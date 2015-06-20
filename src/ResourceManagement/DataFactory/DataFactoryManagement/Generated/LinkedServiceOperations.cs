@@ -362,36 +362,12 @@ namespace Microsoft.Azure.Management.DataFactories
                                 propertiesValue["errorMessage"] = derived5.ErrorMessage;
                             }
                         }
-                        if (parameters.LinkedService.Properties is HDInsightBYOCLinkedService)
+                        if (parameters.LinkedService.Properties is DocumentDbLinkedService)
                         {
-                            propertiesValue["type"] = "HDInsightBYOCLinkedService";
-                            HDInsightBYOCLinkedService derived6 = ((HDInsightBYOCLinkedService)parameters.LinkedService.Properties);
+                            propertiesValue["type"] = "DocumentDbLinkedService";
+                            DocumentDbLinkedService derived6 = ((DocumentDbLinkedService)parameters.LinkedService.Properties);
                             
-                            propertiesValue["clusterUri"] = derived6.ClusterUri;
-                            
-                            propertiesValue["userName"] = derived6.UserName;
-                            
-                            propertiesValue["password"] = derived6.Password;
-                            
-                            if (derived6.LinkedServiceName != null)
-                            {
-                                propertiesValue["linkedServiceName"] = derived6.LinkedServiceName;
-                            }
-                            
-                            if (derived6.Hcatalog != null)
-                            {
-                                JObject hcatalogValue = new JObject();
-                                propertiesValue["hcatalog"] = hcatalogValue;
-                                
-                                if (derived6.Hcatalog.LinkedServiceName != null)
-                                {
-                                    hcatalogValue["linkedServiceName"] = derived6.Hcatalog.LinkedServiceName;
-                                }
-                                
-                                hcatalogValue["recoverPartitions"] = derived6.Hcatalog.RecoverPartitions;
-                                
-                                hcatalogValue["alterSchema"] = derived6.Hcatalog.AlterSchema;
-                            }
+                            propertiesValue["connectionString"] = derived6.ConnectionString;
                             
                             if (derived6.Description != null)
                             {
@@ -413,228 +389,35 @@ namespace Microsoft.Azure.Management.DataFactories
                                 propertiesValue["errorMessage"] = derived6.ErrorMessage;
                             }
                         }
-                        if (parameters.LinkedService.Properties is HDInsightOnDemandLinkedService)
+                        if (parameters.LinkedService.Properties is HDInsightBYOCLinkedService)
                         {
-                            propertiesValue["type"] = "HDInsightOnDemandLinkedService";
-                            HDInsightOnDemandLinkedService derived7 = ((HDInsightOnDemandLinkedService)parameters.LinkedService.Properties);
+                            propertiesValue["type"] = "HDInsightBYOCLinkedService";
+                            HDInsightBYOCLinkedService derived7 = ((HDInsightBYOCLinkedService)parameters.LinkedService.Properties);
                             
-                            if (derived7.Version != null)
+                            propertiesValue["clusterUri"] = derived7.ClusterUri;
+                            
+                            propertiesValue["userName"] = derived7.UserName;
+                            
+                            propertiesValue["password"] = derived7.Password;
+                            
+                            if (derived7.LinkedServiceName != null)
                             {
-                                propertiesValue["version"] = derived7.Version;
-                            }
-                            
-                            if (derived7.ClusterType != null)
-                            {
-                                propertiesValue["clusterType"] = derived7.ClusterType;
-                            }
-                            
-                            propertiesValue["clusterSize"] = derived7.ClusterSize;
-                            
-                            propertiesValue["timeToLive"] = derived7.TimeToLive.ToString();
-                            
-                            propertiesValue["linkedServiceName"] = derived7.LinkedServiceName;
-                            
-                            if (derived7.HiveCustomLibrariesContainer != null)
-                            {
-                                propertiesValue["hiveCustomLibrariesContainer"] = derived7.HiveCustomLibrariesContainer;
-                            }
-                            
-                            if (derived7.CoreConfiguration != null)
-                            {
-                                if (derived7.CoreConfiguration is ILazyCollection == false || ((ILazyCollection)derived7.CoreConfiguration).IsInitialized)
-                                {
-                                    JObject coreConfigurationDictionary = new JObject();
-                                    foreach (KeyValuePair<string, string> pair2 in derived7.CoreConfiguration)
-                                    {
-                                        string coreConfigurationKey = pair2.Key;
-                                        string coreConfigurationValue = pair2.Value;
-                                        coreConfigurationDictionary[coreConfigurationKey] = coreConfigurationValue;
-                                    }
-                                    propertiesValue["coreConfiguration"] = coreConfigurationDictionary;
-                                }
-                            }
-                            
-                            if (derived7.HBaseConfiguration != null)
-                            {
-                                if (derived7.HBaseConfiguration is ILazyCollection == false || ((ILazyCollection)derived7.HBaseConfiguration).IsInitialized)
-                                {
-                                    JObject hBaseConfigurationDictionary = new JObject();
-                                    foreach (KeyValuePair<string, string> pair3 in derived7.HBaseConfiguration)
-                                    {
-                                        string hBaseConfigurationKey = pair3.Key;
-                                        string hBaseConfigurationValue = pair3.Value;
-                                        hBaseConfigurationDictionary[hBaseConfigurationKey] = hBaseConfigurationValue;
-                                    }
-                                    propertiesValue["hBaseConfiguration"] = hBaseConfigurationDictionary;
-                                }
-                            }
-                            
-                            if (derived7.HdfsConfiguration != null)
-                            {
-                                if (derived7.HdfsConfiguration is ILazyCollection == false || ((ILazyCollection)derived7.HdfsConfiguration).IsInitialized)
-                                {
-                                    JObject hdfsConfigurationDictionary = new JObject();
-                                    foreach (KeyValuePair<string, string> pair4 in derived7.HdfsConfiguration)
-                                    {
-                                        string hdfsConfigurationKey = pair4.Key;
-                                        string hdfsConfigurationValue = pair4.Value;
-                                        hdfsConfigurationDictionary[hdfsConfigurationKey] = hdfsConfigurationValue;
-                                    }
-                                    propertiesValue["hdfsConfiguration"] = hdfsConfigurationDictionary;
-                                }
-                            }
-                            
-                            if (derived7.HiveConfiguration != null)
-                            {
-                                if (derived7.HiveConfiguration is ILazyCollection == false || ((ILazyCollection)derived7.HiveConfiguration).IsInitialized)
-                                {
-                                    JObject hiveConfigurationDictionary = new JObject();
-                                    foreach (KeyValuePair<string, string> pair5 in derived7.HiveConfiguration)
-                                    {
-                                        string hiveConfigurationKey = pair5.Key;
-                                        string hiveConfigurationValue = pair5.Value;
-                                        hiveConfigurationDictionary[hiveConfigurationKey] = hiveConfigurationValue;
-                                    }
-                                    propertiesValue["hiveConfiguration"] = hiveConfigurationDictionary;
-                                }
-                            }
-                            
-                            if (derived7.MapReduceConfiguration != null)
-                            {
-                                if (derived7.MapReduceConfiguration is ILazyCollection == false || ((ILazyCollection)derived7.MapReduceConfiguration).IsInitialized)
-                                {
-                                    JObject mapReduceConfigurationDictionary = new JObject();
-                                    foreach (KeyValuePair<string, string> pair6 in derived7.MapReduceConfiguration)
-                                    {
-                                        string mapReduceConfigurationKey = pair6.Key;
-                                        string mapReduceConfigurationValue = pair6.Value;
-                                        mapReduceConfigurationDictionary[mapReduceConfigurationKey] = mapReduceConfigurationValue;
-                                    }
-                                    propertiesValue["mapReduceConfiguration"] = mapReduceConfigurationDictionary;
-                                }
-                            }
-                            
-                            if (derived7.OozieConfiguration != null)
-                            {
-                                if (derived7.OozieConfiguration is ILazyCollection == false || ((ILazyCollection)derived7.OozieConfiguration).IsInitialized)
-                                {
-                                    JObject oozieConfigurationDictionary = new JObject();
-                                    foreach (KeyValuePair<string, string> pair7 in derived7.OozieConfiguration)
-                                    {
-                                        string oozieConfigurationKey = pair7.Key;
-                                        string oozieConfigurationValue = pair7.Value;
-                                        oozieConfigurationDictionary[oozieConfigurationKey] = oozieConfigurationValue;
-                                    }
-                                    propertiesValue["oozieConfiguration"] = oozieConfigurationDictionary;
-                                }
-                            }
-                            
-                            if (derived7.StormConfiguration != null)
-                            {
-                                if (derived7.StormConfiguration is ILazyCollection == false || ((ILazyCollection)derived7.StormConfiguration).IsInitialized)
-                                {
-                                    JObject stormConfigurationDictionary = new JObject();
-                                    foreach (KeyValuePair<string, string> pair8 in derived7.StormConfiguration)
-                                    {
-                                        string stormConfigurationKey = pair8.Key;
-                                        string stormConfigurationValue = pair8.Value;
-                                        stormConfigurationDictionary[stormConfigurationKey] = stormConfigurationValue;
-                                    }
-                                    propertiesValue["stormConfiguration"] = stormConfigurationDictionary;
-                                }
-                            }
-                            
-                            if (derived7.SparkConfiguration != null)
-                            {
-                                if (derived7.SparkConfiguration is ILazyCollection == false || ((ILazyCollection)derived7.SparkConfiguration).IsInitialized)
-                                {
-                                    JObject sparkConfigurationDictionary = new JObject();
-                                    foreach (KeyValuePair<string, string> pair9 in derived7.SparkConfiguration)
-                                    {
-                                        string sparkConfigurationKey = pair9.Key;
-                                        string sparkConfigurationValue = pair9.Value;
-                                        sparkConfigurationDictionary[sparkConfigurationKey] = sparkConfigurationValue;
-                                    }
-                                    propertiesValue["sparkConfiguration"] = sparkConfigurationDictionary;
-                                }
-                            }
-                            
-                            if (derived7.YarnConfiguration != null)
-                            {
-                                if (derived7.YarnConfiguration is ILazyCollection == false || ((ILazyCollection)derived7.YarnConfiguration).IsInitialized)
-                                {
-                                    JObject yarnConfigurationDictionary = new JObject();
-                                    foreach (KeyValuePair<string, string> pair10 in derived7.YarnConfiguration)
-                                    {
-                                        string yarnConfigurationKey = pair10.Key;
-                                        string yarnConfigurationValue = pair10.Value;
-                                        yarnConfigurationDictionary[yarnConfigurationKey] = yarnConfigurationValue;
-                                    }
-                                    propertiesValue["yarnConfiguration"] = yarnConfigurationDictionary;
-                                }
-                            }
-                            
-                            if (derived7.AdditionalLinkedServiceNames != null)
-                            {
-                                if (derived7.AdditionalLinkedServiceNames is ILazyCollection == false || ((ILazyCollection)derived7.AdditionalLinkedServiceNames).IsInitialized)
-                                {
-                                    JArray additionalLinkedServiceNamesArray = new JArray();
-                                    foreach (string additionalLinkedServiceNamesItem in derived7.AdditionalLinkedServiceNames)
-                                    {
-                                        additionalLinkedServiceNamesArray.Add(additionalLinkedServiceNamesItem);
-                                    }
-                                    propertiesValue["additionalLinkedServiceNames"] = additionalLinkedServiceNamesArray;
-                                }
+                                propertiesValue["linkedServiceName"] = derived7.LinkedServiceName;
                             }
                             
                             if (derived7.Hcatalog != null)
                             {
-                                JObject hcatalogValue2 = new JObject();
-                                propertiesValue["hcatalog"] = hcatalogValue2;
+                                JObject hcatalogValue = new JObject();
+                                propertiesValue["hcatalog"] = hcatalogValue;
                                 
                                 if (derived7.Hcatalog.LinkedServiceName != null)
                                 {
-                                    hcatalogValue2["linkedServiceName"] = derived7.Hcatalog.LinkedServiceName;
+                                    hcatalogValue["linkedServiceName"] = derived7.Hcatalog.LinkedServiceName;
                                 }
                                 
-                                hcatalogValue2["recoverPartitions"] = derived7.Hcatalog.RecoverPartitions;
+                                hcatalogValue["recoverPartitions"] = derived7.Hcatalog.RecoverPartitions;
                                 
-                                hcatalogValue2["alterSchema"] = derived7.Hcatalog.AlterSchema;
-                            }
-                            
-                            if (derived7.DataNodeSize != null)
-                            {
-                                propertiesValue["dataNodeSize"] = derived7.DataNodeSize;
-                            }
-                            
-                            if (derived7.HeadNodeSize != null)
-                            {
-                                propertiesValue["headNodeSize"] = derived7.HeadNodeSize;
-                            }
-                            
-                            if (derived7.ZookeeperNodeSize != null)
-                            {
-                                propertiesValue["zookeeperNodeSize"] = derived7.ZookeeperNodeSize;
-                            }
-                            
-                            if (derived7.OSType != null)
-                            {
-                                propertiesValue["osType"] = derived7.OSType;
-                            }
-                            
-                            if (derived7.SshPassword != null)
-                            {
-                                propertiesValue["sshPassword"] = derived7.SshPassword;
-                            }
-                            
-                            if (derived7.SshPublicKey != null)
-                            {
-                                propertiesValue["sshPublicKey"] = derived7.SshPublicKey;
-                            }
-                            
-                            if (derived7.SshUserName != null)
-                            {
-                                propertiesValue["sshUserName"] = derived7.SshUserName;
+                                hcatalogValue["alterSchema"] = derived7.Hcatalog.AlterSchema;
                             }
                             
                             if (derived7.Description != null)
@@ -657,37 +440,228 @@ namespace Microsoft.Azure.Management.DataFactories
                                 propertiesValue["errorMessage"] = derived7.ErrorMessage;
                             }
                         }
-                        if (parameters.LinkedService.Properties is OnPremisesDb2LinkedService)
+                        if (parameters.LinkedService.Properties is HDInsightOnDemandLinkedService)
                         {
-                            propertiesValue["type"] = "OnPremisesDb2LinkedService";
-                            OnPremisesDb2LinkedService derived8 = ((OnPremisesDb2LinkedService)parameters.LinkedService.Properties);
+                            propertiesValue["type"] = "HDInsightOnDemandLinkedService";
+                            HDInsightOnDemandLinkedService derived8 = ((HDInsightOnDemandLinkedService)parameters.LinkedService.Properties);
                             
-                            propertiesValue["server"] = derived8.Server;
-                            
-                            propertiesValue["database"] = derived8.Database;
-                            
-                            if (derived8.Schema != null)
+                            if (derived8.Version != null)
                             {
-                                propertiesValue["schema"] = derived8.Schema;
+                                propertiesValue["version"] = derived8.Version;
                             }
                             
-                            propertiesValue["authenticationType"] = derived8.AuthenticationType;
-                            
-                            if (derived8.Username != null)
+                            if (derived8.ClusterType != null)
                             {
-                                propertiesValue["username"] = derived8.Username;
+                                propertiesValue["clusterType"] = derived8.ClusterType;
                             }
                             
-                            if (derived8.Password != null)
+                            propertiesValue["clusterSize"] = derived8.ClusterSize;
+                            
+                            propertiesValue["timeToLive"] = derived8.TimeToLive.ToString();
+                            
+                            propertiesValue["linkedServiceName"] = derived8.LinkedServiceName;
+                            
+                            if (derived8.HiveCustomLibrariesContainer != null)
                             {
-                                propertiesValue["password"] = derived8.Password;
+                                propertiesValue["hiveCustomLibrariesContainer"] = derived8.HiveCustomLibrariesContainer;
                             }
                             
-                            propertiesValue["gatewayName"] = derived8.GatewayName;
-                            
-                            if (derived8.EncryptedCredential != null)
+                            if (derived8.CoreConfiguration != null)
                             {
-                                propertiesValue["encryptedCredential"] = derived8.EncryptedCredential;
+                                if (derived8.CoreConfiguration is ILazyCollection == false || ((ILazyCollection)derived8.CoreConfiguration).IsInitialized)
+                                {
+                                    JObject coreConfigurationDictionary = new JObject();
+                                    foreach (KeyValuePair<string, string> pair2 in derived8.CoreConfiguration)
+                                    {
+                                        string coreConfigurationKey = pair2.Key;
+                                        string coreConfigurationValue = pair2.Value;
+                                        coreConfigurationDictionary[coreConfigurationKey] = coreConfigurationValue;
+                                    }
+                                    propertiesValue["coreConfiguration"] = coreConfigurationDictionary;
+                                }
+                            }
+                            
+                            if (derived8.HBaseConfiguration != null)
+                            {
+                                if (derived8.HBaseConfiguration is ILazyCollection == false || ((ILazyCollection)derived8.HBaseConfiguration).IsInitialized)
+                                {
+                                    JObject hBaseConfigurationDictionary = new JObject();
+                                    foreach (KeyValuePair<string, string> pair3 in derived8.HBaseConfiguration)
+                                    {
+                                        string hBaseConfigurationKey = pair3.Key;
+                                        string hBaseConfigurationValue = pair3.Value;
+                                        hBaseConfigurationDictionary[hBaseConfigurationKey] = hBaseConfigurationValue;
+                                    }
+                                    propertiesValue["hBaseConfiguration"] = hBaseConfigurationDictionary;
+                                }
+                            }
+                            
+                            if (derived8.HdfsConfiguration != null)
+                            {
+                                if (derived8.HdfsConfiguration is ILazyCollection == false || ((ILazyCollection)derived8.HdfsConfiguration).IsInitialized)
+                                {
+                                    JObject hdfsConfigurationDictionary = new JObject();
+                                    foreach (KeyValuePair<string, string> pair4 in derived8.HdfsConfiguration)
+                                    {
+                                        string hdfsConfigurationKey = pair4.Key;
+                                        string hdfsConfigurationValue = pair4.Value;
+                                        hdfsConfigurationDictionary[hdfsConfigurationKey] = hdfsConfigurationValue;
+                                    }
+                                    propertiesValue["hdfsConfiguration"] = hdfsConfigurationDictionary;
+                                }
+                            }
+                            
+                            if (derived8.HiveConfiguration != null)
+                            {
+                                if (derived8.HiveConfiguration is ILazyCollection == false || ((ILazyCollection)derived8.HiveConfiguration).IsInitialized)
+                                {
+                                    JObject hiveConfigurationDictionary = new JObject();
+                                    foreach (KeyValuePair<string, string> pair5 in derived8.HiveConfiguration)
+                                    {
+                                        string hiveConfigurationKey = pair5.Key;
+                                        string hiveConfigurationValue = pair5.Value;
+                                        hiveConfigurationDictionary[hiveConfigurationKey] = hiveConfigurationValue;
+                                    }
+                                    propertiesValue["hiveConfiguration"] = hiveConfigurationDictionary;
+                                }
+                            }
+                            
+                            if (derived8.MapReduceConfiguration != null)
+                            {
+                                if (derived8.MapReduceConfiguration is ILazyCollection == false || ((ILazyCollection)derived8.MapReduceConfiguration).IsInitialized)
+                                {
+                                    JObject mapReduceConfigurationDictionary = new JObject();
+                                    foreach (KeyValuePair<string, string> pair6 in derived8.MapReduceConfiguration)
+                                    {
+                                        string mapReduceConfigurationKey = pair6.Key;
+                                        string mapReduceConfigurationValue = pair6.Value;
+                                        mapReduceConfigurationDictionary[mapReduceConfigurationKey] = mapReduceConfigurationValue;
+                                    }
+                                    propertiesValue["mapReduceConfiguration"] = mapReduceConfigurationDictionary;
+                                }
+                            }
+                            
+                            if (derived8.OozieConfiguration != null)
+                            {
+                                if (derived8.OozieConfiguration is ILazyCollection == false || ((ILazyCollection)derived8.OozieConfiguration).IsInitialized)
+                                {
+                                    JObject oozieConfigurationDictionary = new JObject();
+                                    foreach (KeyValuePair<string, string> pair7 in derived8.OozieConfiguration)
+                                    {
+                                        string oozieConfigurationKey = pair7.Key;
+                                        string oozieConfigurationValue = pair7.Value;
+                                        oozieConfigurationDictionary[oozieConfigurationKey] = oozieConfigurationValue;
+                                    }
+                                    propertiesValue["oozieConfiguration"] = oozieConfigurationDictionary;
+                                }
+                            }
+                            
+                            if (derived8.StormConfiguration != null)
+                            {
+                                if (derived8.StormConfiguration is ILazyCollection == false || ((ILazyCollection)derived8.StormConfiguration).IsInitialized)
+                                {
+                                    JObject stormConfigurationDictionary = new JObject();
+                                    foreach (KeyValuePair<string, string> pair8 in derived8.StormConfiguration)
+                                    {
+                                        string stormConfigurationKey = pair8.Key;
+                                        string stormConfigurationValue = pair8.Value;
+                                        stormConfigurationDictionary[stormConfigurationKey] = stormConfigurationValue;
+                                    }
+                                    propertiesValue["stormConfiguration"] = stormConfigurationDictionary;
+                                }
+                            }
+                            
+                            if (derived8.SparkConfiguration != null)
+                            {
+                                if (derived8.SparkConfiguration is ILazyCollection == false || ((ILazyCollection)derived8.SparkConfiguration).IsInitialized)
+                                {
+                                    JObject sparkConfigurationDictionary = new JObject();
+                                    foreach (KeyValuePair<string, string> pair9 in derived8.SparkConfiguration)
+                                    {
+                                        string sparkConfigurationKey = pair9.Key;
+                                        string sparkConfigurationValue = pair9.Value;
+                                        sparkConfigurationDictionary[sparkConfigurationKey] = sparkConfigurationValue;
+                                    }
+                                    propertiesValue["sparkConfiguration"] = sparkConfigurationDictionary;
+                                }
+                            }
+                            
+                            if (derived8.YarnConfiguration != null)
+                            {
+                                if (derived8.YarnConfiguration is ILazyCollection == false || ((ILazyCollection)derived8.YarnConfiguration).IsInitialized)
+                                {
+                                    JObject yarnConfigurationDictionary = new JObject();
+                                    foreach (KeyValuePair<string, string> pair10 in derived8.YarnConfiguration)
+                                    {
+                                        string yarnConfigurationKey = pair10.Key;
+                                        string yarnConfigurationValue = pair10.Value;
+                                        yarnConfigurationDictionary[yarnConfigurationKey] = yarnConfigurationValue;
+                                    }
+                                    propertiesValue["yarnConfiguration"] = yarnConfigurationDictionary;
+                                }
+                            }
+                            
+                            if (derived8.AdditionalLinkedServiceNames != null)
+                            {
+                                if (derived8.AdditionalLinkedServiceNames is ILazyCollection == false || ((ILazyCollection)derived8.AdditionalLinkedServiceNames).IsInitialized)
+                                {
+                                    JArray additionalLinkedServiceNamesArray = new JArray();
+                                    foreach (string additionalLinkedServiceNamesItem in derived8.AdditionalLinkedServiceNames)
+                                    {
+                                        additionalLinkedServiceNamesArray.Add(additionalLinkedServiceNamesItem);
+                                    }
+                                    propertiesValue["additionalLinkedServiceNames"] = additionalLinkedServiceNamesArray;
+                                }
+                            }
+                            
+                            if (derived8.Hcatalog != null)
+                            {
+                                JObject hcatalogValue2 = new JObject();
+                                propertiesValue["hcatalog"] = hcatalogValue2;
+                                
+                                if (derived8.Hcatalog.LinkedServiceName != null)
+                                {
+                                    hcatalogValue2["linkedServiceName"] = derived8.Hcatalog.LinkedServiceName;
+                                }
+                                
+                                hcatalogValue2["recoverPartitions"] = derived8.Hcatalog.RecoverPartitions;
+                                
+                                hcatalogValue2["alterSchema"] = derived8.Hcatalog.AlterSchema;
+                            }
+                            
+                            if (derived8.DataNodeSize != null)
+                            {
+                                propertiesValue["dataNodeSize"] = derived8.DataNodeSize;
+                            }
+                            
+                            if (derived8.HeadNodeSize != null)
+                            {
+                                propertiesValue["headNodeSize"] = derived8.HeadNodeSize;
+                            }
+                            
+                            if (derived8.ZookeeperNodeSize != null)
+                            {
+                                propertiesValue["zookeeperNodeSize"] = derived8.ZookeeperNodeSize;
+                            }
+                            
+                            if (derived8.OSType != null)
+                            {
+                                propertiesValue["osType"] = derived8.OSType;
+                            }
+                            
+                            if (derived8.SshPassword != null)
+                            {
+                                propertiesValue["sshPassword"] = derived8.SshPassword;
+                            }
+                            
+                            if (derived8.SshPublicKey != null)
+                            {
+                                propertiesValue["sshPublicKey"] = derived8.SshPublicKey;
+                            }
+                            
+                            if (derived8.SshUserName != null)
+                            {
+                                propertiesValue["sshUserName"] = derived8.SshUserName;
                             }
                             
                             if (derived8.Description != null)
@@ -710,28 +684,23 @@ namespace Microsoft.Azure.Management.DataFactories
                                 propertiesValue["errorMessage"] = derived8.ErrorMessage;
                             }
                         }
-                        if (parameters.LinkedService.Properties is OnPremisesFileSystemLinkedService)
+                        if (parameters.LinkedService.Properties is ODataLinkedService)
                         {
-                            propertiesValue["type"] = "OnPremisesFileSystemLinkedService";
-                            OnPremisesFileSystemLinkedService derived9 = ((OnPremisesFileSystemLinkedService)parameters.LinkedService.Properties);
+                            propertiesValue["type"] = "ODataLinkedService";
+                            ODataLinkedService derived9 = ((ODataLinkedService)parameters.LinkedService.Properties);
                             
-                            propertiesValue["host"] = derived9.Host;
+                            propertiesValue["url"] = derived9.Url;
                             
-                            propertiesValue["gatewayName"] = derived9.GatewayName;
+                            propertiesValue["authenticationType"] = derived9.AuthenticationType;
                             
-                            if (derived9.UserId != null)
+                            if (derived9.Username != null)
                             {
-                                propertiesValue["userId"] = derived9.UserId;
+                                propertiesValue["username"] = derived9.Username;
                             }
                             
                             if (derived9.Password != null)
                             {
                                 propertiesValue["password"] = derived9.Password;
-                            }
-                            
-                            if (derived9.EncryptedCredential != null)
-                            {
-                                propertiesValue["encryptedCredential"] = derived9.EncryptedCredential;
                             }
                             
                             if (derived9.Description != null)
@@ -754,10 +723,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                 propertiesValue["errorMessage"] = derived9.ErrorMessage;
                             }
                         }
-                        if (parameters.LinkedService.Properties is OnPremisesMySqlLinkedService)
+                        if (parameters.LinkedService.Properties is OnPremisesDb2LinkedService)
                         {
-                            propertiesValue["type"] = "OnPremisesMySqlLinkedService";
-                            OnPremisesMySqlLinkedService derived10 = ((OnPremisesMySqlLinkedService)parameters.LinkedService.Properties);
+                            propertiesValue["type"] = "OnPremisesDb2LinkedService";
+                            OnPremisesDb2LinkedService derived10 = ((OnPremisesDb2LinkedService)parameters.LinkedService.Properties);
                             
                             propertiesValue["server"] = derived10.Server;
                             
@@ -807,23 +776,28 @@ namespace Microsoft.Azure.Management.DataFactories
                                 propertiesValue["errorMessage"] = derived10.ErrorMessage;
                             }
                         }
-                        if (parameters.LinkedService.Properties is OnPremisesOracleLinkedService)
+                        if (parameters.LinkedService.Properties is OnPremisesFileSystemLinkedService)
                         {
-                            propertiesValue["type"] = "OnPremisesOracleLinkedService";
-                            OnPremisesOracleLinkedService derived11 = ((OnPremisesOracleLinkedService)parameters.LinkedService.Properties);
+                            propertiesValue["type"] = "OnPremisesFileSystemLinkedService";
+                            OnPremisesFileSystemLinkedService derived11 = ((OnPremisesFileSystemLinkedService)parameters.LinkedService.Properties);
                             
-                            propertiesValue["connectionString"] = derived11.ConnectionString;
+                            propertiesValue["host"] = derived11.Host;
                             
                             propertiesValue["gatewayName"] = derived11.GatewayName;
                             
-                            if (derived11.UserName != null)
+                            if (derived11.UserId != null)
                             {
-                                propertiesValue["userName"] = derived11.UserName;
+                                propertiesValue["userId"] = derived11.UserId;
                             }
                             
                             if (derived11.Password != null)
                             {
                                 propertiesValue["password"] = derived11.Password;
+                            }
+                            
+                            if (derived11.EncryptedCredential != null)
+                            {
+                                propertiesValue["encryptedCredential"] = derived11.EncryptedCredential;
                             }
                             
                             if (derived11.Description != null)
@@ -846,18 +820,16 @@ namespace Microsoft.Azure.Management.DataFactories
                                 propertiesValue["errorMessage"] = derived11.ErrorMessage;
                             }
                         }
-                        if (parameters.LinkedService.Properties is OnPremisesPostgreSqlLinkedService)
+                        if (parameters.LinkedService.Properties is OnPremisesHdfsLinkedService)
                         {
-                            propertiesValue["type"] = "OnPremisesPostgreSqlLinkedService";
-                            OnPremisesPostgreSqlLinkedService derived12 = ((OnPremisesPostgreSqlLinkedService)parameters.LinkedService.Properties);
+                            propertiesValue["type"] = "OnPremisesHdfsLinkedService";
+                            OnPremisesHdfsLinkedService derived12 = ((OnPremisesHdfsLinkedService)parameters.LinkedService.Properties);
                             
-                            propertiesValue["server"] = derived12.Server;
+                            propertiesValue["url"] = derived12.Url;
                             
-                            propertiesValue["database"] = derived12.Database;
-                            
-                            if (derived12.Schema != null)
+                            if (derived12.ContentType != null)
                             {
-                                propertiesValue["schema"] = derived12.Schema;
+                                propertiesValue["contentType"] = derived12.ContentType;
                             }
                             
                             propertiesValue["authenticationType"] = derived12.AuthenticationType;
@@ -899,23 +871,37 @@ namespace Microsoft.Azure.Management.DataFactories
                                 propertiesValue["errorMessage"] = derived12.ErrorMessage;
                             }
                         }
-                        if (parameters.LinkedService.Properties is OnPremisesSqlLinkedService)
+                        if (parameters.LinkedService.Properties is OnPremisesMySqlLinkedService)
                         {
-                            propertiesValue["type"] = "OnPremisesSqlLinkedService";
-                            OnPremisesSqlLinkedService derived13 = ((OnPremisesSqlLinkedService)parameters.LinkedService.Properties);
+                            propertiesValue["type"] = "OnPremisesMySqlLinkedService";
+                            OnPremisesMySqlLinkedService derived13 = ((OnPremisesMySqlLinkedService)parameters.LinkedService.Properties);
                             
-                            propertiesValue["connectionString"] = derived13.ConnectionString;
+                            propertiesValue["server"] = derived13.Server;
                             
-                            propertiesValue["gatewayName"] = derived13.GatewayName;
+                            propertiesValue["database"] = derived13.Database;
                             
-                            if (derived13.UserName != null)
+                            if (derived13.Schema != null)
                             {
-                                propertiesValue["userName"] = derived13.UserName;
+                                propertiesValue["schema"] = derived13.Schema;
+                            }
+                            
+                            propertiesValue["authenticationType"] = derived13.AuthenticationType;
+                            
+                            if (derived13.Username != null)
+                            {
+                                propertiesValue["username"] = derived13.Username;
                             }
                             
                             if (derived13.Password != null)
                             {
                                 propertiesValue["password"] = derived13.Password;
+                            }
+                            
+                            propertiesValue["gatewayName"] = derived13.GatewayName;
+                            
+                            if (derived13.EncryptedCredential != null)
+                            {
+                                propertiesValue["encryptedCredential"] = derived13.EncryptedCredential;
                             }
                             
                             if (derived13.Description != null)
@@ -938,25 +924,29 @@ namespace Microsoft.Azure.Management.DataFactories
                                 propertiesValue["errorMessage"] = derived13.ErrorMessage;
                             }
                         }
-                        if (parameters.LinkedService.Properties is OnPremisesSybaseLinkedService)
+                        if (parameters.LinkedService.Properties is OnPremisesOdbcLinkedService)
                         {
-                            propertiesValue["type"] = "OnPremisesSybaseLinkedService";
-                            OnPremisesSybaseLinkedService derived14 = ((OnPremisesSybaseLinkedService)parameters.LinkedService.Properties);
+                            propertiesValue["type"] = "OnPremisesOdbcLinkedService";
+                            OnPremisesOdbcLinkedService derived14 = ((OnPremisesOdbcLinkedService)parameters.LinkedService.Properties);
                             
-                            propertiesValue["server"] = derived14.Server;
-                            
-                            propertiesValue["database"] = derived14.Database;
-                            
-                            if (derived14.Schema != null)
+                            if (derived14.NonCredentialConnectionString != null)
                             {
-                                propertiesValue["schema"] = derived14.Schema;
+                                propertiesValue["nonCredentialConnectionString"] = derived14.NonCredentialConnectionString;
                             }
                             
-                            propertiesValue["authenticationType"] = derived14.AuthenticationType;
-                            
-                            if (derived14.Username != null)
+                            if (derived14.CredentialConnectionString != null)
                             {
-                                propertiesValue["username"] = derived14.Username;
+                                propertiesValue["credentialConnectionString"] = derived14.CredentialConnectionString;
+                            }
+                            
+                            if (derived14.EncryptedCredentialConnectionString != null)
+                            {
+                                propertiesValue["encryptedCredentialConnectionString"] = derived14.EncryptedCredentialConnectionString;
+                            }
+                            
+                            if (derived14.UserName != null)
+                            {
+                                propertiesValue["userName"] = derived14.UserName;
                             }
                             
                             if (derived14.Password != null)
@@ -966,10 +956,7 @@ namespace Microsoft.Azure.Management.DataFactories
                             
                             propertiesValue["gatewayName"] = derived14.GatewayName;
                             
-                            if (derived14.EncryptedCredential != null)
-                            {
-                                propertiesValue["encryptedCredential"] = derived14.EncryptedCredential;
-                            }
+                            propertiesValue["authenticationType"] = derived14.AuthenticationType;
                             
                             if (derived14.Description != null)
                             {
@@ -991,37 +978,23 @@ namespace Microsoft.Azure.Management.DataFactories
                                 propertiesValue["errorMessage"] = derived14.ErrorMessage;
                             }
                         }
-                        if (parameters.LinkedService.Properties is OnPremisesTeradataLinkedService)
+                        if (parameters.LinkedService.Properties is OnPremisesOracleLinkedService)
                         {
-                            propertiesValue["type"] = "OnPremisesTeradataLinkedService";
-                            OnPremisesTeradataLinkedService derived15 = ((OnPremisesTeradataLinkedService)parameters.LinkedService.Properties);
+                            propertiesValue["type"] = "OnPremisesOracleLinkedService";
+                            OnPremisesOracleLinkedService derived15 = ((OnPremisesOracleLinkedService)parameters.LinkedService.Properties);
                             
-                            propertiesValue["server"] = derived15.Server;
+                            propertiesValue["connectionString"] = derived15.ConnectionString;
                             
-                            propertiesValue["database"] = derived15.Database;
+                            propertiesValue["gatewayName"] = derived15.GatewayName;
                             
-                            if (derived15.Schema != null)
+                            if (derived15.UserName != null)
                             {
-                                propertiesValue["schema"] = derived15.Schema;
-                            }
-                            
-                            propertiesValue["authenticationType"] = derived15.AuthenticationType;
-                            
-                            if (derived15.Username != null)
-                            {
-                                propertiesValue["username"] = derived15.Username;
+                                propertiesValue["userName"] = derived15.UserName;
                             }
                             
                             if (derived15.Password != null)
                             {
                                 propertiesValue["password"] = derived15.Password;
-                            }
-                            
-                            propertiesValue["gatewayName"] = derived15.GatewayName;
-                            
-                            if (derived15.EncryptedCredential != null)
-                            {
-                                propertiesValue["encryptedCredential"] = derived15.EncryptedCredential;
                             }
                             
                             if (derived15.Description != null)
@@ -1042,6 +1015,204 @@ namespace Microsoft.Azure.Management.DataFactories
                             if (derived15.ErrorMessage != null)
                             {
                                 propertiesValue["errorMessage"] = derived15.ErrorMessage;
+                            }
+                        }
+                        if (parameters.LinkedService.Properties is OnPremisesPostgreSqlLinkedService)
+                        {
+                            propertiesValue["type"] = "OnPremisesPostgreSqlLinkedService";
+                            OnPremisesPostgreSqlLinkedService derived16 = ((OnPremisesPostgreSqlLinkedService)parameters.LinkedService.Properties);
+                            
+                            propertiesValue["server"] = derived16.Server;
+                            
+                            propertiesValue["database"] = derived16.Database;
+                            
+                            if (derived16.Schema != null)
+                            {
+                                propertiesValue["schema"] = derived16.Schema;
+                            }
+                            
+                            propertiesValue["authenticationType"] = derived16.AuthenticationType;
+                            
+                            if (derived16.Username != null)
+                            {
+                                propertiesValue["username"] = derived16.Username;
+                            }
+                            
+                            if (derived16.Password != null)
+                            {
+                                propertiesValue["password"] = derived16.Password;
+                            }
+                            
+                            propertiesValue["gatewayName"] = derived16.GatewayName;
+                            
+                            if (derived16.EncryptedCredential != null)
+                            {
+                                propertiesValue["encryptedCredential"] = derived16.EncryptedCredential;
+                            }
+                            
+                            if (derived16.Description != null)
+                            {
+                                propertiesValue["description"] = derived16.Description;
+                            }
+                            
+                            if (derived16.ProvisioningState != null)
+                            {
+                                propertiesValue["provisioningState"] = derived16.ProvisioningState;
+                            }
+                            
+                            if (derived16.HubName != null)
+                            {
+                                propertiesValue["hubName"] = derived16.HubName;
+                            }
+                            
+                            if (derived16.ErrorMessage != null)
+                            {
+                                propertiesValue["errorMessage"] = derived16.ErrorMessage;
+                            }
+                        }
+                        if (parameters.LinkedService.Properties is OnPremisesSqlLinkedService)
+                        {
+                            propertiesValue["type"] = "OnPremisesSqlLinkedService";
+                            OnPremisesSqlLinkedService derived17 = ((OnPremisesSqlLinkedService)parameters.LinkedService.Properties);
+                            
+                            propertiesValue["connectionString"] = derived17.ConnectionString;
+                            
+                            propertiesValue["gatewayName"] = derived17.GatewayName;
+                            
+                            if (derived17.UserName != null)
+                            {
+                                propertiesValue["userName"] = derived17.UserName;
+                            }
+                            
+                            if (derived17.Password != null)
+                            {
+                                propertiesValue["password"] = derived17.Password;
+                            }
+                            
+                            if (derived17.Description != null)
+                            {
+                                propertiesValue["description"] = derived17.Description;
+                            }
+                            
+                            if (derived17.ProvisioningState != null)
+                            {
+                                propertiesValue["provisioningState"] = derived17.ProvisioningState;
+                            }
+                            
+                            if (derived17.HubName != null)
+                            {
+                                propertiesValue["hubName"] = derived17.HubName;
+                            }
+                            
+                            if (derived17.ErrorMessage != null)
+                            {
+                                propertiesValue["errorMessage"] = derived17.ErrorMessage;
+                            }
+                        }
+                        if (parameters.LinkedService.Properties is OnPremisesSybaseLinkedService)
+                        {
+                            propertiesValue["type"] = "OnPremisesSybaseLinkedService";
+                            OnPremisesSybaseLinkedService derived18 = ((OnPremisesSybaseLinkedService)parameters.LinkedService.Properties);
+                            
+                            propertiesValue["server"] = derived18.Server;
+                            
+                            propertiesValue["database"] = derived18.Database;
+                            
+                            if (derived18.Schema != null)
+                            {
+                                propertiesValue["schema"] = derived18.Schema;
+                            }
+                            
+                            propertiesValue["authenticationType"] = derived18.AuthenticationType;
+                            
+                            if (derived18.Username != null)
+                            {
+                                propertiesValue["username"] = derived18.Username;
+                            }
+                            
+                            if (derived18.Password != null)
+                            {
+                                propertiesValue["password"] = derived18.Password;
+                            }
+                            
+                            propertiesValue["gatewayName"] = derived18.GatewayName;
+                            
+                            if (derived18.EncryptedCredential != null)
+                            {
+                                propertiesValue["encryptedCredential"] = derived18.EncryptedCredential;
+                            }
+                            
+                            if (derived18.Description != null)
+                            {
+                                propertiesValue["description"] = derived18.Description;
+                            }
+                            
+                            if (derived18.ProvisioningState != null)
+                            {
+                                propertiesValue["provisioningState"] = derived18.ProvisioningState;
+                            }
+                            
+                            if (derived18.HubName != null)
+                            {
+                                propertiesValue["hubName"] = derived18.HubName;
+                            }
+                            
+                            if (derived18.ErrorMessage != null)
+                            {
+                                propertiesValue["errorMessage"] = derived18.ErrorMessage;
+                            }
+                        }
+                        if (parameters.LinkedService.Properties is OnPremisesTeradataLinkedService)
+                        {
+                            propertiesValue["type"] = "OnPremisesTeradataLinkedService";
+                            OnPremisesTeradataLinkedService derived19 = ((OnPremisesTeradataLinkedService)parameters.LinkedService.Properties);
+                            
+                            propertiesValue["server"] = derived19.Server;
+                            
+                            propertiesValue["database"] = derived19.Database;
+                            
+                            if (derived19.Schema != null)
+                            {
+                                propertiesValue["schema"] = derived19.Schema;
+                            }
+                            
+                            propertiesValue["authenticationType"] = derived19.AuthenticationType;
+                            
+                            if (derived19.Username != null)
+                            {
+                                propertiesValue["username"] = derived19.Username;
+                            }
+                            
+                            if (derived19.Password != null)
+                            {
+                                propertiesValue["password"] = derived19.Password;
+                            }
+                            
+                            propertiesValue["gatewayName"] = derived19.GatewayName;
+                            
+                            if (derived19.EncryptedCredential != null)
+                            {
+                                propertiesValue["encryptedCredential"] = derived19.EncryptedCredential;
+                            }
+                            
+                            if (derived19.Description != null)
+                            {
+                                propertiesValue["description"] = derived19.Description;
+                            }
+                            
+                            if (derived19.ProvisioningState != null)
+                            {
+                                propertiesValue["provisioningState"] = derived19.ProvisioningState;
+                            }
+                            
+                            if (derived19.HubName != null)
+                            {
+                                propertiesValue["hubName"] = derived19.HubName;
+                            }
+                            
+                            if (derived19.ErrorMessage != null)
+                            {
+                                propertiesValue["errorMessage"] = derived19.ErrorMessage;
                             }
                         }
                     }
@@ -1339,6 +1510,46 @@ namespace Microsoft.Azure.Management.DataFactories
                                     }
                                     linkedServiceInstance.Properties = customLinkedServiceInstance;
                                 }
+                                if (typeName == "DocumentDbLinkedService")
+                                {
+                                    DocumentDbLinkedService documentDbLinkedServiceInstance = new DocumentDbLinkedService();
+                                    
+                                    JToken connectionStringValue3 = propertiesValue2["connectionString"];
+                                    if (connectionStringValue3 != null && connectionStringValue3.Type != JTokenType.Null)
+                                    {
+                                        string connectionStringInstance3 = ((string)connectionStringValue3);
+                                        documentDbLinkedServiceInstance.ConnectionString = connectionStringInstance3;
+                                    }
+                                    
+                                    JToken descriptionValue6 = propertiesValue2["description"];
+                                    if (descriptionValue6 != null && descriptionValue6.Type != JTokenType.Null)
+                                    {
+                                        string descriptionInstance6 = ((string)descriptionValue6);
+                                        documentDbLinkedServiceInstance.Description = descriptionInstance6;
+                                    }
+                                    
+                                    JToken provisioningStateValue6 = propertiesValue2["provisioningState"];
+                                    if (provisioningStateValue6 != null && provisioningStateValue6.Type != JTokenType.Null)
+                                    {
+                                        string provisioningStateInstance6 = ((string)provisioningStateValue6);
+                                        documentDbLinkedServiceInstance.ProvisioningState = provisioningStateInstance6;
+                                    }
+                                    
+                                    JToken hubNameValue6 = propertiesValue2["hubName"];
+                                    if (hubNameValue6 != null && hubNameValue6.Type != JTokenType.Null)
+                                    {
+                                        string hubNameInstance6 = ((string)hubNameValue6);
+                                        documentDbLinkedServiceInstance.HubName = hubNameInstance6;
+                                    }
+                                    
+                                    JToken errorMessageValue6 = propertiesValue2["errorMessage"];
+                                    if (errorMessageValue6 != null && errorMessageValue6.Type != JTokenType.Null)
+                                    {
+                                        string errorMessageInstance6 = ((string)errorMessageValue6);
+                                        documentDbLinkedServiceInstance.ErrorMessage = errorMessageInstance6;
+                                    }
+                                    linkedServiceInstance.Properties = documentDbLinkedServiceInstance;
+                                }
                                 if (typeName == "HDInsightBYOCLinkedService")
                                 {
                                     HDInsightBYOCLinkedService hDInsightBYOCLinkedServiceInstance = new HDInsightBYOCLinkedService();
@@ -1399,32 +1610,32 @@ namespace Microsoft.Azure.Management.DataFactories
                                         }
                                     }
                                     
-                                    JToken descriptionValue6 = propertiesValue2["description"];
-                                    if (descriptionValue6 != null && descriptionValue6.Type != JTokenType.Null)
+                                    JToken descriptionValue7 = propertiesValue2["description"];
+                                    if (descriptionValue7 != null && descriptionValue7.Type != JTokenType.Null)
                                     {
-                                        string descriptionInstance6 = ((string)descriptionValue6);
-                                        hDInsightBYOCLinkedServiceInstance.Description = descriptionInstance6;
+                                        string descriptionInstance7 = ((string)descriptionValue7);
+                                        hDInsightBYOCLinkedServiceInstance.Description = descriptionInstance7;
                                     }
                                     
-                                    JToken provisioningStateValue6 = propertiesValue2["provisioningState"];
-                                    if (provisioningStateValue6 != null && provisioningStateValue6.Type != JTokenType.Null)
+                                    JToken provisioningStateValue7 = propertiesValue2["provisioningState"];
+                                    if (provisioningStateValue7 != null && provisioningStateValue7.Type != JTokenType.Null)
                                     {
-                                        string provisioningStateInstance6 = ((string)provisioningStateValue6);
-                                        hDInsightBYOCLinkedServiceInstance.ProvisioningState = provisioningStateInstance6;
+                                        string provisioningStateInstance7 = ((string)provisioningStateValue7);
+                                        hDInsightBYOCLinkedServiceInstance.ProvisioningState = provisioningStateInstance7;
                                     }
                                     
-                                    JToken hubNameValue6 = propertiesValue2["hubName"];
-                                    if (hubNameValue6 != null && hubNameValue6.Type != JTokenType.Null)
+                                    JToken hubNameValue7 = propertiesValue2["hubName"];
+                                    if (hubNameValue7 != null && hubNameValue7.Type != JTokenType.Null)
                                     {
-                                        string hubNameInstance6 = ((string)hubNameValue6);
-                                        hDInsightBYOCLinkedServiceInstance.HubName = hubNameInstance6;
+                                        string hubNameInstance7 = ((string)hubNameValue7);
+                                        hDInsightBYOCLinkedServiceInstance.HubName = hubNameInstance7;
                                     }
                                     
-                                    JToken errorMessageValue6 = propertiesValue2["errorMessage"];
-                                    if (errorMessageValue6 != null && errorMessageValue6.Type != JTokenType.Null)
+                                    JToken errorMessageValue7 = propertiesValue2["errorMessage"];
+                                    if (errorMessageValue7 != null && errorMessageValue7.Type != JTokenType.Null)
                                     {
-                                        string errorMessageInstance6 = ((string)errorMessageValue6);
-                                        hDInsightBYOCLinkedServiceInstance.ErrorMessage = errorMessageInstance6;
+                                        string errorMessageInstance7 = ((string)errorMessageValue7);
+                                        hDInsightBYOCLinkedServiceInstance.ErrorMessage = errorMessageInstance7;
                                     }
                                     linkedServiceInstance.Properties = hDInsightBYOCLinkedServiceInstance;
                                 }
@@ -1659,34 +1870,95 @@ namespace Microsoft.Azure.Management.DataFactories
                                         hDInsightOnDemandLinkedServiceInstance.SshUserName = sshUserNameInstance;
                                     }
                                     
-                                    JToken descriptionValue7 = propertiesValue2["description"];
-                                    if (descriptionValue7 != null && descriptionValue7.Type != JTokenType.Null)
+                                    JToken descriptionValue8 = propertiesValue2["description"];
+                                    if (descriptionValue8 != null && descriptionValue8.Type != JTokenType.Null)
                                     {
-                                        string descriptionInstance7 = ((string)descriptionValue7);
-                                        hDInsightOnDemandLinkedServiceInstance.Description = descriptionInstance7;
+                                        string descriptionInstance8 = ((string)descriptionValue8);
+                                        hDInsightOnDemandLinkedServiceInstance.Description = descriptionInstance8;
                                     }
                                     
-                                    JToken provisioningStateValue7 = propertiesValue2["provisioningState"];
-                                    if (provisioningStateValue7 != null && provisioningStateValue7.Type != JTokenType.Null)
+                                    JToken provisioningStateValue8 = propertiesValue2["provisioningState"];
+                                    if (provisioningStateValue8 != null && provisioningStateValue8.Type != JTokenType.Null)
                                     {
-                                        string provisioningStateInstance7 = ((string)provisioningStateValue7);
-                                        hDInsightOnDemandLinkedServiceInstance.ProvisioningState = provisioningStateInstance7;
+                                        string provisioningStateInstance8 = ((string)provisioningStateValue8);
+                                        hDInsightOnDemandLinkedServiceInstance.ProvisioningState = provisioningStateInstance8;
                                     }
                                     
-                                    JToken hubNameValue7 = propertiesValue2["hubName"];
-                                    if (hubNameValue7 != null && hubNameValue7.Type != JTokenType.Null)
+                                    JToken hubNameValue8 = propertiesValue2["hubName"];
+                                    if (hubNameValue8 != null && hubNameValue8.Type != JTokenType.Null)
                                     {
-                                        string hubNameInstance7 = ((string)hubNameValue7);
-                                        hDInsightOnDemandLinkedServiceInstance.HubName = hubNameInstance7;
+                                        string hubNameInstance8 = ((string)hubNameValue8);
+                                        hDInsightOnDemandLinkedServiceInstance.HubName = hubNameInstance8;
                                     }
                                     
-                                    JToken errorMessageValue7 = propertiesValue2["errorMessage"];
-                                    if (errorMessageValue7 != null && errorMessageValue7.Type != JTokenType.Null)
+                                    JToken errorMessageValue8 = propertiesValue2["errorMessage"];
+                                    if (errorMessageValue8 != null && errorMessageValue8.Type != JTokenType.Null)
                                     {
-                                        string errorMessageInstance7 = ((string)errorMessageValue7);
-                                        hDInsightOnDemandLinkedServiceInstance.ErrorMessage = errorMessageInstance7;
+                                        string errorMessageInstance8 = ((string)errorMessageValue8);
+                                        hDInsightOnDemandLinkedServiceInstance.ErrorMessage = errorMessageInstance8;
                                     }
                                     linkedServiceInstance.Properties = hDInsightOnDemandLinkedServiceInstance;
+                                }
+                                if (typeName == "ODataLinkedService")
+                                {
+                                    ODataLinkedService oDataLinkedServiceInstance = new ODataLinkedService();
+                                    
+                                    JToken urlValue = propertiesValue2["url"];
+                                    if (urlValue != null && urlValue.Type != JTokenType.Null)
+                                    {
+                                        string urlInstance = ((string)urlValue);
+                                        oDataLinkedServiceInstance.Url = urlInstance;
+                                    }
+                                    
+                                    JToken authenticationTypeValue = propertiesValue2["authenticationType"];
+                                    if (authenticationTypeValue != null && authenticationTypeValue.Type != JTokenType.Null)
+                                    {
+                                        string authenticationTypeInstance = ((string)authenticationTypeValue);
+                                        oDataLinkedServiceInstance.AuthenticationType = authenticationTypeInstance;
+                                    }
+                                    
+                                    JToken usernameValue = propertiesValue2["username"];
+                                    if (usernameValue != null && usernameValue.Type != JTokenType.Null)
+                                    {
+                                        string usernameInstance = ((string)usernameValue);
+                                        oDataLinkedServiceInstance.Username = usernameInstance;
+                                    }
+                                    
+                                    JToken passwordValue2 = propertiesValue2["password"];
+                                    if (passwordValue2 != null && passwordValue2.Type != JTokenType.Null)
+                                    {
+                                        string passwordInstance2 = ((string)passwordValue2);
+                                        oDataLinkedServiceInstance.Password = passwordInstance2;
+                                    }
+                                    
+                                    JToken descriptionValue9 = propertiesValue2["description"];
+                                    if (descriptionValue9 != null && descriptionValue9.Type != JTokenType.Null)
+                                    {
+                                        string descriptionInstance9 = ((string)descriptionValue9);
+                                        oDataLinkedServiceInstance.Description = descriptionInstance9;
+                                    }
+                                    
+                                    JToken provisioningStateValue9 = propertiesValue2["provisioningState"];
+                                    if (provisioningStateValue9 != null && provisioningStateValue9.Type != JTokenType.Null)
+                                    {
+                                        string provisioningStateInstance9 = ((string)provisioningStateValue9);
+                                        oDataLinkedServiceInstance.ProvisioningState = provisioningStateInstance9;
+                                    }
+                                    
+                                    JToken hubNameValue9 = propertiesValue2["hubName"];
+                                    if (hubNameValue9 != null && hubNameValue9.Type != JTokenType.Null)
+                                    {
+                                        string hubNameInstance9 = ((string)hubNameValue9);
+                                        oDataLinkedServiceInstance.HubName = hubNameInstance9;
+                                    }
+                                    
+                                    JToken errorMessageValue9 = propertiesValue2["errorMessage"];
+                                    if (errorMessageValue9 != null && errorMessageValue9.Type != JTokenType.Null)
+                                    {
+                                        string errorMessageInstance9 = ((string)errorMessageValue9);
+                                        oDataLinkedServiceInstance.ErrorMessage = errorMessageInstance9;
+                                    }
+                                    linkedServiceInstance.Properties = oDataLinkedServiceInstance;
                                 }
                                 if (typeName == "OnPremisesDb2LinkedService")
                                 {
@@ -1713,25 +1985,25 @@ namespace Microsoft.Azure.Management.DataFactories
                                         onPremisesDb2LinkedServiceInstance.Schema = schemaInstance;
                                     }
                                     
-                                    JToken authenticationTypeValue = propertiesValue2["authenticationType"];
-                                    if (authenticationTypeValue != null && authenticationTypeValue.Type != JTokenType.Null)
+                                    JToken authenticationTypeValue2 = propertiesValue2["authenticationType"];
+                                    if (authenticationTypeValue2 != null && authenticationTypeValue2.Type != JTokenType.Null)
                                     {
-                                        string authenticationTypeInstance = ((string)authenticationTypeValue);
-                                        onPremisesDb2LinkedServiceInstance.AuthenticationType = authenticationTypeInstance;
+                                        string authenticationTypeInstance2 = ((string)authenticationTypeValue2);
+                                        onPremisesDb2LinkedServiceInstance.AuthenticationType = authenticationTypeInstance2;
                                     }
                                     
-                                    JToken usernameValue = propertiesValue2["username"];
-                                    if (usernameValue != null && usernameValue.Type != JTokenType.Null)
+                                    JToken usernameValue2 = propertiesValue2["username"];
+                                    if (usernameValue2 != null && usernameValue2.Type != JTokenType.Null)
                                     {
-                                        string usernameInstance = ((string)usernameValue);
-                                        onPremisesDb2LinkedServiceInstance.Username = usernameInstance;
+                                        string usernameInstance2 = ((string)usernameValue2);
+                                        onPremisesDb2LinkedServiceInstance.Username = usernameInstance2;
                                     }
                                     
-                                    JToken passwordValue2 = propertiesValue2["password"];
-                                    if (passwordValue2 != null && passwordValue2.Type != JTokenType.Null)
+                                    JToken passwordValue3 = propertiesValue2["password"];
+                                    if (passwordValue3 != null && passwordValue3.Type != JTokenType.Null)
                                     {
-                                        string passwordInstance2 = ((string)passwordValue2);
-                                        onPremisesDb2LinkedServiceInstance.Password = passwordInstance2;
+                                        string passwordInstance3 = ((string)passwordValue3);
+                                        onPremisesDb2LinkedServiceInstance.Password = passwordInstance3;
                                     }
                                     
                                     JToken gatewayNameValue = propertiesValue2["gatewayName"];
@@ -1748,32 +2020,32 @@ namespace Microsoft.Azure.Management.DataFactories
                                         onPremisesDb2LinkedServiceInstance.EncryptedCredential = encryptedCredentialInstance;
                                     }
                                     
-                                    JToken descriptionValue8 = propertiesValue2["description"];
-                                    if (descriptionValue8 != null && descriptionValue8.Type != JTokenType.Null)
+                                    JToken descriptionValue10 = propertiesValue2["description"];
+                                    if (descriptionValue10 != null && descriptionValue10.Type != JTokenType.Null)
                                     {
-                                        string descriptionInstance8 = ((string)descriptionValue8);
-                                        onPremisesDb2LinkedServiceInstance.Description = descriptionInstance8;
+                                        string descriptionInstance10 = ((string)descriptionValue10);
+                                        onPremisesDb2LinkedServiceInstance.Description = descriptionInstance10;
                                     }
                                     
-                                    JToken provisioningStateValue8 = propertiesValue2["provisioningState"];
-                                    if (provisioningStateValue8 != null && provisioningStateValue8.Type != JTokenType.Null)
+                                    JToken provisioningStateValue10 = propertiesValue2["provisioningState"];
+                                    if (provisioningStateValue10 != null && provisioningStateValue10.Type != JTokenType.Null)
                                     {
-                                        string provisioningStateInstance8 = ((string)provisioningStateValue8);
-                                        onPremisesDb2LinkedServiceInstance.ProvisioningState = provisioningStateInstance8;
+                                        string provisioningStateInstance10 = ((string)provisioningStateValue10);
+                                        onPremisesDb2LinkedServiceInstance.ProvisioningState = provisioningStateInstance10;
                                     }
                                     
-                                    JToken hubNameValue8 = propertiesValue2["hubName"];
-                                    if (hubNameValue8 != null && hubNameValue8.Type != JTokenType.Null)
+                                    JToken hubNameValue10 = propertiesValue2["hubName"];
+                                    if (hubNameValue10 != null && hubNameValue10.Type != JTokenType.Null)
                                     {
-                                        string hubNameInstance8 = ((string)hubNameValue8);
-                                        onPremisesDb2LinkedServiceInstance.HubName = hubNameInstance8;
+                                        string hubNameInstance10 = ((string)hubNameValue10);
+                                        onPremisesDb2LinkedServiceInstance.HubName = hubNameInstance10;
                                     }
                                     
-                                    JToken errorMessageValue8 = propertiesValue2["errorMessage"];
-                                    if (errorMessageValue8 != null && errorMessageValue8.Type != JTokenType.Null)
+                                    JToken errorMessageValue10 = propertiesValue2["errorMessage"];
+                                    if (errorMessageValue10 != null && errorMessageValue10.Type != JTokenType.Null)
                                     {
-                                        string errorMessageInstance8 = ((string)errorMessageValue8);
-                                        onPremisesDb2LinkedServiceInstance.ErrorMessage = errorMessageInstance8;
+                                        string errorMessageInstance10 = ((string)errorMessageValue10);
+                                        onPremisesDb2LinkedServiceInstance.ErrorMessage = errorMessageInstance10;
                                     }
                                     linkedServiceInstance.Properties = onPremisesDb2LinkedServiceInstance;
                                 }
@@ -1802,11 +2074,11 @@ namespace Microsoft.Azure.Management.DataFactories
                                         onPremisesFileSystemLinkedServiceInstance.UserId = userIdInstance;
                                     }
                                     
-                                    JToken passwordValue3 = propertiesValue2["password"];
-                                    if (passwordValue3 != null && passwordValue3.Type != JTokenType.Null)
+                                    JToken passwordValue4 = propertiesValue2["password"];
+                                    if (passwordValue4 != null && passwordValue4.Type != JTokenType.Null)
                                     {
-                                        string passwordInstance3 = ((string)passwordValue3);
-                                        onPremisesFileSystemLinkedServiceInstance.Password = passwordInstance3;
+                                        string passwordInstance4 = ((string)passwordValue4);
+                                        onPremisesFileSystemLinkedServiceInstance.Password = passwordInstance4;
                                     }
                                     
                                     JToken encryptedCredentialValue2 = propertiesValue2["encryptedCredential"];
@@ -1816,34 +2088,116 @@ namespace Microsoft.Azure.Management.DataFactories
                                         onPremisesFileSystemLinkedServiceInstance.EncryptedCredential = encryptedCredentialInstance2;
                                     }
                                     
-                                    JToken descriptionValue9 = propertiesValue2["description"];
-                                    if (descriptionValue9 != null && descriptionValue9.Type != JTokenType.Null)
+                                    JToken descriptionValue11 = propertiesValue2["description"];
+                                    if (descriptionValue11 != null && descriptionValue11.Type != JTokenType.Null)
                                     {
-                                        string descriptionInstance9 = ((string)descriptionValue9);
-                                        onPremisesFileSystemLinkedServiceInstance.Description = descriptionInstance9;
+                                        string descriptionInstance11 = ((string)descriptionValue11);
+                                        onPremisesFileSystemLinkedServiceInstance.Description = descriptionInstance11;
                                     }
                                     
-                                    JToken provisioningStateValue9 = propertiesValue2["provisioningState"];
-                                    if (provisioningStateValue9 != null && provisioningStateValue9.Type != JTokenType.Null)
+                                    JToken provisioningStateValue11 = propertiesValue2["provisioningState"];
+                                    if (provisioningStateValue11 != null && provisioningStateValue11.Type != JTokenType.Null)
                                     {
-                                        string provisioningStateInstance9 = ((string)provisioningStateValue9);
-                                        onPremisesFileSystemLinkedServiceInstance.ProvisioningState = provisioningStateInstance9;
+                                        string provisioningStateInstance11 = ((string)provisioningStateValue11);
+                                        onPremisesFileSystemLinkedServiceInstance.ProvisioningState = provisioningStateInstance11;
                                     }
                                     
-                                    JToken hubNameValue9 = propertiesValue2["hubName"];
-                                    if (hubNameValue9 != null && hubNameValue9.Type != JTokenType.Null)
+                                    JToken hubNameValue11 = propertiesValue2["hubName"];
+                                    if (hubNameValue11 != null && hubNameValue11.Type != JTokenType.Null)
                                     {
-                                        string hubNameInstance9 = ((string)hubNameValue9);
-                                        onPremisesFileSystemLinkedServiceInstance.HubName = hubNameInstance9;
+                                        string hubNameInstance11 = ((string)hubNameValue11);
+                                        onPremisesFileSystemLinkedServiceInstance.HubName = hubNameInstance11;
                                     }
                                     
-                                    JToken errorMessageValue9 = propertiesValue2["errorMessage"];
-                                    if (errorMessageValue9 != null && errorMessageValue9.Type != JTokenType.Null)
+                                    JToken errorMessageValue11 = propertiesValue2["errorMessage"];
+                                    if (errorMessageValue11 != null && errorMessageValue11.Type != JTokenType.Null)
                                     {
-                                        string errorMessageInstance9 = ((string)errorMessageValue9);
-                                        onPremisesFileSystemLinkedServiceInstance.ErrorMessage = errorMessageInstance9;
+                                        string errorMessageInstance11 = ((string)errorMessageValue11);
+                                        onPremisesFileSystemLinkedServiceInstance.ErrorMessage = errorMessageInstance11;
                                     }
                                     linkedServiceInstance.Properties = onPremisesFileSystemLinkedServiceInstance;
+                                }
+                                if (typeName == "OnPremisesHdfsLinkedService")
+                                {
+                                    OnPremisesHdfsLinkedService onPremisesHdfsLinkedServiceInstance = new OnPremisesHdfsLinkedService();
+                                    
+                                    JToken urlValue2 = propertiesValue2["url"];
+                                    if (urlValue2 != null && urlValue2.Type != JTokenType.Null)
+                                    {
+                                        string urlInstance2 = ((string)urlValue2);
+                                        onPremisesHdfsLinkedServiceInstance.Url = urlInstance2;
+                                    }
+                                    
+                                    JToken contentTypeValue = propertiesValue2["contentType"];
+                                    if (contentTypeValue != null && contentTypeValue.Type != JTokenType.Null)
+                                    {
+                                        string contentTypeInstance = ((string)contentTypeValue);
+                                        onPremisesHdfsLinkedServiceInstance.ContentType = contentTypeInstance;
+                                    }
+                                    
+                                    JToken authenticationTypeValue3 = propertiesValue2["authenticationType"];
+                                    if (authenticationTypeValue3 != null && authenticationTypeValue3.Type != JTokenType.Null)
+                                    {
+                                        string authenticationTypeInstance3 = ((string)authenticationTypeValue3);
+                                        onPremisesHdfsLinkedServiceInstance.AuthenticationType = authenticationTypeInstance3;
+                                    }
+                                    
+                                    JToken usernameValue3 = propertiesValue2["username"];
+                                    if (usernameValue3 != null && usernameValue3.Type != JTokenType.Null)
+                                    {
+                                        string usernameInstance3 = ((string)usernameValue3);
+                                        onPremisesHdfsLinkedServiceInstance.Username = usernameInstance3;
+                                    }
+                                    
+                                    JToken passwordValue5 = propertiesValue2["password"];
+                                    if (passwordValue5 != null && passwordValue5.Type != JTokenType.Null)
+                                    {
+                                        string passwordInstance5 = ((string)passwordValue5);
+                                        onPremisesHdfsLinkedServiceInstance.Password = passwordInstance5;
+                                    }
+                                    
+                                    JToken gatewayNameValue3 = propertiesValue2["gatewayName"];
+                                    if (gatewayNameValue3 != null && gatewayNameValue3.Type != JTokenType.Null)
+                                    {
+                                        string gatewayNameInstance3 = ((string)gatewayNameValue3);
+                                        onPremisesHdfsLinkedServiceInstance.GatewayName = gatewayNameInstance3;
+                                    }
+                                    
+                                    JToken encryptedCredentialValue3 = propertiesValue2["encryptedCredential"];
+                                    if (encryptedCredentialValue3 != null && encryptedCredentialValue3.Type != JTokenType.Null)
+                                    {
+                                        string encryptedCredentialInstance3 = ((string)encryptedCredentialValue3);
+                                        onPremisesHdfsLinkedServiceInstance.EncryptedCredential = encryptedCredentialInstance3;
+                                    }
+                                    
+                                    JToken descriptionValue12 = propertiesValue2["description"];
+                                    if (descriptionValue12 != null && descriptionValue12.Type != JTokenType.Null)
+                                    {
+                                        string descriptionInstance12 = ((string)descriptionValue12);
+                                        onPremisesHdfsLinkedServiceInstance.Description = descriptionInstance12;
+                                    }
+                                    
+                                    JToken provisioningStateValue12 = propertiesValue2["provisioningState"];
+                                    if (provisioningStateValue12 != null && provisioningStateValue12.Type != JTokenType.Null)
+                                    {
+                                        string provisioningStateInstance12 = ((string)provisioningStateValue12);
+                                        onPremisesHdfsLinkedServiceInstance.ProvisioningState = provisioningStateInstance12;
+                                    }
+                                    
+                                    JToken hubNameValue12 = propertiesValue2["hubName"];
+                                    if (hubNameValue12 != null && hubNameValue12.Type != JTokenType.Null)
+                                    {
+                                        string hubNameInstance12 = ((string)hubNameValue12);
+                                        onPremisesHdfsLinkedServiceInstance.HubName = hubNameInstance12;
+                                    }
+                                    
+                                    JToken errorMessageValue12 = propertiesValue2["errorMessage"];
+                                    if (errorMessageValue12 != null && errorMessageValue12.Type != JTokenType.Null)
+                                    {
+                                        string errorMessageInstance12 = ((string)errorMessageValue12);
+                                        onPremisesHdfsLinkedServiceInstance.ErrorMessage = errorMessageInstance12;
+                                    }
+                                    linkedServiceInstance.Properties = onPremisesHdfsLinkedServiceInstance;
                                 }
                                 if (typeName == "OnPremisesMySqlLinkedService")
                                 {
@@ -1870,128 +2224,210 @@ namespace Microsoft.Azure.Management.DataFactories
                                         onPremisesMySqlLinkedServiceInstance.Schema = schemaInstance2;
                                     }
                                     
-                                    JToken authenticationTypeValue2 = propertiesValue2["authenticationType"];
-                                    if (authenticationTypeValue2 != null && authenticationTypeValue2.Type != JTokenType.Null)
+                                    JToken authenticationTypeValue4 = propertiesValue2["authenticationType"];
+                                    if (authenticationTypeValue4 != null && authenticationTypeValue4.Type != JTokenType.Null)
                                     {
-                                        string authenticationTypeInstance2 = ((string)authenticationTypeValue2);
-                                        onPremisesMySqlLinkedServiceInstance.AuthenticationType = authenticationTypeInstance2;
+                                        string authenticationTypeInstance4 = ((string)authenticationTypeValue4);
+                                        onPremisesMySqlLinkedServiceInstance.AuthenticationType = authenticationTypeInstance4;
                                     }
                                     
-                                    JToken usernameValue2 = propertiesValue2["username"];
-                                    if (usernameValue2 != null && usernameValue2.Type != JTokenType.Null)
+                                    JToken usernameValue4 = propertiesValue2["username"];
+                                    if (usernameValue4 != null && usernameValue4.Type != JTokenType.Null)
                                     {
-                                        string usernameInstance2 = ((string)usernameValue2);
-                                        onPremisesMySqlLinkedServiceInstance.Username = usernameInstance2;
+                                        string usernameInstance4 = ((string)usernameValue4);
+                                        onPremisesMySqlLinkedServiceInstance.Username = usernameInstance4;
                                     }
                                     
-                                    JToken passwordValue4 = propertiesValue2["password"];
-                                    if (passwordValue4 != null && passwordValue4.Type != JTokenType.Null)
+                                    JToken passwordValue6 = propertiesValue2["password"];
+                                    if (passwordValue6 != null && passwordValue6.Type != JTokenType.Null)
                                     {
-                                        string passwordInstance4 = ((string)passwordValue4);
-                                        onPremisesMySqlLinkedServiceInstance.Password = passwordInstance4;
-                                    }
-                                    
-                                    JToken gatewayNameValue3 = propertiesValue2["gatewayName"];
-                                    if (gatewayNameValue3 != null && gatewayNameValue3.Type != JTokenType.Null)
-                                    {
-                                        string gatewayNameInstance3 = ((string)gatewayNameValue3);
-                                        onPremisesMySqlLinkedServiceInstance.GatewayName = gatewayNameInstance3;
-                                    }
-                                    
-                                    JToken encryptedCredentialValue3 = propertiesValue2["encryptedCredential"];
-                                    if (encryptedCredentialValue3 != null && encryptedCredentialValue3.Type != JTokenType.Null)
-                                    {
-                                        string encryptedCredentialInstance3 = ((string)encryptedCredentialValue3);
-                                        onPremisesMySqlLinkedServiceInstance.EncryptedCredential = encryptedCredentialInstance3;
-                                    }
-                                    
-                                    JToken descriptionValue10 = propertiesValue2["description"];
-                                    if (descriptionValue10 != null && descriptionValue10.Type != JTokenType.Null)
-                                    {
-                                        string descriptionInstance10 = ((string)descriptionValue10);
-                                        onPremisesMySqlLinkedServiceInstance.Description = descriptionInstance10;
-                                    }
-                                    
-                                    JToken provisioningStateValue10 = propertiesValue2["provisioningState"];
-                                    if (provisioningStateValue10 != null && provisioningStateValue10.Type != JTokenType.Null)
-                                    {
-                                        string provisioningStateInstance10 = ((string)provisioningStateValue10);
-                                        onPremisesMySqlLinkedServiceInstance.ProvisioningState = provisioningStateInstance10;
-                                    }
-                                    
-                                    JToken hubNameValue10 = propertiesValue2["hubName"];
-                                    if (hubNameValue10 != null && hubNameValue10.Type != JTokenType.Null)
-                                    {
-                                        string hubNameInstance10 = ((string)hubNameValue10);
-                                        onPremisesMySqlLinkedServiceInstance.HubName = hubNameInstance10;
-                                    }
-                                    
-                                    JToken errorMessageValue10 = propertiesValue2["errorMessage"];
-                                    if (errorMessageValue10 != null && errorMessageValue10.Type != JTokenType.Null)
-                                    {
-                                        string errorMessageInstance10 = ((string)errorMessageValue10);
-                                        onPremisesMySqlLinkedServiceInstance.ErrorMessage = errorMessageInstance10;
-                                    }
-                                    linkedServiceInstance.Properties = onPremisesMySqlLinkedServiceInstance;
-                                }
-                                if (typeName == "OnPremisesOracleLinkedService")
-                                {
-                                    OnPremisesOracleLinkedService onPremisesOracleLinkedServiceInstance = new OnPremisesOracleLinkedService();
-                                    
-                                    JToken connectionStringValue3 = propertiesValue2["connectionString"];
-                                    if (connectionStringValue3 != null && connectionStringValue3.Type != JTokenType.Null)
-                                    {
-                                        string connectionStringInstance3 = ((string)connectionStringValue3);
-                                        onPremisesOracleLinkedServiceInstance.ConnectionString = connectionStringInstance3;
+                                        string passwordInstance6 = ((string)passwordValue6);
+                                        onPremisesMySqlLinkedServiceInstance.Password = passwordInstance6;
                                     }
                                     
                                     JToken gatewayNameValue4 = propertiesValue2["gatewayName"];
                                     if (gatewayNameValue4 != null && gatewayNameValue4.Type != JTokenType.Null)
                                     {
                                         string gatewayNameInstance4 = ((string)gatewayNameValue4);
-                                        onPremisesOracleLinkedServiceInstance.GatewayName = gatewayNameInstance4;
+                                        onPremisesMySqlLinkedServiceInstance.GatewayName = gatewayNameInstance4;
+                                    }
+                                    
+                                    JToken encryptedCredentialValue4 = propertiesValue2["encryptedCredential"];
+                                    if (encryptedCredentialValue4 != null && encryptedCredentialValue4.Type != JTokenType.Null)
+                                    {
+                                        string encryptedCredentialInstance4 = ((string)encryptedCredentialValue4);
+                                        onPremisesMySqlLinkedServiceInstance.EncryptedCredential = encryptedCredentialInstance4;
+                                    }
+                                    
+                                    JToken descriptionValue13 = propertiesValue2["description"];
+                                    if (descriptionValue13 != null && descriptionValue13.Type != JTokenType.Null)
+                                    {
+                                        string descriptionInstance13 = ((string)descriptionValue13);
+                                        onPremisesMySqlLinkedServiceInstance.Description = descriptionInstance13;
+                                    }
+                                    
+                                    JToken provisioningStateValue13 = propertiesValue2["provisioningState"];
+                                    if (provisioningStateValue13 != null && provisioningStateValue13.Type != JTokenType.Null)
+                                    {
+                                        string provisioningStateInstance13 = ((string)provisioningStateValue13);
+                                        onPremisesMySqlLinkedServiceInstance.ProvisioningState = provisioningStateInstance13;
+                                    }
+                                    
+                                    JToken hubNameValue13 = propertiesValue2["hubName"];
+                                    if (hubNameValue13 != null && hubNameValue13.Type != JTokenType.Null)
+                                    {
+                                        string hubNameInstance13 = ((string)hubNameValue13);
+                                        onPremisesMySqlLinkedServiceInstance.HubName = hubNameInstance13;
+                                    }
+                                    
+                                    JToken errorMessageValue13 = propertiesValue2["errorMessage"];
+                                    if (errorMessageValue13 != null && errorMessageValue13.Type != JTokenType.Null)
+                                    {
+                                        string errorMessageInstance13 = ((string)errorMessageValue13);
+                                        onPremisesMySqlLinkedServiceInstance.ErrorMessage = errorMessageInstance13;
+                                    }
+                                    linkedServiceInstance.Properties = onPremisesMySqlLinkedServiceInstance;
+                                }
+                                if (typeName == "OnPremisesOdbcLinkedService")
+                                {
+                                    OnPremisesOdbcLinkedService onPremisesOdbcLinkedServiceInstance = new OnPremisesOdbcLinkedService();
+                                    
+                                    JToken nonCredentialConnectionStringValue = propertiesValue2["nonCredentialConnectionString"];
+                                    if (nonCredentialConnectionStringValue != null && nonCredentialConnectionStringValue.Type != JTokenType.Null)
+                                    {
+                                        string nonCredentialConnectionStringInstance = ((string)nonCredentialConnectionStringValue);
+                                        onPremisesOdbcLinkedServiceInstance.NonCredentialConnectionString = nonCredentialConnectionStringInstance;
+                                    }
+                                    
+                                    JToken credentialConnectionStringValue = propertiesValue2["credentialConnectionString"];
+                                    if (credentialConnectionStringValue != null && credentialConnectionStringValue.Type != JTokenType.Null)
+                                    {
+                                        string credentialConnectionStringInstance = ((string)credentialConnectionStringValue);
+                                        onPremisesOdbcLinkedServiceInstance.CredentialConnectionString = credentialConnectionStringInstance;
+                                    }
+                                    
+                                    JToken encryptedCredentialConnectionStringValue = propertiesValue2["encryptedCredentialConnectionString"];
+                                    if (encryptedCredentialConnectionStringValue != null && encryptedCredentialConnectionStringValue.Type != JTokenType.Null)
+                                    {
+                                        string encryptedCredentialConnectionStringInstance = ((string)encryptedCredentialConnectionStringValue);
+                                        onPremisesOdbcLinkedServiceInstance.EncryptedCredentialConnectionString = encryptedCredentialConnectionStringInstance;
                                     }
                                     
                                     JToken userNameValue2 = propertiesValue2["userName"];
                                     if (userNameValue2 != null && userNameValue2.Type != JTokenType.Null)
                                     {
                                         string userNameInstance2 = ((string)userNameValue2);
-                                        onPremisesOracleLinkedServiceInstance.UserName = userNameInstance2;
+                                        onPremisesOdbcLinkedServiceInstance.UserName = userNameInstance2;
                                     }
                                     
-                                    JToken passwordValue5 = propertiesValue2["password"];
-                                    if (passwordValue5 != null && passwordValue5.Type != JTokenType.Null)
+                                    JToken passwordValue7 = propertiesValue2["password"];
+                                    if (passwordValue7 != null && passwordValue7.Type != JTokenType.Null)
                                     {
-                                        string passwordInstance5 = ((string)passwordValue5);
-                                        onPremisesOracleLinkedServiceInstance.Password = passwordInstance5;
+                                        string passwordInstance7 = ((string)passwordValue7);
+                                        onPremisesOdbcLinkedServiceInstance.Password = passwordInstance7;
                                     }
                                     
-                                    JToken descriptionValue11 = propertiesValue2["description"];
-                                    if (descriptionValue11 != null && descriptionValue11.Type != JTokenType.Null)
+                                    JToken gatewayNameValue5 = propertiesValue2["gatewayName"];
+                                    if (gatewayNameValue5 != null && gatewayNameValue5.Type != JTokenType.Null)
                                     {
-                                        string descriptionInstance11 = ((string)descriptionValue11);
-                                        onPremisesOracleLinkedServiceInstance.Description = descriptionInstance11;
+                                        string gatewayNameInstance5 = ((string)gatewayNameValue5);
+                                        onPremisesOdbcLinkedServiceInstance.GatewayName = gatewayNameInstance5;
                                     }
                                     
-                                    JToken provisioningStateValue11 = propertiesValue2["provisioningState"];
-                                    if (provisioningStateValue11 != null && provisioningStateValue11.Type != JTokenType.Null)
+                                    JToken authenticationTypeValue5 = propertiesValue2["authenticationType"];
+                                    if (authenticationTypeValue5 != null && authenticationTypeValue5.Type != JTokenType.Null)
                                     {
-                                        string provisioningStateInstance11 = ((string)provisioningStateValue11);
-                                        onPremisesOracleLinkedServiceInstance.ProvisioningState = provisioningStateInstance11;
+                                        string authenticationTypeInstance5 = ((string)authenticationTypeValue5);
+                                        onPremisesOdbcLinkedServiceInstance.AuthenticationType = authenticationTypeInstance5;
                                     }
                                     
-                                    JToken hubNameValue11 = propertiesValue2["hubName"];
-                                    if (hubNameValue11 != null && hubNameValue11.Type != JTokenType.Null)
+                                    JToken descriptionValue14 = propertiesValue2["description"];
+                                    if (descriptionValue14 != null && descriptionValue14.Type != JTokenType.Null)
                                     {
-                                        string hubNameInstance11 = ((string)hubNameValue11);
-                                        onPremisesOracleLinkedServiceInstance.HubName = hubNameInstance11;
+                                        string descriptionInstance14 = ((string)descriptionValue14);
+                                        onPremisesOdbcLinkedServiceInstance.Description = descriptionInstance14;
                                     }
                                     
-                                    JToken errorMessageValue11 = propertiesValue2["errorMessage"];
-                                    if (errorMessageValue11 != null && errorMessageValue11.Type != JTokenType.Null)
+                                    JToken provisioningStateValue14 = propertiesValue2["provisioningState"];
+                                    if (provisioningStateValue14 != null && provisioningStateValue14.Type != JTokenType.Null)
                                     {
-                                        string errorMessageInstance11 = ((string)errorMessageValue11);
-                                        onPremisesOracleLinkedServiceInstance.ErrorMessage = errorMessageInstance11;
+                                        string provisioningStateInstance14 = ((string)provisioningStateValue14);
+                                        onPremisesOdbcLinkedServiceInstance.ProvisioningState = provisioningStateInstance14;
+                                    }
+                                    
+                                    JToken hubNameValue14 = propertiesValue2["hubName"];
+                                    if (hubNameValue14 != null && hubNameValue14.Type != JTokenType.Null)
+                                    {
+                                        string hubNameInstance14 = ((string)hubNameValue14);
+                                        onPremisesOdbcLinkedServiceInstance.HubName = hubNameInstance14;
+                                    }
+                                    
+                                    JToken errorMessageValue14 = propertiesValue2["errorMessage"];
+                                    if (errorMessageValue14 != null && errorMessageValue14.Type != JTokenType.Null)
+                                    {
+                                        string errorMessageInstance14 = ((string)errorMessageValue14);
+                                        onPremisesOdbcLinkedServiceInstance.ErrorMessage = errorMessageInstance14;
+                                    }
+                                    linkedServiceInstance.Properties = onPremisesOdbcLinkedServiceInstance;
+                                }
+                                if (typeName == "OnPremisesOracleLinkedService")
+                                {
+                                    OnPremisesOracleLinkedService onPremisesOracleLinkedServiceInstance = new OnPremisesOracleLinkedService();
+                                    
+                                    JToken connectionStringValue4 = propertiesValue2["connectionString"];
+                                    if (connectionStringValue4 != null && connectionStringValue4.Type != JTokenType.Null)
+                                    {
+                                        string connectionStringInstance4 = ((string)connectionStringValue4);
+                                        onPremisesOracleLinkedServiceInstance.ConnectionString = connectionStringInstance4;
+                                    }
+                                    
+                                    JToken gatewayNameValue6 = propertiesValue2["gatewayName"];
+                                    if (gatewayNameValue6 != null && gatewayNameValue6.Type != JTokenType.Null)
+                                    {
+                                        string gatewayNameInstance6 = ((string)gatewayNameValue6);
+                                        onPremisesOracleLinkedServiceInstance.GatewayName = gatewayNameInstance6;
+                                    }
+                                    
+                                    JToken userNameValue3 = propertiesValue2["userName"];
+                                    if (userNameValue3 != null && userNameValue3.Type != JTokenType.Null)
+                                    {
+                                        string userNameInstance3 = ((string)userNameValue3);
+                                        onPremisesOracleLinkedServiceInstance.UserName = userNameInstance3;
+                                    }
+                                    
+                                    JToken passwordValue8 = propertiesValue2["password"];
+                                    if (passwordValue8 != null && passwordValue8.Type != JTokenType.Null)
+                                    {
+                                        string passwordInstance8 = ((string)passwordValue8);
+                                        onPremisesOracleLinkedServiceInstance.Password = passwordInstance8;
+                                    }
+                                    
+                                    JToken descriptionValue15 = propertiesValue2["description"];
+                                    if (descriptionValue15 != null && descriptionValue15.Type != JTokenType.Null)
+                                    {
+                                        string descriptionInstance15 = ((string)descriptionValue15);
+                                        onPremisesOracleLinkedServiceInstance.Description = descriptionInstance15;
+                                    }
+                                    
+                                    JToken provisioningStateValue15 = propertiesValue2["provisioningState"];
+                                    if (provisioningStateValue15 != null && provisioningStateValue15.Type != JTokenType.Null)
+                                    {
+                                        string provisioningStateInstance15 = ((string)provisioningStateValue15);
+                                        onPremisesOracleLinkedServiceInstance.ProvisioningState = provisioningStateInstance15;
+                                    }
+                                    
+                                    JToken hubNameValue15 = propertiesValue2["hubName"];
+                                    if (hubNameValue15 != null && hubNameValue15.Type != JTokenType.Null)
+                                    {
+                                        string hubNameInstance15 = ((string)hubNameValue15);
+                                        onPremisesOracleLinkedServiceInstance.HubName = hubNameInstance15;
+                                    }
+                                    
+                                    JToken errorMessageValue15 = propertiesValue2["errorMessage"];
+                                    if (errorMessageValue15 != null && errorMessageValue15.Type != JTokenType.Null)
+                                    {
+                                        string errorMessageInstance15 = ((string)errorMessageValue15);
+                                        onPremisesOracleLinkedServiceInstance.ErrorMessage = errorMessageInstance15;
                                     }
                                     linkedServiceInstance.Properties = onPremisesOracleLinkedServiceInstance;
                                 }
@@ -2020,67 +2456,67 @@ namespace Microsoft.Azure.Management.DataFactories
                                         onPremisesPostgreSqlLinkedServiceInstance.Schema = schemaInstance3;
                                     }
                                     
-                                    JToken authenticationTypeValue3 = propertiesValue2["authenticationType"];
-                                    if (authenticationTypeValue3 != null && authenticationTypeValue3.Type != JTokenType.Null)
+                                    JToken authenticationTypeValue6 = propertiesValue2["authenticationType"];
+                                    if (authenticationTypeValue6 != null && authenticationTypeValue6.Type != JTokenType.Null)
                                     {
-                                        string authenticationTypeInstance3 = ((string)authenticationTypeValue3);
-                                        onPremisesPostgreSqlLinkedServiceInstance.AuthenticationType = authenticationTypeInstance3;
+                                        string authenticationTypeInstance6 = ((string)authenticationTypeValue6);
+                                        onPremisesPostgreSqlLinkedServiceInstance.AuthenticationType = authenticationTypeInstance6;
                                     }
                                     
-                                    JToken usernameValue3 = propertiesValue2["username"];
-                                    if (usernameValue3 != null && usernameValue3.Type != JTokenType.Null)
+                                    JToken usernameValue5 = propertiesValue2["username"];
+                                    if (usernameValue5 != null && usernameValue5.Type != JTokenType.Null)
                                     {
-                                        string usernameInstance3 = ((string)usernameValue3);
-                                        onPremisesPostgreSqlLinkedServiceInstance.Username = usernameInstance3;
+                                        string usernameInstance5 = ((string)usernameValue5);
+                                        onPremisesPostgreSqlLinkedServiceInstance.Username = usernameInstance5;
                                     }
                                     
-                                    JToken passwordValue6 = propertiesValue2["password"];
-                                    if (passwordValue6 != null && passwordValue6.Type != JTokenType.Null)
+                                    JToken passwordValue9 = propertiesValue2["password"];
+                                    if (passwordValue9 != null && passwordValue9.Type != JTokenType.Null)
                                     {
-                                        string passwordInstance6 = ((string)passwordValue6);
-                                        onPremisesPostgreSqlLinkedServiceInstance.Password = passwordInstance6;
+                                        string passwordInstance9 = ((string)passwordValue9);
+                                        onPremisesPostgreSqlLinkedServiceInstance.Password = passwordInstance9;
                                     }
                                     
-                                    JToken gatewayNameValue5 = propertiesValue2["gatewayName"];
-                                    if (gatewayNameValue5 != null && gatewayNameValue5.Type != JTokenType.Null)
+                                    JToken gatewayNameValue7 = propertiesValue2["gatewayName"];
+                                    if (gatewayNameValue7 != null && gatewayNameValue7.Type != JTokenType.Null)
                                     {
-                                        string gatewayNameInstance5 = ((string)gatewayNameValue5);
-                                        onPremisesPostgreSqlLinkedServiceInstance.GatewayName = gatewayNameInstance5;
+                                        string gatewayNameInstance7 = ((string)gatewayNameValue7);
+                                        onPremisesPostgreSqlLinkedServiceInstance.GatewayName = gatewayNameInstance7;
                                     }
                                     
-                                    JToken encryptedCredentialValue4 = propertiesValue2["encryptedCredential"];
-                                    if (encryptedCredentialValue4 != null && encryptedCredentialValue4.Type != JTokenType.Null)
+                                    JToken encryptedCredentialValue5 = propertiesValue2["encryptedCredential"];
+                                    if (encryptedCredentialValue5 != null && encryptedCredentialValue5.Type != JTokenType.Null)
                                     {
-                                        string encryptedCredentialInstance4 = ((string)encryptedCredentialValue4);
-                                        onPremisesPostgreSqlLinkedServiceInstance.EncryptedCredential = encryptedCredentialInstance4;
+                                        string encryptedCredentialInstance5 = ((string)encryptedCredentialValue5);
+                                        onPremisesPostgreSqlLinkedServiceInstance.EncryptedCredential = encryptedCredentialInstance5;
                                     }
                                     
-                                    JToken descriptionValue12 = propertiesValue2["description"];
-                                    if (descriptionValue12 != null && descriptionValue12.Type != JTokenType.Null)
+                                    JToken descriptionValue16 = propertiesValue2["description"];
+                                    if (descriptionValue16 != null && descriptionValue16.Type != JTokenType.Null)
                                     {
-                                        string descriptionInstance12 = ((string)descriptionValue12);
-                                        onPremisesPostgreSqlLinkedServiceInstance.Description = descriptionInstance12;
+                                        string descriptionInstance16 = ((string)descriptionValue16);
+                                        onPremisesPostgreSqlLinkedServiceInstance.Description = descriptionInstance16;
                                     }
                                     
-                                    JToken provisioningStateValue12 = propertiesValue2["provisioningState"];
-                                    if (provisioningStateValue12 != null && provisioningStateValue12.Type != JTokenType.Null)
+                                    JToken provisioningStateValue16 = propertiesValue2["provisioningState"];
+                                    if (provisioningStateValue16 != null && provisioningStateValue16.Type != JTokenType.Null)
                                     {
-                                        string provisioningStateInstance12 = ((string)provisioningStateValue12);
-                                        onPremisesPostgreSqlLinkedServiceInstance.ProvisioningState = provisioningStateInstance12;
+                                        string provisioningStateInstance16 = ((string)provisioningStateValue16);
+                                        onPremisesPostgreSqlLinkedServiceInstance.ProvisioningState = provisioningStateInstance16;
                                     }
                                     
-                                    JToken hubNameValue12 = propertiesValue2["hubName"];
-                                    if (hubNameValue12 != null && hubNameValue12.Type != JTokenType.Null)
+                                    JToken hubNameValue16 = propertiesValue2["hubName"];
+                                    if (hubNameValue16 != null && hubNameValue16.Type != JTokenType.Null)
                                     {
-                                        string hubNameInstance12 = ((string)hubNameValue12);
-                                        onPremisesPostgreSqlLinkedServiceInstance.HubName = hubNameInstance12;
+                                        string hubNameInstance16 = ((string)hubNameValue16);
+                                        onPremisesPostgreSqlLinkedServiceInstance.HubName = hubNameInstance16;
                                     }
                                     
-                                    JToken errorMessageValue12 = propertiesValue2["errorMessage"];
-                                    if (errorMessageValue12 != null && errorMessageValue12.Type != JTokenType.Null)
+                                    JToken errorMessageValue16 = propertiesValue2["errorMessage"];
+                                    if (errorMessageValue16 != null && errorMessageValue16.Type != JTokenType.Null)
                                     {
-                                        string errorMessageInstance12 = ((string)errorMessageValue12);
-                                        onPremisesPostgreSqlLinkedServiceInstance.ErrorMessage = errorMessageInstance12;
+                                        string errorMessageInstance16 = ((string)errorMessageValue16);
+                                        onPremisesPostgreSqlLinkedServiceInstance.ErrorMessage = errorMessageInstance16;
                                     }
                                     linkedServiceInstance.Properties = onPremisesPostgreSqlLinkedServiceInstance;
                                 }
@@ -2088,60 +2524,60 @@ namespace Microsoft.Azure.Management.DataFactories
                                 {
                                     OnPremisesSqlLinkedService onPremisesSqlLinkedServiceInstance = new OnPremisesSqlLinkedService();
                                     
-                                    JToken connectionStringValue4 = propertiesValue2["connectionString"];
-                                    if (connectionStringValue4 != null && connectionStringValue4.Type != JTokenType.Null)
+                                    JToken connectionStringValue5 = propertiesValue2["connectionString"];
+                                    if (connectionStringValue5 != null && connectionStringValue5.Type != JTokenType.Null)
                                     {
-                                        string connectionStringInstance4 = ((string)connectionStringValue4);
-                                        onPremisesSqlLinkedServiceInstance.ConnectionString = connectionStringInstance4;
+                                        string connectionStringInstance5 = ((string)connectionStringValue5);
+                                        onPremisesSqlLinkedServiceInstance.ConnectionString = connectionStringInstance5;
                                     }
                                     
-                                    JToken gatewayNameValue6 = propertiesValue2["gatewayName"];
-                                    if (gatewayNameValue6 != null && gatewayNameValue6.Type != JTokenType.Null)
+                                    JToken gatewayNameValue8 = propertiesValue2["gatewayName"];
+                                    if (gatewayNameValue8 != null && gatewayNameValue8.Type != JTokenType.Null)
                                     {
-                                        string gatewayNameInstance6 = ((string)gatewayNameValue6);
-                                        onPremisesSqlLinkedServiceInstance.GatewayName = gatewayNameInstance6;
+                                        string gatewayNameInstance8 = ((string)gatewayNameValue8);
+                                        onPremisesSqlLinkedServiceInstance.GatewayName = gatewayNameInstance8;
                                     }
                                     
-                                    JToken userNameValue3 = propertiesValue2["userName"];
-                                    if (userNameValue3 != null && userNameValue3.Type != JTokenType.Null)
+                                    JToken userNameValue4 = propertiesValue2["userName"];
+                                    if (userNameValue4 != null && userNameValue4.Type != JTokenType.Null)
                                     {
-                                        string userNameInstance3 = ((string)userNameValue3);
-                                        onPremisesSqlLinkedServiceInstance.UserName = userNameInstance3;
+                                        string userNameInstance4 = ((string)userNameValue4);
+                                        onPremisesSqlLinkedServiceInstance.UserName = userNameInstance4;
                                     }
                                     
-                                    JToken passwordValue7 = propertiesValue2["password"];
-                                    if (passwordValue7 != null && passwordValue7.Type != JTokenType.Null)
+                                    JToken passwordValue10 = propertiesValue2["password"];
+                                    if (passwordValue10 != null && passwordValue10.Type != JTokenType.Null)
                                     {
-                                        string passwordInstance7 = ((string)passwordValue7);
-                                        onPremisesSqlLinkedServiceInstance.Password = passwordInstance7;
+                                        string passwordInstance10 = ((string)passwordValue10);
+                                        onPremisesSqlLinkedServiceInstance.Password = passwordInstance10;
                                     }
                                     
-                                    JToken descriptionValue13 = propertiesValue2["description"];
-                                    if (descriptionValue13 != null && descriptionValue13.Type != JTokenType.Null)
+                                    JToken descriptionValue17 = propertiesValue2["description"];
+                                    if (descriptionValue17 != null && descriptionValue17.Type != JTokenType.Null)
                                     {
-                                        string descriptionInstance13 = ((string)descriptionValue13);
-                                        onPremisesSqlLinkedServiceInstance.Description = descriptionInstance13;
+                                        string descriptionInstance17 = ((string)descriptionValue17);
+                                        onPremisesSqlLinkedServiceInstance.Description = descriptionInstance17;
                                     }
                                     
-                                    JToken provisioningStateValue13 = propertiesValue2["provisioningState"];
-                                    if (provisioningStateValue13 != null && provisioningStateValue13.Type != JTokenType.Null)
+                                    JToken provisioningStateValue17 = propertiesValue2["provisioningState"];
+                                    if (provisioningStateValue17 != null && provisioningStateValue17.Type != JTokenType.Null)
                                     {
-                                        string provisioningStateInstance13 = ((string)provisioningStateValue13);
-                                        onPremisesSqlLinkedServiceInstance.ProvisioningState = provisioningStateInstance13;
+                                        string provisioningStateInstance17 = ((string)provisioningStateValue17);
+                                        onPremisesSqlLinkedServiceInstance.ProvisioningState = provisioningStateInstance17;
                                     }
                                     
-                                    JToken hubNameValue13 = propertiesValue2["hubName"];
-                                    if (hubNameValue13 != null && hubNameValue13.Type != JTokenType.Null)
+                                    JToken hubNameValue17 = propertiesValue2["hubName"];
+                                    if (hubNameValue17 != null && hubNameValue17.Type != JTokenType.Null)
                                     {
-                                        string hubNameInstance13 = ((string)hubNameValue13);
-                                        onPremisesSqlLinkedServiceInstance.HubName = hubNameInstance13;
+                                        string hubNameInstance17 = ((string)hubNameValue17);
+                                        onPremisesSqlLinkedServiceInstance.HubName = hubNameInstance17;
                                     }
                                     
-                                    JToken errorMessageValue13 = propertiesValue2["errorMessage"];
-                                    if (errorMessageValue13 != null && errorMessageValue13.Type != JTokenType.Null)
+                                    JToken errorMessageValue17 = propertiesValue2["errorMessage"];
+                                    if (errorMessageValue17 != null && errorMessageValue17.Type != JTokenType.Null)
                                     {
-                                        string errorMessageInstance13 = ((string)errorMessageValue13);
-                                        onPremisesSqlLinkedServiceInstance.ErrorMessage = errorMessageInstance13;
+                                        string errorMessageInstance17 = ((string)errorMessageValue17);
+                                        onPremisesSqlLinkedServiceInstance.ErrorMessage = errorMessageInstance17;
                                     }
                                     linkedServiceInstance.Properties = onPremisesSqlLinkedServiceInstance;
                                 }
@@ -2170,67 +2606,67 @@ namespace Microsoft.Azure.Management.DataFactories
                                         onPremisesSybaseLinkedServiceInstance.Schema = schemaInstance4;
                                     }
                                     
-                                    JToken authenticationTypeValue4 = propertiesValue2["authenticationType"];
-                                    if (authenticationTypeValue4 != null && authenticationTypeValue4.Type != JTokenType.Null)
+                                    JToken authenticationTypeValue7 = propertiesValue2["authenticationType"];
+                                    if (authenticationTypeValue7 != null && authenticationTypeValue7.Type != JTokenType.Null)
                                     {
-                                        string authenticationTypeInstance4 = ((string)authenticationTypeValue4);
-                                        onPremisesSybaseLinkedServiceInstance.AuthenticationType = authenticationTypeInstance4;
+                                        string authenticationTypeInstance7 = ((string)authenticationTypeValue7);
+                                        onPremisesSybaseLinkedServiceInstance.AuthenticationType = authenticationTypeInstance7;
                                     }
                                     
-                                    JToken usernameValue4 = propertiesValue2["username"];
-                                    if (usernameValue4 != null && usernameValue4.Type != JTokenType.Null)
+                                    JToken usernameValue6 = propertiesValue2["username"];
+                                    if (usernameValue6 != null && usernameValue6.Type != JTokenType.Null)
                                     {
-                                        string usernameInstance4 = ((string)usernameValue4);
-                                        onPremisesSybaseLinkedServiceInstance.Username = usernameInstance4;
+                                        string usernameInstance6 = ((string)usernameValue6);
+                                        onPremisesSybaseLinkedServiceInstance.Username = usernameInstance6;
                                     }
                                     
-                                    JToken passwordValue8 = propertiesValue2["password"];
-                                    if (passwordValue8 != null && passwordValue8.Type != JTokenType.Null)
+                                    JToken passwordValue11 = propertiesValue2["password"];
+                                    if (passwordValue11 != null && passwordValue11.Type != JTokenType.Null)
                                     {
-                                        string passwordInstance8 = ((string)passwordValue8);
-                                        onPremisesSybaseLinkedServiceInstance.Password = passwordInstance8;
+                                        string passwordInstance11 = ((string)passwordValue11);
+                                        onPremisesSybaseLinkedServiceInstance.Password = passwordInstance11;
                                     }
                                     
-                                    JToken gatewayNameValue7 = propertiesValue2["gatewayName"];
-                                    if (gatewayNameValue7 != null && gatewayNameValue7.Type != JTokenType.Null)
+                                    JToken gatewayNameValue9 = propertiesValue2["gatewayName"];
+                                    if (gatewayNameValue9 != null && gatewayNameValue9.Type != JTokenType.Null)
                                     {
-                                        string gatewayNameInstance7 = ((string)gatewayNameValue7);
-                                        onPremisesSybaseLinkedServiceInstance.GatewayName = gatewayNameInstance7;
+                                        string gatewayNameInstance9 = ((string)gatewayNameValue9);
+                                        onPremisesSybaseLinkedServiceInstance.GatewayName = gatewayNameInstance9;
                                     }
                                     
-                                    JToken encryptedCredentialValue5 = propertiesValue2["encryptedCredential"];
-                                    if (encryptedCredentialValue5 != null && encryptedCredentialValue5.Type != JTokenType.Null)
+                                    JToken encryptedCredentialValue6 = propertiesValue2["encryptedCredential"];
+                                    if (encryptedCredentialValue6 != null && encryptedCredentialValue6.Type != JTokenType.Null)
                                     {
-                                        string encryptedCredentialInstance5 = ((string)encryptedCredentialValue5);
-                                        onPremisesSybaseLinkedServiceInstance.EncryptedCredential = encryptedCredentialInstance5;
+                                        string encryptedCredentialInstance6 = ((string)encryptedCredentialValue6);
+                                        onPremisesSybaseLinkedServiceInstance.EncryptedCredential = encryptedCredentialInstance6;
                                     }
                                     
-                                    JToken descriptionValue14 = propertiesValue2["description"];
-                                    if (descriptionValue14 != null && descriptionValue14.Type != JTokenType.Null)
+                                    JToken descriptionValue18 = propertiesValue2["description"];
+                                    if (descriptionValue18 != null && descriptionValue18.Type != JTokenType.Null)
                                     {
-                                        string descriptionInstance14 = ((string)descriptionValue14);
-                                        onPremisesSybaseLinkedServiceInstance.Description = descriptionInstance14;
+                                        string descriptionInstance18 = ((string)descriptionValue18);
+                                        onPremisesSybaseLinkedServiceInstance.Description = descriptionInstance18;
                                     }
                                     
-                                    JToken provisioningStateValue14 = propertiesValue2["provisioningState"];
-                                    if (provisioningStateValue14 != null && provisioningStateValue14.Type != JTokenType.Null)
+                                    JToken provisioningStateValue18 = propertiesValue2["provisioningState"];
+                                    if (provisioningStateValue18 != null && provisioningStateValue18.Type != JTokenType.Null)
                                     {
-                                        string provisioningStateInstance14 = ((string)provisioningStateValue14);
-                                        onPremisesSybaseLinkedServiceInstance.ProvisioningState = provisioningStateInstance14;
+                                        string provisioningStateInstance18 = ((string)provisioningStateValue18);
+                                        onPremisesSybaseLinkedServiceInstance.ProvisioningState = provisioningStateInstance18;
                                     }
                                     
-                                    JToken hubNameValue14 = propertiesValue2["hubName"];
-                                    if (hubNameValue14 != null && hubNameValue14.Type != JTokenType.Null)
+                                    JToken hubNameValue18 = propertiesValue2["hubName"];
+                                    if (hubNameValue18 != null && hubNameValue18.Type != JTokenType.Null)
                                     {
-                                        string hubNameInstance14 = ((string)hubNameValue14);
-                                        onPremisesSybaseLinkedServiceInstance.HubName = hubNameInstance14;
+                                        string hubNameInstance18 = ((string)hubNameValue18);
+                                        onPremisesSybaseLinkedServiceInstance.HubName = hubNameInstance18;
                                     }
                                     
-                                    JToken errorMessageValue14 = propertiesValue2["errorMessage"];
-                                    if (errorMessageValue14 != null && errorMessageValue14.Type != JTokenType.Null)
+                                    JToken errorMessageValue18 = propertiesValue2["errorMessage"];
+                                    if (errorMessageValue18 != null && errorMessageValue18.Type != JTokenType.Null)
                                     {
-                                        string errorMessageInstance14 = ((string)errorMessageValue14);
-                                        onPremisesSybaseLinkedServiceInstance.ErrorMessage = errorMessageInstance14;
+                                        string errorMessageInstance18 = ((string)errorMessageValue18);
+                                        onPremisesSybaseLinkedServiceInstance.ErrorMessage = errorMessageInstance18;
                                     }
                                     linkedServiceInstance.Properties = onPremisesSybaseLinkedServiceInstance;
                                 }
@@ -2259,67 +2695,67 @@ namespace Microsoft.Azure.Management.DataFactories
                                         onPremisesTeradataLinkedServiceInstance.Schema = schemaInstance5;
                                     }
                                     
-                                    JToken authenticationTypeValue5 = propertiesValue2["authenticationType"];
-                                    if (authenticationTypeValue5 != null && authenticationTypeValue5.Type != JTokenType.Null)
+                                    JToken authenticationTypeValue8 = propertiesValue2["authenticationType"];
+                                    if (authenticationTypeValue8 != null && authenticationTypeValue8.Type != JTokenType.Null)
                                     {
-                                        string authenticationTypeInstance5 = ((string)authenticationTypeValue5);
-                                        onPremisesTeradataLinkedServiceInstance.AuthenticationType = authenticationTypeInstance5;
+                                        string authenticationTypeInstance8 = ((string)authenticationTypeValue8);
+                                        onPremisesTeradataLinkedServiceInstance.AuthenticationType = authenticationTypeInstance8;
                                     }
                                     
-                                    JToken usernameValue5 = propertiesValue2["username"];
-                                    if (usernameValue5 != null && usernameValue5.Type != JTokenType.Null)
+                                    JToken usernameValue7 = propertiesValue2["username"];
+                                    if (usernameValue7 != null && usernameValue7.Type != JTokenType.Null)
                                     {
-                                        string usernameInstance5 = ((string)usernameValue5);
-                                        onPremisesTeradataLinkedServiceInstance.Username = usernameInstance5;
+                                        string usernameInstance7 = ((string)usernameValue7);
+                                        onPremisesTeradataLinkedServiceInstance.Username = usernameInstance7;
                                     }
                                     
-                                    JToken passwordValue9 = propertiesValue2["password"];
-                                    if (passwordValue9 != null && passwordValue9.Type != JTokenType.Null)
+                                    JToken passwordValue12 = propertiesValue2["password"];
+                                    if (passwordValue12 != null && passwordValue12.Type != JTokenType.Null)
                                     {
-                                        string passwordInstance9 = ((string)passwordValue9);
-                                        onPremisesTeradataLinkedServiceInstance.Password = passwordInstance9;
+                                        string passwordInstance12 = ((string)passwordValue12);
+                                        onPremisesTeradataLinkedServiceInstance.Password = passwordInstance12;
                                     }
                                     
-                                    JToken gatewayNameValue8 = propertiesValue2["gatewayName"];
-                                    if (gatewayNameValue8 != null && gatewayNameValue8.Type != JTokenType.Null)
+                                    JToken gatewayNameValue10 = propertiesValue2["gatewayName"];
+                                    if (gatewayNameValue10 != null && gatewayNameValue10.Type != JTokenType.Null)
                                     {
-                                        string gatewayNameInstance8 = ((string)gatewayNameValue8);
-                                        onPremisesTeradataLinkedServiceInstance.GatewayName = gatewayNameInstance8;
+                                        string gatewayNameInstance10 = ((string)gatewayNameValue10);
+                                        onPremisesTeradataLinkedServiceInstance.GatewayName = gatewayNameInstance10;
                                     }
                                     
-                                    JToken encryptedCredentialValue6 = propertiesValue2["encryptedCredential"];
-                                    if (encryptedCredentialValue6 != null && encryptedCredentialValue6.Type != JTokenType.Null)
+                                    JToken encryptedCredentialValue7 = propertiesValue2["encryptedCredential"];
+                                    if (encryptedCredentialValue7 != null && encryptedCredentialValue7.Type != JTokenType.Null)
                                     {
-                                        string encryptedCredentialInstance6 = ((string)encryptedCredentialValue6);
-                                        onPremisesTeradataLinkedServiceInstance.EncryptedCredential = encryptedCredentialInstance6;
+                                        string encryptedCredentialInstance7 = ((string)encryptedCredentialValue7);
+                                        onPremisesTeradataLinkedServiceInstance.EncryptedCredential = encryptedCredentialInstance7;
                                     }
                                     
-                                    JToken descriptionValue15 = propertiesValue2["description"];
-                                    if (descriptionValue15 != null && descriptionValue15.Type != JTokenType.Null)
+                                    JToken descriptionValue19 = propertiesValue2["description"];
+                                    if (descriptionValue19 != null && descriptionValue19.Type != JTokenType.Null)
                                     {
-                                        string descriptionInstance15 = ((string)descriptionValue15);
-                                        onPremisesTeradataLinkedServiceInstance.Description = descriptionInstance15;
+                                        string descriptionInstance19 = ((string)descriptionValue19);
+                                        onPremisesTeradataLinkedServiceInstance.Description = descriptionInstance19;
                                     }
                                     
-                                    JToken provisioningStateValue15 = propertiesValue2["provisioningState"];
-                                    if (provisioningStateValue15 != null && provisioningStateValue15.Type != JTokenType.Null)
+                                    JToken provisioningStateValue19 = propertiesValue2["provisioningState"];
+                                    if (provisioningStateValue19 != null && provisioningStateValue19.Type != JTokenType.Null)
                                     {
-                                        string provisioningStateInstance15 = ((string)provisioningStateValue15);
-                                        onPremisesTeradataLinkedServiceInstance.ProvisioningState = provisioningStateInstance15;
+                                        string provisioningStateInstance19 = ((string)provisioningStateValue19);
+                                        onPremisesTeradataLinkedServiceInstance.ProvisioningState = provisioningStateInstance19;
                                     }
                                     
-                                    JToken hubNameValue15 = propertiesValue2["hubName"];
-                                    if (hubNameValue15 != null && hubNameValue15.Type != JTokenType.Null)
+                                    JToken hubNameValue19 = propertiesValue2["hubName"];
+                                    if (hubNameValue19 != null && hubNameValue19.Type != JTokenType.Null)
                                     {
-                                        string hubNameInstance15 = ((string)hubNameValue15);
-                                        onPremisesTeradataLinkedServiceInstance.HubName = hubNameInstance15;
+                                        string hubNameInstance19 = ((string)hubNameValue19);
+                                        onPremisesTeradataLinkedServiceInstance.HubName = hubNameInstance19;
                                     }
                                     
-                                    JToken errorMessageValue15 = propertiesValue2["errorMessage"];
-                                    if (errorMessageValue15 != null && errorMessageValue15.Type != JTokenType.Null)
+                                    JToken errorMessageValue19 = propertiesValue2["errorMessage"];
+                                    if (errorMessageValue19 != null && errorMessageValue19.Type != JTokenType.Null)
                                     {
-                                        string errorMessageInstance15 = ((string)errorMessageValue15);
-                                        onPremisesTeradataLinkedServiceInstance.ErrorMessage = errorMessageInstance15;
+                                        string errorMessageInstance19 = ((string)errorMessageValue19);
+                                        onPremisesTeradataLinkedServiceInstance.ErrorMessage = errorMessageInstance19;
                                     }
                                     linkedServiceInstance.Properties = onPremisesTeradataLinkedServiceInstance;
                                 }
@@ -2782,6 +3218,46 @@ namespace Microsoft.Azure.Management.DataFactories
                                     }
                                     linkedServiceInstance.Properties = customLinkedServiceInstance;
                                 }
+                                if (typeName == "DocumentDbLinkedService")
+                                {
+                                    DocumentDbLinkedService documentDbLinkedServiceInstance = new DocumentDbLinkedService();
+                                    
+                                    JToken connectionStringValue3 = propertiesValue["connectionString"];
+                                    if (connectionStringValue3 != null && connectionStringValue3.Type != JTokenType.Null)
+                                    {
+                                        string connectionStringInstance3 = ((string)connectionStringValue3);
+                                        documentDbLinkedServiceInstance.ConnectionString = connectionStringInstance3;
+                                    }
+                                    
+                                    JToken descriptionValue6 = propertiesValue["description"];
+                                    if (descriptionValue6 != null && descriptionValue6.Type != JTokenType.Null)
+                                    {
+                                        string descriptionInstance6 = ((string)descriptionValue6);
+                                        documentDbLinkedServiceInstance.Description = descriptionInstance6;
+                                    }
+                                    
+                                    JToken provisioningStateValue6 = propertiesValue["provisioningState"];
+                                    if (provisioningStateValue6 != null && provisioningStateValue6.Type != JTokenType.Null)
+                                    {
+                                        string provisioningStateInstance6 = ((string)provisioningStateValue6);
+                                        documentDbLinkedServiceInstance.ProvisioningState = provisioningStateInstance6;
+                                    }
+                                    
+                                    JToken hubNameValue6 = propertiesValue["hubName"];
+                                    if (hubNameValue6 != null && hubNameValue6.Type != JTokenType.Null)
+                                    {
+                                        string hubNameInstance6 = ((string)hubNameValue6);
+                                        documentDbLinkedServiceInstance.HubName = hubNameInstance6;
+                                    }
+                                    
+                                    JToken errorMessageValue6 = propertiesValue["errorMessage"];
+                                    if (errorMessageValue6 != null && errorMessageValue6.Type != JTokenType.Null)
+                                    {
+                                        string errorMessageInstance6 = ((string)errorMessageValue6);
+                                        documentDbLinkedServiceInstance.ErrorMessage = errorMessageInstance6;
+                                    }
+                                    linkedServiceInstance.Properties = documentDbLinkedServiceInstance;
+                                }
                                 if (typeName == "HDInsightBYOCLinkedService")
                                 {
                                     HDInsightBYOCLinkedService hDInsightBYOCLinkedServiceInstance = new HDInsightBYOCLinkedService();
@@ -2842,32 +3318,32 @@ namespace Microsoft.Azure.Management.DataFactories
                                         }
                                     }
                                     
-                                    JToken descriptionValue6 = propertiesValue["description"];
-                                    if (descriptionValue6 != null && descriptionValue6.Type != JTokenType.Null)
+                                    JToken descriptionValue7 = propertiesValue["description"];
+                                    if (descriptionValue7 != null && descriptionValue7.Type != JTokenType.Null)
                                     {
-                                        string descriptionInstance6 = ((string)descriptionValue6);
-                                        hDInsightBYOCLinkedServiceInstance.Description = descriptionInstance6;
+                                        string descriptionInstance7 = ((string)descriptionValue7);
+                                        hDInsightBYOCLinkedServiceInstance.Description = descriptionInstance7;
                                     }
                                     
-                                    JToken provisioningStateValue6 = propertiesValue["provisioningState"];
-                                    if (provisioningStateValue6 != null && provisioningStateValue6.Type != JTokenType.Null)
+                                    JToken provisioningStateValue7 = propertiesValue["provisioningState"];
+                                    if (provisioningStateValue7 != null && provisioningStateValue7.Type != JTokenType.Null)
                                     {
-                                        string provisioningStateInstance6 = ((string)provisioningStateValue6);
-                                        hDInsightBYOCLinkedServiceInstance.ProvisioningState = provisioningStateInstance6;
+                                        string provisioningStateInstance7 = ((string)provisioningStateValue7);
+                                        hDInsightBYOCLinkedServiceInstance.ProvisioningState = provisioningStateInstance7;
                                     }
                                     
-                                    JToken hubNameValue6 = propertiesValue["hubName"];
-                                    if (hubNameValue6 != null && hubNameValue6.Type != JTokenType.Null)
+                                    JToken hubNameValue7 = propertiesValue["hubName"];
+                                    if (hubNameValue7 != null && hubNameValue7.Type != JTokenType.Null)
                                     {
-                                        string hubNameInstance6 = ((string)hubNameValue6);
-                                        hDInsightBYOCLinkedServiceInstance.HubName = hubNameInstance6;
+                                        string hubNameInstance7 = ((string)hubNameValue7);
+                                        hDInsightBYOCLinkedServiceInstance.HubName = hubNameInstance7;
                                     }
                                     
-                                    JToken errorMessageValue6 = propertiesValue["errorMessage"];
-                                    if (errorMessageValue6 != null && errorMessageValue6.Type != JTokenType.Null)
+                                    JToken errorMessageValue7 = propertiesValue["errorMessage"];
+                                    if (errorMessageValue7 != null && errorMessageValue7.Type != JTokenType.Null)
                                     {
-                                        string errorMessageInstance6 = ((string)errorMessageValue6);
-                                        hDInsightBYOCLinkedServiceInstance.ErrorMessage = errorMessageInstance6;
+                                        string errorMessageInstance7 = ((string)errorMessageValue7);
+                                        hDInsightBYOCLinkedServiceInstance.ErrorMessage = errorMessageInstance7;
                                     }
                                     linkedServiceInstance.Properties = hDInsightBYOCLinkedServiceInstance;
                                 }
@@ -3102,34 +3578,95 @@ namespace Microsoft.Azure.Management.DataFactories
                                         hDInsightOnDemandLinkedServiceInstance.SshUserName = sshUserNameInstance;
                                     }
                                     
-                                    JToken descriptionValue7 = propertiesValue["description"];
-                                    if (descriptionValue7 != null && descriptionValue7.Type != JTokenType.Null)
+                                    JToken descriptionValue8 = propertiesValue["description"];
+                                    if (descriptionValue8 != null && descriptionValue8.Type != JTokenType.Null)
                                     {
-                                        string descriptionInstance7 = ((string)descriptionValue7);
-                                        hDInsightOnDemandLinkedServiceInstance.Description = descriptionInstance7;
+                                        string descriptionInstance8 = ((string)descriptionValue8);
+                                        hDInsightOnDemandLinkedServiceInstance.Description = descriptionInstance8;
                                     }
                                     
-                                    JToken provisioningStateValue7 = propertiesValue["provisioningState"];
-                                    if (provisioningStateValue7 != null && provisioningStateValue7.Type != JTokenType.Null)
+                                    JToken provisioningStateValue8 = propertiesValue["provisioningState"];
+                                    if (provisioningStateValue8 != null && provisioningStateValue8.Type != JTokenType.Null)
                                     {
-                                        string provisioningStateInstance7 = ((string)provisioningStateValue7);
-                                        hDInsightOnDemandLinkedServiceInstance.ProvisioningState = provisioningStateInstance7;
+                                        string provisioningStateInstance8 = ((string)provisioningStateValue8);
+                                        hDInsightOnDemandLinkedServiceInstance.ProvisioningState = provisioningStateInstance8;
                                     }
                                     
-                                    JToken hubNameValue7 = propertiesValue["hubName"];
-                                    if (hubNameValue7 != null && hubNameValue7.Type != JTokenType.Null)
+                                    JToken hubNameValue8 = propertiesValue["hubName"];
+                                    if (hubNameValue8 != null && hubNameValue8.Type != JTokenType.Null)
                                     {
-                                        string hubNameInstance7 = ((string)hubNameValue7);
-                                        hDInsightOnDemandLinkedServiceInstance.HubName = hubNameInstance7;
+                                        string hubNameInstance8 = ((string)hubNameValue8);
+                                        hDInsightOnDemandLinkedServiceInstance.HubName = hubNameInstance8;
                                     }
                                     
-                                    JToken errorMessageValue7 = propertiesValue["errorMessage"];
-                                    if (errorMessageValue7 != null && errorMessageValue7.Type != JTokenType.Null)
+                                    JToken errorMessageValue8 = propertiesValue["errorMessage"];
+                                    if (errorMessageValue8 != null && errorMessageValue8.Type != JTokenType.Null)
                                     {
-                                        string errorMessageInstance7 = ((string)errorMessageValue7);
-                                        hDInsightOnDemandLinkedServiceInstance.ErrorMessage = errorMessageInstance7;
+                                        string errorMessageInstance8 = ((string)errorMessageValue8);
+                                        hDInsightOnDemandLinkedServiceInstance.ErrorMessage = errorMessageInstance8;
                                     }
                                     linkedServiceInstance.Properties = hDInsightOnDemandLinkedServiceInstance;
+                                }
+                                if (typeName == "ODataLinkedService")
+                                {
+                                    ODataLinkedService oDataLinkedServiceInstance = new ODataLinkedService();
+                                    
+                                    JToken urlValue = propertiesValue["url"];
+                                    if (urlValue != null && urlValue.Type != JTokenType.Null)
+                                    {
+                                        string urlInstance = ((string)urlValue);
+                                        oDataLinkedServiceInstance.Url = urlInstance;
+                                    }
+                                    
+                                    JToken authenticationTypeValue = propertiesValue["authenticationType"];
+                                    if (authenticationTypeValue != null && authenticationTypeValue.Type != JTokenType.Null)
+                                    {
+                                        string authenticationTypeInstance = ((string)authenticationTypeValue);
+                                        oDataLinkedServiceInstance.AuthenticationType = authenticationTypeInstance;
+                                    }
+                                    
+                                    JToken usernameValue = propertiesValue["username"];
+                                    if (usernameValue != null && usernameValue.Type != JTokenType.Null)
+                                    {
+                                        string usernameInstance = ((string)usernameValue);
+                                        oDataLinkedServiceInstance.Username = usernameInstance;
+                                    }
+                                    
+                                    JToken passwordValue2 = propertiesValue["password"];
+                                    if (passwordValue2 != null && passwordValue2.Type != JTokenType.Null)
+                                    {
+                                        string passwordInstance2 = ((string)passwordValue2);
+                                        oDataLinkedServiceInstance.Password = passwordInstance2;
+                                    }
+                                    
+                                    JToken descriptionValue9 = propertiesValue["description"];
+                                    if (descriptionValue9 != null && descriptionValue9.Type != JTokenType.Null)
+                                    {
+                                        string descriptionInstance9 = ((string)descriptionValue9);
+                                        oDataLinkedServiceInstance.Description = descriptionInstance9;
+                                    }
+                                    
+                                    JToken provisioningStateValue9 = propertiesValue["provisioningState"];
+                                    if (provisioningStateValue9 != null && provisioningStateValue9.Type != JTokenType.Null)
+                                    {
+                                        string provisioningStateInstance9 = ((string)provisioningStateValue9);
+                                        oDataLinkedServiceInstance.ProvisioningState = provisioningStateInstance9;
+                                    }
+                                    
+                                    JToken hubNameValue9 = propertiesValue["hubName"];
+                                    if (hubNameValue9 != null && hubNameValue9.Type != JTokenType.Null)
+                                    {
+                                        string hubNameInstance9 = ((string)hubNameValue9);
+                                        oDataLinkedServiceInstance.HubName = hubNameInstance9;
+                                    }
+                                    
+                                    JToken errorMessageValue9 = propertiesValue["errorMessage"];
+                                    if (errorMessageValue9 != null && errorMessageValue9.Type != JTokenType.Null)
+                                    {
+                                        string errorMessageInstance9 = ((string)errorMessageValue9);
+                                        oDataLinkedServiceInstance.ErrorMessage = errorMessageInstance9;
+                                    }
+                                    linkedServiceInstance.Properties = oDataLinkedServiceInstance;
                                 }
                                 if (typeName == "OnPremisesDb2LinkedService")
                                 {
@@ -3156,25 +3693,25 @@ namespace Microsoft.Azure.Management.DataFactories
                                         onPremisesDb2LinkedServiceInstance.Schema = schemaInstance;
                                     }
                                     
-                                    JToken authenticationTypeValue = propertiesValue["authenticationType"];
-                                    if (authenticationTypeValue != null && authenticationTypeValue.Type != JTokenType.Null)
+                                    JToken authenticationTypeValue2 = propertiesValue["authenticationType"];
+                                    if (authenticationTypeValue2 != null && authenticationTypeValue2.Type != JTokenType.Null)
                                     {
-                                        string authenticationTypeInstance = ((string)authenticationTypeValue);
-                                        onPremisesDb2LinkedServiceInstance.AuthenticationType = authenticationTypeInstance;
+                                        string authenticationTypeInstance2 = ((string)authenticationTypeValue2);
+                                        onPremisesDb2LinkedServiceInstance.AuthenticationType = authenticationTypeInstance2;
                                     }
                                     
-                                    JToken usernameValue = propertiesValue["username"];
-                                    if (usernameValue != null && usernameValue.Type != JTokenType.Null)
+                                    JToken usernameValue2 = propertiesValue["username"];
+                                    if (usernameValue2 != null && usernameValue2.Type != JTokenType.Null)
                                     {
-                                        string usernameInstance = ((string)usernameValue);
-                                        onPremisesDb2LinkedServiceInstance.Username = usernameInstance;
+                                        string usernameInstance2 = ((string)usernameValue2);
+                                        onPremisesDb2LinkedServiceInstance.Username = usernameInstance2;
                                     }
                                     
-                                    JToken passwordValue2 = propertiesValue["password"];
-                                    if (passwordValue2 != null && passwordValue2.Type != JTokenType.Null)
+                                    JToken passwordValue3 = propertiesValue["password"];
+                                    if (passwordValue3 != null && passwordValue3.Type != JTokenType.Null)
                                     {
-                                        string passwordInstance2 = ((string)passwordValue2);
-                                        onPremisesDb2LinkedServiceInstance.Password = passwordInstance2;
+                                        string passwordInstance3 = ((string)passwordValue3);
+                                        onPremisesDb2LinkedServiceInstance.Password = passwordInstance3;
                                     }
                                     
                                     JToken gatewayNameValue = propertiesValue["gatewayName"];
@@ -3191,32 +3728,32 @@ namespace Microsoft.Azure.Management.DataFactories
                                         onPremisesDb2LinkedServiceInstance.EncryptedCredential = encryptedCredentialInstance;
                                     }
                                     
-                                    JToken descriptionValue8 = propertiesValue["description"];
-                                    if (descriptionValue8 != null && descriptionValue8.Type != JTokenType.Null)
+                                    JToken descriptionValue10 = propertiesValue["description"];
+                                    if (descriptionValue10 != null && descriptionValue10.Type != JTokenType.Null)
                                     {
-                                        string descriptionInstance8 = ((string)descriptionValue8);
-                                        onPremisesDb2LinkedServiceInstance.Description = descriptionInstance8;
+                                        string descriptionInstance10 = ((string)descriptionValue10);
+                                        onPremisesDb2LinkedServiceInstance.Description = descriptionInstance10;
                                     }
                                     
-                                    JToken provisioningStateValue8 = propertiesValue["provisioningState"];
-                                    if (provisioningStateValue8 != null && provisioningStateValue8.Type != JTokenType.Null)
+                                    JToken provisioningStateValue10 = propertiesValue["provisioningState"];
+                                    if (provisioningStateValue10 != null && provisioningStateValue10.Type != JTokenType.Null)
                                     {
-                                        string provisioningStateInstance8 = ((string)provisioningStateValue8);
-                                        onPremisesDb2LinkedServiceInstance.ProvisioningState = provisioningStateInstance8;
+                                        string provisioningStateInstance10 = ((string)provisioningStateValue10);
+                                        onPremisesDb2LinkedServiceInstance.ProvisioningState = provisioningStateInstance10;
                                     }
                                     
-                                    JToken hubNameValue8 = propertiesValue["hubName"];
-                                    if (hubNameValue8 != null && hubNameValue8.Type != JTokenType.Null)
+                                    JToken hubNameValue10 = propertiesValue["hubName"];
+                                    if (hubNameValue10 != null && hubNameValue10.Type != JTokenType.Null)
                                     {
-                                        string hubNameInstance8 = ((string)hubNameValue8);
-                                        onPremisesDb2LinkedServiceInstance.HubName = hubNameInstance8;
+                                        string hubNameInstance10 = ((string)hubNameValue10);
+                                        onPremisesDb2LinkedServiceInstance.HubName = hubNameInstance10;
                                     }
                                     
-                                    JToken errorMessageValue8 = propertiesValue["errorMessage"];
-                                    if (errorMessageValue8 != null && errorMessageValue8.Type != JTokenType.Null)
+                                    JToken errorMessageValue10 = propertiesValue["errorMessage"];
+                                    if (errorMessageValue10 != null && errorMessageValue10.Type != JTokenType.Null)
                                     {
-                                        string errorMessageInstance8 = ((string)errorMessageValue8);
-                                        onPremisesDb2LinkedServiceInstance.ErrorMessage = errorMessageInstance8;
+                                        string errorMessageInstance10 = ((string)errorMessageValue10);
+                                        onPremisesDb2LinkedServiceInstance.ErrorMessage = errorMessageInstance10;
                                     }
                                     linkedServiceInstance.Properties = onPremisesDb2LinkedServiceInstance;
                                 }
@@ -3245,11 +3782,11 @@ namespace Microsoft.Azure.Management.DataFactories
                                         onPremisesFileSystemLinkedServiceInstance.UserId = userIdInstance;
                                     }
                                     
-                                    JToken passwordValue3 = propertiesValue["password"];
-                                    if (passwordValue3 != null && passwordValue3.Type != JTokenType.Null)
+                                    JToken passwordValue4 = propertiesValue["password"];
+                                    if (passwordValue4 != null && passwordValue4.Type != JTokenType.Null)
                                     {
-                                        string passwordInstance3 = ((string)passwordValue3);
-                                        onPremisesFileSystemLinkedServiceInstance.Password = passwordInstance3;
+                                        string passwordInstance4 = ((string)passwordValue4);
+                                        onPremisesFileSystemLinkedServiceInstance.Password = passwordInstance4;
                                     }
                                     
                                     JToken encryptedCredentialValue2 = propertiesValue["encryptedCredential"];
@@ -3259,34 +3796,116 @@ namespace Microsoft.Azure.Management.DataFactories
                                         onPremisesFileSystemLinkedServiceInstance.EncryptedCredential = encryptedCredentialInstance2;
                                     }
                                     
-                                    JToken descriptionValue9 = propertiesValue["description"];
-                                    if (descriptionValue9 != null && descriptionValue9.Type != JTokenType.Null)
+                                    JToken descriptionValue11 = propertiesValue["description"];
+                                    if (descriptionValue11 != null && descriptionValue11.Type != JTokenType.Null)
                                     {
-                                        string descriptionInstance9 = ((string)descriptionValue9);
-                                        onPremisesFileSystemLinkedServiceInstance.Description = descriptionInstance9;
+                                        string descriptionInstance11 = ((string)descriptionValue11);
+                                        onPremisesFileSystemLinkedServiceInstance.Description = descriptionInstance11;
                                     }
                                     
-                                    JToken provisioningStateValue9 = propertiesValue["provisioningState"];
-                                    if (provisioningStateValue9 != null && provisioningStateValue9.Type != JTokenType.Null)
+                                    JToken provisioningStateValue11 = propertiesValue["provisioningState"];
+                                    if (provisioningStateValue11 != null && provisioningStateValue11.Type != JTokenType.Null)
                                     {
-                                        string provisioningStateInstance9 = ((string)provisioningStateValue9);
-                                        onPremisesFileSystemLinkedServiceInstance.ProvisioningState = provisioningStateInstance9;
+                                        string provisioningStateInstance11 = ((string)provisioningStateValue11);
+                                        onPremisesFileSystemLinkedServiceInstance.ProvisioningState = provisioningStateInstance11;
                                     }
                                     
-                                    JToken hubNameValue9 = propertiesValue["hubName"];
-                                    if (hubNameValue9 != null && hubNameValue9.Type != JTokenType.Null)
+                                    JToken hubNameValue11 = propertiesValue["hubName"];
+                                    if (hubNameValue11 != null && hubNameValue11.Type != JTokenType.Null)
                                     {
-                                        string hubNameInstance9 = ((string)hubNameValue9);
-                                        onPremisesFileSystemLinkedServiceInstance.HubName = hubNameInstance9;
+                                        string hubNameInstance11 = ((string)hubNameValue11);
+                                        onPremisesFileSystemLinkedServiceInstance.HubName = hubNameInstance11;
                                     }
                                     
-                                    JToken errorMessageValue9 = propertiesValue["errorMessage"];
-                                    if (errorMessageValue9 != null && errorMessageValue9.Type != JTokenType.Null)
+                                    JToken errorMessageValue11 = propertiesValue["errorMessage"];
+                                    if (errorMessageValue11 != null && errorMessageValue11.Type != JTokenType.Null)
                                     {
-                                        string errorMessageInstance9 = ((string)errorMessageValue9);
-                                        onPremisesFileSystemLinkedServiceInstance.ErrorMessage = errorMessageInstance9;
+                                        string errorMessageInstance11 = ((string)errorMessageValue11);
+                                        onPremisesFileSystemLinkedServiceInstance.ErrorMessage = errorMessageInstance11;
                                     }
                                     linkedServiceInstance.Properties = onPremisesFileSystemLinkedServiceInstance;
+                                }
+                                if (typeName == "OnPremisesHdfsLinkedService")
+                                {
+                                    OnPremisesHdfsLinkedService onPremisesHdfsLinkedServiceInstance = new OnPremisesHdfsLinkedService();
+                                    
+                                    JToken urlValue2 = propertiesValue["url"];
+                                    if (urlValue2 != null && urlValue2.Type != JTokenType.Null)
+                                    {
+                                        string urlInstance2 = ((string)urlValue2);
+                                        onPremisesHdfsLinkedServiceInstance.Url = urlInstance2;
+                                    }
+                                    
+                                    JToken contentTypeValue = propertiesValue["contentType"];
+                                    if (contentTypeValue != null && contentTypeValue.Type != JTokenType.Null)
+                                    {
+                                        string contentTypeInstance = ((string)contentTypeValue);
+                                        onPremisesHdfsLinkedServiceInstance.ContentType = contentTypeInstance;
+                                    }
+                                    
+                                    JToken authenticationTypeValue3 = propertiesValue["authenticationType"];
+                                    if (authenticationTypeValue3 != null && authenticationTypeValue3.Type != JTokenType.Null)
+                                    {
+                                        string authenticationTypeInstance3 = ((string)authenticationTypeValue3);
+                                        onPremisesHdfsLinkedServiceInstance.AuthenticationType = authenticationTypeInstance3;
+                                    }
+                                    
+                                    JToken usernameValue3 = propertiesValue["username"];
+                                    if (usernameValue3 != null && usernameValue3.Type != JTokenType.Null)
+                                    {
+                                        string usernameInstance3 = ((string)usernameValue3);
+                                        onPremisesHdfsLinkedServiceInstance.Username = usernameInstance3;
+                                    }
+                                    
+                                    JToken passwordValue5 = propertiesValue["password"];
+                                    if (passwordValue5 != null && passwordValue5.Type != JTokenType.Null)
+                                    {
+                                        string passwordInstance5 = ((string)passwordValue5);
+                                        onPremisesHdfsLinkedServiceInstance.Password = passwordInstance5;
+                                    }
+                                    
+                                    JToken gatewayNameValue3 = propertiesValue["gatewayName"];
+                                    if (gatewayNameValue3 != null && gatewayNameValue3.Type != JTokenType.Null)
+                                    {
+                                        string gatewayNameInstance3 = ((string)gatewayNameValue3);
+                                        onPremisesHdfsLinkedServiceInstance.GatewayName = gatewayNameInstance3;
+                                    }
+                                    
+                                    JToken encryptedCredentialValue3 = propertiesValue["encryptedCredential"];
+                                    if (encryptedCredentialValue3 != null && encryptedCredentialValue3.Type != JTokenType.Null)
+                                    {
+                                        string encryptedCredentialInstance3 = ((string)encryptedCredentialValue3);
+                                        onPremisesHdfsLinkedServiceInstance.EncryptedCredential = encryptedCredentialInstance3;
+                                    }
+                                    
+                                    JToken descriptionValue12 = propertiesValue["description"];
+                                    if (descriptionValue12 != null && descriptionValue12.Type != JTokenType.Null)
+                                    {
+                                        string descriptionInstance12 = ((string)descriptionValue12);
+                                        onPremisesHdfsLinkedServiceInstance.Description = descriptionInstance12;
+                                    }
+                                    
+                                    JToken provisioningStateValue12 = propertiesValue["provisioningState"];
+                                    if (provisioningStateValue12 != null && provisioningStateValue12.Type != JTokenType.Null)
+                                    {
+                                        string provisioningStateInstance12 = ((string)provisioningStateValue12);
+                                        onPremisesHdfsLinkedServiceInstance.ProvisioningState = provisioningStateInstance12;
+                                    }
+                                    
+                                    JToken hubNameValue12 = propertiesValue["hubName"];
+                                    if (hubNameValue12 != null && hubNameValue12.Type != JTokenType.Null)
+                                    {
+                                        string hubNameInstance12 = ((string)hubNameValue12);
+                                        onPremisesHdfsLinkedServiceInstance.HubName = hubNameInstance12;
+                                    }
+                                    
+                                    JToken errorMessageValue12 = propertiesValue["errorMessage"];
+                                    if (errorMessageValue12 != null && errorMessageValue12.Type != JTokenType.Null)
+                                    {
+                                        string errorMessageInstance12 = ((string)errorMessageValue12);
+                                        onPremisesHdfsLinkedServiceInstance.ErrorMessage = errorMessageInstance12;
+                                    }
+                                    linkedServiceInstance.Properties = onPremisesHdfsLinkedServiceInstance;
                                 }
                                 if (typeName == "OnPremisesMySqlLinkedService")
                                 {
@@ -3313,128 +3932,210 @@ namespace Microsoft.Azure.Management.DataFactories
                                         onPremisesMySqlLinkedServiceInstance.Schema = schemaInstance2;
                                     }
                                     
-                                    JToken authenticationTypeValue2 = propertiesValue["authenticationType"];
-                                    if (authenticationTypeValue2 != null && authenticationTypeValue2.Type != JTokenType.Null)
+                                    JToken authenticationTypeValue4 = propertiesValue["authenticationType"];
+                                    if (authenticationTypeValue4 != null && authenticationTypeValue4.Type != JTokenType.Null)
                                     {
-                                        string authenticationTypeInstance2 = ((string)authenticationTypeValue2);
-                                        onPremisesMySqlLinkedServiceInstance.AuthenticationType = authenticationTypeInstance2;
+                                        string authenticationTypeInstance4 = ((string)authenticationTypeValue4);
+                                        onPremisesMySqlLinkedServiceInstance.AuthenticationType = authenticationTypeInstance4;
                                     }
                                     
-                                    JToken usernameValue2 = propertiesValue["username"];
-                                    if (usernameValue2 != null && usernameValue2.Type != JTokenType.Null)
+                                    JToken usernameValue4 = propertiesValue["username"];
+                                    if (usernameValue4 != null && usernameValue4.Type != JTokenType.Null)
                                     {
-                                        string usernameInstance2 = ((string)usernameValue2);
-                                        onPremisesMySqlLinkedServiceInstance.Username = usernameInstance2;
+                                        string usernameInstance4 = ((string)usernameValue4);
+                                        onPremisesMySqlLinkedServiceInstance.Username = usernameInstance4;
                                     }
                                     
-                                    JToken passwordValue4 = propertiesValue["password"];
-                                    if (passwordValue4 != null && passwordValue4.Type != JTokenType.Null)
+                                    JToken passwordValue6 = propertiesValue["password"];
+                                    if (passwordValue6 != null && passwordValue6.Type != JTokenType.Null)
                                     {
-                                        string passwordInstance4 = ((string)passwordValue4);
-                                        onPremisesMySqlLinkedServiceInstance.Password = passwordInstance4;
-                                    }
-                                    
-                                    JToken gatewayNameValue3 = propertiesValue["gatewayName"];
-                                    if (gatewayNameValue3 != null && gatewayNameValue3.Type != JTokenType.Null)
-                                    {
-                                        string gatewayNameInstance3 = ((string)gatewayNameValue3);
-                                        onPremisesMySqlLinkedServiceInstance.GatewayName = gatewayNameInstance3;
-                                    }
-                                    
-                                    JToken encryptedCredentialValue3 = propertiesValue["encryptedCredential"];
-                                    if (encryptedCredentialValue3 != null && encryptedCredentialValue3.Type != JTokenType.Null)
-                                    {
-                                        string encryptedCredentialInstance3 = ((string)encryptedCredentialValue3);
-                                        onPremisesMySqlLinkedServiceInstance.EncryptedCredential = encryptedCredentialInstance3;
-                                    }
-                                    
-                                    JToken descriptionValue10 = propertiesValue["description"];
-                                    if (descriptionValue10 != null && descriptionValue10.Type != JTokenType.Null)
-                                    {
-                                        string descriptionInstance10 = ((string)descriptionValue10);
-                                        onPremisesMySqlLinkedServiceInstance.Description = descriptionInstance10;
-                                    }
-                                    
-                                    JToken provisioningStateValue10 = propertiesValue["provisioningState"];
-                                    if (provisioningStateValue10 != null && provisioningStateValue10.Type != JTokenType.Null)
-                                    {
-                                        string provisioningStateInstance10 = ((string)provisioningStateValue10);
-                                        onPremisesMySqlLinkedServiceInstance.ProvisioningState = provisioningStateInstance10;
-                                    }
-                                    
-                                    JToken hubNameValue10 = propertiesValue["hubName"];
-                                    if (hubNameValue10 != null && hubNameValue10.Type != JTokenType.Null)
-                                    {
-                                        string hubNameInstance10 = ((string)hubNameValue10);
-                                        onPremisesMySqlLinkedServiceInstance.HubName = hubNameInstance10;
-                                    }
-                                    
-                                    JToken errorMessageValue10 = propertiesValue["errorMessage"];
-                                    if (errorMessageValue10 != null && errorMessageValue10.Type != JTokenType.Null)
-                                    {
-                                        string errorMessageInstance10 = ((string)errorMessageValue10);
-                                        onPremisesMySqlLinkedServiceInstance.ErrorMessage = errorMessageInstance10;
-                                    }
-                                    linkedServiceInstance.Properties = onPremisesMySqlLinkedServiceInstance;
-                                }
-                                if (typeName == "OnPremisesOracleLinkedService")
-                                {
-                                    OnPremisesOracleLinkedService onPremisesOracleLinkedServiceInstance = new OnPremisesOracleLinkedService();
-                                    
-                                    JToken connectionStringValue3 = propertiesValue["connectionString"];
-                                    if (connectionStringValue3 != null && connectionStringValue3.Type != JTokenType.Null)
-                                    {
-                                        string connectionStringInstance3 = ((string)connectionStringValue3);
-                                        onPremisesOracleLinkedServiceInstance.ConnectionString = connectionStringInstance3;
+                                        string passwordInstance6 = ((string)passwordValue6);
+                                        onPremisesMySqlLinkedServiceInstance.Password = passwordInstance6;
                                     }
                                     
                                     JToken gatewayNameValue4 = propertiesValue["gatewayName"];
                                     if (gatewayNameValue4 != null && gatewayNameValue4.Type != JTokenType.Null)
                                     {
                                         string gatewayNameInstance4 = ((string)gatewayNameValue4);
-                                        onPremisesOracleLinkedServiceInstance.GatewayName = gatewayNameInstance4;
+                                        onPremisesMySqlLinkedServiceInstance.GatewayName = gatewayNameInstance4;
+                                    }
+                                    
+                                    JToken encryptedCredentialValue4 = propertiesValue["encryptedCredential"];
+                                    if (encryptedCredentialValue4 != null && encryptedCredentialValue4.Type != JTokenType.Null)
+                                    {
+                                        string encryptedCredentialInstance4 = ((string)encryptedCredentialValue4);
+                                        onPremisesMySqlLinkedServiceInstance.EncryptedCredential = encryptedCredentialInstance4;
+                                    }
+                                    
+                                    JToken descriptionValue13 = propertiesValue["description"];
+                                    if (descriptionValue13 != null && descriptionValue13.Type != JTokenType.Null)
+                                    {
+                                        string descriptionInstance13 = ((string)descriptionValue13);
+                                        onPremisesMySqlLinkedServiceInstance.Description = descriptionInstance13;
+                                    }
+                                    
+                                    JToken provisioningStateValue13 = propertiesValue["provisioningState"];
+                                    if (provisioningStateValue13 != null && provisioningStateValue13.Type != JTokenType.Null)
+                                    {
+                                        string provisioningStateInstance13 = ((string)provisioningStateValue13);
+                                        onPremisesMySqlLinkedServiceInstance.ProvisioningState = provisioningStateInstance13;
+                                    }
+                                    
+                                    JToken hubNameValue13 = propertiesValue["hubName"];
+                                    if (hubNameValue13 != null && hubNameValue13.Type != JTokenType.Null)
+                                    {
+                                        string hubNameInstance13 = ((string)hubNameValue13);
+                                        onPremisesMySqlLinkedServiceInstance.HubName = hubNameInstance13;
+                                    }
+                                    
+                                    JToken errorMessageValue13 = propertiesValue["errorMessage"];
+                                    if (errorMessageValue13 != null && errorMessageValue13.Type != JTokenType.Null)
+                                    {
+                                        string errorMessageInstance13 = ((string)errorMessageValue13);
+                                        onPremisesMySqlLinkedServiceInstance.ErrorMessage = errorMessageInstance13;
+                                    }
+                                    linkedServiceInstance.Properties = onPremisesMySqlLinkedServiceInstance;
+                                }
+                                if (typeName == "OnPremisesOdbcLinkedService")
+                                {
+                                    OnPremisesOdbcLinkedService onPremisesOdbcLinkedServiceInstance = new OnPremisesOdbcLinkedService();
+                                    
+                                    JToken nonCredentialConnectionStringValue = propertiesValue["nonCredentialConnectionString"];
+                                    if (nonCredentialConnectionStringValue != null && nonCredentialConnectionStringValue.Type != JTokenType.Null)
+                                    {
+                                        string nonCredentialConnectionStringInstance = ((string)nonCredentialConnectionStringValue);
+                                        onPremisesOdbcLinkedServiceInstance.NonCredentialConnectionString = nonCredentialConnectionStringInstance;
+                                    }
+                                    
+                                    JToken credentialConnectionStringValue = propertiesValue["credentialConnectionString"];
+                                    if (credentialConnectionStringValue != null && credentialConnectionStringValue.Type != JTokenType.Null)
+                                    {
+                                        string credentialConnectionStringInstance = ((string)credentialConnectionStringValue);
+                                        onPremisesOdbcLinkedServiceInstance.CredentialConnectionString = credentialConnectionStringInstance;
+                                    }
+                                    
+                                    JToken encryptedCredentialConnectionStringValue = propertiesValue["encryptedCredentialConnectionString"];
+                                    if (encryptedCredentialConnectionStringValue != null && encryptedCredentialConnectionStringValue.Type != JTokenType.Null)
+                                    {
+                                        string encryptedCredentialConnectionStringInstance = ((string)encryptedCredentialConnectionStringValue);
+                                        onPremisesOdbcLinkedServiceInstance.EncryptedCredentialConnectionString = encryptedCredentialConnectionStringInstance;
                                     }
                                     
                                     JToken userNameValue2 = propertiesValue["userName"];
                                     if (userNameValue2 != null && userNameValue2.Type != JTokenType.Null)
                                     {
                                         string userNameInstance2 = ((string)userNameValue2);
-                                        onPremisesOracleLinkedServiceInstance.UserName = userNameInstance2;
+                                        onPremisesOdbcLinkedServiceInstance.UserName = userNameInstance2;
                                     }
                                     
-                                    JToken passwordValue5 = propertiesValue["password"];
-                                    if (passwordValue5 != null && passwordValue5.Type != JTokenType.Null)
+                                    JToken passwordValue7 = propertiesValue["password"];
+                                    if (passwordValue7 != null && passwordValue7.Type != JTokenType.Null)
                                     {
-                                        string passwordInstance5 = ((string)passwordValue5);
-                                        onPremisesOracleLinkedServiceInstance.Password = passwordInstance5;
+                                        string passwordInstance7 = ((string)passwordValue7);
+                                        onPremisesOdbcLinkedServiceInstance.Password = passwordInstance7;
                                     }
                                     
-                                    JToken descriptionValue11 = propertiesValue["description"];
-                                    if (descriptionValue11 != null && descriptionValue11.Type != JTokenType.Null)
+                                    JToken gatewayNameValue5 = propertiesValue["gatewayName"];
+                                    if (gatewayNameValue5 != null && gatewayNameValue5.Type != JTokenType.Null)
                                     {
-                                        string descriptionInstance11 = ((string)descriptionValue11);
-                                        onPremisesOracleLinkedServiceInstance.Description = descriptionInstance11;
+                                        string gatewayNameInstance5 = ((string)gatewayNameValue5);
+                                        onPremisesOdbcLinkedServiceInstance.GatewayName = gatewayNameInstance5;
                                     }
                                     
-                                    JToken provisioningStateValue11 = propertiesValue["provisioningState"];
-                                    if (provisioningStateValue11 != null && provisioningStateValue11.Type != JTokenType.Null)
+                                    JToken authenticationTypeValue5 = propertiesValue["authenticationType"];
+                                    if (authenticationTypeValue5 != null && authenticationTypeValue5.Type != JTokenType.Null)
                                     {
-                                        string provisioningStateInstance11 = ((string)provisioningStateValue11);
-                                        onPremisesOracleLinkedServiceInstance.ProvisioningState = provisioningStateInstance11;
+                                        string authenticationTypeInstance5 = ((string)authenticationTypeValue5);
+                                        onPremisesOdbcLinkedServiceInstance.AuthenticationType = authenticationTypeInstance5;
                                     }
                                     
-                                    JToken hubNameValue11 = propertiesValue["hubName"];
-                                    if (hubNameValue11 != null && hubNameValue11.Type != JTokenType.Null)
+                                    JToken descriptionValue14 = propertiesValue["description"];
+                                    if (descriptionValue14 != null && descriptionValue14.Type != JTokenType.Null)
                                     {
-                                        string hubNameInstance11 = ((string)hubNameValue11);
-                                        onPremisesOracleLinkedServiceInstance.HubName = hubNameInstance11;
+                                        string descriptionInstance14 = ((string)descriptionValue14);
+                                        onPremisesOdbcLinkedServiceInstance.Description = descriptionInstance14;
                                     }
                                     
-                                    JToken errorMessageValue11 = propertiesValue["errorMessage"];
-                                    if (errorMessageValue11 != null && errorMessageValue11.Type != JTokenType.Null)
+                                    JToken provisioningStateValue14 = propertiesValue["provisioningState"];
+                                    if (provisioningStateValue14 != null && provisioningStateValue14.Type != JTokenType.Null)
                                     {
-                                        string errorMessageInstance11 = ((string)errorMessageValue11);
-                                        onPremisesOracleLinkedServiceInstance.ErrorMessage = errorMessageInstance11;
+                                        string provisioningStateInstance14 = ((string)provisioningStateValue14);
+                                        onPremisesOdbcLinkedServiceInstance.ProvisioningState = provisioningStateInstance14;
+                                    }
+                                    
+                                    JToken hubNameValue14 = propertiesValue["hubName"];
+                                    if (hubNameValue14 != null && hubNameValue14.Type != JTokenType.Null)
+                                    {
+                                        string hubNameInstance14 = ((string)hubNameValue14);
+                                        onPremisesOdbcLinkedServiceInstance.HubName = hubNameInstance14;
+                                    }
+                                    
+                                    JToken errorMessageValue14 = propertiesValue["errorMessage"];
+                                    if (errorMessageValue14 != null && errorMessageValue14.Type != JTokenType.Null)
+                                    {
+                                        string errorMessageInstance14 = ((string)errorMessageValue14);
+                                        onPremisesOdbcLinkedServiceInstance.ErrorMessage = errorMessageInstance14;
+                                    }
+                                    linkedServiceInstance.Properties = onPremisesOdbcLinkedServiceInstance;
+                                }
+                                if (typeName == "OnPremisesOracleLinkedService")
+                                {
+                                    OnPremisesOracleLinkedService onPremisesOracleLinkedServiceInstance = new OnPremisesOracleLinkedService();
+                                    
+                                    JToken connectionStringValue4 = propertiesValue["connectionString"];
+                                    if (connectionStringValue4 != null && connectionStringValue4.Type != JTokenType.Null)
+                                    {
+                                        string connectionStringInstance4 = ((string)connectionStringValue4);
+                                        onPremisesOracleLinkedServiceInstance.ConnectionString = connectionStringInstance4;
+                                    }
+                                    
+                                    JToken gatewayNameValue6 = propertiesValue["gatewayName"];
+                                    if (gatewayNameValue6 != null && gatewayNameValue6.Type != JTokenType.Null)
+                                    {
+                                        string gatewayNameInstance6 = ((string)gatewayNameValue6);
+                                        onPremisesOracleLinkedServiceInstance.GatewayName = gatewayNameInstance6;
+                                    }
+                                    
+                                    JToken userNameValue3 = propertiesValue["userName"];
+                                    if (userNameValue3 != null && userNameValue3.Type != JTokenType.Null)
+                                    {
+                                        string userNameInstance3 = ((string)userNameValue3);
+                                        onPremisesOracleLinkedServiceInstance.UserName = userNameInstance3;
+                                    }
+                                    
+                                    JToken passwordValue8 = propertiesValue["password"];
+                                    if (passwordValue8 != null && passwordValue8.Type != JTokenType.Null)
+                                    {
+                                        string passwordInstance8 = ((string)passwordValue8);
+                                        onPremisesOracleLinkedServiceInstance.Password = passwordInstance8;
+                                    }
+                                    
+                                    JToken descriptionValue15 = propertiesValue["description"];
+                                    if (descriptionValue15 != null && descriptionValue15.Type != JTokenType.Null)
+                                    {
+                                        string descriptionInstance15 = ((string)descriptionValue15);
+                                        onPremisesOracleLinkedServiceInstance.Description = descriptionInstance15;
+                                    }
+                                    
+                                    JToken provisioningStateValue15 = propertiesValue["provisioningState"];
+                                    if (provisioningStateValue15 != null && provisioningStateValue15.Type != JTokenType.Null)
+                                    {
+                                        string provisioningStateInstance15 = ((string)provisioningStateValue15);
+                                        onPremisesOracleLinkedServiceInstance.ProvisioningState = provisioningStateInstance15;
+                                    }
+                                    
+                                    JToken hubNameValue15 = propertiesValue["hubName"];
+                                    if (hubNameValue15 != null && hubNameValue15.Type != JTokenType.Null)
+                                    {
+                                        string hubNameInstance15 = ((string)hubNameValue15);
+                                        onPremisesOracleLinkedServiceInstance.HubName = hubNameInstance15;
+                                    }
+                                    
+                                    JToken errorMessageValue15 = propertiesValue["errorMessage"];
+                                    if (errorMessageValue15 != null && errorMessageValue15.Type != JTokenType.Null)
+                                    {
+                                        string errorMessageInstance15 = ((string)errorMessageValue15);
+                                        onPremisesOracleLinkedServiceInstance.ErrorMessage = errorMessageInstance15;
                                     }
                                     linkedServiceInstance.Properties = onPremisesOracleLinkedServiceInstance;
                                 }
@@ -3463,67 +4164,67 @@ namespace Microsoft.Azure.Management.DataFactories
                                         onPremisesPostgreSqlLinkedServiceInstance.Schema = schemaInstance3;
                                     }
                                     
-                                    JToken authenticationTypeValue3 = propertiesValue["authenticationType"];
-                                    if (authenticationTypeValue3 != null && authenticationTypeValue3.Type != JTokenType.Null)
+                                    JToken authenticationTypeValue6 = propertiesValue["authenticationType"];
+                                    if (authenticationTypeValue6 != null && authenticationTypeValue6.Type != JTokenType.Null)
                                     {
-                                        string authenticationTypeInstance3 = ((string)authenticationTypeValue3);
-                                        onPremisesPostgreSqlLinkedServiceInstance.AuthenticationType = authenticationTypeInstance3;
+                                        string authenticationTypeInstance6 = ((string)authenticationTypeValue6);
+                                        onPremisesPostgreSqlLinkedServiceInstance.AuthenticationType = authenticationTypeInstance6;
                                     }
                                     
-                                    JToken usernameValue3 = propertiesValue["username"];
-                                    if (usernameValue3 != null && usernameValue3.Type != JTokenType.Null)
+                                    JToken usernameValue5 = propertiesValue["username"];
+                                    if (usernameValue5 != null && usernameValue5.Type != JTokenType.Null)
                                     {
-                                        string usernameInstance3 = ((string)usernameValue3);
-                                        onPremisesPostgreSqlLinkedServiceInstance.Username = usernameInstance3;
+                                        string usernameInstance5 = ((string)usernameValue5);
+                                        onPremisesPostgreSqlLinkedServiceInstance.Username = usernameInstance5;
                                     }
                                     
-                                    JToken passwordValue6 = propertiesValue["password"];
-                                    if (passwordValue6 != null && passwordValue6.Type != JTokenType.Null)
+                                    JToken passwordValue9 = propertiesValue["password"];
+                                    if (passwordValue9 != null && passwordValue9.Type != JTokenType.Null)
                                     {
-                                        string passwordInstance6 = ((string)passwordValue6);
-                                        onPremisesPostgreSqlLinkedServiceInstance.Password = passwordInstance6;
+                                        string passwordInstance9 = ((string)passwordValue9);
+                                        onPremisesPostgreSqlLinkedServiceInstance.Password = passwordInstance9;
                                     }
                                     
-                                    JToken gatewayNameValue5 = propertiesValue["gatewayName"];
-                                    if (gatewayNameValue5 != null && gatewayNameValue5.Type != JTokenType.Null)
+                                    JToken gatewayNameValue7 = propertiesValue["gatewayName"];
+                                    if (gatewayNameValue7 != null && gatewayNameValue7.Type != JTokenType.Null)
                                     {
-                                        string gatewayNameInstance5 = ((string)gatewayNameValue5);
-                                        onPremisesPostgreSqlLinkedServiceInstance.GatewayName = gatewayNameInstance5;
+                                        string gatewayNameInstance7 = ((string)gatewayNameValue7);
+                                        onPremisesPostgreSqlLinkedServiceInstance.GatewayName = gatewayNameInstance7;
                                     }
                                     
-                                    JToken encryptedCredentialValue4 = propertiesValue["encryptedCredential"];
-                                    if (encryptedCredentialValue4 != null && encryptedCredentialValue4.Type != JTokenType.Null)
+                                    JToken encryptedCredentialValue5 = propertiesValue["encryptedCredential"];
+                                    if (encryptedCredentialValue5 != null && encryptedCredentialValue5.Type != JTokenType.Null)
                                     {
-                                        string encryptedCredentialInstance4 = ((string)encryptedCredentialValue4);
-                                        onPremisesPostgreSqlLinkedServiceInstance.EncryptedCredential = encryptedCredentialInstance4;
+                                        string encryptedCredentialInstance5 = ((string)encryptedCredentialValue5);
+                                        onPremisesPostgreSqlLinkedServiceInstance.EncryptedCredential = encryptedCredentialInstance5;
                                     }
                                     
-                                    JToken descriptionValue12 = propertiesValue["description"];
-                                    if (descriptionValue12 != null && descriptionValue12.Type != JTokenType.Null)
+                                    JToken descriptionValue16 = propertiesValue["description"];
+                                    if (descriptionValue16 != null && descriptionValue16.Type != JTokenType.Null)
                                     {
-                                        string descriptionInstance12 = ((string)descriptionValue12);
-                                        onPremisesPostgreSqlLinkedServiceInstance.Description = descriptionInstance12;
+                                        string descriptionInstance16 = ((string)descriptionValue16);
+                                        onPremisesPostgreSqlLinkedServiceInstance.Description = descriptionInstance16;
                                     }
                                     
-                                    JToken provisioningStateValue12 = propertiesValue["provisioningState"];
-                                    if (provisioningStateValue12 != null && provisioningStateValue12.Type != JTokenType.Null)
+                                    JToken provisioningStateValue16 = propertiesValue["provisioningState"];
+                                    if (provisioningStateValue16 != null && provisioningStateValue16.Type != JTokenType.Null)
                                     {
-                                        string provisioningStateInstance12 = ((string)provisioningStateValue12);
-                                        onPremisesPostgreSqlLinkedServiceInstance.ProvisioningState = provisioningStateInstance12;
+                                        string provisioningStateInstance16 = ((string)provisioningStateValue16);
+                                        onPremisesPostgreSqlLinkedServiceInstance.ProvisioningState = provisioningStateInstance16;
                                     }
                                     
-                                    JToken hubNameValue12 = propertiesValue["hubName"];
-                                    if (hubNameValue12 != null && hubNameValue12.Type != JTokenType.Null)
+                                    JToken hubNameValue16 = propertiesValue["hubName"];
+                                    if (hubNameValue16 != null && hubNameValue16.Type != JTokenType.Null)
                                     {
-                                        string hubNameInstance12 = ((string)hubNameValue12);
-                                        onPremisesPostgreSqlLinkedServiceInstance.HubName = hubNameInstance12;
+                                        string hubNameInstance16 = ((string)hubNameValue16);
+                                        onPremisesPostgreSqlLinkedServiceInstance.HubName = hubNameInstance16;
                                     }
                                     
-                                    JToken errorMessageValue12 = propertiesValue["errorMessage"];
-                                    if (errorMessageValue12 != null && errorMessageValue12.Type != JTokenType.Null)
+                                    JToken errorMessageValue16 = propertiesValue["errorMessage"];
+                                    if (errorMessageValue16 != null && errorMessageValue16.Type != JTokenType.Null)
                                     {
-                                        string errorMessageInstance12 = ((string)errorMessageValue12);
-                                        onPremisesPostgreSqlLinkedServiceInstance.ErrorMessage = errorMessageInstance12;
+                                        string errorMessageInstance16 = ((string)errorMessageValue16);
+                                        onPremisesPostgreSqlLinkedServiceInstance.ErrorMessage = errorMessageInstance16;
                                     }
                                     linkedServiceInstance.Properties = onPremisesPostgreSqlLinkedServiceInstance;
                                 }
@@ -3531,60 +4232,60 @@ namespace Microsoft.Azure.Management.DataFactories
                                 {
                                     OnPremisesSqlLinkedService onPremisesSqlLinkedServiceInstance = new OnPremisesSqlLinkedService();
                                     
-                                    JToken connectionStringValue4 = propertiesValue["connectionString"];
-                                    if (connectionStringValue4 != null && connectionStringValue4.Type != JTokenType.Null)
+                                    JToken connectionStringValue5 = propertiesValue["connectionString"];
+                                    if (connectionStringValue5 != null && connectionStringValue5.Type != JTokenType.Null)
                                     {
-                                        string connectionStringInstance4 = ((string)connectionStringValue4);
-                                        onPremisesSqlLinkedServiceInstance.ConnectionString = connectionStringInstance4;
+                                        string connectionStringInstance5 = ((string)connectionStringValue5);
+                                        onPremisesSqlLinkedServiceInstance.ConnectionString = connectionStringInstance5;
                                     }
                                     
-                                    JToken gatewayNameValue6 = propertiesValue["gatewayName"];
-                                    if (gatewayNameValue6 != null && gatewayNameValue6.Type != JTokenType.Null)
+                                    JToken gatewayNameValue8 = propertiesValue["gatewayName"];
+                                    if (gatewayNameValue8 != null && gatewayNameValue8.Type != JTokenType.Null)
                                     {
-                                        string gatewayNameInstance6 = ((string)gatewayNameValue6);
-                                        onPremisesSqlLinkedServiceInstance.GatewayName = gatewayNameInstance6;
+                                        string gatewayNameInstance8 = ((string)gatewayNameValue8);
+                                        onPremisesSqlLinkedServiceInstance.GatewayName = gatewayNameInstance8;
                                     }
                                     
-                                    JToken userNameValue3 = propertiesValue["userName"];
-                                    if (userNameValue3 != null && userNameValue3.Type != JTokenType.Null)
+                                    JToken userNameValue4 = propertiesValue["userName"];
+                                    if (userNameValue4 != null && userNameValue4.Type != JTokenType.Null)
                                     {
-                                        string userNameInstance3 = ((string)userNameValue3);
-                                        onPremisesSqlLinkedServiceInstance.UserName = userNameInstance3;
+                                        string userNameInstance4 = ((string)userNameValue4);
+                                        onPremisesSqlLinkedServiceInstance.UserName = userNameInstance4;
                                     }
                                     
-                                    JToken passwordValue7 = propertiesValue["password"];
-                                    if (passwordValue7 != null && passwordValue7.Type != JTokenType.Null)
+                                    JToken passwordValue10 = propertiesValue["password"];
+                                    if (passwordValue10 != null && passwordValue10.Type != JTokenType.Null)
                                     {
-                                        string passwordInstance7 = ((string)passwordValue7);
-                                        onPremisesSqlLinkedServiceInstance.Password = passwordInstance7;
+                                        string passwordInstance10 = ((string)passwordValue10);
+                                        onPremisesSqlLinkedServiceInstance.Password = passwordInstance10;
                                     }
                                     
-                                    JToken descriptionValue13 = propertiesValue["description"];
-                                    if (descriptionValue13 != null && descriptionValue13.Type != JTokenType.Null)
+                                    JToken descriptionValue17 = propertiesValue["description"];
+                                    if (descriptionValue17 != null && descriptionValue17.Type != JTokenType.Null)
                                     {
-                                        string descriptionInstance13 = ((string)descriptionValue13);
-                                        onPremisesSqlLinkedServiceInstance.Description = descriptionInstance13;
+                                        string descriptionInstance17 = ((string)descriptionValue17);
+                                        onPremisesSqlLinkedServiceInstance.Description = descriptionInstance17;
                                     }
                                     
-                                    JToken provisioningStateValue13 = propertiesValue["provisioningState"];
-                                    if (provisioningStateValue13 != null && provisioningStateValue13.Type != JTokenType.Null)
+                                    JToken provisioningStateValue17 = propertiesValue["provisioningState"];
+                                    if (provisioningStateValue17 != null && provisioningStateValue17.Type != JTokenType.Null)
                                     {
-                                        string provisioningStateInstance13 = ((string)provisioningStateValue13);
-                                        onPremisesSqlLinkedServiceInstance.ProvisioningState = provisioningStateInstance13;
+                                        string provisioningStateInstance17 = ((string)provisioningStateValue17);
+                                        onPremisesSqlLinkedServiceInstance.ProvisioningState = provisioningStateInstance17;
                                     }
                                     
-                                    JToken hubNameValue13 = propertiesValue["hubName"];
-                                    if (hubNameValue13 != null && hubNameValue13.Type != JTokenType.Null)
+                                    JToken hubNameValue17 = propertiesValue["hubName"];
+                                    if (hubNameValue17 != null && hubNameValue17.Type != JTokenType.Null)
                                     {
-                                        string hubNameInstance13 = ((string)hubNameValue13);
-                                        onPremisesSqlLinkedServiceInstance.HubName = hubNameInstance13;
+                                        string hubNameInstance17 = ((string)hubNameValue17);
+                                        onPremisesSqlLinkedServiceInstance.HubName = hubNameInstance17;
                                     }
                                     
-                                    JToken errorMessageValue13 = propertiesValue["errorMessage"];
-                                    if (errorMessageValue13 != null && errorMessageValue13.Type != JTokenType.Null)
+                                    JToken errorMessageValue17 = propertiesValue["errorMessage"];
+                                    if (errorMessageValue17 != null && errorMessageValue17.Type != JTokenType.Null)
                                     {
-                                        string errorMessageInstance13 = ((string)errorMessageValue13);
-                                        onPremisesSqlLinkedServiceInstance.ErrorMessage = errorMessageInstance13;
+                                        string errorMessageInstance17 = ((string)errorMessageValue17);
+                                        onPremisesSqlLinkedServiceInstance.ErrorMessage = errorMessageInstance17;
                                     }
                                     linkedServiceInstance.Properties = onPremisesSqlLinkedServiceInstance;
                                 }
@@ -3613,67 +4314,67 @@ namespace Microsoft.Azure.Management.DataFactories
                                         onPremisesSybaseLinkedServiceInstance.Schema = schemaInstance4;
                                     }
                                     
-                                    JToken authenticationTypeValue4 = propertiesValue["authenticationType"];
-                                    if (authenticationTypeValue4 != null && authenticationTypeValue4.Type != JTokenType.Null)
+                                    JToken authenticationTypeValue7 = propertiesValue["authenticationType"];
+                                    if (authenticationTypeValue7 != null && authenticationTypeValue7.Type != JTokenType.Null)
                                     {
-                                        string authenticationTypeInstance4 = ((string)authenticationTypeValue4);
-                                        onPremisesSybaseLinkedServiceInstance.AuthenticationType = authenticationTypeInstance4;
+                                        string authenticationTypeInstance7 = ((string)authenticationTypeValue7);
+                                        onPremisesSybaseLinkedServiceInstance.AuthenticationType = authenticationTypeInstance7;
                                     }
                                     
-                                    JToken usernameValue4 = propertiesValue["username"];
-                                    if (usernameValue4 != null && usernameValue4.Type != JTokenType.Null)
+                                    JToken usernameValue6 = propertiesValue["username"];
+                                    if (usernameValue6 != null && usernameValue6.Type != JTokenType.Null)
                                     {
-                                        string usernameInstance4 = ((string)usernameValue4);
-                                        onPremisesSybaseLinkedServiceInstance.Username = usernameInstance4;
+                                        string usernameInstance6 = ((string)usernameValue6);
+                                        onPremisesSybaseLinkedServiceInstance.Username = usernameInstance6;
                                     }
                                     
-                                    JToken passwordValue8 = propertiesValue["password"];
-                                    if (passwordValue8 != null && passwordValue8.Type != JTokenType.Null)
+                                    JToken passwordValue11 = propertiesValue["password"];
+                                    if (passwordValue11 != null && passwordValue11.Type != JTokenType.Null)
                                     {
-                                        string passwordInstance8 = ((string)passwordValue8);
-                                        onPremisesSybaseLinkedServiceInstance.Password = passwordInstance8;
+                                        string passwordInstance11 = ((string)passwordValue11);
+                                        onPremisesSybaseLinkedServiceInstance.Password = passwordInstance11;
                                     }
                                     
-                                    JToken gatewayNameValue7 = propertiesValue["gatewayName"];
-                                    if (gatewayNameValue7 != null && gatewayNameValue7.Type != JTokenType.Null)
+                                    JToken gatewayNameValue9 = propertiesValue["gatewayName"];
+                                    if (gatewayNameValue9 != null && gatewayNameValue9.Type != JTokenType.Null)
                                     {
-                                        string gatewayNameInstance7 = ((string)gatewayNameValue7);
-                                        onPremisesSybaseLinkedServiceInstance.GatewayName = gatewayNameInstance7;
+                                        string gatewayNameInstance9 = ((string)gatewayNameValue9);
+                                        onPremisesSybaseLinkedServiceInstance.GatewayName = gatewayNameInstance9;
                                     }
                                     
-                                    JToken encryptedCredentialValue5 = propertiesValue["encryptedCredential"];
-                                    if (encryptedCredentialValue5 != null && encryptedCredentialValue5.Type != JTokenType.Null)
+                                    JToken encryptedCredentialValue6 = propertiesValue["encryptedCredential"];
+                                    if (encryptedCredentialValue6 != null && encryptedCredentialValue6.Type != JTokenType.Null)
                                     {
-                                        string encryptedCredentialInstance5 = ((string)encryptedCredentialValue5);
-                                        onPremisesSybaseLinkedServiceInstance.EncryptedCredential = encryptedCredentialInstance5;
+                                        string encryptedCredentialInstance6 = ((string)encryptedCredentialValue6);
+                                        onPremisesSybaseLinkedServiceInstance.EncryptedCredential = encryptedCredentialInstance6;
                                     }
                                     
-                                    JToken descriptionValue14 = propertiesValue["description"];
-                                    if (descriptionValue14 != null && descriptionValue14.Type != JTokenType.Null)
+                                    JToken descriptionValue18 = propertiesValue["description"];
+                                    if (descriptionValue18 != null && descriptionValue18.Type != JTokenType.Null)
                                     {
-                                        string descriptionInstance14 = ((string)descriptionValue14);
-                                        onPremisesSybaseLinkedServiceInstance.Description = descriptionInstance14;
+                                        string descriptionInstance18 = ((string)descriptionValue18);
+                                        onPremisesSybaseLinkedServiceInstance.Description = descriptionInstance18;
                                     }
                                     
-                                    JToken provisioningStateValue14 = propertiesValue["provisioningState"];
-                                    if (provisioningStateValue14 != null && provisioningStateValue14.Type != JTokenType.Null)
+                                    JToken provisioningStateValue18 = propertiesValue["provisioningState"];
+                                    if (provisioningStateValue18 != null && provisioningStateValue18.Type != JTokenType.Null)
                                     {
-                                        string provisioningStateInstance14 = ((string)provisioningStateValue14);
-                                        onPremisesSybaseLinkedServiceInstance.ProvisioningState = provisioningStateInstance14;
+                                        string provisioningStateInstance18 = ((string)provisioningStateValue18);
+                                        onPremisesSybaseLinkedServiceInstance.ProvisioningState = provisioningStateInstance18;
                                     }
                                     
-                                    JToken hubNameValue14 = propertiesValue["hubName"];
-                                    if (hubNameValue14 != null && hubNameValue14.Type != JTokenType.Null)
+                                    JToken hubNameValue18 = propertiesValue["hubName"];
+                                    if (hubNameValue18 != null && hubNameValue18.Type != JTokenType.Null)
                                     {
-                                        string hubNameInstance14 = ((string)hubNameValue14);
-                                        onPremisesSybaseLinkedServiceInstance.HubName = hubNameInstance14;
+                                        string hubNameInstance18 = ((string)hubNameValue18);
+                                        onPremisesSybaseLinkedServiceInstance.HubName = hubNameInstance18;
                                     }
                                     
-                                    JToken errorMessageValue14 = propertiesValue["errorMessage"];
-                                    if (errorMessageValue14 != null && errorMessageValue14.Type != JTokenType.Null)
+                                    JToken errorMessageValue18 = propertiesValue["errorMessage"];
+                                    if (errorMessageValue18 != null && errorMessageValue18.Type != JTokenType.Null)
                                     {
-                                        string errorMessageInstance14 = ((string)errorMessageValue14);
-                                        onPremisesSybaseLinkedServiceInstance.ErrorMessage = errorMessageInstance14;
+                                        string errorMessageInstance18 = ((string)errorMessageValue18);
+                                        onPremisesSybaseLinkedServiceInstance.ErrorMessage = errorMessageInstance18;
                                     }
                                     linkedServiceInstance.Properties = onPremisesSybaseLinkedServiceInstance;
                                 }
@@ -3702,67 +4403,67 @@ namespace Microsoft.Azure.Management.DataFactories
                                         onPremisesTeradataLinkedServiceInstance.Schema = schemaInstance5;
                                     }
                                     
-                                    JToken authenticationTypeValue5 = propertiesValue["authenticationType"];
-                                    if (authenticationTypeValue5 != null && authenticationTypeValue5.Type != JTokenType.Null)
+                                    JToken authenticationTypeValue8 = propertiesValue["authenticationType"];
+                                    if (authenticationTypeValue8 != null && authenticationTypeValue8.Type != JTokenType.Null)
                                     {
-                                        string authenticationTypeInstance5 = ((string)authenticationTypeValue5);
-                                        onPremisesTeradataLinkedServiceInstance.AuthenticationType = authenticationTypeInstance5;
+                                        string authenticationTypeInstance8 = ((string)authenticationTypeValue8);
+                                        onPremisesTeradataLinkedServiceInstance.AuthenticationType = authenticationTypeInstance8;
                                     }
                                     
-                                    JToken usernameValue5 = propertiesValue["username"];
-                                    if (usernameValue5 != null && usernameValue5.Type != JTokenType.Null)
+                                    JToken usernameValue7 = propertiesValue["username"];
+                                    if (usernameValue7 != null && usernameValue7.Type != JTokenType.Null)
                                     {
-                                        string usernameInstance5 = ((string)usernameValue5);
-                                        onPremisesTeradataLinkedServiceInstance.Username = usernameInstance5;
+                                        string usernameInstance7 = ((string)usernameValue7);
+                                        onPremisesTeradataLinkedServiceInstance.Username = usernameInstance7;
                                     }
                                     
-                                    JToken passwordValue9 = propertiesValue["password"];
-                                    if (passwordValue9 != null && passwordValue9.Type != JTokenType.Null)
+                                    JToken passwordValue12 = propertiesValue["password"];
+                                    if (passwordValue12 != null && passwordValue12.Type != JTokenType.Null)
                                     {
-                                        string passwordInstance9 = ((string)passwordValue9);
-                                        onPremisesTeradataLinkedServiceInstance.Password = passwordInstance9;
+                                        string passwordInstance12 = ((string)passwordValue12);
+                                        onPremisesTeradataLinkedServiceInstance.Password = passwordInstance12;
                                     }
                                     
-                                    JToken gatewayNameValue8 = propertiesValue["gatewayName"];
-                                    if (gatewayNameValue8 != null && gatewayNameValue8.Type != JTokenType.Null)
+                                    JToken gatewayNameValue10 = propertiesValue["gatewayName"];
+                                    if (gatewayNameValue10 != null && gatewayNameValue10.Type != JTokenType.Null)
                                     {
-                                        string gatewayNameInstance8 = ((string)gatewayNameValue8);
-                                        onPremisesTeradataLinkedServiceInstance.GatewayName = gatewayNameInstance8;
+                                        string gatewayNameInstance10 = ((string)gatewayNameValue10);
+                                        onPremisesTeradataLinkedServiceInstance.GatewayName = gatewayNameInstance10;
                                     }
                                     
-                                    JToken encryptedCredentialValue6 = propertiesValue["encryptedCredential"];
-                                    if (encryptedCredentialValue6 != null && encryptedCredentialValue6.Type != JTokenType.Null)
+                                    JToken encryptedCredentialValue7 = propertiesValue["encryptedCredential"];
+                                    if (encryptedCredentialValue7 != null && encryptedCredentialValue7.Type != JTokenType.Null)
                                     {
-                                        string encryptedCredentialInstance6 = ((string)encryptedCredentialValue6);
-                                        onPremisesTeradataLinkedServiceInstance.EncryptedCredential = encryptedCredentialInstance6;
+                                        string encryptedCredentialInstance7 = ((string)encryptedCredentialValue7);
+                                        onPremisesTeradataLinkedServiceInstance.EncryptedCredential = encryptedCredentialInstance7;
                                     }
                                     
-                                    JToken descriptionValue15 = propertiesValue["description"];
-                                    if (descriptionValue15 != null && descriptionValue15.Type != JTokenType.Null)
+                                    JToken descriptionValue19 = propertiesValue["description"];
+                                    if (descriptionValue19 != null && descriptionValue19.Type != JTokenType.Null)
                                     {
-                                        string descriptionInstance15 = ((string)descriptionValue15);
-                                        onPremisesTeradataLinkedServiceInstance.Description = descriptionInstance15;
+                                        string descriptionInstance19 = ((string)descriptionValue19);
+                                        onPremisesTeradataLinkedServiceInstance.Description = descriptionInstance19;
                                     }
                                     
-                                    JToken provisioningStateValue15 = propertiesValue["provisioningState"];
-                                    if (provisioningStateValue15 != null && provisioningStateValue15.Type != JTokenType.Null)
+                                    JToken provisioningStateValue19 = propertiesValue["provisioningState"];
+                                    if (provisioningStateValue19 != null && provisioningStateValue19.Type != JTokenType.Null)
                                     {
-                                        string provisioningStateInstance15 = ((string)provisioningStateValue15);
-                                        onPremisesTeradataLinkedServiceInstance.ProvisioningState = provisioningStateInstance15;
+                                        string provisioningStateInstance19 = ((string)provisioningStateValue19);
+                                        onPremisesTeradataLinkedServiceInstance.ProvisioningState = provisioningStateInstance19;
                                     }
                                     
-                                    JToken hubNameValue15 = propertiesValue["hubName"];
-                                    if (hubNameValue15 != null && hubNameValue15.Type != JTokenType.Null)
+                                    JToken hubNameValue19 = propertiesValue["hubName"];
+                                    if (hubNameValue19 != null && hubNameValue19.Type != JTokenType.Null)
                                     {
-                                        string hubNameInstance15 = ((string)hubNameValue15);
-                                        onPremisesTeradataLinkedServiceInstance.HubName = hubNameInstance15;
+                                        string hubNameInstance19 = ((string)hubNameValue19);
+                                        onPremisesTeradataLinkedServiceInstance.HubName = hubNameInstance19;
                                     }
                                     
-                                    JToken errorMessageValue15 = propertiesValue["errorMessage"];
-                                    if (errorMessageValue15 != null && errorMessageValue15.Type != JTokenType.Null)
+                                    JToken errorMessageValue19 = propertiesValue["errorMessage"];
+                                    if (errorMessageValue19 != null && errorMessageValue19.Type != JTokenType.Null)
                                     {
-                                        string errorMessageInstance15 = ((string)errorMessageValue15);
-                                        onPremisesTeradataLinkedServiceInstance.ErrorMessage = errorMessageInstance15;
+                                        string errorMessageInstance19 = ((string)errorMessageValue19);
+                                        onPremisesTeradataLinkedServiceInstance.ErrorMessage = errorMessageInstance19;
                                     }
                                     linkedServiceInstance.Properties = onPremisesTeradataLinkedServiceInstance;
                                 }
@@ -4619,6 +5320,46 @@ namespace Microsoft.Azure.Management.DataFactories
                                     }
                                     linkedServiceInstance.Properties = customLinkedServiceInstance;
                                 }
+                                if (typeName == "DocumentDbLinkedService")
+                                {
+                                    DocumentDbLinkedService documentDbLinkedServiceInstance = new DocumentDbLinkedService();
+                                    
+                                    JToken connectionStringValue3 = propertiesValue["connectionString"];
+                                    if (connectionStringValue3 != null && connectionStringValue3.Type != JTokenType.Null)
+                                    {
+                                        string connectionStringInstance3 = ((string)connectionStringValue3);
+                                        documentDbLinkedServiceInstance.ConnectionString = connectionStringInstance3;
+                                    }
+                                    
+                                    JToken descriptionValue6 = propertiesValue["description"];
+                                    if (descriptionValue6 != null && descriptionValue6.Type != JTokenType.Null)
+                                    {
+                                        string descriptionInstance6 = ((string)descriptionValue6);
+                                        documentDbLinkedServiceInstance.Description = descriptionInstance6;
+                                    }
+                                    
+                                    JToken provisioningStateValue6 = propertiesValue["provisioningState"];
+                                    if (provisioningStateValue6 != null && provisioningStateValue6.Type != JTokenType.Null)
+                                    {
+                                        string provisioningStateInstance6 = ((string)provisioningStateValue6);
+                                        documentDbLinkedServiceInstance.ProvisioningState = provisioningStateInstance6;
+                                    }
+                                    
+                                    JToken hubNameValue6 = propertiesValue["hubName"];
+                                    if (hubNameValue6 != null && hubNameValue6.Type != JTokenType.Null)
+                                    {
+                                        string hubNameInstance6 = ((string)hubNameValue6);
+                                        documentDbLinkedServiceInstance.HubName = hubNameInstance6;
+                                    }
+                                    
+                                    JToken errorMessageValue6 = propertiesValue["errorMessage"];
+                                    if (errorMessageValue6 != null && errorMessageValue6.Type != JTokenType.Null)
+                                    {
+                                        string errorMessageInstance6 = ((string)errorMessageValue6);
+                                        documentDbLinkedServiceInstance.ErrorMessage = errorMessageInstance6;
+                                    }
+                                    linkedServiceInstance.Properties = documentDbLinkedServiceInstance;
+                                }
                                 if (typeName == "HDInsightBYOCLinkedService")
                                 {
                                     HDInsightBYOCLinkedService hDInsightBYOCLinkedServiceInstance = new HDInsightBYOCLinkedService();
@@ -4679,32 +5420,32 @@ namespace Microsoft.Azure.Management.DataFactories
                                         }
                                     }
                                     
-                                    JToken descriptionValue6 = propertiesValue["description"];
-                                    if (descriptionValue6 != null && descriptionValue6.Type != JTokenType.Null)
+                                    JToken descriptionValue7 = propertiesValue["description"];
+                                    if (descriptionValue7 != null && descriptionValue7.Type != JTokenType.Null)
                                     {
-                                        string descriptionInstance6 = ((string)descriptionValue6);
-                                        hDInsightBYOCLinkedServiceInstance.Description = descriptionInstance6;
+                                        string descriptionInstance7 = ((string)descriptionValue7);
+                                        hDInsightBYOCLinkedServiceInstance.Description = descriptionInstance7;
                                     }
                                     
-                                    JToken provisioningStateValue6 = propertiesValue["provisioningState"];
-                                    if (provisioningStateValue6 != null && provisioningStateValue6.Type != JTokenType.Null)
+                                    JToken provisioningStateValue7 = propertiesValue["provisioningState"];
+                                    if (provisioningStateValue7 != null && provisioningStateValue7.Type != JTokenType.Null)
                                     {
-                                        string provisioningStateInstance6 = ((string)provisioningStateValue6);
-                                        hDInsightBYOCLinkedServiceInstance.ProvisioningState = provisioningStateInstance6;
+                                        string provisioningStateInstance7 = ((string)provisioningStateValue7);
+                                        hDInsightBYOCLinkedServiceInstance.ProvisioningState = provisioningStateInstance7;
                                     }
                                     
-                                    JToken hubNameValue6 = propertiesValue["hubName"];
-                                    if (hubNameValue6 != null && hubNameValue6.Type != JTokenType.Null)
+                                    JToken hubNameValue7 = propertiesValue["hubName"];
+                                    if (hubNameValue7 != null && hubNameValue7.Type != JTokenType.Null)
                                     {
-                                        string hubNameInstance6 = ((string)hubNameValue6);
-                                        hDInsightBYOCLinkedServiceInstance.HubName = hubNameInstance6;
+                                        string hubNameInstance7 = ((string)hubNameValue7);
+                                        hDInsightBYOCLinkedServiceInstance.HubName = hubNameInstance7;
                                     }
                                     
-                                    JToken errorMessageValue6 = propertiesValue["errorMessage"];
-                                    if (errorMessageValue6 != null && errorMessageValue6.Type != JTokenType.Null)
+                                    JToken errorMessageValue7 = propertiesValue["errorMessage"];
+                                    if (errorMessageValue7 != null && errorMessageValue7.Type != JTokenType.Null)
                                     {
-                                        string errorMessageInstance6 = ((string)errorMessageValue6);
-                                        hDInsightBYOCLinkedServiceInstance.ErrorMessage = errorMessageInstance6;
+                                        string errorMessageInstance7 = ((string)errorMessageValue7);
+                                        hDInsightBYOCLinkedServiceInstance.ErrorMessage = errorMessageInstance7;
                                     }
                                     linkedServiceInstance.Properties = hDInsightBYOCLinkedServiceInstance;
                                 }
@@ -4939,34 +5680,95 @@ namespace Microsoft.Azure.Management.DataFactories
                                         hDInsightOnDemandLinkedServiceInstance.SshUserName = sshUserNameInstance;
                                     }
                                     
-                                    JToken descriptionValue7 = propertiesValue["description"];
-                                    if (descriptionValue7 != null && descriptionValue7.Type != JTokenType.Null)
+                                    JToken descriptionValue8 = propertiesValue["description"];
+                                    if (descriptionValue8 != null && descriptionValue8.Type != JTokenType.Null)
                                     {
-                                        string descriptionInstance7 = ((string)descriptionValue7);
-                                        hDInsightOnDemandLinkedServiceInstance.Description = descriptionInstance7;
+                                        string descriptionInstance8 = ((string)descriptionValue8);
+                                        hDInsightOnDemandLinkedServiceInstance.Description = descriptionInstance8;
                                     }
                                     
-                                    JToken provisioningStateValue7 = propertiesValue["provisioningState"];
-                                    if (provisioningStateValue7 != null && provisioningStateValue7.Type != JTokenType.Null)
+                                    JToken provisioningStateValue8 = propertiesValue["provisioningState"];
+                                    if (provisioningStateValue8 != null && provisioningStateValue8.Type != JTokenType.Null)
                                     {
-                                        string provisioningStateInstance7 = ((string)provisioningStateValue7);
-                                        hDInsightOnDemandLinkedServiceInstance.ProvisioningState = provisioningStateInstance7;
+                                        string provisioningStateInstance8 = ((string)provisioningStateValue8);
+                                        hDInsightOnDemandLinkedServiceInstance.ProvisioningState = provisioningStateInstance8;
                                     }
                                     
-                                    JToken hubNameValue7 = propertiesValue["hubName"];
-                                    if (hubNameValue7 != null && hubNameValue7.Type != JTokenType.Null)
+                                    JToken hubNameValue8 = propertiesValue["hubName"];
+                                    if (hubNameValue8 != null && hubNameValue8.Type != JTokenType.Null)
                                     {
-                                        string hubNameInstance7 = ((string)hubNameValue7);
-                                        hDInsightOnDemandLinkedServiceInstance.HubName = hubNameInstance7;
+                                        string hubNameInstance8 = ((string)hubNameValue8);
+                                        hDInsightOnDemandLinkedServiceInstance.HubName = hubNameInstance8;
                                     }
                                     
-                                    JToken errorMessageValue7 = propertiesValue["errorMessage"];
-                                    if (errorMessageValue7 != null && errorMessageValue7.Type != JTokenType.Null)
+                                    JToken errorMessageValue8 = propertiesValue["errorMessage"];
+                                    if (errorMessageValue8 != null && errorMessageValue8.Type != JTokenType.Null)
                                     {
-                                        string errorMessageInstance7 = ((string)errorMessageValue7);
-                                        hDInsightOnDemandLinkedServiceInstance.ErrorMessage = errorMessageInstance7;
+                                        string errorMessageInstance8 = ((string)errorMessageValue8);
+                                        hDInsightOnDemandLinkedServiceInstance.ErrorMessage = errorMessageInstance8;
                                     }
                                     linkedServiceInstance.Properties = hDInsightOnDemandLinkedServiceInstance;
+                                }
+                                if (typeName == "ODataLinkedService")
+                                {
+                                    ODataLinkedService oDataLinkedServiceInstance = new ODataLinkedService();
+                                    
+                                    JToken urlValue = propertiesValue["url"];
+                                    if (urlValue != null && urlValue.Type != JTokenType.Null)
+                                    {
+                                        string urlInstance = ((string)urlValue);
+                                        oDataLinkedServiceInstance.Url = urlInstance;
+                                    }
+                                    
+                                    JToken authenticationTypeValue = propertiesValue["authenticationType"];
+                                    if (authenticationTypeValue != null && authenticationTypeValue.Type != JTokenType.Null)
+                                    {
+                                        string authenticationTypeInstance = ((string)authenticationTypeValue);
+                                        oDataLinkedServiceInstance.AuthenticationType = authenticationTypeInstance;
+                                    }
+                                    
+                                    JToken usernameValue = propertiesValue["username"];
+                                    if (usernameValue != null && usernameValue.Type != JTokenType.Null)
+                                    {
+                                        string usernameInstance = ((string)usernameValue);
+                                        oDataLinkedServiceInstance.Username = usernameInstance;
+                                    }
+                                    
+                                    JToken passwordValue2 = propertiesValue["password"];
+                                    if (passwordValue2 != null && passwordValue2.Type != JTokenType.Null)
+                                    {
+                                        string passwordInstance2 = ((string)passwordValue2);
+                                        oDataLinkedServiceInstance.Password = passwordInstance2;
+                                    }
+                                    
+                                    JToken descriptionValue9 = propertiesValue["description"];
+                                    if (descriptionValue9 != null && descriptionValue9.Type != JTokenType.Null)
+                                    {
+                                        string descriptionInstance9 = ((string)descriptionValue9);
+                                        oDataLinkedServiceInstance.Description = descriptionInstance9;
+                                    }
+                                    
+                                    JToken provisioningStateValue9 = propertiesValue["provisioningState"];
+                                    if (provisioningStateValue9 != null && provisioningStateValue9.Type != JTokenType.Null)
+                                    {
+                                        string provisioningStateInstance9 = ((string)provisioningStateValue9);
+                                        oDataLinkedServiceInstance.ProvisioningState = provisioningStateInstance9;
+                                    }
+                                    
+                                    JToken hubNameValue9 = propertiesValue["hubName"];
+                                    if (hubNameValue9 != null && hubNameValue9.Type != JTokenType.Null)
+                                    {
+                                        string hubNameInstance9 = ((string)hubNameValue9);
+                                        oDataLinkedServiceInstance.HubName = hubNameInstance9;
+                                    }
+                                    
+                                    JToken errorMessageValue9 = propertiesValue["errorMessage"];
+                                    if (errorMessageValue9 != null && errorMessageValue9.Type != JTokenType.Null)
+                                    {
+                                        string errorMessageInstance9 = ((string)errorMessageValue9);
+                                        oDataLinkedServiceInstance.ErrorMessage = errorMessageInstance9;
+                                    }
+                                    linkedServiceInstance.Properties = oDataLinkedServiceInstance;
                                 }
                                 if (typeName == "OnPremisesDb2LinkedService")
                                 {
@@ -4993,25 +5795,25 @@ namespace Microsoft.Azure.Management.DataFactories
                                         onPremisesDb2LinkedServiceInstance.Schema = schemaInstance;
                                     }
                                     
-                                    JToken authenticationTypeValue = propertiesValue["authenticationType"];
-                                    if (authenticationTypeValue != null && authenticationTypeValue.Type != JTokenType.Null)
+                                    JToken authenticationTypeValue2 = propertiesValue["authenticationType"];
+                                    if (authenticationTypeValue2 != null && authenticationTypeValue2.Type != JTokenType.Null)
                                     {
-                                        string authenticationTypeInstance = ((string)authenticationTypeValue);
-                                        onPremisesDb2LinkedServiceInstance.AuthenticationType = authenticationTypeInstance;
+                                        string authenticationTypeInstance2 = ((string)authenticationTypeValue2);
+                                        onPremisesDb2LinkedServiceInstance.AuthenticationType = authenticationTypeInstance2;
                                     }
                                     
-                                    JToken usernameValue = propertiesValue["username"];
-                                    if (usernameValue != null && usernameValue.Type != JTokenType.Null)
+                                    JToken usernameValue2 = propertiesValue["username"];
+                                    if (usernameValue2 != null && usernameValue2.Type != JTokenType.Null)
                                     {
-                                        string usernameInstance = ((string)usernameValue);
-                                        onPremisesDb2LinkedServiceInstance.Username = usernameInstance;
+                                        string usernameInstance2 = ((string)usernameValue2);
+                                        onPremisesDb2LinkedServiceInstance.Username = usernameInstance2;
                                     }
                                     
-                                    JToken passwordValue2 = propertiesValue["password"];
-                                    if (passwordValue2 != null && passwordValue2.Type != JTokenType.Null)
+                                    JToken passwordValue3 = propertiesValue["password"];
+                                    if (passwordValue3 != null && passwordValue3.Type != JTokenType.Null)
                                     {
-                                        string passwordInstance2 = ((string)passwordValue2);
-                                        onPremisesDb2LinkedServiceInstance.Password = passwordInstance2;
+                                        string passwordInstance3 = ((string)passwordValue3);
+                                        onPremisesDb2LinkedServiceInstance.Password = passwordInstance3;
                                     }
                                     
                                     JToken gatewayNameValue = propertiesValue["gatewayName"];
@@ -5028,32 +5830,32 @@ namespace Microsoft.Azure.Management.DataFactories
                                         onPremisesDb2LinkedServiceInstance.EncryptedCredential = encryptedCredentialInstance;
                                     }
                                     
-                                    JToken descriptionValue8 = propertiesValue["description"];
-                                    if (descriptionValue8 != null && descriptionValue8.Type != JTokenType.Null)
+                                    JToken descriptionValue10 = propertiesValue["description"];
+                                    if (descriptionValue10 != null && descriptionValue10.Type != JTokenType.Null)
                                     {
-                                        string descriptionInstance8 = ((string)descriptionValue8);
-                                        onPremisesDb2LinkedServiceInstance.Description = descriptionInstance8;
+                                        string descriptionInstance10 = ((string)descriptionValue10);
+                                        onPremisesDb2LinkedServiceInstance.Description = descriptionInstance10;
                                     }
                                     
-                                    JToken provisioningStateValue8 = propertiesValue["provisioningState"];
-                                    if (provisioningStateValue8 != null && provisioningStateValue8.Type != JTokenType.Null)
+                                    JToken provisioningStateValue10 = propertiesValue["provisioningState"];
+                                    if (provisioningStateValue10 != null && provisioningStateValue10.Type != JTokenType.Null)
                                     {
-                                        string provisioningStateInstance8 = ((string)provisioningStateValue8);
-                                        onPremisesDb2LinkedServiceInstance.ProvisioningState = provisioningStateInstance8;
+                                        string provisioningStateInstance10 = ((string)provisioningStateValue10);
+                                        onPremisesDb2LinkedServiceInstance.ProvisioningState = provisioningStateInstance10;
                                     }
                                     
-                                    JToken hubNameValue8 = propertiesValue["hubName"];
-                                    if (hubNameValue8 != null && hubNameValue8.Type != JTokenType.Null)
+                                    JToken hubNameValue10 = propertiesValue["hubName"];
+                                    if (hubNameValue10 != null && hubNameValue10.Type != JTokenType.Null)
                                     {
-                                        string hubNameInstance8 = ((string)hubNameValue8);
-                                        onPremisesDb2LinkedServiceInstance.HubName = hubNameInstance8;
+                                        string hubNameInstance10 = ((string)hubNameValue10);
+                                        onPremisesDb2LinkedServiceInstance.HubName = hubNameInstance10;
                                     }
                                     
-                                    JToken errorMessageValue8 = propertiesValue["errorMessage"];
-                                    if (errorMessageValue8 != null && errorMessageValue8.Type != JTokenType.Null)
+                                    JToken errorMessageValue10 = propertiesValue["errorMessage"];
+                                    if (errorMessageValue10 != null && errorMessageValue10.Type != JTokenType.Null)
                                     {
-                                        string errorMessageInstance8 = ((string)errorMessageValue8);
-                                        onPremisesDb2LinkedServiceInstance.ErrorMessage = errorMessageInstance8;
+                                        string errorMessageInstance10 = ((string)errorMessageValue10);
+                                        onPremisesDb2LinkedServiceInstance.ErrorMessage = errorMessageInstance10;
                                     }
                                     linkedServiceInstance.Properties = onPremisesDb2LinkedServiceInstance;
                                 }
@@ -5082,11 +5884,11 @@ namespace Microsoft.Azure.Management.DataFactories
                                         onPremisesFileSystemLinkedServiceInstance.UserId = userIdInstance;
                                     }
                                     
-                                    JToken passwordValue3 = propertiesValue["password"];
-                                    if (passwordValue3 != null && passwordValue3.Type != JTokenType.Null)
+                                    JToken passwordValue4 = propertiesValue["password"];
+                                    if (passwordValue4 != null && passwordValue4.Type != JTokenType.Null)
                                     {
-                                        string passwordInstance3 = ((string)passwordValue3);
-                                        onPremisesFileSystemLinkedServiceInstance.Password = passwordInstance3;
+                                        string passwordInstance4 = ((string)passwordValue4);
+                                        onPremisesFileSystemLinkedServiceInstance.Password = passwordInstance4;
                                     }
                                     
                                     JToken encryptedCredentialValue2 = propertiesValue["encryptedCredential"];
@@ -5096,34 +5898,116 @@ namespace Microsoft.Azure.Management.DataFactories
                                         onPremisesFileSystemLinkedServiceInstance.EncryptedCredential = encryptedCredentialInstance2;
                                     }
                                     
-                                    JToken descriptionValue9 = propertiesValue["description"];
-                                    if (descriptionValue9 != null && descriptionValue9.Type != JTokenType.Null)
+                                    JToken descriptionValue11 = propertiesValue["description"];
+                                    if (descriptionValue11 != null && descriptionValue11.Type != JTokenType.Null)
                                     {
-                                        string descriptionInstance9 = ((string)descriptionValue9);
-                                        onPremisesFileSystemLinkedServiceInstance.Description = descriptionInstance9;
+                                        string descriptionInstance11 = ((string)descriptionValue11);
+                                        onPremisesFileSystemLinkedServiceInstance.Description = descriptionInstance11;
                                     }
                                     
-                                    JToken provisioningStateValue9 = propertiesValue["provisioningState"];
-                                    if (provisioningStateValue9 != null && provisioningStateValue9.Type != JTokenType.Null)
+                                    JToken provisioningStateValue11 = propertiesValue["provisioningState"];
+                                    if (provisioningStateValue11 != null && provisioningStateValue11.Type != JTokenType.Null)
                                     {
-                                        string provisioningStateInstance9 = ((string)provisioningStateValue9);
-                                        onPremisesFileSystemLinkedServiceInstance.ProvisioningState = provisioningStateInstance9;
+                                        string provisioningStateInstance11 = ((string)provisioningStateValue11);
+                                        onPremisesFileSystemLinkedServiceInstance.ProvisioningState = provisioningStateInstance11;
                                     }
                                     
-                                    JToken hubNameValue9 = propertiesValue["hubName"];
-                                    if (hubNameValue9 != null && hubNameValue9.Type != JTokenType.Null)
+                                    JToken hubNameValue11 = propertiesValue["hubName"];
+                                    if (hubNameValue11 != null && hubNameValue11.Type != JTokenType.Null)
                                     {
-                                        string hubNameInstance9 = ((string)hubNameValue9);
-                                        onPremisesFileSystemLinkedServiceInstance.HubName = hubNameInstance9;
+                                        string hubNameInstance11 = ((string)hubNameValue11);
+                                        onPremisesFileSystemLinkedServiceInstance.HubName = hubNameInstance11;
                                     }
                                     
-                                    JToken errorMessageValue9 = propertiesValue["errorMessage"];
-                                    if (errorMessageValue9 != null && errorMessageValue9.Type != JTokenType.Null)
+                                    JToken errorMessageValue11 = propertiesValue["errorMessage"];
+                                    if (errorMessageValue11 != null && errorMessageValue11.Type != JTokenType.Null)
                                     {
-                                        string errorMessageInstance9 = ((string)errorMessageValue9);
-                                        onPremisesFileSystemLinkedServiceInstance.ErrorMessage = errorMessageInstance9;
+                                        string errorMessageInstance11 = ((string)errorMessageValue11);
+                                        onPremisesFileSystemLinkedServiceInstance.ErrorMessage = errorMessageInstance11;
                                     }
                                     linkedServiceInstance.Properties = onPremisesFileSystemLinkedServiceInstance;
+                                }
+                                if (typeName == "OnPremisesHdfsLinkedService")
+                                {
+                                    OnPremisesHdfsLinkedService onPremisesHdfsLinkedServiceInstance = new OnPremisesHdfsLinkedService();
+                                    
+                                    JToken urlValue2 = propertiesValue["url"];
+                                    if (urlValue2 != null && urlValue2.Type != JTokenType.Null)
+                                    {
+                                        string urlInstance2 = ((string)urlValue2);
+                                        onPremisesHdfsLinkedServiceInstance.Url = urlInstance2;
+                                    }
+                                    
+                                    JToken contentTypeValue = propertiesValue["contentType"];
+                                    if (contentTypeValue != null && contentTypeValue.Type != JTokenType.Null)
+                                    {
+                                        string contentTypeInstance = ((string)contentTypeValue);
+                                        onPremisesHdfsLinkedServiceInstance.ContentType = contentTypeInstance;
+                                    }
+                                    
+                                    JToken authenticationTypeValue3 = propertiesValue["authenticationType"];
+                                    if (authenticationTypeValue3 != null && authenticationTypeValue3.Type != JTokenType.Null)
+                                    {
+                                        string authenticationTypeInstance3 = ((string)authenticationTypeValue3);
+                                        onPremisesHdfsLinkedServiceInstance.AuthenticationType = authenticationTypeInstance3;
+                                    }
+                                    
+                                    JToken usernameValue3 = propertiesValue["username"];
+                                    if (usernameValue3 != null && usernameValue3.Type != JTokenType.Null)
+                                    {
+                                        string usernameInstance3 = ((string)usernameValue3);
+                                        onPremisesHdfsLinkedServiceInstance.Username = usernameInstance3;
+                                    }
+                                    
+                                    JToken passwordValue5 = propertiesValue["password"];
+                                    if (passwordValue5 != null && passwordValue5.Type != JTokenType.Null)
+                                    {
+                                        string passwordInstance5 = ((string)passwordValue5);
+                                        onPremisesHdfsLinkedServiceInstance.Password = passwordInstance5;
+                                    }
+                                    
+                                    JToken gatewayNameValue3 = propertiesValue["gatewayName"];
+                                    if (gatewayNameValue3 != null && gatewayNameValue3.Type != JTokenType.Null)
+                                    {
+                                        string gatewayNameInstance3 = ((string)gatewayNameValue3);
+                                        onPremisesHdfsLinkedServiceInstance.GatewayName = gatewayNameInstance3;
+                                    }
+                                    
+                                    JToken encryptedCredentialValue3 = propertiesValue["encryptedCredential"];
+                                    if (encryptedCredentialValue3 != null && encryptedCredentialValue3.Type != JTokenType.Null)
+                                    {
+                                        string encryptedCredentialInstance3 = ((string)encryptedCredentialValue3);
+                                        onPremisesHdfsLinkedServiceInstance.EncryptedCredential = encryptedCredentialInstance3;
+                                    }
+                                    
+                                    JToken descriptionValue12 = propertiesValue["description"];
+                                    if (descriptionValue12 != null && descriptionValue12.Type != JTokenType.Null)
+                                    {
+                                        string descriptionInstance12 = ((string)descriptionValue12);
+                                        onPremisesHdfsLinkedServiceInstance.Description = descriptionInstance12;
+                                    }
+                                    
+                                    JToken provisioningStateValue12 = propertiesValue["provisioningState"];
+                                    if (provisioningStateValue12 != null && provisioningStateValue12.Type != JTokenType.Null)
+                                    {
+                                        string provisioningStateInstance12 = ((string)provisioningStateValue12);
+                                        onPremisesHdfsLinkedServiceInstance.ProvisioningState = provisioningStateInstance12;
+                                    }
+                                    
+                                    JToken hubNameValue12 = propertiesValue["hubName"];
+                                    if (hubNameValue12 != null && hubNameValue12.Type != JTokenType.Null)
+                                    {
+                                        string hubNameInstance12 = ((string)hubNameValue12);
+                                        onPremisesHdfsLinkedServiceInstance.HubName = hubNameInstance12;
+                                    }
+                                    
+                                    JToken errorMessageValue12 = propertiesValue["errorMessage"];
+                                    if (errorMessageValue12 != null && errorMessageValue12.Type != JTokenType.Null)
+                                    {
+                                        string errorMessageInstance12 = ((string)errorMessageValue12);
+                                        onPremisesHdfsLinkedServiceInstance.ErrorMessage = errorMessageInstance12;
+                                    }
+                                    linkedServiceInstance.Properties = onPremisesHdfsLinkedServiceInstance;
                                 }
                                 if (typeName == "OnPremisesMySqlLinkedService")
                                 {
@@ -5150,128 +6034,210 @@ namespace Microsoft.Azure.Management.DataFactories
                                         onPremisesMySqlLinkedServiceInstance.Schema = schemaInstance2;
                                     }
                                     
-                                    JToken authenticationTypeValue2 = propertiesValue["authenticationType"];
-                                    if (authenticationTypeValue2 != null && authenticationTypeValue2.Type != JTokenType.Null)
+                                    JToken authenticationTypeValue4 = propertiesValue["authenticationType"];
+                                    if (authenticationTypeValue4 != null && authenticationTypeValue4.Type != JTokenType.Null)
                                     {
-                                        string authenticationTypeInstance2 = ((string)authenticationTypeValue2);
-                                        onPremisesMySqlLinkedServiceInstance.AuthenticationType = authenticationTypeInstance2;
+                                        string authenticationTypeInstance4 = ((string)authenticationTypeValue4);
+                                        onPremisesMySqlLinkedServiceInstance.AuthenticationType = authenticationTypeInstance4;
                                     }
                                     
-                                    JToken usernameValue2 = propertiesValue["username"];
-                                    if (usernameValue2 != null && usernameValue2.Type != JTokenType.Null)
+                                    JToken usernameValue4 = propertiesValue["username"];
+                                    if (usernameValue4 != null && usernameValue4.Type != JTokenType.Null)
                                     {
-                                        string usernameInstance2 = ((string)usernameValue2);
-                                        onPremisesMySqlLinkedServiceInstance.Username = usernameInstance2;
+                                        string usernameInstance4 = ((string)usernameValue4);
+                                        onPremisesMySqlLinkedServiceInstance.Username = usernameInstance4;
                                     }
                                     
-                                    JToken passwordValue4 = propertiesValue["password"];
-                                    if (passwordValue4 != null && passwordValue4.Type != JTokenType.Null)
+                                    JToken passwordValue6 = propertiesValue["password"];
+                                    if (passwordValue6 != null && passwordValue6.Type != JTokenType.Null)
                                     {
-                                        string passwordInstance4 = ((string)passwordValue4);
-                                        onPremisesMySqlLinkedServiceInstance.Password = passwordInstance4;
-                                    }
-                                    
-                                    JToken gatewayNameValue3 = propertiesValue["gatewayName"];
-                                    if (gatewayNameValue3 != null && gatewayNameValue3.Type != JTokenType.Null)
-                                    {
-                                        string gatewayNameInstance3 = ((string)gatewayNameValue3);
-                                        onPremisesMySqlLinkedServiceInstance.GatewayName = gatewayNameInstance3;
-                                    }
-                                    
-                                    JToken encryptedCredentialValue3 = propertiesValue["encryptedCredential"];
-                                    if (encryptedCredentialValue3 != null && encryptedCredentialValue3.Type != JTokenType.Null)
-                                    {
-                                        string encryptedCredentialInstance3 = ((string)encryptedCredentialValue3);
-                                        onPremisesMySqlLinkedServiceInstance.EncryptedCredential = encryptedCredentialInstance3;
-                                    }
-                                    
-                                    JToken descriptionValue10 = propertiesValue["description"];
-                                    if (descriptionValue10 != null && descriptionValue10.Type != JTokenType.Null)
-                                    {
-                                        string descriptionInstance10 = ((string)descriptionValue10);
-                                        onPremisesMySqlLinkedServiceInstance.Description = descriptionInstance10;
-                                    }
-                                    
-                                    JToken provisioningStateValue10 = propertiesValue["provisioningState"];
-                                    if (provisioningStateValue10 != null && provisioningStateValue10.Type != JTokenType.Null)
-                                    {
-                                        string provisioningStateInstance10 = ((string)provisioningStateValue10);
-                                        onPremisesMySqlLinkedServiceInstance.ProvisioningState = provisioningStateInstance10;
-                                    }
-                                    
-                                    JToken hubNameValue10 = propertiesValue["hubName"];
-                                    if (hubNameValue10 != null && hubNameValue10.Type != JTokenType.Null)
-                                    {
-                                        string hubNameInstance10 = ((string)hubNameValue10);
-                                        onPremisesMySqlLinkedServiceInstance.HubName = hubNameInstance10;
-                                    }
-                                    
-                                    JToken errorMessageValue10 = propertiesValue["errorMessage"];
-                                    if (errorMessageValue10 != null && errorMessageValue10.Type != JTokenType.Null)
-                                    {
-                                        string errorMessageInstance10 = ((string)errorMessageValue10);
-                                        onPremisesMySqlLinkedServiceInstance.ErrorMessage = errorMessageInstance10;
-                                    }
-                                    linkedServiceInstance.Properties = onPremisesMySqlLinkedServiceInstance;
-                                }
-                                if (typeName == "OnPremisesOracleLinkedService")
-                                {
-                                    OnPremisesOracleLinkedService onPremisesOracleLinkedServiceInstance = new OnPremisesOracleLinkedService();
-                                    
-                                    JToken connectionStringValue3 = propertiesValue["connectionString"];
-                                    if (connectionStringValue3 != null && connectionStringValue3.Type != JTokenType.Null)
-                                    {
-                                        string connectionStringInstance3 = ((string)connectionStringValue3);
-                                        onPremisesOracleLinkedServiceInstance.ConnectionString = connectionStringInstance3;
+                                        string passwordInstance6 = ((string)passwordValue6);
+                                        onPremisesMySqlLinkedServiceInstance.Password = passwordInstance6;
                                     }
                                     
                                     JToken gatewayNameValue4 = propertiesValue["gatewayName"];
                                     if (gatewayNameValue4 != null && gatewayNameValue4.Type != JTokenType.Null)
                                     {
                                         string gatewayNameInstance4 = ((string)gatewayNameValue4);
-                                        onPremisesOracleLinkedServiceInstance.GatewayName = gatewayNameInstance4;
+                                        onPremisesMySqlLinkedServiceInstance.GatewayName = gatewayNameInstance4;
+                                    }
+                                    
+                                    JToken encryptedCredentialValue4 = propertiesValue["encryptedCredential"];
+                                    if (encryptedCredentialValue4 != null && encryptedCredentialValue4.Type != JTokenType.Null)
+                                    {
+                                        string encryptedCredentialInstance4 = ((string)encryptedCredentialValue4);
+                                        onPremisesMySqlLinkedServiceInstance.EncryptedCredential = encryptedCredentialInstance4;
+                                    }
+                                    
+                                    JToken descriptionValue13 = propertiesValue["description"];
+                                    if (descriptionValue13 != null && descriptionValue13.Type != JTokenType.Null)
+                                    {
+                                        string descriptionInstance13 = ((string)descriptionValue13);
+                                        onPremisesMySqlLinkedServiceInstance.Description = descriptionInstance13;
+                                    }
+                                    
+                                    JToken provisioningStateValue13 = propertiesValue["provisioningState"];
+                                    if (provisioningStateValue13 != null && provisioningStateValue13.Type != JTokenType.Null)
+                                    {
+                                        string provisioningStateInstance13 = ((string)provisioningStateValue13);
+                                        onPremisesMySqlLinkedServiceInstance.ProvisioningState = provisioningStateInstance13;
+                                    }
+                                    
+                                    JToken hubNameValue13 = propertiesValue["hubName"];
+                                    if (hubNameValue13 != null && hubNameValue13.Type != JTokenType.Null)
+                                    {
+                                        string hubNameInstance13 = ((string)hubNameValue13);
+                                        onPremisesMySqlLinkedServiceInstance.HubName = hubNameInstance13;
+                                    }
+                                    
+                                    JToken errorMessageValue13 = propertiesValue["errorMessage"];
+                                    if (errorMessageValue13 != null && errorMessageValue13.Type != JTokenType.Null)
+                                    {
+                                        string errorMessageInstance13 = ((string)errorMessageValue13);
+                                        onPremisesMySqlLinkedServiceInstance.ErrorMessage = errorMessageInstance13;
+                                    }
+                                    linkedServiceInstance.Properties = onPremisesMySqlLinkedServiceInstance;
+                                }
+                                if (typeName == "OnPremisesOdbcLinkedService")
+                                {
+                                    OnPremisesOdbcLinkedService onPremisesOdbcLinkedServiceInstance = new OnPremisesOdbcLinkedService();
+                                    
+                                    JToken nonCredentialConnectionStringValue = propertiesValue["nonCredentialConnectionString"];
+                                    if (nonCredentialConnectionStringValue != null && nonCredentialConnectionStringValue.Type != JTokenType.Null)
+                                    {
+                                        string nonCredentialConnectionStringInstance = ((string)nonCredentialConnectionStringValue);
+                                        onPremisesOdbcLinkedServiceInstance.NonCredentialConnectionString = nonCredentialConnectionStringInstance;
+                                    }
+                                    
+                                    JToken credentialConnectionStringValue = propertiesValue["credentialConnectionString"];
+                                    if (credentialConnectionStringValue != null && credentialConnectionStringValue.Type != JTokenType.Null)
+                                    {
+                                        string credentialConnectionStringInstance = ((string)credentialConnectionStringValue);
+                                        onPremisesOdbcLinkedServiceInstance.CredentialConnectionString = credentialConnectionStringInstance;
+                                    }
+                                    
+                                    JToken encryptedCredentialConnectionStringValue = propertiesValue["encryptedCredentialConnectionString"];
+                                    if (encryptedCredentialConnectionStringValue != null && encryptedCredentialConnectionStringValue.Type != JTokenType.Null)
+                                    {
+                                        string encryptedCredentialConnectionStringInstance = ((string)encryptedCredentialConnectionStringValue);
+                                        onPremisesOdbcLinkedServiceInstance.EncryptedCredentialConnectionString = encryptedCredentialConnectionStringInstance;
                                     }
                                     
                                     JToken userNameValue2 = propertiesValue["userName"];
                                     if (userNameValue2 != null && userNameValue2.Type != JTokenType.Null)
                                     {
                                         string userNameInstance2 = ((string)userNameValue2);
-                                        onPremisesOracleLinkedServiceInstance.UserName = userNameInstance2;
+                                        onPremisesOdbcLinkedServiceInstance.UserName = userNameInstance2;
                                     }
                                     
-                                    JToken passwordValue5 = propertiesValue["password"];
-                                    if (passwordValue5 != null && passwordValue5.Type != JTokenType.Null)
+                                    JToken passwordValue7 = propertiesValue["password"];
+                                    if (passwordValue7 != null && passwordValue7.Type != JTokenType.Null)
                                     {
-                                        string passwordInstance5 = ((string)passwordValue5);
-                                        onPremisesOracleLinkedServiceInstance.Password = passwordInstance5;
+                                        string passwordInstance7 = ((string)passwordValue7);
+                                        onPremisesOdbcLinkedServiceInstance.Password = passwordInstance7;
                                     }
                                     
-                                    JToken descriptionValue11 = propertiesValue["description"];
-                                    if (descriptionValue11 != null && descriptionValue11.Type != JTokenType.Null)
+                                    JToken gatewayNameValue5 = propertiesValue["gatewayName"];
+                                    if (gatewayNameValue5 != null && gatewayNameValue5.Type != JTokenType.Null)
                                     {
-                                        string descriptionInstance11 = ((string)descriptionValue11);
-                                        onPremisesOracleLinkedServiceInstance.Description = descriptionInstance11;
+                                        string gatewayNameInstance5 = ((string)gatewayNameValue5);
+                                        onPremisesOdbcLinkedServiceInstance.GatewayName = gatewayNameInstance5;
                                     }
                                     
-                                    JToken provisioningStateValue11 = propertiesValue["provisioningState"];
-                                    if (provisioningStateValue11 != null && provisioningStateValue11.Type != JTokenType.Null)
+                                    JToken authenticationTypeValue5 = propertiesValue["authenticationType"];
+                                    if (authenticationTypeValue5 != null && authenticationTypeValue5.Type != JTokenType.Null)
                                     {
-                                        string provisioningStateInstance11 = ((string)provisioningStateValue11);
-                                        onPremisesOracleLinkedServiceInstance.ProvisioningState = provisioningStateInstance11;
+                                        string authenticationTypeInstance5 = ((string)authenticationTypeValue5);
+                                        onPremisesOdbcLinkedServiceInstance.AuthenticationType = authenticationTypeInstance5;
                                     }
                                     
-                                    JToken hubNameValue11 = propertiesValue["hubName"];
-                                    if (hubNameValue11 != null && hubNameValue11.Type != JTokenType.Null)
+                                    JToken descriptionValue14 = propertiesValue["description"];
+                                    if (descriptionValue14 != null && descriptionValue14.Type != JTokenType.Null)
                                     {
-                                        string hubNameInstance11 = ((string)hubNameValue11);
-                                        onPremisesOracleLinkedServiceInstance.HubName = hubNameInstance11;
+                                        string descriptionInstance14 = ((string)descriptionValue14);
+                                        onPremisesOdbcLinkedServiceInstance.Description = descriptionInstance14;
                                     }
                                     
-                                    JToken errorMessageValue11 = propertiesValue["errorMessage"];
-                                    if (errorMessageValue11 != null && errorMessageValue11.Type != JTokenType.Null)
+                                    JToken provisioningStateValue14 = propertiesValue["provisioningState"];
+                                    if (provisioningStateValue14 != null && provisioningStateValue14.Type != JTokenType.Null)
                                     {
-                                        string errorMessageInstance11 = ((string)errorMessageValue11);
-                                        onPremisesOracleLinkedServiceInstance.ErrorMessage = errorMessageInstance11;
+                                        string provisioningStateInstance14 = ((string)provisioningStateValue14);
+                                        onPremisesOdbcLinkedServiceInstance.ProvisioningState = provisioningStateInstance14;
+                                    }
+                                    
+                                    JToken hubNameValue14 = propertiesValue["hubName"];
+                                    if (hubNameValue14 != null && hubNameValue14.Type != JTokenType.Null)
+                                    {
+                                        string hubNameInstance14 = ((string)hubNameValue14);
+                                        onPremisesOdbcLinkedServiceInstance.HubName = hubNameInstance14;
+                                    }
+                                    
+                                    JToken errorMessageValue14 = propertiesValue["errorMessage"];
+                                    if (errorMessageValue14 != null && errorMessageValue14.Type != JTokenType.Null)
+                                    {
+                                        string errorMessageInstance14 = ((string)errorMessageValue14);
+                                        onPremisesOdbcLinkedServiceInstance.ErrorMessage = errorMessageInstance14;
+                                    }
+                                    linkedServiceInstance.Properties = onPremisesOdbcLinkedServiceInstance;
+                                }
+                                if (typeName == "OnPremisesOracleLinkedService")
+                                {
+                                    OnPremisesOracleLinkedService onPremisesOracleLinkedServiceInstance = new OnPremisesOracleLinkedService();
+                                    
+                                    JToken connectionStringValue4 = propertiesValue["connectionString"];
+                                    if (connectionStringValue4 != null && connectionStringValue4.Type != JTokenType.Null)
+                                    {
+                                        string connectionStringInstance4 = ((string)connectionStringValue4);
+                                        onPremisesOracleLinkedServiceInstance.ConnectionString = connectionStringInstance4;
+                                    }
+                                    
+                                    JToken gatewayNameValue6 = propertiesValue["gatewayName"];
+                                    if (gatewayNameValue6 != null && gatewayNameValue6.Type != JTokenType.Null)
+                                    {
+                                        string gatewayNameInstance6 = ((string)gatewayNameValue6);
+                                        onPremisesOracleLinkedServiceInstance.GatewayName = gatewayNameInstance6;
+                                    }
+                                    
+                                    JToken userNameValue3 = propertiesValue["userName"];
+                                    if (userNameValue3 != null && userNameValue3.Type != JTokenType.Null)
+                                    {
+                                        string userNameInstance3 = ((string)userNameValue3);
+                                        onPremisesOracleLinkedServiceInstance.UserName = userNameInstance3;
+                                    }
+                                    
+                                    JToken passwordValue8 = propertiesValue["password"];
+                                    if (passwordValue8 != null && passwordValue8.Type != JTokenType.Null)
+                                    {
+                                        string passwordInstance8 = ((string)passwordValue8);
+                                        onPremisesOracleLinkedServiceInstance.Password = passwordInstance8;
+                                    }
+                                    
+                                    JToken descriptionValue15 = propertiesValue["description"];
+                                    if (descriptionValue15 != null && descriptionValue15.Type != JTokenType.Null)
+                                    {
+                                        string descriptionInstance15 = ((string)descriptionValue15);
+                                        onPremisesOracleLinkedServiceInstance.Description = descriptionInstance15;
+                                    }
+                                    
+                                    JToken provisioningStateValue15 = propertiesValue["provisioningState"];
+                                    if (provisioningStateValue15 != null && provisioningStateValue15.Type != JTokenType.Null)
+                                    {
+                                        string provisioningStateInstance15 = ((string)provisioningStateValue15);
+                                        onPremisesOracleLinkedServiceInstance.ProvisioningState = provisioningStateInstance15;
+                                    }
+                                    
+                                    JToken hubNameValue15 = propertiesValue["hubName"];
+                                    if (hubNameValue15 != null && hubNameValue15.Type != JTokenType.Null)
+                                    {
+                                        string hubNameInstance15 = ((string)hubNameValue15);
+                                        onPremisesOracleLinkedServiceInstance.HubName = hubNameInstance15;
+                                    }
+                                    
+                                    JToken errorMessageValue15 = propertiesValue["errorMessage"];
+                                    if (errorMessageValue15 != null && errorMessageValue15.Type != JTokenType.Null)
+                                    {
+                                        string errorMessageInstance15 = ((string)errorMessageValue15);
+                                        onPremisesOracleLinkedServiceInstance.ErrorMessage = errorMessageInstance15;
                                     }
                                     linkedServiceInstance.Properties = onPremisesOracleLinkedServiceInstance;
                                 }
@@ -5300,67 +6266,67 @@ namespace Microsoft.Azure.Management.DataFactories
                                         onPremisesPostgreSqlLinkedServiceInstance.Schema = schemaInstance3;
                                     }
                                     
-                                    JToken authenticationTypeValue3 = propertiesValue["authenticationType"];
-                                    if (authenticationTypeValue3 != null && authenticationTypeValue3.Type != JTokenType.Null)
+                                    JToken authenticationTypeValue6 = propertiesValue["authenticationType"];
+                                    if (authenticationTypeValue6 != null && authenticationTypeValue6.Type != JTokenType.Null)
                                     {
-                                        string authenticationTypeInstance3 = ((string)authenticationTypeValue3);
-                                        onPremisesPostgreSqlLinkedServiceInstance.AuthenticationType = authenticationTypeInstance3;
+                                        string authenticationTypeInstance6 = ((string)authenticationTypeValue6);
+                                        onPremisesPostgreSqlLinkedServiceInstance.AuthenticationType = authenticationTypeInstance6;
                                     }
                                     
-                                    JToken usernameValue3 = propertiesValue["username"];
-                                    if (usernameValue3 != null && usernameValue3.Type != JTokenType.Null)
+                                    JToken usernameValue5 = propertiesValue["username"];
+                                    if (usernameValue5 != null && usernameValue5.Type != JTokenType.Null)
                                     {
-                                        string usernameInstance3 = ((string)usernameValue3);
-                                        onPremisesPostgreSqlLinkedServiceInstance.Username = usernameInstance3;
+                                        string usernameInstance5 = ((string)usernameValue5);
+                                        onPremisesPostgreSqlLinkedServiceInstance.Username = usernameInstance5;
                                     }
                                     
-                                    JToken passwordValue6 = propertiesValue["password"];
-                                    if (passwordValue6 != null && passwordValue6.Type != JTokenType.Null)
+                                    JToken passwordValue9 = propertiesValue["password"];
+                                    if (passwordValue9 != null && passwordValue9.Type != JTokenType.Null)
                                     {
-                                        string passwordInstance6 = ((string)passwordValue6);
-                                        onPremisesPostgreSqlLinkedServiceInstance.Password = passwordInstance6;
+                                        string passwordInstance9 = ((string)passwordValue9);
+                                        onPremisesPostgreSqlLinkedServiceInstance.Password = passwordInstance9;
                                     }
                                     
-                                    JToken gatewayNameValue5 = propertiesValue["gatewayName"];
-                                    if (gatewayNameValue5 != null && gatewayNameValue5.Type != JTokenType.Null)
+                                    JToken gatewayNameValue7 = propertiesValue["gatewayName"];
+                                    if (gatewayNameValue7 != null && gatewayNameValue7.Type != JTokenType.Null)
                                     {
-                                        string gatewayNameInstance5 = ((string)gatewayNameValue5);
-                                        onPremisesPostgreSqlLinkedServiceInstance.GatewayName = gatewayNameInstance5;
+                                        string gatewayNameInstance7 = ((string)gatewayNameValue7);
+                                        onPremisesPostgreSqlLinkedServiceInstance.GatewayName = gatewayNameInstance7;
                                     }
                                     
-                                    JToken encryptedCredentialValue4 = propertiesValue["encryptedCredential"];
-                                    if (encryptedCredentialValue4 != null && encryptedCredentialValue4.Type != JTokenType.Null)
+                                    JToken encryptedCredentialValue5 = propertiesValue["encryptedCredential"];
+                                    if (encryptedCredentialValue5 != null && encryptedCredentialValue5.Type != JTokenType.Null)
                                     {
-                                        string encryptedCredentialInstance4 = ((string)encryptedCredentialValue4);
-                                        onPremisesPostgreSqlLinkedServiceInstance.EncryptedCredential = encryptedCredentialInstance4;
+                                        string encryptedCredentialInstance5 = ((string)encryptedCredentialValue5);
+                                        onPremisesPostgreSqlLinkedServiceInstance.EncryptedCredential = encryptedCredentialInstance5;
                                     }
                                     
-                                    JToken descriptionValue12 = propertiesValue["description"];
-                                    if (descriptionValue12 != null && descriptionValue12.Type != JTokenType.Null)
+                                    JToken descriptionValue16 = propertiesValue["description"];
+                                    if (descriptionValue16 != null && descriptionValue16.Type != JTokenType.Null)
                                     {
-                                        string descriptionInstance12 = ((string)descriptionValue12);
-                                        onPremisesPostgreSqlLinkedServiceInstance.Description = descriptionInstance12;
+                                        string descriptionInstance16 = ((string)descriptionValue16);
+                                        onPremisesPostgreSqlLinkedServiceInstance.Description = descriptionInstance16;
                                     }
                                     
-                                    JToken provisioningStateValue12 = propertiesValue["provisioningState"];
-                                    if (provisioningStateValue12 != null && provisioningStateValue12.Type != JTokenType.Null)
+                                    JToken provisioningStateValue16 = propertiesValue["provisioningState"];
+                                    if (provisioningStateValue16 != null && provisioningStateValue16.Type != JTokenType.Null)
                                     {
-                                        string provisioningStateInstance12 = ((string)provisioningStateValue12);
-                                        onPremisesPostgreSqlLinkedServiceInstance.ProvisioningState = provisioningStateInstance12;
+                                        string provisioningStateInstance16 = ((string)provisioningStateValue16);
+                                        onPremisesPostgreSqlLinkedServiceInstance.ProvisioningState = provisioningStateInstance16;
                                     }
                                     
-                                    JToken hubNameValue12 = propertiesValue["hubName"];
-                                    if (hubNameValue12 != null && hubNameValue12.Type != JTokenType.Null)
+                                    JToken hubNameValue16 = propertiesValue["hubName"];
+                                    if (hubNameValue16 != null && hubNameValue16.Type != JTokenType.Null)
                                     {
-                                        string hubNameInstance12 = ((string)hubNameValue12);
-                                        onPremisesPostgreSqlLinkedServiceInstance.HubName = hubNameInstance12;
+                                        string hubNameInstance16 = ((string)hubNameValue16);
+                                        onPremisesPostgreSqlLinkedServiceInstance.HubName = hubNameInstance16;
                                     }
                                     
-                                    JToken errorMessageValue12 = propertiesValue["errorMessage"];
-                                    if (errorMessageValue12 != null && errorMessageValue12.Type != JTokenType.Null)
+                                    JToken errorMessageValue16 = propertiesValue["errorMessage"];
+                                    if (errorMessageValue16 != null && errorMessageValue16.Type != JTokenType.Null)
                                     {
-                                        string errorMessageInstance12 = ((string)errorMessageValue12);
-                                        onPremisesPostgreSqlLinkedServiceInstance.ErrorMessage = errorMessageInstance12;
+                                        string errorMessageInstance16 = ((string)errorMessageValue16);
+                                        onPremisesPostgreSqlLinkedServiceInstance.ErrorMessage = errorMessageInstance16;
                                     }
                                     linkedServiceInstance.Properties = onPremisesPostgreSqlLinkedServiceInstance;
                                 }
@@ -5368,60 +6334,60 @@ namespace Microsoft.Azure.Management.DataFactories
                                 {
                                     OnPremisesSqlLinkedService onPremisesSqlLinkedServiceInstance = new OnPremisesSqlLinkedService();
                                     
-                                    JToken connectionStringValue4 = propertiesValue["connectionString"];
-                                    if (connectionStringValue4 != null && connectionStringValue4.Type != JTokenType.Null)
+                                    JToken connectionStringValue5 = propertiesValue["connectionString"];
+                                    if (connectionStringValue5 != null && connectionStringValue5.Type != JTokenType.Null)
                                     {
-                                        string connectionStringInstance4 = ((string)connectionStringValue4);
-                                        onPremisesSqlLinkedServiceInstance.ConnectionString = connectionStringInstance4;
+                                        string connectionStringInstance5 = ((string)connectionStringValue5);
+                                        onPremisesSqlLinkedServiceInstance.ConnectionString = connectionStringInstance5;
                                     }
                                     
-                                    JToken gatewayNameValue6 = propertiesValue["gatewayName"];
-                                    if (gatewayNameValue6 != null && gatewayNameValue6.Type != JTokenType.Null)
+                                    JToken gatewayNameValue8 = propertiesValue["gatewayName"];
+                                    if (gatewayNameValue8 != null && gatewayNameValue8.Type != JTokenType.Null)
                                     {
-                                        string gatewayNameInstance6 = ((string)gatewayNameValue6);
-                                        onPremisesSqlLinkedServiceInstance.GatewayName = gatewayNameInstance6;
+                                        string gatewayNameInstance8 = ((string)gatewayNameValue8);
+                                        onPremisesSqlLinkedServiceInstance.GatewayName = gatewayNameInstance8;
                                     }
                                     
-                                    JToken userNameValue3 = propertiesValue["userName"];
-                                    if (userNameValue3 != null && userNameValue3.Type != JTokenType.Null)
+                                    JToken userNameValue4 = propertiesValue["userName"];
+                                    if (userNameValue4 != null && userNameValue4.Type != JTokenType.Null)
                                     {
-                                        string userNameInstance3 = ((string)userNameValue3);
-                                        onPremisesSqlLinkedServiceInstance.UserName = userNameInstance3;
+                                        string userNameInstance4 = ((string)userNameValue4);
+                                        onPremisesSqlLinkedServiceInstance.UserName = userNameInstance4;
                                     }
                                     
-                                    JToken passwordValue7 = propertiesValue["password"];
-                                    if (passwordValue7 != null && passwordValue7.Type != JTokenType.Null)
+                                    JToken passwordValue10 = propertiesValue["password"];
+                                    if (passwordValue10 != null && passwordValue10.Type != JTokenType.Null)
                                     {
-                                        string passwordInstance7 = ((string)passwordValue7);
-                                        onPremisesSqlLinkedServiceInstance.Password = passwordInstance7;
+                                        string passwordInstance10 = ((string)passwordValue10);
+                                        onPremisesSqlLinkedServiceInstance.Password = passwordInstance10;
                                     }
                                     
-                                    JToken descriptionValue13 = propertiesValue["description"];
-                                    if (descriptionValue13 != null && descriptionValue13.Type != JTokenType.Null)
+                                    JToken descriptionValue17 = propertiesValue["description"];
+                                    if (descriptionValue17 != null && descriptionValue17.Type != JTokenType.Null)
                                     {
-                                        string descriptionInstance13 = ((string)descriptionValue13);
-                                        onPremisesSqlLinkedServiceInstance.Description = descriptionInstance13;
+                                        string descriptionInstance17 = ((string)descriptionValue17);
+                                        onPremisesSqlLinkedServiceInstance.Description = descriptionInstance17;
                                     }
                                     
-                                    JToken provisioningStateValue13 = propertiesValue["provisioningState"];
-                                    if (provisioningStateValue13 != null && provisioningStateValue13.Type != JTokenType.Null)
+                                    JToken provisioningStateValue17 = propertiesValue["provisioningState"];
+                                    if (provisioningStateValue17 != null && provisioningStateValue17.Type != JTokenType.Null)
                                     {
-                                        string provisioningStateInstance13 = ((string)provisioningStateValue13);
-                                        onPremisesSqlLinkedServiceInstance.ProvisioningState = provisioningStateInstance13;
+                                        string provisioningStateInstance17 = ((string)provisioningStateValue17);
+                                        onPremisesSqlLinkedServiceInstance.ProvisioningState = provisioningStateInstance17;
                                     }
                                     
-                                    JToken hubNameValue13 = propertiesValue["hubName"];
-                                    if (hubNameValue13 != null && hubNameValue13.Type != JTokenType.Null)
+                                    JToken hubNameValue17 = propertiesValue["hubName"];
+                                    if (hubNameValue17 != null && hubNameValue17.Type != JTokenType.Null)
                                     {
-                                        string hubNameInstance13 = ((string)hubNameValue13);
-                                        onPremisesSqlLinkedServiceInstance.HubName = hubNameInstance13;
+                                        string hubNameInstance17 = ((string)hubNameValue17);
+                                        onPremisesSqlLinkedServiceInstance.HubName = hubNameInstance17;
                                     }
                                     
-                                    JToken errorMessageValue13 = propertiesValue["errorMessage"];
-                                    if (errorMessageValue13 != null && errorMessageValue13.Type != JTokenType.Null)
+                                    JToken errorMessageValue17 = propertiesValue["errorMessage"];
+                                    if (errorMessageValue17 != null && errorMessageValue17.Type != JTokenType.Null)
                                     {
-                                        string errorMessageInstance13 = ((string)errorMessageValue13);
-                                        onPremisesSqlLinkedServiceInstance.ErrorMessage = errorMessageInstance13;
+                                        string errorMessageInstance17 = ((string)errorMessageValue17);
+                                        onPremisesSqlLinkedServiceInstance.ErrorMessage = errorMessageInstance17;
                                     }
                                     linkedServiceInstance.Properties = onPremisesSqlLinkedServiceInstance;
                                 }
@@ -5450,67 +6416,67 @@ namespace Microsoft.Azure.Management.DataFactories
                                         onPremisesSybaseLinkedServiceInstance.Schema = schemaInstance4;
                                     }
                                     
-                                    JToken authenticationTypeValue4 = propertiesValue["authenticationType"];
-                                    if (authenticationTypeValue4 != null && authenticationTypeValue4.Type != JTokenType.Null)
+                                    JToken authenticationTypeValue7 = propertiesValue["authenticationType"];
+                                    if (authenticationTypeValue7 != null && authenticationTypeValue7.Type != JTokenType.Null)
                                     {
-                                        string authenticationTypeInstance4 = ((string)authenticationTypeValue4);
-                                        onPremisesSybaseLinkedServiceInstance.AuthenticationType = authenticationTypeInstance4;
+                                        string authenticationTypeInstance7 = ((string)authenticationTypeValue7);
+                                        onPremisesSybaseLinkedServiceInstance.AuthenticationType = authenticationTypeInstance7;
                                     }
                                     
-                                    JToken usernameValue4 = propertiesValue["username"];
-                                    if (usernameValue4 != null && usernameValue4.Type != JTokenType.Null)
+                                    JToken usernameValue6 = propertiesValue["username"];
+                                    if (usernameValue6 != null && usernameValue6.Type != JTokenType.Null)
                                     {
-                                        string usernameInstance4 = ((string)usernameValue4);
-                                        onPremisesSybaseLinkedServiceInstance.Username = usernameInstance4;
+                                        string usernameInstance6 = ((string)usernameValue6);
+                                        onPremisesSybaseLinkedServiceInstance.Username = usernameInstance6;
                                     }
                                     
-                                    JToken passwordValue8 = propertiesValue["password"];
-                                    if (passwordValue8 != null && passwordValue8.Type != JTokenType.Null)
+                                    JToken passwordValue11 = propertiesValue["password"];
+                                    if (passwordValue11 != null && passwordValue11.Type != JTokenType.Null)
                                     {
-                                        string passwordInstance8 = ((string)passwordValue8);
-                                        onPremisesSybaseLinkedServiceInstance.Password = passwordInstance8;
+                                        string passwordInstance11 = ((string)passwordValue11);
+                                        onPremisesSybaseLinkedServiceInstance.Password = passwordInstance11;
                                     }
                                     
-                                    JToken gatewayNameValue7 = propertiesValue["gatewayName"];
-                                    if (gatewayNameValue7 != null && gatewayNameValue7.Type != JTokenType.Null)
+                                    JToken gatewayNameValue9 = propertiesValue["gatewayName"];
+                                    if (gatewayNameValue9 != null && gatewayNameValue9.Type != JTokenType.Null)
                                     {
-                                        string gatewayNameInstance7 = ((string)gatewayNameValue7);
-                                        onPremisesSybaseLinkedServiceInstance.GatewayName = gatewayNameInstance7;
+                                        string gatewayNameInstance9 = ((string)gatewayNameValue9);
+                                        onPremisesSybaseLinkedServiceInstance.GatewayName = gatewayNameInstance9;
                                     }
                                     
-                                    JToken encryptedCredentialValue5 = propertiesValue["encryptedCredential"];
-                                    if (encryptedCredentialValue5 != null && encryptedCredentialValue5.Type != JTokenType.Null)
+                                    JToken encryptedCredentialValue6 = propertiesValue["encryptedCredential"];
+                                    if (encryptedCredentialValue6 != null && encryptedCredentialValue6.Type != JTokenType.Null)
                                     {
-                                        string encryptedCredentialInstance5 = ((string)encryptedCredentialValue5);
-                                        onPremisesSybaseLinkedServiceInstance.EncryptedCredential = encryptedCredentialInstance5;
+                                        string encryptedCredentialInstance6 = ((string)encryptedCredentialValue6);
+                                        onPremisesSybaseLinkedServiceInstance.EncryptedCredential = encryptedCredentialInstance6;
                                     }
                                     
-                                    JToken descriptionValue14 = propertiesValue["description"];
-                                    if (descriptionValue14 != null && descriptionValue14.Type != JTokenType.Null)
+                                    JToken descriptionValue18 = propertiesValue["description"];
+                                    if (descriptionValue18 != null && descriptionValue18.Type != JTokenType.Null)
                                     {
-                                        string descriptionInstance14 = ((string)descriptionValue14);
-                                        onPremisesSybaseLinkedServiceInstance.Description = descriptionInstance14;
+                                        string descriptionInstance18 = ((string)descriptionValue18);
+                                        onPremisesSybaseLinkedServiceInstance.Description = descriptionInstance18;
                                     }
                                     
-                                    JToken provisioningStateValue14 = propertiesValue["provisioningState"];
-                                    if (provisioningStateValue14 != null && provisioningStateValue14.Type != JTokenType.Null)
+                                    JToken provisioningStateValue18 = propertiesValue["provisioningState"];
+                                    if (provisioningStateValue18 != null && provisioningStateValue18.Type != JTokenType.Null)
                                     {
-                                        string provisioningStateInstance14 = ((string)provisioningStateValue14);
-                                        onPremisesSybaseLinkedServiceInstance.ProvisioningState = provisioningStateInstance14;
+                                        string provisioningStateInstance18 = ((string)provisioningStateValue18);
+                                        onPremisesSybaseLinkedServiceInstance.ProvisioningState = provisioningStateInstance18;
                                     }
                                     
-                                    JToken hubNameValue14 = propertiesValue["hubName"];
-                                    if (hubNameValue14 != null && hubNameValue14.Type != JTokenType.Null)
+                                    JToken hubNameValue18 = propertiesValue["hubName"];
+                                    if (hubNameValue18 != null && hubNameValue18.Type != JTokenType.Null)
                                     {
-                                        string hubNameInstance14 = ((string)hubNameValue14);
-                                        onPremisesSybaseLinkedServiceInstance.HubName = hubNameInstance14;
+                                        string hubNameInstance18 = ((string)hubNameValue18);
+                                        onPremisesSybaseLinkedServiceInstance.HubName = hubNameInstance18;
                                     }
                                     
-                                    JToken errorMessageValue14 = propertiesValue["errorMessage"];
-                                    if (errorMessageValue14 != null && errorMessageValue14.Type != JTokenType.Null)
+                                    JToken errorMessageValue18 = propertiesValue["errorMessage"];
+                                    if (errorMessageValue18 != null && errorMessageValue18.Type != JTokenType.Null)
                                     {
-                                        string errorMessageInstance14 = ((string)errorMessageValue14);
-                                        onPremisesSybaseLinkedServiceInstance.ErrorMessage = errorMessageInstance14;
+                                        string errorMessageInstance18 = ((string)errorMessageValue18);
+                                        onPremisesSybaseLinkedServiceInstance.ErrorMessage = errorMessageInstance18;
                                     }
                                     linkedServiceInstance.Properties = onPremisesSybaseLinkedServiceInstance;
                                 }
@@ -5539,67 +6505,67 @@ namespace Microsoft.Azure.Management.DataFactories
                                         onPremisesTeradataLinkedServiceInstance.Schema = schemaInstance5;
                                     }
                                     
-                                    JToken authenticationTypeValue5 = propertiesValue["authenticationType"];
-                                    if (authenticationTypeValue5 != null && authenticationTypeValue5.Type != JTokenType.Null)
+                                    JToken authenticationTypeValue8 = propertiesValue["authenticationType"];
+                                    if (authenticationTypeValue8 != null && authenticationTypeValue8.Type != JTokenType.Null)
                                     {
-                                        string authenticationTypeInstance5 = ((string)authenticationTypeValue5);
-                                        onPremisesTeradataLinkedServiceInstance.AuthenticationType = authenticationTypeInstance5;
+                                        string authenticationTypeInstance8 = ((string)authenticationTypeValue8);
+                                        onPremisesTeradataLinkedServiceInstance.AuthenticationType = authenticationTypeInstance8;
                                     }
                                     
-                                    JToken usernameValue5 = propertiesValue["username"];
-                                    if (usernameValue5 != null && usernameValue5.Type != JTokenType.Null)
+                                    JToken usernameValue7 = propertiesValue["username"];
+                                    if (usernameValue7 != null && usernameValue7.Type != JTokenType.Null)
                                     {
-                                        string usernameInstance5 = ((string)usernameValue5);
-                                        onPremisesTeradataLinkedServiceInstance.Username = usernameInstance5;
+                                        string usernameInstance7 = ((string)usernameValue7);
+                                        onPremisesTeradataLinkedServiceInstance.Username = usernameInstance7;
                                     }
                                     
-                                    JToken passwordValue9 = propertiesValue["password"];
-                                    if (passwordValue9 != null && passwordValue9.Type != JTokenType.Null)
+                                    JToken passwordValue12 = propertiesValue["password"];
+                                    if (passwordValue12 != null && passwordValue12.Type != JTokenType.Null)
                                     {
-                                        string passwordInstance9 = ((string)passwordValue9);
-                                        onPremisesTeradataLinkedServiceInstance.Password = passwordInstance9;
+                                        string passwordInstance12 = ((string)passwordValue12);
+                                        onPremisesTeradataLinkedServiceInstance.Password = passwordInstance12;
                                     }
                                     
-                                    JToken gatewayNameValue8 = propertiesValue["gatewayName"];
-                                    if (gatewayNameValue8 != null && gatewayNameValue8.Type != JTokenType.Null)
+                                    JToken gatewayNameValue10 = propertiesValue["gatewayName"];
+                                    if (gatewayNameValue10 != null && gatewayNameValue10.Type != JTokenType.Null)
                                     {
-                                        string gatewayNameInstance8 = ((string)gatewayNameValue8);
-                                        onPremisesTeradataLinkedServiceInstance.GatewayName = gatewayNameInstance8;
+                                        string gatewayNameInstance10 = ((string)gatewayNameValue10);
+                                        onPremisesTeradataLinkedServiceInstance.GatewayName = gatewayNameInstance10;
                                     }
                                     
-                                    JToken encryptedCredentialValue6 = propertiesValue["encryptedCredential"];
-                                    if (encryptedCredentialValue6 != null && encryptedCredentialValue6.Type != JTokenType.Null)
+                                    JToken encryptedCredentialValue7 = propertiesValue["encryptedCredential"];
+                                    if (encryptedCredentialValue7 != null && encryptedCredentialValue7.Type != JTokenType.Null)
                                     {
-                                        string encryptedCredentialInstance6 = ((string)encryptedCredentialValue6);
-                                        onPremisesTeradataLinkedServiceInstance.EncryptedCredential = encryptedCredentialInstance6;
+                                        string encryptedCredentialInstance7 = ((string)encryptedCredentialValue7);
+                                        onPremisesTeradataLinkedServiceInstance.EncryptedCredential = encryptedCredentialInstance7;
                                     }
                                     
-                                    JToken descriptionValue15 = propertiesValue["description"];
-                                    if (descriptionValue15 != null && descriptionValue15.Type != JTokenType.Null)
+                                    JToken descriptionValue19 = propertiesValue["description"];
+                                    if (descriptionValue19 != null && descriptionValue19.Type != JTokenType.Null)
                                     {
-                                        string descriptionInstance15 = ((string)descriptionValue15);
-                                        onPremisesTeradataLinkedServiceInstance.Description = descriptionInstance15;
+                                        string descriptionInstance19 = ((string)descriptionValue19);
+                                        onPremisesTeradataLinkedServiceInstance.Description = descriptionInstance19;
                                     }
                                     
-                                    JToken provisioningStateValue15 = propertiesValue["provisioningState"];
-                                    if (provisioningStateValue15 != null && provisioningStateValue15.Type != JTokenType.Null)
+                                    JToken provisioningStateValue19 = propertiesValue["provisioningState"];
+                                    if (provisioningStateValue19 != null && provisioningStateValue19.Type != JTokenType.Null)
                                     {
-                                        string provisioningStateInstance15 = ((string)provisioningStateValue15);
-                                        onPremisesTeradataLinkedServiceInstance.ProvisioningState = provisioningStateInstance15;
+                                        string provisioningStateInstance19 = ((string)provisioningStateValue19);
+                                        onPremisesTeradataLinkedServiceInstance.ProvisioningState = provisioningStateInstance19;
                                     }
                                     
-                                    JToken hubNameValue15 = propertiesValue["hubName"];
-                                    if (hubNameValue15 != null && hubNameValue15.Type != JTokenType.Null)
+                                    JToken hubNameValue19 = propertiesValue["hubName"];
+                                    if (hubNameValue19 != null && hubNameValue19.Type != JTokenType.Null)
                                     {
-                                        string hubNameInstance15 = ((string)hubNameValue15);
-                                        onPremisesTeradataLinkedServiceInstance.HubName = hubNameInstance15;
+                                        string hubNameInstance19 = ((string)hubNameValue19);
+                                        onPremisesTeradataLinkedServiceInstance.HubName = hubNameInstance19;
                                     }
                                     
-                                    JToken errorMessageValue15 = propertiesValue["errorMessage"];
-                                    if (errorMessageValue15 != null && errorMessageValue15.Type != JTokenType.Null)
+                                    JToken errorMessageValue19 = propertiesValue["errorMessage"];
+                                    if (errorMessageValue19 != null && errorMessageValue19.Type != JTokenType.Null)
                                     {
-                                        string errorMessageInstance15 = ((string)errorMessageValue15);
-                                        onPremisesTeradataLinkedServiceInstance.ErrorMessage = errorMessageInstance15;
+                                        string errorMessageInstance19 = ((string)errorMessageValue19);
+                                        onPremisesTeradataLinkedServiceInstance.ErrorMessage = errorMessageInstance19;
                                     }
                                     linkedServiceInstance.Properties = onPremisesTeradataLinkedServiceInstance;
                                 }
@@ -5973,6 +6939,46 @@ namespace Microsoft.Azure.Management.DataFactories
                                     }
                                     linkedServiceInstance.Properties = customLinkedServiceInstance;
                                 }
+                                if (typeName == "DocumentDbLinkedService")
+                                {
+                                    DocumentDbLinkedService documentDbLinkedServiceInstance = new DocumentDbLinkedService();
+                                    
+                                    JToken connectionStringValue3 = propertiesValue["connectionString"];
+                                    if (connectionStringValue3 != null && connectionStringValue3.Type != JTokenType.Null)
+                                    {
+                                        string connectionStringInstance3 = ((string)connectionStringValue3);
+                                        documentDbLinkedServiceInstance.ConnectionString = connectionStringInstance3;
+                                    }
+                                    
+                                    JToken descriptionValue6 = propertiesValue["description"];
+                                    if (descriptionValue6 != null && descriptionValue6.Type != JTokenType.Null)
+                                    {
+                                        string descriptionInstance6 = ((string)descriptionValue6);
+                                        documentDbLinkedServiceInstance.Description = descriptionInstance6;
+                                    }
+                                    
+                                    JToken provisioningStateValue6 = propertiesValue["provisioningState"];
+                                    if (provisioningStateValue6 != null && provisioningStateValue6.Type != JTokenType.Null)
+                                    {
+                                        string provisioningStateInstance6 = ((string)provisioningStateValue6);
+                                        documentDbLinkedServiceInstance.ProvisioningState = provisioningStateInstance6;
+                                    }
+                                    
+                                    JToken hubNameValue6 = propertiesValue["hubName"];
+                                    if (hubNameValue6 != null && hubNameValue6.Type != JTokenType.Null)
+                                    {
+                                        string hubNameInstance6 = ((string)hubNameValue6);
+                                        documentDbLinkedServiceInstance.HubName = hubNameInstance6;
+                                    }
+                                    
+                                    JToken errorMessageValue6 = propertiesValue["errorMessage"];
+                                    if (errorMessageValue6 != null && errorMessageValue6.Type != JTokenType.Null)
+                                    {
+                                        string errorMessageInstance6 = ((string)errorMessageValue6);
+                                        documentDbLinkedServiceInstance.ErrorMessage = errorMessageInstance6;
+                                    }
+                                    linkedServiceInstance.Properties = documentDbLinkedServiceInstance;
+                                }
                                 if (typeName == "HDInsightBYOCLinkedService")
                                 {
                                     HDInsightBYOCLinkedService hDInsightBYOCLinkedServiceInstance = new HDInsightBYOCLinkedService();
@@ -6033,32 +7039,32 @@ namespace Microsoft.Azure.Management.DataFactories
                                         }
                                     }
                                     
-                                    JToken descriptionValue6 = propertiesValue["description"];
-                                    if (descriptionValue6 != null && descriptionValue6.Type != JTokenType.Null)
+                                    JToken descriptionValue7 = propertiesValue["description"];
+                                    if (descriptionValue7 != null && descriptionValue7.Type != JTokenType.Null)
                                     {
-                                        string descriptionInstance6 = ((string)descriptionValue6);
-                                        hDInsightBYOCLinkedServiceInstance.Description = descriptionInstance6;
+                                        string descriptionInstance7 = ((string)descriptionValue7);
+                                        hDInsightBYOCLinkedServiceInstance.Description = descriptionInstance7;
                                     }
                                     
-                                    JToken provisioningStateValue6 = propertiesValue["provisioningState"];
-                                    if (provisioningStateValue6 != null && provisioningStateValue6.Type != JTokenType.Null)
+                                    JToken provisioningStateValue7 = propertiesValue["provisioningState"];
+                                    if (provisioningStateValue7 != null && provisioningStateValue7.Type != JTokenType.Null)
                                     {
-                                        string provisioningStateInstance6 = ((string)provisioningStateValue6);
-                                        hDInsightBYOCLinkedServiceInstance.ProvisioningState = provisioningStateInstance6;
+                                        string provisioningStateInstance7 = ((string)provisioningStateValue7);
+                                        hDInsightBYOCLinkedServiceInstance.ProvisioningState = provisioningStateInstance7;
                                     }
                                     
-                                    JToken hubNameValue6 = propertiesValue["hubName"];
-                                    if (hubNameValue6 != null && hubNameValue6.Type != JTokenType.Null)
+                                    JToken hubNameValue7 = propertiesValue["hubName"];
+                                    if (hubNameValue7 != null && hubNameValue7.Type != JTokenType.Null)
                                     {
-                                        string hubNameInstance6 = ((string)hubNameValue6);
-                                        hDInsightBYOCLinkedServiceInstance.HubName = hubNameInstance6;
+                                        string hubNameInstance7 = ((string)hubNameValue7);
+                                        hDInsightBYOCLinkedServiceInstance.HubName = hubNameInstance7;
                                     }
                                     
-                                    JToken errorMessageValue6 = propertiesValue["errorMessage"];
-                                    if (errorMessageValue6 != null && errorMessageValue6.Type != JTokenType.Null)
+                                    JToken errorMessageValue7 = propertiesValue["errorMessage"];
+                                    if (errorMessageValue7 != null && errorMessageValue7.Type != JTokenType.Null)
                                     {
-                                        string errorMessageInstance6 = ((string)errorMessageValue6);
-                                        hDInsightBYOCLinkedServiceInstance.ErrorMessage = errorMessageInstance6;
+                                        string errorMessageInstance7 = ((string)errorMessageValue7);
+                                        hDInsightBYOCLinkedServiceInstance.ErrorMessage = errorMessageInstance7;
                                     }
                                     linkedServiceInstance.Properties = hDInsightBYOCLinkedServiceInstance;
                                 }
@@ -6293,34 +7299,95 @@ namespace Microsoft.Azure.Management.DataFactories
                                         hDInsightOnDemandLinkedServiceInstance.SshUserName = sshUserNameInstance;
                                     }
                                     
-                                    JToken descriptionValue7 = propertiesValue["description"];
-                                    if (descriptionValue7 != null && descriptionValue7.Type != JTokenType.Null)
+                                    JToken descriptionValue8 = propertiesValue["description"];
+                                    if (descriptionValue8 != null && descriptionValue8.Type != JTokenType.Null)
                                     {
-                                        string descriptionInstance7 = ((string)descriptionValue7);
-                                        hDInsightOnDemandLinkedServiceInstance.Description = descriptionInstance7;
+                                        string descriptionInstance8 = ((string)descriptionValue8);
+                                        hDInsightOnDemandLinkedServiceInstance.Description = descriptionInstance8;
                                     }
                                     
-                                    JToken provisioningStateValue7 = propertiesValue["provisioningState"];
-                                    if (provisioningStateValue7 != null && provisioningStateValue7.Type != JTokenType.Null)
+                                    JToken provisioningStateValue8 = propertiesValue["provisioningState"];
+                                    if (provisioningStateValue8 != null && provisioningStateValue8.Type != JTokenType.Null)
                                     {
-                                        string provisioningStateInstance7 = ((string)provisioningStateValue7);
-                                        hDInsightOnDemandLinkedServiceInstance.ProvisioningState = provisioningStateInstance7;
+                                        string provisioningStateInstance8 = ((string)provisioningStateValue8);
+                                        hDInsightOnDemandLinkedServiceInstance.ProvisioningState = provisioningStateInstance8;
                                     }
                                     
-                                    JToken hubNameValue7 = propertiesValue["hubName"];
-                                    if (hubNameValue7 != null && hubNameValue7.Type != JTokenType.Null)
+                                    JToken hubNameValue8 = propertiesValue["hubName"];
+                                    if (hubNameValue8 != null && hubNameValue8.Type != JTokenType.Null)
                                     {
-                                        string hubNameInstance7 = ((string)hubNameValue7);
-                                        hDInsightOnDemandLinkedServiceInstance.HubName = hubNameInstance7;
+                                        string hubNameInstance8 = ((string)hubNameValue8);
+                                        hDInsightOnDemandLinkedServiceInstance.HubName = hubNameInstance8;
                                     }
                                     
-                                    JToken errorMessageValue7 = propertiesValue["errorMessage"];
-                                    if (errorMessageValue7 != null && errorMessageValue7.Type != JTokenType.Null)
+                                    JToken errorMessageValue8 = propertiesValue["errorMessage"];
+                                    if (errorMessageValue8 != null && errorMessageValue8.Type != JTokenType.Null)
                                     {
-                                        string errorMessageInstance7 = ((string)errorMessageValue7);
-                                        hDInsightOnDemandLinkedServiceInstance.ErrorMessage = errorMessageInstance7;
+                                        string errorMessageInstance8 = ((string)errorMessageValue8);
+                                        hDInsightOnDemandLinkedServiceInstance.ErrorMessage = errorMessageInstance8;
                                     }
                                     linkedServiceInstance.Properties = hDInsightOnDemandLinkedServiceInstance;
+                                }
+                                if (typeName == "ODataLinkedService")
+                                {
+                                    ODataLinkedService oDataLinkedServiceInstance = new ODataLinkedService();
+                                    
+                                    JToken urlValue = propertiesValue["url"];
+                                    if (urlValue != null && urlValue.Type != JTokenType.Null)
+                                    {
+                                        string urlInstance = ((string)urlValue);
+                                        oDataLinkedServiceInstance.Url = urlInstance;
+                                    }
+                                    
+                                    JToken authenticationTypeValue = propertiesValue["authenticationType"];
+                                    if (authenticationTypeValue != null && authenticationTypeValue.Type != JTokenType.Null)
+                                    {
+                                        string authenticationTypeInstance = ((string)authenticationTypeValue);
+                                        oDataLinkedServiceInstance.AuthenticationType = authenticationTypeInstance;
+                                    }
+                                    
+                                    JToken usernameValue = propertiesValue["username"];
+                                    if (usernameValue != null && usernameValue.Type != JTokenType.Null)
+                                    {
+                                        string usernameInstance = ((string)usernameValue);
+                                        oDataLinkedServiceInstance.Username = usernameInstance;
+                                    }
+                                    
+                                    JToken passwordValue2 = propertiesValue["password"];
+                                    if (passwordValue2 != null && passwordValue2.Type != JTokenType.Null)
+                                    {
+                                        string passwordInstance2 = ((string)passwordValue2);
+                                        oDataLinkedServiceInstance.Password = passwordInstance2;
+                                    }
+                                    
+                                    JToken descriptionValue9 = propertiesValue["description"];
+                                    if (descriptionValue9 != null && descriptionValue9.Type != JTokenType.Null)
+                                    {
+                                        string descriptionInstance9 = ((string)descriptionValue9);
+                                        oDataLinkedServiceInstance.Description = descriptionInstance9;
+                                    }
+                                    
+                                    JToken provisioningStateValue9 = propertiesValue["provisioningState"];
+                                    if (provisioningStateValue9 != null && provisioningStateValue9.Type != JTokenType.Null)
+                                    {
+                                        string provisioningStateInstance9 = ((string)provisioningStateValue9);
+                                        oDataLinkedServiceInstance.ProvisioningState = provisioningStateInstance9;
+                                    }
+                                    
+                                    JToken hubNameValue9 = propertiesValue["hubName"];
+                                    if (hubNameValue9 != null && hubNameValue9.Type != JTokenType.Null)
+                                    {
+                                        string hubNameInstance9 = ((string)hubNameValue9);
+                                        oDataLinkedServiceInstance.HubName = hubNameInstance9;
+                                    }
+                                    
+                                    JToken errorMessageValue9 = propertiesValue["errorMessage"];
+                                    if (errorMessageValue9 != null && errorMessageValue9.Type != JTokenType.Null)
+                                    {
+                                        string errorMessageInstance9 = ((string)errorMessageValue9);
+                                        oDataLinkedServiceInstance.ErrorMessage = errorMessageInstance9;
+                                    }
+                                    linkedServiceInstance.Properties = oDataLinkedServiceInstance;
                                 }
                                 if (typeName == "OnPremisesDb2LinkedService")
                                 {
@@ -6347,25 +7414,25 @@ namespace Microsoft.Azure.Management.DataFactories
                                         onPremisesDb2LinkedServiceInstance.Schema = schemaInstance;
                                     }
                                     
-                                    JToken authenticationTypeValue = propertiesValue["authenticationType"];
-                                    if (authenticationTypeValue != null && authenticationTypeValue.Type != JTokenType.Null)
+                                    JToken authenticationTypeValue2 = propertiesValue["authenticationType"];
+                                    if (authenticationTypeValue2 != null && authenticationTypeValue2.Type != JTokenType.Null)
                                     {
-                                        string authenticationTypeInstance = ((string)authenticationTypeValue);
-                                        onPremisesDb2LinkedServiceInstance.AuthenticationType = authenticationTypeInstance;
+                                        string authenticationTypeInstance2 = ((string)authenticationTypeValue2);
+                                        onPremisesDb2LinkedServiceInstance.AuthenticationType = authenticationTypeInstance2;
                                     }
                                     
-                                    JToken usernameValue = propertiesValue["username"];
-                                    if (usernameValue != null && usernameValue.Type != JTokenType.Null)
+                                    JToken usernameValue2 = propertiesValue["username"];
+                                    if (usernameValue2 != null && usernameValue2.Type != JTokenType.Null)
                                     {
-                                        string usernameInstance = ((string)usernameValue);
-                                        onPremisesDb2LinkedServiceInstance.Username = usernameInstance;
+                                        string usernameInstance2 = ((string)usernameValue2);
+                                        onPremisesDb2LinkedServiceInstance.Username = usernameInstance2;
                                     }
                                     
-                                    JToken passwordValue2 = propertiesValue["password"];
-                                    if (passwordValue2 != null && passwordValue2.Type != JTokenType.Null)
+                                    JToken passwordValue3 = propertiesValue["password"];
+                                    if (passwordValue3 != null && passwordValue3.Type != JTokenType.Null)
                                     {
-                                        string passwordInstance2 = ((string)passwordValue2);
-                                        onPremisesDb2LinkedServiceInstance.Password = passwordInstance2;
+                                        string passwordInstance3 = ((string)passwordValue3);
+                                        onPremisesDb2LinkedServiceInstance.Password = passwordInstance3;
                                     }
                                     
                                     JToken gatewayNameValue = propertiesValue["gatewayName"];
@@ -6382,32 +7449,32 @@ namespace Microsoft.Azure.Management.DataFactories
                                         onPremisesDb2LinkedServiceInstance.EncryptedCredential = encryptedCredentialInstance;
                                     }
                                     
-                                    JToken descriptionValue8 = propertiesValue["description"];
-                                    if (descriptionValue8 != null && descriptionValue8.Type != JTokenType.Null)
+                                    JToken descriptionValue10 = propertiesValue["description"];
+                                    if (descriptionValue10 != null && descriptionValue10.Type != JTokenType.Null)
                                     {
-                                        string descriptionInstance8 = ((string)descriptionValue8);
-                                        onPremisesDb2LinkedServiceInstance.Description = descriptionInstance8;
+                                        string descriptionInstance10 = ((string)descriptionValue10);
+                                        onPremisesDb2LinkedServiceInstance.Description = descriptionInstance10;
                                     }
                                     
-                                    JToken provisioningStateValue8 = propertiesValue["provisioningState"];
-                                    if (provisioningStateValue8 != null && provisioningStateValue8.Type != JTokenType.Null)
+                                    JToken provisioningStateValue10 = propertiesValue["provisioningState"];
+                                    if (provisioningStateValue10 != null && provisioningStateValue10.Type != JTokenType.Null)
                                     {
-                                        string provisioningStateInstance8 = ((string)provisioningStateValue8);
-                                        onPremisesDb2LinkedServiceInstance.ProvisioningState = provisioningStateInstance8;
+                                        string provisioningStateInstance10 = ((string)provisioningStateValue10);
+                                        onPremisesDb2LinkedServiceInstance.ProvisioningState = provisioningStateInstance10;
                                     }
                                     
-                                    JToken hubNameValue8 = propertiesValue["hubName"];
-                                    if (hubNameValue8 != null && hubNameValue8.Type != JTokenType.Null)
+                                    JToken hubNameValue10 = propertiesValue["hubName"];
+                                    if (hubNameValue10 != null && hubNameValue10.Type != JTokenType.Null)
                                     {
-                                        string hubNameInstance8 = ((string)hubNameValue8);
-                                        onPremisesDb2LinkedServiceInstance.HubName = hubNameInstance8;
+                                        string hubNameInstance10 = ((string)hubNameValue10);
+                                        onPremisesDb2LinkedServiceInstance.HubName = hubNameInstance10;
                                     }
                                     
-                                    JToken errorMessageValue8 = propertiesValue["errorMessage"];
-                                    if (errorMessageValue8 != null && errorMessageValue8.Type != JTokenType.Null)
+                                    JToken errorMessageValue10 = propertiesValue["errorMessage"];
+                                    if (errorMessageValue10 != null && errorMessageValue10.Type != JTokenType.Null)
                                     {
-                                        string errorMessageInstance8 = ((string)errorMessageValue8);
-                                        onPremisesDb2LinkedServiceInstance.ErrorMessage = errorMessageInstance8;
+                                        string errorMessageInstance10 = ((string)errorMessageValue10);
+                                        onPremisesDb2LinkedServiceInstance.ErrorMessage = errorMessageInstance10;
                                     }
                                     linkedServiceInstance.Properties = onPremisesDb2LinkedServiceInstance;
                                 }
@@ -6436,11 +7503,11 @@ namespace Microsoft.Azure.Management.DataFactories
                                         onPremisesFileSystemLinkedServiceInstance.UserId = userIdInstance;
                                     }
                                     
-                                    JToken passwordValue3 = propertiesValue["password"];
-                                    if (passwordValue3 != null && passwordValue3.Type != JTokenType.Null)
+                                    JToken passwordValue4 = propertiesValue["password"];
+                                    if (passwordValue4 != null && passwordValue4.Type != JTokenType.Null)
                                     {
-                                        string passwordInstance3 = ((string)passwordValue3);
-                                        onPremisesFileSystemLinkedServiceInstance.Password = passwordInstance3;
+                                        string passwordInstance4 = ((string)passwordValue4);
+                                        onPremisesFileSystemLinkedServiceInstance.Password = passwordInstance4;
                                     }
                                     
                                     JToken encryptedCredentialValue2 = propertiesValue["encryptedCredential"];
@@ -6450,34 +7517,116 @@ namespace Microsoft.Azure.Management.DataFactories
                                         onPremisesFileSystemLinkedServiceInstance.EncryptedCredential = encryptedCredentialInstance2;
                                     }
                                     
-                                    JToken descriptionValue9 = propertiesValue["description"];
-                                    if (descriptionValue9 != null && descriptionValue9.Type != JTokenType.Null)
+                                    JToken descriptionValue11 = propertiesValue["description"];
+                                    if (descriptionValue11 != null && descriptionValue11.Type != JTokenType.Null)
                                     {
-                                        string descriptionInstance9 = ((string)descriptionValue9);
-                                        onPremisesFileSystemLinkedServiceInstance.Description = descriptionInstance9;
+                                        string descriptionInstance11 = ((string)descriptionValue11);
+                                        onPremisesFileSystemLinkedServiceInstance.Description = descriptionInstance11;
                                     }
                                     
-                                    JToken provisioningStateValue9 = propertiesValue["provisioningState"];
-                                    if (provisioningStateValue9 != null && provisioningStateValue9.Type != JTokenType.Null)
+                                    JToken provisioningStateValue11 = propertiesValue["provisioningState"];
+                                    if (provisioningStateValue11 != null && provisioningStateValue11.Type != JTokenType.Null)
                                     {
-                                        string provisioningStateInstance9 = ((string)provisioningStateValue9);
-                                        onPremisesFileSystemLinkedServiceInstance.ProvisioningState = provisioningStateInstance9;
+                                        string provisioningStateInstance11 = ((string)provisioningStateValue11);
+                                        onPremisesFileSystemLinkedServiceInstance.ProvisioningState = provisioningStateInstance11;
                                     }
                                     
-                                    JToken hubNameValue9 = propertiesValue["hubName"];
-                                    if (hubNameValue9 != null && hubNameValue9.Type != JTokenType.Null)
+                                    JToken hubNameValue11 = propertiesValue["hubName"];
+                                    if (hubNameValue11 != null && hubNameValue11.Type != JTokenType.Null)
                                     {
-                                        string hubNameInstance9 = ((string)hubNameValue9);
-                                        onPremisesFileSystemLinkedServiceInstance.HubName = hubNameInstance9;
+                                        string hubNameInstance11 = ((string)hubNameValue11);
+                                        onPremisesFileSystemLinkedServiceInstance.HubName = hubNameInstance11;
                                     }
                                     
-                                    JToken errorMessageValue9 = propertiesValue["errorMessage"];
-                                    if (errorMessageValue9 != null && errorMessageValue9.Type != JTokenType.Null)
+                                    JToken errorMessageValue11 = propertiesValue["errorMessage"];
+                                    if (errorMessageValue11 != null && errorMessageValue11.Type != JTokenType.Null)
                                     {
-                                        string errorMessageInstance9 = ((string)errorMessageValue9);
-                                        onPremisesFileSystemLinkedServiceInstance.ErrorMessage = errorMessageInstance9;
+                                        string errorMessageInstance11 = ((string)errorMessageValue11);
+                                        onPremisesFileSystemLinkedServiceInstance.ErrorMessage = errorMessageInstance11;
                                     }
                                     linkedServiceInstance.Properties = onPremisesFileSystemLinkedServiceInstance;
+                                }
+                                if (typeName == "OnPremisesHdfsLinkedService")
+                                {
+                                    OnPremisesHdfsLinkedService onPremisesHdfsLinkedServiceInstance = new OnPremisesHdfsLinkedService();
+                                    
+                                    JToken urlValue2 = propertiesValue["url"];
+                                    if (urlValue2 != null && urlValue2.Type != JTokenType.Null)
+                                    {
+                                        string urlInstance2 = ((string)urlValue2);
+                                        onPremisesHdfsLinkedServiceInstance.Url = urlInstance2;
+                                    }
+                                    
+                                    JToken contentTypeValue = propertiesValue["contentType"];
+                                    if (contentTypeValue != null && contentTypeValue.Type != JTokenType.Null)
+                                    {
+                                        string contentTypeInstance = ((string)contentTypeValue);
+                                        onPremisesHdfsLinkedServiceInstance.ContentType = contentTypeInstance;
+                                    }
+                                    
+                                    JToken authenticationTypeValue3 = propertiesValue["authenticationType"];
+                                    if (authenticationTypeValue3 != null && authenticationTypeValue3.Type != JTokenType.Null)
+                                    {
+                                        string authenticationTypeInstance3 = ((string)authenticationTypeValue3);
+                                        onPremisesHdfsLinkedServiceInstance.AuthenticationType = authenticationTypeInstance3;
+                                    }
+                                    
+                                    JToken usernameValue3 = propertiesValue["username"];
+                                    if (usernameValue3 != null && usernameValue3.Type != JTokenType.Null)
+                                    {
+                                        string usernameInstance3 = ((string)usernameValue3);
+                                        onPremisesHdfsLinkedServiceInstance.Username = usernameInstance3;
+                                    }
+                                    
+                                    JToken passwordValue5 = propertiesValue["password"];
+                                    if (passwordValue5 != null && passwordValue5.Type != JTokenType.Null)
+                                    {
+                                        string passwordInstance5 = ((string)passwordValue5);
+                                        onPremisesHdfsLinkedServiceInstance.Password = passwordInstance5;
+                                    }
+                                    
+                                    JToken gatewayNameValue3 = propertiesValue["gatewayName"];
+                                    if (gatewayNameValue3 != null && gatewayNameValue3.Type != JTokenType.Null)
+                                    {
+                                        string gatewayNameInstance3 = ((string)gatewayNameValue3);
+                                        onPremisesHdfsLinkedServiceInstance.GatewayName = gatewayNameInstance3;
+                                    }
+                                    
+                                    JToken encryptedCredentialValue3 = propertiesValue["encryptedCredential"];
+                                    if (encryptedCredentialValue3 != null && encryptedCredentialValue3.Type != JTokenType.Null)
+                                    {
+                                        string encryptedCredentialInstance3 = ((string)encryptedCredentialValue3);
+                                        onPremisesHdfsLinkedServiceInstance.EncryptedCredential = encryptedCredentialInstance3;
+                                    }
+                                    
+                                    JToken descriptionValue12 = propertiesValue["description"];
+                                    if (descriptionValue12 != null && descriptionValue12.Type != JTokenType.Null)
+                                    {
+                                        string descriptionInstance12 = ((string)descriptionValue12);
+                                        onPremisesHdfsLinkedServiceInstance.Description = descriptionInstance12;
+                                    }
+                                    
+                                    JToken provisioningStateValue12 = propertiesValue["provisioningState"];
+                                    if (provisioningStateValue12 != null && provisioningStateValue12.Type != JTokenType.Null)
+                                    {
+                                        string provisioningStateInstance12 = ((string)provisioningStateValue12);
+                                        onPremisesHdfsLinkedServiceInstance.ProvisioningState = provisioningStateInstance12;
+                                    }
+                                    
+                                    JToken hubNameValue12 = propertiesValue["hubName"];
+                                    if (hubNameValue12 != null && hubNameValue12.Type != JTokenType.Null)
+                                    {
+                                        string hubNameInstance12 = ((string)hubNameValue12);
+                                        onPremisesHdfsLinkedServiceInstance.HubName = hubNameInstance12;
+                                    }
+                                    
+                                    JToken errorMessageValue12 = propertiesValue["errorMessage"];
+                                    if (errorMessageValue12 != null && errorMessageValue12.Type != JTokenType.Null)
+                                    {
+                                        string errorMessageInstance12 = ((string)errorMessageValue12);
+                                        onPremisesHdfsLinkedServiceInstance.ErrorMessage = errorMessageInstance12;
+                                    }
+                                    linkedServiceInstance.Properties = onPremisesHdfsLinkedServiceInstance;
                                 }
                                 if (typeName == "OnPremisesMySqlLinkedService")
                                 {
@@ -6504,128 +7653,210 @@ namespace Microsoft.Azure.Management.DataFactories
                                         onPremisesMySqlLinkedServiceInstance.Schema = schemaInstance2;
                                     }
                                     
-                                    JToken authenticationTypeValue2 = propertiesValue["authenticationType"];
-                                    if (authenticationTypeValue2 != null && authenticationTypeValue2.Type != JTokenType.Null)
+                                    JToken authenticationTypeValue4 = propertiesValue["authenticationType"];
+                                    if (authenticationTypeValue4 != null && authenticationTypeValue4.Type != JTokenType.Null)
                                     {
-                                        string authenticationTypeInstance2 = ((string)authenticationTypeValue2);
-                                        onPremisesMySqlLinkedServiceInstance.AuthenticationType = authenticationTypeInstance2;
+                                        string authenticationTypeInstance4 = ((string)authenticationTypeValue4);
+                                        onPremisesMySqlLinkedServiceInstance.AuthenticationType = authenticationTypeInstance4;
                                     }
                                     
-                                    JToken usernameValue2 = propertiesValue["username"];
-                                    if (usernameValue2 != null && usernameValue2.Type != JTokenType.Null)
+                                    JToken usernameValue4 = propertiesValue["username"];
+                                    if (usernameValue4 != null && usernameValue4.Type != JTokenType.Null)
                                     {
-                                        string usernameInstance2 = ((string)usernameValue2);
-                                        onPremisesMySqlLinkedServiceInstance.Username = usernameInstance2;
+                                        string usernameInstance4 = ((string)usernameValue4);
+                                        onPremisesMySqlLinkedServiceInstance.Username = usernameInstance4;
                                     }
                                     
-                                    JToken passwordValue4 = propertiesValue["password"];
-                                    if (passwordValue4 != null && passwordValue4.Type != JTokenType.Null)
+                                    JToken passwordValue6 = propertiesValue["password"];
+                                    if (passwordValue6 != null && passwordValue6.Type != JTokenType.Null)
                                     {
-                                        string passwordInstance4 = ((string)passwordValue4);
-                                        onPremisesMySqlLinkedServiceInstance.Password = passwordInstance4;
-                                    }
-                                    
-                                    JToken gatewayNameValue3 = propertiesValue["gatewayName"];
-                                    if (gatewayNameValue3 != null && gatewayNameValue3.Type != JTokenType.Null)
-                                    {
-                                        string gatewayNameInstance3 = ((string)gatewayNameValue3);
-                                        onPremisesMySqlLinkedServiceInstance.GatewayName = gatewayNameInstance3;
-                                    }
-                                    
-                                    JToken encryptedCredentialValue3 = propertiesValue["encryptedCredential"];
-                                    if (encryptedCredentialValue3 != null && encryptedCredentialValue3.Type != JTokenType.Null)
-                                    {
-                                        string encryptedCredentialInstance3 = ((string)encryptedCredentialValue3);
-                                        onPremisesMySqlLinkedServiceInstance.EncryptedCredential = encryptedCredentialInstance3;
-                                    }
-                                    
-                                    JToken descriptionValue10 = propertiesValue["description"];
-                                    if (descriptionValue10 != null && descriptionValue10.Type != JTokenType.Null)
-                                    {
-                                        string descriptionInstance10 = ((string)descriptionValue10);
-                                        onPremisesMySqlLinkedServiceInstance.Description = descriptionInstance10;
-                                    }
-                                    
-                                    JToken provisioningStateValue10 = propertiesValue["provisioningState"];
-                                    if (provisioningStateValue10 != null && provisioningStateValue10.Type != JTokenType.Null)
-                                    {
-                                        string provisioningStateInstance10 = ((string)provisioningStateValue10);
-                                        onPremisesMySqlLinkedServiceInstance.ProvisioningState = provisioningStateInstance10;
-                                    }
-                                    
-                                    JToken hubNameValue10 = propertiesValue["hubName"];
-                                    if (hubNameValue10 != null && hubNameValue10.Type != JTokenType.Null)
-                                    {
-                                        string hubNameInstance10 = ((string)hubNameValue10);
-                                        onPremisesMySqlLinkedServiceInstance.HubName = hubNameInstance10;
-                                    }
-                                    
-                                    JToken errorMessageValue10 = propertiesValue["errorMessage"];
-                                    if (errorMessageValue10 != null && errorMessageValue10.Type != JTokenType.Null)
-                                    {
-                                        string errorMessageInstance10 = ((string)errorMessageValue10);
-                                        onPremisesMySqlLinkedServiceInstance.ErrorMessage = errorMessageInstance10;
-                                    }
-                                    linkedServiceInstance.Properties = onPremisesMySqlLinkedServiceInstance;
-                                }
-                                if (typeName == "OnPremisesOracleLinkedService")
-                                {
-                                    OnPremisesOracleLinkedService onPremisesOracleLinkedServiceInstance = new OnPremisesOracleLinkedService();
-                                    
-                                    JToken connectionStringValue3 = propertiesValue["connectionString"];
-                                    if (connectionStringValue3 != null && connectionStringValue3.Type != JTokenType.Null)
-                                    {
-                                        string connectionStringInstance3 = ((string)connectionStringValue3);
-                                        onPremisesOracleLinkedServiceInstance.ConnectionString = connectionStringInstance3;
+                                        string passwordInstance6 = ((string)passwordValue6);
+                                        onPremisesMySqlLinkedServiceInstance.Password = passwordInstance6;
                                     }
                                     
                                     JToken gatewayNameValue4 = propertiesValue["gatewayName"];
                                     if (gatewayNameValue4 != null && gatewayNameValue4.Type != JTokenType.Null)
                                     {
                                         string gatewayNameInstance4 = ((string)gatewayNameValue4);
-                                        onPremisesOracleLinkedServiceInstance.GatewayName = gatewayNameInstance4;
+                                        onPremisesMySqlLinkedServiceInstance.GatewayName = gatewayNameInstance4;
+                                    }
+                                    
+                                    JToken encryptedCredentialValue4 = propertiesValue["encryptedCredential"];
+                                    if (encryptedCredentialValue4 != null && encryptedCredentialValue4.Type != JTokenType.Null)
+                                    {
+                                        string encryptedCredentialInstance4 = ((string)encryptedCredentialValue4);
+                                        onPremisesMySqlLinkedServiceInstance.EncryptedCredential = encryptedCredentialInstance4;
+                                    }
+                                    
+                                    JToken descriptionValue13 = propertiesValue["description"];
+                                    if (descriptionValue13 != null && descriptionValue13.Type != JTokenType.Null)
+                                    {
+                                        string descriptionInstance13 = ((string)descriptionValue13);
+                                        onPremisesMySqlLinkedServiceInstance.Description = descriptionInstance13;
+                                    }
+                                    
+                                    JToken provisioningStateValue13 = propertiesValue["provisioningState"];
+                                    if (provisioningStateValue13 != null && provisioningStateValue13.Type != JTokenType.Null)
+                                    {
+                                        string provisioningStateInstance13 = ((string)provisioningStateValue13);
+                                        onPremisesMySqlLinkedServiceInstance.ProvisioningState = provisioningStateInstance13;
+                                    }
+                                    
+                                    JToken hubNameValue13 = propertiesValue["hubName"];
+                                    if (hubNameValue13 != null && hubNameValue13.Type != JTokenType.Null)
+                                    {
+                                        string hubNameInstance13 = ((string)hubNameValue13);
+                                        onPremisesMySqlLinkedServiceInstance.HubName = hubNameInstance13;
+                                    }
+                                    
+                                    JToken errorMessageValue13 = propertiesValue["errorMessage"];
+                                    if (errorMessageValue13 != null && errorMessageValue13.Type != JTokenType.Null)
+                                    {
+                                        string errorMessageInstance13 = ((string)errorMessageValue13);
+                                        onPremisesMySqlLinkedServiceInstance.ErrorMessage = errorMessageInstance13;
+                                    }
+                                    linkedServiceInstance.Properties = onPremisesMySqlLinkedServiceInstance;
+                                }
+                                if (typeName == "OnPremisesOdbcLinkedService")
+                                {
+                                    OnPremisesOdbcLinkedService onPremisesOdbcLinkedServiceInstance = new OnPremisesOdbcLinkedService();
+                                    
+                                    JToken nonCredentialConnectionStringValue = propertiesValue["nonCredentialConnectionString"];
+                                    if (nonCredentialConnectionStringValue != null && nonCredentialConnectionStringValue.Type != JTokenType.Null)
+                                    {
+                                        string nonCredentialConnectionStringInstance = ((string)nonCredentialConnectionStringValue);
+                                        onPremisesOdbcLinkedServiceInstance.NonCredentialConnectionString = nonCredentialConnectionStringInstance;
+                                    }
+                                    
+                                    JToken credentialConnectionStringValue = propertiesValue["credentialConnectionString"];
+                                    if (credentialConnectionStringValue != null && credentialConnectionStringValue.Type != JTokenType.Null)
+                                    {
+                                        string credentialConnectionStringInstance = ((string)credentialConnectionStringValue);
+                                        onPremisesOdbcLinkedServiceInstance.CredentialConnectionString = credentialConnectionStringInstance;
+                                    }
+                                    
+                                    JToken encryptedCredentialConnectionStringValue = propertiesValue["encryptedCredentialConnectionString"];
+                                    if (encryptedCredentialConnectionStringValue != null && encryptedCredentialConnectionStringValue.Type != JTokenType.Null)
+                                    {
+                                        string encryptedCredentialConnectionStringInstance = ((string)encryptedCredentialConnectionStringValue);
+                                        onPremisesOdbcLinkedServiceInstance.EncryptedCredentialConnectionString = encryptedCredentialConnectionStringInstance;
                                     }
                                     
                                     JToken userNameValue2 = propertiesValue["userName"];
                                     if (userNameValue2 != null && userNameValue2.Type != JTokenType.Null)
                                     {
                                         string userNameInstance2 = ((string)userNameValue2);
-                                        onPremisesOracleLinkedServiceInstance.UserName = userNameInstance2;
+                                        onPremisesOdbcLinkedServiceInstance.UserName = userNameInstance2;
                                     }
                                     
-                                    JToken passwordValue5 = propertiesValue["password"];
-                                    if (passwordValue5 != null && passwordValue5.Type != JTokenType.Null)
+                                    JToken passwordValue7 = propertiesValue["password"];
+                                    if (passwordValue7 != null && passwordValue7.Type != JTokenType.Null)
                                     {
-                                        string passwordInstance5 = ((string)passwordValue5);
-                                        onPremisesOracleLinkedServiceInstance.Password = passwordInstance5;
+                                        string passwordInstance7 = ((string)passwordValue7);
+                                        onPremisesOdbcLinkedServiceInstance.Password = passwordInstance7;
                                     }
                                     
-                                    JToken descriptionValue11 = propertiesValue["description"];
-                                    if (descriptionValue11 != null && descriptionValue11.Type != JTokenType.Null)
+                                    JToken gatewayNameValue5 = propertiesValue["gatewayName"];
+                                    if (gatewayNameValue5 != null && gatewayNameValue5.Type != JTokenType.Null)
                                     {
-                                        string descriptionInstance11 = ((string)descriptionValue11);
-                                        onPremisesOracleLinkedServiceInstance.Description = descriptionInstance11;
+                                        string gatewayNameInstance5 = ((string)gatewayNameValue5);
+                                        onPremisesOdbcLinkedServiceInstance.GatewayName = gatewayNameInstance5;
                                     }
                                     
-                                    JToken provisioningStateValue11 = propertiesValue["provisioningState"];
-                                    if (provisioningStateValue11 != null && provisioningStateValue11.Type != JTokenType.Null)
+                                    JToken authenticationTypeValue5 = propertiesValue["authenticationType"];
+                                    if (authenticationTypeValue5 != null && authenticationTypeValue5.Type != JTokenType.Null)
                                     {
-                                        string provisioningStateInstance11 = ((string)provisioningStateValue11);
-                                        onPremisesOracleLinkedServiceInstance.ProvisioningState = provisioningStateInstance11;
+                                        string authenticationTypeInstance5 = ((string)authenticationTypeValue5);
+                                        onPremisesOdbcLinkedServiceInstance.AuthenticationType = authenticationTypeInstance5;
                                     }
                                     
-                                    JToken hubNameValue11 = propertiesValue["hubName"];
-                                    if (hubNameValue11 != null && hubNameValue11.Type != JTokenType.Null)
+                                    JToken descriptionValue14 = propertiesValue["description"];
+                                    if (descriptionValue14 != null && descriptionValue14.Type != JTokenType.Null)
                                     {
-                                        string hubNameInstance11 = ((string)hubNameValue11);
-                                        onPremisesOracleLinkedServiceInstance.HubName = hubNameInstance11;
+                                        string descriptionInstance14 = ((string)descriptionValue14);
+                                        onPremisesOdbcLinkedServiceInstance.Description = descriptionInstance14;
                                     }
                                     
-                                    JToken errorMessageValue11 = propertiesValue["errorMessage"];
-                                    if (errorMessageValue11 != null && errorMessageValue11.Type != JTokenType.Null)
+                                    JToken provisioningStateValue14 = propertiesValue["provisioningState"];
+                                    if (provisioningStateValue14 != null && provisioningStateValue14.Type != JTokenType.Null)
                                     {
-                                        string errorMessageInstance11 = ((string)errorMessageValue11);
-                                        onPremisesOracleLinkedServiceInstance.ErrorMessage = errorMessageInstance11;
+                                        string provisioningStateInstance14 = ((string)provisioningStateValue14);
+                                        onPremisesOdbcLinkedServiceInstance.ProvisioningState = provisioningStateInstance14;
+                                    }
+                                    
+                                    JToken hubNameValue14 = propertiesValue["hubName"];
+                                    if (hubNameValue14 != null && hubNameValue14.Type != JTokenType.Null)
+                                    {
+                                        string hubNameInstance14 = ((string)hubNameValue14);
+                                        onPremisesOdbcLinkedServiceInstance.HubName = hubNameInstance14;
+                                    }
+                                    
+                                    JToken errorMessageValue14 = propertiesValue["errorMessage"];
+                                    if (errorMessageValue14 != null && errorMessageValue14.Type != JTokenType.Null)
+                                    {
+                                        string errorMessageInstance14 = ((string)errorMessageValue14);
+                                        onPremisesOdbcLinkedServiceInstance.ErrorMessage = errorMessageInstance14;
+                                    }
+                                    linkedServiceInstance.Properties = onPremisesOdbcLinkedServiceInstance;
+                                }
+                                if (typeName == "OnPremisesOracleLinkedService")
+                                {
+                                    OnPremisesOracleLinkedService onPremisesOracleLinkedServiceInstance = new OnPremisesOracleLinkedService();
+                                    
+                                    JToken connectionStringValue4 = propertiesValue["connectionString"];
+                                    if (connectionStringValue4 != null && connectionStringValue4.Type != JTokenType.Null)
+                                    {
+                                        string connectionStringInstance4 = ((string)connectionStringValue4);
+                                        onPremisesOracleLinkedServiceInstance.ConnectionString = connectionStringInstance4;
+                                    }
+                                    
+                                    JToken gatewayNameValue6 = propertiesValue["gatewayName"];
+                                    if (gatewayNameValue6 != null && gatewayNameValue6.Type != JTokenType.Null)
+                                    {
+                                        string gatewayNameInstance6 = ((string)gatewayNameValue6);
+                                        onPremisesOracleLinkedServiceInstance.GatewayName = gatewayNameInstance6;
+                                    }
+                                    
+                                    JToken userNameValue3 = propertiesValue["userName"];
+                                    if (userNameValue3 != null && userNameValue3.Type != JTokenType.Null)
+                                    {
+                                        string userNameInstance3 = ((string)userNameValue3);
+                                        onPremisesOracleLinkedServiceInstance.UserName = userNameInstance3;
+                                    }
+                                    
+                                    JToken passwordValue8 = propertiesValue["password"];
+                                    if (passwordValue8 != null && passwordValue8.Type != JTokenType.Null)
+                                    {
+                                        string passwordInstance8 = ((string)passwordValue8);
+                                        onPremisesOracleLinkedServiceInstance.Password = passwordInstance8;
+                                    }
+                                    
+                                    JToken descriptionValue15 = propertiesValue["description"];
+                                    if (descriptionValue15 != null && descriptionValue15.Type != JTokenType.Null)
+                                    {
+                                        string descriptionInstance15 = ((string)descriptionValue15);
+                                        onPremisesOracleLinkedServiceInstance.Description = descriptionInstance15;
+                                    }
+                                    
+                                    JToken provisioningStateValue15 = propertiesValue["provisioningState"];
+                                    if (provisioningStateValue15 != null && provisioningStateValue15.Type != JTokenType.Null)
+                                    {
+                                        string provisioningStateInstance15 = ((string)provisioningStateValue15);
+                                        onPremisesOracleLinkedServiceInstance.ProvisioningState = provisioningStateInstance15;
+                                    }
+                                    
+                                    JToken hubNameValue15 = propertiesValue["hubName"];
+                                    if (hubNameValue15 != null && hubNameValue15.Type != JTokenType.Null)
+                                    {
+                                        string hubNameInstance15 = ((string)hubNameValue15);
+                                        onPremisesOracleLinkedServiceInstance.HubName = hubNameInstance15;
+                                    }
+                                    
+                                    JToken errorMessageValue15 = propertiesValue["errorMessage"];
+                                    if (errorMessageValue15 != null && errorMessageValue15.Type != JTokenType.Null)
+                                    {
+                                        string errorMessageInstance15 = ((string)errorMessageValue15);
+                                        onPremisesOracleLinkedServiceInstance.ErrorMessage = errorMessageInstance15;
                                     }
                                     linkedServiceInstance.Properties = onPremisesOracleLinkedServiceInstance;
                                 }
@@ -6654,67 +7885,67 @@ namespace Microsoft.Azure.Management.DataFactories
                                         onPremisesPostgreSqlLinkedServiceInstance.Schema = schemaInstance3;
                                     }
                                     
-                                    JToken authenticationTypeValue3 = propertiesValue["authenticationType"];
-                                    if (authenticationTypeValue3 != null && authenticationTypeValue3.Type != JTokenType.Null)
+                                    JToken authenticationTypeValue6 = propertiesValue["authenticationType"];
+                                    if (authenticationTypeValue6 != null && authenticationTypeValue6.Type != JTokenType.Null)
                                     {
-                                        string authenticationTypeInstance3 = ((string)authenticationTypeValue3);
-                                        onPremisesPostgreSqlLinkedServiceInstance.AuthenticationType = authenticationTypeInstance3;
+                                        string authenticationTypeInstance6 = ((string)authenticationTypeValue6);
+                                        onPremisesPostgreSqlLinkedServiceInstance.AuthenticationType = authenticationTypeInstance6;
                                     }
                                     
-                                    JToken usernameValue3 = propertiesValue["username"];
-                                    if (usernameValue3 != null && usernameValue3.Type != JTokenType.Null)
+                                    JToken usernameValue5 = propertiesValue["username"];
+                                    if (usernameValue5 != null && usernameValue5.Type != JTokenType.Null)
                                     {
-                                        string usernameInstance3 = ((string)usernameValue3);
-                                        onPremisesPostgreSqlLinkedServiceInstance.Username = usernameInstance3;
+                                        string usernameInstance5 = ((string)usernameValue5);
+                                        onPremisesPostgreSqlLinkedServiceInstance.Username = usernameInstance5;
                                     }
                                     
-                                    JToken passwordValue6 = propertiesValue["password"];
-                                    if (passwordValue6 != null && passwordValue6.Type != JTokenType.Null)
+                                    JToken passwordValue9 = propertiesValue["password"];
+                                    if (passwordValue9 != null && passwordValue9.Type != JTokenType.Null)
                                     {
-                                        string passwordInstance6 = ((string)passwordValue6);
-                                        onPremisesPostgreSqlLinkedServiceInstance.Password = passwordInstance6;
+                                        string passwordInstance9 = ((string)passwordValue9);
+                                        onPremisesPostgreSqlLinkedServiceInstance.Password = passwordInstance9;
                                     }
                                     
-                                    JToken gatewayNameValue5 = propertiesValue["gatewayName"];
-                                    if (gatewayNameValue5 != null && gatewayNameValue5.Type != JTokenType.Null)
+                                    JToken gatewayNameValue7 = propertiesValue["gatewayName"];
+                                    if (gatewayNameValue7 != null && gatewayNameValue7.Type != JTokenType.Null)
                                     {
-                                        string gatewayNameInstance5 = ((string)gatewayNameValue5);
-                                        onPremisesPostgreSqlLinkedServiceInstance.GatewayName = gatewayNameInstance5;
+                                        string gatewayNameInstance7 = ((string)gatewayNameValue7);
+                                        onPremisesPostgreSqlLinkedServiceInstance.GatewayName = gatewayNameInstance7;
                                     }
                                     
-                                    JToken encryptedCredentialValue4 = propertiesValue["encryptedCredential"];
-                                    if (encryptedCredentialValue4 != null && encryptedCredentialValue4.Type != JTokenType.Null)
+                                    JToken encryptedCredentialValue5 = propertiesValue["encryptedCredential"];
+                                    if (encryptedCredentialValue5 != null && encryptedCredentialValue5.Type != JTokenType.Null)
                                     {
-                                        string encryptedCredentialInstance4 = ((string)encryptedCredentialValue4);
-                                        onPremisesPostgreSqlLinkedServiceInstance.EncryptedCredential = encryptedCredentialInstance4;
+                                        string encryptedCredentialInstance5 = ((string)encryptedCredentialValue5);
+                                        onPremisesPostgreSqlLinkedServiceInstance.EncryptedCredential = encryptedCredentialInstance5;
                                     }
                                     
-                                    JToken descriptionValue12 = propertiesValue["description"];
-                                    if (descriptionValue12 != null && descriptionValue12.Type != JTokenType.Null)
+                                    JToken descriptionValue16 = propertiesValue["description"];
+                                    if (descriptionValue16 != null && descriptionValue16.Type != JTokenType.Null)
                                     {
-                                        string descriptionInstance12 = ((string)descriptionValue12);
-                                        onPremisesPostgreSqlLinkedServiceInstance.Description = descriptionInstance12;
+                                        string descriptionInstance16 = ((string)descriptionValue16);
+                                        onPremisesPostgreSqlLinkedServiceInstance.Description = descriptionInstance16;
                                     }
                                     
-                                    JToken provisioningStateValue12 = propertiesValue["provisioningState"];
-                                    if (provisioningStateValue12 != null && provisioningStateValue12.Type != JTokenType.Null)
+                                    JToken provisioningStateValue16 = propertiesValue["provisioningState"];
+                                    if (provisioningStateValue16 != null && provisioningStateValue16.Type != JTokenType.Null)
                                     {
-                                        string provisioningStateInstance12 = ((string)provisioningStateValue12);
-                                        onPremisesPostgreSqlLinkedServiceInstance.ProvisioningState = provisioningStateInstance12;
+                                        string provisioningStateInstance16 = ((string)provisioningStateValue16);
+                                        onPremisesPostgreSqlLinkedServiceInstance.ProvisioningState = provisioningStateInstance16;
                                     }
                                     
-                                    JToken hubNameValue12 = propertiesValue["hubName"];
-                                    if (hubNameValue12 != null && hubNameValue12.Type != JTokenType.Null)
+                                    JToken hubNameValue16 = propertiesValue["hubName"];
+                                    if (hubNameValue16 != null && hubNameValue16.Type != JTokenType.Null)
                                     {
-                                        string hubNameInstance12 = ((string)hubNameValue12);
-                                        onPremisesPostgreSqlLinkedServiceInstance.HubName = hubNameInstance12;
+                                        string hubNameInstance16 = ((string)hubNameValue16);
+                                        onPremisesPostgreSqlLinkedServiceInstance.HubName = hubNameInstance16;
                                     }
                                     
-                                    JToken errorMessageValue12 = propertiesValue["errorMessage"];
-                                    if (errorMessageValue12 != null && errorMessageValue12.Type != JTokenType.Null)
+                                    JToken errorMessageValue16 = propertiesValue["errorMessage"];
+                                    if (errorMessageValue16 != null && errorMessageValue16.Type != JTokenType.Null)
                                     {
-                                        string errorMessageInstance12 = ((string)errorMessageValue12);
-                                        onPremisesPostgreSqlLinkedServiceInstance.ErrorMessage = errorMessageInstance12;
+                                        string errorMessageInstance16 = ((string)errorMessageValue16);
+                                        onPremisesPostgreSqlLinkedServiceInstance.ErrorMessage = errorMessageInstance16;
                                     }
                                     linkedServiceInstance.Properties = onPremisesPostgreSqlLinkedServiceInstance;
                                 }
@@ -6722,60 +7953,60 @@ namespace Microsoft.Azure.Management.DataFactories
                                 {
                                     OnPremisesSqlLinkedService onPremisesSqlLinkedServiceInstance = new OnPremisesSqlLinkedService();
                                     
-                                    JToken connectionStringValue4 = propertiesValue["connectionString"];
-                                    if (connectionStringValue4 != null && connectionStringValue4.Type != JTokenType.Null)
+                                    JToken connectionStringValue5 = propertiesValue["connectionString"];
+                                    if (connectionStringValue5 != null && connectionStringValue5.Type != JTokenType.Null)
                                     {
-                                        string connectionStringInstance4 = ((string)connectionStringValue4);
-                                        onPremisesSqlLinkedServiceInstance.ConnectionString = connectionStringInstance4;
+                                        string connectionStringInstance5 = ((string)connectionStringValue5);
+                                        onPremisesSqlLinkedServiceInstance.ConnectionString = connectionStringInstance5;
                                     }
                                     
-                                    JToken gatewayNameValue6 = propertiesValue["gatewayName"];
-                                    if (gatewayNameValue6 != null && gatewayNameValue6.Type != JTokenType.Null)
+                                    JToken gatewayNameValue8 = propertiesValue["gatewayName"];
+                                    if (gatewayNameValue8 != null && gatewayNameValue8.Type != JTokenType.Null)
                                     {
-                                        string gatewayNameInstance6 = ((string)gatewayNameValue6);
-                                        onPremisesSqlLinkedServiceInstance.GatewayName = gatewayNameInstance6;
+                                        string gatewayNameInstance8 = ((string)gatewayNameValue8);
+                                        onPremisesSqlLinkedServiceInstance.GatewayName = gatewayNameInstance8;
                                     }
                                     
-                                    JToken userNameValue3 = propertiesValue["userName"];
-                                    if (userNameValue3 != null && userNameValue3.Type != JTokenType.Null)
+                                    JToken userNameValue4 = propertiesValue["userName"];
+                                    if (userNameValue4 != null && userNameValue4.Type != JTokenType.Null)
                                     {
-                                        string userNameInstance3 = ((string)userNameValue3);
-                                        onPremisesSqlLinkedServiceInstance.UserName = userNameInstance3;
+                                        string userNameInstance4 = ((string)userNameValue4);
+                                        onPremisesSqlLinkedServiceInstance.UserName = userNameInstance4;
                                     }
                                     
-                                    JToken passwordValue7 = propertiesValue["password"];
-                                    if (passwordValue7 != null && passwordValue7.Type != JTokenType.Null)
+                                    JToken passwordValue10 = propertiesValue["password"];
+                                    if (passwordValue10 != null && passwordValue10.Type != JTokenType.Null)
                                     {
-                                        string passwordInstance7 = ((string)passwordValue7);
-                                        onPremisesSqlLinkedServiceInstance.Password = passwordInstance7;
+                                        string passwordInstance10 = ((string)passwordValue10);
+                                        onPremisesSqlLinkedServiceInstance.Password = passwordInstance10;
                                     }
                                     
-                                    JToken descriptionValue13 = propertiesValue["description"];
-                                    if (descriptionValue13 != null && descriptionValue13.Type != JTokenType.Null)
+                                    JToken descriptionValue17 = propertiesValue["description"];
+                                    if (descriptionValue17 != null && descriptionValue17.Type != JTokenType.Null)
                                     {
-                                        string descriptionInstance13 = ((string)descriptionValue13);
-                                        onPremisesSqlLinkedServiceInstance.Description = descriptionInstance13;
+                                        string descriptionInstance17 = ((string)descriptionValue17);
+                                        onPremisesSqlLinkedServiceInstance.Description = descriptionInstance17;
                                     }
                                     
-                                    JToken provisioningStateValue13 = propertiesValue["provisioningState"];
-                                    if (provisioningStateValue13 != null && provisioningStateValue13.Type != JTokenType.Null)
+                                    JToken provisioningStateValue17 = propertiesValue["provisioningState"];
+                                    if (provisioningStateValue17 != null && provisioningStateValue17.Type != JTokenType.Null)
                                     {
-                                        string provisioningStateInstance13 = ((string)provisioningStateValue13);
-                                        onPremisesSqlLinkedServiceInstance.ProvisioningState = provisioningStateInstance13;
+                                        string provisioningStateInstance17 = ((string)provisioningStateValue17);
+                                        onPremisesSqlLinkedServiceInstance.ProvisioningState = provisioningStateInstance17;
                                     }
                                     
-                                    JToken hubNameValue13 = propertiesValue["hubName"];
-                                    if (hubNameValue13 != null && hubNameValue13.Type != JTokenType.Null)
+                                    JToken hubNameValue17 = propertiesValue["hubName"];
+                                    if (hubNameValue17 != null && hubNameValue17.Type != JTokenType.Null)
                                     {
-                                        string hubNameInstance13 = ((string)hubNameValue13);
-                                        onPremisesSqlLinkedServiceInstance.HubName = hubNameInstance13;
+                                        string hubNameInstance17 = ((string)hubNameValue17);
+                                        onPremisesSqlLinkedServiceInstance.HubName = hubNameInstance17;
                                     }
                                     
-                                    JToken errorMessageValue13 = propertiesValue["errorMessage"];
-                                    if (errorMessageValue13 != null && errorMessageValue13.Type != JTokenType.Null)
+                                    JToken errorMessageValue17 = propertiesValue["errorMessage"];
+                                    if (errorMessageValue17 != null && errorMessageValue17.Type != JTokenType.Null)
                                     {
-                                        string errorMessageInstance13 = ((string)errorMessageValue13);
-                                        onPremisesSqlLinkedServiceInstance.ErrorMessage = errorMessageInstance13;
+                                        string errorMessageInstance17 = ((string)errorMessageValue17);
+                                        onPremisesSqlLinkedServiceInstance.ErrorMessage = errorMessageInstance17;
                                     }
                                     linkedServiceInstance.Properties = onPremisesSqlLinkedServiceInstance;
                                 }
@@ -6804,67 +8035,67 @@ namespace Microsoft.Azure.Management.DataFactories
                                         onPremisesSybaseLinkedServiceInstance.Schema = schemaInstance4;
                                     }
                                     
-                                    JToken authenticationTypeValue4 = propertiesValue["authenticationType"];
-                                    if (authenticationTypeValue4 != null && authenticationTypeValue4.Type != JTokenType.Null)
+                                    JToken authenticationTypeValue7 = propertiesValue["authenticationType"];
+                                    if (authenticationTypeValue7 != null && authenticationTypeValue7.Type != JTokenType.Null)
                                     {
-                                        string authenticationTypeInstance4 = ((string)authenticationTypeValue4);
-                                        onPremisesSybaseLinkedServiceInstance.AuthenticationType = authenticationTypeInstance4;
+                                        string authenticationTypeInstance7 = ((string)authenticationTypeValue7);
+                                        onPremisesSybaseLinkedServiceInstance.AuthenticationType = authenticationTypeInstance7;
                                     }
                                     
-                                    JToken usernameValue4 = propertiesValue["username"];
-                                    if (usernameValue4 != null && usernameValue4.Type != JTokenType.Null)
+                                    JToken usernameValue6 = propertiesValue["username"];
+                                    if (usernameValue6 != null && usernameValue6.Type != JTokenType.Null)
                                     {
-                                        string usernameInstance4 = ((string)usernameValue4);
-                                        onPremisesSybaseLinkedServiceInstance.Username = usernameInstance4;
+                                        string usernameInstance6 = ((string)usernameValue6);
+                                        onPremisesSybaseLinkedServiceInstance.Username = usernameInstance6;
                                     }
                                     
-                                    JToken passwordValue8 = propertiesValue["password"];
-                                    if (passwordValue8 != null && passwordValue8.Type != JTokenType.Null)
+                                    JToken passwordValue11 = propertiesValue["password"];
+                                    if (passwordValue11 != null && passwordValue11.Type != JTokenType.Null)
                                     {
-                                        string passwordInstance8 = ((string)passwordValue8);
-                                        onPremisesSybaseLinkedServiceInstance.Password = passwordInstance8;
+                                        string passwordInstance11 = ((string)passwordValue11);
+                                        onPremisesSybaseLinkedServiceInstance.Password = passwordInstance11;
                                     }
                                     
-                                    JToken gatewayNameValue7 = propertiesValue["gatewayName"];
-                                    if (gatewayNameValue7 != null && gatewayNameValue7.Type != JTokenType.Null)
+                                    JToken gatewayNameValue9 = propertiesValue["gatewayName"];
+                                    if (gatewayNameValue9 != null && gatewayNameValue9.Type != JTokenType.Null)
                                     {
-                                        string gatewayNameInstance7 = ((string)gatewayNameValue7);
-                                        onPremisesSybaseLinkedServiceInstance.GatewayName = gatewayNameInstance7;
+                                        string gatewayNameInstance9 = ((string)gatewayNameValue9);
+                                        onPremisesSybaseLinkedServiceInstance.GatewayName = gatewayNameInstance9;
                                     }
                                     
-                                    JToken encryptedCredentialValue5 = propertiesValue["encryptedCredential"];
-                                    if (encryptedCredentialValue5 != null && encryptedCredentialValue5.Type != JTokenType.Null)
+                                    JToken encryptedCredentialValue6 = propertiesValue["encryptedCredential"];
+                                    if (encryptedCredentialValue6 != null && encryptedCredentialValue6.Type != JTokenType.Null)
                                     {
-                                        string encryptedCredentialInstance5 = ((string)encryptedCredentialValue5);
-                                        onPremisesSybaseLinkedServiceInstance.EncryptedCredential = encryptedCredentialInstance5;
+                                        string encryptedCredentialInstance6 = ((string)encryptedCredentialValue6);
+                                        onPremisesSybaseLinkedServiceInstance.EncryptedCredential = encryptedCredentialInstance6;
                                     }
                                     
-                                    JToken descriptionValue14 = propertiesValue["description"];
-                                    if (descriptionValue14 != null && descriptionValue14.Type != JTokenType.Null)
+                                    JToken descriptionValue18 = propertiesValue["description"];
+                                    if (descriptionValue18 != null && descriptionValue18.Type != JTokenType.Null)
                                     {
-                                        string descriptionInstance14 = ((string)descriptionValue14);
-                                        onPremisesSybaseLinkedServiceInstance.Description = descriptionInstance14;
+                                        string descriptionInstance18 = ((string)descriptionValue18);
+                                        onPremisesSybaseLinkedServiceInstance.Description = descriptionInstance18;
                                     }
                                     
-                                    JToken provisioningStateValue14 = propertiesValue["provisioningState"];
-                                    if (provisioningStateValue14 != null && provisioningStateValue14.Type != JTokenType.Null)
+                                    JToken provisioningStateValue18 = propertiesValue["provisioningState"];
+                                    if (provisioningStateValue18 != null && provisioningStateValue18.Type != JTokenType.Null)
                                     {
-                                        string provisioningStateInstance14 = ((string)provisioningStateValue14);
-                                        onPremisesSybaseLinkedServiceInstance.ProvisioningState = provisioningStateInstance14;
+                                        string provisioningStateInstance18 = ((string)provisioningStateValue18);
+                                        onPremisesSybaseLinkedServiceInstance.ProvisioningState = provisioningStateInstance18;
                                     }
                                     
-                                    JToken hubNameValue14 = propertiesValue["hubName"];
-                                    if (hubNameValue14 != null && hubNameValue14.Type != JTokenType.Null)
+                                    JToken hubNameValue18 = propertiesValue["hubName"];
+                                    if (hubNameValue18 != null && hubNameValue18.Type != JTokenType.Null)
                                     {
-                                        string hubNameInstance14 = ((string)hubNameValue14);
-                                        onPremisesSybaseLinkedServiceInstance.HubName = hubNameInstance14;
+                                        string hubNameInstance18 = ((string)hubNameValue18);
+                                        onPremisesSybaseLinkedServiceInstance.HubName = hubNameInstance18;
                                     }
                                     
-                                    JToken errorMessageValue14 = propertiesValue["errorMessage"];
-                                    if (errorMessageValue14 != null && errorMessageValue14.Type != JTokenType.Null)
+                                    JToken errorMessageValue18 = propertiesValue["errorMessage"];
+                                    if (errorMessageValue18 != null && errorMessageValue18.Type != JTokenType.Null)
                                     {
-                                        string errorMessageInstance14 = ((string)errorMessageValue14);
-                                        onPremisesSybaseLinkedServiceInstance.ErrorMessage = errorMessageInstance14;
+                                        string errorMessageInstance18 = ((string)errorMessageValue18);
+                                        onPremisesSybaseLinkedServiceInstance.ErrorMessage = errorMessageInstance18;
                                     }
                                     linkedServiceInstance.Properties = onPremisesSybaseLinkedServiceInstance;
                                 }
@@ -6893,67 +8124,67 @@ namespace Microsoft.Azure.Management.DataFactories
                                         onPremisesTeradataLinkedServiceInstance.Schema = schemaInstance5;
                                     }
                                     
-                                    JToken authenticationTypeValue5 = propertiesValue["authenticationType"];
-                                    if (authenticationTypeValue5 != null && authenticationTypeValue5.Type != JTokenType.Null)
+                                    JToken authenticationTypeValue8 = propertiesValue["authenticationType"];
+                                    if (authenticationTypeValue8 != null && authenticationTypeValue8.Type != JTokenType.Null)
                                     {
-                                        string authenticationTypeInstance5 = ((string)authenticationTypeValue5);
-                                        onPremisesTeradataLinkedServiceInstance.AuthenticationType = authenticationTypeInstance5;
+                                        string authenticationTypeInstance8 = ((string)authenticationTypeValue8);
+                                        onPremisesTeradataLinkedServiceInstance.AuthenticationType = authenticationTypeInstance8;
                                     }
                                     
-                                    JToken usernameValue5 = propertiesValue["username"];
-                                    if (usernameValue5 != null && usernameValue5.Type != JTokenType.Null)
+                                    JToken usernameValue7 = propertiesValue["username"];
+                                    if (usernameValue7 != null && usernameValue7.Type != JTokenType.Null)
                                     {
-                                        string usernameInstance5 = ((string)usernameValue5);
-                                        onPremisesTeradataLinkedServiceInstance.Username = usernameInstance5;
+                                        string usernameInstance7 = ((string)usernameValue7);
+                                        onPremisesTeradataLinkedServiceInstance.Username = usernameInstance7;
                                     }
                                     
-                                    JToken passwordValue9 = propertiesValue["password"];
-                                    if (passwordValue9 != null && passwordValue9.Type != JTokenType.Null)
+                                    JToken passwordValue12 = propertiesValue["password"];
+                                    if (passwordValue12 != null && passwordValue12.Type != JTokenType.Null)
                                     {
-                                        string passwordInstance9 = ((string)passwordValue9);
-                                        onPremisesTeradataLinkedServiceInstance.Password = passwordInstance9;
+                                        string passwordInstance12 = ((string)passwordValue12);
+                                        onPremisesTeradataLinkedServiceInstance.Password = passwordInstance12;
                                     }
                                     
-                                    JToken gatewayNameValue8 = propertiesValue["gatewayName"];
-                                    if (gatewayNameValue8 != null && gatewayNameValue8.Type != JTokenType.Null)
+                                    JToken gatewayNameValue10 = propertiesValue["gatewayName"];
+                                    if (gatewayNameValue10 != null && gatewayNameValue10.Type != JTokenType.Null)
                                     {
-                                        string gatewayNameInstance8 = ((string)gatewayNameValue8);
-                                        onPremisesTeradataLinkedServiceInstance.GatewayName = gatewayNameInstance8;
+                                        string gatewayNameInstance10 = ((string)gatewayNameValue10);
+                                        onPremisesTeradataLinkedServiceInstance.GatewayName = gatewayNameInstance10;
                                     }
                                     
-                                    JToken encryptedCredentialValue6 = propertiesValue["encryptedCredential"];
-                                    if (encryptedCredentialValue6 != null && encryptedCredentialValue6.Type != JTokenType.Null)
+                                    JToken encryptedCredentialValue7 = propertiesValue["encryptedCredential"];
+                                    if (encryptedCredentialValue7 != null && encryptedCredentialValue7.Type != JTokenType.Null)
                                     {
-                                        string encryptedCredentialInstance6 = ((string)encryptedCredentialValue6);
-                                        onPremisesTeradataLinkedServiceInstance.EncryptedCredential = encryptedCredentialInstance6;
+                                        string encryptedCredentialInstance7 = ((string)encryptedCredentialValue7);
+                                        onPremisesTeradataLinkedServiceInstance.EncryptedCredential = encryptedCredentialInstance7;
                                     }
                                     
-                                    JToken descriptionValue15 = propertiesValue["description"];
-                                    if (descriptionValue15 != null && descriptionValue15.Type != JTokenType.Null)
+                                    JToken descriptionValue19 = propertiesValue["description"];
+                                    if (descriptionValue19 != null && descriptionValue19.Type != JTokenType.Null)
                                     {
-                                        string descriptionInstance15 = ((string)descriptionValue15);
-                                        onPremisesTeradataLinkedServiceInstance.Description = descriptionInstance15;
+                                        string descriptionInstance19 = ((string)descriptionValue19);
+                                        onPremisesTeradataLinkedServiceInstance.Description = descriptionInstance19;
                                     }
                                     
-                                    JToken provisioningStateValue15 = propertiesValue["provisioningState"];
-                                    if (provisioningStateValue15 != null && provisioningStateValue15.Type != JTokenType.Null)
+                                    JToken provisioningStateValue19 = propertiesValue["provisioningState"];
+                                    if (provisioningStateValue19 != null && provisioningStateValue19.Type != JTokenType.Null)
                                     {
-                                        string provisioningStateInstance15 = ((string)provisioningStateValue15);
-                                        onPremisesTeradataLinkedServiceInstance.ProvisioningState = provisioningStateInstance15;
+                                        string provisioningStateInstance19 = ((string)provisioningStateValue19);
+                                        onPremisesTeradataLinkedServiceInstance.ProvisioningState = provisioningStateInstance19;
                                     }
                                     
-                                    JToken hubNameValue15 = propertiesValue["hubName"];
-                                    if (hubNameValue15 != null && hubNameValue15.Type != JTokenType.Null)
+                                    JToken hubNameValue19 = propertiesValue["hubName"];
+                                    if (hubNameValue19 != null && hubNameValue19.Type != JTokenType.Null)
                                     {
-                                        string hubNameInstance15 = ((string)hubNameValue15);
-                                        onPremisesTeradataLinkedServiceInstance.HubName = hubNameInstance15;
+                                        string hubNameInstance19 = ((string)hubNameValue19);
+                                        onPremisesTeradataLinkedServiceInstance.HubName = hubNameInstance19;
                                     }
                                     
-                                    JToken errorMessageValue15 = propertiesValue["errorMessage"];
-                                    if (errorMessageValue15 != null && errorMessageValue15.Type != JTokenType.Null)
+                                    JToken errorMessageValue19 = propertiesValue["errorMessage"];
+                                    if (errorMessageValue19 != null && errorMessageValue19.Type != JTokenType.Null)
                                     {
-                                        string errorMessageInstance15 = ((string)errorMessageValue15);
-                                        onPremisesTeradataLinkedServiceInstance.ErrorMessage = errorMessageInstance15;
+                                        string errorMessageInstance19 = ((string)errorMessageValue19);
+                                        onPremisesTeradataLinkedServiceInstance.ErrorMessage = errorMessageInstance19;
                                     }
                                     linkedServiceInstance.Properties = onPremisesTeradataLinkedServiceInstance;
                                 }
@@ -7394,6 +8625,46 @@ namespace Microsoft.Azure.Management.DataFactories
                                             }
                                             linkedServiceInstance.Properties = customLinkedServiceInstance;
                                         }
+                                        if (typeName == "DocumentDbLinkedService")
+                                        {
+                                            DocumentDbLinkedService documentDbLinkedServiceInstance = new DocumentDbLinkedService();
+                                            
+                                            JToken connectionStringValue3 = propertiesValue["connectionString"];
+                                            if (connectionStringValue3 != null && connectionStringValue3.Type != JTokenType.Null)
+                                            {
+                                                string connectionStringInstance3 = ((string)connectionStringValue3);
+                                                documentDbLinkedServiceInstance.ConnectionString = connectionStringInstance3;
+                                            }
+                                            
+                                            JToken descriptionValue6 = propertiesValue["description"];
+                                            if (descriptionValue6 != null && descriptionValue6.Type != JTokenType.Null)
+                                            {
+                                                string descriptionInstance6 = ((string)descriptionValue6);
+                                                documentDbLinkedServiceInstance.Description = descriptionInstance6;
+                                            }
+                                            
+                                            JToken provisioningStateValue6 = propertiesValue["provisioningState"];
+                                            if (provisioningStateValue6 != null && provisioningStateValue6.Type != JTokenType.Null)
+                                            {
+                                                string provisioningStateInstance6 = ((string)provisioningStateValue6);
+                                                documentDbLinkedServiceInstance.ProvisioningState = provisioningStateInstance6;
+                                            }
+                                            
+                                            JToken hubNameValue6 = propertiesValue["hubName"];
+                                            if (hubNameValue6 != null && hubNameValue6.Type != JTokenType.Null)
+                                            {
+                                                string hubNameInstance6 = ((string)hubNameValue6);
+                                                documentDbLinkedServiceInstance.HubName = hubNameInstance6;
+                                            }
+                                            
+                                            JToken errorMessageValue6 = propertiesValue["errorMessage"];
+                                            if (errorMessageValue6 != null && errorMessageValue6.Type != JTokenType.Null)
+                                            {
+                                                string errorMessageInstance6 = ((string)errorMessageValue6);
+                                                documentDbLinkedServiceInstance.ErrorMessage = errorMessageInstance6;
+                                            }
+                                            linkedServiceInstance.Properties = documentDbLinkedServiceInstance;
+                                        }
                                         if (typeName == "HDInsightBYOCLinkedService")
                                         {
                                             HDInsightBYOCLinkedService hDInsightBYOCLinkedServiceInstance = new HDInsightBYOCLinkedService();
@@ -7454,32 +8725,32 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 }
                                             }
                                             
-                                            JToken descriptionValue6 = propertiesValue["description"];
-                                            if (descriptionValue6 != null && descriptionValue6.Type != JTokenType.Null)
+                                            JToken descriptionValue7 = propertiesValue["description"];
+                                            if (descriptionValue7 != null && descriptionValue7.Type != JTokenType.Null)
                                             {
-                                                string descriptionInstance6 = ((string)descriptionValue6);
-                                                hDInsightBYOCLinkedServiceInstance.Description = descriptionInstance6;
+                                                string descriptionInstance7 = ((string)descriptionValue7);
+                                                hDInsightBYOCLinkedServiceInstance.Description = descriptionInstance7;
                                             }
                                             
-                                            JToken provisioningStateValue6 = propertiesValue["provisioningState"];
-                                            if (provisioningStateValue6 != null && provisioningStateValue6.Type != JTokenType.Null)
+                                            JToken provisioningStateValue7 = propertiesValue["provisioningState"];
+                                            if (provisioningStateValue7 != null && provisioningStateValue7.Type != JTokenType.Null)
                                             {
-                                                string provisioningStateInstance6 = ((string)provisioningStateValue6);
-                                                hDInsightBYOCLinkedServiceInstance.ProvisioningState = provisioningStateInstance6;
+                                                string provisioningStateInstance7 = ((string)provisioningStateValue7);
+                                                hDInsightBYOCLinkedServiceInstance.ProvisioningState = provisioningStateInstance7;
                                             }
                                             
-                                            JToken hubNameValue6 = propertiesValue["hubName"];
-                                            if (hubNameValue6 != null && hubNameValue6.Type != JTokenType.Null)
+                                            JToken hubNameValue7 = propertiesValue["hubName"];
+                                            if (hubNameValue7 != null && hubNameValue7.Type != JTokenType.Null)
                                             {
-                                                string hubNameInstance6 = ((string)hubNameValue6);
-                                                hDInsightBYOCLinkedServiceInstance.HubName = hubNameInstance6;
+                                                string hubNameInstance7 = ((string)hubNameValue7);
+                                                hDInsightBYOCLinkedServiceInstance.HubName = hubNameInstance7;
                                             }
                                             
-                                            JToken errorMessageValue6 = propertiesValue["errorMessage"];
-                                            if (errorMessageValue6 != null && errorMessageValue6.Type != JTokenType.Null)
+                                            JToken errorMessageValue7 = propertiesValue["errorMessage"];
+                                            if (errorMessageValue7 != null && errorMessageValue7.Type != JTokenType.Null)
                                             {
-                                                string errorMessageInstance6 = ((string)errorMessageValue6);
-                                                hDInsightBYOCLinkedServiceInstance.ErrorMessage = errorMessageInstance6;
+                                                string errorMessageInstance7 = ((string)errorMessageValue7);
+                                                hDInsightBYOCLinkedServiceInstance.ErrorMessage = errorMessageInstance7;
                                             }
                                             linkedServiceInstance.Properties = hDInsightBYOCLinkedServiceInstance;
                                         }
@@ -7714,34 +8985,95 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 hDInsightOnDemandLinkedServiceInstance.SshUserName = sshUserNameInstance;
                                             }
                                             
-                                            JToken descriptionValue7 = propertiesValue["description"];
-                                            if (descriptionValue7 != null && descriptionValue7.Type != JTokenType.Null)
+                                            JToken descriptionValue8 = propertiesValue["description"];
+                                            if (descriptionValue8 != null && descriptionValue8.Type != JTokenType.Null)
                                             {
-                                                string descriptionInstance7 = ((string)descriptionValue7);
-                                                hDInsightOnDemandLinkedServiceInstance.Description = descriptionInstance7;
+                                                string descriptionInstance8 = ((string)descriptionValue8);
+                                                hDInsightOnDemandLinkedServiceInstance.Description = descriptionInstance8;
                                             }
                                             
-                                            JToken provisioningStateValue7 = propertiesValue["provisioningState"];
-                                            if (provisioningStateValue7 != null && provisioningStateValue7.Type != JTokenType.Null)
+                                            JToken provisioningStateValue8 = propertiesValue["provisioningState"];
+                                            if (provisioningStateValue8 != null && provisioningStateValue8.Type != JTokenType.Null)
                                             {
-                                                string provisioningStateInstance7 = ((string)provisioningStateValue7);
-                                                hDInsightOnDemandLinkedServiceInstance.ProvisioningState = provisioningStateInstance7;
+                                                string provisioningStateInstance8 = ((string)provisioningStateValue8);
+                                                hDInsightOnDemandLinkedServiceInstance.ProvisioningState = provisioningStateInstance8;
                                             }
                                             
-                                            JToken hubNameValue7 = propertiesValue["hubName"];
-                                            if (hubNameValue7 != null && hubNameValue7.Type != JTokenType.Null)
+                                            JToken hubNameValue8 = propertiesValue["hubName"];
+                                            if (hubNameValue8 != null && hubNameValue8.Type != JTokenType.Null)
                                             {
-                                                string hubNameInstance7 = ((string)hubNameValue7);
-                                                hDInsightOnDemandLinkedServiceInstance.HubName = hubNameInstance7;
+                                                string hubNameInstance8 = ((string)hubNameValue8);
+                                                hDInsightOnDemandLinkedServiceInstance.HubName = hubNameInstance8;
                                             }
                                             
-                                            JToken errorMessageValue7 = propertiesValue["errorMessage"];
-                                            if (errorMessageValue7 != null && errorMessageValue7.Type != JTokenType.Null)
+                                            JToken errorMessageValue8 = propertiesValue["errorMessage"];
+                                            if (errorMessageValue8 != null && errorMessageValue8.Type != JTokenType.Null)
                                             {
-                                                string errorMessageInstance7 = ((string)errorMessageValue7);
-                                                hDInsightOnDemandLinkedServiceInstance.ErrorMessage = errorMessageInstance7;
+                                                string errorMessageInstance8 = ((string)errorMessageValue8);
+                                                hDInsightOnDemandLinkedServiceInstance.ErrorMessage = errorMessageInstance8;
                                             }
                                             linkedServiceInstance.Properties = hDInsightOnDemandLinkedServiceInstance;
+                                        }
+                                        if (typeName == "ODataLinkedService")
+                                        {
+                                            ODataLinkedService oDataLinkedServiceInstance = new ODataLinkedService();
+                                            
+                                            JToken urlValue = propertiesValue["url"];
+                                            if (urlValue != null && urlValue.Type != JTokenType.Null)
+                                            {
+                                                string urlInstance = ((string)urlValue);
+                                                oDataLinkedServiceInstance.Url = urlInstance;
+                                            }
+                                            
+                                            JToken authenticationTypeValue = propertiesValue["authenticationType"];
+                                            if (authenticationTypeValue != null && authenticationTypeValue.Type != JTokenType.Null)
+                                            {
+                                                string authenticationTypeInstance = ((string)authenticationTypeValue);
+                                                oDataLinkedServiceInstance.AuthenticationType = authenticationTypeInstance;
+                                            }
+                                            
+                                            JToken usernameValue = propertiesValue["username"];
+                                            if (usernameValue != null && usernameValue.Type != JTokenType.Null)
+                                            {
+                                                string usernameInstance = ((string)usernameValue);
+                                                oDataLinkedServiceInstance.Username = usernameInstance;
+                                            }
+                                            
+                                            JToken passwordValue2 = propertiesValue["password"];
+                                            if (passwordValue2 != null && passwordValue2.Type != JTokenType.Null)
+                                            {
+                                                string passwordInstance2 = ((string)passwordValue2);
+                                                oDataLinkedServiceInstance.Password = passwordInstance2;
+                                            }
+                                            
+                                            JToken descriptionValue9 = propertiesValue["description"];
+                                            if (descriptionValue9 != null && descriptionValue9.Type != JTokenType.Null)
+                                            {
+                                                string descriptionInstance9 = ((string)descriptionValue9);
+                                                oDataLinkedServiceInstance.Description = descriptionInstance9;
+                                            }
+                                            
+                                            JToken provisioningStateValue9 = propertiesValue["provisioningState"];
+                                            if (provisioningStateValue9 != null && provisioningStateValue9.Type != JTokenType.Null)
+                                            {
+                                                string provisioningStateInstance9 = ((string)provisioningStateValue9);
+                                                oDataLinkedServiceInstance.ProvisioningState = provisioningStateInstance9;
+                                            }
+                                            
+                                            JToken hubNameValue9 = propertiesValue["hubName"];
+                                            if (hubNameValue9 != null && hubNameValue9.Type != JTokenType.Null)
+                                            {
+                                                string hubNameInstance9 = ((string)hubNameValue9);
+                                                oDataLinkedServiceInstance.HubName = hubNameInstance9;
+                                            }
+                                            
+                                            JToken errorMessageValue9 = propertiesValue["errorMessage"];
+                                            if (errorMessageValue9 != null && errorMessageValue9.Type != JTokenType.Null)
+                                            {
+                                                string errorMessageInstance9 = ((string)errorMessageValue9);
+                                                oDataLinkedServiceInstance.ErrorMessage = errorMessageInstance9;
+                                            }
+                                            linkedServiceInstance.Properties = oDataLinkedServiceInstance;
                                         }
                                         if (typeName == "OnPremisesDb2LinkedService")
                                         {
@@ -7768,25 +9100,25 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 onPremisesDb2LinkedServiceInstance.Schema = schemaInstance;
                                             }
                                             
-                                            JToken authenticationTypeValue = propertiesValue["authenticationType"];
-                                            if (authenticationTypeValue != null && authenticationTypeValue.Type != JTokenType.Null)
+                                            JToken authenticationTypeValue2 = propertiesValue["authenticationType"];
+                                            if (authenticationTypeValue2 != null && authenticationTypeValue2.Type != JTokenType.Null)
                                             {
-                                                string authenticationTypeInstance = ((string)authenticationTypeValue);
-                                                onPremisesDb2LinkedServiceInstance.AuthenticationType = authenticationTypeInstance;
+                                                string authenticationTypeInstance2 = ((string)authenticationTypeValue2);
+                                                onPremisesDb2LinkedServiceInstance.AuthenticationType = authenticationTypeInstance2;
                                             }
                                             
-                                            JToken usernameValue = propertiesValue["username"];
-                                            if (usernameValue != null && usernameValue.Type != JTokenType.Null)
+                                            JToken usernameValue2 = propertiesValue["username"];
+                                            if (usernameValue2 != null && usernameValue2.Type != JTokenType.Null)
                                             {
-                                                string usernameInstance = ((string)usernameValue);
-                                                onPremisesDb2LinkedServiceInstance.Username = usernameInstance;
+                                                string usernameInstance2 = ((string)usernameValue2);
+                                                onPremisesDb2LinkedServiceInstance.Username = usernameInstance2;
                                             }
                                             
-                                            JToken passwordValue2 = propertiesValue["password"];
-                                            if (passwordValue2 != null && passwordValue2.Type != JTokenType.Null)
+                                            JToken passwordValue3 = propertiesValue["password"];
+                                            if (passwordValue3 != null && passwordValue3.Type != JTokenType.Null)
                                             {
-                                                string passwordInstance2 = ((string)passwordValue2);
-                                                onPremisesDb2LinkedServiceInstance.Password = passwordInstance2;
+                                                string passwordInstance3 = ((string)passwordValue3);
+                                                onPremisesDb2LinkedServiceInstance.Password = passwordInstance3;
                                             }
                                             
                                             JToken gatewayNameValue = propertiesValue["gatewayName"];
@@ -7803,32 +9135,32 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 onPremisesDb2LinkedServiceInstance.EncryptedCredential = encryptedCredentialInstance;
                                             }
                                             
-                                            JToken descriptionValue8 = propertiesValue["description"];
-                                            if (descriptionValue8 != null && descriptionValue8.Type != JTokenType.Null)
+                                            JToken descriptionValue10 = propertiesValue["description"];
+                                            if (descriptionValue10 != null && descriptionValue10.Type != JTokenType.Null)
                                             {
-                                                string descriptionInstance8 = ((string)descriptionValue8);
-                                                onPremisesDb2LinkedServiceInstance.Description = descriptionInstance8;
+                                                string descriptionInstance10 = ((string)descriptionValue10);
+                                                onPremisesDb2LinkedServiceInstance.Description = descriptionInstance10;
                                             }
                                             
-                                            JToken provisioningStateValue8 = propertiesValue["provisioningState"];
-                                            if (provisioningStateValue8 != null && provisioningStateValue8.Type != JTokenType.Null)
+                                            JToken provisioningStateValue10 = propertiesValue["provisioningState"];
+                                            if (provisioningStateValue10 != null && provisioningStateValue10.Type != JTokenType.Null)
                                             {
-                                                string provisioningStateInstance8 = ((string)provisioningStateValue8);
-                                                onPremisesDb2LinkedServiceInstance.ProvisioningState = provisioningStateInstance8;
+                                                string provisioningStateInstance10 = ((string)provisioningStateValue10);
+                                                onPremisesDb2LinkedServiceInstance.ProvisioningState = provisioningStateInstance10;
                                             }
                                             
-                                            JToken hubNameValue8 = propertiesValue["hubName"];
-                                            if (hubNameValue8 != null && hubNameValue8.Type != JTokenType.Null)
+                                            JToken hubNameValue10 = propertiesValue["hubName"];
+                                            if (hubNameValue10 != null && hubNameValue10.Type != JTokenType.Null)
                                             {
-                                                string hubNameInstance8 = ((string)hubNameValue8);
-                                                onPremisesDb2LinkedServiceInstance.HubName = hubNameInstance8;
+                                                string hubNameInstance10 = ((string)hubNameValue10);
+                                                onPremisesDb2LinkedServiceInstance.HubName = hubNameInstance10;
                                             }
                                             
-                                            JToken errorMessageValue8 = propertiesValue["errorMessage"];
-                                            if (errorMessageValue8 != null && errorMessageValue8.Type != JTokenType.Null)
+                                            JToken errorMessageValue10 = propertiesValue["errorMessage"];
+                                            if (errorMessageValue10 != null && errorMessageValue10.Type != JTokenType.Null)
                                             {
-                                                string errorMessageInstance8 = ((string)errorMessageValue8);
-                                                onPremisesDb2LinkedServiceInstance.ErrorMessage = errorMessageInstance8;
+                                                string errorMessageInstance10 = ((string)errorMessageValue10);
+                                                onPremisesDb2LinkedServiceInstance.ErrorMessage = errorMessageInstance10;
                                             }
                                             linkedServiceInstance.Properties = onPremisesDb2LinkedServiceInstance;
                                         }
@@ -7857,11 +9189,11 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 onPremisesFileSystemLinkedServiceInstance.UserId = userIdInstance;
                                             }
                                             
-                                            JToken passwordValue3 = propertiesValue["password"];
-                                            if (passwordValue3 != null && passwordValue3.Type != JTokenType.Null)
+                                            JToken passwordValue4 = propertiesValue["password"];
+                                            if (passwordValue4 != null && passwordValue4.Type != JTokenType.Null)
                                             {
-                                                string passwordInstance3 = ((string)passwordValue3);
-                                                onPremisesFileSystemLinkedServiceInstance.Password = passwordInstance3;
+                                                string passwordInstance4 = ((string)passwordValue4);
+                                                onPremisesFileSystemLinkedServiceInstance.Password = passwordInstance4;
                                             }
                                             
                                             JToken encryptedCredentialValue2 = propertiesValue["encryptedCredential"];
@@ -7871,34 +9203,116 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 onPremisesFileSystemLinkedServiceInstance.EncryptedCredential = encryptedCredentialInstance2;
                                             }
                                             
-                                            JToken descriptionValue9 = propertiesValue["description"];
-                                            if (descriptionValue9 != null && descriptionValue9.Type != JTokenType.Null)
+                                            JToken descriptionValue11 = propertiesValue["description"];
+                                            if (descriptionValue11 != null && descriptionValue11.Type != JTokenType.Null)
                                             {
-                                                string descriptionInstance9 = ((string)descriptionValue9);
-                                                onPremisesFileSystemLinkedServiceInstance.Description = descriptionInstance9;
+                                                string descriptionInstance11 = ((string)descriptionValue11);
+                                                onPremisesFileSystemLinkedServiceInstance.Description = descriptionInstance11;
                                             }
                                             
-                                            JToken provisioningStateValue9 = propertiesValue["provisioningState"];
-                                            if (provisioningStateValue9 != null && provisioningStateValue9.Type != JTokenType.Null)
+                                            JToken provisioningStateValue11 = propertiesValue["provisioningState"];
+                                            if (provisioningStateValue11 != null && provisioningStateValue11.Type != JTokenType.Null)
                                             {
-                                                string provisioningStateInstance9 = ((string)provisioningStateValue9);
-                                                onPremisesFileSystemLinkedServiceInstance.ProvisioningState = provisioningStateInstance9;
+                                                string provisioningStateInstance11 = ((string)provisioningStateValue11);
+                                                onPremisesFileSystemLinkedServiceInstance.ProvisioningState = provisioningStateInstance11;
                                             }
                                             
-                                            JToken hubNameValue9 = propertiesValue["hubName"];
-                                            if (hubNameValue9 != null && hubNameValue9.Type != JTokenType.Null)
+                                            JToken hubNameValue11 = propertiesValue["hubName"];
+                                            if (hubNameValue11 != null && hubNameValue11.Type != JTokenType.Null)
                                             {
-                                                string hubNameInstance9 = ((string)hubNameValue9);
-                                                onPremisesFileSystemLinkedServiceInstance.HubName = hubNameInstance9;
+                                                string hubNameInstance11 = ((string)hubNameValue11);
+                                                onPremisesFileSystemLinkedServiceInstance.HubName = hubNameInstance11;
                                             }
                                             
-                                            JToken errorMessageValue9 = propertiesValue["errorMessage"];
-                                            if (errorMessageValue9 != null && errorMessageValue9.Type != JTokenType.Null)
+                                            JToken errorMessageValue11 = propertiesValue["errorMessage"];
+                                            if (errorMessageValue11 != null && errorMessageValue11.Type != JTokenType.Null)
                                             {
-                                                string errorMessageInstance9 = ((string)errorMessageValue9);
-                                                onPremisesFileSystemLinkedServiceInstance.ErrorMessage = errorMessageInstance9;
+                                                string errorMessageInstance11 = ((string)errorMessageValue11);
+                                                onPremisesFileSystemLinkedServiceInstance.ErrorMessage = errorMessageInstance11;
                                             }
                                             linkedServiceInstance.Properties = onPremisesFileSystemLinkedServiceInstance;
+                                        }
+                                        if (typeName == "OnPremisesHdfsLinkedService")
+                                        {
+                                            OnPremisesHdfsLinkedService onPremisesHdfsLinkedServiceInstance = new OnPremisesHdfsLinkedService();
+                                            
+                                            JToken urlValue2 = propertiesValue["url"];
+                                            if (urlValue2 != null && urlValue2.Type != JTokenType.Null)
+                                            {
+                                                string urlInstance2 = ((string)urlValue2);
+                                                onPremisesHdfsLinkedServiceInstance.Url = urlInstance2;
+                                            }
+                                            
+                                            JToken contentTypeValue = propertiesValue["contentType"];
+                                            if (contentTypeValue != null && contentTypeValue.Type != JTokenType.Null)
+                                            {
+                                                string contentTypeInstance = ((string)contentTypeValue);
+                                                onPremisesHdfsLinkedServiceInstance.ContentType = contentTypeInstance;
+                                            }
+                                            
+                                            JToken authenticationTypeValue3 = propertiesValue["authenticationType"];
+                                            if (authenticationTypeValue3 != null && authenticationTypeValue3.Type != JTokenType.Null)
+                                            {
+                                                string authenticationTypeInstance3 = ((string)authenticationTypeValue3);
+                                                onPremisesHdfsLinkedServiceInstance.AuthenticationType = authenticationTypeInstance3;
+                                            }
+                                            
+                                            JToken usernameValue3 = propertiesValue["username"];
+                                            if (usernameValue3 != null && usernameValue3.Type != JTokenType.Null)
+                                            {
+                                                string usernameInstance3 = ((string)usernameValue3);
+                                                onPremisesHdfsLinkedServiceInstance.Username = usernameInstance3;
+                                            }
+                                            
+                                            JToken passwordValue5 = propertiesValue["password"];
+                                            if (passwordValue5 != null && passwordValue5.Type != JTokenType.Null)
+                                            {
+                                                string passwordInstance5 = ((string)passwordValue5);
+                                                onPremisesHdfsLinkedServiceInstance.Password = passwordInstance5;
+                                            }
+                                            
+                                            JToken gatewayNameValue3 = propertiesValue["gatewayName"];
+                                            if (gatewayNameValue3 != null && gatewayNameValue3.Type != JTokenType.Null)
+                                            {
+                                                string gatewayNameInstance3 = ((string)gatewayNameValue3);
+                                                onPremisesHdfsLinkedServiceInstance.GatewayName = gatewayNameInstance3;
+                                            }
+                                            
+                                            JToken encryptedCredentialValue3 = propertiesValue["encryptedCredential"];
+                                            if (encryptedCredentialValue3 != null && encryptedCredentialValue3.Type != JTokenType.Null)
+                                            {
+                                                string encryptedCredentialInstance3 = ((string)encryptedCredentialValue3);
+                                                onPremisesHdfsLinkedServiceInstance.EncryptedCredential = encryptedCredentialInstance3;
+                                            }
+                                            
+                                            JToken descriptionValue12 = propertiesValue["description"];
+                                            if (descriptionValue12 != null && descriptionValue12.Type != JTokenType.Null)
+                                            {
+                                                string descriptionInstance12 = ((string)descriptionValue12);
+                                                onPremisesHdfsLinkedServiceInstance.Description = descriptionInstance12;
+                                            }
+                                            
+                                            JToken provisioningStateValue12 = propertiesValue["provisioningState"];
+                                            if (provisioningStateValue12 != null && provisioningStateValue12.Type != JTokenType.Null)
+                                            {
+                                                string provisioningStateInstance12 = ((string)provisioningStateValue12);
+                                                onPremisesHdfsLinkedServiceInstance.ProvisioningState = provisioningStateInstance12;
+                                            }
+                                            
+                                            JToken hubNameValue12 = propertiesValue["hubName"];
+                                            if (hubNameValue12 != null && hubNameValue12.Type != JTokenType.Null)
+                                            {
+                                                string hubNameInstance12 = ((string)hubNameValue12);
+                                                onPremisesHdfsLinkedServiceInstance.HubName = hubNameInstance12;
+                                            }
+                                            
+                                            JToken errorMessageValue12 = propertiesValue["errorMessage"];
+                                            if (errorMessageValue12 != null && errorMessageValue12.Type != JTokenType.Null)
+                                            {
+                                                string errorMessageInstance12 = ((string)errorMessageValue12);
+                                                onPremisesHdfsLinkedServiceInstance.ErrorMessage = errorMessageInstance12;
+                                            }
+                                            linkedServiceInstance.Properties = onPremisesHdfsLinkedServiceInstance;
                                         }
                                         if (typeName == "OnPremisesMySqlLinkedService")
                                         {
@@ -7925,128 +9339,210 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 onPremisesMySqlLinkedServiceInstance.Schema = schemaInstance2;
                                             }
                                             
-                                            JToken authenticationTypeValue2 = propertiesValue["authenticationType"];
-                                            if (authenticationTypeValue2 != null && authenticationTypeValue2.Type != JTokenType.Null)
+                                            JToken authenticationTypeValue4 = propertiesValue["authenticationType"];
+                                            if (authenticationTypeValue4 != null && authenticationTypeValue4.Type != JTokenType.Null)
                                             {
-                                                string authenticationTypeInstance2 = ((string)authenticationTypeValue2);
-                                                onPremisesMySqlLinkedServiceInstance.AuthenticationType = authenticationTypeInstance2;
+                                                string authenticationTypeInstance4 = ((string)authenticationTypeValue4);
+                                                onPremisesMySqlLinkedServiceInstance.AuthenticationType = authenticationTypeInstance4;
                                             }
                                             
-                                            JToken usernameValue2 = propertiesValue["username"];
-                                            if (usernameValue2 != null && usernameValue2.Type != JTokenType.Null)
+                                            JToken usernameValue4 = propertiesValue["username"];
+                                            if (usernameValue4 != null && usernameValue4.Type != JTokenType.Null)
                                             {
-                                                string usernameInstance2 = ((string)usernameValue2);
-                                                onPremisesMySqlLinkedServiceInstance.Username = usernameInstance2;
+                                                string usernameInstance4 = ((string)usernameValue4);
+                                                onPremisesMySqlLinkedServiceInstance.Username = usernameInstance4;
                                             }
                                             
-                                            JToken passwordValue4 = propertiesValue["password"];
-                                            if (passwordValue4 != null && passwordValue4.Type != JTokenType.Null)
+                                            JToken passwordValue6 = propertiesValue["password"];
+                                            if (passwordValue6 != null && passwordValue6.Type != JTokenType.Null)
                                             {
-                                                string passwordInstance4 = ((string)passwordValue4);
-                                                onPremisesMySqlLinkedServiceInstance.Password = passwordInstance4;
-                                            }
-                                            
-                                            JToken gatewayNameValue3 = propertiesValue["gatewayName"];
-                                            if (gatewayNameValue3 != null && gatewayNameValue3.Type != JTokenType.Null)
-                                            {
-                                                string gatewayNameInstance3 = ((string)gatewayNameValue3);
-                                                onPremisesMySqlLinkedServiceInstance.GatewayName = gatewayNameInstance3;
-                                            }
-                                            
-                                            JToken encryptedCredentialValue3 = propertiesValue["encryptedCredential"];
-                                            if (encryptedCredentialValue3 != null && encryptedCredentialValue3.Type != JTokenType.Null)
-                                            {
-                                                string encryptedCredentialInstance3 = ((string)encryptedCredentialValue3);
-                                                onPremisesMySqlLinkedServiceInstance.EncryptedCredential = encryptedCredentialInstance3;
-                                            }
-                                            
-                                            JToken descriptionValue10 = propertiesValue["description"];
-                                            if (descriptionValue10 != null && descriptionValue10.Type != JTokenType.Null)
-                                            {
-                                                string descriptionInstance10 = ((string)descriptionValue10);
-                                                onPremisesMySqlLinkedServiceInstance.Description = descriptionInstance10;
-                                            }
-                                            
-                                            JToken provisioningStateValue10 = propertiesValue["provisioningState"];
-                                            if (provisioningStateValue10 != null && provisioningStateValue10.Type != JTokenType.Null)
-                                            {
-                                                string provisioningStateInstance10 = ((string)provisioningStateValue10);
-                                                onPremisesMySqlLinkedServiceInstance.ProvisioningState = provisioningStateInstance10;
-                                            }
-                                            
-                                            JToken hubNameValue10 = propertiesValue["hubName"];
-                                            if (hubNameValue10 != null && hubNameValue10.Type != JTokenType.Null)
-                                            {
-                                                string hubNameInstance10 = ((string)hubNameValue10);
-                                                onPremisesMySqlLinkedServiceInstance.HubName = hubNameInstance10;
-                                            }
-                                            
-                                            JToken errorMessageValue10 = propertiesValue["errorMessage"];
-                                            if (errorMessageValue10 != null && errorMessageValue10.Type != JTokenType.Null)
-                                            {
-                                                string errorMessageInstance10 = ((string)errorMessageValue10);
-                                                onPremisesMySqlLinkedServiceInstance.ErrorMessage = errorMessageInstance10;
-                                            }
-                                            linkedServiceInstance.Properties = onPremisesMySqlLinkedServiceInstance;
-                                        }
-                                        if (typeName == "OnPremisesOracleLinkedService")
-                                        {
-                                            OnPremisesOracleLinkedService onPremisesOracleLinkedServiceInstance = new OnPremisesOracleLinkedService();
-                                            
-                                            JToken connectionStringValue3 = propertiesValue["connectionString"];
-                                            if (connectionStringValue3 != null && connectionStringValue3.Type != JTokenType.Null)
-                                            {
-                                                string connectionStringInstance3 = ((string)connectionStringValue3);
-                                                onPremisesOracleLinkedServiceInstance.ConnectionString = connectionStringInstance3;
+                                                string passwordInstance6 = ((string)passwordValue6);
+                                                onPremisesMySqlLinkedServiceInstance.Password = passwordInstance6;
                                             }
                                             
                                             JToken gatewayNameValue4 = propertiesValue["gatewayName"];
                                             if (gatewayNameValue4 != null && gatewayNameValue4.Type != JTokenType.Null)
                                             {
                                                 string gatewayNameInstance4 = ((string)gatewayNameValue4);
-                                                onPremisesOracleLinkedServiceInstance.GatewayName = gatewayNameInstance4;
+                                                onPremisesMySqlLinkedServiceInstance.GatewayName = gatewayNameInstance4;
+                                            }
+                                            
+                                            JToken encryptedCredentialValue4 = propertiesValue["encryptedCredential"];
+                                            if (encryptedCredentialValue4 != null && encryptedCredentialValue4.Type != JTokenType.Null)
+                                            {
+                                                string encryptedCredentialInstance4 = ((string)encryptedCredentialValue4);
+                                                onPremisesMySqlLinkedServiceInstance.EncryptedCredential = encryptedCredentialInstance4;
+                                            }
+                                            
+                                            JToken descriptionValue13 = propertiesValue["description"];
+                                            if (descriptionValue13 != null && descriptionValue13.Type != JTokenType.Null)
+                                            {
+                                                string descriptionInstance13 = ((string)descriptionValue13);
+                                                onPremisesMySqlLinkedServiceInstance.Description = descriptionInstance13;
+                                            }
+                                            
+                                            JToken provisioningStateValue13 = propertiesValue["provisioningState"];
+                                            if (provisioningStateValue13 != null && provisioningStateValue13.Type != JTokenType.Null)
+                                            {
+                                                string provisioningStateInstance13 = ((string)provisioningStateValue13);
+                                                onPremisesMySqlLinkedServiceInstance.ProvisioningState = provisioningStateInstance13;
+                                            }
+                                            
+                                            JToken hubNameValue13 = propertiesValue["hubName"];
+                                            if (hubNameValue13 != null && hubNameValue13.Type != JTokenType.Null)
+                                            {
+                                                string hubNameInstance13 = ((string)hubNameValue13);
+                                                onPremisesMySqlLinkedServiceInstance.HubName = hubNameInstance13;
+                                            }
+                                            
+                                            JToken errorMessageValue13 = propertiesValue["errorMessage"];
+                                            if (errorMessageValue13 != null && errorMessageValue13.Type != JTokenType.Null)
+                                            {
+                                                string errorMessageInstance13 = ((string)errorMessageValue13);
+                                                onPremisesMySqlLinkedServiceInstance.ErrorMessage = errorMessageInstance13;
+                                            }
+                                            linkedServiceInstance.Properties = onPremisesMySqlLinkedServiceInstance;
+                                        }
+                                        if (typeName == "OnPremisesOdbcLinkedService")
+                                        {
+                                            OnPremisesOdbcLinkedService onPremisesOdbcLinkedServiceInstance = new OnPremisesOdbcLinkedService();
+                                            
+                                            JToken nonCredentialConnectionStringValue = propertiesValue["nonCredentialConnectionString"];
+                                            if (nonCredentialConnectionStringValue != null && nonCredentialConnectionStringValue.Type != JTokenType.Null)
+                                            {
+                                                string nonCredentialConnectionStringInstance = ((string)nonCredentialConnectionStringValue);
+                                                onPremisesOdbcLinkedServiceInstance.NonCredentialConnectionString = nonCredentialConnectionStringInstance;
+                                            }
+                                            
+                                            JToken credentialConnectionStringValue = propertiesValue["credentialConnectionString"];
+                                            if (credentialConnectionStringValue != null && credentialConnectionStringValue.Type != JTokenType.Null)
+                                            {
+                                                string credentialConnectionStringInstance = ((string)credentialConnectionStringValue);
+                                                onPremisesOdbcLinkedServiceInstance.CredentialConnectionString = credentialConnectionStringInstance;
+                                            }
+                                            
+                                            JToken encryptedCredentialConnectionStringValue = propertiesValue["encryptedCredentialConnectionString"];
+                                            if (encryptedCredentialConnectionStringValue != null && encryptedCredentialConnectionStringValue.Type != JTokenType.Null)
+                                            {
+                                                string encryptedCredentialConnectionStringInstance = ((string)encryptedCredentialConnectionStringValue);
+                                                onPremisesOdbcLinkedServiceInstance.EncryptedCredentialConnectionString = encryptedCredentialConnectionStringInstance;
                                             }
                                             
                                             JToken userNameValue2 = propertiesValue["userName"];
                                             if (userNameValue2 != null && userNameValue2.Type != JTokenType.Null)
                                             {
                                                 string userNameInstance2 = ((string)userNameValue2);
-                                                onPremisesOracleLinkedServiceInstance.UserName = userNameInstance2;
+                                                onPremisesOdbcLinkedServiceInstance.UserName = userNameInstance2;
                                             }
                                             
-                                            JToken passwordValue5 = propertiesValue["password"];
-                                            if (passwordValue5 != null && passwordValue5.Type != JTokenType.Null)
+                                            JToken passwordValue7 = propertiesValue["password"];
+                                            if (passwordValue7 != null && passwordValue7.Type != JTokenType.Null)
                                             {
-                                                string passwordInstance5 = ((string)passwordValue5);
-                                                onPremisesOracleLinkedServiceInstance.Password = passwordInstance5;
+                                                string passwordInstance7 = ((string)passwordValue7);
+                                                onPremisesOdbcLinkedServiceInstance.Password = passwordInstance7;
                                             }
                                             
-                                            JToken descriptionValue11 = propertiesValue["description"];
-                                            if (descriptionValue11 != null && descriptionValue11.Type != JTokenType.Null)
+                                            JToken gatewayNameValue5 = propertiesValue["gatewayName"];
+                                            if (gatewayNameValue5 != null && gatewayNameValue5.Type != JTokenType.Null)
                                             {
-                                                string descriptionInstance11 = ((string)descriptionValue11);
-                                                onPremisesOracleLinkedServiceInstance.Description = descriptionInstance11;
+                                                string gatewayNameInstance5 = ((string)gatewayNameValue5);
+                                                onPremisesOdbcLinkedServiceInstance.GatewayName = gatewayNameInstance5;
                                             }
                                             
-                                            JToken provisioningStateValue11 = propertiesValue["provisioningState"];
-                                            if (provisioningStateValue11 != null && provisioningStateValue11.Type != JTokenType.Null)
+                                            JToken authenticationTypeValue5 = propertiesValue["authenticationType"];
+                                            if (authenticationTypeValue5 != null && authenticationTypeValue5.Type != JTokenType.Null)
                                             {
-                                                string provisioningStateInstance11 = ((string)provisioningStateValue11);
-                                                onPremisesOracleLinkedServiceInstance.ProvisioningState = provisioningStateInstance11;
+                                                string authenticationTypeInstance5 = ((string)authenticationTypeValue5);
+                                                onPremisesOdbcLinkedServiceInstance.AuthenticationType = authenticationTypeInstance5;
                                             }
                                             
-                                            JToken hubNameValue11 = propertiesValue["hubName"];
-                                            if (hubNameValue11 != null && hubNameValue11.Type != JTokenType.Null)
+                                            JToken descriptionValue14 = propertiesValue["description"];
+                                            if (descriptionValue14 != null && descriptionValue14.Type != JTokenType.Null)
                                             {
-                                                string hubNameInstance11 = ((string)hubNameValue11);
-                                                onPremisesOracleLinkedServiceInstance.HubName = hubNameInstance11;
+                                                string descriptionInstance14 = ((string)descriptionValue14);
+                                                onPremisesOdbcLinkedServiceInstance.Description = descriptionInstance14;
                                             }
                                             
-                                            JToken errorMessageValue11 = propertiesValue["errorMessage"];
-                                            if (errorMessageValue11 != null && errorMessageValue11.Type != JTokenType.Null)
+                                            JToken provisioningStateValue14 = propertiesValue["provisioningState"];
+                                            if (provisioningStateValue14 != null && provisioningStateValue14.Type != JTokenType.Null)
                                             {
-                                                string errorMessageInstance11 = ((string)errorMessageValue11);
-                                                onPremisesOracleLinkedServiceInstance.ErrorMessage = errorMessageInstance11;
+                                                string provisioningStateInstance14 = ((string)provisioningStateValue14);
+                                                onPremisesOdbcLinkedServiceInstance.ProvisioningState = provisioningStateInstance14;
+                                            }
+                                            
+                                            JToken hubNameValue14 = propertiesValue["hubName"];
+                                            if (hubNameValue14 != null && hubNameValue14.Type != JTokenType.Null)
+                                            {
+                                                string hubNameInstance14 = ((string)hubNameValue14);
+                                                onPremisesOdbcLinkedServiceInstance.HubName = hubNameInstance14;
+                                            }
+                                            
+                                            JToken errorMessageValue14 = propertiesValue["errorMessage"];
+                                            if (errorMessageValue14 != null && errorMessageValue14.Type != JTokenType.Null)
+                                            {
+                                                string errorMessageInstance14 = ((string)errorMessageValue14);
+                                                onPremisesOdbcLinkedServiceInstance.ErrorMessage = errorMessageInstance14;
+                                            }
+                                            linkedServiceInstance.Properties = onPremisesOdbcLinkedServiceInstance;
+                                        }
+                                        if (typeName == "OnPremisesOracleLinkedService")
+                                        {
+                                            OnPremisesOracleLinkedService onPremisesOracleLinkedServiceInstance = new OnPremisesOracleLinkedService();
+                                            
+                                            JToken connectionStringValue4 = propertiesValue["connectionString"];
+                                            if (connectionStringValue4 != null && connectionStringValue4.Type != JTokenType.Null)
+                                            {
+                                                string connectionStringInstance4 = ((string)connectionStringValue4);
+                                                onPremisesOracleLinkedServiceInstance.ConnectionString = connectionStringInstance4;
+                                            }
+                                            
+                                            JToken gatewayNameValue6 = propertiesValue["gatewayName"];
+                                            if (gatewayNameValue6 != null && gatewayNameValue6.Type != JTokenType.Null)
+                                            {
+                                                string gatewayNameInstance6 = ((string)gatewayNameValue6);
+                                                onPremisesOracleLinkedServiceInstance.GatewayName = gatewayNameInstance6;
+                                            }
+                                            
+                                            JToken userNameValue3 = propertiesValue["userName"];
+                                            if (userNameValue3 != null && userNameValue3.Type != JTokenType.Null)
+                                            {
+                                                string userNameInstance3 = ((string)userNameValue3);
+                                                onPremisesOracleLinkedServiceInstance.UserName = userNameInstance3;
+                                            }
+                                            
+                                            JToken passwordValue8 = propertiesValue["password"];
+                                            if (passwordValue8 != null && passwordValue8.Type != JTokenType.Null)
+                                            {
+                                                string passwordInstance8 = ((string)passwordValue8);
+                                                onPremisesOracleLinkedServiceInstance.Password = passwordInstance8;
+                                            }
+                                            
+                                            JToken descriptionValue15 = propertiesValue["description"];
+                                            if (descriptionValue15 != null && descriptionValue15.Type != JTokenType.Null)
+                                            {
+                                                string descriptionInstance15 = ((string)descriptionValue15);
+                                                onPremisesOracleLinkedServiceInstance.Description = descriptionInstance15;
+                                            }
+                                            
+                                            JToken provisioningStateValue15 = propertiesValue["provisioningState"];
+                                            if (provisioningStateValue15 != null && provisioningStateValue15.Type != JTokenType.Null)
+                                            {
+                                                string provisioningStateInstance15 = ((string)provisioningStateValue15);
+                                                onPremisesOracleLinkedServiceInstance.ProvisioningState = provisioningStateInstance15;
+                                            }
+                                            
+                                            JToken hubNameValue15 = propertiesValue["hubName"];
+                                            if (hubNameValue15 != null && hubNameValue15.Type != JTokenType.Null)
+                                            {
+                                                string hubNameInstance15 = ((string)hubNameValue15);
+                                                onPremisesOracleLinkedServiceInstance.HubName = hubNameInstance15;
+                                            }
+                                            
+                                            JToken errorMessageValue15 = propertiesValue["errorMessage"];
+                                            if (errorMessageValue15 != null && errorMessageValue15.Type != JTokenType.Null)
+                                            {
+                                                string errorMessageInstance15 = ((string)errorMessageValue15);
+                                                onPremisesOracleLinkedServiceInstance.ErrorMessage = errorMessageInstance15;
                                             }
                                             linkedServiceInstance.Properties = onPremisesOracleLinkedServiceInstance;
                                         }
@@ -8075,67 +9571,67 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 onPremisesPostgreSqlLinkedServiceInstance.Schema = schemaInstance3;
                                             }
                                             
-                                            JToken authenticationTypeValue3 = propertiesValue["authenticationType"];
-                                            if (authenticationTypeValue3 != null && authenticationTypeValue3.Type != JTokenType.Null)
+                                            JToken authenticationTypeValue6 = propertiesValue["authenticationType"];
+                                            if (authenticationTypeValue6 != null && authenticationTypeValue6.Type != JTokenType.Null)
                                             {
-                                                string authenticationTypeInstance3 = ((string)authenticationTypeValue3);
-                                                onPremisesPostgreSqlLinkedServiceInstance.AuthenticationType = authenticationTypeInstance3;
+                                                string authenticationTypeInstance6 = ((string)authenticationTypeValue6);
+                                                onPremisesPostgreSqlLinkedServiceInstance.AuthenticationType = authenticationTypeInstance6;
                                             }
                                             
-                                            JToken usernameValue3 = propertiesValue["username"];
-                                            if (usernameValue3 != null && usernameValue3.Type != JTokenType.Null)
+                                            JToken usernameValue5 = propertiesValue["username"];
+                                            if (usernameValue5 != null && usernameValue5.Type != JTokenType.Null)
                                             {
-                                                string usernameInstance3 = ((string)usernameValue3);
-                                                onPremisesPostgreSqlLinkedServiceInstance.Username = usernameInstance3;
+                                                string usernameInstance5 = ((string)usernameValue5);
+                                                onPremisesPostgreSqlLinkedServiceInstance.Username = usernameInstance5;
                                             }
                                             
-                                            JToken passwordValue6 = propertiesValue["password"];
-                                            if (passwordValue6 != null && passwordValue6.Type != JTokenType.Null)
+                                            JToken passwordValue9 = propertiesValue["password"];
+                                            if (passwordValue9 != null && passwordValue9.Type != JTokenType.Null)
                                             {
-                                                string passwordInstance6 = ((string)passwordValue6);
-                                                onPremisesPostgreSqlLinkedServiceInstance.Password = passwordInstance6;
+                                                string passwordInstance9 = ((string)passwordValue9);
+                                                onPremisesPostgreSqlLinkedServiceInstance.Password = passwordInstance9;
                                             }
                                             
-                                            JToken gatewayNameValue5 = propertiesValue["gatewayName"];
-                                            if (gatewayNameValue5 != null && gatewayNameValue5.Type != JTokenType.Null)
+                                            JToken gatewayNameValue7 = propertiesValue["gatewayName"];
+                                            if (gatewayNameValue7 != null && gatewayNameValue7.Type != JTokenType.Null)
                                             {
-                                                string gatewayNameInstance5 = ((string)gatewayNameValue5);
-                                                onPremisesPostgreSqlLinkedServiceInstance.GatewayName = gatewayNameInstance5;
+                                                string gatewayNameInstance7 = ((string)gatewayNameValue7);
+                                                onPremisesPostgreSqlLinkedServiceInstance.GatewayName = gatewayNameInstance7;
                                             }
                                             
-                                            JToken encryptedCredentialValue4 = propertiesValue["encryptedCredential"];
-                                            if (encryptedCredentialValue4 != null && encryptedCredentialValue4.Type != JTokenType.Null)
+                                            JToken encryptedCredentialValue5 = propertiesValue["encryptedCredential"];
+                                            if (encryptedCredentialValue5 != null && encryptedCredentialValue5.Type != JTokenType.Null)
                                             {
-                                                string encryptedCredentialInstance4 = ((string)encryptedCredentialValue4);
-                                                onPremisesPostgreSqlLinkedServiceInstance.EncryptedCredential = encryptedCredentialInstance4;
+                                                string encryptedCredentialInstance5 = ((string)encryptedCredentialValue5);
+                                                onPremisesPostgreSqlLinkedServiceInstance.EncryptedCredential = encryptedCredentialInstance5;
                                             }
                                             
-                                            JToken descriptionValue12 = propertiesValue["description"];
-                                            if (descriptionValue12 != null && descriptionValue12.Type != JTokenType.Null)
+                                            JToken descriptionValue16 = propertiesValue["description"];
+                                            if (descriptionValue16 != null && descriptionValue16.Type != JTokenType.Null)
                                             {
-                                                string descriptionInstance12 = ((string)descriptionValue12);
-                                                onPremisesPostgreSqlLinkedServiceInstance.Description = descriptionInstance12;
+                                                string descriptionInstance16 = ((string)descriptionValue16);
+                                                onPremisesPostgreSqlLinkedServiceInstance.Description = descriptionInstance16;
                                             }
                                             
-                                            JToken provisioningStateValue12 = propertiesValue["provisioningState"];
-                                            if (provisioningStateValue12 != null && provisioningStateValue12.Type != JTokenType.Null)
+                                            JToken provisioningStateValue16 = propertiesValue["provisioningState"];
+                                            if (provisioningStateValue16 != null && provisioningStateValue16.Type != JTokenType.Null)
                                             {
-                                                string provisioningStateInstance12 = ((string)provisioningStateValue12);
-                                                onPremisesPostgreSqlLinkedServiceInstance.ProvisioningState = provisioningStateInstance12;
+                                                string provisioningStateInstance16 = ((string)provisioningStateValue16);
+                                                onPremisesPostgreSqlLinkedServiceInstance.ProvisioningState = provisioningStateInstance16;
                                             }
                                             
-                                            JToken hubNameValue12 = propertiesValue["hubName"];
-                                            if (hubNameValue12 != null && hubNameValue12.Type != JTokenType.Null)
+                                            JToken hubNameValue16 = propertiesValue["hubName"];
+                                            if (hubNameValue16 != null && hubNameValue16.Type != JTokenType.Null)
                                             {
-                                                string hubNameInstance12 = ((string)hubNameValue12);
-                                                onPremisesPostgreSqlLinkedServiceInstance.HubName = hubNameInstance12;
+                                                string hubNameInstance16 = ((string)hubNameValue16);
+                                                onPremisesPostgreSqlLinkedServiceInstance.HubName = hubNameInstance16;
                                             }
                                             
-                                            JToken errorMessageValue12 = propertiesValue["errorMessage"];
-                                            if (errorMessageValue12 != null && errorMessageValue12.Type != JTokenType.Null)
+                                            JToken errorMessageValue16 = propertiesValue["errorMessage"];
+                                            if (errorMessageValue16 != null && errorMessageValue16.Type != JTokenType.Null)
                                             {
-                                                string errorMessageInstance12 = ((string)errorMessageValue12);
-                                                onPremisesPostgreSqlLinkedServiceInstance.ErrorMessage = errorMessageInstance12;
+                                                string errorMessageInstance16 = ((string)errorMessageValue16);
+                                                onPremisesPostgreSqlLinkedServiceInstance.ErrorMessage = errorMessageInstance16;
                                             }
                                             linkedServiceInstance.Properties = onPremisesPostgreSqlLinkedServiceInstance;
                                         }
@@ -8143,60 +9639,60 @@ namespace Microsoft.Azure.Management.DataFactories
                                         {
                                             OnPremisesSqlLinkedService onPremisesSqlLinkedServiceInstance = new OnPremisesSqlLinkedService();
                                             
-                                            JToken connectionStringValue4 = propertiesValue["connectionString"];
-                                            if (connectionStringValue4 != null && connectionStringValue4.Type != JTokenType.Null)
+                                            JToken connectionStringValue5 = propertiesValue["connectionString"];
+                                            if (connectionStringValue5 != null && connectionStringValue5.Type != JTokenType.Null)
                                             {
-                                                string connectionStringInstance4 = ((string)connectionStringValue4);
-                                                onPremisesSqlLinkedServiceInstance.ConnectionString = connectionStringInstance4;
+                                                string connectionStringInstance5 = ((string)connectionStringValue5);
+                                                onPremisesSqlLinkedServiceInstance.ConnectionString = connectionStringInstance5;
                                             }
                                             
-                                            JToken gatewayNameValue6 = propertiesValue["gatewayName"];
-                                            if (gatewayNameValue6 != null && gatewayNameValue6.Type != JTokenType.Null)
+                                            JToken gatewayNameValue8 = propertiesValue["gatewayName"];
+                                            if (gatewayNameValue8 != null && gatewayNameValue8.Type != JTokenType.Null)
                                             {
-                                                string gatewayNameInstance6 = ((string)gatewayNameValue6);
-                                                onPremisesSqlLinkedServiceInstance.GatewayName = gatewayNameInstance6;
+                                                string gatewayNameInstance8 = ((string)gatewayNameValue8);
+                                                onPremisesSqlLinkedServiceInstance.GatewayName = gatewayNameInstance8;
                                             }
                                             
-                                            JToken userNameValue3 = propertiesValue["userName"];
-                                            if (userNameValue3 != null && userNameValue3.Type != JTokenType.Null)
+                                            JToken userNameValue4 = propertiesValue["userName"];
+                                            if (userNameValue4 != null && userNameValue4.Type != JTokenType.Null)
                                             {
-                                                string userNameInstance3 = ((string)userNameValue3);
-                                                onPremisesSqlLinkedServiceInstance.UserName = userNameInstance3;
+                                                string userNameInstance4 = ((string)userNameValue4);
+                                                onPremisesSqlLinkedServiceInstance.UserName = userNameInstance4;
                                             }
                                             
-                                            JToken passwordValue7 = propertiesValue["password"];
-                                            if (passwordValue7 != null && passwordValue7.Type != JTokenType.Null)
+                                            JToken passwordValue10 = propertiesValue["password"];
+                                            if (passwordValue10 != null && passwordValue10.Type != JTokenType.Null)
                                             {
-                                                string passwordInstance7 = ((string)passwordValue7);
-                                                onPremisesSqlLinkedServiceInstance.Password = passwordInstance7;
+                                                string passwordInstance10 = ((string)passwordValue10);
+                                                onPremisesSqlLinkedServiceInstance.Password = passwordInstance10;
                                             }
                                             
-                                            JToken descriptionValue13 = propertiesValue["description"];
-                                            if (descriptionValue13 != null && descriptionValue13.Type != JTokenType.Null)
+                                            JToken descriptionValue17 = propertiesValue["description"];
+                                            if (descriptionValue17 != null && descriptionValue17.Type != JTokenType.Null)
                                             {
-                                                string descriptionInstance13 = ((string)descriptionValue13);
-                                                onPremisesSqlLinkedServiceInstance.Description = descriptionInstance13;
+                                                string descriptionInstance17 = ((string)descriptionValue17);
+                                                onPremisesSqlLinkedServiceInstance.Description = descriptionInstance17;
                                             }
                                             
-                                            JToken provisioningStateValue13 = propertiesValue["provisioningState"];
-                                            if (provisioningStateValue13 != null && provisioningStateValue13.Type != JTokenType.Null)
+                                            JToken provisioningStateValue17 = propertiesValue["provisioningState"];
+                                            if (provisioningStateValue17 != null && provisioningStateValue17.Type != JTokenType.Null)
                                             {
-                                                string provisioningStateInstance13 = ((string)provisioningStateValue13);
-                                                onPremisesSqlLinkedServiceInstance.ProvisioningState = provisioningStateInstance13;
+                                                string provisioningStateInstance17 = ((string)provisioningStateValue17);
+                                                onPremisesSqlLinkedServiceInstance.ProvisioningState = provisioningStateInstance17;
                                             }
                                             
-                                            JToken hubNameValue13 = propertiesValue["hubName"];
-                                            if (hubNameValue13 != null && hubNameValue13.Type != JTokenType.Null)
+                                            JToken hubNameValue17 = propertiesValue["hubName"];
+                                            if (hubNameValue17 != null && hubNameValue17.Type != JTokenType.Null)
                                             {
-                                                string hubNameInstance13 = ((string)hubNameValue13);
-                                                onPremisesSqlLinkedServiceInstance.HubName = hubNameInstance13;
+                                                string hubNameInstance17 = ((string)hubNameValue17);
+                                                onPremisesSqlLinkedServiceInstance.HubName = hubNameInstance17;
                                             }
                                             
-                                            JToken errorMessageValue13 = propertiesValue["errorMessage"];
-                                            if (errorMessageValue13 != null && errorMessageValue13.Type != JTokenType.Null)
+                                            JToken errorMessageValue17 = propertiesValue["errorMessage"];
+                                            if (errorMessageValue17 != null && errorMessageValue17.Type != JTokenType.Null)
                                             {
-                                                string errorMessageInstance13 = ((string)errorMessageValue13);
-                                                onPremisesSqlLinkedServiceInstance.ErrorMessage = errorMessageInstance13;
+                                                string errorMessageInstance17 = ((string)errorMessageValue17);
+                                                onPremisesSqlLinkedServiceInstance.ErrorMessage = errorMessageInstance17;
                                             }
                                             linkedServiceInstance.Properties = onPremisesSqlLinkedServiceInstance;
                                         }
@@ -8225,67 +9721,67 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 onPremisesSybaseLinkedServiceInstance.Schema = schemaInstance4;
                                             }
                                             
-                                            JToken authenticationTypeValue4 = propertiesValue["authenticationType"];
-                                            if (authenticationTypeValue4 != null && authenticationTypeValue4.Type != JTokenType.Null)
+                                            JToken authenticationTypeValue7 = propertiesValue["authenticationType"];
+                                            if (authenticationTypeValue7 != null && authenticationTypeValue7.Type != JTokenType.Null)
                                             {
-                                                string authenticationTypeInstance4 = ((string)authenticationTypeValue4);
-                                                onPremisesSybaseLinkedServiceInstance.AuthenticationType = authenticationTypeInstance4;
+                                                string authenticationTypeInstance7 = ((string)authenticationTypeValue7);
+                                                onPremisesSybaseLinkedServiceInstance.AuthenticationType = authenticationTypeInstance7;
                                             }
                                             
-                                            JToken usernameValue4 = propertiesValue["username"];
-                                            if (usernameValue4 != null && usernameValue4.Type != JTokenType.Null)
+                                            JToken usernameValue6 = propertiesValue["username"];
+                                            if (usernameValue6 != null && usernameValue6.Type != JTokenType.Null)
                                             {
-                                                string usernameInstance4 = ((string)usernameValue4);
-                                                onPremisesSybaseLinkedServiceInstance.Username = usernameInstance4;
+                                                string usernameInstance6 = ((string)usernameValue6);
+                                                onPremisesSybaseLinkedServiceInstance.Username = usernameInstance6;
                                             }
                                             
-                                            JToken passwordValue8 = propertiesValue["password"];
-                                            if (passwordValue8 != null && passwordValue8.Type != JTokenType.Null)
+                                            JToken passwordValue11 = propertiesValue["password"];
+                                            if (passwordValue11 != null && passwordValue11.Type != JTokenType.Null)
                                             {
-                                                string passwordInstance8 = ((string)passwordValue8);
-                                                onPremisesSybaseLinkedServiceInstance.Password = passwordInstance8;
+                                                string passwordInstance11 = ((string)passwordValue11);
+                                                onPremisesSybaseLinkedServiceInstance.Password = passwordInstance11;
                                             }
                                             
-                                            JToken gatewayNameValue7 = propertiesValue["gatewayName"];
-                                            if (gatewayNameValue7 != null && gatewayNameValue7.Type != JTokenType.Null)
+                                            JToken gatewayNameValue9 = propertiesValue["gatewayName"];
+                                            if (gatewayNameValue9 != null && gatewayNameValue9.Type != JTokenType.Null)
                                             {
-                                                string gatewayNameInstance7 = ((string)gatewayNameValue7);
-                                                onPremisesSybaseLinkedServiceInstance.GatewayName = gatewayNameInstance7;
+                                                string gatewayNameInstance9 = ((string)gatewayNameValue9);
+                                                onPremisesSybaseLinkedServiceInstance.GatewayName = gatewayNameInstance9;
                                             }
                                             
-                                            JToken encryptedCredentialValue5 = propertiesValue["encryptedCredential"];
-                                            if (encryptedCredentialValue5 != null && encryptedCredentialValue5.Type != JTokenType.Null)
+                                            JToken encryptedCredentialValue6 = propertiesValue["encryptedCredential"];
+                                            if (encryptedCredentialValue6 != null && encryptedCredentialValue6.Type != JTokenType.Null)
                                             {
-                                                string encryptedCredentialInstance5 = ((string)encryptedCredentialValue5);
-                                                onPremisesSybaseLinkedServiceInstance.EncryptedCredential = encryptedCredentialInstance5;
+                                                string encryptedCredentialInstance6 = ((string)encryptedCredentialValue6);
+                                                onPremisesSybaseLinkedServiceInstance.EncryptedCredential = encryptedCredentialInstance6;
                                             }
                                             
-                                            JToken descriptionValue14 = propertiesValue["description"];
-                                            if (descriptionValue14 != null && descriptionValue14.Type != JTokenType.Null)
+                                            JToken descriptionValue18 = propertiesValue["description"];
+                                            if (descriptionValue18 != null && descriptionValue18.Type != JTokenType.Null)
                                             {
-                                                string descriptionInstance14 = ((string)descriptionValue14);
-                                                onPremisesSybaseLinkedServiceInstance.Description = descriptionInstance14;
+                                                string descriptionInstance18 = ((string)descriptionValue18);
+                                                onPremisesSybaseLinkedServiceInstance.Description = descriptionInstance18;
                                             }
                                             
-                                            JToken provisioningStateValue14 = propertiesValue["provisioningState"];
-                                            if (provisioningStateValue14 != null && provisioningStateValue14.Type != JTokenType.Null)
+                                            JToken provisioningStateValue18 = propertiesValue["provisioningState"];
+                                            if (provisioningStateValue18 != null && provisioningStateValue18.Type != JTokenType.Null)
                                             {
-                                                string provisioningStateInstance14 = ((string)provisioningStateValue14);
-                                                onPremisesSybaseLinkedServiceInstance.ProvisioningState = provisioningStateInstance14;
+                                                string provisioningStateInstance18 = ((string)provisioningStateValue18);
+                                                onPremisesSybaseLinkedServiceInstance.ProvisioningState = provisioningStateInstance18;
                                             }
                                             
-                                            JToken hubNameValue14 = propertiesValue["hubName"];
-                                            if (hubNameValue14 != null && hubNameValue14.Type != JTokenType.Null)
+                                            JToken hubNameValue18 = propertiesValue["hubName"];
+                                            if (hubNameValue18 != null && hubNameValue18.Type != JTokenType.Null)
                                             {
-                                                string hubNameInstance14 = ((string)hubNameValue14);
-                                                onPremisesSybaseLinkedServiceInstance.HubName = hubNameInstance14;
+                                                string hubNameInstance18 = ((string)hubNameValue18);
+                                                onPremisesSybaseLinkedServiceInstance.HubName = hubNameInstance18;
                                             }
                                             
-                                            JToken errorMessageValue14 = propertiesValue["errorMessage"];
-                                            if (errorMessageValue14 != null && errorMessageValue14.Type != JTokenType.Null)
+                                            JToken errorMessageValue18 = propertiesValue["errorMessage"];
+                                            if (errorMessageValue18 != null && errorMessageValue18.Type != JTokenType.Null)
                                             {
-                                                string errorMessageInstance14 = ((string)errorMessageValue14);
-                                                onPremisesSybaseLinkedServiceInstance.ErrorMessage = errorMessageInstance14;
+                                                string errorMessageInstance18 = ((string)errorMessageValue18);
+                                                onPremisesSybaseLinkedServiceInstance.ErrorMessage = errorMessageInstance18;
                                             }
                                             linkedServiceInstance.Properties = onPremisesSybaseLinkedServiceInstance;
                                         }
@@ -8314,67 +9810,67 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 onPremisesTeradataLinkedServiceInstance.Schema = schemaInstance5;
                                             }
                                             
-                                            JToken authenticationTypeValue5 = propertiesValue["authenticationType"];
-                                            if (authenticationTypeValue5 != null && authenticationTypeValue5.Type != JTokenType.Null)
+                                            JToken authenticationTypeValue8 = propertiesValue["authenticationType"];
+                                            if (authenticationTypeValue8 != null && authenticationTypeValue8.Type != JTokenType.Null)
                                             {
-                                                string authenticationTypeInstance5 = ((string)authenticationTypeValue5);
-                                                onPremisesTeradataLinkedServiceInstance.AuthenticationType = authenticationTypeInstance5;
+                                                string authenticationTypeInstance8 = ((string)authenticationTypeValue8);
+                                                onPremisesTeradataLinkedServiceInstance.AuthenticationType = authenticationTypeInstance8;
                                             }
                                             
-                                            JToken usernameValue5 = propertiesValue["username"];
-                                            if (usernameValue5 != null && usernameValue5.Type != JTokenType.Null)
+                                            JToken usernameValue7 = propertiesValue["username"];
+                                            if (usernameValue7 != null && usernameValue7.Type != JTokenType.Null)
                                             {
-                                                string usernameInstance5 = ((string)usernameValue5);
-                                                onPremisesTeradataLinkedServiceInstance.Username = usernameInstance5;
+                                                string usernameInstance7 = ((string)usernameValue7);
+                                                onPremisesTeradataLinkedServiceInstance.Username = usernameInstance7;
                                             }
                                             
-                                            JToken passwordValue9 = propertiesValue["password"];
-                                            if (passwordValue9 != null && passwordValue9.Type != JTokenType.Null)
+                                            JToken passwordValue12 = propertiesValue["password"];
+                                            if (passwordValue12 != null && passwordValue12.Type != JTokenType.Null)
                                             {
-                                                string passwordInstance9 = ((string)passwordValue9);
-                                                onPremisesTeradataLinkedServiceInstance.Password = passwordInstance9;
+                                                string passwordInstance12 = ((string)passwordValue12);
+                                                onPremisesTeradataLinkedServiceInstance.Password = passwordInstance12;
                                             }
                                             
-                                            JToken gatewayNameValue8 = propertiesValue["gatewayName"];
-                                            if (gatewayNameValue8 != null && gatewayNameValue8.Type != JTokenType.Null)
+                                            JToken gatewayNameValue10 = propertiesValue["gatewayName"];
+                                            if (gatewayNameValue10 != null && gatewayNameValue10.Type != JTokenType.Null)
                                             {
-                                                string gatewayNameInstance8 = ((string)gatewayNameValue8);
-                                                onPremisesTeradataLinkedServiceInstance.GatewayName = gatewayNameInstance8;
+                                                string gatewayNameInstance10 = ((string)gatewayNameValue10);
+                                                onPremisesTeradataLinkedServiceInstance.GatewayName = gatewayNameInstance10;
                                             }
                                             
-                                            JToken encryptedCredentialValue6 = propertiesValue["encryptedCredential"];
-                                            if (encryptedCredentialValue6 != null && encryptedCredentialValue6.Type != JTokenType.Null)
+                                            JToken encryptedCredentialValue7 = propertiesValue["encryptedCredential"];
+                                            if (encryptedCredentialValue7 != null && encryptedCredentialValue7.Type != JTokenType.Null)
                                             {
-                                                string encryptedCredentialInstance6 = ((string)encryptedCredentialValue6);
-                                                onPremisesTeradataLinkedServiceInstance.EncryptedCredential = encryptedCredentialInstance6;
+                                                string encryptedCredentialInstance7 = ((string)encryptedCredentialValue7);
+                                                onPremisesTeradataLinkedServiceInstance.EncryptedCredential = encryptedCredentialInstance7;
                                             }
                                             
-                                            JToken descriptionValue15 = propertiesValue["description"];
-                                            if (descriptionValue15 != null && descriptionValue15.Type != JTokenType.Null)
+                                            JToken descriptionValue19 = propertiesValue["description"];
+                                            if (descriptionValue19 != null && descriptionValue19.Type != JTokenType.Null)
                                             {
-                                                string descriptionInstance15 = ((string)descriptionValue15);
-                                                onPremisesTeradataLinkedServiceInstance.Description = descriptionInstance15;
+                                                string descriptionInstance19 = ((string)descriptionValue19);
+                                                onPremisesTeradataLinkedServiceInstance.Description = descriptionInstance19;
                                             }
                                             
-                                            JToken provisioningStateValue15 = propertiesValue["provisioningState"];
-                                            if (provisioningStateValue15 != null && provisioningStateValue15.Type != JTokenType.Null)
+                                            JToken provisioningStateValue19 = propertiesValue["provisioningState"];
+                                            if (provisioningStateValue19 != null && provisioningStateValue19.Type != JTokenType.Null)
                                             {
-                                                string provisioningStateInstance15 = ((string)provisioningStateValue15);
-                                                onPremisesTeradataLinkedServiceInstance.ProvisioningState = provisioningStateInstance15;
+                                                string provisioningStateInstance19 = ((string)provisioningStateValue19);
+                                                onPremisesTeradataLinkedServiceInstance.ProvisioningState = provisioningStateInstance19;
                                             }
                                             
-                                            JToken hubNameValue15 = propertiesValue["hubName"];
-                                            if (hubNameValue15 != null && hubNameValue15.Type != JTokenType.Null)
+                                            JToken hubNameValue19 = propertiesValue["hubName"];
+                                            if (hubNameValue19 != null && hubNameValue19.Type != JTokenType.Null)
                                             {
-                                                string hubNameInstance15 = ((string)hubNameValue15);
-                                                onPremisesTeradataLinkedServiceInstance.HubName = hubNameInstance15;
+                                                string hubNameInstance19 = ((string)hubNameValue19);
+                                                onPremisesTeradataLinkedServiceInstance.HubName = hubNameInstance19;
                                             }
                                             
-                                            JToken errorMessageValue15 = propertiesValue["errorMessage"];
-                                            if (errorMessageValue15 != null && errorMessageValue15.Type != JTokenType.Null)
+                                            JToken errorMessageValue19 = propertiesValue["errorMessage"];
+                                            if (errorMessageValue19 != null && errorMessageValue19.Type != JTokenType.Null)
                                             {
-                                                string errorMessageInstance15 = ((string)errorMessageValue15);
-                                                onPremisesTeradataLinkedServiceInstance.ErrorMessage = errorMessageInstance15;
+                                                string errorMessageInstance19 = ((string)errorMessageValue19);
+                                                onPremisesTeradataLinkedServiceInstance.ErrorMessage = errorMessageInstance19;
                                             }
                                             linkedServiceInstance.Properties = onPremisesTeradataLinkedServiceInstance;
                                         }
@@ -8765,6 +10261,46 @@ namespace Microsoft.Azure.Management.DataFactories
                                             }
                                             linkedServiceInstance.Properties = customLinkedServiceInstance;
                                         }
+                                        if (typeName == "DocumentDbLinkedService")
+                                        {
+                                            DocumentDbLinkedService documentDbLinkedServiceInstance = new DocumentDbLinkedService();
+                                            
+                                            JToken connectionStringValue3 = propertiesValue["connectionString"];
+                                            if (connectionStringValue3 != null && connectionStringValue3.Type != JTokenType.Null)
+                                            {
+                                                string connectionStringInstance3 = ((string)connectionStringValue3);
+                                                documentDbLinkedServiceInstance.ConnectionString = connectionStringInstance3;
+                                            }
+                                            
+                                            JToken descriptionValue6 = propertiesValue["description"];
+                                            if (descriptionValue6 != null && descriptionValue6.Type != JTokenType.Null)
+                                            {
+                                                string descriptionInstance6 = ((string)descriptionValue6);
+                                                documentDbLinkedServiceInstance.Description = descriptionInstance6;
+                                            }
+                                            
+                                            JToken provisioningStateValue6 = propertiesValue["provisioningState"];
+                                            if (provisioningStateValue6 != null && provisioningStateValue6.Type != JTokenType.Null)
+                                            {
+                                                string provisioningStateInstance6 = ((string)provisioningStateValue6);
+                                                documentDbLinkedServiceInstance.ProvisioningState = provisioningStateInstance6;
+                                            }
+                                            
+                                            JToken hubNameValue6 = propertiesValue["hubName"];
+                                            if (hubNameValue6 != null && hubNameValue6.Type != JTokenType.Null)
+                                            {
+                                                string hubNameInstance6 = ((string)hubNameValue6);
+                                                documentDbLinkedServiceInstance.HubName = hubNameInstance6;
+                                            }
+                                            
+                                            JToken errorMessageValue6 = propertiesValue["errorMessage"];
+                                            if (errorMessageValue6 != null && errorMessageValue6.Type != JTokenType.Null)
+                                            {
+                                                string errorMessageInstance6 = ((string)errorMessageValue6);
+                                                documentDbLinkedServiceInstance.ErrorMessage = errorMessageInstance6;
+                                            }
+                                            linkedServiceInstance.Properties = documentDbLinkedServiceInstance;
+                                        }
                                         if (typeName == "HDInsightBYOCLinkedService")
                                         {
                                             HDInsightBYOCLinkedService hDInsightBYOCLinkedServiceInstance = new HDInsightBYOCLinkedService();
@@ -8825,32 +10361,32 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 }
                                             }
                                             
-                                            JToken descriptionValue6 = propertiesValue["description"];
-                                            if (descriptionValue6 != null && descriptionValue6.Type != JTokenType.Null)
+                                            JToken descriptionValue7 = propertiesValue["description"];
+                                            if (descriptionValue7 != null && descriptionValue7.Type != JTokenType.Null)
                                             {
-                                                string descriptionInstance6 = ((string)descriptionValue6);
-                                                hDInsightBYOCLinkedServiceInstance.Description = descriptionInstance6;
+                                                string descriptionInstance7 = ((string)descriptionValue7);
+                                                hDInsightBYOCLinkedServiceInstance.Description = descriptionInstance7;
                                             }
                                             
-                                            JToken provisioningStateValue6 = propertiesValue["provisioningState"];
-                                            if (provisioningStateValue6 != null && provisioningStateValue6.Type != JTokenType.Null)
+                                            JToken provisioningStateValue7 = propertiesValue["provisioningState"];
+                                            if (provisioningStateValue7 != null && provisioningStateValue7.Type != JTokenType.Null)
                                             {
-                                                string provisioningStateInstance6 = ((string)provisioningStateValue6);
-                                                hDInsightBYOCLinkedServiceInstance.ProvisioningState = provisioningStateInstance6;
+                                                string provisioningStateInstance7 = ((string)provisioningStateValue7);
+                                                hDInsightBYOCLinkedServiceInstance.ProvisioningState = provisioningStateInstance7;
                                             }
                                             
-                                            JToken hubNameValue6 = propertiesValue["hubName"];
-                                            if (hubNameValue6 != null && hubNameValue6.Type != JTokenType.Null)
+                                            JToken hubNameValue7 = propertiesValue["hubName"];
+                                            if (hubNameValue7 != null && hubNameValue7.Type != JTokenType.Null)
                                             {
-                                                string hubNameInstance6 = ((string)hubNameValue6);
-                                                hDInsightBYOCLinkedServiceInstance.HubName = hubNameInstance6;
+                                                string hubNameInstance7 = ((string)hubNameValue7);
+                                                hDInsightBYOCLinkedServiceInstance.HubName = hubNameInstance7;
                                             }
                                             
-                                            JToken errorMessageValue6 = propertiesValue["errorMessage"];
-                                            if (errorMessageValue6 != null && errorMessageValue6.Type != JTokenType.Null)
+                                            JToken errorMessageValue7 = propertiesValue["errorMessage"];
+                                            if (errorMessageValue7 != null && errorMessageValue7.Type != JTokenType.Null)
                                             {
-                                                string errorMessageInstance6 = ((string)errorMessageValue6);
-                                                hDInsightBYOCLinkedServiceInstance.ErrorMessage = errorMessageInstance6;
+                                                string errorMessageInstance7 = ((string)errorMessageValue7);
+                                                hDInsightBYOCLinkedServiceInstance.ErrorMessage = errorMessageInstance7;
                                             }
                                             linkedServiceInstance.Properties = hDInsightBYOCLinkedServiceInstance;
                                         }
@@ -9085,34 +10621,95 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 hDInsightOnDemandLinkedServiceInstance.SshUserName = sshUserNameInstance;
                                             }
                                             
-                                            JToken descriptionValue7 = propertiesValue["description"];
-                                            if (descriptionValue7 != null && descriptionValue7.Type != JTokenType.Null)
+                                            JToken descriptionValue8 = propertiesValue["description"];
+                                            if (descriptionValue8 != null && descriptionValue8.Type != JTokenType.Null)
                                             {
-                                                string descriptionInstance7 = ((string)descriptionValue7);
-                                                hDInsightOnDemandLinkedServiceInstance.Description = descriptionInstance7;
+                                                string descriptionInstance8 = ((string)descriptionValue8);
+                                                hDInsightOnDemandLinkedServiceInstance.Description = descriptionInstance8;
                                             }
                                             
-                                            JToken provisioningStateValue7 = propertiesValue["provisioningState"];
-                                            if (provisioningStateValue7 != null && provisioningStateValue7.Type != JTokenType.Null)
+                                            JToken provisioningStateValue8 = propertiesValue["provisioningState"];
+                                            if (provisioningStateValue8 != null && provisioningStateValue8.Type != JTokenType.Null)
                                             {
-                                                string provisioningStateInstance7 = ((string)provisioningStateValue7);
-                                                hDInsightOnDemandLinkedServiceInstance.ProvisioningState = provisioningStateInstance7;
+                                                string provisioningStateInstance8 = ((string)provisioningStateValue8);
+                                                hDInsightOnDemandLinkedServiceInstance.ProvisioningState = provisioningStateInstance8;
                                             }
                                             
-                                            JToken hubNameValue7 = propertiesValue["hubName"];
-                                            if (hubNameValue7 != null && hubNameValue7.Type != JTokenType.Null)
+                                            JToken hubNameValue8 = propertiesValue["hubName"];
+                                            if (hubNameValue8 != null && hubNameValue8.Type != JTokenType.Null)
                                             {
-                                                string hubNameInstance7 = ((string)hubNameValue7);
-                                                hDInsightOnDemandLinkedServiceInstance.HubName = hubNameInstance7;
+                                                string hubNameInstance8 = ((string)hubNameValue8);
+                                                hDInsightOnDemandLinkedServiceInstance.HubName = hubNameInstance8;
                                             }
                                             
-                                            JToken errorMessageValue7 = propertiesValue["errorMessage"];
-                                            if (errorMessageValue7 != null && errorMessageValue7.Type != JTokenType.Null)
+                                            JToken errorMessageValue8 = propertiesValue["errorMessage"];
+                                            if (errorMessageValue8 != null && errorMessageValue8.Type != JTokenType.Null)
                                             {
-                                                string errorMessageInstance7 = ((string)errorMessageValue7);
-                                                hDInsightOnDemandLinkedServiceInstance.ErrorMessage = errorMessageInstance7;
+                                                string errorMessageInstance8 = ((string)errorMessageValue8);
+                                                hDInsightOnDemandLinkedServiceInstance.ErrorMessage = errorMessageInstance8;
                                             }
                                             linkedServiceInstance.Properties = hDInsightOnDemandLinkedServiceInstance;
+                                        }
+                                        if (typeName == "ODataLinkedService")
+                                        {
+                                            ODataLinkedService oDataLinkedServiceInstance = new ODataLinkedService();
+                                            
+                                            JToken urlValue = propertiesValue["url"];
+                                            if (urlValue != null && urlValue.Type != JTokenType.Null)
+                                            {
+                                                string urlInstance = ((string)urlValue);
+                                                oDataLinkedServiceInstance.Url = urlInstance;
+                                            }
+                                            
+                                            JToken authenticationTypeValue = propertiesValue["authenticationType"];
+                                            if (authenticationTypeValue != null && authenticationTypeValue.Type != JTokenType.Null)
+                                            {
+                                                string authenticationTypeInstance = ((string)authenticationTypeValue);
+                                                oDataLinkedServiceInstance.AuthenticationType = authenticationTypeInstance;
+                                            }
+                                            
+                                            JToken usernameValue = propertiesValue["username"];
+                                            if (usernameValue != null && usernameValue.Type != JTokenType.Null)
+                                            {
+                                                string usernameInstance = ((string)usernameValue);
+                                                oDataLinkedServiceInstance.Username = usernameInstance;
+                                            }
+                                            
+                                            JToken passwordValue2 = propertiesValue["password"];
+                                            if (passwordValue2 != null && passwordValue2.Type != JTokenType.Null)
+                                            {
+                                                string passwordInstance2 = ((string)passwordValue2);
+                                                oDataLinkedServiceInstance.Password = passwordInstance2;
+                                            }
+                                            
+                                            JToken descriptionValue9 = propertiesValue["description"];
+                                            if (descriptionValue9 != null && descriptionValue9.Type != JTokenType.Null)
+                                            {
+                                                string descriptionInstance9 = ((string)descriptionValue9);
+                                                oDataLinkedServiceInstance.Description = descriptionInstance9;
+                                            }
+                                            
+                                            JToken provisioningStateValue9 = propertiesValue["provisioningState"];
+                                            if (provisioningStateValue9 != null && provisioningStateValue9.Type != JTokenType.Null)
+                                            {
+                                                string provisioningStateInstance9 = ((string)provisioningStateValue9);
+                                                oDataLinkedServiceInstance.ProvisioningState = provisioningStateInstance9;
+                                            }
+                                            
+                                            JToken hubNameValue9 = propertiesValue["hubName"];
+                                            if (hubNameValue9 != null && hubNameValue9.Type != JTokenType.Null)
+                                            {
+                                                string hubNameInstance9 = ((string)hubNameValue9);
+                                                oDataLinkedServiceInstance.HubName = hubNameInstance9;
+                                            }
+                                            
+                                            JToken errorMessageValue9 = propertiesValue["errorMessage"];
+                                            if (errorMessageValue9 != null && errorMessageValue9.Type != JTokenType.Null)
+                                            {
+                                                string errorMessageInstance9 = ((string)errorMessageValue9);
+                                                oDataLinkedServiceInstance.ErrorMessage = errorMessageInstance9;
+                                            }
+                                            linkedServiceInstance.Properties = oDataLinkedServiceInstance;
                                         }
                                         if (typeName == "OnPremisesDb2LinkedService")
                                         {
@@ -9139,25 +10736,25 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 onPremisesDb2LinkedServiceInstance.Schema = schemaInstance;
                                             }
                                             
-                                            JToken authenticationTypeValue = propertiesValue["authenticationType"];
-                                            if (authenticationTypeValue != null && authenticationTypeValue.Type != JTokenType.Null)
+                                            JToken authenticationTypeValue2 = propertiesValue["authenticationType"];
+                                            if (authenticationTypeValue2 != null && authenticationTypeValue2.Type != JTokenType.Null)
                                             {
-                                                string authenticationTypeInstance = ((string)authenticationTypeValue);
-                                                onPremisesDb2LinkedServiceInstance.AuthenticationType = authenticationTypeInstance;
+                                                string authenticationTypeInstance2 = ((string)authenticationTypeValue2);
+                                                onPremisesDb2LinkedServiceInstance.AuthenticationType = authenticationTypeInstance2;
                                             }
                                             
-                                            JToken usernameValue = propertiesValue["username"];
-                                            if (usernameValue != null && usernameValue.Type != JTokenType.Null)
+                                            JToken usernameValue2 = propertiesValue["username"];
+                                            if (usernameValue2 != null && usernameValue2.Type != JTokenType.Null)
                                             {
-                                                string usernameInstance = ((string)usernameValue);
-                                                onPremisesDb2LinkedServiceInstance.Username = usernameInstance;
+                                                string usernameInstance2 = ((string)usernameValue2);
+                                                onPremisesDb2LinkedServiceInstance.Username = usernameInstance2;
                                             }
                                             
-                                            JToken passwordValue2 = propertiesValue["password"];
-                                            if (passwordValue2 != null && passwordValue2.Type != JTokenType.Null)
+                                            JToken passwordValue3 = propertiesValue["password"];
+                                            if (passwordValue3 != null && passwordValue3.Type != JTokenType.Null)
                                             {
-                                                string passwordInstance2 = ((string)passwordValue2);
-                                                onPremisesDb2LinkedServiceInstance.Password = passwordInstance2;
+                                                string passwordInstance3 = ((string)passwordValue3);
+                                                onPremisesDb2LinkedServiceInstance.Password = passwordInstance3;
                                             }
                                             
                                             JToken gatewayNameValue = propertiesValue["gatewayName"];
@@ -9174,32 +10771,32 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 onPremisesDb2LinkedServiceInstance.EncryptedCredential = encryptedCredentialInstance;
                                             }
                                             
-                                            JToken descriptionValue8 = propertiesValue["description"];
-                                            if (descriptionValue8 != null && descriptionValue8.Type != JTokenType.Null)
+                                            JToken descriptionValue10 = propertiesValue["description"];
+                                            if (descriptionValue10 != null && descriptionValue10.Type != JTokenType.Null)
                                             {
-                                                string descriptionInstance8 = ((string)descriptionValue8);
-                                                onPremisesDb2LinkedServiceInstance.Description = descriptionInstance8;
+                                                string descriptionInstance10 = ((string)descriptionValue10);
+                                                onPremisesDb2LinkedServiceInstance.Description = descriptionInstance10;
                                             }
                                             
-                                            JToken provisioningStateValue8 = propertiesValue["provisioningState"];
-                                            if (provisioningStateValue8 != null && provisioningStateValue8.Type != JTokenType.Null)
+                                            JToken provisioningStateValue10 = propertiesValue["provisioningState"];
+                                            if (provisioningStateValue10 != null && provisioningStateValue10.Type != JTokenType.Null)
                                             {
-                                                string provisioningStateInstance8 = ((string)provisioningStateValue8);
-                                                onPremisesDb2LinkedServiceInstance.ProvisioningState = provisioningStateInstance8;
+                                                string provisioningStateInstance10 = ((string)provisioningStateValue10);
+                                                onPremisesDb2LinkedServiceInstance.ProvisioningState = provisioningStateInstance10;
                                             }
                                             
-                                            JToken hubNameValue8 = propertiesValue["hubName"];
-                                            if (hubNameValue8 != null && hubNameValue8.Type != JTokenType.Null)
+                                            JToken hubNameValue10 = propertiesValue["hubName"];
+                                            if (hubNameValue10 != null && hubNameValue10.Type != JTokenType.Null)
                                             {
-                                                string hubNameInstance8 = ((string)hubNameValue8);
-                                                onPremisesDb2LinkedServiceInstance.HubName = hubNameInstance8;
+                                                string hubNameInstance10 = ((string)hubNameValue10);
+                                                onPremisesDb2LinkedServiceInstance.HubName = hubNameInstance10;
                                             }
                                             
-                                            JToken errorMessageValue8 = propertiesValue["errorMessage"];
-                                            if (errorMessageValue8 != null && errorMessageValue8.Type != JTokenType.Null)
+                                            JToken errorMessageValue10 = propertiesValue["errorMessage"];
+                                            if (errorMessageValue10 != null && errorMessageValue10.Type != JTokenType.Null)
                                             {
-                                                string errorMessageInstance8 = ((string)errorMessageValue8);
-                                                onPremisesDb2LinkedServiceInstance.ErrorMessage = errorMessageInstance8;
+                                                string errorMessageInstance10 = ((string)errorMessageValue10);
+                                                onPremisesDb2LinkedServiceInstance.ErrorMessage = errorMessageInstance10;
                                             }
                                             linkedServiceInstance.Properties = onPremisesDb2LinkedServiceInstance;
                                         }
@@ -9228,11 +10825,11 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 onPremisesFileSystemLinkedServiceInstance.UserId = userIdInstance;
                                             }
                                             
-                                            JToken passwordValue3 = propertiesValue["password"];
-                                            if (passwordValue3 != null && passwordValue3.Type != JTokenType.Null)
+                                            JToken passwordValue4 = propertiesValue["password"];
+                                            if (passwordValue4 != null && passwordValue4.Type != JTokenType.Null)
                                             {
-                                                string passwordInstance3 = ((string)passwordValue3);
-                                                onPremisesFileSystemLinkedServiceInstance.Password = passwordInstance3;
+                                                string passwordInstance4 = ((string)passwordValue4);
+                                                onPremisesFileSystemLinkedServiceInstance.Password = passwordInstance4;
                                             }
                                             
                                             JToken encryptedCredentialValue2 = propertiesValue["encryptedCredential"];
@@ -9242,34 +10839,116 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 onPremisesFileSystemLinkedServiceInstance.EncryptedCredential = encryptedCredentialInstance2;
                                             }
                                             
-                                            JToken descriptionValue9 = propertiesValue["description"];
-                                            if (descriptionValue9 != null && descriptionValue9.Type != JTokenType.Null)
+                                            JToken descriptionValue11 = propertiesValue["description"];
+                                            if (descriptionValue11 != null && descriptionValue11.Type != JTokenType.Null)
                                             {
-                                                string descriptionInstance9 = ((string)descriptionValue9);
-                                                onPremisesFileSystemLinkedServiceInstance.Description = descriptionInstance9;
+                                                string descriptionInstance11 = ((string)descriptionValue11);
+                                                onPremisesFileSystemLinkedServiceInstance.Description = descriptionInstance11;
                                             }
                                             
-                                            JToken provisioningStateValue9 = propertiesValue["provisioningState"];
-                                            if (provisioningStateValue9 != null && provisioningStateValue9.Type != JTokenType.Null)
+                                            JToken provisioningStateValue11 = propertiesValue["provisioningState"];
+                                            if (provisioningStateValue11 != null && provisioningStateValue11.Type != JTokenType.Null)
                                             {
-                                                string provisioningStateInstance9 = ((string)provisioningStateValue9);
-                                                onPremisesFileSystemLinkedServiceInstance.ProvisioningState = provisioningStateInstance9;
+                                                string provisioningStateInstance11 = ((string)provisioningStateValue11);
+                                                onPremisesFileSystemLinkedServiceInstance.ProvisioningState = provisioningStateInstance11;
                                             }
                                             
-                                            JToken hubNameValue9 = propertiesValue["hubName"];
-                                            if (hubNameValue9 != null && hubNameValue9.Type != JTokenType.Null)
+                                            JToken hubNameValue11 = propertiesValue["hubName"];
+                                            if (hubNameValue11 != null && hubNameValue11.Type != JTokenType.Null)
                                             {
-                                                string hubNameInstance9 = ((string)hubNameValue9);
-                                                onPremisesFileSystemLinkedServiceInstance.HubName = hubNameInstance9;
+                                                string hubNameInstance11 = ((string)hubNameValue11);
+                                                onPremisesFileSystemLinkedServiceInstance.HubName = hubNameInstance11;
                                             }
                                             
-                                            JToken errorMessageValue9 = propertiesValue["errorMessage"];
-                                            if (errorMessageValue9 != null && errorMessageValue9.Type != JTokenType.Null)
+                                            JToken errorMessageValue11 = propertiesValue["errorMessage"];
+                                            if (errorMessageValue11 != null && errorMessageValue11.Type != JTokenType.Null)
                                             {
-                                                string errorMessageInstance9 = ((string)errorMessageValue9);
-                                                onPremisesFileSystemLinkedServiceInstance.ErrorMessage = errorMessageInstance9;
+                                                string errorMessageInstance11 = ((string)errorMessageValue11);
+                                                onPremisesFileSystemLinkedServiceInstance.ErrorMessage = errorMessageInstance11;
                                             }
                                             linkedServiceInstance.Properties = onPremisesFileSystemLinkedServiceInstance;
+                                        }
+                                        if (typeName == "OnPremisesHdfsLinkedService")
+                                        {
+                                            OnPremisesHdfsLinkedService onPremisesHdfsLinkedServiceInstance = new OnPremisesHdfsLinkedService();
+                                            
+                                            JToken urlValue2 = propertiesValue["url"];
+                                            if (urlValue2 != null && urlValue2.Type != JTokenType.Null)
+                                            {
+                                                string urlInstance2 = ((string)urlValue2);
+                                                onPremisesHdfsLinkedServiceInstance.Url = urlInstance2;
+                                            }
+                                            
+                                            JToken contentTypeValue = propertiesValue["contentType"];
+                                            if (contentTypeValue != null && contentTypeValue.Type != JTokenType.Null)
+                                            {
+                                                string contentTypeInstance = ((string)contentTypeValue);
+                                                onPremisesHdfsLinkedServiceInstance.ContentType = contentTypeInstance;
+                                            }
+                                            
+                                            JToken authenticationTypeValue3 = propertiesValue["authenticationType"];
+                                            if (authenticationTypeValue3 != null && authenticationTypeValue3.Type != JTokenType.Null)
+                                            {
+                                                string authenticationTypeInstance3 = ((string)authenticationTypeValue3);
+                                                onPremisesHdfsLinkedServiceInstance.AuthenticationType = authenticationTypeInstance3;
+                                            }
+                                            
+                                            JToken usernameValue3 = propertiesValue["username"];
+                                            if (usernameValue3 != null && usernameValue3.Type != JTokenType.Null)
+                                            {
+                                                string usernameInstance3 = ((string)usernameValue3);
+                                                onPremisesHdfsLinkedServiceInstance.Username = usernameInstance3;
+                                            }
+                                            
+                                            JToken passwordValue5 = propertiesValue["password"];
+                                            if (passwordValue5 != null && passwordValue5.Type != JTokenType.Null)
+                                            {
+                                                string passwordInstance5 = ((string)passwordValue5);
+                                                onPremisesHdfsLinkedServiceInstance.Password = passwordInstance5;
+                                            }
+                                            
+                                            JToken gatewayNameValue3 = propertiesValue["gatewayName"];
+                                            if (gatewayNameValue3 != null && gatewayNameValue3.Type != JTokenType.Null)
+                                            {
+                                                string gatewayNameInstance3 = ((string)gatewayNameValue3);
+                                                onPremisesHdfsLinkedServiceInstance.GatewayName = gatewayNameInstance3;
+                                            }
+                                            
+                                            JToken encryptedCredentialValue3 = propertiesValue["encryptedCredential"];
+                                            if (encryptedCredentialValue3 != null && encryptedCredentialValue3.Type != JTokenType.Null)
+                                            {
+                                                string encryptedCredentialInstance3 = ((string)encryptedCredentialValue3);
+                                                onPremisesHdfsLinkedServiceInstance.EncryptedCredential = encryptedCredentialInstance3;
+                                            }
+                                            
+                                            JToken descriptionValue12 = propertiesValue["description"];
+                                            if (descriptionValue12 != null && descriptionValue12.Type != JTokenType.Null)
+                                            {
+                                                string descriptionInstance12 = ((string)descriptionValue12);
+                                                onPremisesHdfsLinkedServiceInstance.Description = descriptionInstance12;
+                                            }
+                                            
+                                            JToken provisioningStateValue12 = propertiesValue["provisioningState"];
+                                            if (provisioningStateValue12 != null && provisioningStateValue12.Type != JTokenType.Null)
+                                            {
+                                                string provisioningStateInstance12 = ((string)provisioningStateValue12);
+                                                onPremisesHdfsLinkedServiceInstance.ProvisioningState = provisioningStateInstance12;
+                                            }
+                                            
+                                            JToken hubNameValue12 = propertiesValue["hubName"];
+                                            if (hubNameValue12 != null && hubNameValue12.Type != JTokenType.Null)
+                                            {
+                                                string hubNameInstance12 = ((string)hubNameValue12);
+                                                onPremisesHdfsLinkedServiceInstance.HubName = hubNameInstance12;
+                                            }
+                                            
+                                            JToken errorMessageValue12 = propertiesValue["errorMessage"];
+                                            if (errorMessageValue12 != null && errorMessageValue12.Type != JTokenType.Null)
+                                            {
+                                                string errorMessageInstance12 = ((string)errorMessageValue12);
+                                                onPremisesHdfsLinkedServiceInstance.ErrorMessage = errorMessageInstance12;
+                                            }
+                                            linkedServiceInstance.Properties = onPremisesHdfsLinkedServiceInstance;
                                         }
                                         if (typeName == "OnPremisesMySqlLinkedService")
                                         {
@@ -9296,128 +10975,210 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 onPremisesMySqlLinkedServiceInstance.Schema = schemaInstance2;
                                             }
                                             
-                                            JToken authenticationTypeValue2 = propertiesValue["authenticationType"];
-                                            if (authenticationTypeValue2 != null && authenticationTypeValue2.Type != JTokenType.Null)
+                                            JToken authenticationTypeValue4 = propertiesValue["authenticationType"];
+                                            if (authenticationTypeValue4 != null && authenticationTypeValue4.Type != JTokenType.Null)
                                             {
-                                                string authenticationTypeInstance2 = ((string)authenticationTypeValue2);
-                                                onPremisesMySqlLinkedServiceInstance.AuthenticationType = authenticationTypeInstance2;
+                                                string authenticationTypeInstance4 = ((string)authenticationTypeValue4);
+                                                onPremisesMySqlLinkedServiceInstance.AuthenticationType = authenticationTypeInstance4;
                                             }
                                             
-                                            JToken usernameValue2 = propertiesValue["username"];
-                                            if (usernameValue2 != null && usernameValue2.Type != JTokenType.Null)
+                                            JToken usernameValue4 = propertiesValue["username"];
+                                            if (usernameValue4 != null && usernameValue4.Type != JTokenType.Null)
                                             {
-                                                string usernameInstance2 = ((string)usernameValue2);
-                                                onPremisesMySqlLinkedServiceInstance.Username = usernameInstance2;
+                                                string usernameInstance4 = ((string)usernameValue4);
+                                                onPremisesMySqlLinkedServiceInstance.Username = usernameInstance4;
                                             }
                                             
-                                            JToken passwordValue4 = propertiesValue["password"];
-                                            if (passwordValue4 != null && passwordValue4.Type != JTokenType.Null)
+                                            JToken passwordValue6 = propertiesValue["password"];
+                                            if (passwordValue6 != null && passwordValue6.Type != JTokenType.Null)
                                             {
-                                                string passwordInstance4 = ((string)passwordValue4);
-                                                onPremisesMySqlLinkedServiceInstance.Password = passwordInstance4;
-                                            }
-                                            
-                                            JToken gatewayNameValue3 = propertiesValue["gatewayName"];
-                                            if (gatewayNameValue3 != null && gatewayNameValue3.Type != JTokenType.Null)
-                                            {
-                                                string gatewayNameInstance3 = ((string)gatewayNameValue3);
-                                                onPremisesMySqlLinkedServiceInstance.GatewayName = gatewayNameInstance3;
-                                            }
-                                            
-                                            JToken encryptedCredentialValue3 = propertiesValue["encryptedCredential"];
-                                            if (encryptedCredentialValue3 != null && encryptedCredentialValue3.Type != JTokenType.Null)
-                                            {
-                                                string encryptedCredentialInstance3 = ((string)encryptedCredentialValue3);
-                                                onPremisesMySqlLinkedServiceInstance.EncryptedCredential = encryptedCredentialInstance3;
-                                            }
-                                            
-                                            JToken descriptionValue10 = propertiesValue["description"];
-                                            if (descriptionValue10 != null && descriptionValue10.Type != JTokenType.Null)
-                                            {
-                                                string descriptionInstance10 = ((string)descriptionValue10);
-                                                onPremisesMySqlLinkedServiceInstance.Description = descriptionInstance10;
-                                            }
-                                            
-                                            JToken provisioningStateValue10 = propertiesValue["provisioningState"];
-                                            if (provisioningStateValue10 != null && provisioningStateValue10.Type != JTokenType.Null)
-                                            {
-                                                string provisioningStateInstance10 = ((string)provisioningStateValue10);
-                                                onPremisesMySqlLinkedServiceInstance.ProvisioningState = provisioningStateInstance10;
-                                            }
-                                            
-                                            JToken hubNameValue10 = propertiesValue["hubName"];
-                                            if (hubNameValue10 != null && hubNameValue10.Type != JTokenType.Null)
-                                            {
-                                                string hubNameInstance10 = ((string)hubNameValue10);
-                                                onPremisesMySqlLinkedServiceInstance.HubName = hubNameInstance10;
-                                            }
-                                            
-                                            JToken errorMessageValue10 = propertiesValue["errorMessage"];
-                                            if (errorMessageValue10 != null && errorMessageValue10.Type != JTokenType.Null)
-                                            {
-                                                string errorMessageInstance10 = ((string)errorMessageValue10);
-                                                onPremisesMySqlLinkedServiceInstance.ErrorMessage = errorMessageInstance10;
-                                            }
-                                            linkedServiceInstance.Properties = onPremisesMySqlLinkedServiceInstance;
-                                        }
-                                        if (typeName == "OnPremisesOracleLinkedService")
-                                        {
-                                            OnPremisesOracleLinkedService onPremisesOracleLinkedServiceInstance = new OnPremisesOracleLinkedService();
-                                            
-                                            JToken connectionStringValue3 = propertiesValue["connectionString"];
-                                            if (connectionStringValue3 != null && connectionStringValue3.Type != JTokenType.Null)
-                                            {
-                                                string connectionStringInstance3 = ((string)connectionStringValue3);
-                                                onPremisesOracleLinkedServiceInstance.ConnectionString = connectionStringInstance3;
+                                                string passwordInstance6 = ((string)passwordValue6);
+                                                onPremisesMySqlLinkedServiceInstance.Password = passwordInstance6;
                                             }
                                             
                                             JToken gatewayNameValue4 = propertiesValue["gatewayName"];
                                             if (gatewayNameValue4 != null && gatewayNameValue4.Type != JTokenType.Null)
                                             {
                                                 string gatewayNameInstance4 = ((string)gatewayNameValue4);
-                                                onPremisesOracleLinkedServiceInstance.GatewayName = gatewayNameInstance4;
+                                                onPremisesMySqlLinkedServiceInstance.GatewayName = gatewayNameInstance4;
+                                            }
+                                            
+                                            JToken encryptedCredentialValue4 = propertiesValue["encryptedCredential"];
+                                            if (encryptedCredentialValue4 != null && encryptedCredentialValue4.Type != JTokenType.Null)
+                                            {
+                                                string encryptedCredentialInstance4 = ((string)encryptedCredentialValue4);
+                                                onPremisesMySqlLinkedServiceInstance.EncryptedCredential = encryptedCredentialInstance4;
+                                            }
+                                            
+                                            JToken descriptionValue13 = propertiesValue["description"];
+                                            if (descriptionValue13 != null && descriptionValue13.Type != JTokenType.Null)
+                                            {
+                                                string descriptionInstance13 = ((string)descriptionValue13);
+                                                onPremisesMySqlLinkedServiceInstance.Description = descriptionInstance13;
+                                            }
+                                            
+                                            JToken provisioningStateValue13 = propertiesValue["provisioningState"];
+                                            if (provisioningStateValue13 != null && provisioningStateValue13.Type != JTokenType.Null)
+                                            {
+                                                string provisioningStateInstance13 = ((string)provisioningStateValue13);
+                                                onPremisesMySqlLinkedServiceInstance.ProvisioningState = provisioningStateInstance13;
+                                            }
+                                            
+                                            JToken hubNameValue13 = propertiesValue["hubName"];
+                                            if (hubNameValue13 != null && hubNameValue13.Type != JTokenType.Null)
+                                            {
+                                                string hubNameInstance13 = ((string)hubNameValue13);
+                                                onPremisesMySqlLinkedServiceInstance.HubName = hubNameInstance13;
+                                            }
+                                            
+                                            JToken errorMessageValue13 = propertiesValue["errorMessage"];
+                                            if (errorMessageValue13 != null && errorMessageValue13.Type != JTokenType.Null)
+                                            {
+                                                string errorMessageInstance13 = ((string)errorMessageValue13);
+                                                onPremisesMySqlLinkedServiceInstance.ErrorMessage = errorMessageInstance13;
+                                            }
+                                            linkedServiceInstance.Properties = onPremisesMySqlLinkedServiceInstance;
+                                        }
+                                        if (typeName == "OnPremisesOdbcLinkedService")
+                                        {
+                                            OnPremisesOdbcLinkedService onPremisesOdbcLinkedServiceInstance = new OnPremisesOdbcLinkedService();
+                                            
+                                            JToken nonCredentialConnectionStringValue = propertiesValue["nonCredentialConnectionString"];
+                                            if (nonCredentialConnectionStringValue != null && nonCredentialConnectionStringValue.Type != JTokenType.Null)
+                                            {
+                                                string nonCredentialConnectionStringInstance = ((string)nonCredentialConnectionStringValue);
+                                                onPremisesOdbcLinkedServiceInstance.NonCredentialConnectionString = nonCredentialConnectionStringInstance;
+                                            }
+                                            
+                                            JToken credentialConnectionStringValue = propertiesValue["credentialConnectionString"];
+                                            if (credentialConnectionStringValue != null && credentialConnectionStringValue.Type != JTokenType.Null)
+                                            {
+                                                string credentialConnectionStringInstance = ((string)credentialConnectionStringValue);
+                                                onPremisesOdbcLinkedServiceInstance.CredentialConnectionString = credentialConnectionStringInstance;
+                                            }
+                                            
+                                            JToken encryptedCredentialConnectionStringValue = propertiesValue["encryptedCredentialConnectionString"];
+                                            if (encryptedCredentialConnectionStringValue != null && encryptedCredentialConnectionStringValue.Type != JTokenType.Null)
+                                            {
+                                                string encryptedCredentialConnectionStringInstance = ((string)encryptedCredentialConnectionStringValue);
+                                                onPremisesOdbcLinkedServiceInstance.EncryptedCredentialConnectionString = encryptedCredentialConnectionStringInstance;
                                             }
                                             
                                             JToken userNameValue2 = propertiesValue["userName"];
                                             if (userNameValue2 != null && userNameValue2.Type != JTokenType.Null)
                                             {
                                                 string userNameInstance2 = ((string)userNameValue2);
-                                                onPremisesOracleLinkedServiceInstance.UserName = userNameInstance2;
+                                                onPremisesOdbcLinkedServiceInstance.UserName = userNameInstance2;
                                             }
                                             
-                                            JToken passwordValue5 = propertiesValue["password"];
-                                            if (passwordValue5 != null && passwordValue5.Type != JTokenType.Null)
+                                            JToken passwordValue7 = propertiesValue["password"];
+                                            if (passwordValue7 != null && passwordValue7.Type != JTokenType.Null)
                                             {
-                                                string passwordInstance5 = ((string)passwordValue5);
-                                                onPremisesOracleLinkedServiceInstance.Password = passwordInstance5;
+                                                string passwordInstance7 = ((string)passwordValue7);
+                                                onPremisesOdbcLinkedServiceInstance.Password = passwordInstance7;
                                             }
                                             
-                                            JToken descriptionValue11 = propertiesValue["description"];
-                                            if (descriptionValue11 != null && descriptionValue11.Type != JTokenType.Null)
+                                            JToken gatewayNameValue5 = propertiesValue["gatewayName"];
+                                            if (gatewayNameValue5 != null && gatewayNameValue5.Type != JTokenType.Null)
                                             {
-                                                string descriptionInstance11 = ((string)descriptionValue11);
-                                                onPremisesOracleLinkedServiceInstance.Description = descriptionInstance11;
+                                                string gatewayNameInstance5 = ((string)gatewayNameValue5);
+                                                onPremisesOdbcLinkedServiceInstance.GatewayName = gatewayNameInstance5;
                                             }
                                             
-                                            JToken provisioningStateValue11 = propertiesValue["provisioningState"];
-                                            if (provisioningStateValue11 != null && provisioningStateValue11.Type != JTokenType.Null)
+                                            JToken authenticationTypeValue5 = propertiesValue["authenticationType"];
+                                            if (authenticationTypeValue5 != null && authenticationTypeValue5.Type != JTokenType.Null)
                                             {
-                                                string provisioningStateInstance11 = ((string)provisioningStateValue11);
-                                                onPremisesOracleLinkedServiceInstance.ProvisioningState = provisioningStateInstance11;
+                                                string authenticationTypeInstance5 = ((string)authenticationTypeValue5);
+                                                onPremisesOdbcLinkedServiceInstance.AuthenticationType = authenticationTypeInstance5;
                                             }
                                             
-                                            JToken hubNameValue11 = propertiesValue["hubName"];
-                                            if (hubNameValue11 != null && hubNameValue11.Type != JTokenType.Null)
+                                            JToken descriptionValue14 = propertiesValue["description"];
+                                            if (descriptionValue14 != null && descriptionValue14.Type != JTokenType.Null)
                                             {
-                                                string hubNameInstance11 = ((string)hubNameValue11);
-                                                onPremisesOracleLinkedServiceInstance.HubName = hubNameInstance11;
+                                                string descriptionInstance14 = ((string)descriptionValue14);
+                                                onPremisesOdbcLinkedServiceInstance.Description = descriptionInstance14;
                                             }
                                             
-                                            JToken errorMessageValue11 = propertiesValue["errorMessage"];
-                                            if (errorMessageValue11 != null && errorMessageValue11.Type != JTokenType.Null)
+                                            JToken provisioningStateValue14 = propertiesValue["provisioningState"];
+                                            if (provisioningStateValue14 != null && provisioningStateValue14.Type != JTokenType.Null)
                                             {
-                                                string errorMessageInstance11 = ((string)errorMessageValue11);
-                                                onPremisesOracleLinkedServiceInstance.ErrorMessage = errorMessageInstance11;
+                                                string provisioningStateInstance14 = ((string)provisioningStateValue14);
+                                                onPremisesOdbcLinkedServiceInstance.ProvisioningState = provisioningStateInstance14;
+                                            }
+                                            
+                                            JToken hubNameValue14 = propertiesValue["hubName"];
+                                            if (hubNameValue14 != null && hubNameValue14.Type != JTokenType.Null)
+                                            {
+                                                string hubNameInstance14 = ((string)hubNameValue14);
+                                                onPremisesOdbcLinkedServiceInstance.HubName = hubNameInstance14;
+                                            }
+                                            
+                                            JToken errorMessageValue14 = propertiesValue["errorMessage"];
+                                            if (errorMessageValue14 != null && errorMessageValue14.Type != JTokenType.Null)
+                                            {
+                                                string errorMessageInstance14 = ((string)errorMessageValue14);
+                                                onPremisesOdbcLinkedServiceInstance.ErrorMessage = errorMessageInstance14;
+                                            }
+                                            linkedServiceInstance.Properties = onPremisesOdbcLinkedServiceInstance;
+                                        }
+                                        if (typeName == "OnPremisesOracleLinkedService")
+                                        {
+                                            OnPremisesOracleLinkedService onPremisesOracleLinkedServiceInstance = new OnPremisesOracleLinkedService();
+                                            
+                                            JToken connectionStringValue4 = propertiesValue["connectionString"];
+                                            if (connectionStringValue4 != null && connectionStringValue4.Type != JTokenType.Null)
+                                            {
+                                                string connectionStringInstance4 = ((string)connectionStringValue4);
+                                                onPremisesOracleLinkedServiceInstance.ConnectionString = connectionStringInstance4;
+                                            }
+                                            
+                                            JToken gatewayNameValue6 = propertiesValue["gatewayName"];
+                                            if (gatewayNameValue6 != null && gatewayNameValue6.Type != JTokenType.Null)
+                                            {
+                                                string gatewayNameInstance6 = ((string)gatewayNameValue6);
+                                                onPremisesOracleLinkedServiceInstance.GatewayName = gatewayNameInstance6;
+                                            }
+                                            
+                                            JToken userNameValue3 = propertiesValue["userName"];
+                                            if (userNameValue3 != null && userNameValue3.Type != JTokenType.Null)
+                                            {
+                                                string userNameInstance3 = ((string)userNameValue3);
+                                                onPremisesOracleLinkedServiceInstance.UserName = userNameInstance3;
+                                            }
+                                            
+                                            JToken passwordValue8 = propertiesValue["password"];
+                                            if (passwordValue8 != null && passwordValue8.Type != JTokenType.Null)
+                                            {
+                                                string passwordInstance8 = ((string)passwordValue8);
+                                                onPremisesOracleLinkedServiceInstance.Password = passwordInstance8;
+                                            }
+                                            
+                                            JToken descriptionValue15 = propertiesValue["description"];
+                                            if (descriptionValue15 != null && descriptionValue15.Type != JTokenType.Null)
+                                            {
+                                                string descriptionInstance15 = ((string)descriptionValue15);
+                                                onPremisesOracleLinkedServiceInstance.Description = descriptionInstance15;
+                                            }
+                                            
+                                            JToken provisioningStateValue15 = propertiesValue["provisioningState"];
+                                            if (provisioningStateValue15 != null && provisioningStateValue15.Type != JTokenType.Null)
+                                            {
+                                                string provisioningStateInstance15 = ((string)provisioningStateValue15);
+                                                onPremisesOracleLinkedServiceInstance.ProvisioningState = provisioningStateInstance15;
+                                            }
+                                            
+                                            JToken hubNameValue15 = propertiesValue["hubName"];
+                                            if (hubNameValue15 != null && hubNameValue15.Type != JTokenType.Null)
+                                            {
+                                                string hubNameInstance15 = ((string)hubNameValue15);
+                                                onPremisesOracleLinkedServiceInstance.HubName = hubNameInstance15;
+                                            }
+                                            
+                                            JToken errorMessageValue15 = propertiesValue["errorMessage"];
+                                            if (errorMessageValue15 != null && errorMessageValue15.Type != JTokenType.Null)
+                                            {
+                                                string errorMessageInstance15 = ((string)errorMessageValue15);
+                                                onPremisesOracleLinkedServiceInstance.ErrorMessage = errorMessageInstance15;
                                             }
                                             linkedServiceInstance.Properties = onPremisesOracleLinkedServiceInstance;
                                         }
@@ -9446,67 +11207,67 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 onPremisesPostgreSqlLinkedServiceInstance.Schema = schemaInstance3;
                                             }
                                             
-                                            JToken authenticationTypeValue3 = propertiesValue["authenticationType"];
-                                            if (authenticationTypeValue3 != null && authenticationTypeValue3.Type != JTokenType.Null)
+                                            JToken authenticationTypeValue6 = propertiesValue["authenticationType"];
+                                            if (authenticationTypeValue6 != null && authenticationTypeValue6.Type != JTokenType.Null)
                                             {
-                                                string authenticationTypeInstance3 = ((string)authenticationTypeValue3);
-                                                onPremisesPostgreSqlLinkedServiceInstance.AuthenticationType = authenticationTypeInstance3;
+                                                string authenticationTypeInstance6 = ((string)authenticationTypeValue6);
+                                                onPremisesPostgreSqlLinkedServiceInstance.AuthenticationType = authenticationTypeInstance6;
                                             }
                                             
-                                            JToken usernameValue3 = propertiesValue["username"];
-                                            if (usernameValue3 != null && usernameValue3.Type != JTokenType.Null)
+                                            JToken usernameValue5 = propertiesValue["username"];
+                                            if (usernameValue5 != null && usernameValue5.Type != JTokenType.Null)
                                             {
-                                                string usernameInstance3 = ((string)usernameValue3);
-                                                onPremisesPostgreSqlLinkedServiceInstance.Username = usernameInstance3;
+                                                string usernameInstance5 = ((string)usernameValue5);
+                                                onPremisesPostgreSqlLinkedServiceInstance.Username = usernameInstance5;
                                             }
                                             
-                                            JToken passwordValue6 = propertiesValue["password"];
-                                            if (passwordValue6 != null && passwordValue6.Type != JTokenType.Null)
+                                            JToken passwordValue9 = propertiesValue["password"];
+                                            if (passwordValue9 != null && passwordValue9.Type != JTokenType.Null)
                                             {
-                                                string passwordInstance6 = ((string)passwordValue6);
-                                                onPremisesPostgreSqlLinkedServiceInstance.Password = passwordInstance6;
+                                                string passwordInstance9 = ((string)passwordValue9);
+                                                onPremisesPostgreSqlLinkedServiceInstance.Password = passwordInstance9;
                                             }
                                             
-                                            JToken gatewayNameValue5 = propertiesValue["gatewayName"];
-                                            if (gatewayNameValue5 != null && gatewayNameValue5.Type != JTokenType.Null)
+                                            JToken gatewayNameValue7 = propertiesValue["gatewayName"];
+                                            if (gatewayNameValue7 != null && gatewayNameValue7.Type != JTokenType.Null)
                                             {
-                                                string gatewayNameInstance5 = ((string)gatewayNameValue5);
-                                                onPremisesPostgreSqlLinkedServiceInstance.GatewayName = gatewayNameInstance5;
+                                                string gatewayNameInstance7 = ((string)gatewayNameValue7);
+                                                onPremisesPostgreSqlLinkedServiceInstance.GatewayName = gatewayNameInstance7;
                                             }
                                             
-                                            JToken encryptedCredentialValue4 = propertiesValue["encryptedCredential"];
-                                            if (encryptedCredentialValue4 != null && encryptedCredentialValue4.Type != JTokenType.Null)
+                                            JToken encryptedCredentialValue5 = propertiesValue["encryptedCredential"];
+                                            if (encryptedCredentialValue5 != null && encryptedCredentialValue5.Type != JTokenType.Null)
                                             {
-                                                string encryptedCredentialInstance4 = ((string)encryptedCredentialValue4);
-                                                onPremisesPostgreSqlLinkedServiceInstance.EncryptedCredential = encryptedCredentialInstance4;
+                                                string encryptedCredentialInstance5 = ((string)encryptedCredentialValue5);
+                                                onPremisesPostgreSqlLinkedServiceInstance.EncryptedCredential = encryptedCredentialInstance5;
                                             }
                                             
-                                            JToken descriptionValue12 = propertiesValue["description"];
-                                            if (descriptionValue12 != null && descriptionValue12.Type != JTokenType.Null)
+                                            JToken descriptionValue16 = propertiesValue["description"];
+                                            if (descriptionValue16 != null && descriptionValue16.Type != JTokenType.Null)
                                             {
-                                                string descriptionInstance12 = ((string)descriptionValue12);
-                                                onPremisesPostgreSqlLinkedServiceInstance.Description = descriptionInstance12;
+                                                string descriptionInstance16 = ((string)descriptionValue16);
+                                                onPremisesPostgreSqlLinkedServiceInstance.Description = descriptionInstance16;
                                             }
                                             
-                                            JToken provisioningStateValue12 = propertiesValue["provisioningState"];
-                                            if (provisioningStateValue12 != null && provisioningStateValue12.Type != JTokenType.Null)
+                                            JToken provisioningStateValue16 = propertiesValue["provisioningState"];
+                                            if (provisioningStateValue16 != null && provisioningStateValue16.Type != JTokenType.Null)
                                             {
-                                                string provisioningStateInstance12 = ((string)provisioningStateValue12);
-                                                onPremisesPostgreSqlLinkedServiceInstance.ProvisioningState = provisioningStateInstance12;
+                                                string provisioningStateInstance16 = ((string)provisioningStateValue16);
+                                                onPremisesPostgreSqlLinkedServiceInstance.ProvisioningState = provisioningStateInstance16;
                                             }
                                             
-                                            JToken hubNameValue12 = propertiesValue["hubName"];
-                                            if (hubNameValue12 != null && hubNameValue12.Type != JTokenType.Null)
+                                            JToken hubNameValue16 = propertiesValue["hubName"];
+                                            if (hubNameValue16 != null && hubNameValue16.Type != JTokenType.Null)
                                             {
-                                                string hubNameInstance12 = ((string)hubNameValue12);
-                                                onPremisesPostgreSqlLinkedServiceInstance.HubName = hubNameInstance12;
+                                                string hubNameInstance16 = ((string)hubNameValue16);
+                                                onPremisesPostgreSqlLinkedServiceInstance.HubName = hubNameInstance16;
                                             }
                                             
-                                            JToken errorMessageValue12 = propertiesValue["errorMessage"];
-                                            if (errorMessageValue12 != null && errorMessageValue12.Type != JTokenType.Null)
+                                            JToken errorMessageValue16 = propertiesValue["errorMessage"];
+                                            if (errorMessageValue16 != null && errorMessageValue16.Type != JTokenType.Null)
                                             {
-                                                string errorMessageInstance12 = ((string)errorMessageValue12);
-                                                onPremisesPostgreSqlLinkedServiceInstance.ErrorMessage = errorMessageInstance12;
+                                                string errorMessageInstance16 = ((string)errorMessageValue16);
+                                                onPremisesPostgreSqlLinkedServiceInstance.ErrorMessage = errorMessageInstance16;
                                             }
                                             linkedServiceInstance.Properties = onPremisesPostgreSqlLinkedServiceInstance;
                                         }
@@ -9514,60 +11275,60 @@ namespace Microsoft.Azure.Management.DataFactories
                                         {
                                             OnPremisesSqlLinkedService onPremisesSqlLinkedServiceInstance = new OnPremisesSqlLinkedService();
                                             
-                                            JToken connectionStringValue4 = propertiesValue["connectionString"];
-                                            if (connectionStringValue4 != null && connectionStringValue4.Type != JTokenType.Null)
+                                            JToken connectionStringValue5 = propertiesValue["connectionString"];
+                                            if (connectionStringValue5 != null && connectionStringValue5.Type != JTokenType.Null)
                                             {
-                                                string connectionStringInstance4 = ((string)connectionStringValue4);
-                                                onPremisesSqlLinkedServiceInstance.ConnectionString = connectionStringInstance4;
+                                                string connectionStringInstance5 = ((string)connectionStringValue5);
+                                                onPremisesSqlLinkedServiceInstance.ConnectionString = connectionStringInstance5;
                                             }
                                             
-                                            JToken gatewayNameValue6 = propertiesValue["gatewayName"];
-                                            if (gatewayNameValue6 != null && gatewayNameValue6.Type != JTokenType.Null)
+                                            JToken gatewayNameValue8 = propertiesValue["gatewayName"];
+                                            if (gatewayNameValue8 != null && gatewayNameValue8.Type != JTokenType.Null)
                                             {
-                                                string gatewayNameInstance6 = ((string)gatewayNameValue6);
-                                                onPremisesSqlLinkedServiceInstance.GatewayName = gatewayNameInstance6;
+                                                string gatewayNameInstance8 = ((string)gatewayNameValue8);
+                                                onPremisesSqlLinkedServiceInstance.GatewayName = gatewayNameInstance8;
                                             }
                                             
-                                            JToken userNameValue3 = propertiesValue["userName"];
-                                            if (userNameValue3 != null && userNameValue3.Type != JTokenType.Null)
+                                            JToken userNameValue4 = propertiesValue["userName"];
+                                            if (userNameValue4 != null && userNameValue4.Type != JTokenType.Null)
                                             {
-                                                string userNameInstance3 = ((string)userNameValue3);
-                                                onPremisesSqlLinkedServiceInstance.UserName = userNameInstance3;
+                                                string userNameInstance4 = ((string)userNameValue4);
+                                                onPremisesSqlLinkedServiceInstance.UserName = userNameInstance4;
                                             }
                                             
-                                            JToken passwordValue7 = propertiesValue["password"];
-                                            if (passwordValue7 != null && passwordValue7.Type != JTokenType.Null)
+                                            JToken passwordValue10 = propertiesValue["password"];
+                                            if (passwordValue10 != null && passwordValue10.Type != JTokenType.Null)
                                             {
-                                                string passwordInstance7 = ((string)passwordValue7);
-                                                onPremisesSqlLinkedServiceInstance.Password = passwordInstance7;
+                                                string passwordInstance10 = ((string)passwordValue10);
+                                                onPremisesSqlLinkedServiceInstance.Password = passwordInstance10;
                                             }
                                             
-                                            JToken descriptionValue13 = propertiesValue["description"];
-                                            if (descriptionValue13 != null && descriptionValue13.Type != JTokenType.Null)
+                                            JToken descriptionValue17 = propertiesValue["description"];
+                                            if (descriptionValue17 != null && descriptionValue17.Type != JTokenType.Null)
                                             {
-                                                string descriptionInstance13 = ((string)descriptionValue13);
-                                                onPremisesSqlLinkedServiceInstance.Description = descriptionInstance13;
+                                                string descriptionInstance17 = ((string)descriptionValue17);
+                                                onPremisesSqlLinkedServiceInstance.Description = descriptionInstance17;
                                             }
                                             
-                                            JToken provisioningStateValue13 = propertiesValue["provisioningState"];
-                                            if (provisioningStateValue13 != null && provisioningStateValue13.Type != JTokenType.Null)
+                                            JToken provisioningStateValue17 = propertiesValue["provisioningState"];
+                                            if (provisioningStateValue17 != null && provisioningStateValue17.Type != JTokenType.Null)
                                             {
-                                                string provisioningStateInstance13 = ((string)provisioningStateValue13);
-                                                onPremisesSqlLinkedServiceInstance.ProvisioningState = provisioningStateInstance13;
+                                                string provisioningStateInstance17 = ((string)provisioningStateValue17);
+                                                onPremisesSqlLinkedServiceInstance.ProvisioningState = provisioningStateInstance17;
                                             }
                                             
-                                            JToken hubNameValue13 = propertiesValue["hubName"];
-                                            if (hubNameValue13 != null && hubNameValue13.Type != JTokenType.Null)
+                                            JToken hubNameValue17 = propertiesValue["hubName"];
+                                            if (hubNameValue17 != null && hubNameValue17.Type != JTokenType.Null)
                                             {
-                                                string hubNameInstance13 = ((string)hubNameValue13);
-                                                onPremisesSqlLinkedServiceInstance.HubName = hubNameInstance13;
+                                                string hubNameInstance17 = ((string)hubNameValue17);
+                                                onPremisesSqlLinkedServiceInstance.HubName = hubNameInstance17;
                                             }
                                             
-                                            JToken errorMessageValue13 = propertiesValue["errorMessage"];
-                                            if (errorMessageValue13 != null && errorMessageValue13.Type != JTokenType.Null)
+                                            JToken errorMessageValue17 = propertiesValue["errorMessage"];
+                                            if (errorMessageValue17 != null && errorMessageValue17.Type != JTokenType.Null)
                                             {
-                                                string errorMessageInstance13 = ((string)errorMessageValue13);
-                                                onPremisesSqlLinkedServiceInstance.ErrorMessage = errorMessageInstance13;
+                                                string errorMessageInstance17 = ((string)errorMessageValue17);
+                                                onPremisesSqlLinkedServiceInstance.ErrorMessage = errorMessageInstance17;
                                             }
                                             linkedServiceInstance.Properties = onPremisesSqlLinkedServiceInstance;
                                         }
@@ -9596,67 +11357,67 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 onPremisesSybaseLinkedServiceInstance.Schema = schemaInstance4;
                                             }
                                             
-                                            JToken authenticationTypeValue4 = propertiesValue["authenticationType"];
-                                            if (authenticationTypeValue4 != null && authenticationTypeValue4.Type != JTokenType.Null)
+                                            JToken authenticationTypeValue7 = propertiesValue["authenticationType"];
+                                            if (authenticationTypeValue7 != null && authenticationTypeValue7.Type != JTokenType.Null)
                                             {
-                                                string authenticationTypeInstance4 = ((string)authenticationTypeValue4);
-                                                onPremisesSybaseLinkedServiceInstance.AuthenticationType = authenticationTypeInstance4;
+                                                string authenticationTypeInstance7 = ((string)authenticationTypeValue7);
+                                                onPremisesSybaseLinkedServiceInstance.AuthenticationType = authenticationTypeInstance7;
                                             }
                                             
-                                            JToken usernameValue4 = propertiesValue["username"];
-                                            if (usernameValue4 != null && usernameValue4.Type != JTokenType.Null)
+                                            JToken usernameValue6 = propertiesValue["username"];
+                                            if (usernameValue6 != null && usernameValue6.Type != JTokenType.Null)
                                             {
-                                                string usernameInstance4 = ((string)usernameValue4);
-                                                onPremisesSybaseLinkedServiceInstance.Username = usernameInstance4;
+                                                string usernameInstance6 = ((string)usernameValue6);
+                                                onPremisesSybaseLinkedServiceInstance.Username = usernameInstance6;
                                             }
                                             
-                                            JToken passwordValue8 = propertiesValue["password"];
-                                            if (passwordValue8 != null && passwordValue8.Type != JTokenType.Null)
+                                            JToken passwordValue11 = propertiesValue["password"];
+                                            if (passwordValue11 != null && passwordValue11.Type != JTokenType.Null)
                                             {
-                                                string passwordInstance8 = ((string)passwordValue8);
-                                                onPremisesSybaseLinkedServiceInstance.Password = passwordInstance8;
+                                                string passwordInstance11 = ((string)passwordValue11);
+                                                onPremisesSybaseLinkedServiceInstance.Password = passwordInstance11;
                                             }
                                             
-                                            JToken gatewayNameValue7 = propertiesValue["gatewayName"];
-                                            if (gatewayNameValue7 != null && gatewayNameValue7.Type != JTokenType.Null)
+                                            JToken gatewayNameValue9 = propertiesValue["gatewayName"];
+                                            if (gatewayNameValue9 != null && gatewayNameValue9.Type != JTokenType.Null)
                                             {
-                                                string gatewayNameInstance7 = ((string)gatewayNameValue7);
-                                                onPremisesSybaseLinkedServiceInstance.GatewayName = gatewayNameInstance7;
+                                                string gatewayNameInstance9 = ((string)gatewayNameValue9);
+                                                onPremisesSybaseLinkedServiceInstance.GatewayName = gatewayNameInstance9;
                                             }
                                             
-                                            JToken encryptedCredentialValue5 = propertiesValue["encryptedCredential"];
-                                            if (encryptedCredentialValue5 != null && encryptedCredentialValue5.Type != JTokenType.Null)
+                                            JToken encryptedCredentialValue6 = propertiesValue["encryptedCredential"];
+                                            if (encryptedCredentialValue6 != null && encryptedCredentialValue6.Type != JTokenType.Null)
                                             {
-                                                string encryptedCredentialInstance5 = ((string)encryptedCredentialValue5);
-                                                onPremisesSybaseLinkedServiceInstance.EncryptedCredential = encryptedCredentialInstance5;
+                                                string encryptedCredentialInstance6 = ((string)encryptedCredentialValue6);
+                                                onPremisesSybaseLinkedServiceInstance.EncryptedCredential = encryptedCredentialInstance6;
                                             }
                                             
-                                            JToken descriptionValue14 = propertiesValue["description"];
-                                            if (descriptionValue14 != null && descriptionValue14.Type != JTokenType.Null)
+                                            JToken descriptionValue18 = propertiesValue["description"];
+                                            if (descriptionValue18 != null && descriptionValue18.Type != JTokenType.Null)
                                             {
-                                                string descriptionInstance14 = ((string)descriptionValue14);
-                                                onPremisesSybaseLinkedServiceInstance.Description = descriptionInstance14;
+                                                string descriptionInstance18 = ((string)descriptionValue18);
+                                                onPremisesSybaseLinkedServiceInstance.Description = descriptionInstance18;
                                             }
                                             
-                                            JToken provisioningStateValue14 = propertiesValue["provisioningState"];
-                                            if (provisioningStateValue14 != null && provisioningStateValue14.Type != JTokenType.Null)
+                                            JToken provisioningStateValue18 = propertiesValue["provisioningState"];
+                                            if (provisioningStateValue18 != null && provisioningStateValue18.Type != JTokenType.Null)
                                             {
-                                                string provisioningStateInstance14 = ((string)provisioningStateValue14);
-                                                onPremisesSybaseLinkedServiceInstance.ProvisioningState = provisioningStateInstance14;
+                                                string provisioningStateInstance18 = ((string)provisioningStateValue18);
+                                                onPremisesSybaseLinkedServiceInstance.ProvisioningState = provisioningStateInstance18;
                                             }
                                             
-                                            JToken hubNameValue14 = propertiesValue["hubName"];
-                                            if (hubNameValue14 != null && hubNameValue14.Type != JTokenType.Null)
+                                            JToken hubNameValue18 = propertiesValue["hubName"];
+                                            if (hubNameValue18 != null && hubNameValue18.Type != JTokenType.Null)
                                             {
-                                                string hubNameInstance14 = ((string)hubNameValue14);
-                                                onPremisesSybaseLinkedServiceInstance.HubName = hubNameInstance14;
+                                                string hubNameInstance18 = ((string)hubNameValue18);
+                                                onPremisesSybaseLinkedServiceInstance.HubName = hubNameInstance18;
                                             }
                                             
-                                            JToken errorMessageValue14 = propertiesValue["errorMessage"];
-                                            if (errorMessageValue14 != null && errorMessageValue14.Type != JTokenType.Null)
+                                            JToken errorMessageValue18 = propertiesValue["errorMessage"];
+                                            if (errorMessageValue18 != null && errorMessageValue18.Type != JTokenType.Null)
                                             {
-                                                string errorMessageInstance14 = ((string)errorMessageValue14);
-                                                onPremisesSybaseLinkedServiceInstance.ErrorMessage = errorMessageInstance14;
+                                                string errorMessageInstance18 = ((string)errorMessageValue18);
+                                                onPremisesSybaseLinkedServiceInstance.ErrorMessage = errorMessageInstance18;
                                             }
                                             linkedServiceInstance.Properties = onPremisesSybaseLinkedServiceInstance;
                                         }
@@ -9685,67 +11446,67 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 onPremisesTeradataLinkedServiceInstance.Schema = schemaInstance5;
                                             }
                                             
-                                            JToken authenticationTypeValue5 = propertiesValue["authenticationType"];
-                                            if (authenticationTypeValue5 != null && authenticationTypeValue5.Type != JTokenType.Null)
+                                            JToken authenticationTypeValue8 = propertiesValue["authenticationType"];
+                                            if (authenticationTypeValue8 != null && authenticationTypeValue8.Type != JTokenType.Null)
                                             {
-                                                string authenticationTypeInstance5 = ((string)authenticationTypeValue5);
-                                                onPremisesTeradataLinkedServiceInstance.AuthenticationType = authenticationTypeInstance5;
+                                                string authenticationTypeInstance8 = ((string)authenticationTypeValue8);
+                                                onPremisesTeradataLinkedServiceInstance.AuthenticationType = authenticationTypeInstance8;
                                             }
                                             
-                                            JToken usernameValue5 = propertiesValue["username"];
-                                            if (usernameValue5 != null && usernameValue5.Type != JTokenType.Null)
+                                            JToken usernameValue7 = propertiesValue["username"];
+                                            if (usernameValue7 != null && usernameValue7.Type != JTokenType.Null)
                                             {
-                                                string usernameInstance5 = ((string)usernameValue5);
-                                                onPremisesTeradataLinkedServiceInstance.Username = usernameInstance5;
+                                                string usernameInstance7 = ((string)usernameValue7);
+                                                onPremisesTeradataLinkedServiceInstance.Username = usernameInstance7;
                                             }
                                             
-                                            JToken passwordValue9 = propertiesValue["password"];
-                                            if (passwordValue9 != null && passwordValue9.Type != JTokenType.Null)
+                                            JToken passwordValue12 = propertiesValue["password"];
+                                            if (passwordValue12 != null && passwordValue12.Type != JTokenType.Null)
                                             {
-                                                string passwordInstance9 = ((string)passwordValue9);
-                                                onPremisesTeradataLinkedServiceInstance.Password = passwordInstance9;
+                                                string passwordInstance12 = ((string)passwordValue12);
+                                                onPremisesTeradataLinkedServiceInstance.Password = passwordInstance12;
                                             }
                                             
-                                            JToken gatewayNameValue8 = propertiesValue["gatewayName"];
-                                            if (gatewayNameValue8 != null && gatewayNameValue8.Type != JTokenType.Null)
+                                            JToken gatewayNameValue10 = propertiesValue["gatewayName"];
+                                            if (gatewayNameValue10 != null && gatewayNameValue10.Type != JTokenType.Null)
                                             {
-                                                string gatewayNameInstance8 = ((string)gatewayNameValue8);
-                                                onPremisesTeradataLinkedServiceInstance.GatewayName = gatewayNameInstance8;
+                                                string gatewayNameInstance10 = ((string)gatewayNameValue10);
+                                                onPremisesTeradataLinkedServiceInstance.GatewayName = gatewayNameInstance10;
                                             }
                                             
-                                            JToken encryptedCredentialValue6 = propertiesValue["encryptedCredential"];
-                                            if (encryptedCredentialValue6 != null && encryptedCredentialValue6.Type != JTokenType.Null)
+                                            JToken encryptedCredentialValue7 = propertiesValue["encryptedCredential"];
+                                            if (encryptedCredentialValue7 != null && encryptedCredentialValue7.Type != JTokenType.Null)
                                             {
-                                                string encryptedCredentialInstance6 = ((string)encryptedCredentialValue6);
-                                                onPremisesTeradataLinkedServiceInstance.EncryptedCredential = encryptedCredentialInstance6;
+                                                string encryptedCredentialInstance7 = ((string)encryptedCredentialValue7);
+                                                onPremisesTeradataLinkedServiceInstance.EncryptedCredential = encryptedCredentialInstance7;
                                             }
                                             
-                                            JToken descriptionValue15 = propertiesValue["description"];
-                                            if (descriptionValue15 != null && descriptionValue15.Type != JTokenType.Null)
+                                            JToken descriptionValue19 = propertiesValue["description"];
+                                            if (descriptionValue19 != null && descriptionValue19.Type != JTokenType.Null)
                                             {
-                                                string descriptionInstance15 = ((string)descriptionValue15);
-                                                onPremisesTeradataLinkedServiceInstance.Description = descriptionInstance15;
+                                                string descriptionInstance19 = ((string)descriptionValue19);
+                                                onPremisesTeradataLinkedServiceInstance.Description = descriptionInstance19;
                                             }
                                             
-                                            JToken provisioningStateValue15 = propertiesValue["provisioningState"];
-                                            if (provisioningStateValue15 != null && provisioningStateValue15.Type != JTokenType.Null)
+                                            JToken provisioningStateValue19 = propertiesValue["provisioningState"];
+                                            if (provisioningStateValue19 != null && provisioningStateValue19.Type != JTokenType.Null)
                                             {
-                                                string provisioningStateInstance15 = ((string)provisioningStateValue15);
-                                                onPremisesTeradataLinkedServiceInstance.ProvisioningState = provisioningStateInstance15;
+                                                string provisioningStateInstance19 = ((string)provisioningStateValue19);
+                                                onPremisesTeradataLinkedServiceInstance.ProvisioningState = provisioningStateInstance19;
                                             }
                                             
-                                            JToken hubNameValue15 = propertiesValue["hubName"];
-                                            if (hubNameValue15 != null && hubNameValue15.Type != JTokenType.Null)
+                                            JToken hubNameValue19 = propertiesValue["hubName"];
+                                            if (hubNameValue19 != null && hubNameValue19.Type != JTokenType.Null)
                                             {
-                                                string hubNameInstance15 = ((string)hubNameValue15);
-                                                onPremisesTeradataLinkedServiceInstance.HubName = hubNameInstance15;
+                                                string hubNameInstance19 = ((string)hubNameValue19);
+                                                onPremisesTeradataLinkedServiceInstance.HubName = hubNameInstance19;
                                             }
                                             
-                                            JToken errorMessageValue15 = propertiesValue["errorMessage"];
-                                            if (errorMessageValue15 != null && errorMessageValue15.Type != JTokenType.Null)
+                                            JToken errorMessageValue19 = propertiesValue["errorMessage"];
+                                            if (errorMessageValue19 != null && errorMessageValue19.Type != JTokenType.Null)
                                             {
-                                                string errorMessageInstance15 = ((string)errorMessageValue15);
-                                                onPremisesTeradataLinkedServiceInstance.ErrorMessage = errorMessageInstance15;
+                                                string errorMessageInstance19 = ((string)errorMessageValue19);
+                                                onPremisesTeradataLinkedServiceInstance.ErrorMessage = errorMessageInstance19;
                                             }
                                             linkedServiceInstance.Properties = onPremisesTeradataLinkedServiceInstance;
                                         }
