@@ -27,7 +27,6 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Hyak.Common;
-using Hyak.Common.Internals;
 using Microsoft.Azure;
 using Microsoft.Azure.Commerce.UsageAggregates;
 using Microsoft.Azure.Commerce.UsageAggregates.Models;
@@ -161,90 +160,6 @@ namespace Microsoft.Azure.Commerce.UsageAggregates.Models
     }
     
     /// <summary>
-    /// Key-value pairs of instance details.
-    /// </summary>
-    public partial class UsageInstanceData
-    {
-        private string _additionalInfo;
-        
-        /// <summary>
-        /// Optional. More details about the resource being consumed. For
-        /// example, OS version, Image Type.
-        /// </summary>
-        public string AdditionalInfo
-        {
-            get { return this._additionalInfo; }
-            set { this._additionalInfo = value; }
-        }
-        
-        private string _location;
-        
-        /// <summary>
-        /// Optional. The region in which this service was run.
-        /// </summary>
-        public string Location
-        {
-            get { return this._location; }
-            set { this._location = value; }
-        }
-        
-        private string _orderNumber;
-        
-        /// <summary>
-        /// Optional. Unique ID that represents the 3rd party order identifier.
-        /// Presence of an orderNumber states that this usage record was
-        /// incurred on a resource owned by a 3rd party and not Microsoft.
-        /// </summary>
-        public string OrderNumber
-        {
-            get { return this._orderNumber; }
-            set { this._orderNumber = value; }
-        }
-        
-        private string _partNumber;
-        
-        /// <summary>
-        /// Optional. Unique namespace used to identify the resource for Azure
-        /// Marketplace 3rd party usage
-        /// </summary>
-        public string PartNumber
-        {
-            get { return this._partNumber; }
-            set { this._partNumber = value; }
-        }
-        
-        private Uri _resourceUri;
-        
-        /// <summary>
-        /// Optional. This is the fully qualified resource ID, which includes
-        /// the resource groups and the instance name.
-        /// </summary>
-        public Uri ResourceUri
-        {
-            get { return this._resourceUri; }
-            set { this._resourceUri = value; }
-        }
-        
-        private string _tags;
-        
-        /// <summary>
-        /// Optional. Contains the resource tags specified by the user.
-        /// </summary>
-        public string Tags
-        {
-            get { return this._tags; }
-            set { this._tags = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the UsageInstanceData class.
-        /// </summary>
-        public UsageInstanceData()
-        {
-        }
-    }
-    
-    /// <summary>
     /// Describes a sample of the usageAggregation.
     /// </summary>
     public partial class UsageSample
@@ -260,12 +175,13 @@ namespace Microsoft.Azure.Commerce.UsageAggregates.Models
             set { this._infoFields = value; }
         }
         
-        private UsageInstanceData _instanceData;
+        private string _instanceData;
         
         /// <summary>
-        /// Optional. Key-value pairs of instance details.
+        /// Optional. Key-value pairs of instance details represented as a
+        /// string.
         /// </summary>
-        public UsageInstanceData InstanceData
+        public string InstanceData
         {
             get { return this._instanceData; }
             set { this._instanceData = value; }
@@ -1107,50 +1023,8 @@ namespace Microsoft.Azure.Commerce.UsageAggregates
                                         JToken instanceDataValue = propertiesValue["instanceData"];
                                         if (instanceDataValue != null && instanceDataValue.Type != JTokenType.Null)
                                         {
-                                            UsageInstanceData instanceDataInstance = new UsageInstanceData();
+                                            string instanceDataInstance = ((string)instanceDataValue);
                                             propertiesInstance.InstanceData = instanceDataInstance;
-                                            
-                                            JToken resourceUriValue = instanceDataValue["resourceUri"];
-                                            if (resourceUriValue != null && resourceUriValue.Type != JTokenType.Null)
-                                            {
-                                                Uri resourceUriInstance = TypeConversion.TryParseUri(((string)resourceUriValue));
-                                                instanceDataInstance.ResourceUri = resourceUriInstance;
-                                            }
-                                            
-                                            JToken tagsValue = instanceDataValue["tags"];
-                                            if (tagsValue != null && tagsValue.Type != JTokenType.Null)
-                                            {
-                                                string tagsInstance = ((string)tagsValue);
-                                                instanceDataInstance.Tags = tagsInstance;
-                                            }
-                                            
-                                            JToken locationValue = instanceDataValue["location"];
-                                            if (locationValue != null && locationValue.Type != JTokenType.Null)
-                                            {
-                                                string locationInstance = ((string)locationValue);
-                                                instanceDataInstance.Location = locationInstance;
-                                            }
-                                            
-                                            JToken additionalInfoValue = instanceDataValue["additionalInfo"];
-                                            if (additionalInfoValue != null && additionalInfoValue.Type != JTokenType.Null)
-                                            {
-                                                string additionalInfoInstance = ((string)additionalInfoValue);
-                                                instanceDataInstance.AdditionalInfo = additionalInfoInstance;
-                                            }
-                                            
-                                            JToken partNumberValue = instanceDataValue["partNumber"];
-                                            if (partNumberValue != null && partNumberValue.Type != JTokenType.Null)
-                                            {
-                                                string partNumberInstance = ((string)partNumberValue);
-                                                instanceDataInstance.PartNumber = partNumberInstance;
-                                            }
-                                            
-                                            JToken orderNumberValue = instanceDataValue["orderNumber"];
-                                            if (orderNumberValue != null && orderNumberValue.Type != JTokenType.Null)
-                                            {
-                                                string orderNumberInstance = ((string)orderNumberValue);
-                                                instanceDataInstance.OrderNumber = orderNumberInstance;
-                                            }
                                         }
                                     }
                                 }
