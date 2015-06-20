@@ -97,6 +97,17 @@ namespace Microsoft.Azure.Management.Network
             set { this._longRunningOperationRetryTimeout = value; }
         }
         
+        private IApplicationGatewayOperations _applicationGateways;
+        
+        /// <summary>
+        /// The Network Resource Provider API includes operations managing the
+        /// application gateways for your subscription.
+        /// </summary>
+        public virtual IApplicationGatewayOperations ApplicationGateways
+        {
+            get { return this._applicationGateways; }
+        }
+        
         private ILoadBalancerOperations _loadBalancers;
         
         /// <summary>
@@ -224,6 +235,7 @@ namespace Microsoft.Azure.Management.Network
         public NetworkResourceProviderClient()
             : base()
         {
+            this._applicationGateways = new ApplicationGatewayOperations(this);
             this._loadBalancers = new LoadBalancerOperations(this);
             this._localNetworkGateways = new LocalNetworkGatewayOperations(this);
             this._networkInterfaces = new NetworkInterfaceOperations(this);
@@ -303,6 +315,7 @@ namespace Microsoft.Azure.Management.Network
         public NetworkResourceProviderClient(HttpClient httpClient)
             : base(httpClient)
         {
+            this._applicationGateways = new ApplicationGatewayOperations(this);
             this._loadBalancers = new LoadBalancerOperations(this);
             this._localNetworkGateways = new LocalNetworkGatewayOperations(this);
             this._networkInterfaces = new NetworkInterfaceOperations(this);
