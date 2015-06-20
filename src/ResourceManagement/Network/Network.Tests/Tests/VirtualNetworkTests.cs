@@ -73,7 +73,7 @@ namespace Networks.Tests
 
                 // Put Vnet
                 var putVnetResponse = networkResourceProviderClient.VirtualNetworks.CreateOrUpdate(resourceGroupName, vnetName, vnet);
-                Assert.Equal("Succeeded", putVnetResponse.VirtualNetwork.ProvisioningState);
+                Assert.Equal("Succeeded", putVnetResponse.ProvisioningState);
 
                 // Get Vnet
                 var getVnetResponse = networkResourceProviderClient.VirtualNetworks.Get(resourceGroupName, vnetName);

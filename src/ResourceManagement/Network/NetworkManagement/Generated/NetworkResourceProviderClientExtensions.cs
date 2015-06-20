@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Network
             /// The domain name to be verified. It must conform to the following regular
             /// expression: ^[a-z][a-z0-9-]{1,61}[a-z0-9]$.
             /// </param>
-            public static bool? CheckDnsNameAvailability(this INetworkResourceProviderClient operations, string location, string domainNameLabel = default(string))
+            public static DnsNameAvailabilityResponse CheckDnsNameAvailability(this INetworkResourceProviderClient operations, string location, string domainNameLabel = default(string))
             {
                 return Task.Factory.StartNew(s => ((INetworkResourceProviderClient)s).CheckDnsNameAvailabilityAsync(location, domainNameLabel), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -45,9 +45,9 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<bool?> CheckDnsNameAvailabilityAsync( this INetworkResourceProviderClient operations, string location, string domainNameLabel = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DnsNameAvailabilityResponse> CheckDnsNameAvailabilityAsync( this INetworkResourceProviderClient operations, string location, string domainNameLabel = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<bool?> result = await operations.CheckDnsNameAvailabilityWithOperationResponseAsync(location, domainNameLabel, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<DnsNameAvailabilityResponse> result = await operations.CheckDnsNameAvailabilityWithOperationResponseAsync(location, domainNameLabel, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

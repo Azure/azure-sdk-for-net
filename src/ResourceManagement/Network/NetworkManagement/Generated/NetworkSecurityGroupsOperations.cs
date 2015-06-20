@@ -47,6 +47,27 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         public async Task<AzureOperationResponse> DeleteWithOperationResponseAsync(string resourceGroupName, string networkSecurityGroupName, CancellationToken cancellationToken = default(CancellationToken))
         {
+            // Send request
+            AzureOperationResponse response = await BeginDeleteWithOperationResponseAsync(
+                resourceGroupName, networkSecurityGroupName, cancellationToken);
+            return await this.Client.GetPostOrDeleteOperationResultAsync(response, cancellationToken);
+        }
+
+        /// <summary>
+        /// The Delete NetworkSecurityGroup operation deletes the specifed network
+        /// security group
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>    
+        /// <param name='networkSecurityGroupName'>
+        /// The name of the network security group.
+        /// </param>    
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse> BeginDeleteWithOperationResponseAsync(string resourceGroupName, string networkSecurityGroupName, CancellationToken cancellationToken = default(CancellationToken))
+        {
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException("resourceGroupName");
@@ -65,7 +86,7 @@ namespace Microsoft.Azure.Management.Network
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("networkSecurityGroupName", networkSecurityGroupName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "Delete", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "BeginDelete", tracingParameters);
             }
             // Construct URL
             string url = this.Client.BaseUri.AbsoluteUri + 
@@ -253,7 +274,33 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<NetworkSecurityGroupPutResponse>> CreateOrUpdateWithOperationResponseAsync(string resourceGroupName, string networkSecurityGroupName, NetworkSecurityGroup parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<NetworkSecurityGroup>> CreateOrUpdateWithOperationResponseAsync(string resourceGroupName, string networkSecurityGroupName, NetworkSecurityGroup parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // Send Request
+            AzureOperationResponse<NetworkSecurityGroup> response = await BeginCreateOrUpdateWithOperationResponseAsync(
+                resourceGroupName, networkSecurityGroupName, parameters, cancellationToken);
+            return await this.Client.GetPutOperationResultAsync<NetworkSecurityGroup>(response, 
+                () => GetWithOperationResponseAsync(resourceGroupName, networkSecurityGroupName, cancellationToken),
+                cancellationToken);
+        }
+
+        /// <summary>
+        /// The Put NetworkSecurityGroup operation creates/updates a network security
+        /// groupin the specified resource group.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>    
+        /// <param name='networkSecurityGroupName'>
+        /// The name of the network security group.
+        /// </param>    
+        /// <param name='parameters'>
+        /// Parameters supplied to the create/update Network Security Group operation
+        /// </param>    
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<NetworkSecurityGroup>> BeginCreateOrUpdateWithOperationResponseAsync(string resourceGroupName, string networkSecurityGroupName, NetworkSecurityGroup parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -282,7 +329,7 @@ namespace Microsoft.Azure.Management.Network
                 tracingParameters.Add("networkSecurityGroupName", networkSecurityGroupName);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "CreateOrUpdate", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "BeginCreateOrUpdate", tracingParameters);
             }
             // Construct URL
             string url = this.Client.BaseUri.AbsoluteUri + 
@@ -346,18 +393,18 @@ namespace Microsoft.Azure.Management.Network
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<NetworkSecurityGroupPutResponse>();
+            var result = new AzureOperationResponse<NetworkSecurityGroup>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             // Deserialize Response
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "Created"))
             {
-                result.Body = JsonConvert.DeserializeObject<NetworkSecurityGroupPutResponse>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<NetworkSecurityGroup>(responseContent, this.Client.DeserializationSettings);
             }
             // Deserialize Response
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
-                result.Body = JsonConvert.DeserializeObject<NetworkSecurityGroupPutResponse>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<NetworkSecurityGroup>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {

@@ -9,32 +9,20 @@ namespace Microsoft.Azure.Management.Network.Models
 
     /// <summary>
     /// </summary>
-    public partial class SubnetPutResponse
+    public partial class ConnectionSharedKeyResponse
     {
         /// <summary>
-        /// Gets the subnet in a virtual network
+        /// The virtual network connection shared key value
         /// </summary>
-        [JsonProperty(PropertyName = "Subnet")]
-        public Subnet Subnet { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "error")]
-        public Error Error { get; set; }
+        [JsonProperty(PropertyName = "value")]
+        public string Value { get; set; }
 
         /// <summary>
         /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
         /// </summary>
         public virtual void Validate()
         {
-            if (this.Subnet != null)
-            {
-                this.Subnet.Validate();
-            }
-            if (this.Error != null)
-            {
-                this.Error.Validate();
-            }
+            //Nothing to validate
         }
     }
 }

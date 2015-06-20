@@ -27,7 +27,7 @@ namespace Networks.Tests
 
                 var dnsNameAvailability = networkResourceProviderClient.CheckDnsNameAvailability(location, domainNameLabel);
 
-                Assert.True(dnsNameAvailability.Value);
+                Assert.True(dnsNameAvailability.Available.Value);
             }
         }
 

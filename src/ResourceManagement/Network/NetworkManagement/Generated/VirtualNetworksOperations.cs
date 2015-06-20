@@ -46,6 +46,26 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         public async Task<AzureOperationResponse> DeleteWithOperationResponseAsync(string resourceGroupName, string virtualNetworkName, CancellationToken cancellationToken = default(CancellationToken))
         {
+            // Send request
+            AzureOperationResponse response = await BeginDeleteWithOperationResponseAsync(
+                resourceGroupName, virtualNetworkName, cancellationToken);
+            return await this.Client.GetPostOrDeleteOperationResultAsync(response, cancellationToken);
+        }
+
+        /// <summary>
+        /// The Delete VirtualNetwork operation deletes the specifed virtual network
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>    
+        /// <param name='virtualNetworkName'>
+        /// The name of the virtual network.
+        /// </param>    
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse> BeginDeleteWithOperationResponseAsync(string resourceGroupName, string virtualNetworkName, CancellationToken cancellationToken = default(CancellationToken))
+        {
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException("resourceGroupName");
@@ -64,7 +84,7 @@ namespace Microsoft.Azure.Management.Network
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("virtualNetworkName", virtualNetworkName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "Delete", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "BeginDelete", tracingParameters);
             }
             // Construct URL
             string url = this.Client.BaseUri.AbsoluteUri + 
@@ -252,7 +272,33 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<VirtualNetworkPutResponse>> CreateOrUpdateWithOperationResponseAsync(string resourceGroupName, string virtualNetworkName, VirtualNetwork parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<VirtualNetwork>> CreateOrUpdateWithOperationResponseAsync(string resourceGroupName, string virtualNetworkName, VirtualNetwork parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // Send Request
+            AzureOperationResponse<VirtualNetwork> response = await BeginCreateOrUpdateWithOperationResponseAsync(
+                resourceGroupName, virtualNetworkName, parameters, cancellationToken);
+            return await this.Client.GetPutOperationResultAsync<VirtualNetwork>(response, 
+                () => GetWithOperationResponseAsync(resourceGroupName, virtualNetworkName, cancellationToken),
+                cancellationToken);
+        }
+
+        /// <summary>
+        /// The Put VirtualNetwork operation creates/updates a virtual network in the
+        /// specified resource group.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>    
+        /// <param name='virtualNetworkName'>
+        /// The name of the virtual network.
+        /// </param>    
+        /// <param name='parameters'>
+        /// Parameters supplied to the create/update Virtual Network operation
+        /// </param>    
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<VirtualNetwork>> BeginCreateOrUpdateWithOperationResponseAsync(string resourceGroupName, string virtualNetworkName, VirtualNetwork parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -281,7 +327,7 @@ namespace Microsoft.Azure.Management.Network
                 tracingParameters.Add("virtualNetworkName", virtualNetworkName);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "CreateOrUpdate", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "BeginCreateOrUpdate", tracingParameters);
             }
             // Construct URL
             string url = this.Client.BaseUri.AbsoluteUri + 
@@ -345,18 +391,18 @@ namespace Microsoft.Azure.Management.Network
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<VirtualNetworkPutResponse>();
+            var result = new AzureOperationResponse<VirtualNetwork>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             // Deserialize Response
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "Created"))
             {
-                result.Body = JsonConvert.DeserializeObject<VirtualNetworkPutResponse>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<VirtualNetwork>(responseContent, this.Client.DeserializationSettings);
             }
             // Deserialize Response
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
-                result.Body = JsonConvert.DeserializeObject<VirtualNetworkPutResponse>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<VirtualNetwork>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {

@@ -43,7 +43,7 @@ namespace Networks.Tests
 
                 // Put Nsg
                 var putNsgResponse = networkResourceProviderClient.NetworkSecurityGroups.CreateOrUpdate(resourceGroupName, networkSecurityGroupName, networkSecurityGroup);
-                Assert.Equal("Succeeded", putNsgResponse.NetworkSecurityGroup.ProvisioningState);
+                Assert.Equal("Succeeded", putNsgResponse.ProvisioningState);
 
                 var getNsgResponse = networkResourceProviderClient.NetworkSecurityGroups.Get(resourceGroupName, networkSecurityGroupName);
 
@@ -52,9 +52,9 @@ namespace Networks.Tests
 
                 // Verify that the strings are populated
                 Assert.NotNull(usagesResponse);
-                Assert.True(usagesResponse.Any());
+                Assert.True(usagesResponse.Value.Any());
 
-                foreach (var usage in usagesResponse)
+                foreach (var usage in usagesResponse.Value)
                 {
                     Assert.True(usage.Limit > 0);
                     Assert.NotNull(usage.Name);

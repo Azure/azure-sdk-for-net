@@ -30,6 +30,22 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         Task<AzureOperationResponse> DeleteWithOperationResponseAsync(string resourceGroupName, string virtualNetworkName, string subnetName, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// The delete subnet operation deletes the specified subnet.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='virtualNetworkName'>
+        /// The name of the virtual network.
+        /// </param>
+        /// <param name='subnetName'>
+        /// The name of the subnet.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        Task<AzureOperationResponse> BeginDeleteWithOperationResponseAsync(string resourceGroupName, string virtualNetworkName, string subnetName, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// The Get subnet operation retreives information about the specified
         /// subnet.
         /// </summary>
@@ -65,7 +81,27 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        Task<AzureOperationResponse<SubnetPutResponse>> CreateOrUpdateWithOperationResponseAsync(string resourceGroupName, string virtualNetworkName, string subnetName, Subnet subnetParameters, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Subnet>> CreateOrUpdateWithOperationResponseAsync(string resourceGroupName, string virtualNetworkName, string subnetName, Subnet subnetParameters, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// The Put Subnet operation creates/updates a subnet in thespecified
+        /// virtual network
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='virtualNetworkName'>
+        /// The name of the virtual network.
+        /// </param>
+        /// <param name='subnetName'>
+        /// The name of the subnet.
+        /// </param>
+        /// <param name='subnetParameters'>
+        /// Parameters supplied to the create/update Subnet operation
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<Subnet>> BeginCreateOrUpdateWithOperationResponseAsync(string resourceGroupName, string virtualNetworkName, string subnetName, Subnet subnetParameters, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The List subnets opertion retrieves all the subnets in a virtual
         /// network.

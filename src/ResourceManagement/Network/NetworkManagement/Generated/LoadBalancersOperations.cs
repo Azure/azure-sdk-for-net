@@ -46,6 +46,26 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         public async Task<AzureOperationResponse> DeleteWithOperationResponseAsync(string resourceGroupName, string loadBalancerName, CancellationToken cancellationToken = default(CancellationToken))
         {
+            // Send request
+            AzureOperationResponse response = await BeginDeleteWithOperationResponseAsync(
+                resourceGroupName, loadBalancerName, cancellationToken);
+            return await this.Client.GetPostOrDeleteOperationResultAsync(response, cancellationToken);
+        }
+
+        /// <summary>
+        /// The delete loadbalancer operation deletes the specified loadbalancer.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>    
+        /// <param name='loadBalancerName'>
+        /// The name of the loadBalancer.
+        /// </param>    
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse> BeginDeleteWithOperationResponseAsync(string resourceGroupName, string loadBalancerName, CancellationToken cancellationToken = default(CancellationToken))
+        {
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException("resourceGroupName");
@@ -64,7 +84,7 @@ namespace Microsoft.Azure.Management.Network
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("loadBalancerName", loadBalancerName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "Delete", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "BeginDelete", tracingParameters);
             }
             // Construct URL
             string url = this.Client.BaseUri.AbsoluteUri + 
@@ -251,7 +271,32 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<LoadBalancerPutResponse>> CreateOrUpdateWithOperationResponseAsync(string resourceGroupName, string loadBalancerName, LoadBalancer parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<LoadBalancer>> CreateOrUpdateWithOperationResponseAsync(string resourceGroupName, string loadBalancerName, LoadBalancer parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // Send Request
+            AzureOperationResponse<LoadBalancer> response = await BeginCreateOrUpdateWithOperationResponseAsync(
+                resourceGroupName, loadBalancerName, parameters, cancellationToken);
+            return await this.Client.GetPutOperationResultAsync<LoadBalancer>(response, 
+                () => GetWithOperationResponseAsync(resourceGroupName, loadBalancerName, cancellationToken),
+                cancellationToken);
+        }
+
+        /// <summary>
+        /// The Put LoadBalancer operation creates/updates a LoadBalancer
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>    
+        /// <param name='loadBalancerName'>
+        /// The name of the loadBalancer.
+        /// </param>    
+        /// <param name='parameters'>
+        /// Parameters supplied to the create/delete LoadBalancer operation
+        /// </param>    
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<LoadBalancer>> BeginCreateOrUpdateWithOperationResponseAsync(string resourceGroupName, string loadBalancerName, LoadBalancer parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -280,7 +325,7 @@ namespace Microsoft.Azure.Management.Network
                 tracingParameters.Add("loadBalancerName", loadBalancerName);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "CreateOrUpdate", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "BeginCreateOrUpdate", tracingParameters);
             }
             // Construct URL
             string url = this.Client.BaseUri.AbsoluteUri + 
@@ -344,18 +389,18 @@ namespace Microsoft.Azure.Management.Network
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<LoadBalancerPutResponse>();
+            var result = new AzureOperationResponse<LoadBalancer>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             // Deserialize Response
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "Created"))
             {
-                result.Body = JsonConvert.DeserializeObject<LoadBalancerPutResponse>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<LoadBalancer>(responseContent, this.Client.DeserializationSettings);
             }
             // Deserialize Response
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
-                result.Body = JsonConvert.DeserializeObject<LoadBalancerPutResponse>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<LoadBalancer>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {

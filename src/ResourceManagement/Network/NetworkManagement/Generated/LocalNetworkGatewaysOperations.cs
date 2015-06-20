@@ -49,7 +49,34 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<LocalNetworkGatewayPutResponse>> CreateOrUpdateWithOperationResponseAsync(string resourceGroupName, string localNetworkGatewayName, LocalNetworkGateway parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<LocalNetworkGateway>> CreateOrUpdateWithOperationResponseAsync(string resourceGroupName, string localNetworkGatewayName, LocalNetworkGateway parameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // Send Request
+            AzureOperationResponse<LocalNetworkGateway> response = await BeginCreateOrUpdateWithOperationResponseAsync(
+                resourceGroupName, localNetworkGatewayName, parameters, cancellationToken);
+            return await this.Client.GetPutOperationResultAsync<LocalNetworkGateway>(response, 
+                () => GetWithOperationResponseAsync(resourceGroupName, localNetworkGatewayName, cancellationToken),
+                cancellationToken);
+        }
+
+        /// <summary>
+        /// The Put LocalNetworkGateway operation creates/updates a local network
+        /// gateway in the specified resource group through Network resource provider.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>    
+        /// <param name='localNetworkGatewayName'>
+        /// The name of the local network gateway.
+        /// </param>    
+        /// <param name='parameters'>
+        /// Parameters supplied to the Begin Create or update Local Network Gateway
+        /// operation through Network resource provider.
+        /// </param>    
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<LocalNetworkGateway>> BeginCreateOrUpdateWithOperationResponseAsync(string resourceGroupName, string localNetworkGatewayName, LocalNetworkGateway parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -78,7 +105,7 @@ namespace Microsoft.Azure.Management.Network
                 tracingParameters.Add("localNetworkGatewayName", localNetworkGatewayName);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "CreateOrUpdate", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "BeginCreateOrUpdate", tracingParameters);
             }
             // Construct URL
             string url = this.Client.BaseUri.AbsoluteUri + 
@@ -142,18 +169,18 @@ namespace Microsoft.Azure.Management.Network
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<LocalNetworkGatewayPutResponse>();
+            var result = new AzureOperationResponse<LocalNetworkGateway>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             // Deserialize Response
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
-                result.Body = JsonConvert.DeserializeObject<LocalNetworkGatewayPutResponse>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<LocalNetworkGateway>(responseContent, this.Client.DeserializationSettings);
             }
             // Deserialize Response
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "Created"))
             {
-                result.Body = JsonConvert.DeserializeObject<LocalNetworkGatewayPutResponse>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<LocalNetworkGateway>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -285,6 +312,27 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         public async Task<AzureOperationResponse> DeleteWithOperationResponseAsync(string resourceGroupName, string localNetworkGatewayName, CancellationToken cancellationToken = default(CancellationToken))
         {
+            // Send request
+            AzureOperationResponse response = await BeginDeleteWithOperationResponseAsync(
+                resourceGroupName, localNetworkGatewayName, cancellationToken);
+            return await this.Client.GetPostOrDeleteOperationResultAsync(response, cancellationToken);
+        }
+
+        /// <summary>
+        /// The Delete LocalNetworkGateway operation deletes the specifed local
+        /// network Gateway through Network resource provider.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>    
+        /// <param name='localNetworkGatewayName'>
+        /// The name of the local network gateway.
+        /// </param>    
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse> BeginDeleteWithOperationResponseAsync(string resourceGroupName, string localNetworkGatewayName, CancellationToken cancellationToken = default(CancellationToken))
+        {
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException("resourceGroupName");
@@ -303,7 +351,7 @@ namespace Microsoft.Azure.Management.Network
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("localNetworkGatewayName", localNetworkGatewayName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "Delete", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "BeginDelete", tracingParameters);
             }
             // Construct URL
             string url = this.Client.BaseUri.AbsoluteUri + 

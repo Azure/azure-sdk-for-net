@@ -50,6 +50,30 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         public async Task<AzureOperationResponse> DeleteWithOperationResponseAsync(string resourceGroupName, string networkSecurityGroupName, string securityRuleName, CancellationToken cancellationToken = default(CancellationToken))
         {
+            // Send request
+            AzureOperationResponse response = await BeginDeleteWithOperationResponseAsync(
+                resourceGroupName, networkSecurityGroupName, securityRuleName, cancellationToken);
+            return await this.Client.GetPostOrDeleteOperationResultAsync(response, cancellationToken);
+        }
+
+        /// <summary>
+        /// The delete network security rule operation deletes the specified network
+        /// security rule.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>    
+        /// <param name='networkSecurityGroupName'>
+        /// The name of the network security group.
+        /// </param>    
+        /// <param name='securityRuleName'>
+        /// The name of the security rule.
+        /// </param>    
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse> BeginDeleteWithOperationResponseAsync(string resourceGroupName, string networkSecurityGroupName, string securityRuleName, CancellationToken cancellationToken = default(CancellationToken))
+        {
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException("resourceGroupName");
@@ -73,7 +97,7 @@ namespace Microsoft.Azure.Management.Network
                 tracingParameters.Add("networkSecurityGroupName", networkSecurityGroupName);
                 tracingParameters.Add("securityRuleName", securityRuleName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "Delete", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "BeginDelete", tracingParameters);
             }
             // Construct URL
             string url = this.Client.BaseUri.AbsoluteUri + 
@@ -274,7 +298,36 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<SecurityRulePutResponse>> CreateOrUpdateWithOperationResponseAsync(string resourceGroupName, string networkSecurityGroupName, string securityRuleName, SecurityRule securityRuleParameters, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SecurityRule>> CreateOrUpdateWithOperationResponseAsync(string resourceGroupName, string networkSecurityGroupName, string securityRuleName, SecurityRule securityRuleParameters, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // Send Request
+            AzureOperationResponse<SecurityRule> response = await BeginCreateOrUpdateWithOperationResponseAsync(
+                resourceGroupName, networkSecurityGroupName, securityRuleName, securityRuleParameters, cancellationToken);
+            return await this.Client.GetPutOperationResultAsync<SecurityRule>(response, 
+                () => GetWithOperationResponseAsync(resourceGroupName, networkSecurityGroupName, securityRuleName, cancellationToken),
+                cancellationToken);
+        }
+
+        /// <summary>
+        /// The Put network security rule operation creates/updates a security rule in
+        /// the specified network security group
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>    
+        /// <param name='networkSecurityGroupName'>
+        /// The name of the network security group.
+        /// </param>    
+        /// <param name='securityRuleName'>
+        /// The name of the security rule.
+        /// </param>    
+        /// <param name='securityRuleParameters'>
+        /// Parameters supplied to the create/update network security rule operation
+        /// </param>    
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<SecurityRule>> BeginCreateOrUpdateWithOperationResponseAsync(string resourceGroupName, string networkSecurityGroupName, string securityRuleName, SecurityRule securityRuleParameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -308,7 +361,7 @@ namespace Microsoft.Azure.Management.Network
                 tracingParameters.Add("securityRuleName", securityRuleName);
                 tracingParameters.Add("securityRuleParameters", securityRuleParameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "CreateOrUpdate", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "BeginCreateOrUpdate", tracingParameters);
             }
             // Construct URL
             string url = this.Client.BaseUri.AbsoluteUri + 
@@ -373,18 +426,18 @@ namespace Microsoft.Azure.Management.Network
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<SecurityRulePutResponse>();
+            var result = new AzureOperationResponse<SecurityRule>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             // Deserialize Response
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "Created"))
             {
-                result.Body = JsonConvert.DeserializeObject<SecurityRulePutResponse>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<SecurityRule>(responseContent, this.Client.DeserializationSettings);
             }
             // Deserialize Response
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
-                result.Body = JsonConvert.DeserializeObject<SecurityRulePutResponse>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<SecurityRule>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {

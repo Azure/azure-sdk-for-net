@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.Network
             /// Parameters supplied to the Begin Create or update Virtual Network Gateway
             /// operation through Network resource provider.
             /// </param>
-            public static VirtualNetworkGatewayPutResponse CreateOrUpdate(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, VirtualNetworkGateway parameters)
+            public static VirtualNetworkGateway CreateOrUpdate(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, VirtualNetworkGateway parameters)
             {
                 return Task.Factory.StartNew(s => ((IVirtualNetworkGatewaysOperations)s).CreateOrUpdateAsync(resourceGroupName, virtualNetworkGatewayName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -53,9 +53,97 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<VirtualNetworkGatewayPutResponse> CreateOrUpdateAsync( this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, VirtualNetworkGateway parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VirtualNetworkGateway> CreateOrUpdateAsync( this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, VirtualNetworkGateway parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<VirtualNetworkGatewayPutResponse> result = await operations.CreateOrUpdateWithOperationResponseAsync(resourceGroupName, virtualNetworkGatewayName, parameters, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<VirtualNetworkGateway> result = await operations.CreateOrUpdateWithOperationResponseAsync(resourceGroupName, virtualNetworkGatewayName, parameters, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// The Put VirtualNetworkGateway operation creates/updates a virtual network
+            /// gateway in the specified resource group through Network resource provider.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkGatewayName'>
+            /// The name of the virtual network gateway.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to the Begin Create or update Virtual Network Gateway
+            /// operation through Network resource provider.
+            /// </param>
+            public static VirtualNetworkGateway BeginCreateOrUpdate(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, VirtualNetworkGateway parameters)
+            {
+                return Task.Factory.StartNew(s => ((IVirtualNetworkGatewaysOperations)s).BeginCreateOrUpdateAsync(resourceGroupName, virtualNetworkGatewayName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// The Put VirtualNetworkGateway operation creates/updates a virtual network
+            /// gateway in the specified resource group through Network resource provider.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkGatewayName'>
+            /// The name of the virtual network gateway.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to the Begin Create or update Virtual Network Gateway
+            /// operation through Network resource provider.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// Cancellation token.
+            /// </param>
+            public static async Task<VirtualNetworkGateway> BeginCreateOrUpdateAsync( this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, VirtualNetworkGateway parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<VirtualNetworkGateway> result = await operations.BeginCreateOrUpdateWithOperationResponseAsync(resourceGroupName, virtualNetworkGatewayName, parameters, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// The Get VirtualNetworkGateway operation retrieves information about the
+            /// specified virtual network gateway through Network resource provider.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkGatewayName'>
+            /// The name of the virtual network gateway.
+            /// </param>
+            public static VirtualNetworkGateway Get(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName)
+            {
+                return Task.Factory.StartNew(s => ((IVirtualNetworkGatewaysOperations)s).GetAsync(resourceGroupName, virtualNetworkGatewayName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// The Get VirtualNetworkGateway operation retrieves information about the
+            /// specified virtual network gateway through Network resource provider.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkGatewayName'>
+            /// The name of the virtual network gateway.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// Cancellation token.
+            /// </param>
+            public static async Task<VirtualNetworkGateway> GetAsync( this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<VirtualNetworkGateway> result = await operations.GetWithOperationResponseAsync(resourceGroupName, virtualNetworkGatewayName, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -99,8 +187,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The Get VirtualNetworkGateway operation retrieves information about the
-            /// specified virtual network gateway through Network resource provider.
+            /// The Delete VirtualNetworkGateway operation deletes the specifed virtual
+            /// network Gateway through Network resource provider.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method
@@ -111,14 +199,14 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='virtualNetworkGatewayName'>
             /// The name of the virtual network gateway.
             /// </param>
-            public static VirtualNetworkGateway Get(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName)
+            public static void BeginDelete(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName)
             {
-                return Task.Factory.StartNew(s => ((IVirtualNetworkGatewaysOperations)s).GetAsync(resourceGroupName, virtualNetworkGatewayName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                Task.Factory.StartNew(s => ((IVirtualNetworkGatewaysOperations)s).BeginDeleteAsync(resourceGroupName, virtualNetworkGatewayName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// The Get VirtualNetworkGateway operation retrieves information about the
-            /// specified virtual network gateway through Network resource provider.
+            /// The Delete VirtualNetworkGateway operation deletes the specifed virtual
+            /// network Gateway through Network resource provider.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method
@@ -132,10 +220,9 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<VirtualNetworkGateway> GetAsync( this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginDeleteAsync( this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<VirtualNetworkGateway> result = await operations.GetWithOperationResponseAsync(resourceGroupName, virtualNetworkGatewayName, cancellationToken).ConfigureAwait(false);
-                return result.Body;
+                await operations.BeginDeleteWithOperationResponseAsync(resourceGroupName, virtualNetworkGatewayName, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -190,7 +277,7 @@ namespace Microsoft.Azure.Management.Network
             /// Parameters supplied to the Begin Reset Virtual Network Gateway operation
             /// through Network resource provider.
             /// </param>
-            public static VirtualNetworkGatewayPutResponse Reset(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, VirtualNetworkGateway parameters)
+            public static VirtualNetworkGateway Reset(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, VirtualNetworkGateway parameters)
             {
                 return Task.Factory.StartNew(s => ((IVirtualNetworkGatewaysOperations)s).ResetAsync(resourceGroupName, virtualNetworkGatewayName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -216,9 +303,59 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<VirtualNetworkGatewayPutResponse> ResetAsync( this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, VirtualNetworkGateway parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VirtualNetworkGateway> ResetAsync( this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, VirtualNetworkGateway parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<VirtualNetworkGatewayPutResponse> result = await operations.ResetWithOperationResponseAsync(resourceGroupName, virtualNetworkGatewayName, parameters, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<VirtualNetworkGateway> result = await operations.ResetWithOperationResponseAsync(resourceGroupName, virtualNetworkGatewayName, parameters, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// The Reset VirtualNetworkGateway operation resets the primary of the
+            /// virtual network gatewayin the specified resource group through Network
+            /// resource provider.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkGatewayName'>
+            /// The name of the virtual network gateway.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to the Begin Reset Virtual Network Gateway operation
+            /// through Network resource provider.
+            /// </param>
+            public static VirtualNetworkGateway BeginReset(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, VirtualNetworkGateway parameters)
+            {
+                return Task.Factory.StartNew(s => ((IVirtualNetworkGatewaysOperations)s).BeginResetAsync(resourceGroupName, virtualNetworkGatewayName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// The Reset VirtualNetworkGateway operation resets the primary of the
+            /// virtual network gatewayin the specified resource group through Network
+            /// resource provider.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkGatewayName'>
+            /// The name of the virtual network gateway.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to the Begin Reset Virtual Network Gateway operation
+            /// through Network resource provider.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// Cancellation token.
+            /// </param>
+            public static async Task<VirtualNetworkGateway> BeginResetAsync( this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, VirtualNetworkGateway parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<VirtualNetworkGateway> result = await operations.BeginResetWithOperationResponseAsync(resourceGroupName, virtualNetworkGatewayName, parameters, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

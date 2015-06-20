@@ -63,7 +63,8 @@
           "204": {
             "description": ""
           }
-        }
+        },
+        "x-ms-long-running-operation": true
       },
       "get": {
         "tags": [
@@ -157,16 +158,17 @@
           "201": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/LoadBalancerPutResponse"
+              "$ref": "#/definitions/LoadBalancer"
             }
           },
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/LoadBalancerPutResponse"
+              "$ref": "#/definitions/LoadBalancer"
             }
           }
-        }
+        },
+        "x-ms-long-running-operation": true
       }
     },
     "/subscriptions/{subscriptionId}/providers/Microsoft.Network/loadBalancers": {
@@ -291,16 +293,17 @@
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/LocalNetworkGatewayPutResponse"
+              "$ref": "#/definitions/LocalNetworkGateway"
             }
           },
           "201": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/LocalNetworkGatewayPutResponse"
+              "$ref": "#/definitions/LocalNetworkGateway"
             }
           }
-        }
+        },
+        "x-ms-long-running-operation": true
       },
       "get": {
         "tags": [
@@ -393,7 +396,8 @@
           "200": {
             "description": ""
           }
-        }
+        },
+        "x-ms-long-running-operation": true
       }
     },
     "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/localNetworkGateways": {
@@ -482,7 +486,8 @@
           "202": {
             "description": ""
           }
-        }
+        },
+        "x-ms-long-running-operation": true
       },
       "get": {
         "tags": [
@@ -576,16 +581,17 @@
           "201": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/NetworkInterfacePutResponse"
+              "$ref": "#/definitions/NetworkInterface"
             }
           },
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/NetworkInterfacePutResponse"
+              "$ref": "#/definitions/NetworkInterface"
             }
           }
-        }
+        },
+        "x-ms-long-running-operation": true
       }
     },
     "/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkInterfaces": {
@@ -707,7 +713,8 @@
           "204": {
             "description": ""
           }
-        }
+        },
+        "x-ms-long-running-operation": true
       },
       "get": {
         "tags": [
@@ -801,16 +808,17 @@
           "201": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/NetworkSecurityGroupPutResponse"
+              "$ref": "#/definitions/NetworkSecurityGroup"
             }
           },
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/NetworkSecurityGroupPutResponse"
+              "$ref": "#/definitions/NetworkSecurityGroup"
             }
           }
-        }
+        },
+        "x-ms-long-running-operation": true
       }
     },
     "/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkSecurityGroups": {
@@ -932,7 +940,8 @@
           "200": {
             "description": ""
           }
-        }
+        },
+        "x-ms-long-running-operation": true
       },
       "get": {
         "tags": [
@@ -1026,16 +1035,17 @@
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/PublicIpAddressPutResponse"
+              "$ref": "#/definitions/PublicIpAddress"
             }
           },
           "201": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/PublicIpAddressPutResponse"
+              "$ref": "#/definitions/PublicIpAddress"
             }
           }
-        }
+        },
+        "x-ms-long-running-operation": true
       }
     },
     "/subscriptions/{subscriptionId}/providers/Microsoft.Network/publicIPAddresses": {
@@ -1164,7 +1174,8 @@
           "200": {
             "description": ""
           }
-        }
+        },
+        "x-ms-long-running-operation": true
       },
       "get": {
         "tags": [
@@ -1272,16 +1283,17 @@
           "201": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/SecurityRulePutResponse"
+              "$ref": "#/definitions/SecurityRule"
             }
           },
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/SecurityRulePutResponse"
+              "$ref": "#/definitions/SecurityRule"
             }
           }
-        }
+        },
+        "x-ms-long-running-operation": true
       }
     },
     "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}/securityRules": {
@@ -1384,7 +1396,8 @@
           "204": {
             "description": ""
           }
-        }
+        },
+        "x-ms-long-running-operation": true
       },
       "get": {
         "tags": [
@@ -1492,16 +1505,17 @@
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/SubnetPutResponse"
+              "$ref": "#/definitions/Subnet"
             }
           },
           "201": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/SubnetPutResponse"
+              "$ref": "#/definitions/Subnet"
             }
           }
-        }
+        },
+        "x-ms-long-running-operation": true
       }
     },
     "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualnetworks/{virtualNetworkName}/subnets": {
@@ -1584,10 +1598,7 @@
           "200": {
             "description": "",
             "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Usage"
-              }
+              "$ref": "#/definitions/UsagesListResponse"
             }
           }
         }
@@ -1642,16 +1653,17 @@
           "201": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/VirtualNetworkGatewayConnectionPutResponse"
+              "$ref": "#/definitions/VirtualNetworkGatewayConnection"
             }
           },
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/VirtualNetworkGatewayConnectionPutResponse"
+              "$ref": "#/definitions/VirtualNetworkGatewayConnection"
             }
           }
-        }
+        },
+        "x-ms-long-running-operation": true
       },
       "get": {
         "tags": [
@@ -1744,10 +1756,11 @@
           "204": {
             "description": ""
           }
-        }
+        },
+        "x-ms-long-running-operation": true
       }
     },
-    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{connectionSharedKeyName}/sharedkey": {
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}/sharedkey": {
       "get": {
         "tags": [
           "VirtualNetworkGatewayConnections"
@@ -1770,7 +1783,7 @@
             "description": "The name of the resource group."
           },
           {
-            "name": "connectionSharedKeyName",
+            "name": "virtualNetworkGatewayConnectionName",
             "in": "path",
             "required": true,
             "type": "string",
@@ -1787,10 +1800,70 @@
           "200": {
             "description": "",
             "schema": {
-              "type": "string"
+              "$ref": "#/definitions/ConnectionSharedKey"
             }
           }
         }
+      },
+      "put": {
+        "tags": [
+          "VirtualNetworkGatewayConnections"
+        ],
+        "operationId": "VirtualNetworkGatewayConnections_SetSharedKey",
+        "description": "The Put VirtualNetworkGatewayConnectionSharedKey operation sets the virtual network gateway connection shared key for passed virtual network gateway connection in the specified resource group through Network resource provider.",
+        "parameters": [
+          {
+            "name": "subscriptionId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
+          },
+          {
+            "name": "resourceGroupName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The name of the resource group."
+          },
+          {
+            "name": "virtualNetworkGatewayConnectionName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The virtual network gateway connection name."
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "parameters",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ConnectionSharedKey"
+            },
+            "description": "Parameters supplied to the Begin Set Virtual Network Gateway conection Shared key operation throughNetwork resource provider."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ConnectionSharedKey"
+            }
+          },
+          "201": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ConnectionSharedKey"
+            }
+          }
+        },
+        "x-ms-long-running-operation": true
       }
     },
     "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections": {
@@ -1882,77 +1955,17 @@
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/ConnectionResetSharedKeyPutResponse"
+              "$ref": "#/definitions/ConnectionResetSharedKey"
             }
           },
           "201": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/ConnectionResetSharedKeyPutResponse"
+              "$ref": "#/definitions/ConnectionResetSharedKey"
             }
           }
-        }
-      }
-    },
-    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}/sharedkey": {
-      "put": {
-        "tags": [
-          "VirtualNetworkGatewayConnections"
-        ],
-        "operationId": "VirtualNetworkGatewayConnections_SetSharedKey",
-        "description": "The Put VirtualNetworkGatewayConnectionSharedKey operation sets the virtual network gateway connection shared key for passed virtual network gateway connection in the specified resource group through Network resource provider.",
-        "parameters": [
-          {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
-            "name": "resourceGroupName",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "The name of the resource group."
-          },
-          {
-            "name": "virtualNetworkGatewayConnectionName",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "The virtual network gateway connection name."
-          },
-          {
-            "name": "api-version",
-            "in": "query",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "parameters",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/ConnectionSharedKey"
-            },
-            "description": "Parameters supplied to the Begin Set Virtual Network Gateway conection Shared key operation throughNetwork resource provider."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/ConnectionSharedKeyPutResponse"
-            }
-          },
-          "201": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/ConnectionSharedKeyPutResponse"
-            }
-          }
-        }
+        },
+        "x-ms-long-running-operation": true
       }
     },
     "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualnetworkgateways/{virtualNetworkGatewayName}": {
@@ -2004,13 +2017,58 @@
           "201": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/VirtualNetworkGatewayPutResponse"
+              "$ref": "#/definitions/VirtualNetworkGateway"
             }
           },
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/VirtualNetworkGatewayPutResponse"
+              "$ref": "#/definitions/VirtualNetworkGateway"
+            }
+          }
+        },
+        "x-ms-long-running-operation": true
+      },
+      "get": {
+        "tags": [
+          "VirtualNetworkGateways"
+        ],
+        "operationId": "VirtualNetworkGateways_Get",
+        "description": "The Get VirtualNetworkGateway operation retrieves information about the specified virtual network gateway through Network resource provider.",
+        "parameters": [
+          {
+            "name": "subscriptionId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
+          },
+          {
+            "name": "resourceGroupName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The name of the resource group."
+          },
+          {
+            "name": "virtualNetworkGatewayName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The name of the virtual network gateway."
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/VirtualNetworkGateway"
             }
           }
         }
@@ -2062,53 +2120,8 @@
           "202": {
             "description": ""
           }
-        }
-      }
-    },
-    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}": {
-      "get": {
-        "tags": [
-          "VirtualNetworkGateways"
-        ],
-        "operationId": "VirtualNetworkGateways_Get",
-        "description": "The Get VirtualNetworkGateway operation retrieves information about the specified virtual network gateway through Network resource provider.",
-        "parameters": [
-          {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
-            "name": "resourceGroupName",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "The name of the resource group."
-          },
-          {
-            "name": "virtualNetworkGatewayName",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "The name of the virtual network gateway."
-          },
-          {
-            "name": "api-version",
-            "in": "query",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/VirtualNetworkGateway"
-            }
-          }
-        }
+        },
+        "x-ms-long-running-operation": true
       }
     },
     "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways": {
@@ -2200,16 +2213,17 @@
           "201": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/VirtualNetworkGatewayPutResponse"
+              "$ref": "#/definitions/VirtualNetworkGateway"
             }
           },
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/VirtualNetworkGatewayPutResponse"
+              "$ref": "#/definitions/VirtualNetworkGateway"
             }
           }
-        }
+        },
+        "x-ms-long-running-operation": true
       }
     },
     "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualnetworks/{virtualNetworkName}": {
@@ -2258,7 +2272,8 @@
           "204": {
             "description": ""
           }
-        }
+        },
+        "x-ms-long-running-operation": true
       },
       "get": {
         "tags": [
@@ -2352,16 +2367,17 @@
           "201": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/VirtualNetworkPutResponse"
+              "$ref": "#/definitions/VirtualNetwork"
             }
           },
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/VirtualNetworkPutResponse"
+              "$ref": "#/definitions/VirtualNetwork"
             }
           }
-        }
+        },
+        "x-ms-long-running-operation": true
       }
     },
     "/subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualnetworks": {
@@ -2474,7 +2490,7 @@
           "200": {
             "description": "",
             "schema": {
-              "type": "boolean"
+              "$ref": "#/definitions/DnsNameAvailabilityResponse"
             }
           }
         }
@@ -2874,53 +2890,6 @@
       },
       "description": "Response for ListLoadBalancers Api service call"
     },
-    "ErrorDetails": {
-      "properties": {
-        "code": {
-          "type": "string"
-        },
-        "target": {
-          "type": "string"
-        },
-        "message": {
-          "type": "string"
-        }
-      }
-    },
-    "Error": {
-      "properties": {
-        "code": {
-          "type": "string"
-        },
-        "message": {
-          "type": "string"
-        },
-        "target": {
-          "type": "string"
-        },
-        "details": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/ErrorDetails"
-          }
-        },
-        "innerError": {
-          "type": "string"
-        }
-      }
-    },
-    "LoadBalancerPutResponse": {
-      "properties": {
-        "LoadBalancer": {
-          "$ref": "#/definitions/LoadBalancer",
-          "description": "Gets Load Balancer in a resource group"
-        },
-        "error": {
-          "$ref": "#/definitions/Error"
-        }
-      },
-      "description": "Response of a PUT Load Balancer operation"
-    },
     "AddressSpace": {
       "properties": {
         "addressPrefixes": {
@@ -2962,18 +2931,6 @@
         }
       ],
       "description": "A common class for general resource information"
-    },
-    "LocalNetworkGatewayPutResponse": {
-      "properties": {
-        "LocalNetworkGateway": {
-          "$ref": "#/definitions/LocalNetworkGateway",
-          "description": "Puts the local network gateway that exists in a resource group"
-        },
-        "error": {
-          "$ref": "#/definitions/Error"
-        }
-      },
-      "description": "Response for PutLocalNetworkGateway Api servive call"
     },
     "LocalNetworkGatewayListResponse": {
       "properties": {
@@ -3140,18 +3097,6 @@
       },
       "description": "Response for ListNetworkInterface Api service call"
     },
-    "NetworkInterfacePutResponse": {
-      "properties": {
-        "NetworkInterface": {
-          "$ref": "#/definitions/NetworkInterface",
-          "description": "Gets a NetworkInterface that exists in a resource group"
-        },
-        "error": {
-          "$ref": "#/definitions/Error"
-        }
-      },
-      "description": "Response for PutNetworkInterface Api servive call"
-    },
     "SecurityRulePropertiesFormat": {
       "properties": {
         "description": {
@@ -3300,18 +3245,6 @@
       },
       "description": "Response for ListNetworkSecurityGroups Api servive call"
     },
-    "NetworkSecurityGroupPutResponse": {
-      "properties": {
-        "NetworkSecurityGroup": {
-          "$ref": "#/definitions/NetworkSecurityGroup",
-          "description": "Gets NetworkSecurityGroups in a resource group"
-        },
-        "error": {
-          "$ref": "#/definitions/Error"
-        }
-      },
-      "description": "Response for PUT NetworkSecurityGroups Api servive call"
-    },
     "PublicIpAddressDnsSettings": {
       "properties": {
         "domainNameLabel": {
@@ -3393,18 +3326,6 @@
       },
       "description": "Response for ListPublicIpAddresses Api service call"
     },
-    "PublicIpAddressPutResponse": {
-      "properties": {
-        "PublicIpAddress": {
-          "$ref": "#/definitions/PublicIpAddress",
-          "description": "Gets a publicIP address that exists in a resource group"
-        },
-        "error": {
-          "$ref": "#/definitions/Error"
-        }
-      },
-      "description": "Response for PutPublicIpAddress Api servive call"
-    },
     "SecurityRuleListResponse": {
       "properties": {
         "value": {
@@ -3420,18 +3341,6 @@
         }
       },
       "description": "Response for ListSecurityRule Api service callRetrieves all security rules that belongs to a network security group"
-    },
-    "SecurityRulePutResponse": {
-      "properties": {
-        "SecurityRule": {
-          "$ref": "#/definitions/SecurityRule",
-          "description": "Gets the security rule in a network security group"
-        },
-        "error": {
-          "$ref": "#/definitions/Error"
-        }
-      },
-      "description": "Response for PUT SecurityRule Api service call"
     },
     "SubnetPropertiesFormat": {
       "properties": {
@@ -3493,18 +3402,6 @@
       },
       "description": "Response for ListSubnets Api service callRetrieves all subnet that belongs to a virtual network"
     },
-    "SubnetPutResponse": {
-      "properties": {
-        "Subnet": {
-          "$ref": "#/definitions/Subnet",
-          "description": "Gets the subnet in a virtual network"
-        },
-        "error": {
-          "$ref": "#/definitions/Error"
-        }
-      },
-      "description": "Response for PutSubnet Api service call"
-    },
     "UsageName": {
       "properties": {
         "value": {
@@ -3544,6 +3441,18 @@
         }
       },
       "description": "Describes Network Resource Usage."
+    },
+    "UsagesListResponse": {
+      "properties": {
+        "value": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Usage"
+          },
+          "description": "Gets or sets the list Network Resource Usages."
+        }
+      },
+      "description": "The List Usages operation response."
     },
     "VirtualNetworkGatewayIpConfigurationPropertiesFormat": {
       "properties": {
@@ -3698,17 +3607,14 @@
       ],
       "description": "A common class for general resource information"
     },
-    "VirtualNetworkGatewayConnectionPutResponse": {
+    "ConnectionSharedKey": {
       "properties": {
-        "VirtualNetworkGatewayConnection": {
-          "$ref": "#/definitions/VirtualNetworkGatewayConnection",
-          "description": "Gets the virtual network gateway connection that exists in a resource group"
-        },
-        "error": {
-          "$ref": "#/definitions/Error"
+        "value": {
+          "type": "string",
+          "description": "The virtual network connection shared key value"
         }
       },
-      "description": "Response for CreateOrUpdateVirtualNetworkGatewayConnection Api servive call"
+      "description": "Response for GetConnectionSharedKey Api servive call"
     },
     "VirtualNetworkGatewayConnectionListResponse": {
       "properties": {
@@ -3742,59 +3648,6 @@
           "$ref": "#/definitions/ConnectionResetSharedKeyPropertiesFormat"
         }
       }
-    },
-    "ConnectionResetSharedKeyPutResponse": {
-      "properties": {
-        "ConnectionResetSharedKey": {
-          "$ref": "#/definitions/ConnectionResetSharedKey",
-          "description": "Puts the virtual network gateway connection reset shared key that exists in a resource group"
-        },
-        "error": {
-          "$ref": "#/definitions/Error"
-        }
-      },
-      "description": "Response for PutVirtualNetworkGatewayConnectionResetSharedKey Api servive call"
-    },
-    "ConnectionSharedKeyPropertiesFormat": {
-      "properties": {
-        "value": {
-          "type": "string",
-          "description": "The virtual network connection shared key value"
-        }
-      },
-      "description": "VirtualNeworkGatewayConnectionSharedKey properties"
-    },
-    "ConnectionSharedKey": {
-      "properties": {
-        "properties": {
-          "$ref": "#/definitions/ConnectionSharedKeyPropertiesFormat"
-        }
-      },
-      "description": "Response for GetConnectionSharedKey Api servive call"
-    },
-    "ConnectionSharedKeyPutResponse": {
-      "properties": {
-        "ConnectionSharedKey": {
-          "$ref": "#/definitions/ConnectionSharedKey",
-          "description": "Puts the virtual network gateway connection shared key that exists in a resource group"
-        },
-        "error": {
-          "$ref": "#/definitions/Error"
-        }
-      },
-      "description": "Response for PutVirtualNetworkGatewayConnectionSharedKey Api servive call"
-    },
-    "VirtualNetworkGatewayPutResponse": {
-      "properties": {
-        "VirtualNetworkGateway": {
-          "$ref": "#/definitions/VirtualNetworkGateway",
-          "description": "Puts the virtual network gateway that exists in a resource group"
-        },
-        "error": {
-          "$ref": "#/definitions/Error"
-        }
-      },
-      "description": "Response for PutVirtualNetworkGateway Api servive call"
     },
     "VirtualNetworkGatewayListResponse": {
       "properties": {
@@ -3876,17 +3729,49 @@
       },
       "description": "Response for ListVirtualNetworks Api servive call"
     },
-    "VirtualNetworkPutResponse": {
+    "DnsNameAvailabilityResponse": {
       "properties": {
-        "VirtualNetwork": {
-          "$ref": "#/definitions/VirtualNetwork",
-          "description": "Gets a  VirtualNetwork in a resource group"
-        },
-        "error": {
-          "$ref": "#/definitions/Error"
+        "available": {
+          "type": "boolean",
+          "description": "Domain availability (True/False)"
         }
       },
-      "description": "Response for PutVirtualNetworks API service calls."
+      "description": "Response for CheckDnsNameAvailability Api servive call"
+    },
+    "ErrorDetails": {
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "target": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "Error": {
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "target": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ErrorDetails"
+          }
+        },
+        "innerError": {
+          "type": "string"
+        }
+      }
     },
     "AzureAsyncOperationResponse": {
       "properties": {

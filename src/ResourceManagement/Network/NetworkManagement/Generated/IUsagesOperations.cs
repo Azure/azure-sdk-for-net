@@ -22,6 +22,6 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        Task<AzureOperationResponse<IList<Usage>>> ListWithOperationResponseAsync(string location, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<UsagesListResponse>> ListWithOperationResponseAsync(string location, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

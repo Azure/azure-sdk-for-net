@@ -9,31 +9,28 @@ namespace Microsoft.Azure.Management.Network.Models
 
     /// <summary>
     /// </summary>
-    public partial class NetworkInterfacePutResponse
+    public partial class UsagesListResponse
     {
         /// <summary>
-        /// Gets a NetworkInterface that exists in a resource group
+        /// Gets or sets the list Network Resource Usages.
         /// </summary>
-        [JsonProperty(PropertyName = "NetworkInterface")]
-        public NetworkInterface NetworkInterface { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "error")]
-        public Error Error { get; set; }
+        [JsonProperty(PropertyName = "value")]
+        public IList<Usage> Value { get; set; }
 
         /// <summary>
         /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
         /// </summary>
         public virtual void Validate()
         {
-            if (this.NetworkInterface != null)
+            if (this.Value != null)
             {
-                this.NetworkInterface.Validate();
+                foreach ( var element in this.Value)
+            {
+                if (element != null)
+            {
+                element.Validate();
             }
-            if (this.Error != null)
-            {
-                this.Error.Validate();
+            }
             }
         }
     }

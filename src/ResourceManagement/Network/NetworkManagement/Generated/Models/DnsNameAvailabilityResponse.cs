@@ -9,13 +9,13 @@ namespace Microsoft.Azure.Management.Network.Models
 
     /// <summary>
     /// </summary>
-    public partial class ConnectionSharedKey
+    public partial class DnsNameAvailabilityResponse
     {
         /// <summary>
-        /// The virtual network connection shared key value
+        /// Domain availability (True/False)
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
-        public string Value { get; set; }
+        [JsonProperty(PropertyName = "available")]
+        public bool? Available { get; set; }
 
         /// <summary>
         /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.

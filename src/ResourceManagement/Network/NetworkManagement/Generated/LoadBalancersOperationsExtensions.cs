@@ -49,6 +49,43 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
+            /// The delete loadbalancer operation deletes the specified loadbalancer.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='loadBalancerName'>
+            /// The name of the loadBalancer.
+            /// </param>
+            public static void BeginDelete(this ILoadBalancersOperations operations, string resourceGroupName, string loadBalancerName)
+            {
+                Task.Factory.StartNew(s => ((ILoadBalancersOperations)s).BeginDeleteAsync(resourceGroupName, loadBalancerName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// The delete loadbalancer operation deletes the specified loadbalancer.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='loadBalancerName'>
+            /// The name of the loadBalancer.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// Cancellation token.
+            /// </param>
+            public static async Task BeginDeleteAsync( this ILoadBalancersOperations operations, string resourceGroupName, string loadBalancerName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                await operations.BeginDeleteWithOperationResponseAsync(resourceGroupName, loadBalancerName, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
             /// The Get ntework interface operation retreives information about the
             /// specified network interface.
             /// </summary>
@@ -103,7 +140,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='parameters'>
             /// Parameters supplied to the create/delete LoadBalancer operation
             /// </param>
-            public static LoadBalancerPutResponse CreateOrUpdate(this ILoadBalancersOperations operations, string resourceGroupName, string loadBalancerName, LoadBalancer parameters)
+            public static LoadBalancer CreateOrUpdate(this ILoadBalancersOperations operations, string resourceGroupName, string loadBalancerName, LoadBalancer parameters)
             {
                 return Task.Factory.StartNew(s => ((ILoadBalancersOperations)s).CreateOrUpdateAsync(resourceGroupName, loadBalancerName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -126,9 +163,53 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<LoadBalancerPutResponse> CreateOrUpdateAsync( this ILoadBalancersOperations operations, string resourceGroupName, string loadBalancerName, LoadBalancer parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<LoadBalancer> CreateOrUpdateAsync( this ILoadBalancersOperations operations, string resourceGroupName, string loadBalancerName, LoadBalancer parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<LoadBalancerPutResponse> result = await operations.CreateOrUpdateWithOperationResponseAsync(resourceGroupName, loadBalancerName, parameters, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<LoadBalancer> result = await operations.CreateOrUpdateWithOperationResponseAsync(resourceGroupName, loadBalancerName, parameters, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// The Put LoadBalancer operation creates/updates a LoadBalancer
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='loadBalancerName'>
+            /// The name of the loadBalancer.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to the create/delete LoadBalancer operation
+            /// </param>
+            public static LoadBalancer BeginCreateOrUpdate(this ILoadBalancersOperations operations, string resourceGroupName, string loadBalancerName, LoadBalancer parameters)
+            {
+                return Task.Factory.StartNew(s => ((ILoadBalancersOperations)s).BeginCreateOrUpdateAsync(resourceGroupName, loadBalancerName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// The Put LoadBalancer operation creates/updates a LoadBalancer
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='loadBalancerName'>
+            /// The name of the loadBalancer.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to the create/delete LoadBalancer operation
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// Cancellation token.
+            /// </param>
+            public static async Task<LoadBalancer> BeginCreateOrUpdateAsync( this ILoadBalancersOperations operations, string resourceGroupName, string loadBalancerName, LoadBalancer parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<LoadBalancer> result = await operations.BeginCreateOrUpdateWithOperationResponseAsync(resourceGroupName, loadBalancerName, parameters, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

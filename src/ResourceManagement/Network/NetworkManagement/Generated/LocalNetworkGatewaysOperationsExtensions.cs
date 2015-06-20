@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.Network
             /// Parameters supplied to the Begin Create or update Local Network Gateway
             /// operation through Network resource provider.
             /// </param>
-            public static LocalNetworkGatewayPutResponse CreateOrUpdate(this ILocalNetworkGatewaysOperations operations, string resourceGroupName, string localNetworkGatewayName, LocalNetworkGateway parameters)
+            public static LocalNetworkGateway CreateOrUpdate(this ILocalNetworkGatewaysOperations operations, string resourceGroupName, string localNetworkGatewayName, LocalNetworkGateway parameters)
             {
                 return Task.Factory.StartNew(s => ((ILocalNetworkGatewaysOperations)s).CreateOrUpdateAsync(resourceGroupName, localNetworkGatewayName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -53,9 +53,57 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<LocalNetworkGatewayPutResponse> CreateOrUpdateAsync( this ILocalNetworkGatewaysOperations operations, string resourceGroupName, string localNetworkGatewayName, LocalNetworkGateway parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<LocalNetworkGateway> CreateOrUpdateAsync( this ILocalNetworkGatewaysOperations operations, string resourceGroupName, string localNetworkGatewayName, LocalNetworkGateway parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<LocalNetworkGatewayPutResponse> result = await operations.CreateOrUpdateWithOperationResponseAsync(resourceGroupName, localNetworkGatewayName, parameters, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<LocalNetworkGateway> result = await operations.CreateOrUpdateWithOperationResponseAsync(resourceGroupName, localNetworkGatewayName, parameters, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// The Put LocalNetworkGateway operation creates/updates a local network
+            /// gateway in the specified resource group through Network resource provider.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='localNetworkGatewayName'>
+            /// The name of the local network gateway.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to the Begin Create or update Local Network Gateway
+            /// operation through Network resource provider.
+            /// </param>
+            public static LocalNetworkGateway BeginCreateOrUpdate(this ILocalNetworkGatewaysOperations operations, string resourceGroupName, string localNetworkGatewayName, LocalNetworkGateway parameters)
+            {
+                return Task.Factory.StartNew(s => ((ILocalNetworkGatewaysOperations)s).BeginCreateOrUpdateAsync(resourceGroupName, localNetworkGatewayName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// The Put LocalNetworkGateway operation creates/updates a local network
+            /// gateway in the specified resource group through Network resource provider.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='localNetworkGatewayName'>
+            /// The name of the local network gateway.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to the Begin Create or update Local Network Gateway
+            /// operation through Network resource provider.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// Cancellation token.
+            /// </param>
+            public static async Task<LocalNetworkGateway> BeginCreateOrUpdateAsync( this ILocalNetworkGatewaysOperations operations, string resourceGroupName, string localNetworkGatewayName, LocalNetworkGateway parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<LocalNetworkGateway> result = await operations.BeginCreateOrUpdateWithOperationResponseAsync(resourceGroupName, localNetworkGatewayName, parameters, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -136,6 +184,45 @@ namespace Microsoft.Azure.Management.Network
             public static async Task DeleteAsync( this ILocalNetworkGatewaysOperations operations, string resourceGroupName, string localNetworkGatewayName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 await operations.DeleteWithOperationResponseAsync(resourceGroupName, localNetworkGatewayName, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
+            /// The Delete LocalNetworkGateway operation deletes the specifed local
+            /// network Gateway through Network resource provider.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='localNetworkGatewayName'>
+            /// The name of the local network gateway.
+            /// </param>
+            public static void BeginDelete(this ILocalNetworkGatewaysOperations operations, string resourceGroupName, string localNetworkGatewayName)
+            {
+                Task.Factory.StartNew(s => ((ILocalNetworkGatewaysOperations)s).BeginDeleteAsync(resourceGroupName, localNetworkGatewayName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// The Delete LocalNetworkGateway operation deletes the specifed local
+            /// network Gateway through Network resource provider.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='localNetworkGatewayName'>
+            /// The name of the local network gateway.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// Cancellation token.
+            /// </param>
+            public static async Task BeginDeleteAsync( this ILocalNetworkGatewaysOperations operations, string resourceGroupName, string localNetworkGatewayName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                await operations.BeginDeleteWithOperationResponseAsync(resourceGroupName, localNetworkGatewayName, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>

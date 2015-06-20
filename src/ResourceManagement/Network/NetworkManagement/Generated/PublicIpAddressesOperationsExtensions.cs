@@ -49,6 +49,43 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
+            /// The delete publicIpAddress operation deletes the specified publicIpAddress.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='publicIpAddressName'>
+            /// The name of the subnet.
+            /// </param>
+            public static void BeginDelete(this IPublicIpAddressesOperations operations, string resourceGroupName, string publicIpAddressName)
+            {
+                Task.Factory.StartNew(s => ((IPublicIpAddressesOperations)s).BeginDeleteAsync(resourceGroupName, publicIpAddressName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// The delete publicIpAddress operation deletes the specified publicIpAddress.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='publicIpAddressName'>
+            /// The name of the subnet.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// Cancellation token.
+            /// </param>
+            public static async Task BeginDeleteAsync( this IPublicIpAddressesOperations operations, string resourceGroupName, string publicIpAddressName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                await operations.BeginDeleteWithOperationResponseAsync(resourceGroupName, publicIpAddressName, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
             /// The Get publicIpAddress operation retreives information about the
             /// specified pubicIpAddress
             /// </summary>
@@ -104,7 +141,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='parameters'>
             /// Parameters supplied to the create/update PublicIPAddress operation
             /// </param>
-            public static PublicIpAddressPutResponse CreateOrUpdate(this IPublicIpAddressesOperations operations, string resourceGroupName, string publicIpAddressName, PublicIpAddress parameters)
+            public static PublicIpAddress CreateOrUpdate(this IPublicIpAddressesOperations operations, string resourceGroupName, string publicIpAddressName, PublicIpAddress parameters)
             {
                 return Task.Factory.StartNew(s => ((IPublicIpAddressesOperations)s).CreateOrUpdateAsync(resourceGroupName, publicIpAddressName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -128,9 +165,55 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<PublicIpAddressPutResponse> CreateOrUpdateAsync( this IPublicIpAddressesOperations operations, string resourceGroupName, string publicIpAddressName, PublicIpAddress parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PublicIpAddress> CreateOrUpdateAsync( this IPublicIpAddressesOperations operations, string resourceGroupName, string publicIpAddressName, PublicIpAddress parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<PublicIpAddressPutResponse> result = await operations.CreateOrUpdateWithOperationResponseAsync(resourceGroupName, publicIpAddressName, parameters, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<PublicIpAddress> result = await operations.CreateOrUpdateWithOperationResponseAsync(resourceGroupName, publicIpAddressName, parameters, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// The Put PublicIPAddress operation creates/updates a stable/dynamic
+            /// PublicIP address
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='publicIpAddressName'>
+            /// The name of the publicIpAddress.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to the create/update PublicIPAddress operation
+            /// </param>
+            public static PublicIpAddress BeginCreateOrUpdate(this IPublicIpAddressesOperations operations, string resourceGroupName, string publicIpAddressName, PublicIpAddress parameters)
+            {
+                return Task.Factory.StartNew(s => ((IPublicIpAddressesOperations)s).BeginCreateOrUpdateAsync(resourceGroupName, publicIpAddressName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// The Put PublicIPAddress operation creates/updates a stable/dynamic
+            /// PublicIP address
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='publicIpAddressName'>
+            /// The name of the publicIpAddress.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to the create/update PublicIPAddress operation
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// Cancellation token.
+            /// </param>
+            public static async Task<PublicIpAddress> BeginCreateOrUpdateAsync( this IPublicIpAddressesOperations operations, string resourceGroupName, string publicIpAddressName, PublicIpAddress parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<PublicIpAddress> result = await operations.BeginCreateOrUpdateWithOperationResponseAsync(resourceGroupName, publicIpAddressName, parameters, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

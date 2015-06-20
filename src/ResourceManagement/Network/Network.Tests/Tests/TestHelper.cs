@@ -28,7 +28,7 @@ namespace Networks.Tests
 
             // Put nic1PublicIpAddress
             var putPublicIpAddressResponse = nrpClient.PublicIpAddresses.CreateOrUpdate(resourceGroupName, name, publicIp);
-            Assert.Equal("Succeeded", putPublicIpAddressResponse.PublicIpAddress.ProvisioningState);
+            Assert.Equal("Succeeded", putPublicIpAddressResponse.ProvisioningState);
             var getPublicIpAddressResponse = nrpClient.PublicIpAddresses.Get(resourceGroupName, name);
 
             return getPublicIpAddressResponse;

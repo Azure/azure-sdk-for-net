@@ -28,6 +28,20 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         Task<AzureOperationResponse> DeleteWithOperationResponseAsync(string resourceGroupName, string networkSecurityGroupName, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// The Delete NetworkSecurityGroup operation deletes the specifed
+        /// network security group
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='networkSecurityGroupName'>
+        /// The name of the network security group.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        Task<AzureOperationResponse> BeginDeleteWithOperationResponseAsync(string resourceGroupName, string networkSecurityGroupName, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// The Get NetworkSecurityGroups operation retrieves information
         /// about the specified network security group.
         /// </summary>
@@ -58,7 +72,25 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        Task<AzureOperationResponse<NetworkSecurityGroupPutResponse>> CreateOrUpdateWithOperationResponseAsync(string resourceGroupName, string networkSecurityGroupName, NetworkSecurityGroup parameters, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<NetworkSecurityGroup>> CreateOrUpdateWithOperationResponseAsync(string resourceGroupName, string networkSecurityGroupName, NetworkSecurityGroup parameters, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// The Put NetworkSecurityGroup operation creates/updates a network
+        /// security groupin the specified resource group.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='networkSecurityGroupName'>
+        /// The name of the network security group.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the create/update Network Security Group
+        /// operation
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<NetworkSecurityGroup>> BeginCreateOrUpdateWithOperationResponseAsync(string resourceGroupName, string networkSecurityGroupName, NetworkSecurityGroup parameters, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The list NetworkSecurityGroups returns all network security groups
         /// in a subscription

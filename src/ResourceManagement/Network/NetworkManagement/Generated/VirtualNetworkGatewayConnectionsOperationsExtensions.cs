@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Network
             /// Parameters supplied to the Begin Create or update Virtual Network Gateway
             /// connection operation through Network resource provider.
             /// </param>
-            public static VirtualNetworkGatewayConnectionPutResponse CreateOrUpdate(this IVirtualNetworkGatewayConnectionsOperations operations, string resourceGroupName, string virtualNetworkGatewayConnectionName, VirtualNetworkGatewayConnection parameters)
+            public static VirtualNetworkGatewayConnection CreateOrUpdate(this IVirtualNetworkGatewayConnectionsOperations operations, string resourceGroupName, string virtualNetworkGatewayConnectionName, VirtualNetworkGatewayConnection parameters)
             {
                 return Task.Factory.StartNew(s => ((IVirtualNetworkGatewayConnectionsOperations)s).CreateOrUpdateAsync(resourceGroupName, virtualNetworkGatewayConnectionName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -55,9 +55,59 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<VirtualNetworkGatewayConnectionPutResponse> CreateOrUpdateAsync( this IVirtualNetworkGatewayConnectionsOperations operations, string resourceGroupName, string virtualNetworkGatewayConnectionName, VirtualNetworkGatewayConnection parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VirtualNetworkGatewayConnection> CreateOrUpdateAsync( this IVirtualNetworkGatewayConnectionsOperations operations, string resourceGroupName, string virtualNetworkGatewayConnectionName, VirtualNetworkGatewayConnection parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<VirtualNetworkGatewayConnectionPutResponse> result = await operations.CreateOrUpdateWithOperationResponseAsync(resourceGroupName, virtualNetworkGatewayConnectionName, parameters, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<VirtualNetworkGatewayConnection> result = await operations.CreateOrUpdateWithOperationResponseAsync(resourceGroupName, virtualNetworkGatewayConnectionName, parameters, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// The Put VirtualNetworkGatewayConnection operation creates/updates a
+            /// virtual network gateway connection in the specified resource group
+            /// through Network resource provider.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkGatewayConnectionName'>
+            /// The name of the virtual network gateway conenction.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to the Begin Create or update Virtual Network Gateway
+            /// connection operation through Network resource provider.
+            /// </param>
+            public static VirtualNetworkGatewayConnection BeginCreateOrUpdate(this IVirtualNetworkGatewayConnectionsOperations operations, string resourceGroupName, string virtualNetworkGatewayConnectionName, VirtualNetworkGatewayConnection parameters)
+            {
+                return Task.Factory.StartNew(s => ((IVirtualNetworkGatewayConnectionsOperations)s).BeginCreateOrUpdateAsync(resourceGroupName, virtualNetworkGatewayConnectionName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// The Put VirtualNetworkGatewayConnection operation creates/updates a
+            /// virtual network gateway connection in the specified resource group
+            /// through Network resource provider.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkGatewayConnectionName'>
+            /// The name of the virtual network gateway conenction.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to the Begin Create or update Virtual Network Gateway
+            /// connection operation through Network resource provider.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// Cancellation token.
+            /// </param>
+            public static async Task<VirtualNetworkGatewayConnection> BeginCreateOrUpdateAsync( this IVirtualNetworkGatewayConnectionsOperations operations, string resourceGroupName, string virtualNetworkGatewayConnectionName, VirtualNetworkGatewayConnection parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<VirtualNetworkGatewayConnection> result = await operations.BeginCreateOrUpdateWithOperationResponseAsync(resourceGroupName, virtualNetworkGatewayConnectionName, parameters, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -143,9 +193,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The Get VirtualNetworkGatewayConnectionSharedKey operation retrieves
-            /// information about the specified virtual network gateway connection shared
-            /// key through Network resource provider.
+            /// The Delete VirtualNetworkGatewayConnection operation deletes the specifed
+            /// virtual network Gateway connection through Network resource provider.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method
@@ -153,12 +202,33 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
-            /// <param name='connectionSharedKeyName'>
-            /// The virtual network gateway connection shared key name.
+            /// <param name='virtualNetworkGatewayConnectionName'>
+            /// The name of the virtual network gateway connection.
             /// </param>
-            public static string GetSharedKey(this IVirtualNetworkGatewayConnectionsOperations operations, string resourceGroupName, string connectionSharedKeyName)
+            public static void BeginDelete(this IVirtualNetworkGatewayConnectionsOperations operations, string resourceGroupName, string virtualNetworkGatewayConnectionName)
             {
-                return Task.Factory.StartNew(s => ((IVirtualNetworkGatewayConnectionsOperations)s).GetSharedKeyAsync(resourceGroupName, connectionSharedKeyName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                Task.Factory.StartNew(s => ((IVirtualNetworkGatewayConnectionsOperations)s).BeginDeleteAsync(resourceGroupName, virtualNetworkGatewayConnectionName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// The Delete VirtualNetworkGatewayConnection operation deletes the specifed
+            /// virtual network Gateway connection through Network resource provider.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkGatewayConnectionName'>
+            /// The name of the virtual network gateway connection.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// Cancellation token.
+            /// </param>
+            public static async Task BeginDeleteAsync( this IVirtualNetworkGatewayConnectionsOperations operations, string resourceGroupName, string virtualNetworkGatewayConnectionName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                await operations.BeginDeleteWithOperationResponseAsync(resourceGroupName, virtualNetworkGatewayConnectionName, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -172,15 +242,138 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
-            /// <param name='connectionSharedKeyName'>
+            /// <param name='virtualNetworkGatewayConnectionName'>
+            /// The virtual network gateway connection shared key name.
+            /// </param>
+            public static ConnectionSharedKey GetSharedKey(this IVirtualNetworkGatewayConnectionsOperations operations, string resourceGroupName, string virtualNetworkGatewayConnectionName)
+            {
+                return Task.Factory.StartNew(s => ((IVirtualNetworkGatewayConnectionsOperations)s).GetSharedKeyAsync(resourceGroupName, virtualNetworkGatewayConnectionName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// The Get VirtualNetworkGatewayConnectionSharedKey operation retrieves
+            /// information about the specified virtual network gateway connection shared
+            /// key through Network resource provider.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkGatewayConnectionName'>
             /// The virtual network gateway connection shared key name.
             /// </param>
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<string> GetSharedKeyAsync( this IVirtualNetworkGatewayConnectionsOperations operations, string resourceGroupName, string connectionSharedKeyName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ConnectionSharedKey> GetSharedKeyAsync( this IVirtualNetworkGatewayConnectionsOperations operations, string resourceGroupName, string virtualNetworkGatewayConnectionName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<string> result = await operations.GetSharedKeyWithOperationResponseAsync(resourceGroupName, connectionSharedKeyName, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<ConnectionSharedKey> result = await operations.GetSharedKeyWithOperationResponseAsync(resourceGroupName, virtualNetworkGatewayConnectionName, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// The Put VirtualNetworkGatewayConnectionSharedKey operation sets the
+            /// virtual network gateway connection shared key for passed virtual network
+            /// gateway connection in the specified resource group through Network
+            /// resource provider.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkGatewayConnectionName'>
+            /// The virtual network gateway connection name.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to the Begin Set Virtual Network Gateway conection
+            /// Shared key operation throughNetwork resource provider.
+            /// </param>
+            public static ConnectionSharedKey SetSharedKey(this IVirtualNetworkGatewayConnectionsOperations operations, string resourceGroupName, string virtualNetworkGatewayConnectionName, ConnectionSharedKey parameters)
+            {
+                return Task.Factory.StartNew(s => ((IVirtualNetworkGatewayConnectionsOperations)s).SetSharedKeyAsync(resourceGroupName, virtualNetworkGatewayConnectionName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// The Put VirtualNetworkGatewayConnectionSharedKey operation sets the
+            /// virtual network gateway connection shared key for passed virtual network
+            /// gateway connection in the specified resource group through Network
+            /// resource provider.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkGatewayConnectionName'>
+            /// The virtual network gateway connection name.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to the Begin Set Virtual Network Gateway conection
+            /// Shared key operation throughNetwork resource provider.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// Cancellation token.
+            /// </param>
+            public static async Task<ConnectionSharedKey> SetSharedKeyAsync( this IVirtualNetworkGatewayConnectionsOperations operations, string resourceGroupName, string virtualNetworkGatewayConnectionName, ConnectionSharedKey parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<ConnectionSharedKey> result = await operations.SetSharedKeyWithOperationResponseAsync(resourceGroupName, virtualNetworkGatewayConnectionName, parameters, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// The Put VirtualNetworkGatewayConnectionSharedKey operation sets the
+            /// virtual network gateway connection shared key for passed virtual network
+            /// gateway connection in the specified resource group through Network
+            /// resource provider.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkGatewayConnectionName'>
+            /// The virtual network gateway connection name.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to the Begin Set Virtual Network Gateway conection
+            /// Shared key operation throughNetwork resource provider.
+            /// </param>
+            public static ConnectionSharedKey BeginSetSharedKey(this IVirtualNetworkGatewayConnectionsOperations operations, string resourceGroupName, string virtualNetworkGatewayConnectionName, ConnectionSharedKey parameters)
+            {
+                return Task.Factory.StartNew(s => ((IVirtualNetworkGatewayConnectionsOperations)s).BeginSetSharedKeyAsync(resourceGroupName, virtualNetworkGatewayConnectionName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// The Put VirtualNetworkGatewayConnectionSharedKey operation sets the
+            /// virtual network gateway connection shared key for passed virtual network
+            /// gateway connection in the specified resource group through Network
+            /// resource provider.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkGatewayConnectionName'>
+            /// The virtual network gateway connection name.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to the Begin Set Virtual Network Gateway conection
+            /// Shared key operation throughNetwork resource provider.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// Cancellation token.
+            /// </param>
+            public static async Task<ConnectionSharedKey> BeginSetSharedKeyAsync( this IVirtualNetworkGatewayConnectionsOperations operations, string resourceGroupName, string virtualNetworkGatewayConnectionName, ConnectionSharedKey parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<ConnectionSharedKey> result = await operations.BeginSetSharedKeyWithOperationResponseAsync(resourceGroupName, virtualNetworkGatewayConnectionName, parameters, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -237,7 +430,7 @@ namespace Microsoft.Azure.Management.Network
             /// Parameters supplied to the Begin Reset Virtual Network Gateway connection
             /// shared key operation through Network resource provider.
             /// </param>
-            public static ConnectionResetSharedKeyPutResponse ResetSharedKey(this IVirtualNetworkGatewayConnectionsOperations operations, string resourceGroupName, string virtualNetworkGatewayConnectionName, ConnectionResetSharedKey parameters)
+            public static ConnectionResetSharedKey ResetSharedKey(this IVirtualNetworkGatewayConnectionsOperations operations, string resourceGroupName, string virtualNetworkGatewayConnectionName, ConnectionResetSharedKey parameters)
             {
                 return Task.Factory.StartNew(s => ((IVirtualNetworkGatewayConnectionsOperations)s).ResetSharedKeyAsync(resourceGroupName, virtualNetworkGatewayConnectionName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -264,14 +457,14 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<ConnectionResetSharedKeyPutResponse> ResetSharedKeyAsync( this IVirtualNetworkGatewayConnectionsOperations operations, string resourceGroupName, string virtualNetworkGatewayConnectionName, ConnectionResetSharedKey parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ConnectionResetSharedKey> ResetSharedKeyAsync( this IVirtualNetworkGatewayConnectionsOperations operations, string resourceGroupName, string virtualNetworkGatewayConnectionName, ConnectionResetSharedKey parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<ConnectionResetSharedKeyPutResponse> result = await operations.ResetSharedKeyWithOperationResponseAsync(resourceGroupName, virtualNetworkGatewayConnectionName, parameters, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<ConnectionResetSharedKey> result = await operations.ResetSharedKeyWithOperationResponseAsync(resourceGroupName, virtualNetworkGatewayConnectionName, parameters, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
             /// <summary>
-            /// The Put VirtualNetworkGatewayConnectionSharedKey operation sets the
+            /// The VirtualNetworkGatewayConnectionResetSharedKey operation resets the
             /// virtual network gateway connection shared key for passed virtual network
             /// gateway connection in the specified resource group through Network
             /// resource provider.
@@ -283,19 +476,19 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the resource group.
             /// </param>
             /// <param name='virtualNetworkGatewayConnectionName'>
-            /// The virtual network gateway connection name.
+            /// The virtual network gateway connection reset shared key Name.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to the Begin Set Virtual Network Gateway conection
-            /// Shared key operation throughNetwork resource provider.
+            /// Parameters supplied to the Begin Reset Virtual Network Gateway connection
+            /// shared key operation through Network resource provider.
             /// </param>
-            public static ConnectionSharedKeyPutResponse SetSharedKey(this IVirtualNetworkGatewayConnectionsOperations operations, string resourceGroupName, string virtualNetworkGatewayConnectionName, ConnectionSharedKey parameters)
+            public static ConnectionResetSharedKey BeginResetSharedKey(this IVirtualNetworkGatewayConnectionsOperations operations, string resourceGroupName, string virtualNetworkGatewayConnectionName, ConnectionResetSharedKey parameters)
             {
-                return Task.Factory.StartNew(s => ((IVirtualNetworkGatewayConnectionsOperations)s).SetSharedKeyAsync(resourceGroupName, virtualNetworkGatewayConnectionName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IVirtualNetworkGatewayConnectionsOperations)s).BeginResetSharedKeyAsync(resourceGroupName, virtualNetworkGatewayConnectionName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// The Put VirtualNetworkGatewayConnectionSharedKey operation sets the
+            /// The VirtualNetworkGatewayConnectionResetSharedKey operation resets the
             /// virtual network gateway connection shared key for passed virtual network
             /// gateway connection in the specified resource group through Network
             /// resource provider.
@@ -307,18 +500,18 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the resource group.
             /// </param>
             /// <param name='virtualNetworkGatewayConnectionName'>
-            /// The virtual network gateway connection name.
+            /// The virtual network gateway connection reset shared key Name.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to the Begin Set Virtual Network Gateway conection
-            /// Shared key operation throughNetwork resource provider.
+            /// Parameters supplied to the Begin Reset Virtual Network Gateway connection
+            /// shared key operation through Network resource provider.
             /// </param>
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<ConnectionSharedKeyPutResponse> SetSharedKeyAsync( this IVirtualNetworkGatewayConnectionsOperations operations, string resourceGroupName, string virtualNetworkGatewayConnectionName, ConnectionSharedKey parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ConnectionResetSharedKey> BeginResetSharedKeyAsync( this IVirtualNetworkGatewayConnectionsOperations operations, string resourceGroupName, string virtualNetworkGatewayConnectionName, ConnectionResetSharedKey parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<ConnectionSharedKeyPutResponse> result = await operations.SetSharedKeyWithOperationResponseAsync(resourceGroupName, virtualNetworkGatewayConnectionName, parameters, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<ConnectionResetSharedKey> result = await operations.BeginResetSharedKeyWithOperationResponseAsync(resourceGroupName, virtualNetworkGatewayConnectionName, parameters, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='location'>
             /// The location upon which resource usage is queried.
             /// </param>
-            public static IList<Usage> List(this IUsagesOperations operations, string location)
+            public static UsagesListResponse List(this IUsagesOperations operations, string location)
             {
                 return Task.Factory.StartNew(s => ((IUsagesOperations)s).ListAsync(location), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -37,9 +37,9 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<IList<Usage>> ListAsync( this IUsagesOperations operations, string location, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<UsagesListResponse> ListAsync( this IUsagesOperations operations, string location, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IList<Usage>> result = await operations.ListWithOperationResponseAsync(location, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<UsagesListResponse> result = await operations.ListWithOperationResponseAsync(location, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

@@ -63,7 +63,7 @@ namespace Networks.Tests
 
                 // Put Nsg
                 var putNsgResponse = networkResourceProviderClient.NetworkSecurityGroups.CreateOrUpdate(resourceGroupName, networkSecurityGroupName, networkSecurityGroup);
-                Assert.Equal("Succeeded", putNsgResponse.NetworkSecurityGroup.ProvisioningState);
+                Assert.Equal("Succeeded", putNsgResponse.ProvisioningState);
 
                 // Get NSG
                 var getNsgResponse = networkResourceProviderClient.NetworkSecurityGroups.Get(resourceGroupName, networkSecurityGroupName);
@@ -91,7 +91,7 @@ namespace Networks.Tests
                                    };
 
                 var putSecurityRuleResponse = networkResourceProviderClient.SecurityRules.CreateOrUpdate(resourceGroupName, networkSecurityGroupName, securityRule2, securityRule);
-                Assert.Equal("Succeeded", putSecurityRuleResponse.SecurityRule.ProvisioningState);
+                Assert.Equal("Succeeded", putSecurityRuleResponse.ProvisioningState);
 
                 // Get NSG
                 getNsgResponse = networkResourceProviderClient.NetworkSecurityGroups.Get(resourceGroupName, networkSecurityGroupName);

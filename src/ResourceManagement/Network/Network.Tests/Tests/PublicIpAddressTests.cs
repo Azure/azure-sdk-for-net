@@ -54,7 +54,7 @@ namespace Networks.Tests
 
                 // Put PublicIpAddress
                 var putPublicIpAddressResponse = networkResourceProviderClient.PublicIpAddresses.CreateOrUpdate(resourceGroupName, publicIpName, publicIp);
-                Assert.Equal("Succeeded", putPublicIpAddressResponse.PublicIpAddress.ProvisioningState);
+                Assert.Equal("Succeeded", putPublicIpAddressResponse.ProvisioningState);
                 
                 // Get PublicIpAddress
                 var getPublicIpAddressResponse = networkResourceProviderClient.PublicIpAddresses.Get(resourceGroupName, publicIpName);
@@ -121,7 +121,7 @@ namespace Networks.Tests
 
                 // Put PublicIpAddress
                 var putPublicIpAddressResponse = networkResourceProviderClient.PublicIpAddresses.CreateOrUpdate(resourceGroupName, publicIpName, publicIp);
-                Assert.Equal("Succeeded", putPublicIpAddressResponse.PublicIpAddress.ProvisioningState);
+                Assert.Equal("Succeeded", putPublicIpAddressResponse.ProvisioningState);
 
                 // Get PublicIpAddress
                 var getPublicIpAddressResponse = networkResourceProviderClient.PublicIpAddresses.Get(resourceGroupName, publicIpName);
@@ -131,7 +131,7 @@ namespace Networks.Tests
                 getPublicIpAddressResponse.DnsSettings.ReverseFqdn = reverseFqdn;
 
                 putPublicIpAddressResponse = networkResourceProviderClient.PublicIpAddresses.CreateOrUpdate(resourceGroupName, publicIpName, getPublicIpAddressResponse);
-                Assert.Equal("Succeeded", putPublicIpAddressResponse.PublicIpAddress.ProvisioningState);
+                Assert.Equal("Succeeded", putPublicIpAddressResponse.ProvisioningState);
 
                 // Get PublicIpAddress
                 getPublicIpAddressResponse = networkResourceProviderClient.PublicIpAddresses.Get(resourceGroupName, publicIpName);

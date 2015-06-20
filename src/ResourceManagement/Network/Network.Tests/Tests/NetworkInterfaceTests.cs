@@ -54,7 +54,7 @@ namespace Networks.Tests
 
                 // Put PublicIPAddress
                 var putPublicIpAddressResponse = networkResourceProviderClient.PublicIpAddresses.CreateOrUpdate(resourceGroupName, publicIpName, publicIp);
-                Assert.Equal("Succeeded", putPublicIpAddressResponse.PublicIpAddress.ProvisioningState);
+                Assert.Equal("Succeeded", putPublicIpAddressResponse.ProvisioningState);
                 var getPublicIpAddressResponse = networkResourceProviderClient.PublicIpAddresses.Get(resourceGroupName, publicIpName);
 
                 // Create Vnet

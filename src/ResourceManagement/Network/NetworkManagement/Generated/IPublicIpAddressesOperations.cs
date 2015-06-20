@@ -28,6 +28,20 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         Task<AzureOperationResponse> DeleteWithOperationResponseAsync(string resourceGroupName, string publicIpAddressName, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// The delete publicIpAddress operation deletes the specified
+        /// publicIpAddress.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='publicIpAddressName'>
+        /// The name of the subnet.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        Task<AzureOperationResponse> BeginDeleteWithOperationResponseAsync(string resourceGroupName, string publicIpAddressName, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// The Get publicIpAddress operation retreives information about the
         /// specified pubicIpAddress
         /// </summary>
@@ -57,7 +71,24 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        Task<AzureOperationResponse<PublicIpAddressPutResponse>> CreateOrUpdateWithOperationResponseAsync(string resourceGroupName, string publicIpAddressName, PublicIpAddress parameters, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PublicIpAddress>> CreateOrUpdateWithOperationResponseAsync(string resourceGroupName, string publicIpAddressName, PublicIpAddress parameters, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// The Put PublicIPAddress operation creates/updates a stable/dynamic
+        /// PublicIP address
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='publicIpAddressName'>
+        /// The name of the publicIpAddress.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the create/update PublicIPAddress operation
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<PublicIpAddress>> BeginCreateOrUpdateWithOperationResponseAsync(string resourceGroupName, string publicIpAddressName, PublicIpAddress parameters, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The List publicIpAddress opertion retrieves all the
         /// publicIpAddresses in a subscription.
