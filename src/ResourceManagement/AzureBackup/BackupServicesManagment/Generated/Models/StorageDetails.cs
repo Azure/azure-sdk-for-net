@@ -21,29 +21,41 @@
 
 using System;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.Azure.Management.BackupServices.Models;
 
-namespace Microsoft.Azure.Management.BackupServices
+namespace Microsoft.Azure.Management.BackupServices.Models
 {
     /// <summary>
-    /// Definition of Recovery Point operations for the Azure Backup extension.
+    /// The resource storage details.
     /// </summary>
-    public partial interface IRecoveryPointOperations
+    public partial class StorageDetails
     {
+        private string _storageType;
+        
         /// <summary>
-        /// Get the list of all Recovery Points.
+        /// Optional. Gets or sets the storage type.
         /// </summary>
-        /// <param name='customRequestHeaders'>
-        /// Request header parameters.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The response model for the list RecoveryPoints operation.
-        /// </returns>
-        Task<RecoveryPointListResponse> ListAsync(CustomRequestHeaders customRequestHeaders, string containerName, string dataSourceType, string dataSourceId, CancellationToken cancellationToken);
+        public string StorageType
+        {
+            get { return this._storageType; }
+            set { this._storageType = value; }
+        }
+        
+        private string _storageTypeState;
+        
+        /// <summary>
+        /// Optional. Gets or sets the storage type state.
+        /// </summary>
+        public string StorageTypeState
+        {
+            get { return this._storageTypeState; }
+            set { this._storageTypeState = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the StorageDetails class.
+        /// </summary>
+        public StorageDetails()
+        {
+        }
     }
 }

@@ -34,6 +34,104 @@ namespace Microsoft.Azure.Management.BackupServices
     public partial interface IVaultOperations
     {
         /// <summary>
+        /// Creates a new Azure backup vault.
+        /// </summary>
+        /// <param name='parameters'>
+        /// Parameters to create or update the vault
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Vault information.
+        /// </returns>
+        Task<AzureBackupVaultGetResponse> CreateOrUpdateAsync(AzureBackupVaultCreateOrUpdateParameters parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Deletes the specified Azure backup vault.
+        /// </summary>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Vault information.
+        /// </returns>
+        Task<AzureBackupVaultGetResponse> DeleteAsync(CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Gets the specified Azure key vault.
+        /// </summary>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Vault information.
+        /// </returns>
+        Task<AzureBackupVaultGetResponse> GetAsync(CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Fetches resource storage config.
+        /// </summary>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The definition of a get resource storage config response.
+        /// </returns>
+        Task<GetResourceStorageConfigResponse> GetResourceStorageConfigAsync(CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Gets information of the backup vaults associated with subscription.
+        /// </summary>
+        /// <param name='top'>
+        /// Maximum number of results to return.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// List of vaults
+        /// </returns>
+        Task<AzureBackupVaultListResponse> ListAsync(int top, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Gets information of the backup vaults associated with resource
+        /// group.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// An optional argument which specifies the name of the resource group
+        /// that constrains the set of vaults that are returned.
+        /// </param>
+        /// <param name='top'>
+        /// Maximum number of results to return.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// List of vaults
+        /// </returns>
+        Task<AzureBackupVaultListResponse> ListByResourceGroupAsync(string resourceGroupName, int top, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// Updates vault storage model type.
         /// </summary>
         /// <param name='updateVaultStorageTypeRequest'>

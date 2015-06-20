@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.BackupServices
         }
         
         /// <summary>
-        /// Get the list of all Protection Policy.
+        /// Get the list of all Recovery Points.
         /// </summary>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.

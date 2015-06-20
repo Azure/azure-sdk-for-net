@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.BackupServices
     public partial interface IBackUpOperations
     {
         /// <summary>
-        /// Get the list of all Protection Policy.
+        /// BackUp the AzureBackUpItem.
         /// </summary>
         /// <param name='customRequestHeaders'>
         /// Request header parameters.
