@@ -9,13 +9,8 @@ namespace Microsoft.Azure.Management.Network.Models
 
     /// <summary>
     /// </summary>
-    public partial class FrontendIpConfiguration
+    public partial class FrontendIpConfiguration : SubResource
     {
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "properties")]
-        public FrontendIpConfigurationPropertiesFormat Properties { get; set; }
-
         /// <summary>
         /// Gets name of the resource that is unique within a resource group.
         /// This name can be used to access the resource
@@ -31,19 +26,85 @@ namespace Microsoft.Azure.Management.Network.Models
         public string Etag { get; set; }
 
         /// <summary>
-        /// Id of the resource
+        /// Gets or sets the IP address of the Load Balancer.This is only
+        /// specified if a specific private IP address shall be allocated
+        /// from the subnet specified in subnetRef
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
+        [JsonProperty(PropertyName = "privateIPAddress")]
+        public string PrivateIPAddress { get; set; }
+
+        /// <summary>
+        /// Gets or sets PrivateIP allocation method (Static/Dynamic).
+        /// Possible values for this property include: 'Static', 'Dynamic'
+        /// </summary>
+        [JsonProperty(PropertyName = "privateIPAllocationMethod")]
+        public IpAllocationMethod? PrivateIPAllocationMethod { get; set; }
+
+        /// <summary>
+        /// Gets or sets the reference of the subnet resource.A subnet from
+        /// wher the load balancer gets its private frontend address
+        /// </summary>
+        [JsonProperty(PropertyName = "subnet")]
+        public SubResource Subnet { get; set; }
+
+        /// <summary>
+        /// Gets or sets the reference of the PublicIP resource
+        /// </summary>
+        [JsonProperty(PropertyName = "publicIPAddress")]
+        public SubResource PublicIPAddress { get; set; }
+
+        /// <summary>
+        /// Read only.Inbound rules URIs that use this frontend IP
+        /// </summary>
+        [JsonProperty(PropertyName = "inboundNatRules")]
+        public IList<SubResource> InboundNatRules { get; set; }
+
+        /// <summary>
+        /// Gets Load Balancing rules URIs that use this frontend IP
+        /// </summary>
+        [JsonProperty(PropertyName = "loadBalancingRules")]
+        public IList<SubResource> LoadBalancingRules { get; set; }
+
+        /// <summary>
+        /// Gets or sets Provisioning state of the PublicIP resource
+        /// Updating/Deleting/Failed
+        /// </summary>
+        [JsonProperty(PropertyName = "provisioningState")]
+        public string ProvisioningState { get; set; }
 
         /// <summary>
         /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
         /// </summary>
-        public virtual void Validate()
+        public override void Validate()
         {
-            if (this.Properties != null)
+            base.Validate();
+            if (this.Subnet != null)
             {
-                this.Properties.Validate();
+                this.Subnet.Validate();
+            }
+            if (this.PublicIPAddress != null)
+            {
+                this.PublicIPAddress.Validate();
+            }
+            if (this.InboundNatRules != null)
+            {
+                foreach ( var element in this.InboundNatRules)
+            {
+                if (element != null)
+            {
+                element.Validate();
+            }
+            }
+            }
+            if (this.LoadBalancingRules != null)
+            {
+                foreach ( var element1 in this.LoadBalancingRules)
+            {
+                if (element1 != null)
+            {
+                element1.Validate();
+            }
+            }
             }
         }
     }

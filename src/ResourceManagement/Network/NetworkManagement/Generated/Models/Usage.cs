@@ -12,10 +12,11 @@ namespace Microsoft.Azure.Management.Network.Models
     public partial class Usage
     {
         /// <summary>
-        /// Gets or sets an enum describing the unit of measurement.
+        /// Gets or sets an enum describing the unit of measurement. Possible
+        /// values for this property include: 'Count'
         /// </summary>
         [JsonProperty(PropertyName = "unit")]
-        public string Unit { get; set; }
+        public UsageUnit? Unit { get; set; }
 
         /// <summary>
         /// Gets or sets the current value of the usage.

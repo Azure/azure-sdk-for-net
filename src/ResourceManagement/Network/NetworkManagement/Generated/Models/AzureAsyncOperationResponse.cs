@@ -12,10 +12,11 @@ namespace Microsoft.Azure.Management.Network.Models
     public partial class AzureAsyncOperationResponse
     {
         /// <summary>
-        /// Status of the AzureAsuncOperation
+        /// Status of the AzureAsuncOperation. Possible values for this
+        /// property include: 'InProgress', 'Succeeded', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "status")]
-        public string Status { get; set; }
+        public OperationStatus? Status { get; set; }
 
         /// <summary>
         /// </summary>

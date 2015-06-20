@@ -9,15 +9,8 @@ namespace Microsoft.Azure.Management.Network.Models
 
     /// <summary>
     /// </summary>
-    public partial class VirtualNetworkGateway : Resource
+    public partial class VirtualNetworkGatewayPropertiesFormat
     {
-        /// <summary>
-        /// Gets a unique read-only string that changes whenever the resource
-        /// is updated
-        /// </summary>
-        [JsonProperty(PropertyName = "etag")]
-        public string Etag { get; set; }
-
         /// <summary>
         /// IpConfigurations for Virtual network gateway.
         /// </summary>
@@ -47,9 +40,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
         /// </summary>
-        public override void Validate()
+        public virtual void Validate()
         {
-            base.Validate();
             if (this.IpConfigurations != null)
             {
                 foreach ( var element in this.IpConfigurations)

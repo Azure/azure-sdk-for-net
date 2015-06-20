@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Net;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Network;
 using Microsoft.Azure.Management.Network.Models;
 using Xunit;
@@ -18,7 +19,7 @@ namespace Networks.Tests
                     {
                        {"key","value"}
                     },
-                PublicIPAllocationMethod = "Dynamic",
+                PublicIPAllocationMethod = IpAllocationMethod.Dynamic,
                 DnsSettings = new PublicIpAddressDnsSettings()
                 {
                     DomainNameLabel = domainNameLabel
@@ -45,40 +46,37 @@ namespace Networks.Tests
             var nicParameters = new NetworkInterface()
             {
                 Location = location,
-                Name = name,
                 Tags = new Dictionary<string, string>()
-                        {
-                           {"key","value"}
-                        },
+                {
+                    {"key","value"}
+                },
                 IpConfigurations = new List<NetworkInterfaceIpConfiguration>()
                 {
                     new NetworkInterfaceIpConfiguration()
                     {
-                         Name = ipConfigName,
-                         PrivateIPAllocationMethod = IpAllocationMethod.Dynamic,
-                         
-                         Subnet = new ResourceId()
-                         {
-                             Id = subnetId
-                         }
+                            Name = ipConfigName,
+                            PrivateIPAllocationMethod = IpAllocationMethod.Dynamic,
+                            Subnet = new SubResource()
+                            {
+                                Id = subnetId
+                            }
                     }
                 }
             };
 
             if (!string.IsNullOrEmpty(publicIpAddressId))
             {
-                nicParameters.IpConfigurations[0].PublicIpAddress = new ResourceId() { Id = publicIpAddressId };
+                nicParameters.IpConfigurations[0].PublicIPAddress = new SubResource() { Id = publicIpAddressId };
             }
 
             // Test NIC apis
             var putNicResponse = client.NetworkInterfaces.CreateOrUpdate(resourceGroupName, name, nicParameters);
-            Assert.Equal(HttpStatusCode.OK, putNicResponse.StatusCode);
 
             var getNicResponse = client.NetworkInterfaces.Get(resourceGroupName, name);
-            Assert.Equal(getNicResponse.NetworkInterface.Name, name);
-            Assert.Equal(getNicResponse.NetworkInterface.ProvisioningState, Microsoft.Azure.Management.Resources.Models.ProvisioningState.Succeeded);
+            Assert.Equal(getNicResponse.Name, name);
+            Assert.Equal(getNicResponse.ProvisioningState, "Succeeded");
 
-            return getNicResponse.NetworkInterface;
+            return getNicResponse;
         }
 
         public static VirtualNetwork CreateVirtualNetwork(string vnetName, string subnetName, string resourceGroupName, string location, NetworkResourceProviderClient client)
@@ -113,10 +111,9 @@ namespace Networks.Tests
             };
 
             var putVnetResponse = client.VirtualNetworks.CreateOrUpdate(resourceGroupName, vnetName, vnet);
-            Assert.Equal(HttpStatusCode.OK, putVnetResponse.StatusCode);
             var getVnetResponse = client.VirtualNetworks.Get(resourceGroupName, vnetName);
 
-            return getVnetResponse.VirtualNetwork;
+            return getVnetResponse;
         }
     }
 }

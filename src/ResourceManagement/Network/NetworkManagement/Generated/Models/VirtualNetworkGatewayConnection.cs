@@ -34,10 +34,12 @@ namespace Microsoft.Azure.Management.Network.Models
         public LocalNetworkGateway LocalNetworkGateway2 { get; set; }
 
         /// <summary>
-        /// Gateway connection type -Ipsec/Dedicated/VpnClient/Vnet2Vnet
+        /// Gateway connection type -Ipsec/Dedicated/VpnClient/Vnet2Vnet.
+        /// Possible values for this property include: 'IPsec', 'Vnet2Vnet',
+        /// 'Dedicated', 'VPNClient'
         /// </summary>
         [JsonProperty(PropertyName = "connectionType")]
-        public string ConnectionType { get; set; }
+        public VirtualNetworkGatewayConnectionType? ConnectionType { get; set; }
 
         /// <summary>
         /// The Routing weight.

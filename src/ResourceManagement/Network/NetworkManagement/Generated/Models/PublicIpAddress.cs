@@ -19,17 +19,18 @@ namespace Microsoft.Azure.Management.Network.Models
         public string Etag { get; set; }
 
         /// <summary>
-        /// Gets or sets PublicIP allocation method (Static/Dynamic)
+        /// Gets or sets PublicIP allocation method (Static/Dynamic). Possible
+        /// values for this property include: 'Static', 'Dynamic'
         /// </summary>
         [JsonProperty(PropertyName = "publicIPAllocationMethod")]
-        public string PublicIPAllocationMethod { get; set; }
+        public IpAllocationMethod? PublicIPAllocationMethod { get; set; }
 
         /// <summary>
         /// Gets a reference to the network interface IP configurations using
         /// this public IP address
         /// </summary>
         [JsonProperty(PropertyName = "ipConfiguration")]
-        public ResourceId IpConfiguration { get; set; }
+        public SubResource IpConfiguration { get; set; }
 
         /// <summary>
         /// Gets or sets FQDN of the DNS record associated with the public IP

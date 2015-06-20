@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Net;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Network;
 using Microsoft.Azure.Management.Network.Models;
 using Microsoft.Azure.Management.Resources;
@@ -44,17 +45,16 @@ namespace Networks.Tests
                     {
                        {"key","value"}
                     },
-                    PublicIpAllocationMethod = IpAllocationMethod.Dynamic,
+                    PublicIPAllocationMethod = IpAllocationMethod.Dynamic,
                     DnsSettings = new PublicIpAddressDnsSettings()
                     {
                        DomainNameLabel = domainNameLabel
                     }
                 };
 
-                // Put PublicIpAddress
+                // Put PublicIPAddress
                 var putPublicIpAddressResponse = networkResourceProviderClient.PublicIpAddresses.CreateOrUpdate(resourceGroupName, publicIpName, publicIp);
-                Assert.Equal(HttpStatusCode.OK, putPublicIpAddressResponse.StatusCode);
-                Assert.Equal("Succeeded", putPublicIpAddressResponse.Status);
+                Assert.Equal("Succeeded", putPublicIpAddressResponse.PublicIpAddress.ProvisioningState);
                 var getPublicIpAddressResponse = networkResourceProviderClient.PublicIpAddresses.Get(resourceGroupName, publicIpName);
 
                 // Create Vnet
@@ -92,7 +92,6 @@ namespace Networks.Tests
                 };
 
                 var putVnetResponse = networkResourceProviderClient.VirtualNetworks.CreateOrUpdate(resourceGroupName, vnetName, vnet);
-                Assert.Equal(HttpStatusCode.OK, putVnetResponse.StatusCode);
 
                 var getSubnetResponse = networkResourceProviderClient.Subnets.Get(resourceGroupName, vnetName, subnetName);
 
@@ -103,7 +102,6 @@ namespace Networks.Tests
                 var nicParameters = new NetworkInterface()
                 {
                     Location = location,
-                    Name = nicName,
                     Tags = new Dictionary<string, string>()
                         {
                            {"key","value"}
@@ -113,14 +111,14 @@ namespace Networks.Tests
                         new NetworkInterfaceIpConfiguration()
                         {
                              Name = ipConfigName,
-                             PrivateIpAllocationMethod = IpAllocationMethod.Dynamic,
-                             PublicIpAddress = new ResourceId()
+                             PrivateIPAllocationMethod = IpAllocationMethod.Dynamic,
+                             PublicIPAddress = new SubResource()
                              {
-                                 Id = getPublicIpAddressResponse.PublicIpAddress.Id
+                                 Id = getPublicIpAddressResponse.Id
                              },
-                             Subnet = new ResourceId()
+                             Subnet = new SubResource()
                              {
-                                 Id = getSubnetResponse.Subnet.Id
+                                 Id = getSubnetResponse.Id
                              }
                         }
                     }
@@ -128,46 +126,42 @@ namespace Networks.Tests
 
                 // Test NIC apis
                 var putNicResponse = networkResourceProviderClient.NetworkInterfaces.CreateOrUpdate(resourceGroupName, nicName, nicParameters);
-                Assert.Equal(HttpStatusCode.OK, putNicResponse.StatusCode);
 
                 var getNicResponse = networkResourceProviderClient.NetworkInterfaces.Get(resourceGroupName, nicName);
-                Assert.Equal(getNicResponse.NetworkInterface.Name, nicName);
-                Assert.Equal(getNicResponse.NetworkInterface.ProvisioningState, Microsoft.Azure.Management.Resources.Models.ProvisioningState.Succeeded);
-                Assert.Null(getNicResponse.NetworkInterface.VirtualMachine);
-                Assert.Null(getNicResponse.NetworkInterface.MacAddress);
-                Assert.Equal(1, getNicResponse.NetworkInterface.IpConfigurations.Count);
-                Assert.Equal(ipConfigName, getNicResponse.NetworkInterface.IpConfigurations[0].Name);
-                Assert.Equal(getPublicIpAddressResponse.PublicIpAddress.Id, getNicResponse.NetworkInterface.IpConfigurations[0].PublicIpAddress.Id);
-                Assert.Equal(getSubnetResponse.Subnet.Id, getNicResponse.NetworkInterface.IpConfigurations[0].Subnet.Id);
+                Assert.Equal(getNicResponse.Name, nicName);
+                Assert.Equal(getNicResponse.ProvisioningState, "Succeeded");
+                Assert.Null(getNicResponse.VirtualMachine);
+                Assert.Null(getNicResponse.MacAddress);
+                Assert.Equal(1, getNicResponse.IpConfigurations.Count);
+                Assert.Equal(ipConfigName, getNicResponse.IpConfigurations[0].Name);
+                Assert.Equal(getPublicIpAddressResponse.Id, getNicResponse.IpConfigurations[0].Id);
+                Assert.Equal(getSubnetResponse.Id, getNicResponse.IpConfigurations[0].Id);
 
                 // Get all Nics
                 var getListNicResponse = networkResourceProviderClient.NetworkInterfaces.List(resourceGroupName);
-                Assert.Equal(1, getListNicResponse.NetworkInterfaces.Count);
-                Assert.Equal(getNicResponse.NetworkInterface.Name, getListNicResponse.NetworkInterfaces[0].Name);
-                Assert.Equal(getNicResponse.NetworkInterface.Etag, getListNicResponse.NetworkInterfaces[0].Etag);
-                Assert.Equal(getNicResponse.NetworkInterface.IpConfigurations[0].Etag, getListNicResponse.NetworkInterfaces[0].IpConfigurations[0].Etag);
+                Assert.Equal(1, getListNicResponse.Value.Count);
+                Assert.Equal(getNicResponse.Name, getListNicResponse.Value[0].Name);
+                Assert.Equal(getNicResponse.Etag, getListNicResponse.Value[0].Etag);
+                Assert.Equal(getNicResponse.IpConfigurations[0].Etag, getListNicResponse.Value[0].IpConfigurations[0].Etag);
 
                 // Get all Nics in subscription
                 var listNicSubscription = networkResourceProviderClient.NetworkInterfaces.ListAll();
-                Assert.Equal(1, getListNicResponse.NetworkInterfaces.Count);
-                Assert.Equal(getNicResponse.NetworkInterface.Name, listNicSubscription.NetworkInterfaces[0].Name);
-                Assert.Equal(getNicResponse.NetworkInterface.Etag, listNicSubscription.NetworkInterfaces[0].Etag);
-                Assert.Equal(listNicSubscription.NetworkInterfaces[0].IpConfigurations[0].Etag, getListNicResponse.NetworkInterfaces[0].IpConfigurations[0].Etag);
+                Assert.Equal(1, getListNicResponse.Value.Count);
+                Assert.Equal(getNicResponse.Name, listNicSubscription.Value[0].Name);
+                Assert.Equal(getNicResponse.Etag, listNicSubscription.Value[0].Etag);
+                Assert.Equal(listNicSubscription.Value[0].IpConfigurations[0].Etag, getListNicResponse.Value[0].IpConfigurations[0].Etag);
 
                 // Delete Nic
-                var deleteNicResponse = networkResourceProviderClient.NetworkInterfaces.Delete(resourceGroupName, nicName);
-                Assert.Equal(HttpStatusCode.OK, deleteNicResponse.StatusCode);
+                networkResourceProviderClient.NetworkInterfaces.Delete(resourceGroupName, nicName);
 
                 getListNicResponse = networkResourceProviderClient.NetworkInterfaces.List(resourceGroupName);
-                Assert.Equal(0, getListNicResponse.NetworkInterfaces.Count);
+                Assert.Equal(0, getListNicResponse.Value.Count);
 
-                // Delete PublicIpAddress
-                var deletePublicIpAddressResponse = networkResourceProviderClient.PublicIpAddresses.Delete(resourceGroupName, publicIpName);
-                Assert.Equal(HttpStatusCode.OK, deletePublicIpAddressResponse.StatusCode);
+                // Delete PublicIPAddress
+                networkResourceProviderClient.PublicIpAddresses.Delete(resourceGroupName, publicIpName);
 
                 // Delete VirtualNetwork
-                var deleteVnetResponse = networkResourceProviderClient.VirtualNetworks.Delete(resourceGroupName, vnetName);
-                Assert.Equal(HttpStatusCode.OK, deleteVnetResponse.StatusCode);
+                networkResourceProviderClient.VirtualNetworks.Delete(resourceGroupName, vnetName);
             }
         }
     }

@@ -34,13 +34,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Gets collection of references to Network Interfaces
         /// </summary>
         [JsonProperty(PropertyName = "networkInterfaces")]
-        public IList<ResourceId> NetworkInterfaces { get; set; }
+        public IList<SubResource> NetworkInterfaces { get; set; }
 
         /// <summary>
         /// Gets collection of references to subnets
         /// </summary>
         [JsonProperty(PropertyName = "subnets")]
-        public IList<ResourceId> Subnets { get; set; }
+        public IList<SubResource> Subnets { get; set; }
 
         /// <summary>
         /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.

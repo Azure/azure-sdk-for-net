@@ -18,7 +18,7 @@ namespace Networks.Tests.Helpers
         public static NetworkResourceProviderClient GetNetworkResourceProviderClient(RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
-            return TestBase.GetServiceClient<NetworkResourceProviderClient>(new CSMTestEnvironmentFactory()).WithHandler(handler);
+            return TestBase.GetServiceClient<NetworkResourceProviderClient>(new CSMTestEnvironmentFactory(), handler);
         }
 
         /// <summary>
@@ -34,9 +34,9 @@ namespace Networks.Tests.Helpers
             string[] parts = resourceType.Split('/');
             string providerName = parts[0];
             var provider = client.Providers.Get(providerName);
-            foreach (var resource in provider.Provider.ResourceTypes)
+            foreach (var resource in provider.ResourceTypes)
             {
-                if (string.Equals(resource.Name, parts[1], StringComparison.OrdinalIgnoreCase))
+                if (string.Equals(resource.ResourceType, parts[1], StringComparison.OrdinalIgnoreCase))
                 {
                     return resource.Locations.FirstOrDefault(supportedLocations.Contains);
                 }

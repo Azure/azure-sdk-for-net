@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Test
         public static ResourceManagementClient GetResourceManagementClientWithHandler(RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
-            return TestBase.GetServiceClient<ResourceManagementClient>(new CSMTestEnvironmentFactory()).WithHandler(handler);
+            return TestBase.GetServiceClient<ResourceManagementClient>(new CSMTestEnvironmentFactory(), handler);
         }
 
         /// <summary>
@@ -68,9 +68,9 @@ namespace Microsoft.Azure.Test
             string[] parts = resourceType.Split('/');
             string providerName = parts[0];
             var provider = client.Providers.Get(providerName);
-            foreach (var resource in provider.Provider.ResourceTypes)
+            foreach (var resource in provider.ResourceTypes)
             {
-                if (string.Equals(resource.Name, parts[1], StringComparison.OrdinalIgnoreCase))
+                if (string.Equals(resource.ResourceType, parts[1], StringComparison.OrdinalIgnoreCase))
                 {
                     location = resource.Locations.LastOrDefault<string>();
                 }

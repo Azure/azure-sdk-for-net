@@ -22,13 +22,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Gets or sets the reference of a VirtualMachine
         /// </summary>
         [JsonProperty(PropertyName = "virtualMachine")]
-        public ResourceId VirtualMachine { get; set; }
+        public SubResource VirtualMachine { get; set; }
 
         /// <summary>
         /// Gets or sets the reference of the NetworkSecurityGroup resource
         /// </summary>
         [JsonProperty(PropertyName = "networkSecurityGroup")]
-        public ResourceId NetworkSecurityGroup { get; set; }
+        public SubResource NetworkSecurityGroup { get; set; }
 
         /// <summary>
         /// Gets or sets list of IPConfigurations of the NetworkInterface

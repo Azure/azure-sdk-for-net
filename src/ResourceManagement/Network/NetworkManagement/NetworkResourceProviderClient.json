@@ -2482,15 +2482,6 @@
     }
   },
   "definitions": {
-    "ResourceId": {
-      "properties": {
-        "id": {
-          "type": "string",
-          "description": "Id of the resource"
-        }
-      },
-      "description": "Id of the resource"
-    },
     "FrontendIpConfigurationPropertiesFormat": {
       "properties": {
         "privateIPAddress": {
@@ -2499,29 +2490,38 @@
         },
         "privateIPAllocationMethod": {
           "type": "string",
-          "description": "Gets or sets PrivateIP allocation method (Static/Dynamic)"
+          "description": "Gets or sets PrivateIP allocation method (Static/Dynamic)",
+          "enum": [
+            "Static",
+            "Dynamic"
+          ],
+          "x-ms-enum": "IpAllocationMethod"
         },
         "subnet": {
-          "$ref": "#/definitions/ResourceId",
+          "$ref": "#/definitions/SubResource",
           "description": "Gets or sets the reference of the subnet resource.A subnet from wher the load balancer gets its private frontend address "
         },
         "publicIPAddress": {
-          "$ref": "#/definitions/ResourceId",
+          "$ref": "#/definitions/SubResource",
           "description": "Gets or sets the reference of the PublicIP resource"
         },
         "inboundNatRules": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/ResourceId"
+            "$ref": "#/definitions/SubResource"
           },
           "description": "Read only.Inbound rules URIs that use this frontend IP"
         },
         "loadBalancingRules": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/ResourceId"
+            "$ref": "#/definitions/SubResource"
           },
           "description": "Gets Load Balancing rules URIs that use this frontend IP"
+        },
+        "provisioningState": {
+          "type": "string",
+          "description": "Gets or sets Provisioning state of the PublicIP resource Updating/Deleting/Failed"
         }
       },
       "description": "Properties of Frontend IP Configuration of the load balancer"
@@ -2538,12 +2538,13 @@
         "etag": {
           "type": "string",
           "description": "A unique read-only string that changes whenever the resource is updated"
-        },
-        "id": {
-          "type": "string",
-          "description": "Id of the resource"
         }
       },
+      "allOf": [
+        {
+          "$ref": "SubResource"
+        }
+      ],
       "description": "Frontend IP address of the load balancer"
     },
     "BackendAddressPoolPropertiesFormat": {
@@ -2551,16 +2552,20 @@
         "backendIPConfigurations": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/ResourceId"
+            "$ref": "#/definitions/SubResource"
           },
           "description": "Gets collection of references to IPs defined in NICs"
         },
         "loadBalancingRules": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/ResourceId"
+            "$ref": "#/definitions/SubResource"
           },
           "description": "Gets Load Balancing rules that use this Backend Address Pool"
+        },
+        "provisioningState": {
+          "type": "string",
+          "description": "Provisioning state of the PublicIP resource Updating/Deleting/Failed"
         }
       },
       "description": "Properties of BackendAddressPool"
@@ -2577,35 +2582,47 @@
         "etag": {
           "type": "string",
           "description": "A unique read-only string that changes whenever the resource is updated"
-        },
-        "id": {
-          "type": "string",
-          "description": "Id of the resource"
         }
       },
+      "allOf": [
+        {
+          "$ref": "SubResource"
+        }
+      ],
       "description": "Pool of backend IP addresseses"
     },
     "LoadBalancingRulePropertiesFormat": {
       "properties": {
         "frontendIPConfiguration": {
-          "$ref": "#/definitions/ResourceId",
+          "$ref": "#/definitions/SubResource",
           "description": "Gets or sets a reference to frontend IP Addresses"
         },
         "backendAddressPool": {
-          "$ref": "#/definitions/ResourceId",
+          "$ref": "#/definitions/SubResource",
           "description": "Gets or sets  a reference to a pool of DIPs. Inbound traffic is randomly load balanced across IPs in the backend IPs"
         },
         "probe": {
-          "$ref": "#/definitions/ResourceId",
+          "$ref": "#/definitions/SubResource",
           "description": "Gets or sets the reference of the load balancer probe used by the Load Balancing rule."
         },
         "protocol": {
           "type": "string",
-          "description": "Gets or sets the transport protocol for the external endpoint. Possible values are Udp or Tcp"
+          "description": "Gets or sets the transport protocol for the external endpoint. Possible values are Udp or Tcp",
+          "enum": [
+            "Udp",
+            "Tcp"
+          ],
+          "x-ms-enum": "TransportProtocol"
         },
         "loadDistribution": {
           "type": "string",
-          "description": "Gets or sets the load distribution policy for this rule"
+          "description": "Gets or sets the load distribution policy for this rule",
+          "enum": [
+            "Default",
+            "SourceIP",
+            "SourceIPProtocol"
+          ],
+          "x-ms-enum": "LoadDistribution"
         },
         "frontendPort": {
           "type": "integer",
@@ -2625,6 +2642,10 @@
         "enableFloatingIP": {
           "type": "boolean",
           "description": "Configures a virtual machine's endpoint for the floating IP capability required to configure a SQL AlwaysOn availability Group. This setting is required when using the SQL Always ON availability Groups in SQL server. This setting can't be changed after you create the endpoint"
+        },
+        "provisioningState": {
+          "type": "string",
+          "description": "Gets or sets Provisioning state of the PublicIP resource Updating/Deleting/Failed"
         }
       },
       "description": "Properties of the load balancer"
@@ -2641,12 +2662,13 @@
         "etag": {
           "type": "string",
           "description": "A unique read-only string that changes whenever the resource is updated"
-        },
-        "id": {
-          "type": "string",
-          "description": "Id of the resource"
         }
       },
+      "allOf": [
+        {
+          "$ref": "SubResource"
+        }
+      ],
       "description": "Rules of the load balancer"
     },
     "ProbePropertiesFormat": {
@@ -2654,13 +2676,18 @@
         "loadBalancingRules": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/ResourceId"
+            "$ref": "#/definitions/SubResource"
           },
           "description": "Gets Load balancer rules that use this probe"
         },
         "protocol": {
           "type": "string",
-          "description": "Gets or sets the protocol of the end point. Possible values are http pr Tcp. If Tcp is specified, a received ACK is required for the probe to be successful. If http is specified,a 200 OK response from the specifies URI is required for the probe to be successful"
+          "description": "Gets or sets the protocol of the end point. Possible values are http pr Tcp. If Tcp is specified, a received ACK is required for the probe to be successful. If http is specified,a 200 OK response from the specifies URI is required for the probe to be successful",
+          "enum": [
+            "Http",
+            "Tcp"
+          ],
+          "x-ms-enum": "ProbeProtocol"
         },
         "port": {
           "type": "integer",
@@ -2680,6 +2707,10 @@
         "requestPath": {
           "type": "string",
           "description": "Gets or sets the URI used for requesting health status from the VM. Path is required if a protocol is set to http. Otherwise, it is not allowed. There is no default value"
+        },
+        "provisioningState": {
+          "type": "string",
+          "description": "Gets or sets Provisioning state of the PublicIP resource Updating/Deleting/Failed"
         }
       }
     },
@@ -2695,27 +2726,33 @@
         "etag": {
           "type": "string",
           "description": "A unique read-only string that changes whenever the resource is updated"
-        },
-        "id": {
-          "type": "string",
-          "description": "Id of the resource"
         }
       },
+      "allOf": [
+        {
+          "$ref": "SubResource"
+        }
+      ],
       "description": "Load balancer Probe"
     },
     "InboundNatRulePropertiesFormat": {
       "properties": {
         "frontendIPConfiguration": {
-          "$ref": "#/definitions/ResourceId",
+          "$ref": "#/definitions/SubResource",
           "description": "Gets or sets a reference to frontend IP Addresses"
         },
         "backendIPConfiguration": {
-          "$ref": "#/definitions/ResourceId",
+          "$ref": "#/definitions/SubResource",
           "description": "Gets or sets a reference to a private ip address defined on a NetworkInterface of a VM. Traffic sent to frontendPort of each of the frontendIPConfigurations is forwarded to the backed IP"
         },
         "protocol": {
           "type": "string",
-          "description": "Gets or sets the transport potocol for the external endpoint. Possible values are Udp or Tcp"
+          "description": "Gets or sets the transport potocol for the external endpoint. Possible values are Udp or Tcp",
+          "enum": [
+            "Udp",
+            "Tcp"
+          ],
+          "x-ms-enum": "TransportProtocol"
         },
         "frontendPort": {
           "type": "integer",
@@ -2735,6 +2772,10 @@
         "enableFloatingIP": {
           "type": "boolean",
           "description": "Configures a virtual machine's endpoint for the floating IP capability required to configure a SQL AlwaysOn availability Group. This setting is required when using the SQL Always ON availability Groups in SQL server. This setting can't be changed after you create the endpoint"
+        },
+        "provisioningState": {
+          "type": "string",
+          "description": "Gets or sets Provisioning state of the PublicIP resource Updating/Deleting/Failed"
         }
       },
       "description": "Properties of Inbound NAT rule"
@@ -2751,12 +2792,13 @@
         "etag": {
           "type": "string",
           "description": "A unique read-only string that changes whenever the resource is updated"
-        },
-        "id": {
-          "type": "string",
-          "description": "Id of the resource"
         }
       },
+      "allOf": [
+        {
+          "$ref": "SubResource"
+        }
+      ],
       "description": "Inbound NAT rule of the loadbalancer"
     },
     "LoadBalancerPropertiesFormat": {
@@ -2957,29 +2999,38 @@
         },
         "privateIPAllocationMethod": {
           "type": "string",
-          "description": "Gets or sets PrivateIP allocation method (Static/Dynamic)"
+          "description": "Gets or sets PrivateIP allocation method (Static/Dynamic)",
+          "enum": [
+            "Static",
+            "Dynamic"
+          ],
+          "x-ms-enum": "IpAllocationMethod"
         },
         "subnet": {
-          "$ref": "#/definitions/ResourceId",
+          "$ref": "#/definitions/SubResource",
           "description": "Gets or sets the reference of the subnet resource"
         },
         "publicIPAddress": {
-          "$ref": "#/definitions/ResourceId",
+          "$ref": "#/definitions/SubResource",
           "description": "Gets or sets the reference of the PublicIP resource"
         },
         "loadBalancerBackendAddressPools": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/ResourceId"
+            "$ref": "#/definitions/SubResource"
           },
           "description": "Gets or sets the reference of LoadBalancerBackendAddressPool resource"
         },
         "loadBalancerInboundNatRules": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/ResourceId"
+            "$ref": "#/definitions/SubResource"
           },
           "description": "Gets or sets list of references of LoadBalancerInboundNatRules"
+        },
+        "provisioningState": {
+          "type": "string",
+          "description": "Gets or sets Provisioning state of the PublicIP resource Updating/Deleting/Failed"
         }
       },
       "description": "Properties of IPConfiguration"
@@ -2996,12 +3047,13 @@
         "etag": {
           "type": "string",
           "description": "A unique read-only string that changes whenever the resource is updated"
-        },
-        "id": {
-          "type": "string",
-          "description": "Id of the resource"
         }
       },
+      "allOf": [
+        {
+          "$ref": "SubResource"
+        }
+      ],
       "description": "IPConfiguration in a NetworkInterface"
     },
     "DnsSettings": {
@@ -3026,11 +3078,11 @@
     "NetworkInterfacePropertiesFormat": {
       "properties": {
         "virtualMachine": {
-          "$ref": "#/definitions/ResourceId",
+          "$ref": "#/definitions/SubResource",
           "description": "Gets or sets the reference of a VirtualMachine"
         },
         "networkSecurityGroup": {
-          "$ref": "#/definitions/ResourceId",
+          "$ref": "#/definitions/SubResource",
           "description": "Gets or sets the reference of the NetworkSecurityGroup resource"
         },
         "ipConfigurations": {
@@ -3108,7 +3160,13 @@
         },
         "protocol": {
           "type": "string",
-          "description": "Gets or sets Network protocol this rule applies to. Can be Tcp, Udp or All(*)."
+          "description": "Gets or sets Network protocol this rule applies to. Can be Tcp, Udp or All(*).",
+          "enum": [
+            "Tcp",
+            "Udp",
+            "*"
+          ],
+          "x-ms-enum": "SecurityRuleProtocol"
         },
         "sourcePortRange": {
           "type": "string",
@@ -3128,7 +3186,12 @@
         },
         "access": {
           "type": "string",
-          "description": "Gets or sets network traffic is allowed or denied. Possible values are “Allow” and “Deny”"
+          "description": "Gets or sets network traffic is allowed or denied. Possible values are “Allow” and “Deny”",
+          "enum": [
+            "Allow",
+            "Deny"
+          ],
+          "x-ms-enum": "SecurityRuleAccess"
         },
         "priority": {
           "type": "integer",
@@ -3137,7 +3200,16 @@
         },
         "direction": {
           "type": "string",
-          "description": "Gets or sets the direction of the rule.InBound or Outbound. The direction specifies if rule will be evaluated on incoming or outcoming traffic."
+          "description": "Gets or sets the direction of the rule.InBound or Outbound. The direction specifies if rule will be evaluated on incoming or outcoming traffic.",
+          "enum": [
+            "Inbound",
+            "Outbound"
+          ],
+          "x-ms-enum": "SecurityRuleDirection"
+        },
+        "provisioningState": {
+          "type": "string",
+          "description": "Gets or sets Provisioning state of the PublicIP resource Updating/Deleting/Failed"
         }
       }
     },
@@ -3153,12 +3225,13 @@
         "etag": {
           "type": "string",
           "description": "A unique read-only string that changes whenever the resource is updated"
-        },
-        "id": {
-          "type": "string",
-          "description": "Id of the resource"
         }
       },
+      "allOf": [
+        {
+          "$ref": "SubResource"
+        }
+      ],
       "description": "Network security rule"
     },
     "NetworkSecurityGroupPropertiesFormat": {
@@ -3180,14 +3253,14 @@
         "networkInterfaces": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/ResourceId"
+            "$ref": "#/definitions/SubResource"
           },
           "description": "Gets collection of references to Network Interfaces"
         },
         "subnets": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/ResourceId"
+            "$ref": "#/definitions/SubResource"
           },
           "description": "Gets collection of references to subnets"
         }
@@ -3260,10 +3333,15 @@
       "properties": {
         "publicIPAllocationMethod": {
           "type": "string",
-          "description": "Gets or sets PublicIP allocation method (Static/Dynamic)"
+          "description": "Gets or sets PublicIP allocation method (Static/Dynamic)",
+          "enum": [
+            "Static",
+            "Dynamic"
+          ],
+          "x-ms-enum": "IpAllocationMethod"
         },
         "ipConfiguration": {
-          "$ref": "#/definitions/ResourceId",
+          "$ref": "#/definitions/SubResource",
           "description": "Gets a reference to the network interface IP configurations using this public IP address"
         },
         "dnsSettings": {
@@ -3362,15 +3440,19 @@
           "description": "Gets or sets Address prefix for the subnet."
         },
         "networkSecurityGroup": {
-          "$ref": "#/definitions/ResourceId",
+          "$ref": "#/definitions/SubResource",
           "description": "Gets or sets the reference of the NetworkSecurityGroup resource"
         },
         "ipConfigurations": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/ResourceId"
+            "$ref": "#/definitions/SubResource"
           },
           "description": "Gets array of references to the network interface IP configurations using subnet"
+        },
+        "provisioningState": {
+          "type": "string",
+          "description": "Gets or sets Provisioning state of the PublicIP resource Updating/Deleting/Failed"
         }
       }
     },
@@ -3386,12 +3468,13 @@
         "etag": {
           "type": "string",
           "description": "A unique read-only string that changes whenever the resource is updated"
-        },
-        "id": {
-          "type": "string",
-          "description": "Id of the resource"
         }
       },
+      "allOf": [
+        {
+          "$ref": "SubResource"
+        }
+      ],
       "description": "Subnet in a VirtualNework resource"
     },
     "SubnetListResponse": {
@@ -3439,7 +3522,11 @@
       "properties": {
         "unit": {
           "type": "string",
-          "description": "Gets or sets an enum describing the unit of measurement."
+          "description": "Gets or sets an enum describing the unit of measurement.",
+          "enum": [
+            "Count"
+          ],
+          "x-ms-enum": "UsageUnit"
         },
         "currentValue": {
           "type": "integer",
@@ -3466,15 +3553,24 @@
         },
         "privateIPAllocationMethod": {
           "type": "string",
-          "description": "Gets or sets PrivateIP allocation method (Static/Dynamic)"
+          "description": "Gets or sets PrivateIP allocation method (Static/Dynamic)",
+          "enum": [
+            "Static",
+            "Dynamic"
+          ],
+          "x-ms-enum": "IpAllocationMethod"
         },
         "subnet": {
-          "$ref": "#/definitions/ResourceId",
+          "$ref": "#/definitions/SubResource",
           "description": "Gets or sets the reference of the subnet resource"
         },
         "publicIPAddress": {
-          "$ref": "#/definitions/ResourceId",
+          "$ref": "#/definitions/SubResource",
           "description": "Gets or sets the reference of the PublicIP resource"
+        },
+        "provisioningState": {
+          "type": "string",
+          "description": "Gets or sets Provisioning state of the PublicIP resource Updating/Deleting/Failed"
         }
       },
       "description": "Properties of VirtualNetworkGatewayIPConfiguration"
@@ -3491,12 +3587,13 @@
         "etag": {
           "type": "string",
           "description": "A unique read-only string that changes whenever the resource is updated"
-        },
-        "id": {
-          "type": "string",
-          "description": "Id of the resource"
         }
       },
+      "allOf": [
+        {
+          "$ref": "SubResource"
+        }
+      ],
       "description": "IpConfiguration for Virtual network gateway"
     },
     "VirtualNetworkGatewayPropertiesFormat": {
@@ -3510,11 +3607,21 @@
         },
         "gatewaySize": {
           "type": "string",
-          "description": "The size of this virtual network gateway."
+          "description": "The size of this virtual network gateway.",
+          "enum": [
+            "Default",
+            "HighPerformance"
+          ],
+          "x-ms-enum": "VirtualNetworkGatewaySize"
         },
         "gatewayType": {
           "type": "string",
-          "description": "The type of this virtual network gateway."
+          "description": "The type of this virtual network gateway.",
+          "enum": [
+            "StaticRouting",
+            "DynamicRouting"
+          ],
+          "x-ms-enum": "VpnGatewayType"
         },
         "enableBgp": {
           "type": "boolean",
@@ -3553,7 +3660,14 @@
         },
         "connectionType": {
           "type": "string",
-          "description": "Gateway connection type -Ipsec/Dedicated/VpnClient/Vnet2Vnet"
+          "description": "Gateway connection type -Ipsec/Dedicated/VpnClient/Vnet2Vnet",
+          "enum": [
+            "IPsec",
+            "Vnet2Vnet",
+            "Dedicated",
+            "VPNClient"
+          ],
+          "x-ms-enum": "VirtualNetworkGatewayConnectionType"
         },
         "routingWeight": {
           "type": "integer",
@@ -3778,7 +3892,13 @@
       "properties": {
         "status": {
           "type": "string",
-          "description": "Status of the AzureAsuncOperation"
+          "description": "Status of the AzureAsuncOperation",
+          "enum": [
+            "InProgress",
+            "Succeeded",
+            "Failed"
+          ],
+          "x-ms-enum": "OperationStatus"
         },
         "error": {
           "$ref": "#/definitions/Error"
@@ -3787,6 +3907,15 @@
       "description": "The response body contains the status of the specified asynchronous operation, indicating whether it has succeeded, is inprogress, or has failed. Note that this status is distinct from the HTTP status code returned for the Get Operation Status operation itself. If the asynchronous operation succeeded, the response body includes the HTTP status code for the successful request. If the asynchronous operation failed, the response body includes the HTTP status code for the failed request and error information regarding the failure."
     },
     "Resource": {
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Resource Id"
+        }
+      },
+      "x-ms-external": true
+    },
+    "SubResource": {
       "properties": {
         "id": {
           "type": "string",
