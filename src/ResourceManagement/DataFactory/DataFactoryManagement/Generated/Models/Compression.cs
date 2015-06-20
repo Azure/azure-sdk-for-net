@@ -22,31 +22,18 @@
 using System;
 using System.Linq;
 
-namespace Microsoft.Azure.Management.Network.Models
+namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
-    /// The different connection types that a virtual network gateway can have.
+    /// The compression method used on a table location.
     /// </summary>
-    public static partial class VirtualNetworkGatewayConnectionType
+    public abstract partial class Compression
     {
         /// <summary>
-        /// Virtual network gateway connection type:IPsec
+        /// Initializes a new instance of the Compression class.
         /// </summary>
-        public const string IPsec = "IPsec";
-        
-        /// <summary>
-        /// Virtual network gateway connection type:Vnet2Vnet
-        /// </summary>
-        public const string Vnet2Vnet = "Vnet2Vnet";
-        
-        /// <summary>
-        /// Virtual network gateway dedicated connection type:ExpressRoute
-        /// </summary>
-        public const string ExpressRoute = "ExpressRoute";
-        
-        /// <summary>
-        /// Virtual network gateway connection type:VPNClient
-        /// </summary>
-        public const string VPNClient = "VPNClient";
+        public Compression()
+        {
+        }
     }
 }

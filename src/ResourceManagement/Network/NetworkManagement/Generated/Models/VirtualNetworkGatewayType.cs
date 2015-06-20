@@ -24,29 +24,11 @@ using System.Linq;
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    /// <summary>
-    /// The different connection types that a virtual network gateway can have.
-    /// </summary>
-    public static partial class VirtualNetworkGatewayConnectionType
+    public static partial class VirtualNetworkGatewayType
     {
         /// <summary>
-        /// Virtual network gateway connection type:IPsec
+        /// VPN Gateways
         /// </summary>
-        public const string IPsec = "IPsec";
-        
-        /// <summary>
-        /// Virtual network gateway connection type:Vnet2Vnet
-        /// </summary>
-        public const string Vnet2Vnet = "Vnet2Vnet";
-        
-        /// <summary>
-        /// Virtual network gateway dedicated connection type:ExpressRoute
-        /// </summary>
-        public const string ExpressRoute = "ExpressRoute";
-        
-        /// <summary>
-        /// Virtual network gateway connection type:VPNClient
-        /// </summary>
-        public const string VPNClient = "VPNClient";
+        public const string Vpn = "Vpn";
     }
 }

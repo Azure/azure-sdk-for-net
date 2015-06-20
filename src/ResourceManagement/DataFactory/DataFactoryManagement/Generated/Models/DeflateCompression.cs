@@ -21,32 +21,31 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure.Management.DataFactories.Models;
 
-namespace Microsoft.Azure.Management.Network.Models
+namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
-    /// The different connection types that a virtual network gateway can have.
+    /// The Deflate compression method.
     /// </summary>
-    public static partial class VirtualNetworkGatewayConnectionType
+    public partial class DeflateCompression : Compression
     {
-        /// <summary>
-        /// Virtual network gateway connection type:IPsec
-        /// </summary>
-        public const string IPsec = "IPsec";
+        private string _level;
         
         /// <summary>
-        /// Virtual network gateway connection type:Vnet2Vnet
+        /// Optional. Gets or sets the compression level.
         /// </summary>
-        public const string Vnet2Vnet = "Vnet2Vnet";
+        public string Level
+        {
+            get { return this._level; }
+            set { this._level = value; }
+        }
         
         /// <summary>
-        /// Virtual network gateway dedicated connection type:ExpressRoute
+        /// Initializes a new instance of the DeflateCompression class.
         /// </summary>
-        public const string ExpressRoute = "ExpressRoute";
-        
-        /// <summary>
-        /// Virtual network gateway connection type:VPNClient
-        /// </summary>
-        public const string VPNClient = "VPNClient";
+        public DeflateCompression()
+        {
+        }
     }
 }

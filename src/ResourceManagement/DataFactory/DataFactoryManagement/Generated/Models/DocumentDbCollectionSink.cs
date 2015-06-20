@@ -21,32 +21,42 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure.Management.DataFactories.Models;
 
-namespace Microsoft.Azure.Management.Network.Models
+namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
-    /// The different connection types that a virtual network gateway can have.
+    /// A copy activity Document Database Collection sink.
     /// </summary>
-    public static partial class VirtualNetworkGatewayConnectionType
+    public partial class DocumentDbCollectionSink : CopySink
     {
-        /// <summary>
-        /// Virtual network gateway connection type:IPsec
-        /// </summary>
-        public const string IPsec = "IPsec";
+        private string _nestingSeparator;
         
         /// <summary>
-        /// Virtual network gateway connection type:Vnet2Vnet
+        /// Optional. Gets or sets nested properties separator.
         /// </summary>
-        public const string Vnet2Vnet = "Vnet2Vnet";
+        public string NestingSeparator
+        {
+            get { return this._nestingSeparator; }
+            set { this._nestingSeparator = value; }
+        }
         
         /// <summary>
-        /// Virtual network gateway dedicated connection type:ExpressRoute
+        /// Initializes a new instance of the DocumentDbCollectionSink class.
         /// </summary>
-        public const string ExpressRoute = "ExpressRoute";
+        public DocumentDbCollectionSink()
+        {
+        }
         
         /// <summary>
-        /// Virtual network gateway connection type:VPNClient
+        /// Initializes a new instance of the DocumentDbCollectionSink class
+        /// with required arguments.
         /// </summary>
-        public const string VPNClient = "VPNClient";
+        public DocumentDbCollectionSink(int writeBatchSize, TimeSpan writeBatchTimeout)
+            : this()
+        {
+            this.WriteBatchSize = writeBatchSize;
+            this.WriteBatchTimeout = writeBatchTimeout;
+        }
     }
 }

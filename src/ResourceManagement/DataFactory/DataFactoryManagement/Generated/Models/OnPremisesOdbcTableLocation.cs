@@ -21,32 +21,34 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure.Management.DataFactories.Models;
 
-namespace Microsoft.Azure.Management.Network.Models
+namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
-    /// The different connection types that a virtual network gateway can have.
+    /// The on-premises ODBC data source location.
     /// </summary>
-    public static partial class VirtualNetworkGatewayConnectionType
+    public partial class OnPremisesOdbcTableLocation : TableLocation
     {
         /// <summary>
-        /// Virtual network gateway connection type:IPsec
+        /// Initializes a new instance of the OnPremisesOdbcTableLocation class.
         /// </summary>
-        public const string IPsec = "IPsec";
+        public OnPremisesOdbcTableLocation()
+        {
+        }
         
         /// <summary>
-        /// Virtual network gateway connection type:Vnet2Vnet
+        /// Initializes a new instance of the OnPremisesOdbcTableLocation class
+        /// with required arguments.
         /// </summary>
-        public const string Vnet2Vnet = "Vnet2Vnet";
-        
-        /// <summary>
-        /// Virtual network gateway dedicated connection type:ExpressRoute
-        /// </summary>
-        public const string ExpressRoute = "ExpressRoute";
-        
-        /// <summary>
-        /// Virtual network gateway connection type:VPNClient
-        /// </summary>
-        public const string VPNClient = "VPNClient";
+        public OnPremisesOdbcTableLocation(string linkedServiceName)
+            : this()
+        {
+            if (linkedServiceName == null)
+            {
+                throw new ArgumentNullException("linkedServiceName");
+            }
+            this.LinkedServiceName = linkedServiceName;
+        }
     }
 }

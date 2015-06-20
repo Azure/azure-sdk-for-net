@@ -22,31 +22,26 @@
 using System;
 using System.Linq;
 
-namespace Microsoft.Azure.Management.Network.Models
+namespace Microsoft.Azure.Management.Sql.Models
 {
     /// <summary>
-    /// The different connection types that a virtual network gateway can have.
+    /// Defines the valid restore points of Azure SQL Databases. See MSDN for
+    /// more information.
     /// </summary>
-    public static partial class VirtualNetworkGatewayConnectionType
+    public static partial class RestorePointTypes
     {
         /// <summary>
-        /// Virtual network gateway connection type:IPsec
+        /// Discrete restore points describe the possible point-in-times that
+        /// an Azure SQL database can be restored to.
         /// </summary>
-        public const string IPsec = "IPsec";
+        public const string DISCRETE = "DISCRETE";
         
         /// <summary>
-        /// Virtual network gateway connection type:Vnet2Vnet
+        /// Continuous restore points describe the earliest possible
+        /// point-in-times that an Azure SQL database can be restored to. The
+        /// database can be restored to any point-in-time after the earliest
+        /// point.
         /// </summary>
-        public const string Vnet2Vnet = "Vnet2Vnet";
-        
-        /// <summary>
-        /// Virtual network gateway dedicated connection type:ExpressRoute
-        /// </summary>
-        public const string ExpressRoute = "ExpressRoute";
-        
-        /// <summary>
-        /// Virtual network gateway connection type:VPNClient
-        /// </summary>
-        public const string VPNClient = "VPNClient";
+        public const string CONTINUOUS = "CONTINUOUS";
     }
 }

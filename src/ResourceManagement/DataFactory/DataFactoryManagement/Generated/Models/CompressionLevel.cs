@@ -22,21 +22,21 @@
 using System;
 using System.Linq;
 
-namespace Microsoft.Azure.Management.Network.Models
+namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
-    /// The different SKUs that a gateway can have.
+    /// The compression level.
     /// </summary>
-    public static partial class VirtualNetworkGatewaySize
+    public static partial class CompressionLevel
     {
         /// <summary>
-        /// Default gateway size.
+        /// The optimal compression level.
         /// </summary>
-        public const string Default = "Default";
+        public const string Optimal = "Optimal";
         
         /// <summary>
-        /// HighPerformance gateway size.
+        /// The fastest compression level.
         /// </summary>
-        public const string HighPerformance = "HighPerformance";
+        public const string Fastest = "Fastest";
     }
 }

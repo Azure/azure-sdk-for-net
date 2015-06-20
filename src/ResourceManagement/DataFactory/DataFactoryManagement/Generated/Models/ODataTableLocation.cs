@@ -21,32 +21,45 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure.Management.DataFactories.Models;
 
-namespace Microsoft.Azure.Management.Network.Models
+namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
-    /// The different connection types that a virtual network gateway can have.
+    /// The OData feed.
     /// </summary>
-    public static partial class VirtualNetworkGatewayConnectionType
+    public partial class ODataTableLocation : TableLocation
     {
-        /// <summary>
-        /// Virtual network gateway connection type:IPsec
-        /// </summary>
-        public const string IPsec = "IPsec";
+        private string _resource;
         
         /// <summary>
-        /// Virtual network gateway connection type:Vnet2Vnet
+        /// Optional. Gets or sets the table name of the OData resource.
         /// </summary>
-        public const string Vnet2Vnet = "Vnet2Vnet";
+        public string Resource
+        {
+            get { return this._resource; }
+            set { this._resource = value; }
+        }
         
         /// <summary>
-        /// Virtual network gateway dedicated connection type:ExpressRoute
+        /// Initializes a new instance of the ODataTableLocation class.
         /// </summary>
-        public const string ExpressRoute = "ExpressRoute";
+        public ODataTableLocation()
+        {
+        }
         
         /// <summary>
-        /// Virtual network gateway connection type:VPNClient
+        /// Initializes a new instance of the ODataTableLocation class with
+        /// required arguments.
         /// </summary>
-        public const string VPNClient = "VPNClient";
+        public ODataTableLocation(string linkedServiceName)
+            : this()
+        {
+            if (linkedServiceName == null)
+            {
+                throw new ArgumentNullException("linkedServiceName");
+            }
+            this.LinkedServiceName = linkedServiceName;
+        }
     }
 }

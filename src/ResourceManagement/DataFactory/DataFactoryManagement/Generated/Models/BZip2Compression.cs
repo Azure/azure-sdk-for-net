@@ -21,19 +21,20 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure.Management.DataFactories.Models;
 
-namespace Microsoft.Azure.Management.Network.Models
+namespace Microsoft.Azure.Management.DataFactories.Models
 {
-    public static partial class VpnGatewayType
+    /// <summary>
+    /// The BZip2 compression method.
+    /// </summary>
+    public partial class BZip2Compression : Compression
     {
         /// <summary>
-        /// Virtual network StaticRouting gateway type
+        /// Initializes a new instance of the BZip2Compression class.
         /// </summary>
-        public const string StaticRouting = "StaticRouting";
-        
-        /// <summary>
-        /// Virtual network DynamicRouting gateway type
-        /// </summary>
-        public const string DynamicRouting = "DynamicRouting";
+        public BZip2Compression()
+        {
+        }
     }
 }

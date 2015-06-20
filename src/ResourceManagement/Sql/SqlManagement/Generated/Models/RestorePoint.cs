@@ -21,32 +21,47 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
+using Microsoft.Azure.Management.Sql.Models;
 
-namespace Microsoft.Azure.Management.Network.Models
+namespace Microsoft.Azure.Management.Sql.Models
 {
     /// <summary>
-    /// The different connection types that a virtual network gateway can have.
+    /// Represents an Azure SQL Database restore point.
     /// </summary>
-    public static partial class VirtualNetworkGatewayConnectionType
+    public partial class RestorePoint : ResourceBaseExtended
     {
-        /// <summary>
-        /// Virtual network gateway connection type:IPsec
-        /// </summary>
-        public const string IPsec = "IPsec";
+        private RestorePointProperties _properties;
         
         /// <summary>
-        /// Virtual network gateway connection type:Vnet2Vnet
+        /// Optional. Gets or sets the properties representing the restore
+        /// point.
         /// </summary>
-        public const string Vnet2Vnet = "Vnet2Vnet";
+        public RestorePointProperties Properties
+        {
+            get { return this._properties; }
+            set { this._properties = value; }
+        }
         
         /// <summary>
-        /// Virtual network gateway dedicated connection type:ExpressRoute
+        /// Initializes a new instance of the RestorePoint class.
         /// </summary>
-        public const string ExpressRoute = "ExpressRoute";
+        public RestorePoint()
+        {
+        }
         
         /// <summary>
-        /// Virtual network gateway connection type:VPNClient
+        /// Initializes a new instance of the RestorePoint class with required
+        /// arguments.
         /// </summary>
-        public const string VPNClient = "VPNClient";
+        public RestorePoint(string location)
+            : this()
+        {
+            if (location == null)
+            {
+                throw new ArgumentNullException("location");
+            }
+            this.Location = location;
+        }
     }
 }
