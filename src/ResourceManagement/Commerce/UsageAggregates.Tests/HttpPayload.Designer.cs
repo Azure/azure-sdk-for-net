@@ -70,7 +70,7 @@ namespace UsageAggregates.Tests {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {&quot;value&quot;:[{&quot;id&quot;:&quot;/subscriptiy_BRSDT_20150602_0100&quot;,&quot;name&quot;:&quot;Hourly_BRSDT_20150602_0100&quot;,&quot;properties&quot;:{&quot;subscriptionId&quot;:&quot;sid&quot;,&quot;usageStartTime&quot;:&quot;2015-06-01&quot;,&quot;usageEndTime&quot;:&quot;2015-06-01&quot;,&quot;instanceData&quot;:{&quot;resourceUri&quot;:&quot;http://azure.com&quot;,&quot;tags&quot;:&quot;tag1&quot;,&quot;location&quot;:&quot;loc&quot;,&quot;additionalInfo&quot;:&quot;OSVersion&quot;,&quot;partNumber&quot;:&quot;namespace&quot;,&quot;orderNumber&quot;:&quot;abc3&quot;}}}],&quot;nextLink&quot;:&quot;https://management.azure.com:443/subscriptions/3af18309-a8c8-4865-&quot;}.
+        ///   Looks up a localized string similar to {&quot;value&quot;:[{&quot;id&quot;:&quot;/subscriptiy_BRSDT_20150602_0100&quot;,&quot;name&quot;:&quot;Hourly_BRSDT_20150602_0100&quot;,&quot;properties&quot;:{&quot;subscriptionId&quot;:&quot;sid&quot;,&quot;usageStartTime&quot;:&quot;2015-06-01&quot;,&quot;usageEndTime&quot;:&quot;2015-06-01&quot;,&quot;instanceData&quot;:&quot;{\&quot;Microsoft.Resources\&quot;:{\&quot;resourceUri\&quot;:\&quot;/subscriptions/35349201-a0b3-405e-8a23-9f1450984307/resourceGroups/ABHAYM-DEMO-20150512-014436-PAASV2/providers/Microsoft.Compute/virtualMachines/VM2\&quot;,\&quot;location\&quot;:\&quot;southeastasia\&quot;,\&quot;additionalInfo\&quot;:{\&quot;ImageType\&quot;:\&quot;\&quot;,\&quot;ServiceType\&quot;:\&quot;Standard_A2\&quot;}&quot;}}],&quot;nextLink&quot;: [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string AggregateInstanceData {
             get {
