@@ -25,7 +25,7 @@ function SyncNuspecFile([string]$FolderPath)
 
         $assemblyContent = Get-Content $FolderPath\Properties\AssemblyInfo.cs
         $currentContent = $assemblyContent | Out-String
-
+		Write-Host "Current content: $currentContent"
         #Updating AssemblyFileVersion
         $packageVersion = $nuproj.Project.ItemGroup.SdkNuGetPackage.PackageVersion
         $packageVersion = ([regex]"[\d\.]+").Match($packageVersion).Value
@@ -37,6 +37,7 @@ function SyncNuspecFile([string]$FolderPath)
         $assemblyFileVersion = "$packageVersion.0" 
         $assemblyContent = $assemblyContent -replace "\[assembly\:\s*AssemblyFileVersion\s*\(\s*`"[\d\.\s]+`"\s*\)\s*\]","[assembly: AssemblyFileVersion(`"$assemblyFileVersion`")]"
 
+		Write-Host "Major Version: $majorVersion, package version: $packageVersion, AssemblyFileVersion: $assemblyFileVersion"
         #Updating AssemblyVersion
         $assemblyVersion = "$majorVersion.0.0.0"
         if ($majorVersion -eq "0") {
@@ -44,7 +45,8 @@ function SyncNuspecFile([string]$FolderPath)
         }
         $assemblyContent = $assemblyContent -replace "\[assembly\:\s*AssemblyVersion\s*\(\s*`"[\d\.\s]+","[assembly: AssemblyVersion(`"$assemblyVersion"       
         $newContent = $assemblyContent | Out-String
-
+		Write-Host "Major Version: $majorVersion, AssemblyVersion: $assemblyVersion"
+		Write-Host "New Content: $newContent"
         if ($currentContent.CompareTo($newContent)  -ne 0) {
             # due to file access confliction with other process such as VS, retry several times 
             $retry = 1
