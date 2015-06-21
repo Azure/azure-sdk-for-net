@@ -49,9 +49,8 @@ namespace Microsoft.Azure.Search.Tests
                 SearchServiceClient serviceClient = Data.GetSearchServiceClient();
                 SearchIndexClient indexClient = serviceClient.Indexes.GetClient("test");
 
-                Assert.True(indexClient.BaseUri.AbsolutePath.EndsWith("/indexes/test/"));
                 Assert.Equal(serviceClient.Credentials.ApiKey, indexClient.Credentials.ApiKey);
-                Assert.Equal(new Uri(serviceClient.BaseUri, "/indexes/test/"), indexClient.BaseUri);
+                Assert.Equal(new Uri(serviceClient.BaseUri, "/indexes('test')"), indexClient.BaseUri);
             });
         }
 

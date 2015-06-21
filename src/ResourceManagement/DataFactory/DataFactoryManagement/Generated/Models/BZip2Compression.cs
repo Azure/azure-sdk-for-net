@@ -21,22 +21,20 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure.Management.DataFactories.Models;
 
-namespace Microsoft.Azure.Management.Network.Models
+namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
-    /// The different SKUs that a gateway can have.
+    /// The BZip2 compression method.
     /// </summary>
-    public static partial class VirtualNetworkGatewaySize
+    public partial class BZip2Compression : Compression
     {
         /// <summary>
-        /// Default gateway size.
+        /// Initializes a new instance of the BZip2Compression class.
         /// </summary>
-        public const string Default = "Default";
-        
-        /// <summary>
-        /// HighPerformance gateway size.
-        /// </summary>
-        public const string HighPerformance = "HighPerformance";
+        public BZip2Compression()
+        {
+        }
     }
 }

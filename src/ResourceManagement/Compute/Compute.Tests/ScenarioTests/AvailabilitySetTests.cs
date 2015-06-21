@@ -348,7 +348,9 @@ namespace Compute.Tests
             Assert.True(outputAvailabilitySet.PlatformFaultDomainCount == expectedFD);
             Assert.True(outputAvailabilitySet.PlatformUpdateDomainCount == expectedUD);
 
-            Assert.True(inputAvailabilitySet.Tags != null && outputAvailabilitySet.Tags != null);
+            Assert.NotNull(inputAvailabilitySet.Tags);
+            Assert.NotNull(outputAvailabilitySet.Tags);
+
             foreach (var tag in inputAvailabilitySet.Tags)
             {
                 string key = tag.Key;

@@ -95,7 +95,7 @@ namespace Microsoft.Azure.KeyVault.Internal
             string url = "";
             url = url + secretIdentifier;
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-02-01-preview");
+            queryParameters.Add("api-version=2015-06-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -212,7 +212,7 @@ namespace Microsoft.Azure.KeyVault.Internal
             string url = "";
             url = url + secretIdentifier;
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-02-01-preview");
+            queryParameters.Add("api-version=2015-06-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -334,7 +334,7 @@ namespace Microsoft.Azure.KeyVault.Internal
             url = url + vault;
             url = url + "/secrets/";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-02-01-preview");
+            queryParameters.Add("api-version=2015-06-01");
             if (top != null)
             {
                 queryParameters.Add("maxresults=" + Uri.EscapeDataString(top.Value.ToString()));
@@ -581,7 +581,7 @@ namespace Microsoft.Azure.KeyVault.Internal
             url = url + Uri.EscapeDataString(secretName);
             url = url + "/versions";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-02-01-preview");
+            queryParameters.Add("api-version=2015-06-01");
             if (top != null)
             {
                 queryParameters.Add("maxresults=" + Uri.EscapeDataString(top.Value.ToString()));
@@ -821,7 +821,7 @@ namespace Microsoft.Azure.KeyVault.Internal
             string url = "";
             url = url + secretIdentifier;
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-02-01-preview");
+            queryParameters.Add("api-version=2015-06-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -951,7 +951,7 @@ namespace Microsoft.Azure.KeyVault.Internal
             string url = "";
             url = url + secretIdentifier;
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-02-01-preview");
+            queryParameters.Add("api-version=2015-06-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);

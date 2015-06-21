@@ -87,6 +87,25 @@ namespace Microsoft.Azure.Management.Sql
         }
         
         /// <summary>
+        /// Represents all the operations for operating pertaining to
+        /// activation on Azure SQL Data Warehouse databases. Contains
+        /// operations to: Pause and Resume databases
+        /// </summary>
+        IDatabaseActivationOperations DatabaseActivation
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Represents all the operations for operating on Azure SQL Database
+        /// restore points. Contains operations to: List restore points.
+        /// </summary>
+        IDatabaseBackupOperations DatabaseBackup
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Represents all the operations for operating on Azure SQL Databases.
         /// Contains operations to: Create, Retrieve, Update, and Delete
         /// databases, and also includes the ability to get the event logs for

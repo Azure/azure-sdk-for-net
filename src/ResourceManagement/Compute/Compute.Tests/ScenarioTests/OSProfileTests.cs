@@ -130,8 +130,8 @@ namespace Compute.Tests
             Assert.Null(osProfile.LinuxConfiguration);
             Assert.NotNull(osProfile.WindowsConfiguration);
 
-            Assert.True(osProfile.WindowsConfiguration.ProvisionVMAgent.Value);
-            Assert.False(osProfile.WindowsConfiguration.EnableAutomaticUpdates.Value);
+            Assert.True(osProfile.WindowsConfiguration.ProvisionVMAgent != null && osProfile.WindowsConfiguration.ProvisionVMAgent.Value);
+            Assert.True(osProfile.WindowsConfiguration.EnableAutomaticUpdates != null && !osProfile.WindowsConfiguration.EnableAutomaticUpdates.Value);
 
             // TimeZone
             Assert.Equal(PacificStandardTime, osProfile.WindowsConfiguration.TimeZone);
@@ -172,6 +172,8 @@ namespace Compute.Tests
             Assert.Equal(autoLogonContent, additionalContents[0].Content);
         }
 
+        // See recording instructions in HyakSpec\ReadMe.txt. The key vault URLs produced by the script are plugged
+        // into SecretVaultHelper, below.
         [Fact]
         public void TestVMWithWindowsOSProfile()
         {
@@ -257,7 +259,7 @@ namespace Compute.Tests
                     var publicKeys = osProfile.LinuxConfiguration.SshConfiguration.PublicKeys;
                     Assert.NotNull(osProfile.LinuxConfiguration.SshConfiguration.PublicKeys);
 
-                    Assert.False(osProfile.LinuxConfiguration.DisablePasswordAuthentication.Value);
+                    Assert.True(osProfile.LinuxConfiguration.DisablePasswordAuthentication != null && !osProfile.LinuxConfiguration.DisablePasswordAuthentication.Value);
 
                     Assert.Equal(1, publicKeys.Count);
                     Assert.Equal(sshPath, publicKeys[0].Path);
@@ -281,14 +283,14 @@ namespace Compute.Tests
             string storageAccountName = TestUtilities.GenerateName(TestPrefix);
             string asName = TestUtilities.GenerateName("as");
 
-            string imgRefId = GetPlatformOSImage(useWindowsProfile);
+            ImageReference imageRef = GetPlatformVMImage(useWindowsProfile);
 
             VirtualMachine inputVM;
             try
             {
                 StorageAccount storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
 
-                VirtualMachine vm = CreateVM(rgName, asName, storageAccountOutput, imgRefId, out inputVM, vmCustomizer);
+                VirtualMachine vm = CreateVM_NoAsyncTracking(rgName, asName, storageAccountOutput, imageRef, out inputVM, vmCustomizer);
 
                 VirtualMachineGetResponse getVMWithInstanceViewResponse = m_CrpClient.VirtualMachines.GetWithInstanceView(rgName, inputVM.Name);
                 Assert.True(getVMWithInstanceViewResponse.StatusCode == HttpStatusCode.OK);
@@ -359,9 +361,9 @@ namespace Compute.Tests
         // 3. Complete the recording. 
         // 4. After recording completes, please delete key vault you created by deleting the whole resource group.
 
-        public static string KeyVaultId = "/subscriptions/0e1dad42-1d4c-4329-9d38-ea44c03a519d/resourceGroups/pslibtestosprofile/providers/Microsoft.KeyVault/vaults/pslibtestkeyvault";
+        public static string KeyVaultId = "/subscriptions/ccfebd33-45cd-4e22-9389-98982441aa5d/resourceGroups/pslibtestosprofile/providers/Microsoft.KeyVault/vaults/pslibtestkeyvault";
 
-        public static Uri CertificateUrl = new Uri("https://pslibtestkeyvault.vault.azure.net:443/secrets/WinRM/5c0b61f14941409aa752665210fd1319");
+        public static Uri CertificateUrl = new Uri("https://pslibtestkeyvault.vault.azure.net:443/secrets/WinRM/24c727e7449b47cb9d2f385113f59a63");
 
 #pragma warning disable 1998
         public static async Task CreateKeyVault(string subId, string rgName, string keyVaultName)

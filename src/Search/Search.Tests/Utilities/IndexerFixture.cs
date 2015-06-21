@@ -63,9 +63,9 @@ namespace Microsoft.Azure.Search.Tests.Utilities
         {
             return new Indexer(TestUtilities.GenerateName(), DataSourceName, TargetIndexName)
             {
-                Schedule = new IndexingSchedule(
-                    interval: TimeSpan.FromDays(1),
-                    startTime: new DateTimeOffset(2020, 1, 1, 0, 0, 0, TimeSpan.Zero)),
+                // We can't test startTime because it's an absolute time that must be within 24 hours of the current
+                // time. That doesn't play well with recorded mock payloads.
+                Schedule = new IndexingSchedule() { Interval = TimeSpan.FromDays(1) }
             };
         }
     }

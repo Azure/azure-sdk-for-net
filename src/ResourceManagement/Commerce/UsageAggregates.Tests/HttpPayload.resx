@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AggregateInfoField" xml:space="preserve">
+    <value>{"value":[{"id":"/subscriptiy_BRSDT_20150602_0100","name":"Hourly_BRSDT_20150602_0100","properties":{"subscriptionId":"sid","usageStartTime":"2015-06-01","usageEndTime":"2015-06-01","infoFields":{"meteredRegion":"East","meteredService":"Database","meteredServiceType":"P3","project":"audittest"}}}],"nextLink":"https://management.azure.com:443/subscriptions/3af18309-a8c8-4865-"}</value>
+  </data>
+  <data name="AggregateInstanceData" xml:space="preserve">
+    <value>{"value":[{"id":"/subscriptiy_BRSDT_20150602_0100","name":"Hourly_BRSDT_20150602_0100","properties":{"subscriptionId":"sid","usageStartTime":"2015-06-01","usageEndTime":"2015-06-01","instanceData":"{\"Microsoft.Resources\":{\"resourceUri\":\"/subscriptions/35349201-a0b3-405e-8a23-9f1450984307/resourceGroups/ABHAYM-DEMO-20150512-014436-PAASV2/providers/Microsoft.Compute/virtualMachines/VM2\",\"location\":\"southeastasia\",\"additionalInfo\":{\"ImageType\":\"\",\"ServiceType\":\"Standard_A2\"}"}}],"nextLink":"https://management.azure.com:443/subscriptions/3af18309-a8c8-4865-"}</value>
+  </data>
+  <data name="GetOneAggregates" xml:space="preserve">
+    <value>{"value":[{"id":"/subscriptions/3af18309-a8c8-4865-90d3-56b135f1b1d6/providers/Microsoft.Commerce/UsageAggregates/Hourly_BRSDT_20150602_0100","name":"Hourly_BRSDT_20150602_0100","type":"Microsoft.Commerce/UsageAggregate","properties":{"subscriptionId":"3af18309-a8c8-4865-90d3-56b135f1b1d6","usageStartTime":"2015-06-01T11:00:00+00:00","usageEndTime":"2015-06-01T12:00:00+00:00","meterName":"Premium P3 Database Days","meterRegion":"","meterCategory":"Data Services","meterSubCategory":"SQL Database","unit":"Days","meterId":"2a8f5aeb-d518-4417-a262-f168e3204a84","infoFields":{"meteredRegion":"East US","meteredService":"Database","meteredServiceType":"P3","project":"g099cb0nz7 - audittest"},"quantity":0.041667}}],"nextLink":"https://management.azure.com:443/subscriptions/3af18309-a8c8-4865-90d3-56b135f1b1d6/providers/Microsoft.Commerce/UsageAggregates?api-version=2015-03-31&amp;reportedstartTime=2015-06-02+1%3a00%3a00Z&amp;reportedEndTime=2015-06-03+0%3a00%3a00Z&amp;error_if_not_processed=true&amp;showDetails=True&amp;aggregationGranularity=Hourly&amp;continuationToken=eyJyIjoiMjAxNTA2MDItNjM1Njg4NDMyMDAwMDAwMDAwIiwiaSI6IkhYSDhoekRQUnBFM3NZTVE1bDB5YW5MNTFsUWw3Nzdwd3FWMzhFdDFqb2pqS3Vza0JwSWNkQWozOXRuSjYwNjhqd0ZzYXBEUGhRa0VhSXJKOWtxMjNnPT0iLCJzIjoicEpWME0rRT0ifQ%3d%3d"}</value>
+  </data>
+  <data name="GetThreeAggregates" xml:space="preserve">
+    <value>{"value":[{"id":"/subscriptions/3af18309-a8c8-4865-90d3-56b135f1b1d6/providers/Microsoft.Commerce/UsageAggregates/Hourly_BRSDT_20150602_0100","name":"Hourly_BRSDT_20150602_0100","type":"Microsoft.Commerce/UsageAggregate","properties":{"subscriptionId":"3af18309-a8c8-4865-90d3-56b135f1b1d6","usageStartTime":"2015-06-01T11:00:00+00:00","usageEndTime":"2015-06-01T12:00:00+00:00","meterName":"Premium P3 Database Days","meterRegion":"","meterCategory":"Data Services","meterSubCategory":"SQL Database","unit":"Days","meterId":"2a8f5aeb-d518-4417-a262-f168e3204a84","infoFields":{"meteredRegion":"East US","meteredService":"Database","meteredServiceType":"P3","project":"g099cb0nz7 - audittest"},"quantity":0.041667}},{"id":"/subscriptions/3af18309-a8c8-4865-90d3-56b135f1b1d6/providers/Microsoft.Commerce/UsageAggregates/Hourly_BRSDT_20150602_0100","name":"Hourly_BRSDT_20150602_0100","type":"Microsoft.Commerce/UsageAggregate","properties":{"subscriptionId":"3af18309-a8c8-4865-90d3-56b135f1b1d6","usageStartTime":"2015-06-01T11:00:00+00:00","usageEndTime":"2015-06-01T12:00:00+00:00","meterName":"Premium P3 Database Days","meterRegion":"","meterCategory":"Data Services","meterSubCategory":"SQL Database","unit":"Days","meterId":"2a8f5aeb-d518-4417-a262-f168e3204a84","infoFields":{"meteredRegion":"East US","meteredService":"Database","meteredServiceType":"P3","project":"g099cb0nz7 - audittest"},"quantity":0.041667}},{"id":"/subscriptions/3af18309-a8c8-4865-90d3-56b135f1b1d6/providers/Microsoft.Commerce/UsageAggregates/Hourly_BRSDT_20150602_0100","name":"Hourly_BRSDT_20150602_0100","type":"Microsoft.Commerce/UsageAggregate","properties":{"subscriptionId":"3af18309-a8c8-4865-90d3-56b135f1b1d6","usageStartTime":"2015-06-01T11:00:00+00:00","usageEndTime":"2015-06-01T12:00:00+00:00","meterName":"Premium P3 Database Days","meterRegion":"","meterCategory":"Data Services","meterSubCategory":"SQL Database","unit":"Days","meterId":"2a8f5aeb-d518-4417-a262-f168e3204a84","infoFields":{"meteredRegion":"East US","meteredService":"Database","meteredServiceType":"P3","project":"g099cb0nz7 - audittest"},"quantity":0.041667}}],"nextLink":"https://management.azure.com:443/subscriptions/3af18309-a8c8-4865-90d3-56b135f1b1d6/providers/Microsoft.Commerce/UsageAggregates?api-version=2015-03-31&amp;reportedstartTime=2015-06-02+1%3a00%3a00Z&amp;reportedEndTime=2015-06-03+0%3a00%3a00Z&amp;error_if_not_processed=true&amp;showDetails=True&amp;aggregationGranularity=Hourly&amp;continuationToken=eyJyIjoiMjAxNTA2MDItNjM1Njg4NDMyMDAwMDAwMDAwIiwiaSI6IkhYSDhoekRQUnBFM3NZTVE1bDB5YW5MNTFsUWw3Nzdwd3FWMzhFdDFqb2pqS3Vza0JwSWNkQWozOXRuSjYwNjhqd0ZzYXBEUGhRa0VhSXJKOWtxMjNnPT0iLCJzIjoicEpWME0rRT0ifQ%3d%3d"}</value>
+  </data>
+</root>

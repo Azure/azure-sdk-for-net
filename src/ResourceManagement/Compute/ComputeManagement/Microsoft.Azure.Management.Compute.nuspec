@@ -3,7 +3,6 @@
   <metadata minClientVersion="2.5">
     <id>Microsoft.Azure.Management.Compute</id>
     <title>Microsoft Azure Compute Management Library</title>
-    <releaseNotes>__BASELINE_RELEASE_NOTES__</releaseNotes>
     <version>$version$</version>
     <authors>Microsoft</authors>
     <owners>azure-sdk, Microsoft</owners>
@@ -11,10 +10,14 @@
     <projectUrl>https://github.com/Azure/azure-sdk-for-net</projectUrl>
     <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <summary>Provides virtual machine and availability set management capabilities to developers. Launch, restart, scale, and manage VMs, hosted services, virtual disks, operating system images, and more.</summary>
-    <description>Provides virtual machine and availability set management capabilities to developers. Launch, restart, scale, and manage VMs, hosted services, virtual disks, operating system images, and more.</description>
+    <summary>Provides developers with libraries for the updated compute platform under Azure Resource manager to deploy virtual machine, virtual machine extensions and availability set management capabilities. Launch, restart, scale, capture and manage VMs, VM Extensions and more.
+
+Note: This client library is for Virtual Machines under Azure Resource Manager.</summary>
+    <description>Provides developers with libraries for the updated compute platform under Azure Resource manager to deploy virtual machine, virtual machine extensions and availability set management capabilities. Launch, restart, scale, capture and manage VMs, VM Extensions and more.
+
+Note: This client library is for Virtual Machines under Azure Resource Manager.</description>
     <copyright>Copyright © Microsoft Corporation</copyright>
-    <tags>Microsoft "Microsoft Azure" Azure cloud management "service management" REST HTTP client core common azureofficial windowsazureofficial</tags>
+    <tags>Microsoft Azure resource management virtual machine compute REST HTTP client core common azureofficial windowsazureofficial</tags>
     <references>
       <group targetFramework="portable-net45+sl50+wp80+win">
         <reference file="Microsoft.Azure.Management.Compute.dll" />
