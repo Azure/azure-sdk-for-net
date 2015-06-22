@@ -65,6 +65,12 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <summary>
         /// Creates a new Azure backup vault.
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of resource group to which vault belongs
+        /// </param>
+        /// <param name='vaultName'>
+        /// Required. The name of the vault
+        /// </param>
         /// <param name='parameters'>
         /// Required. Parameters to create or update the vault
         /// </param>
@@ -77,9 +83,17 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// Vault information.
         /// </returns>
-        public async Task<AzureBackupVaultGetResponse> CreateOrUpdateAsync(AzureBackupVaultCreateOrUpdateParameters parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<AzureBackupVaultGetResponse> CreateOrUpdateAsync(string resourceGroupName, string vaultName, AzureBackupVaultCreateOrUpdateParameters parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (vaultName == null)
+            {
+                throw new ArgumentNullException("vaultName");
+            }
             if (parameters == null)
             {
                 throw new ArgumentNullException("parameters");
@@ -100,6 +114,8 @@ namespace Microsoft.Azure.Management.BackupServices
             {
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("vaultName", vaultName);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
                 TracingAdapter.Enter(invocationId, this, "CreateOrUpdateAsync", tracingParameters);
@@ -113,13 +129,13 @@ namespace Microsoft.Azure.Management.BackupServices
                 url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
             }
             url = url + "/resourceGroups/";
-            url = url + Uri.EscapeDataString(this.Client.ResourceGroupName);
+            url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
             url = url + "Microsoft.Backupseadev01";
             url = url + "/";
             url = url + "BackupVault";
             url = url + "/";
-            url = url + Uri.EscapeDataString(this.Client.ResourceName);
+            url = url + Uri.EscapeDataString(vaultName);
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-03-15");
             if (queryParameters.Count > 0)
@@ -329,6 +345,12 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <summary>
         /// Deletes the specified Azure backup vault.
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of resource group to which vault belongs
+        /// </param>
+        /// <param name='vaultName'>
+        /// Required. The name of the vault
+        /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
@@ -338,9 +360,17 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// Vault information.
         /// </returns>
-        public async Task<AzureBackupVaultGetResponse> DeleteAsync(CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<AzureBackupVaultGetResponse> DeleteAsync(string resourceGroupName, string vaultName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (vaultName == null)
+            {
+                throw new ArgumentNullException("vaultName");
+            }
             
             // Tracing
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -349,6 +379,8 @@ namespace Microsoft.Azure.Management.BackupServices
             {
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("vaultName", vaultName);
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
                 TracingAdapter.Enter(invocationId, this, "DeleteAsync", tracingParameters);
             }
@@ -361,13 +393,13 @@ namespace Microsoft.Azure.Management.BackupServices
                 url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
             }
             url = url + "/resourceGroups/";
-            url = url + Uri.EscapeDataString(this.Client.ResourceGroupName);
+            url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
             url = url + "Microsoft.Backupseadev01";
             url = url + "/";
             url = url + "BackupVault";
             url = url + "/";
-            url = url + Uri.EscapeDataString(this.Client.ResourceName);
+            url = url + Uri.EscapeDataString(vaultName);
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-03-15");
             if (queryParameters.Count > 0)
@@ -461,6 +493,12 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <summary>
         /// Gets the specified Azure key vault.
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of resource group to which vault belongs
+        /// </param>
+        /// <param name='vaultName'>
+        /// Required. The name of the vault
+        /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
@@ -470,9 +508,17 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// Vault information.
         /// </returns>
-        public async Task<AzureBackupVaultGetResponse> GetAsync(CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<AzureBackupVaultGetResponse> GetAsync(string resourceGroupName, string vaultName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (vaultName == null)
+            {
+                throw new ArgumentNullException("vaultName");
+            }
             
             // Tracing
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -481,6 +527,8 @@ namespace Microsoft.Azure.Management.BackupServices
             {
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("vaultName", vaultName);
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
                 TracingAdapter.Enter(invocationId, this, "GetAsync", tracingParameters);
             }
@@ -493,13 +541,13 @@ namespace Microsoft.Azure.Management.BackupServices
                 url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
             }
             url = url + "/resourceGroups/";
-            url = url + Uri.EscapeDataString(this.Client.ResourceGroupName);
+            url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
             url = url + "Microsoft.Backupseadev01";
             url = url + "/";
             url = url + "BackupVault";
             url = url + "/";
-            url = url + Uri.EscapeDataString(this.Client.ResourceName);
+            url = url + Uri.EscapeDataString(vaultName);
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-03-15");
             if (queryParameters.Count > 0)
@@ -670,6 +718,12 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <summary>
         /// Fetches resource storage config.
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of resource group to which vault belongs
+        /// </param>
+        /// <param name='vaultName'>
+        /// Required. The name of the vault
+        /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
@@ -679,9 +733,17 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a get resource storage config response.
         /// </returns>
-        public async Task<GetResourceStorageConfigResponse> GetResourceStorageConfigAsync(CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<GetResourceStorageConfigResponse> GetResourceStorageConfigAsync(string resourceGroupName, string vaultName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (vaultName == null)
+            {
+                throw new ArgumentNullException("vaultName");
+            }
             
             // Tracing
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -690,6 +752,8 @@ namespace Microsoft.Azure.Management.BackupServices
             {
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("vaultName", vaultName);
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
                 TracingAdapter.Enter(invocationId, this, "GetResourceStorageConfigAsync", tracingParameters);
             }
@@ -702,13 +766,13 @@ namespace Microsoft.Azure.Management.BackupServices
                 url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
             }
             url = url + "/resourceGroups/";
-            url = url + Uri.EscapeDataString(this.Client.ResourceGroupName);
+            url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
             url = url + "Microsoft.Backupseadev01";
             url = url + "/";
             url = url + "BackupVault";
             url = url + "/";
-            url = url + Uri.EscapeDataString(this.Client.ResourceName);
+            url = url + Uri.EscapeDataString(vaultName);
             url = url + "/storageconfig/vaultstorageconfig";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-03-15");

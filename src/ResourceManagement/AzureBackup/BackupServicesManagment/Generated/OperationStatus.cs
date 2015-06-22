@@ -215,6 +215,15 @@ namespace Microsoft.Azure.Management.BackupServices
                                 string errorCodeInstance = ((string)errorCodeValue);
                                 result.ErrorCode = errorCodeInstance;
                             }
+                            
+                            JToken jobListArray = responseDoc["JobList"];
+                            if (jobListArray != null && jobListArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken jobListValue in ((JArray)jobListArray))
+                                {
+                                    result.JobList.Add(((string)jobListValue));
+                                }
+                            }
                         }
                         
                     }

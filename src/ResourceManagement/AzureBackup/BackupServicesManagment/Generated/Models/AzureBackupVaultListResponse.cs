@@ -24,6 +24,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Hyak.Common;
 using Microsoft.Azure;
+using Microsoft.Azure.Management.BackupServices.Models;
 
 namespace Microsoft.Azure.Management.BackupServices.Models
 {
@@ -43,12 +44,12 @@ namespace Microsoft.Azure.Management.BackupServices.Models
             set { this._nextLink = value; }
         }
         
-        private IList<ResourceBaseExtended> _vaults;
+        private IList<AzureBackupVault> _vaults;
         
         /// <summary>
         /// Optional. Gets or sets the list of vaults.
         /// </summary>
-        public IList<ResourceBaseExtended> Vaults
+        public IList<AzureBackupVault> Vaults
         {
             get { return this._vaults; }
             set { this._vaults = value; }
@@ -60,7 +61,7 @@ namespace Microsoft.Azure.Management.BackupServices.Models
         /// </summary>
         public AzureBackupVaultListResponse()
         {
-            this.Vaults = new LazyList<ResourceBaseExtended>();
+            this.Vaults = new LazyList<AzureBackupVault>();
         }
     }
 }
