@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.SmapiTest
                 // delete the group
                 ApiManagementClient.Groups.Delete(ResourceGroupName, ApiManagementServiceName, newGroupId, getResponse.ETag);
 
-                // create a gruop with other parameters
+                // create a group with other parameters
                 string newGroupDescription = TestUtilities.GenerateName("newGroupDescription");
                 var newGroupType = GroupTypeContract.Custom;
 
@@ -149,7 +149,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.SmapiTest
                 Assert.NotNull(deleteResponse);
                 Assert.Equal(HttpStatusCode.NoContent, deleteResponse.StatusCode);
 
-                // get the deleted api to make sure it was deleted
+                // get the deleted group to make sure it was deleted
                 try
                 {
                     ApiManagementClient.Groups.Get(ResourceGroupName, ApiManagementServiceName, newGroupId);
