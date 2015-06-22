@@ -13,7 +13,6 @@
 // limitations under the License.
 //
 
-#if ADF_INTERNAL
 using System;
 
 namespace Microsoft.Azure.Management.DataFactories.Models
@@ -38,4 +37,3 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         }
     }
 }
-#endif
