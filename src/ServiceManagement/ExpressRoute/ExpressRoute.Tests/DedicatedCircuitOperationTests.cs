@@ -11,7 +11,7 @@
     using Management;
     using Xunit;
 
-    public class DedicatedCircuitOperationTests : ExpressRouteTestBase
+    public class DedicatedCircuitTests : ExpressRouteTestBase
     {
         [Fact]
         public void CanCreateGetListUpdateAndDeleteDedicatedCircuit()

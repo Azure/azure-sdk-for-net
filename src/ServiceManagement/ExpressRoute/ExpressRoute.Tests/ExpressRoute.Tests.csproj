@@ -17,43 +17,43 @@
     <Compile Include="TestUtilities\UndoContextDiscoveryExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="SessionRecords\Microsoft.WindowsAzure.Management.ExpressRoute.Testing.BgpPeeringOperationTests\CanCreateGetUpdateAndRemovePrivateAndPublicPeerings.json">
+    <None Include="SessionRecords\Microsoft.WindowsAzure.Management.ExpressRoute.Testing.BgpPeeringTests\CanCreateGetUpdateAndRemovePrivateAndPublicPeerings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="SessionRecords\Microsoft.WindowsAzure.Management.ExpressRoute.Testing.BgpPeeringOperationTests\CreateFailsIfDuplicateVlanIdUsedOrIfPeeringAlreadyExists.json">
+    <None Include="SessionRecords\Microsoft.WindowsAzure.Management.ExpressRoute.Testing.BgpPeeringTests\CreateFailsIfDuplicateVlanIdUsedOrIfPeeringAlreadyExists.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="SessionRecords\Microsoft.WindowsAzure.Management.ExpressRoute.Testing.BgpPeeringOperationTests\CreateFailsIfInvalidPrimaryOrSecondaryPeerSubnetUsed.json">
+    <None Include="SessionRecords\Microsoft.WindowsAzure.Management.ExpressRoute.Testing.BgpPeeringTests\CreateFailsIfInvalidPrimaryOrSecondaryPeerSubnetUsed.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="SessionRecords\Microsoft.WindowsAzure.Management.ExpressRoute.Testing.CrossConnectionOperationTests\CanCreateGetListAndUpdateCrossConnnections.json">
+    <None Include="SessionRecords\Microsoft.WindowsAzure.Management.ExpressRoute.Testing.CrossConnectionTests\CanCreateGetListAndUpdateCrossConnnections.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="SessionRecords\Microsoft.WindowsAzure.Management.ExpressRoute.Testing.DedicatedCircuitOperationTests\CanCreateGetListUpdateAndDeleteDedicatedCircuit.json">
+    <None Include="SessionRecords\Microsoft.WindowsAzure.Management.ExpressRoute.Testing.DedicatedCircuitTests\CanCreateGetListUpdateAndDeleteDedicatedCircuit.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="SessionRecords\Microsoft.WindowsAzure.Management.ExpressRoute.Testing.DedicatedCircuitOperationTests\CanListDedicatedCircuit.json">
+    <None Include="SessionRecords\Microsoft.WindowsAzure.Management.ExpressRoute.Testing.DedicatedCircuitTests\CanListDedicatedCircuit.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="SessionRecords\Microsoft.WindowsAzure.Management.ExpressRoute.Testing.DedicatedCircuitOperationTests\CanRemoveDedicatedCircuit.json">
+    <None Include="SessionRecords\Microsoft.WindowsAzure.Management.ExpressRoute.Testing.DedicatedCircuitTests\CanRemoveDedicatedCircuit.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="SessionRecords\Microsoft.WindowsAzure.Management.ExpressRoute.Testing.DedicatedCircuitOperationTests\CreateFailsIfBandwidthDoesNotExist.json">
+    <None Include="SessionRecords\Microsoft.WindowsAzure.Management.ExpressRoute.Testing.DedicatedCircuitTests\CreateFailsIfBandwidthDoesNotExist.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="SessionRecords\Microsoft.WindowsAzure.Management.ExpressRoute.Testing.DedicatedCircuitOperationTests\CreateFailsIfDuplicateName.json">
+    <None Include="SessionRecords\Microsoft.WindowsAzure.Management.ExpressRoute.Testing.DedicatedCircuitTests\CreateFailsIfDuplicateName.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="SessionRecords\Microsoft.WindowsAzure.Management.ExpressRoute.Testing.DedicatedCircuitOperationTests\CreateFailsIfLocationDoesNotExist.json">
+    <None Include="SessionRecords\Microsoft.WindowsAzure.Management.ExpressRoute.Testing.DedicatedCircuitTests\CreateFailsIfLocationDoesNotExist.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="SessionRecords\Microsoft.WindowsAzure.Management.ExpressRoute.Testing.DedicatedCircuitOperationTests\CreateFailsIfProviderDoesNotExist.json">
+    <None Include="SessionRecords\Microsoft.WindowsAzure.Management.ExpressRoute.Testing.DedicatedCircuitTests\CreateFailsIfProviderDoesNotExist.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="SessionRecords\Microsoft.WindowsAzure.Management.ExpressRoute.Testing.DedicatedCircuitOperationTests\GetFailsIfCircuitDoesNotExist.json">
+    <None Include="SessionRecords\Microsoft.WindowsAzure.Management.ExpressRoute.Testing.DedicatedCircuitTests\GetFailsIfCircuitDoesNotExist.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="SessionRecords\Microsoft.WindowsAzure.Management.ExpressRoute.Testing.DedicatedCircuitOperationTests\RemoveFailsIfCircuitDoesNotExist.json">
+    <None Include="SessionRecords\Microsoft.WindowsAzure.Management.ExpressRoute.Testing.DedicatedCircuitTests\RemoveFailsIfCircuitDoesNotExist.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

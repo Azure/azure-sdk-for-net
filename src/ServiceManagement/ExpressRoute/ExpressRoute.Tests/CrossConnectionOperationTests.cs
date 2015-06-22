@@ -11,7 +11,7 @@
     using Management;
     using Xunit;
 
-    public class CrossConnectionOperationTests : ExpressRouteTestBase
+    public class CrossConnectionTests : ExpressRouteTestBase
     {
         [Fact]
         public void CanCreateGetListAndUpdateCrossConnnections()
