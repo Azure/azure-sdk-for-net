@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a BMSOperationStatusResponse.
         /// </returns>
-        public async Task<AzureBackupOperationStatusResponse> GetAsync(string operationId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<OperationResultResponse> GetAsync(string operationId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
             if (operationId == null)
@@ -173,13 +173,13 @@ namespace Microsoft.Azure.Management.BackupServices
                     }
                     
                     // Create Result
-                    AzureBackupOperationStatusResponse result = null;
+                    OperationResultResponse result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new AzureBackupOperationStatusResponse();
+                        result = new OperationResultResponse();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -209,49 +209,20 @@ namespace Microsoft.Azure.Management.BackupServices
                                 result.Message = messageInstance;
                             }
                             
-                            JToken objectsArray = responseDoc["Objects"];
-                            if (objectsArray != null && objectsArray.Type != JTokenType.Null)
-                            {
-                                foreach (JToken objectsValue in ((JArray)objectsArray))
-                                {
-                                    JobStep jobStepInstance = new JobStep();
-                                    result.JobSteps.Add(jobStepInstance);
-                                    
-                                    JToken operationStatusValue2 = objectsValue["OperationStatus"];
-                                    if (operationStatusValue2 != null && operationStatusValue2.Type != JTokenType.Null)
-                                    {
-                                        string operationStatusInstance2 = ((string)operationStatusValue2);
-                                        jobStepInstance.OperationStatus = operationStatusInstance2;
-                                    }
-                                    
-                                    JToken operationResultValue2 = objectsValue["OperationResult"];
-                                    if (operationResultValue2 != null && operationResultValue2.Type != JTokenType.Null)
-                                    {
-                                        string operationResultInstance2 = ((string)operationResultValue2);
-                                        jobStepInstance.OperationResult = operationResultInstance2;
-                                    }
-                                    
-                                    JToken messageValue2 = objectsValue["Message"];
-                                    if (messageValue2 != null && messageValue2.Type != JTokenType.Null)
-                                    {
-                                        string messageInstance2 = ((string)messageValue2);
-                                        jobStepInstance.Message = messageInstance2;
-                                    }
-                                    
-                                    JToken detailValue = objectsValue["Detail"];
-                                    if (detailValue != null && detailValue.Type != JTokenType.Null)
-                                    {
-                                        string detailInstance = ((string)detailValue);
-                                        jobStepInstance.Detail = detailInstance;
-                                    }
-                                }
-                            }
-                            
                             JToken errorCodeValue = responseDoc["ErrorCode"];
                             if (errorCodeValue != null && errorCodeValue.Type != JTokenType.Null)
                             {
                                 string errorCodeInstance = ((string)errorCodeValue);
                                 result.ErrorCode = errorCodeInstance;
+                            }
+                            
+                            JToken jobListArray = responseDoc["JobList"];
+                            if (jobListArray != null && jobListArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken jobListValue in ((JArray)jobListArray))
+                                {
+                                    result.JobList.Add(((string)jobListValue));
+                                }
                             }
                         }
                         

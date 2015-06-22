@@ -21,29 +21,31 @@
 
 using System;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.Azure.Management.BackupServices.Models;
 
-namespace Microsoft.Azure.Management.BackupServices
+namespace Microsoft.Azure.Management.BackupServices.Models
 {
     /// <summary>
-    /// Definition of Recovery Point operations for the Azure Backup extension.
+    /// Properties of the vault
     /// </summary>
-    public partial interface IRecoveryPointOperations
+    public partial class AzureBackupVaultProperties
     {
+        private SkuProperties _sku;
+        
         /// <summary>
-        /// Get the list of all Recovery Points.
+        /// Optional. SKU details
         /// </summary>
-        /// <param name='customRequestHeaders'>
-        /// Request header parameters.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The response model for the list RecoveryPoints operation.
-        /// </returns>
-        Task<RecoveryPointListResponse> ListAsync(CustomRequestHeaders customRequestHeaders, string containerName, string dataSourceType, string dataSourceId, CancellationToken cancellationToken);
+        public SkuProperties Sku
+        {
+            get { return this._sku; }
+            set { this._sku = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the AzureBackupVaultProperties class.
+        /// </summary>
+        public AzureBackupVaultProperties()
+        {
+        }
     }
 }

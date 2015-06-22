@@ -23,6 +23,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure.Management.BackupServices;
 using Microsoft.Azure.Management.BackupServices.Models;
 
 namespace Microsoft.Azure.Management.BackupServices
@@ -47,6 +48,6 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a BMSOperationStatusResponse.
         /// </returns>
-        Task<AzureBackupOperationStatusResponse> GetAsync(string operationId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<OperationResultResponse> GetAsync(string operationId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
     }
 }

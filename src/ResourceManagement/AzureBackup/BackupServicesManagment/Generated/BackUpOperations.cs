@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.BackupServices
         }
         
         /// <summary>
-        /// Get the list of all Protection Policy.
+        /// BackUp the AzureBackUpItem.
         /// </summary>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
