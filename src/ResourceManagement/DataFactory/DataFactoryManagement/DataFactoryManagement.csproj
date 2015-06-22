@@ -16,6 +16,9 @@
     <DefineConstants>ADF_INTERNAL</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Customizations\Models\LinkedServices\HDInsightSchemaGenerationProperties.cs" />
+    <Compile Include="Customizations\Models\LinkedServices\InputPartitionOptions.cs" />
+    <Compile Include="Customizations\Models\LinkedServices\SchemaGenerationTypes.cs" />
     <Compile Include="Customizations\Models\Tables\Compression\CompressionLevel.cs" />
     <Compile Include="Customizations\Models\Tables\Compression\GenericCompression.cs" />
     <Compile Include="Customizations\Models\Tables\Compression\BZip2Compression.cs" />
@@ -112,7 +115,6 @@
     <Compile Include="Customizations\Models\LinkedServices\CustomLinkedService.cs" />
     <Compile Include="Customizations\Models\LinkedServices\DocumentDbLinkedService.cs" />
     <Compile Include="Customizations\Models\LinkedServices\GenericLinkedService.cs" />
-    <Compile Include="Customizations\Models\LinkedServices\HCatalogProperties.cs" />
     <Compile Include="Customizations\Models\LinkedServices\HDInsightBYOCLinkedService.cs" />
     <Compile Include="Customizations\Models\LinkedServices\HDInsightOnDemandLinkedService.cs" />
     <Compile Include="Customizations\Models\LinkedServices\LinkedService.cs" />
