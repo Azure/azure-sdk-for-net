@@ -78,6 +78,17 @@ namespace Microsoft.Azure.Management.DataFactories.Models
             set { this._nullValue = value; }
         }
         
+        private string _quoteChar;
+        
+        /// <summary>
+        /// Optional. Gets or sets the quote character.
+        /// </summary>
+        public string QuoteChar
+        {
+            get { return this._quoteChar; }
+            set { this._quoteChar = value; }
+        }
+        
         private string _rowDelimiter;
         
         /// <summary>
