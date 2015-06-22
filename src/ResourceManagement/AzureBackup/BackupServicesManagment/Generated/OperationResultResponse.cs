@@ -20,7 +20,9 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 using Microsoft.Azure;
 
 namespace Microsoft.Azure.Management.BackupServices
@@ -39,6 +41,17 @@ namespace Microsoft.Azure.Management.BackupServices
         {
             get { return this._errorCode; }
             set { this._errorCode = value; }
+        }
+        
+        private IList<string> _jobList;
+        
+        /// <summary>
+        /// Optional. ID of jobs created by this operation
+        /// </summary>
+        public IList<string> JobList
+        {
+            get { return this._jobList; }
+            set { this._jobList = value; }
         }
         
         private string _message;
@@ -79,6 +92,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// </summary>
         public OperationResultResponse()
         {
+            this.JobList = new LazyList<string>();
         }
     }
 }
