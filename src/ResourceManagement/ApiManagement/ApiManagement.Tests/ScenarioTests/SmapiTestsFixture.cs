@@ -60,10 +60,6 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests
 
                 ApiManagementServiceName = TestUtilities.GenerateName("hydraapimservice");
                 this.ApiManagementClient.TryCreateApiService(ResourceGroupName, ApiManagementServiceName, Location);
-
-                //this.ResourceGroupName = "Api-Default-West-US";
-                //this.ApiManagementServiceName = "ailntest";
-                //this.Location = "West US";
             }
             catch (Exception)
             {
