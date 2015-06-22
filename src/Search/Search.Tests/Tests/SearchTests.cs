@@ -38,6 +38,7 @@ namespace Microsoft.Azure.Search.Tests
                 Assert.Equal(HttpStatusCode.OK, response.StatusCode);
                 Assert.Null(response.ContinuationToken);
                 Assert.Null(response.Count);
+                Assert.Null(response.Coverage);
                 Assert.Null(response.Facets);
                 Assert.NotNull(response.Results);
                 
@@ -64,6 +65,7 @@ namespace Microsoft.Azure.Search.Tests
                 Assert.Equal(HttpStatusCode.OK, response.StatusCode);
                 Assert.Null(response.ContinuationToken);
                 Assert.Null(response.Count);
+                Assert.Null(response.Coverage);
                 Assert.Null(response.Facets);
                 Assert.NotNull(response.Results);
 
@@ -150,8 +152,10 @@ namespace Microsoft.Azure.Search.Tests
 
                 var searchParameters = 
                     new SearchParameters() { Filter = "rating gt 3 and lastRenovationDate gt 2000-01-01T00:00:00Z" };
+
+                // Also test that searchText can be null.
                 DocumentSearchResponse<Hotel> response =
-                    client.Documents.Search<Hotel>("*", searchParameters);
+                    client.Documents.Search<Hotel>(null, searchParameters);
 
                 AssertKeySequenceEqual(response, "1", "5");
             });
@@ -194,10 +198,8 @@ namespace Microsoft.Azure.Search.Tests
                 string[] expectedDescriptionHighlights =
                     new[] 
                     { 
-                        "Best <b>hotel</b> in town if you like <b>luxury</b> hotels. They have an amazing infinity " +
-                        "pool, a spa, and a",
-                        " really helpful concierge. The location is perfect -- right downtown, close to all the " +
-                        "tourist attractions. We highly recommend this <b>hotel</b>."
+                        "Best <b>hotel</b> in town if you like <b>luxury</b> hotels.",
+                        "We highly recommend this <b>hotel</b>."
                     };
 
                 SearchAssert.SequenceEqual(expectedDescriptionHighlights, highlights[Description]);
@@ -499,6 +501,22 @@ namespace Microsoft.Azure.Search.Tests
                 AssertKeySequenceEqual(response, expectedIds.Last());
 
                 Assert.Null(response.ContinuationToken);
+            });
+        }
+
+        [Fact]
+        [Trait(TestTraits.AcceptanceType, TestTraits.LiveBVT)]
+        public void CanSearchWithMinimumCoverage()
+        {
+            Run(() =>
+            {
+                SearchIndexClient client = Data.GetSearchIndexClientForQuery();
+
+                var parameters = new SearchParameters() { MinimumCoverage = 50 };
+                DocumentSearchResponse<Hotel> response = client.Documents.Search<Hotel>("*", parameters);
+
+                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+                Assert.Equal(100, response.Coverage);
             });
         }
 

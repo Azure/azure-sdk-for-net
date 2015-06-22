@@ -24,16 +24,16 @@ using System.Linq;
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    public static partial class VpnGatewayType
+    public static partial class ApplicationGatewayCookieBasedAffinity
     {
         /// <summary>
-        /// Virtual network StaticRouting gateway type
+        /// Enables cookie based affinity of application gateway
         /// </summary>
-        public const string StaticRouting = "StaticRouting";
+        public const string Enabled = "Enabled";
         
         /// <summary>
-        /// Virtual network DynamicRouting gateway type
+        /// Disables cookie based affinity of application gateway
         /// </summary>
-        public const string DynamicRouting = "DynamicRouting";
+        public const string Disabled = "Disabled";
     }
 }

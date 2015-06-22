@@ -35,10 +35,10 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         private IDictionary<string, string> _extendedProperties;
         
         /// <summary>
-        /// Optional. User specified property bag used in Pig or Hive scripts.
-        /// There is no restriction on the keys or values that can be used.
-        /// User needs to consume and interpret the content accordingly in
-        /// their customized Pig or Hive scripts.
+        /// Optional. User specified property bag used in Pig scripts. There is
+        /// no restriction on the keys or values that can be used. User needs
+        /// to consume and interpret the content accordingly in their
+        /// customized Pig scripts.
         /// </summary>
         public IDictionary<string, string> ExtendedProperties
         {
