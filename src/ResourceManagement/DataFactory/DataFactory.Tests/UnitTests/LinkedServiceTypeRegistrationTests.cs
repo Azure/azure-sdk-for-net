@@ -61,5 +61,14 @@ namespace DataFactory.Tests.UnitTests
                 () => this.Client.RegisterType<MyLinkedServiceType>());
             Assert.True(ex.Message.Contains("is already registered"));
         }
+
+        [Fact]
+        [Trait(TraitName.TestType, TestType.Unit)]
+        [Trait(TraitName.Function, TestType.Registration)]
+        public void CanRegisterLinkedServiceTypeTwiceWithForce()
+        {
+            this.Client.RegisterType<MyActivityType>();
+            this.Client.RegisterType<MyActivityType>(true);
+        }
     }
 }

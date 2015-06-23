@@ -66,5 +66,14 @@ namespace DataFactory.Tests.UnitTests
                 Assert.True(ex.Message.Contains("is already registered"));
             }
         }
+
+        [Fact]
+        [Trait(TraitName.TestType, TestType.Unit)]
+        [Trait(TraitName.Function, TestType.Registration)]
+        public void CanRegisterActivityTypeTwiceWithForce()
+        {
+            this.Client.RegisterType<MyActivityType>();
+            this.Client.RegisterType<MyActivityType>(true);
+        }
     }
 }
