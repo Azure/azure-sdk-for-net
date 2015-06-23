@@ -59,6 +59,9 @@
     <None Include="SessionRecords\Networks.Tests.NetworkInterfaceTests\NetworkInterfaceApiTest.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\Networks.Tests.NetworkInterfaceTests\NetworkInterfaceDnsSettingsTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\Networks.Tests.NetworkSecurityGroupTests\NetworkSecurityGroupApiTest.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
