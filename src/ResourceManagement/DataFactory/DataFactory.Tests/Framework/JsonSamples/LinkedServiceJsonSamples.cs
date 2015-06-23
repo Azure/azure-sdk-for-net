@@ -228,10 +228,12 @@ namespace DataFactory.Tests.Framework.JsonSamples
             userName: ""MyUserName"",
             password: ""$EncryptedString$MyEncryptedPassword"",
             linkedServiceName: ""MyStorageAssetName"",
-            hcatalog:
+		    hcatalogLinkedServiceName : ""Asset-HcatDb"",
+		    schemaGeneration:
 		    {
-			    linkedServiceName : ""Asset-HcatDb"",
-			    recoverPartitions : true
+			    type : ""Output"",
+			    inputPartition : ""None"",
+			    alterSchema : false
 		    }
         }
     }

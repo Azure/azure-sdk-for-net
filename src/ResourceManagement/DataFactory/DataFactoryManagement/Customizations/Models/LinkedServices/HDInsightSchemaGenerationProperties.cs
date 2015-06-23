@@ -16,18 +16,23 @@
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
-    /// A copy activity Document Database Collection source.
+    /// Schema generation options for activities that execute against HDInsight clusters
     /// </summary>
-    public class DocumentDbCollectionSource : CopySource
+    public class HDInsightSchemaGenerationProperties
     {
         /// <summary>
-        /// Document query.
+        /// The <see cref="SchemaGenerationTypes "/> used.
         /// </summary>
-        public string Query { get; set; }
+        public string Type { get; set; }
 
         /// <summary>
-        /// Nested properties separator.
+        /// The <see cref="InputPartitionOptions "/> used.
         /// </summary>
-        public string NestingSeparator { get; set; }
+        public string InputPartition { get; set; }
+
+        /// <summary>
+        /// Flag to indicate if alter schema should be performed.
+        /// </summary>
+        public bool AlterSchema { get; set; }
     }
 }

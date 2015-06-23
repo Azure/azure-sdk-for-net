@@ -13,21 +13,18 @@
 // limitations under the License.
 //
 
+
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
-    /// A copy activity Document Database Collection source.
+    /// All available chema generation types.
     /// </summary>
-    public class DocumentDbCollectionSource : CopySource
+    public static class SchemaGenerationTypes
     {
-        /// <summary>
-        /// Document query.
-        /// </summary>
-        public string Query { get; set; }
+        public const string All = "All";
 
-        /// <summary>
-        /// Nested properties separator.
-        /// </summary>
-        public string NestingSeparator { get; set; }
+        public const string Input = "Input";
+
+        public const string Output = "Output";
     }
 }
