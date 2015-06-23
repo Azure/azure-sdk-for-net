@@ -15,7 +15,6 @@
   <ItemGroup>
     <Compile Include="Customizations\Conversion\GenericRegisteredTypeConverter.cs" />
     <Compile Include="Customizations\Models\IRegisteredType.cs" />
-    <Compile Include="Customizations\Models\IRegisteredTypeInternal.cs" />
     <Compile Include="Customizations\Models\Tables\Compression\CompressionLevel.cs" />
     <Compile Include="Customizations\Models\Tables\Compression\GenericCompression.cs" />
     <Compile Include="Customizations\Models\Tables\Compression\BZip2Compression.cs" />

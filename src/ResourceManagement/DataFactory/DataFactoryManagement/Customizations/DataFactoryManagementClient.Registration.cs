@@ -16,24 +16,34 @@
 using System;
 using Microsoft.Azure.Management.DataFactories.Conversion;
 using Microsoft.Azure.Management.DataFactories.Models;
-using Microsoft.Azure.Management.DataFactories.Registration.Models;
 
 namespace Microsoft.Azure.Management.DataFactories
 {
     public partial class DataFactoryManagementClient
     {
-        internal static GenericRegisteredTypeConverter<IRegisteredType> GenericConverter  { get; set; }
+        #region Converters
+
+        internal static readonly GenericRegisteredTypeConverter<Compression> CompressionConverter;
+        internal static readonly GenericRegisteredTypeConverter<CopyLocation> CopyLocationConverter;
+        internal static readonly GenericRegisteredTypeConverter<CopyTranslator> CopyTranslatorConverter;
+        internal static readonly GenericRegisteredTypeConverter<PartitionValue> PartitionValueConverter;
+        internal static readonly GenericRegisteredTypeConverter<StorageFormat> StorageFormatConverter;
+
+        #endregion
 
         static DataFactoryManagementClient()
         {
-            GenericConverter = new GenericRegisteredTypeConverter<IRegisteredType>();
+            StorageFormatConverter = new GenericRegisteredTypeConverter<StorageFormat>();
+            PartitionValueConverter = new GenericRegisteredTypeConverter<PartitionValue>();
+            CopyLocationConverter = new GenericRegisteredTypeConverter<CopyLocation>();
+            CopyTranslatorConverter = new GenericRegisteredTypeConverter<CopyTranslator>();
+            CompressionConverter = new GenericRegisteredTypeConverter<Compression>();
         }
 
-        internal void RegisterType<T>(bool force = false) where T : IRegisteredTypeInternal
+        internal void RegisterType<T>(bool force = false) where T : TypeProperties
         {
             Type type = typeof(T);
 
-            // TODO bgold09: allow registration of CopyLocation, etc. from friend assemblies
             if (typeof(LinkedServiceTypeProperties).IsAssignableFrom(type))
             {
                 ((LinkedServiceOperations)this.LinkedServices).RegisterType<T>(force);
@@ -42,17 +52,47 @@ namespace Microsoft.Azure.Management.DataFactories
             {
                 ((TableOperations)this.Tables).RegisterType<T>(force);
             }
-            else if (typeof(Models.ActivityTypeProperties).IsAssignableFrom(type))
+            else if (typeof(ActivityTypeProperties).IsAssignableFrom(type))
             {
                 ((PipelineOperations)this.Pipelines).RegisterType<T>(force);
-            }
+            } 
             else
             {
-                GenericConverter.RegisterType<T>(force);
+                throw new NotImplementedException();
             }
         }
 
-        internal bool TypeIsRegistered<T>() where T : IRegisteredTypeInternal
+        internal void RegisterInternalType<T>(bool force = false) where T : Registration.Models.IRegisteredType
+        {
+            Type type = typeof(T);
+
+            if (typeof(StorageFormat).IsAssignableFrom(type))
+            {
+                StorageFormatConverter.RegisterType<T>(force);
+            }
+            else if (typeof(PartitionValue).IsAssignableFrom(type))
+            {
+                PartitionValueConverter.RegisterType<T>(force);
+            }
+            else if (typeof(CopyLocation).IsAssignableFrom(type))
+            {
+                CopyLocationConverter.RegisterType<T>(force);
+            }
+            else if (typeof(CopyTranslator).IsAssignableFrom(type))
+            {
+                CopyTranslatorConverter.RegisterType<T>(force);
+            }
+            else if (typeof(Compression).IsAssignableFrom(type))
+            {
+                CompressionConverter.RegisterType<T>(force);
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        internal bool TypeIsRegistered<T>() where T : Registration.Models.IRegisteredType
         {
             Type type = typeof(T);
 
@@ -66,12 +106,37 @@ namespace Microsoft.Azure.Management.DataFactories
                 return ((TableOperations)this.Tables).TypeIsRegistered<T>();
             }
 
-            if (typeof(Models.ActivityTypeProperties).IsAssignableFrom(type))
+            if (typeof(ActivityTypeProperties).IsAssignableFrom(type))
             {
                 return ((PipelineOperations)this.Pipelines).TypeIsRegistered<T>();
             }
 
-            return GenericConverter.TypeIsRegistered<T>();
+            if (typeof(StorageFormat).IsAssignableFrom(type))
+            {
+                return StorageFormatConverter.TypeIsRegistered<T>();
+            }
+            
+            if (typeof(PartitionValue).IsAssignableFrom(type))
+            {
+                return PartitionValueConverter.TypeIsRegistered<T>();
+            }
+            
+            if (typeof(CopyLocation).IsAssignableFrom(type))
+            {
+                return CopyLocationConverter.TypeIsRegistered<T>();
+            }
+            
+            if (typeof(CopyTranslator).IsAssignableFrom(type))
+            {
+                return CopyTranslatorConverter.TypeIsRegistered<T>();
+            }
+            
+            if (typeof(Compression).IsAssignableFrom(type))
+            {
+                return CompressionConverter.TypeIsRegistered<T>();
+            }
+
+            return false;
         }
     }
 }

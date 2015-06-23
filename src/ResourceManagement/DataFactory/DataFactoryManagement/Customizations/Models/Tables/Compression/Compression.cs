@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     /// <summary>
     /// The compression method used on a table.
     /// </summary>
-    public abstract class Compression : IRegisteredTypeInternal
+    public abstract class Compression : IRegisteredType
     {
     }
 }

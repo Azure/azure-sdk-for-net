@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
     /// Used to de/serialize any polymorphic types inside the typeProperties section of a resource. 
     /// </summary>
     internal class GenericRegisteredTypeConverter<TRegistered> : PolymorphicTypeConverter<TRegistered> 
-        where TRegistered : IRegisteredTypeInternal
+        where TRegistered : IRegisteredType
     {
         protected static IDictionary<string, Type> TypeMap { get; set; }
 

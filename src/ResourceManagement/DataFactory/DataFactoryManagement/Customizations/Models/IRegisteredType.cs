@@ -15,7 +15,7 @@
 
 namespace Microsoft.Azure.Management.DataFactories.Registration.Models
 {
-    internal interface IRegisteredType : IRegisteredTypeInternal
+    internal interface IRegisteredType
     {
     }
 }

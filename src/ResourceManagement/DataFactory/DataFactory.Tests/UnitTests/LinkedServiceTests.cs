@@ -240,47 +240,6 @@ namespace DataFactory.Tests.UnitTests
                 Assert.Throws<InvalidOperationException>(() => this.TestLinkedServiceValidation(json));
             Assert.Contains("is required", ex.Message);
         }
-
-
-        public class MyLsType : LinkedServiceTypeProperties
-        {
-            public MyType Poly { get; set; }
-        }
-
-        public abstract class Subtype : IRegisteredType { }
-
-        public class MyType : Subtype
-        {
-            public int NumberValue { get; set; }
-        }
-
-        [Fact]
-        [Trait(TraitName.TestType, TestType.Unit)]
-        [Trait(TraitName.Function, TestType.Conversion)]
-        public void GenericTypeTest()
-        {
-            // clusterUri, userName and password are required
-            string json = @"{
-    name: ""Test-BYOC-HDInsight-linkedService"",
-    properties:
-    {
-        type: ""MyLsType"",
-        typeProperties:
-        {
-            poly: {
-                type: ""MyType"", 
-                numberValue: 1
-            }
-        }
-    }
-}
-";
-            this.Client.RegisterType<MyLsType>(true);
-            this.Client.RegisterType<MyType>(true);
-            this.TestLinkedServiceValidation(json);
-            this.TestLinkedServiceJson(json);
-        }
-
 #endif 
 
         #endregion Tests

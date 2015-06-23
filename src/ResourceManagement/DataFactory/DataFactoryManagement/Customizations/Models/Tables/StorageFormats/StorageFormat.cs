@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     /// <summary>
     /// The format definition of a storage.
     /// </summary>
-    public abstract class StorageFormat : IRegisteredTypeInternal
+    public abstract class StorageFormat : IRegisteredType
     {
         /// <summary>
         /// The serializer.

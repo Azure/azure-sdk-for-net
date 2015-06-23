@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     /// <summary>
     /// A copy activity translator.
     /// </summary>
-    public abstract class CopyTranslator : IRegisteredTypeInternal
+    public abstract class CopyTranslator : IRegisteredType
     {
     }
 }
