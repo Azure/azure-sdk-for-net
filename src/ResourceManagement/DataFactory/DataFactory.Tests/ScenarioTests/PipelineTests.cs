@@ -32,7 +32,7 @@ namespace DataFactory.Tests.ScenarioTests
     {
         [Fact]
         [Trait(TraitName.TestType, TestType.Scenario)]
-        public void WikipediaPipelineTest()
+        public void WikipediaPipelineE2ETest()
         {
             BasicDelegatingHandler handler = new BasicDelegatingHandler();
 

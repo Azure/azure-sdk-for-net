@@ -23,6 +23,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// <summary>
         /// The table name of the on-premises SQL database.
         /// </summary>
+        [AdfRequired]
         public string TableName { get; set; }
 
         public OnPremisesSqlServerTableLocation()

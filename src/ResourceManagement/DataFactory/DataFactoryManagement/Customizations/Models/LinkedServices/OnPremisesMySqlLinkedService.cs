@@ -39,6 +39,11 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         public string GatewayName { get; set; }
 
         /// <summary>
+        /// Optional. The encrypted credential for authentication.
+        /// </summary>]
+        public string EncryptedCredential { get; set; }
+
+        /// <summary>
         /// Optional. Password for authentication.
         /// </summary>
         public string Password { get; set; }

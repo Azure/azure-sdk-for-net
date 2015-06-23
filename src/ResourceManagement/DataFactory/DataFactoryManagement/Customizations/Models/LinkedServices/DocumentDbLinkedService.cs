@@ -15,7 +15,6 @@
 
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
-#if ADF_INTERNAL
     /// <summary>
     /// Windows Azure Document Database.
     /// </summary>
@@ -45,5 +44,4 @@ namespace Microsoft.Azure.Management.DataFactories.Models
             this.ConnectionString = connectionString;
         }
     }
-#endif
 }

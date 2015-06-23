@@ -20,8 +20,36 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     /// </summary>
     public class LinkedService
     {
+        /// <summary>
+        /// Name of the LinkedService.
+        /// </summary>
+        [AdfRequired]
         public string Name { get; set; }
 
+        /// <summary>
+        /// LinkedService properties.
+        /// </summary>
+        [AdfRequired]
         public LinkedServiceProperties Properties { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the LinkedService class.
+        /// </summary>
+        public LinkedService()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the LinkedService class with required arguments.
+        /// </summary>
+        public LinkedService(string name, LinkedServiceProperties properties)
+            : this()
+        {
+            Ensure.IsNotNullOrEmpty(name, "name");
+            Ensure.IsNotNull(properties, "properties");
+
+            this.Name = name;
+            this.Properties = properties;
+        }
     }
 }
