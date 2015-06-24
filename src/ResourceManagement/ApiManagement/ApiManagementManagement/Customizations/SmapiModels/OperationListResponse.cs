@@ -11,23 +11,14 @@
 //  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
+
 namespace Microsoft.Azure.Management.ApiManagement.SmapiModels
 {
-    public partial class OAuth2AuthorizationServerContract
+    public partial class OperationListResponse : IPagedListResponse<OperationContract>
     {
-        private const string IdPrefix = "/authorizationServers/";
-
-        public string Id
+        IPaged<OperationContract> IPagedListResponse<OperationContract>.Result
         {
-            get
-            {
-                if (!string.IsNullOrEmpty(IdPath))
-                {
-                    return IdPath.Replace(IdPrefix, string.Empty);
-                }
-
-                return IdPath;
-            }
+            get { return this.Result; }
         }
     }
 }

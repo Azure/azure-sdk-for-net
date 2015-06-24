@@ -563,7 +563,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                             JObject hostnameConfigurationValue = new JObject();
                             hostnameConfigurationsArray.Add(hostnameConfigurationValue);
                             
-                            hostnameConfigurationValue["type"] = hostnameConfigurationsItem.Type.ToString();
+                            hostnameConfigurationValue["type"] = ((int)hostnameConfigurationsItem.Type);
                             
                             hostnameConfigurationValue["hostname"] = hostnameConfigurationsItem.Hostname;
                             
@@ -872,7 +872,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                                         JToken typeValue2 = hostnameConfigurationsValue["type"];
                                         if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
                                         {
-                                            HostnameType typeInstance2 = ((HostnameType)Enum.Parse(typeof(HostnameType), ((string)typeValue2), true));
+                                            HostnameType typeInstance2 = ((HostnameType)(((int)typeValue2)));
                                             hostnameConfigurationInstance.Type = typeInstance2;
                                         }
                                         
@@ -1930,7 +1930,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                             JObject hostnameConfigurationValue = new JObject();
                             updateArray.Add(hostnameConfigurationValue);
                             
-                            hostnameConfigurationValue["type"] = updateItem.Type.ToString();
+                            hostnameConfigurationValue["type"] = ((int)updateItem.Type);
                             
                             hostnameConfigurationValue["hostname"] = updateItem.Hostname;
                             
@@ -2173,7 +2173,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                             JObject hostnameConfigurationValue = new JObject();
                             updateArray.Add(hostnameConfigurationValue);
                             
-                            hostnameConfigurationValue["type"] = updateItem.Type.ToString();
+                            hostnameConfigurationValue["type"] = ((int)updateItem.Type);
                             
                             hostnameConfigurationValue["hostname"] = updateItem.Hostname;
                             
@@ -2961,7 +2961,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                                         JToken typeValue2 = hostnameConfigurationsValue["type"];
                                         if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
                                         {
-                                            HostnameType typeInstance2 = ((HostnameType)Enum.Parse(typeof(HostnameType), ((string)typeValue2), true));
+                                            HostnameType typeInstance2 = ((HostnameType)(((int)typeValue2)));
                                             hostnameConfigurationInstance.Type = typeInstance2;
                                         }
                                         
@@ -3392,7 +3392,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                                         JToken typeValue2 = hostnameConfigurationsValue["type"];
                                         if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
                                         {
-                                            HostnameType typeInstance2 = ((HostnameType)Enum.Parse(typeof(HostnameType), ((string)typeValue2), true));
+                                            HostnameType typeInstance2 = ((HostnameType)(((int)typeValue2)));
                                             hostnameConfigurationInstance.Type = typeInstance2;
                                         }
                                         
@@ -4186,7 +4186,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                                                 JToken typeValue2 = hostnameConfigurationsValue["type"];
                                                 if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
                                                 {
-                                                    HostnameType typeInstance2 = ((HostnameType)Enum.Parse(typeof(HostnameType), ((string)typeValue2), true));
+                                                    HostnameType typeInstance2 = ((HostnameType)(((int)typeValue2)));
                                                     hostnameConfigurationInstance.Type = typeInstance2;
                                                 }
                                                 
@@ -4801,7 +4801,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                 JObject apiServiceUploadCertificateParametersValue = new JObject();
                 requestDoc = apiServiceUploadCertificateParametersValue;
                 
-                apiServiceUploadCertificateParametersValue["type"] = parameters.Type.ToString();
+                apiServiceUploadCertificateParametersValue["type"] = ((int)parameters.Type);
                 
                 apiServiceUploadCertificateParametersValue["certificate"] = parameters.EncodedCertificate;
                 

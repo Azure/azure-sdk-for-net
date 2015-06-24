@@ -13,21 +13,7 @@
 //  limitations under the License.
 namespace Microsoft.Azure.Management.ApiManagement.SmapiModels
 {
-    public partial class OAuth2AuthorizationServerContract
+    public partial class ReportPaged : IPaged<ReportRecordContract>
     {
-        private const string IdPrefix = "/authorizationServers/";
-
-        public string Id
-        {
-            get
-            {
-                if (!string.IsNullOrEmpty(IdPath))
-                {
-                    return IdPath.Replace(IdPrefix, string.Empty);
-                }
-
-                return IdPath;
-            }
-        }
     }
 }
