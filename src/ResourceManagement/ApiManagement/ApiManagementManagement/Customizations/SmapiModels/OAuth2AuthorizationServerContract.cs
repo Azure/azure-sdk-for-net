@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.ApiManagement.SmapiModels
 {
     public partial class OAuth2AuthorizationServerContract
     {
-        private const string IdPrefix = "/authorization-servers/";
+        private const string IdPrefix = "/authorizationServers/";
 
         public string Id
         {

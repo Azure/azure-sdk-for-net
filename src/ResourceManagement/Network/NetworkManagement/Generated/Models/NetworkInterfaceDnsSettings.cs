@@ -27,9 +27,9 @@ using Hyak.Common;
 namespace Microsoft.Azure.Management.Network.Models
 {
     /// <summary>
-    /// Dns Settings of a resource
+    /// Dns Settings of a network interface
     /// </summary>
-    public partial class DnsSettings
+    public partial class NetworkInterfaceDnsSettings
     {
         private IList<string> _appliedDnsServers;
         
@@ -53,10 +53,34 @@ namespace Microsoft.Azure.Management.Network.Models
             set { this._dnsServers = value; }
         }
         
+        private string _internalDnsNameLabel;
+        
         /// <summary>
-        /// Initializes a new instance of the DnsSettings class.
+        /// Optional. Gets or sets the Internal DNS name
         /// </summary>
-        public DnsSettings()
+        public string InternalDnsNameLabel
+        {
+            get { return this._internalDnsNameLabel; }
+            set { this._internalDnsNameLabel = value; }
+        }
+        
+        private string _internalFqdn;
+        
+        /// <summary>
+        /// Optional. Gets or sets full IDNS name in the form,
+        /// DnsName.VnetId.ZoneId.TopleveSuffix. This is set when the NIC is
+        /// associated to a VM
+        /// </summary>
+        public string InternalFqdn
+        {
+            get { return this._internalFqdn; }
+            set { this._internalFqdn = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the NetworkInterfaceDnsSettings class.
+        /// </summary>
+        public NetworkInterfaceDnsSettings()
         {
             this.AppliedDnsServers = new LazyList<string>();
             this.DnsServers = new LazyList<string>();

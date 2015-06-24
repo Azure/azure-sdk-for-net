@@ -74,7 +74,6 @@
     <Compile Include="Generated\Models\ConnectionSharedKeyResponse.cs" />
     <Compile Include="Generated\Models\DhcpOptions.cs" />
     <Compile Include="Generated\Models\DnsNameAvailabilityResponse.cs" />
-    <Compile Include="Generated\Models\DnsSettings.cs" />
     <Compile Include="Generated\Models\Error.cs" />
     <Compile Include="Generated\Models\ErrorDetails.cs" />
     <Compile Include="Generated\Models\FrontendIpConfiguration.cs" />
@@ -91,6 +90,7 @@
     <Compile Include="Generated\Models\LocalNetworkGatewayListResponse.cs" />
     <Compile Include="Generated\Models\LocalNetworkGatewayPutResponse.cs" />
     <Compile Include="Generated\Models\NetworkInterface.cs" />
+    <Compile Include="Generated\Models\NetworkInterfaceDnsSettings.cs" />
     <Compile Include="Generated\Models\NetworkInterfaceGetResponse.cs" />
     <Compile Include="Generated\Models\NetworkInterfaceIpConfiguration.cs" />
     <Compile Include="Generated\Models\NetworkInterfaceListResponse.cs" />
