@@ -28,12 +28,8 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
     internal class GenericRegisteredTypeConverter<TRegistered> : PolymorphicTypeConverter<TRegistered> 
         where TRegistered : IRegisteredType
     {
-        protected static IDictionary<string, Type> TypeMap { get; set; }
-
-        static GenericRegisteredTypeConverter()
-        {
-            TypeMap = new Dictionary<string, Type>();
-        }
+        private static readonly object RegistrationLock = new object();
+        private static readonly IDictionary<string, Type> TypeMap = new Dictionary<string, Type>();
 
         /// <summary>
         /// Registers a type for conversion inside the TypeProperties of an ADF resource.
@@ -53,29 +49,32 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
             if (ReservedTypes.ContainsKey(typeName))
             {
                 throw new InvalidOperationException(string.Format(
-                        CultureInfo.InvariantCulture,
-                        "{0} type '{1}' cannot be locally registered because it has the same name as a built-in ADF {0} type.",
-                        wrapperTypeName,
-                        typeName));
+                    CultureInfo.InvariantCulture,
+                    "{0} type '{1}' cannot be locally registered because it has the same name as a built-in ADF {0} type.",
+                    wrapperTypeName,
+                    typeName));
             }
 
-            if (TypeMap.ContainsKey(typeName))
+            lock (RegistrationLock)
             {
-                if (force)
+                if (TypeMap.ContainsKey(typeName))
                 {
-                    TypeMap.Remove(typeName);
-                }
-                else
-                {
-                    throw new InvalidOperationException(string.Format(
+                    if (force)
+                    {
+                        TypeMap.Remove(typeName);
+                    }
+                    else
+                    {
+                        throw new InvalidOperationException(string.Format(
                             CultureInfo.InvariantCulture,
                             "A {0} type with the name '{1}' is already registered.",
                             wrapperTypeName,
                             typeName));
+                    }
                 }
-            }
 
-            TypeMap.Add(typeName, type);
+                TypeMap.Add(typeName, type);    
+            }
         }
 
         public bool TypeIsRegistered<T>()
@@ -83,12 +82,28 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
             this.EnsureIsAssignableRegisteredType<T>();
 
             string typeName = typeof(T).Name;
-            return ReservedTypes.ContainsKey(typeName) || TypeMap.ContainsKey(typeName);
+            if (ReservedTypes.ContainsKey(typeName))
+            {
+                return true;
+            }
+            
+            lock (RegistrationLock)
+            {
+                return TypeMap.ContainsKey(typeName);
+            }
         }
 
         public bool TryGetRegisteredType(string typeName, out Type type)
         {
-            return ReservedTypes.TryGetValue(typeName, out type) || TypeMap.TryGetValue(typeName, out type);
+            if (ReservedTypes.TryGetValue(typeName, out type))
+            {
+                return true;
+            }
+            
+            lock (RegistrationLock)
+            {
+                return TypeMap.TryGetValue(typeName, out type);
+            }
         }
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
