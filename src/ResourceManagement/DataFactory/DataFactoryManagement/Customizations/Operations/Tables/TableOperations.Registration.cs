@@ -25,12 +25,12 @@ namespace Microsoft.Azure.Management.DataFactories
     {
         internal TableConverter Converter { get; set; }
 
-        internal void RegisterType<T>(bool force = false)
+        public void RegisterType<T>(bool force = false)
         {
             this.Converter.RegisterType<T>(force, typeof(Table));
         }
 
-        internal bool TypeIsRegistered<T>() 
+        public bool TypeIsRegistered<T>()
         {
             return this.Converter.TypeIsRegistered<T>();
         }

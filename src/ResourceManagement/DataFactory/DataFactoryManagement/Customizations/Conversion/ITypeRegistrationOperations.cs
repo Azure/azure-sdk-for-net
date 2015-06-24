@@ -13,18 +13,14 @@
 // limitations under the License.
 //
 
-using Microsoft.Azure.Management.DataFactories.Models;
-
 namespace Microsoft.Azure.Management.DataFactories.Conversion
 {
-#if ADF_INTERNAL
-    public interface ITypeRegistrationOperations<TWrapper, TExtensible> where TExtensible : TypeProperties
+    public interface ITypeRegistrationOperations<TWrapper>
     {
-        void RegisterType<T>() where T : TExtensible;
+        void RegisterType<T>(bool force = false);
 
-        bool TypeIsRegistered<T>() where T : TExtensible;
+        bool TypeIsRegistered<T>();
 
         void ValidateObject(TWrapper value);
     }
-#endif
 }
