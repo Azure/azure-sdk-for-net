@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.DataFactories
             CompressionConverter = new GenericRegisteredTypeConverter<Compression>();
         }
 
-        internal void RegisterType<T>(bool force = false) where T : TypeProperties
+        public void RegisterType<T>(bool force = false) where T : TypeProperties
         {
             Type type = typeof(T);
 
@@ -92,7 +92,7 @@ namespace Microsoft.Azure.Management.DataFactories
             }
         }
 
-        internal bool TypeIsRegistered<T>() where T : Registration.Models.IRegisteredType
+        public bool TypeIsRegistered<T>() where T : Registration.Models.IRegisteredType
         {
             Type type = typeof(T);
 
