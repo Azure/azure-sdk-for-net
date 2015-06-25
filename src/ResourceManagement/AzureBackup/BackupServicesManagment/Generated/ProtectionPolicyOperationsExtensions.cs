@@ -184,10 +184,9 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The definition of a Operation Response.
         /// </returns>
-        public static AzureOperationResponse Update(this IProtectionPolicyOperations operations, string protectionPolicyId, UpdateProtectionPolicyRequest updateProtectionPolicyRequest, CustomRequestHeaders customRequestHeaders)
+        public static OperationResponse Update(this IProtectionPolicyOperations operations, string protectionPolicyId, UpdateProtectionPolicyRequest updateProtectionPolicyRequest, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -213,10 +212,9 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The definition of a Operation Response.
         /// </returns>
-        public static Task<AzureOperationResponse> UpdateAsync(this IProtectionPolicyOperations operations, string protectionPolicyId, UpdateProtectionPolicyRequest updateProtectionPolicyRequest, CustomRequestHeaders customRequestHeaders)
+        public static Task<OperationResponse> UpdateAsync(this IProtectionPolicyOperations operations, string protectionPolicyId, UpdateProtectionPolicyRequest updateProtectionPolicyRequest, CustomRequestHeaders customRequestHeaders)
         {
             return operations.UpdateAsync(protectionPolicyId, updateProtectionPolicyRequest, customRequestHeaders, CancellationToken.None);
         }
