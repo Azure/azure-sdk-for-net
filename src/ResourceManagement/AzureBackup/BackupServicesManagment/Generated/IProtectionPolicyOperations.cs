@@ -24,6 +24,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure;
+using Microsoft.Azure.Management.BackupServices;
 using Microsoft.Azure.Management.BackupServices.Models;
 
 namespace Microsoft.Azure.Management.BackupServices
@@ -100,9 +101,8 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The definition of a Operation Response.
         /// </returns>
-        Task<AzureOperationResponse> UpdateAsync(string protectionPolicyId, UpdateProtectionPolicyRequest updateProtectionPolicyRequest, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<OperationResponse> UpdateAsync(string protectionPolicyId, UpdateProtectionPolicyRequest updateProtectionPolicyRequest, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
     }
 }

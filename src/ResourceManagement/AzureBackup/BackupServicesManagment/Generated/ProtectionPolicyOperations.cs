@@ -713,10 +713,9 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The definition of a Operation Response.
         /// </returns>
-        public async Task<AzureOperationResponse> UpdateAsync(string protectionPolicyId, UpdateProtectionPolicyRequest updateProtectionPolicyRequest, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<OperationResponse> UpdateAsync(string protectionPolicyId, UpdateProtectionPolicyRequest updateProtectionPolicyRequest, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
             if (protectionPolicyId == null)
@@ -894,9 +893,26 @@ namespace Microsoft.Azure.Management.BackupServices
                     }
                     
                     // Create Result
-                    AzureOperationResponse result = null;
+                    OperationResponse result = null;
                     // Deserialize Response
-                    result = new AzureOperationResponse();
+                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new OperationResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            Guid operationIdInstance = Guid.Parse(((string)responseDoc));
+                            result.OperationId = operationIdInstance;
+                        }
+                        
+                    }
                     result.StatusCode = statusCode;
                     
                     if (shouldTrace)
