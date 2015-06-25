@@ -69,13 +69,11 @@
           "200": {
             "description": "",
             "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Subscription"
-              }
+              "$ref": "#/definitions/SubscriptionListResult"
             }
           }
-        }
+        },
+        "x-ms-pageable": true
       }
     },
     "/tenants": {
@@ -97,13 +95,11 @@
           "200": {
             "description": "",
             "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/TenantIdDescription"
-              }
+              "$ref": "#/definitions/TenantListResult"
             }
           }
-        }
+        },
+        "x-ms-pageable": true
       }
     }
   },
@@ -117,7 +113,7 @@
       },
       "description": "Deployment filter."
     },
-    "GenericResourceExtendedFilter": {
+    "GenericResourceFilter": {
       "properties": {
         "resourceType": {
           "type": "string",
@@ -168,6 +164,22 @@
       },
       "description": "Subscription information."
     },
+    "SubscriptionListResult": {
+      "properties": {
+        "value": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Subscription"
+          },
+          "description": "Gets or sets subscriptions."
+        },
+        "nextLink": {
+          "type": "string",
+          "description": "Gets or sets the URL to get the next set of results."
+        }
+      },
+      "description": "Subscription list operation response."
+    },
     "TenantIdDescription": {
       "properties": {
         "id": {
@@ -180,6 +192,22 @@
         }
       },
       "description": "Tenant Id information"
+    },
+    "TenantListResult": {
+      "properties": {
+        "value": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TenantIdDescription"
+          },
+          "description": "Gets or sets tenant Ids."
+        },
+        "nextLink": {
+          "type": "string",
+          "description": "Gets or sets the URL to get the next set of results."
+        }
+      },
+      "description": "Tenant Ids information."
     },
     "Resource": {
       "properties": {

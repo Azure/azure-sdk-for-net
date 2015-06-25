@@ -30,14 +30,13 @@ namespace ResourceGroups.Tests
             var client = this.GetSubscriptionClientWithHandler(handler);
             if (HttpMockServer.Mode == HttpRecorderMode.Playback)
             {
-                client.LongRunningOperationInitialTimeout = 0;
                 client.LongRunningOperationRetryTimeout = 0;
             }
 
             return client;
         }
 
-        [Fact(Skip = "Bugs in Hydra Spec Converter that the PassThrough flag is not handled correctly")]
+        [Fact]
         public void ListTenants()
         {
             // NEXT environment variables used to record the mock
@@ -55,9 +54,9 @@ namespace ResourceGroups.Tests
                 Assert.NotNull(tenants);
                 Assert.Equal(HttpStatusCode.OK, tenants.Response.StatusCode);
                 Assert.NotNull(tenants.Body);
-                Assert.NotEqual(0, tenants.Body.Count);
-                Assert.NotNull(tenants.Body[0].Id);
-                Assert.NotNull(tenants.Body[0].TenantId);
+                Assert.NotEqual(0, tenants.Body.Value.Count);
+                Assert.NotNull(tenants.Body.Value[0].Id);
+                Assert.NotNull(tenants.Body.Value[0].TenantId);
             }
         }
     }

@@ -37,7 +37,7 @@ namespace ResourceGroups.Tests
             return new ResourceManagementClient(token, handler);
         }
 
-        [Fact(Skip = "Datetime serialization is not supported yet at code-gen, the work is on-going.")]
+        [Fact]
         public void DeploymentTestsCreateValidateMessage()
         {
             var response = new HttpResponseMessage(HttpStatusCode.Created)
@@ -109,7 +109,7 @@ namespace ResourceGroups.Tests
                         Uri = "http://abc/def/template.json",
                         ContentVersion = "1.0.0.0"
                     },
-                    Mode = "Incremental"
+                    Mode = DeploymentMode.Incremental
                 }
             };
 
@@ -138,7 +138,7 @@ namespace ResourceGroups.Tests
             Assert.Equal("myrealease-3.14", result.Name);
             Assert.Equal("Succeeded", result.Properties.ProvisioningState);
             Assert.Equal(new DateTime(2014, 1, 5, 12, 30, 43), result.Properties.Timestamp);
-            Assert.Equal("Incremental", result.Properties.Mode);
+            Assert.Equal(DeploymentMode.Incremental, result.Properties.Mode);
             Assert.Equal("http://wa/template.json", result.Properties.TemplateLink.Uri);
             Assert.Equal("1.0.0.0", result.Properties.TemplateLink.ContentVersion);
             Assert.True(result.Properties.Parameters.ToString().Contains("\"type\": \"string\""));
@@ -470,7 +470,7 @@ namespace ResourceGroups.Tests
                         ContentVersion = "1.0.0.0",
                     },
                     Parameters = dictionary,
-                    Mode = "Incremental"
+                    Mode = DeploymentMode.Incremental
                 }
             };
 
@@ -518,7 +518,7 @@ namespace ResourceGroups.Tests
                         Uri = "http://abc/def/template.json",
                         ContentVersion = "1.0.0.0",
                     },
-                    Mode = "Incremental"
+                    Mode = DeploymentMode.Incremental
                 }
             };
 
@@ -566,7 +566,7 @@ namespace ResourceGroups.Tests
                         Uri = "http://abc/def/template.json",
                         ContentVersion = "1.0.0.0",
                     },
-                    Mode = "Incremental"
+                    Mode = DeploymentMode.Incremental
                 }
             };
 
@@ -599,7 +599,7 @@ namespace ResourceGroups.Tests
                         Uri = "http://abc/def/template.json",
                         ContentVersion = "1.0.0.0",
                     },
-                    Mode = "Incremental"
+                    Mode = DeploymentMode.Incremental
                 }
             };
 
@@ -653,7 +653,7 @@ namespace ResourceGroups.Tests
             Assert.Throws<ArgumentNullException>(() => client.Deployments.Cancel("foo", null));
         }
 
-        [Fact(Skip = "Datetime serialization is not supported yet at code-gen, the work is on-going.")]
+        [Fact]
         public void DeploymentTestsGetValidateMessage()
         {
             var response = new HttpResponseMessage(HttpStatusCode.OK)
@@ -712,7 +712,7 @@ namespace ResourceGroups.Tests
             Assert.Equal("Succeeded", result.Properties.ProvisioningState);
             Assert.Equal("12345", result.Properties.CorrelationId);
             Assert.Equal(new DateTime(2014, 1, 5, 12, 30, 43), result.Properties.Timestamp);
-            Assert.Equal("Incremental", result.Properties.Mode);
+            Assert.Equal(DeploymentMode.Incremental, result.Properties.Mode);
             Assert.Equal("http://wa/template.json", result.Properties.TemplateLink.Uri.ToString());
             Assert.Equal("1.0.0.0", result.Properties.TemplateLink.ContentVersion);
             Assert.True(result.Properties.Parameters.ToString().Contains("\"type\": \"string\""));
@@ -730,7 +730,7 @@ namespace ResourceGroups.Tests
             Assert.Throws<ArgumentOutOfRangeException>(() => client.Deployments.Get("~`123", "bar"));
         }
 
-        [Fact(Skip = "Datetime serialization is not supported yet at code-gen, the work is on-going.")]
+        [Fact]
         public void DeploymentTestsListAllValidateMessage()
         {
             var response = new HttpResponseMessage(HttpStatusCode.OK)
@@ -829,7 +829,7 @@ namespace ResourceGroups.Tests
             Assert.Equal("myrealease-3.14", result.Value[0].Name);
             Assert.Equal("Succeeded", result.Value[0].Properties.ProvisioningState);
             Assert.Equal(new DateTime(2014, 1, 5, 12, 30, 43), result.Value[0].Properties.Timestamp);
-            Assert.Equal("Incremental", result.Value[0].Properties.Mode);
+            Assert.Equal(DeploymentMode.Incremental, result.Value[0].Properties.Mode);
             Assert.Equal("http://wa/template.json", result.Value[0].Properties.TemplateLink.Uri.ToString());
             Assert.Equal("1.0.0.0", result.Value[0].Properties.TemplateLink.ContentVersion);
             Assert.True(result.Value[0].Properties.Parameters.ToString().Contains("\"type\": \"string\""));
@@ -837,7 +837,7 @@ namespace ResourceGroups.Tests
             Assert.Equal("https://wa/subscriptions/subId/templateDeployments?$skiptoken=983fknw", result.NextLink.ToString());
         }
 
-        [Fact(Skip = "Datetime serialization is not supported yet at code-gen, the work is on-going.")]
+        [Fact]
         public void DeploymentTestsListValidateMessage()
         {
             var response = new HttpResponseMessage(HttpStatusCode.OK)
@@ -938,7 +938,7 @@ namespace ResourceGroups.Tests
             Assert.Equal("myrealease-3.14", result.Value[0].Name);
             Assert.Equal("Succeeded", result.Value[0].Properties.ProvisioningState);
             Assert.Equal(new DateTime(2014, 1, 5, 12, 30, 43), result.Value[0].Properties.Timestamp);
-            Assert.Equal("Incremental", result.Value[0].Properties.Mode);
+            Assert.Equal(DeploymentMode.Incremental, result.Value[0].Properties.Mode);
             Assert.Equal("http://wa/template.json", result.Value[0].Properties.TemplateLink.Uri.ToString());
             Assert.Equal("1.0.0.0", result.Value[0].Properties.TemplateLink.ContentVersion);
             Assert.True(result.Value[0].Properties.Parameters.ToString().Contains("\"type\": \"string\""));
@@ -946,7 +946,7 @@ namespace ResourceGroups.Tests
             Assert.Equal("https://wa/subscriptions/subId/templateDeployments?$skiptoken=983fknw", result.NextLink.ToString());
         }
 
-        [Fact(Skip = "Datetime serialization is not supported yet at code-gen, the work is on-going.")]
+        [Fact]
         public void DeploymentTestsListForGroupValidateMessage()
         {
             var response = new HttpResponseMessage(HttpStatusCode.OK)
@@ -1048,7 +1048,7 @@ namespace ResourceGroups.Tests
             Assert.Equal("myrealease-3.14", result.Value[0].Name);
             Assert.Equal("Succeeded", result.Value[0].Properties.ProvisioningState);
             Assert.Equal(new DateTime(2014, 1, 5, 12, 30, 43), result.Value[0].Properties.Timestamp);
-            Assert.Equal("Incremental", result.Value[0].Properties.Mode);
+            Assert.Equal(DeploymentMode.Incremental, result.Value[0].Properties.Mode);
             Assert.Equal("http://wa/template.json", result.Value[0].Properties.TemplateLink.Uri.ToString());
             Assert.Equal("1.0.0.0", result.Value[0].Properties.TemplateLink.ContentVersion);
             Assert.True(result.Value[0].Properties.Parameters.ToString().Contains("\"type\": \"string\""));

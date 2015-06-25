@@ -193,7 +193,7 @@
       },
       "description": "Deployment filter."
     },
-    "GenericResourceExtendedFilter": {
+    "GenericResourceFilter": {
       "properties": {
         "resourceType": {
           "type": "string",

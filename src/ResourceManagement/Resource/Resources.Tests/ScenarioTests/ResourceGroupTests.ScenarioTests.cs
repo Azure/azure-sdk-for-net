@@ -37,7 +37,6 @@ namespace ResourceGroups.Tests
             var client = this.GetResourceManagementClientWithHandler(handler);
             if (HttpMockServer.Mode == HttpRecorderMode.Playback)
             {
-                client.LongRunningOperationInitialTimeout = 0;
                 client.LongRunningOperationRetryTimeout = 0;
             }
 
@@ -119,13 +118,13 @@ namespace ResourceGroups.Tests
                 client.SetRetryPolicy(new RetryPolicy<HttpStatusCodeErrorDetectionStrategy>(1));
 
                 var checkExistenceFirst = client.ResourceGroups.CheckExistence(groupName);
-                Assert.False(checkExistenceFirst);
+                Assert.False(checkExistenceFirst.Value);
 
                 client.ResourceGroups.CreateOrUpdate(groupName, new ResourceGroup { Location = DefaultLocation });
 
                 var checkExistenceSecond = client.ResourceGroups.CheckExistence(groupName);
 
-                Assert.True(checkExistenceSecond);
+                Assert.True(checkExistenceSecond.Value);
             }
         }
 
@@ -140,12 +139,12 @@ namespace ResourceGroups.Tests
             var resourceGroupName = TestUtilities.GenerateName("csmrg");
             var createResult = client.ResourceGroups.CreateOrUpdate(resourceGroupName, new ResourceGroup { Location = DefaultLocation });
             var getResult = client.ResourceGroups.Get(resourceGroupName);
-            var deleteResult = client.ResourceGroups.DeleteWithOperationResponseAsync(resourceGroupName)
-                .ConfigureAwait(false).GetAwaiter().GetResult();
+            var deleteResult =
+                client.ResourceGroups.DeleteWithOperationResponseAsync(resourceGroupName).Result;
             var listResult = client.ResourceGroups.List(null);
 
             Assert.Equal(HttpStatusCode.OK, deleteResult.Response.StatusCode);
-            Assert.False(listResult.Value.Any(rg => rg.Name == resourceGroupName && rg.ProvisioningState != "Deleting"));
+            Assert.False(listResult.Value.Any(rg => rg.Name == resourceGroupName && rg.Properties.ProvisioningState != "Deleting"));
             TestUtilities.EndTest();
         }
     }

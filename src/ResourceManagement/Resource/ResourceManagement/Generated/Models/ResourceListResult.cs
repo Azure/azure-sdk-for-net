@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// Gets or sets the list of resource groups.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
-        public IList<GenericResourceExtended> Value { get; set; }
+        public IList<GenericResource> Value { get; set; }
 
         /// <summary>
         /// Gets or sets the URL to get the next set of results.

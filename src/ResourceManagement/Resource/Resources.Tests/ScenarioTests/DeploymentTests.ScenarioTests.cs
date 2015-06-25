@@ -79,7 +79,7 @@ namespace ResourceGroups.Tests
                             Uri = DummyTemplateUri
                         },
                         Parameters = serializedDictionary,
-                        Mode = "Incremental",
+                        Mode = DeploymentMode.Incremental,
                     }
                 };
 
@@ -115,7 +115,7 @@ namespace ResourceGroups.Tests
                         },
                         Parameters =
                             @"{ 'siteName': {'value': 'mctest0101'},'hostingPlanName': {'value': 'mctest0101'},'siteMode': {'value': 'Limited'},'computeMode': {'value': 'Shared'},'siteLocation': {'value': 'North Europe'},'sku': {'value': 'Free'},'workerSize': {'value': '0'}}",
-                        Mode = "Incremental",
+                        Mode = DeploymentMode.Incremental,
                     }
                 };
                 string groupName = TestUtilities.GenerateName("csmrg");
@@ -167,7 +167,7 @@ namespace ResourceGroups.Tests
                         },
                         Parameters =
                             @"{ 'siteName': {'value': 'mctest0101'},'hostingPlanName': {'value': 'mctest0101'},'siteMode': {'value': 'Limited'},'computeMode': {'value': 'Shared'},'siteLocation': {'value': 'North Europe'},'sku': {'value': 'Free'},'workerSize': {'value': '0'}}",
-                        Mode = "Incremental",
+                        Mode = DeploymentMode.Incremental,
                     }
                 };
 
@@ -204,7 +204,7 @@ namespace ResourceGroups.Tests
                         Template = File.ReadAllText("ScenarioTests\\good-website.js"),
                         Parameters =
                             @"{ 'siteName': {'value': 'mctest0101'},'hostingPlanName': {'value': 'mctest0101'},'siteMode': {'value': 'Limited'},'computeMode': {'value': 'Shared'},'siteLocation': {'value': 'North Europe'},'sku': {'value': 'Free'},'workerSize': {'value': '0'}}",
-                        Mode = "Incremental",
+                        Mode = DeploymentMode.Incremental,
                     }
                 };
 
@@ -244,7 +244,7 @@ namespace ResourceGroups.Tests
                         },
                         Parameters =
                             @"{ 'siteName': {'value': 'mctest0101'},'hostingPlanName': {'value': 'mctest0101'},'siteMode': {'value': 'Limited'},'computeMode': {'value': 'Shared'},'siteLocation': {'value': 'North Europe'},'sku': {'value': 'Free'},'workerSize': {'value': '0'}}",
-                        Mode = "Incremental",
+                        Mode = DeploymentMode.Incremental,
                     }
                 };
 
@@ -292,7 +292,7 @@ namespace ResourceGroups.Tests
                             Uri = DummyTemplateUri
                         },
                         Parameters = serializedDictionary,
-                        Mode = "Incremental",
+                        Mode = DeploymentMode.Incremental,
                     }
                 };
 
@@ -335,7 +335,7 @@ namespace ResourceGroups.Tests
                         },
                         Parameters =
                             @"{ 'siteName': {'value': 'mctest0101'},'hostingPlanName': {'value': 'mctest0101'},'siteMode': {'value': 'Limited'},'computeMode': {'value': 'Shared'},'siteLocation': {'value': 'North Europe'},'sku': {'value': 'Free'},'workerSize': {'value': '0'}}",
-                        Mode = "Incremental",
+                        Mode = DeploymentMode.Incremental,
                     }
                 };
                 string groupName = TestUtilities.GenerateName("csmrg");
@@ -388,7 +388,7 @@ namespace ResourceGroups.Tests
                             "{ 'siteName': {'value': '" + resourceName + "'},'hostingPlanName': {'value': '" +
                             resourceName +
                             "'},'siteMode': {'value': 'Limited'},'computeMode': {'value': 'Shared'},'siteLocation': {'value': 'North Europe'},'sku': {'value': 'Free'},'workerSize': {'value': '0'}}",
-                        Mode = "Incremental",
+                        Mode = DeploymentMode.Incremental,
                     }
                 };
 

@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='top'>
             /// Query parameters. If null is passed returns all resource groups.
             /// </param>
-            public static ResourceListResult ListResources(this IResourceGroupsOperations operations, string resourceGroupName, Expression<Func<GenericResourceExtendedFilter, bool>> filter = default(Expression<Func<GenericResourceExtendedFilter, bool>>), int? top = default(int?))
+            public static ResourceListResult ListResources(this IResourceGroupsOperations operations, string resourceGroupName, Expression<Func<GenericResourceFilter, bool>> filter = default(Expression<Func<GenericResourceFilter, bool>>), int? top = default(int?))
             {
                 return Task.Factory.StartNew(s => ((IResourceGroupsOperations)s).ListResourcesAsync(resourceGroupName, filter, top), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<ResourceListResult> ListResourcesAsync( this IResourceGroupsOperations operations, string resourceGroupName, Expression<Func<GenericResourceExtendedFilter, bool>> filter = default(Expression<Func<GenericResourceExtendedFilter, bool>>), int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ResourceListResult> ListResourcesAsync( this IResourceGroupsOperations operations, string resourceGroupName, Expression<Func<GenericResourceFilter, bool>> filter = default(Expression<Func<GenericResourceFilter, bool>>), int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {
                 AzureOperationResponse<ResourceListResult> result = await operations.ListResourcesWithOperationResponseAsync(resourceGroupName, filter, top, cancellationToken).ConfigureAwait(false);
                 return result.Body;
