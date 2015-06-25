@@ -266,5 +266,13 @@ namespace Microsoft.Azure.Management.ApiManagement
         {
             get; 
         }
+        
+        /// <summary>
+        /// Operations for managing User Subscriptions.
+        /// </summary>
+        IUserSubscriptionsOperations UserSubscriptions
+        {
+            get; 
+        }
     }
 }

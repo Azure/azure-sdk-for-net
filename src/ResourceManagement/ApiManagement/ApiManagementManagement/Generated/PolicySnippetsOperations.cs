@@ -116,7 +116,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + "Microsoft.ApiManagement";
             url = url + "/service/";
             url = url + Uri.EscapeDataString(serviceName);
-            url = url + "/policy-snippets";
+            url = url + "/policySnippets";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2014-02-14");
             queryParameters.Add("scope=" + Uri.EscapeDataString(scope.ToString()));

@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.SmapiTest
 
             try
             {
-                const int allSnippetsCount = 23;
+                const int allSnippetsCount = 24;
                 var allListResponse = ApiManagementClient.PolicySnippents.List(
                     ResourceGroupName,
                     ApiManagementServiceName,
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.SmapiTest
                     ApiManagementServiceName,
                     PolicyScopeContract.Api);
 
-                const int apiSnippetsCount = 19;
+                const int apiSnippetsCount = 20;
                 Assert.NotNull(apiListResponse);
                 Assert.Equal(apiSnippetsCount, apiListResponse.Values.Count);
 
