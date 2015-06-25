@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 using System.Configuration;
+using BackupServices.Tests.Helpers;
 
 namespace BackupServices.Tests
 {
