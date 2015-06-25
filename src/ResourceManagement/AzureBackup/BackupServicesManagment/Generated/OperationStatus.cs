@@ -216,12 +216,12 @@ namespace Microsoft.Azure.Management.BackupServices
                                 result.ErrorCode = errorCodeInstance;
                             }
                             
-                            JToken jobListArray = responseDoc["JobList"];
-                            if (jobListArray != null && jobListArray.Type != JTokenType.Null)
+                            JToken jobsArray = responseDoc["Jobs"];
+                            if (jobsArray != null && jobsArray.Type != JTokenType.Null)
                             {
-                                foreach (JToken jobListValue in ((JArray)jobListArray))
+                                foreach (JToken jobsValue in ((JArray)jobsArray))
                                 {
-                                    result.JobList.Add(((string)jobListValue));
+                                    result.Jobs.Add(((string)jobsValue));
                                 }
                             }
                         }

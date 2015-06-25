@@ -43,15 +43,15 @@ namespace Microsoft.Azure.Management.BackupServices
             set { this._errorCode = value; }
         }
         
-        private IList<string> _jobList;
+        private IList<string> _jobs;
         
         /// <summary>
         /// Optional. ID of jobs created by this operation
         /// </summary>
-        public IList<string> JobList
+        public IList<string> Jobs
         {
-            get { return this._jobList; }
-            set { this._jobList = value; }
+            get { return this._jobs; }
+            set { this._jobs = value; }
         }
         
         private string _message;
@@ -92,7 +92,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// </summary>
         public OperationResultResponse()
         {
-            this.JobList = new LazyList<string>();
+            this.Jobs = new LazyList<string>();
         }
     }
 }
