@@ -43,6 +43,11 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// keys or values that can be used. User needs to consume and interpret the content accordingly in
         /// their customized Pig script.
         /// </summary>
-        public IDictionary<string, string> ExtendedProperties { get; set; }
+        public IDictionary<string, string> Defines { get; set; }
+
+        public HDInsightPigActivity()
+        {
+            this.Defines = new Dictionary<string, string>();
+        }
     }
 }

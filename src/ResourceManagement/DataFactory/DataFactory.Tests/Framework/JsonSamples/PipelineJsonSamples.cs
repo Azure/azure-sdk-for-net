@@ -77,7 +77,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
                         ""SA1"",
                         ""SA2""
                     ],
-                    extendedProperties:
+                    defines:
                     {
                         PropertyBagPropertyName1: ""PropertyBagValue1""
                     }
@@ -163,7 +163,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
                     [
                         ""storageLinkedService2""
                     ], 
-					extendedProperties:
+					defines:
 					{
                         PropertyBagPropertyName1: ""PropertyBagValue1""
 					}
@@ -824,7 +824,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
 						""aureleu/example/apps/wc.exe"" , 
 						""aureleu/example/apps/cat.exe"" 
 					],
-					extendedProperties:
+					defines:
 					{
                         PropertyBagPropertyName1: ""PropertyBagValue1""
 					},
