@@ -49,19 +49,12 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// </summary>
         public IDictionary<string, string> Defines { get; set; }
 
-        /// <summary>
-        /// User specified property bag. There is no restriction on the keys or 
-        /// values that can be used. These are passed as Defines in the MapReduce job request.
-        /// </summary>
-        public IDictionary<string, string> ExtendedProperties { get; set; }
-
          /// <summary>
         /// Initializes a new instance of the MapReduce class.
         /// </summary>
         public HDInsightMapReduceActivity()
         {
             this.Defines = new Dictionary<string, string>();
-            this.ExtendedProperties = new Dictionary<string, string>();
             this.JarLibs = new List<string>();
         }
         

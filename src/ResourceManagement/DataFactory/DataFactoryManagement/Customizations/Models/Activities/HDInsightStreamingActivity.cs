@@ -73,19 +73,12 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         public IDictionary<string, string> Defines { get; set; }
 
         /// <summary>
-        /// User specified property bag. There is no restriction on the keys or 
-        /// values that can be used. These are passed as Defines in the streaming job request.
-        /// </summary>
-        public IDictionary<string, string> ExtendedProperties { get; set; }
-
-        /// <summary>
         /// Initializes a new instance of the HDInsightStreamingActivity class.
         /// </summary>
         public HDInsightStreamingActivity()
         {
             this.CommandEnvironment = new List<string>();
             this.Defines = new Dictionary<string, string>();
-            this.ExtendedProperties = new Dictionary<string, string>();
             this.FilePaths = new List<string>();
         }
     }
