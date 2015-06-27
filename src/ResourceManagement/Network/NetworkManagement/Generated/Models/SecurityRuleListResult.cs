@@ -9,13 +9,19 @@ namespace Microsoft.Azure.Management.Network.Models
 
     /// <summary>
     /// </summary>
-    public partial class UsagesListResponse
+    public partial class SecurityRuleListResult
     {
         /// <summary>
-        /// Gets or sets the list Network Resource Usages.
+        /// Gets security rules in a network security group
         /// </summary>
         [JsonProperty(PropertyName = "value")]
-        public IList<Usage> Value { get; set; }
+        public IList<SecurityRule> Value { get; set; }
+
+        /// <summary>
+        /// Gets the URL to get the next set of results.
+        /// </summary>
+        [JsonProperty(PropertyName = "nextLink")]
+        public string NextLink { get; set; }
 
         /// <summary>
         /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.

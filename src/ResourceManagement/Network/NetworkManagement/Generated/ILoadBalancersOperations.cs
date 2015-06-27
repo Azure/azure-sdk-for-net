@@ -94,7 +94,7 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        Task<AzureOperationResponse<LoadBalancerListResponse>> ListAllWithOperationResponseAsync(CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<LoadBalancerListResult>> ListAllWithOperationResponseAsync(CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The List loadBalancer opertion retrieves all the loadbalancers in
         /// a resource group.
@@ -105,7 +105,7 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        Task<AzureOperationResponse<LoadBalancerListResponse>> ListWithOperationResponseAsync(string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<LoadBalancerListResult>> ListWithOperationResponseAsync(string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The List loadBalancer opertion retrieves all the loadbalancers in
         /// a subscription.
@@ -116,7 +116,7 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        Task<AzureOperationResponse<LoadBalancerListResponse>> ListAllNextWithOperationResponseAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<LoadBalancerListResult>> ListAllNextWithOperationResponseAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The List loadBalancer opertion retrieves all the loadbalancers in
         /// a resource group.
@@ -127,6 +127,6 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        Task<AzureOperationResponse<LoadBalancerListResponse>> ListNextWithOperationResponseAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<LoadBalancerListResult>> ListNextWithOperationResponseAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

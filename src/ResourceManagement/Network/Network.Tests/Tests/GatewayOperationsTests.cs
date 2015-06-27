@@ -41,7 +41,6 @@ namespace Networks.Tests
                         Location = location
                     });
 
-
                 // 1. CreateVirtualNetworkGateway API
 
                 // A. Prerequisite:- Create PublicIPAddress(Gateway Ip) using Put PublicIPAddress API
@@ -74,8 +73,8 @@ namespace Networks.Tests
                            {"key","value"}
                         },
                     EnableBgp = false,
-                    GatewaySize = VirtualNetworkGatewaySize.Default,
-                    GatewayType = VpnGatewayType.DynamicRouting,
+                    GatewayType = VirtualNetworkGatewayType.Vpn,
+                    VpnType = VpnType.RouteBased,
                     IpConfigurations = new List<VirtualNetworkGatewayIpConfiguration>()
                     {
                         new VirtualNetworkGatewayIpConfiguration()
@@ -99,51 +98,33 @@ namespace Networks.Tests
 
                 // 2. GetVirtualNetworkGateway API
                 var getVirtualNetworkGatewayResponse = networkResourceProviderClient.VirtualNetworkGateways.Get(resourceGroupName, virtualNetworkGatewayName);
-                Console.WriteLine("Gateway details:- GatewayLocation: {0}, GatewayId:{1}, GatewayName={2}, GateaySize={3}, GatewayType={4} ",
+                Console.WriteLine("Gateway details:- GatewayLocation: {0}, GatewayId:{1}, GatewayName={2}, GatewayType={3}, VpnType={4}",
                     getVirtualNetworkGatewayResponse.Location,
                     getVirtualNetworkGatewayResponse.Id, getVirtualNetworkGatewayResponse.Name,
-                    getVirtualNetworkGatewayResponse.GatewaySize, getVirtualNetworkGatewayResponse.GatewayType);
+                    getVirtualNetworkGatewayResponse.GatewayType, getVirtualNetworkGatewayResponse.VpnType);
+                Assert.Equal(VirtualNetworkGatewayType.Vpn, getVirtualNetworkGatewayResponse.GatewayType);
+                Assert.Equal(VpnType.RouteBased, getVirtualNetworkGatewayResponse.VpnType);
 
-                // 3A. UpdateVirtualNetworkGateway API :- GatewaySize update from Default -> HighPerformance
-                virtualNetworkGateway.GatewaySize = VirtualNetworkGatewaySize.HighPerformance;
+                // 3A. ResetVirtualNetworkGateway API
+                var resetVirtualNetworkGatewayResponse = networkResourceProviderClient.VirtualNetworkGateways.Reset(resourceGroupName, virtualNetworkGatewayName, virtualNetworkGateway);
+                Assert.Equal("Succeeded", resetVirtualNetworkGatewayResponse.ProvisioningState);
 
-                putVirtualNetworkGatewayResponse = networkResourceProviderClient.VirtualNetworkGateways.CreateOrUpdate(resourceGroupName, virtualNetworkGatewayName, virtualNetworkGateway);
-                Assert.Equal("Succeeded", putVirtualNetworkGatewayResponse.ProvisioningState);
-
-                // 3B. GetVirtualNetworkgateway API after Updating GatewaySKU from Default -> HighPerformance
+                // 3B. GetVirtualNetworkgateway API after ResetVirtualNetworkGateway API was called
                 getVirtualNetworkGatewayResponse = networkResourceProviderClient.VirtualNetworkGateways.Get(resourceGroupName, virtualNetworkGatewayName);
-                Console.WriteLine("Gateway details:- GatewayLocation: {0}, GatewayId:{1}, GatewayName={2}, GateaySize={3}, GatewayType={4} ",
+                Console.WriteLine("Gateway details:- GatewayLocation: {0}, GatewayId:{1}, GatewayName={2}, GatewayType={3} ",
                     getVirtualNetworkGatewayResponse.Location,
                     getVirtualNetworkGatewayResponse.Id, getVirtualNetworkGatewayResponse.Name,
-                    getVirtualNetworkGatewayResponse.GatewaySize, getVirtualNetworkGatewayResponse.GatewayType);
-                Assert.Equal(VirtualNetworkGatewaySize.HighPerformance, getVirtualNetworkGatewayResponse.GatewaySize);
+                    getVirtualNetworkGatewayResponse.GatewayType);
 
-                // 4A. ResetVirtualNetworkGateway API
-                try
-                {
-                    var resetVirtualNetworkGatewayResponse = networkResourceProviderClient.VirtualNetworkGateways.Reset(resourceGroupName, virtualNetworkGatewayName, virtualNetworkGateway);
-                }
-                catch (Exception ex)
-                {
-                    Assert.Equal("Accepted", ex.Message);
-                }
-
-                // 4B. GetVirtualNetworkgateway API after ResetVirtualNetworkGateway API was called
-                getVirtualNetworkGatewayResponse = networkResourceProviderClient.VirtualNetworkGateways.Get(resourceGroupName, virtualNetworkGatewayName);
-                Console.WriteLine("Gateway details:- GatewayLocation: {0}, GatewayId:{1}, GatewayName={2}, GateaySize={3}, GatewayType={4} ",
-                    getVirtualNetworkGatewayResponse.Location,
-                    getVirtualNetworkGatewayResponse.Id, getVirtualNetworkGatewayResponse.Name,
-                    getVirtualNetworkGatewayResponse.GatewaySize, getVirtualNetworkGatewayResponse.GatewayType);
-
-                // 5. ListVitualNetworkGateways API
+                // 4. ListVitualNetworkGateways API
                 var listVirtualNetworkGatewayResponse = networkResourceProviderClient.VirtualNetworkGateways.List(resourceGroupName);
                 Console.WriteLine("ListVirtualNetworkGateways count ={0} ", listVirtualNetworkGatewayResponse.Value.Count);
                 Assert.Equal(1, listVirtualNetworkGatewayResponse.Value.Count);
 
-                // 6A. DeleteVirtualNetworkGateway API
+                // 5A. DeleteVirtualNetworkGateway API
                 networkResourceProviderClient.VirtualNetworkGateways.Delete(resourceGroupName, virtualNetworkGatewayName);
 
-                // 6B. ListVitualNetworkGateways API after deleting VirtualNetworkGateway
+                // 5B. ListVitualNetworkGateways API after deleting VirtualNetworkGateway
                 listVirtualNetworkGatewayResponse = networkResourceProviderClient.VirtualNetworkGateways.List(resourceGroupName);
                 Console.WriteLine("ListVirtualNetworkGateways count ={0} ", listVirtualNetworkGatewayResponse.Value.Count);
                 Assert.Equal(0, listVirtualNetworkGatewayResponse.Value.Count);
@@ -175,7 +156,8 @@ namespace Networks.Tests
                 // 1. CreateLocalNetworkGateway API
                 string localNetworkGatewayName = TestUtilities.GenerateName();
                 string gatewayIp = "192.168.3.4";
-                string newGatewayIp = "192.168.3.5";
+                string addressPrefixes = "192.168.0.0/16";
+                string newAddressPrefixes = "200.168.0.0/16";
 
                 var localNetworkGateway = new LocalNetworkGateway()
                 {
@@ -185,11 +167,11 @@ namespace Networks.Tests
                            {"test","value"}
                         },
                     GatewayIpAddress = gatewayIp,
-                    LocalNetworkSiteAddressSpace = new AddressSpace()
+                    LocalNetworkAddressSpace = new AddressSpace()
                     {
                         AddressPrefixes = new List<string>()
                         {
-                            "192.168.0.0/16",
+                            addressPrefixes,
                         }
                     }
                 };
@@ -199,22 +181,34 @@ namespace Networks.Tests
 
                 // 2. GetLocalNetworkGateway API
                 var getLocalNetworkGatewayResponse = networkResourceProviderClient.LocalNetworkGateways.Get(resourceGroupName, localNetworkGatewayName);
-                Console.WriteLine("Local Network Gateway details:- GatewayLocation: {0}, GatewayId:{1}, GatewayName={2} ",
+                getLocalNetworkGatewayResponse.Location = location;
+                Console.WriteLine("Local Network Gateway details:- GatewayLocation: {0}, GatewayId:{1}, GatewayName={2} GatewayIpAddress={3} LocalNetworkAddressSpace={4}",
                     getLocalNetworkGatewayResponse.Location,
-                    getLocalNetworkGatewayResponse.Id, getLocalNetworkGatewayResponse.Name);
+                    getLocalNetworkGatewayResponse.Id, getLocalNetworkGatewayResponse.Name,
+                    getLocalNetworkGatewayResponse.GatewayIpAddress, getLocalNetworkGatewayResponse.LocalNetworkAddressSpace.AddressPrefixes[0].ToString());
                 Assert.Equal(gatewayIp, getLocalNetworkGatewayResponse.GatewayIpAddress);
+                Assert.Equal(addressPrefixes, getLocalNetworkGatewayResponse.LocalNetworkAddressSpace.AddressPrefixes[0].ToString());
 
-                // 3A. UpdateLocalNetworkgateway API :- GatewayIp from "10.0.3.4" => "10.0.3.5"
-                localNetworkGateway.GatewayIpAddress = newGatewayIp;
+                // 3A. UpdateLocalNetworkgateway API :- LocalNetworkGateway LocalNetworkAddressSpace from "192.168.0.0/16" => "200.168.0.0/16"
+                getLocalNetworkGatewayResponse.LocalNetworkAddressSpace = new AddressSpace()
+                {
+                    AddressPrefixes = new List<string>()
+                        {
+                            newAddressPrefixes,
+                        }
+                };
 
-                putLocalNetworkGatewayResponse = networkResourceProviderClient.LocalNetworkGateways.CreateOrUpdate(resourceGroupName, localNetworkGatewayName, localNetworkGateway);
-                
-                // 3B. GetLocalNetworkGateway API after Updating GatewayIp from "10.0.3.4" => "10.0.3.5"
+                putLocalNetworkGatewayResponse = networkResourceProviderClient.LocalNetworkGateways.CreateOrUpdate(resourceGroupName, localNetworkGatewayName, getLocalNetworkGatewayResponse);
+                Assert.Equal("Succeeded", putLocalNetworkGatewayResponse.ProvisioningState);
+
+                // 3B. GetLocalNetworkGateway API after Updating LocalNetworkGateway LocalNetworkAddressSpace from "192.168.0.0/16" => "200.168.0.0/16"
                 getLocalNetworkGatewayResponse = networkResourceProviderClient.LocalNetworkGateways.Get(resourceGroupName, localNetworkGatewayName);
-                Console.WriteLine("Local Network Gateway details:- GatewayLocation: {0}, GatewayId:{1}, GatewayName={2} GatewayIpAddress={3}",
+                getLocalNetworkGatewayResponse.Location = location;
+                Console.WriteLine("Local Network Gateway details:- GatewayLocation: {0}, GatewayId:{1}, GatewayName={2} GatewayIpAddress={3} LocalNetworkAddressSpace={4}",
                     getLocalNetworkGatewayResponse.Location, getLocalNetworkGatewayResponse.Id,
-                    getLocalNetworkGatewayResponse.Name, getLocalNetworkGatewayResponse.GatewayIpAddress);
-                Assert.Equal(newGatewayIp, getLocalNetworkGatewayResponse.GatewayIpAddress);
+                    getLocalNetworkGatewayResponse.Name, getLocalNetworkGatewayResponse.GatewayIpAddress,
+                    getLocalNetworkGatewayResponse.LocalNetworkAddressSpace.AddressPrefixes[0].ToString());
+                Assert.Equal(newAddressPrefixes, getLocalNetworkGatewayResponse.LocalNetworkAddressSpace.AddressPrefixes[0].ToString());
 
                 // 4. ListLocalNetworkGateways API
                 var listLocalNetworkGatewayResponse = networkResourceProviderClient.LocalNetworkGateways.List(resourceGroupName);
@@ -285,8 +279,8 @@ namespace Networks.Tests
                            {"key","value"}
                         },
                     EnableBgp = false,
-                    GatewaySize = VirtualNetworkGatewaySize.Default,
-                    GatewayType = VpnGatewayType.DynamicRouting,
+                    GatewayType = VirtualNetworkGatewayType.Vpn,
+                    VpnType = VpnType.RouteBased,
                     IpConfigurations = new List<VirtualNetworkGatewayIpConfiguration>()
                     {
                         new VirtualNetworkGatewayIpConfiguration()
@@ -307,6 +301,7 @@ namespace Networks.Tests
 
                 var putVirtualNetworkGatewayResponse = networkResourceProviderClient.VirtualNetworkGateways.CreateOrUpdate(resourceGroupName, virtualNetworkGatewayName, virtualNetworkGateway);
                 Assert.Equal("Succeeded", putVirtualNetworkGatewayResponse.ProvisioningState);
+                var getVirtualNetworkGatewayResponse = networkResourceProviderClient.VirtualNetworkGateways.Get(resourceGroupName, virtualNetworkGatewayName);
 
                 //B. Create LocalNetworkGateway2
                 string localNetworkGatewayName = TestUtilities.GenerateName();
@@ -320,7 +315,7 @@ namespace Networks.Tests
                            {"test","value"}
                         },
                     GatewayIpAddress = gatewayIp,
-                    LocalNetworkSiteAddressSpace = new AddressSpace()
+                    LocalNetworkAddressSpace = new AddressSpace()
                     {
                         AddressPrefixes = new List<string>()
                         {
@@ -331,14 +326,16 @@ namespace Networks.Tests
 
                 var putLocalNetworkGatewayResponse = networkResourceProviderClient.LocalNetworkGateways.CreateOrUpdate(resourceGroupName, localNetworkGatewayName, localNetworkGateway);
                 Assert.Equal("Succeeded", putLocalNetworkGatewayResponse.ProvisioningState);
+                var getLocalNetworkGatewayResponse = networkResourceProviderClient.LocalNetworkGateways.Get(resourceGroupName, localNetworkGatewayName);
+                getLocalNetworkGatewayResponse.Location = location;
 
                 // C. CreaetVirtualNetworkGatewayConnection API
                 string VirtualNetworkGatewayConnectionName = TestUtilities.GenerateName();
                 var virtualNetworkGatewayConneciton = new VirtualNetworkGatewayConnection()
                 {
                     Location = location,
-                    VirtualNetworkGateway1 = virtualNetworkGateway,
-                    LocalNetworkGateway2 = localNetworkGateway,
+                    VirtualNetworkGateway1 = getVirtualNetworkGatewayResponse,
+                    LocalNetworkGateway2 = getLocalNetworkGatewayResponse,
                     ConnectionType = VirtualNetworkGatewayConnectionType.IPsec,
                     RoutingWeight = 3,
                     SharedKey = "abc"
@@ -359,15 +356,14 @@ namespace Networks.Tests
                 Assert.Equal(3, getVirtualNetworkGatewayConnectionResponse.RoutingWeight);
                 Assert.Equal("abc", getVirtualNetworkGatewayConnectionResponse.SharedKey);
 
-                // 3A. UpdateVirtualNetworkGatewayConnection API :- ConnectionType = "IPSec" => Vnet2Vnet , RoutingWeight = 3 => 4, SharedKey = "abc"=> "xyz"
-                virtualNetworkGatewayConneciton.ConnectionType = VirtualNetworkGatewayConnectionType.Vnet2Vnet;
+                // 3A. UpdateVirtualNetworkGatewayConnection API :- RoutingWeight = 3 => 4, SharedKey = "abc"=> "xyz"
                 virtualNetworkGatewayConneciton.RoutingWeight = 4;
                 virtualNetworkGatewayConneciton.SharedKey = "xyz";
 
                 putVirtualNetworkGatewayConnectionResponse = networkResourceProviderClient.VirtualNetworkGatewayConnections.CreateOrUpdate(resourceGroupName, VirtualNetworkGatewayConnectionName, virtualNetworkGatewayConneciton);
                 Assert.Equal("Succeeded", putVirtualNetworkGatewayConnectionResponse.ProvisioningState);
 
-                // 3B. GetVirtualNetworkGatewayConnection API after Updating ConnectionType = "IPSec" => Vnet2Vnet , RoutingWeight = 3 => 4, SharedKey = "abc"=> "xyz"
+                // 3B. GetVirtualNetworkGatewayConnection API after Updating RoutingWeight = 3 => 4, SharedKey = "abc"=> "xyz"
                 getVirtualNetworkGatewayConnectionResponse = networkResourceProviderClient.VirtualNetworkGatewayConnections.Get(resourceGroupName, VirtualNetworkGatewayConnectionName);
                 Console.WriteLine("GatewayConnection details:- GatewayLocation: {0}, GatewayConnectionId:{1}, VirtualNetworkGateway1 name={2} & Id={3}, LocalNetworkGateway2 name={4} & Id={5}, ConnectionType={6} RoutingWeight={7} SharedKey={8}",
                     getVirtualNetworkGatewayConnectionResponse.Location, getVirtualNetworkGatewayConnectionResponse.Id,
@@ -376,7 +372,6 @@ namespace Networks.Tests
                     getVirtualNetworkGatewayConnectionResponse.LocalNetworkGateway2.Name, getVirtualNetworkGatewayConnectionResponse.LocalNetworkGateway2.Id,
                     getVirtualNetworkGatewayConnectionResponse.ConnectionType, getVirtualNetworkGatewayConnectionResponse.RoutingWeight,
                     getVirtualNetworkGatewayConnectionResponse.SharedKey);
-                Assert.Equal(VirtualNetworkGatewayConnectionType.Vnet2Vnet, getVirtualNetworkGatewayConnectionResponse.ConnectionType);
                 Assert.Equal(4, getVirtualNetworkGatewayConnectionResponse.RoutingWeight);
                 Assert.Equal("xyz", getVirtualNetworkGatewayConnectionResponse.SharedKey);
 
@@ -453,8 +448,8 @@ namespace Networks.Tests
                            {"key","value"}
                         },
                     EnableBgp = false,
-                    GatewaySize = VirtualNetworkGatewaySize.Default,
-                    GatewayType = VpnGatewayType.DynamicRouting,
+                    GatewayType = VirtualNetworkGatewayType.Vpn,
+                    VpnType = VpnType.RouteBased,
                     IpConfigurations = new List<VirtualNetworkGatewayIpConfiguration>()
                     {
                         new VirtualNetworkGatewayIpConfiguration()
@@ -475,6 +470,7 @@ namespace Networks.Tests
 
                 var putVirtualNetworkGatewayResponse = networkResourceProviderClient.VirtualNetworkGateways.CreateOrUpdate(resourceGroupName, virtualNetworkGatewayName, virtualNetworkGateway);
                 Assert.Equal("Succeeded", putVirtualNetworkGatewayResponse.ProvisioningState);
+                var getVirtualNetworkGatewayResponse = networkResourceProviderClient.VirtualNetworkGateways.Get(resourceGroupName, virtualNetworkGatewayName);
 
                 // Create LocalNetworkGateway2
                 string localNetworkGatewayName = TestUtilities.GenerateName();
@@ -488,7 +484,7 @@ namespace Networks.Tests
                            {"test","value"}
                         },
                     GatewayIpAddress = gatewayIp,
-                    LocalNetworkSiteAddressSpace = new AddressSpace()
+                    LocalNetworkAddressSpace = new AddressSpace()
                     {
                         AddressPrefixes = new List<string>()
                         {
@@ -499,14 +495,16 @@ namespace Networks.Tests
 
                 var putLocalNetworkGatewayResponse = networkResourceProviderClient.LocalNetworkGateways.CreateOrUpdate(resourceGroupName, localNetworkGatewayName, localNetworkGateway);
                 Assert.Equal("Succeeded", putLocalNetworkGatewayResponse.ProvisioningState);
+                var getLocalNetworkGatewayResponse = networkResourceProviderClient.LocalNetworkGateways.Get(resourceGroupName, localNetworkGatewayName);
+                getLocalNetworkGatewayResponse.Location = location;
 
                 // CreaetVirtualNetworkGatewayConnection API
                 string VirtualNetworkGatewayConnectionName = TestUtilities.GenerateName();
                 var virtualNetworkGatewayConneciton = new VirtualNetworkGatewayConnection()
                 {
                     Location = location,
-                    VirtualNetworkGateway1 = virtualNetworkGateway,
-                    LocalNetworkGateway2 = localNetworkGateway,
+                    VirtualNetworkGateway1 = getVirtualNetworkGatewayResponse,
+                    LocalNetworkGateway2 = getLocalNetworkGatewayResponse,
                     ConnectionType = VirtualNetworkGatewayConnectionType.IPsec,
                     RoutingWeight = 3,
                     SharedKey = "abc"
@@ -516,40 +514,32 @@ namespace Networks.Tests
 
                 // SetVirtualNetworkGatewayConnectionSharedKey API on created connection above:- virtualNetworkGatewayConneciton
                 string connectionSharedKeyName = VirtualNetworkGatewayConnectionName;
-                var connectionSharedKey = new ConnectionSharedKey
+                var connectionSharedKey = new ConnectionSharedKey()
                 {
-                    Properties = new ConnectionSharedKeyPropertiesFormat
-                    {
-                        Value = "TestSharedKeyValue"
-                    }
+                    Value = "TestSharedKeyValue"
                 };
 
                 var putConnectionSharedKeyResponse = networkResourceProviderClient.VirtualNetworkGatewayConnections.SetSharedKey(resourceGroupName, connectionSharedKeyName, connectionSharedKey);
+                Assert.NotNull(putConnectionSharedKeyResponse);
 
                 // 2. GetVirtualNetworkGatewayConnectionSharedKey API
                 var getconnectionSharedKeyResponse = networkResourceProviderClient.VirtualNetworkGatewayConnections.GetSharedKey(resourceGroupName, connectionSharedKeyName);
-                Console.WriteLine("ConnectionSharedKey details:- Value: {0}", getconnectionSharedKeyResponse);
+                Console.WriteLine("ConnectionSharedKey details:- Value: {0}", getconnectionSharedKeyResponse.Value);
 
                 // 3A. VirtualNetworkGatewayConnectionResetSharedKey API
-                var connectionResetSharedKey = new ConnectionResetSharedKey
+                var connectionResetSharedKey = new ConnectionResetSharedKey()
                 {
                     Properties = new ConnectionResetSharedKeyPropertiesFormat
                     {
                         KeyLength = 50
                     }
                 };
-                try
-                {
-                    networkResourceProviderClient.VirtualNetworkGatewayConnections.ResetSharedKey(resourceGroupName, connectionSharedKeyName, connectionResetSharedKey);
-                }
-                catch (Exception ex)
-                {
-                    Assert.Equal(ex.Message, "Accepted");
-                }
+                var resetConnectionResetSharedKeyResponse = networkResourceProviderClient.VirtualNetworkGatewayConnections.ResetSharedKey(resourceGroupName, connectionSharedKeyName, connectionResetSharedKey);
+                Assert.NotNull(resetConnectionResetSharedKeyResponse);
 
                 // 3B. GetVirtualNetworkGatewayConnectionSharedKey API after VirtualNetworkGatewayConnectionResetSharedKey API was called
                 getconnectionSharedKeyResponse = networkResourceProviderClient.VirtualNetworkGatewayConnections.GetSharedKey(resourceGroupName, connectionSharedKeyName);
-                Console.WriteLine("ConnectionSharedKey details:- Value: {0}", getconnectionSharedKeyResponse);
+                Console.WriteLine("ConnectionSharedKey details:- Value: {0}", getconnectionSharedKeyResponse.Value);
             }
         }
     }

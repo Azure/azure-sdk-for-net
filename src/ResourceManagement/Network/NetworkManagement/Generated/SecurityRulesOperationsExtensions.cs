@@ -264,7 +264,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='networkSecurityGroupName'>
             /// The name of the network security group.
             /// </param>
-            public static SecurityRuleListResponse List(this ISecurityRulesOperations operations, string resourceGroupName, string networkSecurityGroupName)
+            public static SecurityRuleListResult List(this ISecurityRulesOperations operations, string resourceGroupName, string networkSecurityGroupName)
             {
                 return Task.Factory.StartNew(s => ((ISecurityRulesOperations)s).ListAsync(resourceGroupName, networkSecurityGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -285,9 +285,9 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<SecurityRuleListResponse> ListAsync( this ISecurityRulesOperations operations, string resourceGroupName, string networkSecurityGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SecurityRuleListResult> ListAsync( this ISecurityRulesOperations operations, string resourceGroupName, string networkSecurityGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<SecurityRuleListResponse> result = await operations.ListWithOperationResponseAsync(resourceGroupName, networkSecurityGroupName, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<SecurityRuleListResult> result = await operations.ListWithOperationResponseAsync(resourceGroupName, networkSecurityGroupName, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -301,7 +301,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='nextLink'>
             /// NextLink from the previous successful call to List operation.
             /// </param>
-            public static SecurityRuleListResponse ListNext(this ISecurityRulesOperations operations, string nextLink)
+            public static SecurityRuleListResult ListNext(this ISecurityRulesOperations operations, string nextLink)
             {
                 return Task.Factory.StartNew(s => ((ISecurityRulesOperations)s).ListNextAsync(nextLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -319,9 +319,9 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<SecurityRuleListResponse> ListNextAsync( this ISecurityRulesOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SecurityRuleListResult> ListNextAsync( this ISecurityRulesOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<SecurityRuleListResponse> result = await operations.ListNextWithOperationResponseAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<SecurityRuleListResult> result = await operations.ListNextWithOperationResponseAsync(nextLink, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

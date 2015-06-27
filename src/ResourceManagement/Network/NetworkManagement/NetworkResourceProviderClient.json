@@ -17,6 +17,324 @@
     "text/json"
   ],
   "paths": {
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}": {
+      "delete": {
+        "tags": [
+          "ApplicationGateways"
+        ],
+        "operationId": "ApplicationGateways_Delete",
+        "description": "The delete applicationgateway operation deletes the specified applicationgateway.",
+        "parameters": [
+          {
+            "name": "subscriptionId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
+          },
+          {
+            "name": "resourceGroupName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The name of the resource group."
+          },
+          {
+            "name": "applicationGatewayName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The name of the applicationgateway."
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          },
+          "202": {
+            "description": ""
+          },
+          "200": {
+            "description": ""
+          }
+        },
+        "x-ms-long-running-operation": true
+      },
+      "get": {
+        "tags": [
+          "ApplicationGateways"
+        ],
+        "operationId": "ApplicationGateways_Get",
+        "description": "The Get applicationgateway operation retreives information about the specified applicationgateway.",
+        "parameters": [
+          {
+            "name": "subscriptionId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
+          },
+          {
+            "name": "resourceGroupName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The name of the resource group."
+          },
+          {
+            "name": "applicationGatewayName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The name of the applicationgateway."
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ApplicationGateway"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "ApplicationGateways"
+        ],
+        "operationId": "ApplicationGateways_CreateOrUpdate",
+        "description": "The Put ApplicationGateway operation creates/updates a ApplicationGateway",
+        "parameters": [
+          {
+            "name": "subscriptionId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
+          },
+          {
+            "name": "resourceGroupName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The name of the resource group."
+          },
+          {
+            "name": "applicationGatewayName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The name of the ApplicationGateway."
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "parameters",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ApplicationGateway"
+            },
+            "description": "Parameters supplied to the create/delete ApplicationGateway operation"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ApplicationGateway"
+            }
+          },
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ApplicationGateway"
+            }
+          }
+        },
+        "x-ms-long-running-operation": true
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways": {
+      "get": {
+        "tags": [
+          "ApplicationGateways"
+        ],
+        "operationId": "ApplicationGateways_List",
+        "description": "The List ApplicationGateway opertion retrieves all the applicationgateways in a resource group.",
+        "parameters": [
+          {
+            "name": "subscriptionId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
+          },
+          {
+            "name": "resourceGroupName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The name of the resource group."
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ApplicationGatewayListResult"
+            }
+          }
+        },
+        "x-ms-pageable": true
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGateways": {
+      "get": {
+        "tags": [
+          "ApplicationGateways"
+        ],
+        "operationId": "ApplicationGateways_ListAll",
+        "description": "The List applicationgateway opertion retrieves all the applicationgateways in a subscription.",
+        "parameters": [
+          {
+            "name": "subscriptionId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ApplicationGatewayListResult"
+            }
+          }
+        },
+        "x-ms-pageable": true
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}/start": {
+      "post": {
+        "tags": [
+          "ApplicationGateways"
+        ],
+        "operationId": "ApplicationGateways_Start",
+        "description": "The Start ApplicationGateway operation starts application gatewayin the specified resource group through Network resource provider.",
+        "parameters": [
+          {
+            "name": "subscriptionId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
+          },
+          {
+            "name": "resourceGroupName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The name of the resource group."
+          },
+          {
+            "name": "applicationGatewayName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The name of the application gateway."
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": ""
+          }
+        },
+        "x-ms-long-running-operation": true
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}/stop": {
+      "post": {
+        "tags": [
+          "ApplicationGateways"
+        ],
+        "operationId": "ApplicationGateways_Stop",
+        "description": "The STOP ApplicationGateway operation stops application gatewayin the specified resource group through Network resource provider.",
+        "parameters": [
+          {
+            "name": "subscriptionId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
+          },
+          {
+            "name": "resourceGroupName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The name of the resource group."
+          },
+          {
+            "name": "applicationGatewayName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The name of the application gateway."
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": ""
+          },
+          "200": {
+            "description": ""
+          }
+        },
+        "x-ms-long-running-operation": true
+      }
+    },
     "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}": {
       "delete": {
         "tags": [
@@ -57,10 +375,10 @@
           "200": {
             "description": ""
           },
-          "202": {
+          "204": {
             "description": ""
           },
-          "204": {
+          "202": {
             "description": ""
           }
         },
@@ -197,7 +515,7 @@
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/LoadBalancerListResponse"
+              "$ref": "#/definitions/LoadBalancerListResult"
             }
           }
         },
@@ -237,7 +555,7 @@
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/LoadBalancerListResponse"
+              "$ref": "#/definitions/LoadBalancerListResult"
             }
           }
         },
@@ -290,13 +608,13 @@
           }
         ],
         "responses": {
-          "200": {
+          "201": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/LocalNetworkGateway"
             }
           },
-          "201": {
+          "200": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/LocalNetworkGateway"
@@ -433,7 +751,7 @@
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/LocalNetworkGatewayListResponse"
+              "$ref": "#/definitions/LocalNetworkGatewayListResult"
             }
           }
         },
@@ -620,7 +938,7 @@
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/NetworkInterfaceListResponse"
+              "$ref": "#/definitions/NetworkInterfaceListResult"
             }
           }
         },
@@ -660,7 +978,7 @@
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/NetworkInterfaceListResponse"
+              "$ref": "#/definitions/NetworkInterfaceListResult"
             }
           }
         },
@@ -704,13 +1022,13 @@
           }
         ],
         "responses": {
-          "200": {
+          "204": {
             "description": ""
           },
           "202": {
             "description": ""
           },
-          "204": {
+          "200": {
             "description": ""
           }
         },
@@ -847,7 +1165,7 @@
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/NetworkSecurityGroupListResponse"
+              "$ref": "#/definitions/NetworkSecurityGroupListResult"
             }
           }
         },
@@ -887,7 +1205,7 @@
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/NetworkSecurityGroupListResponse"
+              "$ref": "#/definitions/NetworkSecurityGroupListResult"
             }
           }
         },
@@ -1074,7 +1392,7 @@
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/PublicIpAddressListResponse"
+              "$ref": "#/definitions/PublicIpAddressListResult"
             }
           }
         },
@@ -1114,7 +1432,7 @@
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/PublicIpAddressListResponse"
+              "$ref": "#/definitions/PublicIpAddressListResult"
             }
           }
         },
@@ -1165,13 +1483,13 @@
           }
         ],
         "responses": {
-          "204": {
-            "description": ""
-          },
           "202": {
             "description": ""
           },
           "200": {
+            "description": ""
+          },
+          "204": {
             "description": ""
           }
         },
@@ -1280,13 +1598,13 @@
           }
         ],
         "responses": {
-          "201": {
+          "200": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/SecurityRule"
             }
           },
-          "200": {
+          "201": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/SecurityRule"
@@ -1336,7 +1654,7 @@
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/SecurityRuleListResponse"
+              "$ref": "#/definitions/SecurityRuleListResult"
             }
           }
         },
@@ -1387,13 +1705,13 @@
           }
         ],
         "responses": {
-          "200": {
+          "204": {
             "description": ""
           },
           "202": {
             "description": ""
           },
-          "204": {
+          "200": {
             "description": ""
           }
         },
@@ -1558,7 +1876,7 @@
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/SubnetListResponse"
+              "$ref": "#/definitions/SubnetListResult"
             }
           }
         },
@@ -1598,7 +1916,7 @@
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/UsagesListResponse"
+              "$ref": "#/definitions/UsagesListResult"
             }
           }
         }
@@ -1650,13 +1968,13 @@
           }
         ],
         "responses": {
-          "201": {
+          "200": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/VirtualNetworkGatewayConnection"
             }
           },
-          "200": {
+          "201": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/VirtualNetworkGatewayConnection"
@@ -1899,7 +2217,7 @@
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/VirtualNetworkGatewayConnectionListResponse"
+              "$ref": "#/definitions/VirtualNetworkGatewayConnectionListResult"
             }
           }
         },
@@ -1958,11 +2276,8 @@
               "$ref": "#/definitions/ConnectionResetSharedKey"
             }
           },
-          "201": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/ConnectionResetSharedKey"
-            }
+          "202": {
+            "description": ""
           }
         },
         "x-ms-long-running-operation": true
@@ -2111,13 +2426,13 @@
           }
         ],
         "responses": {
+          "202": {
+            "description": ""
+          },
           "200": {
             "description": ""
           },
           "204": {
-            "description": ""
-          },
-          "202": {
             "description": ""
           }
         },
@@ -2157,7 +2472,7 @@
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/VirtualNetworkGatewayListResponse"
+              "$ref": "#/definitions/VirtualNetworkGatewayListResult"
             }
           }
         },
@@ -2210,11 +2525,8 @@
           }
         ],
         "responses": {
-          "201": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/VirtualNetworkGateway"
-            }
+          "202": {
+            "description": ""
           },
           "200": {
             "description": "",
@@ -2263,13 +2575,13 @@
           }
         ],
         "responses": {
-          "202": {
-            "description": ""
-          },
           "200": {
             "description": ""
           },
           "204": {
+            "description": ""
+          },
+          "202": {
             "description": ""
           }
         },
@@ -2364,13 +2676,13 @@
           }
         ],
         "responses": {
-          "201": {
+          "200": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/VirtualNetwork"
             }
           },
-          "200": {
+          "201": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/VirtualNetwork"
@@ -2406,7 +2718,7 @@
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/VirtualNetworkListResponse"
+              "$ref": "#/definitions/VirtualNetworkListResult"
             }
           }
         },
@@ -2446,7 +2758,7 @@
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/VirtualNetworkListResponse"
+              "$ref": "#/definitions/VirtualNetworkListResult"
             }
           }
         },
@@ -2490,7 +2802,7 @@
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/DnsNameAvailabilityResponse"
+              "$ref": "#/definitions/DnsNameAvailabilityResult"
             }
           }
         }
@@ -2498,6 +2810,474 @@
     }
   },
   "definitions": {
+    "ApplicationGatewaySku": {
+      "properties": {
+        "tier": {
+          "type": "string",
+          "description": "Gets or sets tier of application gateway",
+          "enum": [
+            "Standard"
+          ],
+          "x-ms-enum": "ApplicationGatewayTier"
+        },
+        "capacity": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Gets or sets capacity (instance count) of application gateway"
+        }
+      },
+      "description": "SKU of application gateway"
+    },
+    "ApplicationGatewayIpConfigurationPropertiesFormat": {
+      "properties": {
+        "subnet": {
+          "$ref": "#/definitions/SubResource",
+          "description": "Gets or sets the reference of the subnet resource.A subnet from where appliation gateway gets its private address "
+        }
+      },
+      "description": "Properties of IP configuration of application gateway"
+    },
+    "ApplicationGatewayIpConfiguration": {
+      "properties": {
+        "properties": {
+          "$ref": "#/definitions/ApplicationGatewayIpConfigurationPropertiesFormat"
+        },
+        "name": {
+          "type": "string",
+          "description": "Gets name of the resource that is unique within a resource group. This name can be used to access the resource"
+        },
+        "etag": {
+          "type": "string",
+          "description": "A unique read-only string that changes whenever the resource is updated"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "SubResource"
+        }
+      ],
+      "description": "IP configuration of application gateway"
+    },
+    "ApplicationGatewaySslCertificatePropertiesFormat": {
+      "properties": {
+        "data": {
+          "type": "string",
+          "description": "Gets or sets the certificate data "
+        },
+        "password": {
+          "type": "string",
+          "description": "Gets or sets the certificate password "
+        },
+        "publicCertData": {
+          "type": "string",
+          "description": "Gets or sets the certificate public data "
+        }
+      },
+      "description": "Properties of SSL certificates of application gateway"
+    },
+    "ApplicationGatewaySslCertificate": {
+      "properties": {
+        "properties": {
+          "$ref": "#/definitions/ApplicationGatewaySslCertificatePropertiesFormat"
+        },
+        "name": {
+          "type": "string",
+          "description": "Gets name of the resource that is unique within a resource group. This name can be used to access the resource"
+        },
+        "etag": {
+          "type": "string",
+          "description": "A unique read-only string that changes whenever the resource is updated"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "SubResource"
+        }
+      ],
+      "description": "SSL certificates of application gateway"
+    },
+    "ApplicationGatewayFrontendIpConfigurationPropertiesFormat": {
+      "properties": {
+        "privateIPAddress": {
+          "type": "string",
+          "description": "Gets or sets the privateIPAddress of the Network Interface IP Configuration"
+        },
+        "privateIPAllocationMethod": {
+          "type": "string",
+          "description": "Gets or sets PrivateIP allocation method (Static/Dynamic)",
+          "enum": [
+            "Static",
+            "Dynamic"
+          ],
+          "x-ms-enum": "IpAllocationMethod"
+        },
+        "subnet": {
+          "$ref": "#/definitions/SubResource",
+          "description": "Gets or sets the reference of the subnet resource"
+        },
+        "publicIPAddress": {
+          "$ref": "#/definitions/SubResource",
+          "description": "Gets or sets the reference of the PublicIP resource"
+        }
+      },
+      "description": "Properties of Frontend IP configuration of application gateway"
+    },
+    "ApplicationGatewayFrontendIpConfiguration": {
+      "properties": {
+        "properties": {
+          "$ref": "#/definitions/ApplicationGatewayFrontendIpConfigurationPropertiesFormat"
+        },
+        "name": {
+          "type": "string",
+          "description": "Gets name of the resource that is unique within a resource group. This name can be used to access the resource"
+        },
+        "etag": {
+          "type": "string",
+          "description": "A unique read-only string that changes whenever the resource is updated"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "SubResource"
+        }
+      ],
+      "description": "Frontend IP configuration of application gateway"
+    },
+    "ApplicationGatewayFrontendPortPropertiesFormat": {
+      "properties": {
+        "port": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Gets or sets the frontend port"
+        }
+      },
+      "description": "Properties of Frontend Port of application gateway"
+    },
+    "ApplicationGatewayFrontendPort": {
+      "properties": {
+        "properties": {
+          "$ref": "#/definitions/ApplicationGatewayFrontendPortPropertiesFormat"
+        },
+        "name": {
+          "type": "string",
+          "description": "Gets name of the resource that is unique within a resource group. This name can be used to access the resource"
+        },
+        "etag": {
+          "type": "string",
+          "description": "A unique read-only string that changes whenever the resource is updated"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "SubResource"
+        }
+      ],
+      "description": "Frontend Port of application gateway"
+    },
+    "ApplicationGatewayBackendAddress": {
+      "properties": {
+        "fqdn": {
+          "type": "string",
+          "description": "Gets or sets the dns name"
+        },
+        "ipAddress": {
+          "type": "string",
+          "description": "Gets or sets the ip address"
+        }
+      },
+      "description": "Backend Address of application gateway"
+    },
+    "ApplicationGatewayBackendAddressPoolPropertiesFormat": {
+      "properties": {
+        "backendIpConfigurations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SubResource"
+          },
+          "description": "Gets or sets backendIpConfiguration of application gateway "
+        },
+        "backendAddresses": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ApplicationGatewayBackendAddress"
+          },
+          "description": "Gets or sets the backend addresses"
+        }
+      },
+      "description": "Properties of Backend Address Pool of application gateway"
+    },
+    "ApplicationGatewayBackendAddressPool": {
+      "properties": {
+        "properties": {
+          "$ref": "#/definitions/ApplicationGatewayBackendAddressPoolPropertiesFormat"
+        },
+        "name": {
+          "type": "string",
+          "description": "Gets name of the resource that is unique within a resource group. This name can be used to access the resource"
+        },
+        "etag": {
+          "type": "string",
+          "description": "A unique read-only string that changes whenever the resource is updated"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "SubResource"
+        }
+      ],
+      "description": "Backend Address Pool of application gateway"
+    },
+    "ApplicationGatewayBackendHttpSettingsPropertiesFormat": {
+      "properties": {
+        "port": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Gets or sets the port"
+        },
+        "protocol": {
+          "type": "string",
+          "description": "Gets or sets the protocol",
+          "enum": [
+            "Http",
+            "Https"
+          ],
+          "x-ms-enum": "ApplicationGatewayProtocol"
+        },
+        "cookieBasedAffinity": {
+          "type": "string",
+          "description": "Gets or sets the cookie affinity",
+          "enum": [
+            "Enabled",
+            "Disabled"
+          ],
+          "x-ms-enum": "ApplicationGatewayCookieBasedAffinity"
+        }
+      },
+      "description": "Properties of Backend address pool settings of application gateway"
+    },
+    "ApplicationGatewayBackendHttpSettings": {
+      "properties": {
+        "properties": {
+          "$ref": "#/definitions/ApplicationGatewayBackendHttpSettingsPropertiesFormat"
+        },
+        "name": {
+          "type": "string",
+          "description": "Gets name of the resource that is unique within a resource group. This name can be used to access the resource"
+        },
+        "etag": {
+          "type": "string",
+          "description": "A unique read-only string that changes whenever the resource is updated"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "SubResource"
+        }
+      ],
+      "description": "Backend address pool settings of application gateway"
+    },
+    "ApplicationGatewayHttpListenerPropertiesFormat": {
+      "properties": {
+        "frontendIpConfiguration": {
+          "$ref": "#/definitions/SubResource",
+          "description": "Gets or sets frontend IP configuration resource of application gateway "
+        },
+        "frontendPort": {
+          "$ref": "#/definitions/SubResource",
+          "description": "Gets or sets frontend port resource of application gateway "
+        },
+        "protocol": {
+          "type": "string",
+          "description": "Gets or sets the protocol",
+          "enum": [
+            "Http",
+            "Https"
+          ],
+          "x-ms-enum": "ApplicationGatewayProtocol"
+        },
+        "sslCertificate": {
+          "$ref": "#/definitions/SubResource",
+          "description": "Gets or sets ssl certificate resource of application gateway "
+        }
+      },
+      "description": "Properties of Http listener of application gateway"
+    },
+    "ApplicationGatewayHttpListener": {
+      "properties": {
+        "properties": {
+          "$ref": "#/definitions/ApplicationGatewayHttpListenerPropertiesFormat"
+        },
+        "name": {
+          "type": "string",
+          "description": "Gets name of the resource that is unique within a resource group. This name can be used to access the resource"
+        },
+        "etag": {
+          "type": "string",
+          "description": "A unique read-only string that changes whenever the resource is updated"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "SubResource"
+        }
+      ],
+      "description": "Http listener of application gateway"
+    },
+    "ApplicationGatewayRequestRoutingRulePropertiesFormat": {
+      "properties": {
+        "ruleType": {
+          "type": "string",
+          "description": "Gets or sets the rule type",
+          "enum": [
+            "Basic"
+          ],
+          "x-ms-enum": "ApplicationGatewayRequestRoutingRuleType"
+        },
+        "backendAddressPool": {
+          "$ref": "#/definitions/SubResource",
+          "description": "Gets or sets backend address pool resource of application gateway "
+        },
+        "backendHttpSettings": {
+          "$ref": "#/definitions/SubResource",
+          "description": "Gets or sets frontend port resource of application gateway "
+        },
+        "httpListener": {
+          "$ref": "#/definitions/SubResource",
+          "description": "Gets or sets http listener resource of application gateway "
+        }
+      },
+      "description": "Properties of Request routing rule of application gateway"
+    },
+    "ApplicationGatewayRequestRoutingRule": {
+      "properties": {
+        "properties": {
+          "$ref": "#/definitions/ApplicationGatewayRequestRoutingRulePropertiesFormat"
+        },
+        "name": {
+          "type": "string",
+          "description": "Gets name of the resource that is unique within a resource group. This name can be used to access the resource"
+        },
+        "etag": {
+          "type": "string",
+          "description": "A unique read-only string that changes whenever the resource is updated"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "SubResource"
+        }
+      ],
+      "description": "Request routing rule of application gateway"
+    },
+    "ApplicationGatewayPropertiesFormat": {
+      "properties": {
+        "sku": {
+          "$ref": "#/definitions/ApplicationGatewaySku",
+          "description": "Gets or sets sku of application gateway resource"
+        },
+        "operationalState": {
+          "type": "string",
+          "description": "Gets operational state of application gateway resource",
+          "enum": [
+            "Stopped",
+            "Starting",
+            "Running",
+            "Stopping"
+          ],
+          "x-ms-enum": "ApplicationGatewayOperationalState"
+        },
+        "gatewayIpConfigurations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ApplicationGatewayIpConfiguration"
+          },
+          "description": "Gets or sets subnets of application gateway resource"
+        },
+        "sslCertificates": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ApplicationGatewaySslCertificate"
+          },
+          "description": "Gets or sets ssl certificates of application gateway resource"
+        },
+        "frontendIpConfigurations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ApplicationGatewayFrontendIpConfiguration"
+          },
+          "description": "Gets or sets frontend IP addresses of application gateway resource"
+        },
+        "frontendPorts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ApplicationGatewayFrontendPort"
+          },
+          "description": "Gets or sets frontend ports of application gateway resource"
+        },
+        "backendAddressPools": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ApplicationGatewayBackendAddressPool"
+          },
+          "description": "Gets or sets backend address pool of application gateway resource"
+        },
+        "backendHttpSettingsCollection": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ApplicationGatewayBackendHttpSettings"
+          },
+          "description": "Gets or sets backend http settings of application gateway resource"
+        },
+        "httpListeners": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ApplicationGatewayHttpListener"
+          },
+          "description": "Gets or sets HTTP listeners of application gateway resource"
+        },
+        "requestRoutingRules": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ApplicationGatewayRequestRoutingRule"
+          },
+          "description": "Gets or sets request routing rules of application gateway resource"
+        }
+      },
+      "description": "Properties of Application Gateway"
+    },
+    "ApplicationGateway": {
+      "properties": {
+        "properties": {
+          "$ref": "#/definitions/ApplicationGatewayPropertiesFormat"
+        },
+        "etag": {
+          "type": "string",
+          "description": "Gets a unique read-only string that changes whenever the resource is updated"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "Resource"
+        }
+      ],
+      "description": "ApplicationGateways resource"
+    },
+    "ApplicationGatewayListResult": {
+      "properties": {
+        "value": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ApplicationGateway"
+          },
+          "description": "Gets a list of ApplicationGateways in a resource group"
+        },
+        "nextLink": {
+          "type": "string",
+          "description": "Gets the URL to get the next set of results."
+        }
+      },
+      "description": "Response for ListLoadBalancers Api service call"
+    },
     "FrontendIpConfigurationPropertiesFormat": {
       "properties": {
         "privateIPAddress": {
@@ -2534,10 +3314,6 @@
             "$ref": "#/definitions/SubResource"
           },
           "description": "Gets Load Balancing rules URIs that use this frontend IP"
-        },
-        "provisioningState": {
-          "type": "string",
-          "description": "Gets or sets Provisioning state of the PublicIP resource Updating/Deleting/Failed"
         }
       },
       "description": "Properties of Frontend IP Configuration of the load balancer"
@@ -2578,10 +3354,6 @@
             "$ref": "#/definitions/SubResource"
           },
           "description": "Gets Load Balancing rules that use this Backend Address Pool"
-        },
-        "provisioningState": {
-          "type": "string",
-          "description": "Provisioning state of the PublicIP resource Updating/Deleting/Failed"
         }
       },
       "description": "Properties of BackendAddressPool"
@@ -2658,10 +3430,6 @@
         "enableFloatingIP": {
           "type": "boolean",
           "description": "Configures a virtual machine's endpoint for the floating IP capability required to configure a SQL AlwaysOn availability Group. This setting is required when using the SQL Always ON availability Groups in SQL server. This setting can't be changed after you create the endpoint"
-        },
-        "provisioningState": {
-          "type": "string",
-          "description": "Gets or sets Provisioning state of the PublicIP resource Updating/Deleting/Failed"
         }
       },
       "description": "Properties of the load balancer"
@@ -2723,10 +3491,6 @@
         "requestPath": {
           "type": "string",
           "description": "Gets or sets the URI used for requesting health status from the VM. Path is required if a protocol is set to http. Otherwise, it is not allowed. There is no default value"
-        },
-        "provisioningState": {
-          "type": "string",
-          "description": "Gets or sets Provisioning state of the PublicIP resource Updating/Deleting/Failed"
         }
       }
     },
@@ -2788,10 +3552,6 @@
         "enableFloatingIP": {
           "type": "boolean",
           "description": "Configures a virtual machine's endpoint for the floating IP capability required to configure a SQL AlwaysOn availability Group. This setting is required when using the SQL Always ON availability Groups in SQL server. This setting can't be changed after you create the endpoint"
-        },
-        "provisioningState": {
-          "type": "string",
-          "description": "Gets or sets Provisioning state of the PublicIP resource Updating/Deleting/Failed"
         }
       },
       "description": "Properties of Inbound NAT rule"
@@ -2874,7 +3634,7 @@
       ],
       "description": "LoadBalancer resource"
     },
-    "LoadBalancerListResponse": {
+    "LoadBalancerListResult": {
       "properties": {
         "value": {
           "type": "array",
@@ -2904,13 +3664,13 @@
     },
     "LocalNetworkGatewayPropertiesFormat": {
       "properties": {
+        "localNetworkAddressSpace": {
+          "$ref": "#/definitions/AddressSpace",
+          "description": "Local network site Address space"
+        },
         "gatewayIpAddress": {
           "type": "string",
           "description": "IP address of local network gateway."
-        },
-        "localNetworkSiteAddressSpace": {
-          "$ref": "#/definitions/AddressSpace",
-          "description": "Local network site Address space"
         }
       },
       "description": "LocalNetworkGateway properties"
@@ -2932,7 +3692,7 @@
       ],
       "description": "A common class for general resource information"
     },
-    "LocalNetworkGatewayListResponse": {
+    "LocalNetworkGatewayListResult": {
       "properties": {
         "value": {
           "type": "array",
@@ -2984,10 +3744,6 @@
             "$ref": "#/definitions/SubResource"
           },
           "description": "Gets or sets list of references of LoadBalancerInboundNatRules"
-        },
-        "provisioningState": {
-          "type": "string",
-          "description": "Gets or sets Provisioning state of the PublicIP resource Updating/Deleting/Failed"
         }
       },
       "description": "Properties of IPConfiguration"
@@ -3013,7 +3769,7 @@
       ],
       "description": "IPConfiguration in a NetworkInterface"
     },
-    "DnsSettings": {
+    "NetworkInterfaceDnsSettings": {
       "properties": {
         "dnsServers": {
           "type": "array",
@@ -3028,9 +3784,17 @@
             "type": "string"
           },
           "description": "Gets or sets list of Applied DNS servers IP addresses"
+        },
+        "internalDnsNameLabel": {
+          "type": "string",
+          "description": "Gets or sets the Internal DNS name"
+        },
+        "internalFqdn": {
+          "type": "string",
+          "description": "Gets or sets full IDNS name in the form, DnsName.VnetId.ZoneId.TopleveSuffix. This is set when the NIC is associated to a VM"
         }
       },
-      "description": "Dns Settings of a resource"
+      "description": "Dns Settings of a network interface"
     },
     "NetworkInterfacePropertiesFormat": {
       "properties": {
@@ -3050,8 +3814,8 @@
           "description": "Gets or sets list of IPConfigurations of the NetworkInterface"
         },
         "dnsSettings": {
-          "$ref": "#/definitions/DnsSettings",
-          "description": "Gets or sets DNsSettings in  NetworkInterface"
+          "$ref": "#/definitions/NetworkInterfaceDnsSettings",
+          "description": "Gets or sets DNS Settings in  NetworkInterface"
         },
         "macAddress": {
           "type": "string",
@@ -3081,7 +3845,7 @@
       ],
       "description": "A NetworkInterface in a resource group"
     },
-    "NetworkInterfaceListResponse": {
+    "NetworkInterfaceListResult": {
       "properties": {
         "value": {
           "type": "array",
@@ -3151,10 +3915,6 @@
             "Outbound"
           ],
           "x-ms-enum": "SecurityRuleDirection"
-        },
-        "provisioningState": {
-          "type": "string",
-          "description": "Gets or sets Provisioning state of the PublicIP resource Updating/Deleting/Failed"
         }
       }
     },
@@ -3229,7 +3989,7 @@
       ],
       "description": "NetworkSecurityGroup resource"
     },
-    "NetworkSecurityGroupListResponse": {
+    "NetworkSecurityGroupListResult": {
       "properties": {
         "value": {
           "type": "array",
@@ -3310,7 +4070,7 @@
       ],
       "description": "PublicIPAddress resource"
     },
-    "PublicIpAddressListResponse": {
+    "PublicIpAddressListResult": {
       "properties": {
         "value": {
           "type": "array",
@@ -3326,7 +4086,7 @@
       },
       "description": "Response for ListPublicIpAddresses Api service call"
     },
-    "SecurityRuleListResponse": {
+    "SecurityRuleListResult": {
       "properties": {
         "value": {
           "type": "array",
@@ -3358,10 +4118,6 @@
             "$ref": "#/definitions/SubResource"
           },
           "description": "Gets array of references to the network interface IP configurations using subnet"
-        },
-        "provisioningState": {
-          "type": "string",
-          "description": "Gets or sets Provisioning state of the PublicIP resource Updating/Deleting/Failed"
         }
       }
     },
@@ -3386,7 +4142,7 @@
       ],
       "description": "Subnet in a VirtualNework resource"
     },
-    "SubnetListResponse": {
+    "SubnetListResult": {
       "properties": {
         "value": {
           "type": "array",
@@ -3442,7 +4198,7 @@
       },
       "description": "Describes Network Resource Usage."
     },
-    "UsagesListResponse": {
+    "UsagesListResult": {
       "properties": {
         "value": {
           "type": "array",
@@ -3476,10 +4232,6 @@
         "publicIPAddress": {
           "$ref": "#/definitions/SubResource",
           "description": "Gets or sets the reference of the PublicIP resource"
-        },
-        "provisioningState": {
-          "type": "string",
-          "description": "Gets or sets Provisioning state of the PublicIP resource Updating/Deleting/Failed"
         }
       },
       "description": "Properties of VirtualNetworkGatewayIPConfiguration"
@@ -3514,23 +4266,22 @@
           },
           "description": "IpConfigurations for Virtual network gateway."
         },
-        "gatewaySize": {
-          "type": "string",
-          "description": "The size of this virtual network gateway.",
-          "enum": [
-            "Default",
-            "HighPerformance"
-          ],
-          "x-ms-enum": "VirtualNetworkGatewaySize"
-        },
         "gatewayType": {
           "type": "string",
           "description": "The type of this virtual network gateway.",
           "enum": [
-            "StaticRouting",
-            "DynamicRouting"
+            "Vpn"
           ],
-          "x-ms-enum": "VpnGatewayType"
+          "x-ms-enum": "VirtualNetworkGatewayType"
+        },
+        "vpnType": {
+          "type": "string",
+          "description": "The type of this virtual network gateway.",
+          "enum": [
+            "PolicyBased",
+            "RouteBased"
+          ],
+          "x-ms-enum": "VpnType"
         },
         "enableBgp": {
           "type": "boolean",
@@ -3573,7 +4324,7 @@
           "enum": [
             "IPsec",
             "Vnet2Vnet",
-            "Dedicated",
+            "ExpressRoute",
             "VPNClient"
           ],
           "x-ms-enum": "VirtualNetworkGatewayConnectionType"
@@ -3616,7 +4367,7 @@
       },
       "description": "Response for GetConnectionSharedKey Api servive call"
     },
-    "VirtualNetworkGatewayConnectionListResponse": {
+    "VirtualNetworkGatewayConnectionListResult": {
       "properties": {
         "value": {
           "type": "array",
@@ -3649,7 +4400,7 @@
         }
       }
     },
-    "VirtualNetworkGatewayListResponse": {
+    "VirtualNetworkGatewayListResult": {
       "properties": {
         "value": {
           "type": "array",
@@ -3713,7 +4464,7 @@
       ],
       "description": "Virtual Network resource"
     },
-    "VirtualNetworkListResponse": {
+    "VirtualNetworkListResult": {
       "properties": {
         "value": {
           "type": "array",
@@ -3729,7 +4480,7 @@
       },
       "description": "Response for ListVirtualNetworks Api servive call"
     },
-    "DnsNameAvailabilityResponse": {
+    "DnsNameAvailabilityResult": {
       "properties": {
         "available": {
           "type": "boolean",
@@ -3773,7 +4524,7 @@
         }
       }
     },
-    "AzureAsyncOperationResponse": {
+    "AzureAsyncOperationResult": {
       "properties": {
         "status": {
           "type": "string",
@@ -3796,6 +4547,25 @@
         "id": {
           "type": "string",
           "description": "Resource Id"
+        },
+        "name": {
+          "type": "string",
+          "description": "Resource name"
+        },
+        "type": {
+          "type": "string",
+          "description": "Resource type"
+        },
+        "location": {
+          "type": "string",
+          "description": "Resource location"
+        },
+        "tags": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Resource tags"
         }
       },
       "x-ms-external": true

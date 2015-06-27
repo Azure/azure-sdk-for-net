@@ -9,20 +9,29 @@ namespace Microsoft.Azure.Management.Network.Models
 
     /// <summary>
     /// </summary>
-    public partial class ConnectionSharedKeyPropertiesFormat
+    public partial class AzureAsyncOperationResult
     {
         /// <summary>
-        /// The virtual network connection shared key value
+        /// Status of the AzureAsuncOperation. Possible values for this
+        /// property include: 'InProgress', 'Succeeded', 'Failed'
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
-        public string Value { get; set; }
+        [JsonProperty(PropertyName = "status")]
+        public OperationStatus? Status { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "error")]
+        public Error Error { get; set; }
 
         /// <summary>
         /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
         /// </summary>
         public virtual void Validate()
         {
-            //Nothing to validate
+            if (this.Error != null)
+            {
+                this.Error.Validate();
+            }
         }
     }
 }

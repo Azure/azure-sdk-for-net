@@ -223,7 +223,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='operations'>
             /// The operations group for this extension method
             /// </param>
-            public static VirtualNetworkListResponse ListAll(this IVirtualNetworksOperations operations)
+            public static VirtualNetworkListResult ListAll(this IVirtualNetworksOperations operations)
             {
                 return Task.Factory.StartNew(s => ((IVirtualNetworksOperations)s).ListAllAsync(), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -237,9 +237,9 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<VirtualNetworkListResponse> ListAllAsync( this IVirtualNetworksOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VirtualNetworkListResult> ListAllAsync( this IVirtualNetworksOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<VirtualNetworkListResponse> result = await operations.ListAllWithOperationResponseAsync(cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<VirtualNetworkListResult> result = await operations.ListAllWithOperationResponseAsync(cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -252,7 +252,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
-            public static VirtualNetworkListResponse List(this IVirtualNetworksOperations operations, string resourceGroupName)
+            public static VirtualNetworkListResult List(this IVirtualNetworksOperations operations, string resourceGroupName)
             {
                 return Task.Factory.StartNew(s => ((IVirtualNetworksOperations)s).ListAsync(resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -269,9 +269,9 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<VirtualNetworkListResponse> ListAsync( this IVirtualNetworksOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VirtualNetworkListResult> ListAsync( this IVirtualNetworksOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<VirtualNetworkListResponse> result = await operations.ListWithOperationResponseAsync(resourceGroupName, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<VirtualNetworkListResult> result = await operations.ListWithOperationResponseAsync(resourceGroupName, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -284,7 +284,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='nextLink'>
             /// NextLink from the previous successful call to List operation.
             /// </param>
-            public static VirtualNetworkListResponse ListAllNext(this IVirtualNetworksOperations operations, string nextLink)
+            public static VirtualNetworkListResult ListAllNext(this IVirtualNetworksOperations operations, string nextLink)
             {
                 return Task.Factory.StartNew(s => ((IVirtualNetworksOperations)s).ListAllNextAsync(nextLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -301,9 +301,9 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<VirtualNetworkListResponse> ListAllNextAsync( this IVirtualNetworksOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VirtualNetworkListResult> ListAllNextAsync( this IVirtualNetworksOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<VirtualNetworkListResponse> result = await operations.ListAllNextWithOperationResponseAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<VirtualNetworkListResult> result = await operations.ListAllNextWithOperationResponseAsync(nextLink, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -316,7 +316,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='nextLink'>
             /// NextLink from the previous successful call to List operation.
             /// </param>
-            public static VirtualNetworkListResponse ListNext(this IVirtualNetworksOperations operations, string nextLink)
+            public static VirtualNetworkListResult ListNext(this IVirtualNetworksOperations operations, string nextLink)
             {
                 return Task.Factory.StartNew(s => ((IVirtualNetworksOperations)s).ListNextAsync(nextLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -333,9 +333,9 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<VirtualNetworkListResponse> ListNextAsync( this IVirtualNetworksOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VirtualNetworkListResult> ListNextAsync( this IVirtualNetworksOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<VirtualNetworkListResponse> result = await operations.ListNextWithOperationResponseAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<VirtualNetworkListResult> result = await operations.ListNextWithOperationResponseAsync(nextLink, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

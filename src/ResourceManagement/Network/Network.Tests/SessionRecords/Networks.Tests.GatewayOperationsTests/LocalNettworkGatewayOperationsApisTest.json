@@ -1,19 +1,19 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/7e2a56ef-1038-4480-a48c-5697c3e8eb3c/providers/Microsoft.Network?api-version=2014-04-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvN2UyYTU2ZWYtMTAzOC00NDgwLWE0OGMtNTY5N2MzZThlYjNjL3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yaz9hcGktdmVyc2lvbj0yMDE0LTA0LTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/providers/Microsoft.Network?api-version=2014-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjE5NTMzNTQtNTExNS00MzQwLWJmODAtZjRjY2QxY2IyMTNlL3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yaz9hcGktdmVyc2lvbj0yMDE0LTA0LTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/2.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/7e2a56ef-1038-4480-a48c-5697c3e8eb3c/providers/Microsoft.Network\",\r\n  \"namespace\": \"Microsoft.Network\",\r\n  \"resourceTypes\": [\r\n    {\r\n      \"resourceType\": \"dnszones\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-05-04-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"dnszones/A\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-05-04-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"dnszones/AAAA\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-05-04-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"dnszones/CNAME\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-05-04-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"dnszones/PTR\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-05-04-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"dnszones/MX\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-05-04-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"dnszones/TXT\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-05-04-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"dnszones/SRV\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-05-04-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"trafficmanagerprofiles\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-04-28-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"virtualNetworks\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"Central US\",\r\n        \"West US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"publicIPAddresses\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"Central US\",\r\n        \"West US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"networkInterfaces\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"Central US\",\r\n        \"West US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"loadBalancers\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"Central US\",\r\n        \"West US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"networkSecurityGroups\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"Central US\",\r\n        \"West US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/operations\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/operationResults\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/CheckDnsNameAvailability\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/usages\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"operations\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"virtualNetworkGateways\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"Central US\",\r\n        \"West US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-05-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"localNetworkGateways\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"Central US\",\r\n        \"West US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-05-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"connections\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"Central US\",\r\n        \"West US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-05-01-preview\"\r\n      ]\r\n    }\r\n  ],\r\n  \"registrationState\": \"Registering\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/providers/Microsoft.Network\",\r\n  \"namespace\": \"Microsoft.Network\",\r\n  \"authorization\": {\r\n    \"applicationId\": \"2cf9eb86-36b5-49dc-86ae-9a63135dfa8c\",\r\n    \"roleDefinitionId\": \"13ba9ab4-19f0-4804-adc4-14ece36cc7a1\"\r\n  },\r\n  \"resourceTypes\": [\r\n    {\r\n      \"resourceType\": \"dnszones\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-05-04-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"dnszones/A\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-05-04-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"dnszones/AAAA\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-05-04-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"dnszones/CNAME\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-05-04-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"dnszones/PTR\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-05-04-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"dnszones/MX\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-05-04-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"dnszones/TXT\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-05-04-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"dnszones/SRV\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-05-04-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"trafficmanagerprofiles\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-04-28-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"virtualNetworks\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"Central US\",\r\n        \"West US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"publicIPAddresses\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"Central US\",\r\n        \"West US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"networkInterfaces\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"Central US\",\r\n        \"West US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"loadBalancers\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"Central US\",\r\n        \"West US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"networkSecurityGroups\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"Central US\",\r\n        \"West US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/operations\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/operationResults\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/CheckDnsNameAvailability\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/usages\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"operations\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"virtualNetworkGateways\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"Central US\",\r\n        \"West US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"localNetworkGateways\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"Central US\",\r\n        \"West US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"connections\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"Central US\",\r\n        \"West US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"applicationGateways\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"Central US\",\r\n        \"West US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    }\r\n  ],\r\n  \"registrationState\": \"Registering\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "2784"
+          "3321"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -25,16 +25,16 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "31978"
+          "14999"
         ],
         "x-ms-request-id": [
-          "c415cb68-9442-4b81-80bc-6c08437808be"
+          "b8344ad7-cbe1-4812-ae00-26ab3c83a7fa"
         ],
         "x-ms-correlation-request-id": [
-          "c415cb68-9442-4b81-80bc-6c08437808be"
+          "b8344ad7-cbe1-4812-ae00-26ab3c83a7fa"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20150427T222744Z:c415cb68-9442-4b81-80bc-6c08437808be"
+          "CENTRALUS:20150626T223604Z:b8344ad7-cbe1-4812-ae00-26ab3c83a7fa"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -43,31 +43,79 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 27 Apr 2015 22:27:44 GMT"
+          "Fri, 26 Jun 2015 22:36:04 GMT"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/7e2a56ef-1038-4480-a48c-5697c3e8eb3c/resourcegroups/csmrg4499?api-version=2014-04-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvN2UyYTU2ZWYtMTAzOC00NDgwLWE0OGMtNTY5N2MzZThlYjNjL3Jlc291cmNlZ3JvdXBzL2NzbXJnNDQ5OT9hcGktdmVyc2lvbj0yMDE0LTA0LTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/providers/Microsoft.Network?api-version=2014-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjE5NTMzNTQtNTExNS00MzQwLWJmODAtZjRjY2QxY2IyMTNlL3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yaz9hcGktdmVyc2lvbj0yMDE0LTA0LTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/providers/Microsoft.Network\",\r\n  \"namespace\": \"Microsoft.Network\",\r\n  \"authorization\": {\r\n    \"applicationId\": \"2cf9eb86-36b5-49dc-86ae-9a63135dfa8c\",\r\n    \"roleDefinitionId\": \"13ba9ab4-19f0-4804-adc4-14ece36cc7a1\"\r\n  },\r\n  \"resourceTypes\": [\r\n    {\r\n      \"resourceType\": \"dnszones\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-05-04-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"dnszones/A\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-05-04-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"dnszones/AAAA\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-05-04-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"dnszones/CNAME\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-05-04-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"dnszones/PTR\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-05-04-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"dnszones/MX\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-05-04-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"dnszones/TXT\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-05-04-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"dnszones/SRV\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-05-04-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"trafficmanagerprofiles\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-04-28-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"virtualNetworks\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"Central US\",\r\n        \"West US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"publicIPAddresses\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"Central US\",\r\n        \"West US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"networkInterfaces\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"Central US\",\r\n        \"West US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"loadBalancers\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"Central US\",\r\n        \"West US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"networkSecurityGroups\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"Central US\",\r\n        \"West US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/operations\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/operationResults\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/CheckDnsNameAvailability\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/usages\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"operations\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"virtualNetworkGateways\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"Central US\",\r\n        \"West US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"localNetworkGateways\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"Central US\",\r\n        \"West US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"connections\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"Central US\",\r\n        \"West US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"applicationGateways\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"Central US\",\r\n        \"West US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    }\r\n  ],\r\n  \"registrationState\": \"Registering\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "3321"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14999"
+        ],
+        "x-ms-request-id": [
+          "b8344ad7-cbe1-4812-ae00-26ab3c83a7fa"
+        ],
+        "x-ms-correlation-request-id": [
+          "b8344ad7-cbe1-4812-ae00-26ab3c83a7fa"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150626T223604Z:b8344ad7-cbe1-4812-ae00-26ab3c83a7fa"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 26 Jun 2015 22:36:04 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourcegroups/csmrg9069?api-version=2014-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjE5NTMzNTQtNTExNS00MzQwLWJmODAtZjRjY2QxY2IyMTNlL3Jlc291cmNlZ3JvdXBzL2NzbXJnOTA2OT9hcGktdmVyc2lvbj0yMDE0LTA0LTAxLXByZXZpZXc=",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"location\": \"West US\"\r\n}",
+      "RequestBody": "{\r\n  \"location\": \"West Europe\"\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "29"
+          "33"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/2.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/7e2a56ef-1038-4480-a48c-5697c3e8eb3c/resourceGroups/csmrg4499\",\r\n  \"name\": \"csmrg4499\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg9069\",\r\n  \"name\": \"csmrg9069\",\r\n  \"location\": \"westeurope\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "171"
+          "175"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -79,16 +127,16 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1188"
+          "1198"
         ],
         "x-ms-request-id": [
-          "79a8179b-2d8f-4828-a25c-4a0007bd6190"
+          "e43c34c7-8f08-43c1-ac74-6ab6dd007d95"
         ],
         "x-ms-correlation-request-id": [
-          "79a8179b-2d8f-4828-a25c-4a0007bd6190"
+          "e43c34c7-8f08-43c1-ac74-6ab6dd007d95"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20150427T222744Z:79a8179b-2d8f-4828-a25c-4a0007bd6190"
+          "CENTRALUS:20150626T223606Z:e43c34c7-8f08-43c1-ac74-6ab6dd007d95"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -97,31 +145,31 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 27 Apr 2015 22:27:44 GMT"
+          "Fri, 26 Jun 2015 22:36:05 GMT"
         ]
       },
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/7e2a56ef-1038-4480-a48c-5697c3e8eb3c/resourceGroups/csmrg4499/providers/Microsoft.Network/localNetworkGateways/azsmnet4897?api-version=2015-05-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvN2UyYTU2ZWYtMTAzOC00NDgwLWE0OGMtNTY5N2MzZThlYjNjL3Jlc291cmNlR3JvdXBzL2NzbXJnNDQ5OS9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvbG9jYWxOZXR3b3JrR2F0ZXdheXMvYXpzbW5ldDQ4OTc/YXBpLXZlcnNpb249MjAxNS0wNS0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourcegroups/csmrg9069?api-version=2014-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjE5NTMzNTQtNTExNS00MzQwLWJmODAtZjRjY2QxY2IyMTNlL3Jlc291cmNlZ3JvdXBzL2NzbXJnOTA2OT9hcGktdmVyc2lvbj0yMDE0LTA0LTAxLXByZXZpZXc=",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"gatewayIpAddress\": \"192.168.3.4\",\r\n    \"localNetworkSiteAddressSpace\": {\r\n      \"addressPrefixes\": [\r\n        \"192.168.0.0/16\"\r\n      ]\r\n    }\r\n  },\r\n  \"name\": \"azsmnet4897\",\r\n  \"location\": \"West US\",\r\n  \"tags\": {\r\n    \"test\": \"value\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"location\": \"West Europe\"\r\n}",
       "RequestHeaders": {
         "Content-Type": [
-          "application/json"
+          "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "269"
+          "33"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/1.0.0.0"
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/2.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"azsmnet4897\",\r\n  \"id\": \"/subscriptions/7e2a56ef-1038-4480-a48c-5697c3e8eb3c/resourceGroups/csmrg4499/providers/Microsoft.Network/localNetworkGateways/azsmnet4897\",\r\n  \"etag\": \"W/\\\"f0d80b88-3f81-4294-ba81-4fb180790a9e\\\"\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Updating\",\r\n    \"armGuid\": \"f987f25a-1f81-4141-8b87-10bd27778747\",\r\n    \"localNetworkSiteAddressSpace\": {\r\n      \"addressPrefixes\": [\r\n        \"192.168.0.0/16\"\r\n      ]\r\n    },\r\n    \"gatewayIpAddress\": \"192.168.3.4\"\r\n  },\r\n  \"location\": \"West US\",\r\n  \"tags\": {\r\n    \"test\": \"value\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg9069\",\r\n  \"name\": \"csmrg9069\",\r\n  \"location\": \"westeurope\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "570"
+          "175"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -132,14 +180,17 @@
         "Pragma": [
           "no-cache"
         ],
-        "Retry-After": [
-          "10"
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1198"
         ],
         "x-ms-request-id": [
-          "4e1b7b43-b9f9-439e-b53a-adaf8b2355e1"
+          "e43c34c7-8f08-43c1-ac74-6ab6dd007d95"
         ],
-        "Azure-AsyncOperation": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/7e2a56ef-1038-4480-a48c-5697c3e8eb3c/providers/Microsoft.Network/locations/nrp8/operations/4e1b7b43-b9f9-439e-b53a-adaf8b2355e1?api-version=2015-05-01-preview"
+        "x-ms-correlation-request-id": [
+          "e43c34c7-8f08-43c1-ac74-6ab6dd007d95"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150626T223606Z:e43c34c7-8f08-43c1-ac74-6ab6dd007d95"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -147,45 +198,32 @@
         "Cache-Control": [
           "no-cache"
         ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1187"
-        ],
-        "x-ms-correlation-request-id": [
-          "85b5fe54-83aa-4388-84d1-9a4a0435af76"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20150427T222745Z:85b5fe54-83aa-4388-84d1-9a4a0435af76"
-        ],
         "Date": [
-          "Mon, 27 Apr 2015 22:27:45 GMT"
+          "Fri, 26 Jun 2015 22:36:05 GMT"
         ]
       },
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/7e2a56ef-1038-4480-a48c-5697c3e8eb3c/resourceGroups/csmrg4499/providers/Microsoft.Network/localNetworkGateways/azsmnet4897?api-version=2015-05-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvN2UyYTU2ZWYtMTAzOC00NDgwLWE0OGMtNTY5N2MzZThlYjNjL3Jlc291cmNlR3JvdXBzL2NzbXJnNDQ5OS9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvbG9jYWxOZXR3b3JrR2F0ZXdheXMvYXpzbW5ldDQ4OTc/YXBpLXZlcnNpb249MjAxNS0wNS0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg9069/providers/Microsoft.Network/localNetworkGateways/azsmnet114?api-version=2015-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjE5NTMzNTQtNTExNS00MzQwLWJmODAtZjRjY2QxY2IyMTNlL3Jlc291cmNlR3JvdXBzL2NzbXJnOTA2OS9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvbG9jYWxOZXR3b3JrR2F0ZXdheXMvYXpzbW5ldDExND9hcGktdmVyc2lvbj0yMDE1LTA1LTAxLXByZXZpZXc=",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"gatewayIpAddress\": \"192.168.3.5\",\r\n    \"localNetworkSiteAddressSpace\": {\r\n      \"addressPrefixes\": [\r\n        \"192.168.0.0/16\"\r\n      ]\r\n    }\r\n  },\r\n  \"name\": \"azsmnet4897\",\r\n  \"location\": \"West US\",\r\n  \"tags\": {\r\n    \"test\": \"value\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"location\": \"West Europe\",\r\n  \"tags\": {\r\n    \"test\": \"value\"\r\n  },\r\n  \"properties\": {\r\n    \"gatewayIpAddress\": \"192.168.3.4\",\r\n    \"localNetworkSiteAddressSpace\": {\r\n      \"addressPrefixes\": [\r\n        \"192.168.0.0/16\"\r\n      ]\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
         "Content-Type": [
-          "application/json"
+          "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "269"
+          "247"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/1.0.0.0"
+          "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/2.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"azsmnet4897\",\r\n  \"id\": \"/subscriptions/7e2a56ef-1038-4480-a48c-5697c3e8eb3c/resourceGroups/csmrg4499/providers/Microsoft.Network/localNetworkGateways/azsmnet4897\",\r\n  \"etag\": \"W/\\\"e5d98510-881d-455c-ad84-fa474f382816\\\"\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Updating\",\r\n    \"armGuid\": \"00000000-0000-0000-0000-000000000000\",\r\n    \"localNetworkSiteAddressSpace\": {\r\n      \"addressPrefixes\": [\r\n        \"192.168.0.0/16\"\r\n      ]\r\n    },\r\n    \"gatewayIpAddress\": \"192.168.3.5\"\r\n  },\r\n  \"location\": \"West US\",\r\n  \"tags\": {\r\n    \"test\": \"value\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"azsmnet114\",\r\n  \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg9069/providers/Microsoft.Network/localNetworkGateways/azsmnet114\",\r\n  \"etag\": \"W/\\\"a5217e73-a771-40e7-8132-197b3741f69f\\\"\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Updating\",\r\n    \"localNetworkAddressSpace\": {},\r\n    \"gatewayIpAddress\": \"192.168.3.4\"\r\n  },\r\n  \"location\": \"westeurope\",\r\n  \"tags\": {\r\n    \"test\": \"value\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "570"
+          "442"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -200,10 +238,10 @@
           "10"
         ],
         "x-ms-request-id": [
-          "b919934c-8072-48b3-bb1f-ed6b1f04b8b8"
+          "042f51bc-262e-4a7b-b1f1-eaab29fa306b"
         ],
         "Azure-AsyncOperation": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/7e2a56ef-1038-4480-a48c-5697c3e8eb3c/providers/Microsoft.Network/locations/nrp8/operations/b919934c-8072-48b3-bb1f-ed6b1f04b8b8?api-version=2015-05-01-preview"
+          "https://api-dogfood.resources.windows-int.net/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/providers/Microsoft.Network/locations/nrp7/operations/042f51bc-262e-4a7b-b1f1-eaab29fa306b?api-version=2015-05-01-preview"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -216,352 +254,43 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1186"
+          "1197"
         ],
         "x-ms-correlation-request-id": [
-          "9bc553d7-0649-472d-b6c4-4eb80e9f6646"
+          "2e32084a-fcb1-43c4-be11-210578ac2ca3"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20150427T222746Z:9bc553d7-0649-472d-b6c4-4eb80e9f6646"
+          "CENTRALUS:20150626T223609Z:2e32084a-fcb1-43c4-be11-210578ac2ca3"
         ],
         "Date": [
-          "Mon, 27 Apr 2015 22:27:45 GMT"
+          "Fri, 26 Jun 2015 22:36:08 GMT"
         ]
       },
-      "StatusCode": 200
+      "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/7e2a56ef-1038-4480-a48c-5697c3e8eb3c/providers/Microsoft.Network/locations/nrp8/operations/4e1b7b43-b9f9-439e-b53a-adaf8b2355e1?api-version=2015-05-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvN2UyYTU2ZWYtMTAzOC00NDgwLWE0OGMtNTY5N2MzZThlYjNjL3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9sb2NhdGlvbnMvbnJwOC9vcGVyYXRpb25zLzRlMWI3YjQzLWI5ZjktNDM5ZS1iNTNhLWFkYWY4YjIzNTVlMT9hcGktdmVyc2lvbj0yMDE1LTA1LTAxLXByZXZpZXc=",
-      "RequestMethod": "GET",
-      "RequestBody": "",
+      "RequestUri": "/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg9069/providers/Microsoft.Network/localNetworkGateways/azsmnet114?api-version=2015-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjE5NTMzNTQtNTExNS00MzQwLWJmODAtZjRjY2QxY2IyMTNlL3Jlc291cmNlR3JvdXBzL2NzbXJnOTA2OS9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvbG9jYWxOZXR3b3JrR2F0ZXdheXMvYXpzbW5ldDExND9hcGktdmVyc2lvbj0yMDE1LTA1LTAxLXByZXZpZXc=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"West Europe\",\r\n  \"tags\": {\r\n    \"test\": \"value\"\r\n  },\r\n  \"properties\": {\r\n    \"gatewayIpAddress\": \"192.168.3.4\",\r\n    \"localNetworkSiteAddressSpace\": {\r\n      \"addressPrefixes\": [\r\n        \"192.168.0.0/16\"\r\n      ]\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
-        "x-ms-version": [
-          "2015-05-01-preview"
-        ],
-        "User-Agent": [
-          "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"status\": \"Succeeded\"\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "29"
-        ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
-        "Expires": [
-          "-1"
+        "Content-Length": [
+          "247"
         ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-request-id": [
-          "364942af-723f-45db-9569-986601d6018f"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "31977"
-        ],
-        "x-ms-correlation-request-id": [
-          "cb0fd1be-dac6-49b9-b3dc-619f06e4a6e8"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20150427T222746Z:cb0fd1be-dac6-49b9-b3dc-619f06e4a6e8"
-        ],
-        "Date": [
-          "Mon, 27 Apr 2015 22:27:45 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/7e2a56ef-1038-4480-a48c-5697c3e8eb3c/resourceGroups/csmrg4499/providers/Microsoft.Network/localNetworkGateways/azsmnet4897?api-version=2015-05-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvN2UyYTU2ZWYtMTAzOC00NDgwLWE0OGMtNTY5N2MzZThlYjNjL3Jlc291cmNlR3JvdXBzL2NzbXJnNDQ5OS9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvbG9jYWxOZXR3b3JrR2F0ZXdheXMvYXpzbW5ldDQ4OTc/YXBpLXZlcnNpb249MjAxNS0wNS0wMS1wcmV2aWV3",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
         "User-Agent": [
-          "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/1.0.0.0"
+          "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/2.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"azsmnet4897\",\r\n  \"id\": \"/subscriptions/7e2a56ef-1038-4480-a48c-5697c3e8eb3c/resourceGroups/csmrg4499/providers/Microsoft.Network/localNetworkGateways/azsmnet4897\",\r\n  \"etag\": \"W/\\\"e8a053eb-0a39-44b9-8345-e1cf76ffa6ee\\\"\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"armGuid\": \"f987f25a-1f81-4141-8b87-10bd27778747\",\r\n    \"localNetworkSiteAddressSpace\": {\r\n      \"addressPrefixes\": [\r\n        \"192.168.0.0/16\"\r\n      ]\r\n    },\r\n    \"gatewayIpAddress\": \"192.168.3.4\"\r\n  },\r\n  \"location\": \"West US\",\r\n  \"tags\": {\r\n    \"test\": \"value\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"azsmnet114\",\r\n  \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg9069/providers/Microsoft.Network/localNetworkGateways/azsmnet114\",\r\n  \"etag\": \"W/\\\"a5217e73-a771-40e7-8132-197b3741f69f\\\"\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Updating\",\r\n    \"localNetworkAddressSpace\": {},\r\n    \"gatewayIpAddress\": \"192.168.3.4\"\r\n  },\r\n  \"location\": \"westeurope\",\r\n  \"tags\": {\r\n    \"test\": \"value\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "571"
+          "442"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-request-id": [
-          "9c55b3aa-4c52-40c0-87fc-afb9b77f4e07"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "31976"
-        ],
-        "x-ms-correlation-request-id": [
-          "19697cbf-570f-49f7-b226-5b227839ca23"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20150427T222746Z:19697cbf-570f-49f7-b226-5b227839ca23"
-        ],
-        "Date": [
-          "Mon, 27 Apr 2015 22:27:45 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/7e2a56ef-1038-4480-a48c-5697c3e8eb3c/resourceGroups/csmrg4499/providers/Microsoft.Network/localNetworkGateways/azsmnet4897?api-version=2015-05-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvN2UyYTU2ZWYtMTAzOC00NDgwLWE0OGMtNTY5N2MzZThlYjNjL3Jlc291cmNlR3JvdXBzL2NzbXJnNDQ5OS9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvbG9jYWxOZXR3b3JrR2F0ZXdheXMvYXpzbW5ldDQ4OTc/YXBpLXZlcnNpb249MjAxNS0wNS0wMS1wcmV2aWV3",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"name\": \"azsmnet4897\",\r\n  \"id\": \"/subscriptions/7e2a56ef-1038-4480-a48c-5697c3e8eb3c/resourceGroups/csmrg4499/providers/Microsoft.Network/localNetworkGateways/azsmnet4897\",\r\n  \"etag\": \"W/\\\"9e07ed7d-4468-4195-a899-a389bc5c0d8e\\\"\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"armGuid\": \"00000000-0000-0000-0000-000000000000\",\r\n    \"localNetworkSiteAddressSpace\": {\r\n      \"addressPrefixes\": [\r\n        \"192.168.0.0/16\"\r\n      ]\r\n    },\r\n    \"gatewayIpAddress\": \"192.168.3.5\"\r\n  },\r\n  \"location\": \"West US\",\r\n  \"tags\": {\r\n    \"test\": \"value\"\r\n  }\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "571"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-request-id": [
-          "e9f8c228-cb7c-4e1d-9533-5a3ca13f8d8f"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "31974"
-        ],
-        "x-ms-correlation-request-id": [
-          "738d6746-08cd-4e53-bf58-1119bd2aa006"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20150427T222746Z:738d6746-08cd-4e53-bf58-1119bd2aa006"
-        ],
-        "Date": [
-          "Mon, 27 Apr 2015 22:27:46 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/7e2a56ef-1038-4480-a48c-5697c3e8eb3c/providers/Microsoft.Network/locations/nrp8/operations/b919934c-8072-48b3-bb1f-ed6b1f04b8b8?api-version=2015-05-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvN2UyYTU2ZWYtMTAzOC00NDgwLWE0OGMtNTY5N2MzZThlYjNjL3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9sb2NhdGlvbnMvbnJwOC9vcGVyYXRpb25zL2I5MTk5MzRjLTgwNzItNDhiMy1iYjFmLWVkNmIxZjA0YjhiOD9hcGktdmVyc2lvbj0yMDE1LTA1LTAxLXByZXZpZXc=",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-version": [
-          "2015-05-01-preview"
-        ],
-        "User-Agent": [
-          "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"status\": \"Succeeded\"\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "29"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-request-id": [
-          "3e10aa45-2236-4cdc-9619-e31b6fed814f"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "31975"
-        ],
-        "x-ms-correlation-request-id": [
-          "2f0cd297-9d44-49fe-8680-6e89b3fe8d06"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20150427T222746Z:2f0cd297-9d44-49fe-8680-6e89b3fe8d06"
-        ],
-        "Date": [
-          "Mon, 27 Apr 2015 22:27:45 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/7e2a56ef-1038-4480-a48c-5697c3e8eb3c/resourceGroups/csmrg4499/providers/Microsoft.Network/localNetworkGateways?api-version=2015-05-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvN2UyYTU2ZWYtMTAzOC00NDgwLWE0OGMtNTY5N2MzZThlYjNjL3Jlc291cmNlR3JvdXBzL2NzbXJnNDQ5OS9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvbG9jYWxOZXR3b3JrR2F0ZXdheXM/YXBpLXZlcnNpb249MjAxNS0wNS0wMS1wcmV2aWV3",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"name\": \"azsmnet4897\",\r\n      \"id\": \"/subscriptions/7e2a56ef-1038-4480-a48c-5697c3e8eb3c/resourceGroups/csmrg4499/providers/Microsoft.Network/localNetworkGateways/azsmnet4897\",\r\n      \"etag\": \"W/\\\"9e07ed7d-4468-4195-a899-a389bc5c0d8e\\\"\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"armGuid\": \"00000000-0000-0000-0000-000000000000\",\r\n        \"localNetworkSiteAddressSpace\": {\r\n          \"addressPrefixes\": [\r\n            \"192.168.0.0/16\"\r\n          ]\r\n        },\r\n        \"gatewayIpAddress\": \"192.168.3.5\"\r\n      },\r\n      \"location\": \"West US\",\r\n      \"tags\": {\r\n        \"test\": \"value\"\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": \"\"\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "691"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-request-id": [
-          "3ff153d8-f8a4-4425-bd1d-163a27878b03"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "31973"
-        ],
-        "x-ms-correlation-request-id": [
-          "5f9cb075-01b4-457f-8251-22624917a898"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20150427T222747Z:5f9cb075-01b4-457f-8251-22624917a898"
-        ],
-        "Date": [
-          "Mon, 27 Apr 2015 22:27:46 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/7e2a56ef-1038-4480-a48c-5697c3e8eb3c/resourceGroups/csmrg4499/providers/Microsoft.Network/localNetworkGateways?api-version=2015-05-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvN2UyYTU2ZWYtMTAzOC00NDgwLWE0OGMtNTY5N2MzZThlYjNjL3Jlc291cmNlR3JvdXBzL2NzbXJnNDQ5OS9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvbG9jYWxOZXR3b3JrR2F0ZXdheXM/YXBpLXZlcnNpb249MjAxNS0wNS0wMS1wcmV2aWV3",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"nextLink\": \"\"\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "22"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-request-id": [
-          "70e1111a-cf98-458e-b813-1322488e58f7"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "31971"
-        ],
-        "x-ms-correlation-request-id": [
-          "4d1a1efc-afb0-4b95-a31c-bd3422cb0c68"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20150427T222747Z:4d1a1efc-afb0-4b95-a31c-bd3422cb0c68"
-        ],
-        "Date": [
-          "Mon, 27 Apr 2015 22:27:46 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/7e2a56ef-1038-4480-a48c-5697c3e8eb3c/resourceGroups/csmrg4499/providers/Microsoft.Network/localNetworkGateways/azsmnet4897/?api-version=2015-05-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvN2UyYTU2ZWYtMTAzOC00NDgwLWE0OGMtNTY5N2MzZThlYjNjL3Jlc291cmNlR3JvdXBzL2NzbXJnNDQ5OS9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvbG9jYWxOZXR3b3JrR2F0ZXdheXMvYXpzbW5ldDQ4OTcvP2FwaS12ZXJzaW9uPTIwMTUtMDUtMDEtcHJldmlldw==",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "0"
         ],
         "Expires": [
           "-1"
@@ -573,10 +302,10 @@
           "10"
         ],
         "x-ms-request-id": [
-          "7222d8dc-5e31-453b-8fac-b84012af5223"
+          "042f51bc-262e-4a7b-b1f1-eaab29fa306b"
         ],
         "Azure-AsyncOperation": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/7e2a56ef-1038-4480-a48c-5697c3e8eb3c/providers/Microsoft.Network/locations/nrp8/operations/7222d8dc-5e31-453b-8fac-b84012af5223?api-version=2015-05-01-preview"
+          "https://api-dogfood.resources.windows-int.net/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/providers/Microsoft.Network/locations/nrp7/operations/042f51bc-262e-4a7b-b1f1-eaab29fa306b?api-version=2015-05-01-preview"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -584,39 +313,149 @@
         "Cache-Control": [
           "no-cache"
         ],
-        "Location": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/7e2a56ef-1038-4480-a48c-5697c3e8eb3c/providers/Microsoft.Network/locations/nrp8/operationResults/7222d8dc-5e31-453b-8fac-b84012af5223?api-version=2015-05-01-preview"
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1197"
+        ],
+        "x-ms-correlation-request-id": [
+          "2e32084a-fcb1-43c4-be11-210578ac2ca3"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150626T223609Z:2e32084a-fcb1-43c4-be11-210578ac2ca3"
+        ],
+        "Date": [
+          "Fri, 26 Jun 2015 22:36:08 GMT"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg9069/providers/Microsoft.Network/localNetworkGateways/azsmnet114?api-version=2015-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjE5NTMzNTQtNTExNS00MzQwLWJmODAtZjRjY2QxY2IyMTNlL3Jlc291cmNlR3JvdXBzL2NzbXJnOTA2OS9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvbG9jYWxOZXR3b3JrR2F0ZXdheXMvYXpzbW5ldDExND9hcGktdmVyc2lvbj0yMDE1LTA1LTAxLXByZXZpZXc=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"West Europe\",\r\n  \"tags\": {\r\n    \"test\": \"value\"\r\n  },\r\n  \"properties\": {\r\n    \"gatewayIpAddress\": \"192.168.3.5\",\r\n    \"localNetworkSiteAddressSpace\": {\r\n      \"addressPrefixes\": [\r\n        \"192.168.0.0/16\"\r\n      ]\r\n    }\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "247"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"LocalNetworkGatewayIpAddressCannotBeUpdated\",\r\n    \"message\": \"Local network gateway's IP Address cannot be changed. Please set IpAddress to 192.168.3.4 for gateway /subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg9069/providers/Microsoft.Network/localNetworkGateways/azsmnet114.\",\r\n    \"innerError\": \"Microsoft.WindowsAzure.Networking.Nrp.Frontend.Common.ValidationException: Local network gateway's IP Address cannot be changed. Please set IpAddress to 192.168.3.4 for gateway /subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg9069/providers/Microsoft.Network/localNetworkGateways/azsmnet114.\\r\\n   at Microsoft.WindowsAzure.Networking.Nrp.Frontend.Contract.Csm.Public.LocalNetworkGateway.Validate(LocalNetworkGateway existingGateway) in x:\\\\bt\\\\565900\\\\repo\\\\src\\\\sources\\\\Frontend\\\\FrontendContract\\\\Csm.Public\\\\LocalNetworkGateway.cs:line 117\\r\\n   at Microsoft.WindowsAzure.Networking.Nrp.Frontend.Operations.Csm.PutLocalNetworkGatewayOperation.<ExecuteAsync>d__b.MoveNext() in x:\\\\bt\\\\565900\\\\repo\\\\src\\\\sources\\\\Frontend\\\\FrontEndOperations\\\\Csm\\\\PutLocalNetworkGatewayOperation.cs:line 112\\r\\n--- End of stack trace from previous location where exception was thrown ---\\r\\n   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)\\r\\n   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)\\r\\n   at Microsoft.WindowsAzure.Networking.Nrp.Frontend.Operations.OperationBase`1.<RunAsync>d__2.MoveNext() in x:\\\\bt\\\\565900\\\\repo\\\\src\\\\sources\\\\Frontend\\\\FrontEndOperations\\\\OperationBase.cs:line 113\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1653"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "0dcb4feb-1018-41d5-9d1f-1ad3a0201b1d"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1185"
+          "1196"
         ],
         "x-ms-correlation-request-id": [
-          "55451ae6-d85d-48f1-868d-6ac5050602f0"
+          "ef8aaae7-b39d-481a-94f9-7140843bbdd8"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20150427T222747Z:55451ae6-d85d-48f1-868d-6ac5050602f0"
+          "CENTRALUS:20150626T223610Z:ef8aaae7-b39d-481a-94f9-7140843bbdd8"
         ],
         "Date": [
-          "Mon, 27 Apr 2015 22:27:46 GMT"
+          "Fri, 26 Jun 2015 22:36:09 GMT"
         ]
       },
-      "StatusCode": 202
+      "StatusCode": 400
     },
     {
-      "RequestUri": "/subscriptions/7e2a56ef-1038-4480-a48c-5697c3e8eb3c/providers/Microsoft.Network/locations/nrp8/operations/7222d8dc-5e31-453b-8fac-b84012af5223?api-version=2015-05-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvN2UyYTU2ZWYtMTAzOC00NDgwLWE0OGMtNTY5N2MzZThlYjNjL3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9sb2NhdGlvbnMvbnJwOC9vcGVyYXRpb25zLzcyMjJkOGRjLTVlMzEtNDUzYi04ZmFjLWI4NDAxMmFmNTIyMz9hcGktdmVyc2lvbj0yMDE1LTA1LTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg9069/providers/Microsoft.Network/localNetworkGateways/azsmnet114?api-version=2015-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjE5NTMzNTQtNTExNS00MzQwLWJmODAtZjRjY2QxY2IyMTNlL3Jlc291cmNlR3JvdXBzL2NzbXJnOTA2OS9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvbG9jYWxOZXR3b3JrR2F0ZXdheXMvYXpzbW5ldDExND9hcGktdmVyc2lvbj0yMDE1LTA1LTAxLXByZXZpZXc=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"West Europe\",\r\n  \"tags\": {\r\n    \"test\": \"value\"\r\n  },\r\n  \"properties\": {\r\n    \"gatewayIpAddress\": \"192.168.3.5\",\r\n    \"localNetworkSiteAddressSpace\": {\r\n      \"addressPrefixes\": [\r\n        \"192.168.0.0/16\"\r\n      ]\r\n    }\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "247"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"LocalNetworkGatewayIpAddressCannotBeUpdated\",\r\n    \"message\": \"Local network gateway's IP Address cannot be changed. Please set IpAddress to 192.168.3.4 for gateway /subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg9069/providers/Microsoft.Network/localNetworkGateways/azsmnet114.\",\r\n    \"innerError\": \"Microsoft.WindowsAzure.Networking.Nrp.Frontend.Common.ValidationException: Local network gateway's IP Address cannot be changed. Please set IpAddress to 192.168.3.4 for gateway /subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg9069/providers/Microsoft.Network/localNetworkGateways/azsmnet114.\\r\\n   at Microsoft.WindowsAzure.Networking.Nrp.Frontend.Contract.Csm.Public.LocalNetworkGateway.Validate(LocalNetworkGateway existingGateway) in x:\\\\bt\\\\565900\\\\repo\\\\src\\\\sources\\\\Frontend\\\\FrontendContract\\\\Csm.Public\\\\LocalNetworkGateway.cs:line 117\\r\\n   at Microsoft.WindowsAzure.Networking.Nrp.Frontend.Operations.Csm.PutLocalNetworkGatewayOperation.<ExecuteAsync>d__b.MoveNext() in x:\\\\bt\\\\565900\\\\repo\\\\src\\\\sources\\\\Frontend\\\\FrontEndOperations\\\\Csm\\\\PutLocalNetworkGatewayOperation.cs:line 112\\r\\n--- End of stack trace from previous location where exception was thrown ---\\r\\n   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)\\r\\n   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)\\r\\n   at Microsoft.WindowsAzure.Networking.Nrp.Frontend.Operations.OperationBase`1.<RunAsync>d__2.MoveNext() in x:\\\\bt\\\\565900\\\\repo\\\\src\\\\sources\\\\Frontend\\\\FrontEndOperations\\\\OperationBase.cs:line 113\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1653"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "0dcb4feb-1018-41d5-9d1f-1ad3a0201b1d"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1196"
+        ],
+        "x-ms-correlation-request-id": [
+          "ef8aaae7-b39d-481a-94f9-7140843bbdd8"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150626T223610Z:ef8aaae7-b39d-481a-94f9-7140843bbdd8"
+        ],
+        "Date": [
+          "Fri, 26 Jun 2015 22:36:09 GMT"
+        ]
+      },
+      "StatusCode": 400
+    },
+    {
+      "RequestUri": "/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/providers/Microsoft.Network/locations/nrp7/operations/042f51bc-262e-4a7b-b1f1-eaab29fa306b?api-version=2015-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjE5NTMzNTQtNTExNS00MzQwLWJmODAtZjRjY2QxY2IyMTNlL3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9sb2NhdGlvbnMvbnJwNy9vcGVyYXRpb25zLzA0MmY1MWJjLTI2MmUtNGE3Yi1iMWYxLWVhYWIyOWZhMzA2Yj9hcGktdmVyc2lvbj0yMDE1LTA1LTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
-        "x-ms-version": [
-          "2015-05-01-preview"
-        ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/1.0.0.0"
+          "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/2.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"status\": \"Succeeded\"\r\n}",
@@ -634,7 +473,7 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "430cfc52-9df8-4aba-8112-17a8046cfc78"
+          "0366d4a9-0a4b-4945-9b79-9abef46979ca"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -647,16 +486,276 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "31972"
+          "14998"
         ],
         "x-ms-correlation-request-id": [
-          "f1a413f8-c528-4ef3-8a89-921f0e4298f3"
+          "aa4efba3-af42-4266-8130-af4a6c19e620"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20150427T222747Z:f1a413f8-c528-4ef3-8a89-921f0e4298f3"
+          "CENTRALUS:20150626T223609Z:aa4efba3-af42-4266-8130-af4a6c19e620"
         ],
         "Date": [
-          "Mon, 27 Apr 2015 22:27:46 GMT"
+          "Fri, 26 Jun 2015 22:36:09 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/providers/Microsoft.Network/locations/nrp7/operations/042f51bc-262e-4a7b-b1f1-eaab29fa306b?api-version=2015-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjE5NTMzNTQtNTExNS00MzQwLWJmODAtZjRjY2QxY2IyMTNlL3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9sb2NhdGlvbnMvbnJwNy9vcGVyYXRpb25zLzA0MmY1MWJjLTI2MmUtNGE3Yi1iMWYxLWVhYWIyOWZhMzA2Yj9hcGktdmVyc2lvbj0yMDE1LTA1LTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"Succeeded\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "29"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "0366d4a9-0a4b-4945-9b79-9abef46979ca"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14998"
+        ],
+        "x-ms-correlation-request-id": [
+          "aa4efba3-af42-4266-8130-af4a6c19e620"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150626T223609Z:aa4efba3-af42-4266-8130-af4a6c19e620"
+        ],
+        "Date": [
+          "Fri, 26 Jun 2015 22:36:09 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg9069/providers/Microsoft.Network/localNetworkGateways/azsmnet114?api-version=2015-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjE5NTMzNTQtNTExNS00MzQwLWJmODAtZjRjY2QxY2IyMTNlL3Jlc291cmNlR3JvdXBzL2NzbXJnOTA2OS9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvbG9jYWxOZXR3b3JrR2F0ZXdheXMvYXpzbW5ldDExND9hcGktdmVyc2lvbj0yMDE1LTA1LTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"azsmnet114\",\r\n  \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg9069/providers/Microsoft.Network/localNetworkGateways/azsmnet114\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"localNetworkAddressSpace\": {},\r\n    \"gatewayIpAddress\": \"192.168.3.4\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "317"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "c1316fd8-e18b-4dce-b41c-e7bc580b10bd"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14997"
+        ],
+        "x-ms-correlation-request-id": [
+          "82cc8019-e289-43ce-8039-ef111dcf85f1"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150626T223609Z:82cc8019-e289-43ce-8039-ef111dcf85f1"
+        ],
+        "Date": [
+          "Fri, 26 Jun 2015 22:36:09 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg9069/providers/Microsoft.Network/localNetworkGateways/azsmnet114?api-version=2015-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjE5NTMzNTQtNTExNS00MzQwLWJmODAtZjRjY2QxY2IyMTNlL3Jlc291cmNlR3JvdXBzL2NzbXJnOTA2OS9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvbG9jYWxOZXR3b3JrR2F0ZXdheXMvYXpzbW5ldDExND9hcGktdmVyc2lvbj0yMDE1LTA1LTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"azsmnet114\",\r\n  \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg9069/providers/Microsoft.Network/localNetworkGateways/azsmnet114\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"localNetworkAddressSpace\": {},\r\n    \"gatewayIpAddress\": \"192.168.3.4\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "317"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "c1316fd8-e18b-4dce-b41c-e7bc580b10bd"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14997"
+        ],
+        "x-ms-correlation-request-id": [
+          "82cc8019-e289-43ce-8039-ef111dcf85f1"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150626T223609Z:82cc8019-e289-43ce-8039-ef111dcf85f1"
+        ],
+        "Date": [
+          "Fri, 26 Jun 2015 22:36:09 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg9069/providers/Microsoft.Network/localNetworkGateways/azsmnet114?api-version=2015-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjE5NTMzNTQtNTExNS00MzQwLWJmODAtZjRjY2QxY2IyMTNlL3Jlc291cmNlR3JvdXBzL2NzbXJnOTA2OS9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvbG9jYWxOZXR3b3JrR2F0ZXdheXMvYXpzbW5ldDExND9hcGktdmVyc2lvbj0yMDE1LTA1LTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"azsmnet114\",\r\n  \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg9069/providers/Microsoft.Network/localNetworkGateways/azsmnet114\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"localNetworkAddressSpace\": {},\r\n    \"gatewayIpAddress\": \"192.168.3.4\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "317"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "dbeae819-c041-4688-ada7-b21e2d94b904"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14996"
+        ],
+        "x-ms-correlation-request-id": [
+          "2ee1627f-476d-4bca-9dbf-c18bb8c1f96b"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150626T223610Z:2ee1627f-476d-4bca-9dbf-c18bb8c1f96b"
+        ],
+        "Date": [
+          "Fri, 26 Jun 2015 22:36:09 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg9069/providers/Microsoft.Network/localNetworkGateways/azsmnet114?api-version=2015-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjE5NTMzNTQtNTExNS00MzQwLWJmODAtZjRjY2QxY2IyMTNlL3Jlc291cmNlR3JvdXBzL2NzbXJnOTA2OS9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvbG9jYWxOZXR3b3JrR2F0ZXdheXMvYXpzbW5ldDExND9hcGktdmVyc2lvbj0yMDE1LTA1LTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Network.NetworkResourceProviderClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"azsmnet114\",\r\n  \"id\": \"/subscriptions/61953354-5115-4340-bf80-f4ccd1cb213e/resourceGroups/csmrg9069/providers/Microsoft.Network/localNetworkGateways/azsmnet114\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"localNetworkAddressSpace\": {},\r\n    \"gatewayIpAddress\": \"192.168.3.4\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "317"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "dbeae819-c041-4688-ada7-b21e2d94b904"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14996"
+        ],
+        "x-ms-correlation-request-id": [
+          "2ee1627f-476d-4bca-9dbf-c18bb8c1f96b"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150626T223610Z:2ee1627f-476d-4bca-9dbf-c18bb8c1f96b"
+        ],
+        "Date": [
+          "Fri, 26 Jun 2015 22:36:09 GMT"
         ]
       },
       "StatusCode": 200
@@ -664,11 +763,11 @@
   ],
   "Names": {
     "LocalNettworkGatewayOperationsApisTest": [
-      "csmrg4499",
-      "azsmnet4897"
+      "csmrg9069",
+      "azsmnet114"
     ]
   },
   "Variables": {
-    "SubscriptionId": "7e2a56ef-1038-4480-a48c-5697c3e8eb3c"
+    "SubscriptionId": "61953354-5115-4340-bf80-f4ccd1cb213e"
   }
 }

@@ -9,20 +9,26 @@ namespace Microsoft.Azure.Management.Network.Models
 
     /// <summary>
     /// </summary>
-    public partial class DnsNameAvailabilityResponse
+    public partial class ApplicationGatewaySku
     {
         /// <summary>
-        /// Domain availability (True/False)
+        /// Gets or sets tier of application gateway. Possible values for this
+        /// property include: 'Standard'
         /// </summary>
-        [JsonProperty(PropertyName = "available")]
-        public bool? Available { get; set; }
+        [JsonProperty(PropertyName = "tier")]
+        public ApplicationGatewayTier? Tier { get; set; }
+
+        /// <summary>
+        /// Gets or sets capacity (instance count) of application gateway
+        /// </summary>
+        [JsonProperty(PropertyName = "capacity")]
+        public int? Capacity { get; set; }
 
         /// <summary>
         /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
         /// </summary>
         public virtual void Validate()
         {
-            //Nothing to validate
         }
     }
 }

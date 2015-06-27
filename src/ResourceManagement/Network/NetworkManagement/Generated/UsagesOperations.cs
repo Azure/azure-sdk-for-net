@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<UsagesListResponse>> ListWithOperationResponseAsync(string location, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<UsagesListResult>> ListWithOperationResponseAsync(string location, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (location == null)
             {
@@ -115,13 +115,13 @@ namespace Microsoft.Azure.Management.Network
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<UsagesListResponse>();
+            var result = new AzureOperationResponse<UsagesListResult>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             // Deserialize Response
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
-                result.Body = JsonConvert.DeserializeObject<UsagesListResponse>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<UsagesListResult>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {

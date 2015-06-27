@@ -18,6 +18,8 @@ namespace Microsoft.Azure.Management.Network
         /// </summary>
         Uri BaseUri { get; set; }
 
+        IApplicationGatewaysOperations ApplicationGateways { get; }
+
         ILoadBalancersOperations LoadBalancers { get; }
 
         ILocalNetworkGatewaysOperations LocalNetworkGateways { get; }
@@ -54,7 +56,7 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        Task<AzureOperationResponse<DnsNameAvailabilityResponse>> CheckDnsNameAvailabilityWithOperationResponseAsync(string location, string domainNameLabel = default(string), CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DnsNameAvailabilityResult>> CheckDnsNameAvailabilityWithOperationResponseAsync(string location, string domainNameLabel = default(string), CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

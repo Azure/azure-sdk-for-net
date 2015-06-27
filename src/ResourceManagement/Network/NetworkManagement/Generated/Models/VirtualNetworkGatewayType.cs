@@ -5,14 +5,12 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for VpnGatewayType
+    /// Defines values for VirtualNetworkGatewayType
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum VpnGatewayType
+    public enum VirtualNetworkGatewayType
     {
-        [EnumMember(Value = "StaticRouting")]
-        StaticRouting,
-        [EnumMember(Value = "DynamicRouting")]
-        DynamicRouting
+        [EnumMember(Value = "Vpn")]
+        Vpn
     }
 }

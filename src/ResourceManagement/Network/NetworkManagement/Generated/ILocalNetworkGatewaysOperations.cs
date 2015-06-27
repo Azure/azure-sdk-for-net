@@ -104,7 +104,7 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        Task<AzureOperationResponse<LocalNetworkGatewayListResponse>> ListWithOperationResponseAsync(string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<LocalNetworkGatewayListResult>> ListWithOperationResponseAsync(string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The List LocalNetworkGateways opertion retrieves all the local
         /// network gateways stored.
@@ -115,6 +115,6 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        Task<AzureOperationResponse<LocalNetworkGatewayListResponse>> ListNextWithOperationResponseAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<LocalNetworkGatewayListResult>> ListNextWithOperationResponseAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

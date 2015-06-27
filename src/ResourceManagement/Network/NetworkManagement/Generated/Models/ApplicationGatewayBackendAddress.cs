@@ -9,25 +9,26 @@ namespace Microsoft.Azure.Management.Network.Models
 
     /// <summary>
     /// </summary>
-    public partial class DnsSettings
+    public partial class ApplicationGatewayBackendAddress
     {
         /// <summary>
-        /// Gets or sets list of DNS servers IP addresses
+        /// Gets or sets the dns name
         /// </summary>
-        [JsonProperty(PropertyName = "dnsServers")]
-        public IList<string> DnsServers { get; set; }
+        [JsonProperty(PropertyName = "fqdn")]
+        public string Fqdn { get; set; }
 
         /// <summary>
-        /// Gets or sets list of Applied DNS servers IP addresses
+        /// Gets or sets the ip address
         /// </summary>
-        [JsonProperty(PropertyName = "appliedDnsServers")]
-        public IList<string> AppliedDnsServers { get; set; }
+        [JsonProperty(PropertyName = "ipAddress")]
+        public string IpAddress { get; set; }
 
         /// <summary>
         /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
         /// </summary>
         public virtual void Validate()
         {
+            //Nothing to validate
         }
     }
 }

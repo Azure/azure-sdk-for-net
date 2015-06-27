@@ -9,13 +9,13 @@ namespace Microsoft.Azure.Management.Network.Models
 
     /// <summary>
     /// </summary>
-    public partial class NetworkSecurityGroupListResponse
+    public partial class PublicIpAddressListResult
     {
         /// <summary>
-        /// Gets List of NetworkSecurityGroups in a resource group
+        /// Gets List of publicIP addresses that exists in a resource group
         /// </summary>
         [JsonProperty(PropertyName = "value")]
-        public IList<NetworkSecurityGroup> Value { get; set; }
+        public IList<PublicIpAddress> Value { get; set; }
 
         /// <summary>
         /// Gets the URL to get the next set of results.

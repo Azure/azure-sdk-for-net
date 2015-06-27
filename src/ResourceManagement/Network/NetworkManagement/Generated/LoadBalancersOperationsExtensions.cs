@@ -220,7 +220,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='operations'>
             /// The operations group for this extension method
             /// </param>
-            public static LoadBalancerListResponse ListAll(this ILoadBalancersOperations operations)
+            public static LoadBalancerListResult ListAll(this ILoadBalancersOperations operations)
             {
                 return Task.Factory.StartNew(s => ((ILoadBalancersOperations)s).ListAllAsync(), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -235,9 +235,9 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<LoadBalancerListResponse> ListAllAsync( this ILoadBalancersOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<LoadBalancerListResult> ListAllAsync( this ILoadBalancersOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<LoadBalancerListResponse> result = await operations.ListAllWithOperationResponseAsync(cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<LoadBalancerListResult> result = await operations.ListAllWithOperationResponseAsync(cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -251,7 +251,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
-            public static LoadBalancerListResponse List(this ILoadBalancersOperations operations, string resourceGroupName)
+            public static LoadBalancerListResult List(this ILoadBalancersOperations operations, string resourceGroupName)
             {
                 return Task.Factory.StartNew(s => ((ILoadBalancersOperations)s).ListAsync(resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -269,9 +269,9 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<LoadBalancerListResponse> ListAsync( this ILoadBalancersOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<LoadBalancerListResult> ListAsync( this ILoadBalancersOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<LoadBalancerListResponse> result = await operations.ListWithOperationResponseAsync(resourceGroupName, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<LoadBalancerListResult> result = await operations.ListWithOperationResponseAsync(resourceGroupName, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -285,7 +285,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='nextLink'>
             /// NextLink from the previous successful call to List operation.
             /// </param>
-            public static LoadBalancerListResponse ListAllNext(this ILoadBalancersOperations operations, string nextLink)
+            public static LoadBalancerListResult ListAllNext(this ILoadBalancersOperations operations, string nextLink)
             {
                 return Task.Factory.StartNew(s => ((ILoadBalancersOperations)s).ListAllNextAsync(nextLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -303,9 +303,9 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<LoadBalancerListResponse> ListAllNextAsync( this ILoadBalancersOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<LoadBalancerListResult> ListAllNextAsync( this ILoadBalancersOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<LoadBalancerListResponse> result = await operations.ListAllNextWithOperationResponseAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<LoadBalancerListResult> result = await operations.ListAllNextWithOperationResponseAsync(nextLink, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -319,7 +319,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='nextLink'>
             /// NextLink from the previous successful call to List operation.
             /// </param>
-            public static LoadBalancerListResponse ListNext(this ILoadBalancersOperations operations, string nextLink)
+            public static LoadBalancerListResult ListNext(this ILoadBalancersOperations operations, string nextLink)
             {
                 return Task.Factory.StartNew(s => ((ILoadBalancersOperations)s).ListNextAsync(nextLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -337,9 +337,9 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<LoadBalancerListResponse> ListNextAsync( this ILoadBalancersOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<LoadBalancerListResult> ListNextAsync( this ILoadBalancersOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<LoadBalancerListResponse> result = await operations.ListNextWithOperationResponseAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<LoadBalancerListResult> result = await operations.ListNextWithOperationResponseAsync(nextLink, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

@@ -28,35 +28,19 @@ namespace Microsoft.Azure.Test
         /// <summary>
         /// Default constructor for management clients, using the TestSupport Infrastructure
         /// </summary>
-        /// <param name="testBase">the test class</param>
-        /// <returns>A resource management client, created from the current context (environment variables)</returns>
-        public static ResourceManagementClient GetResourceManagementClient(this TestBase testBase)
-        {
-            return TestBase.GetServiceClient<ResourceManagementClient>(new CSMTestEnvironmentFactory());
-        }
-
-        /// <summary>
-        /// Default constructor for management clients, using the TestSupport Infrastructure
-        /// </summary>
         /// <param name="handler"></param>
         /// <returns>A resource management client, created from the current context (environment variables)</returns>
         public static ResourceManagementClient GetResourceManagementClientWithHandler(RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
-            return TestBase.GetServiceClient<ResourceManagementClient>(new CSMTestEnvironmentFactory(), handler);
+            var client = TestBase.GetServiceClient<ResourceManagementClient>(new CSMTestEnvironmentFactory(), handler);
+            if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Playback")
+            {
+                client.LongRunningOperationRetryTimeout = 0;
+            }
+            return client;
         }
 
-        /// <summary>
-        /// Default constructor for management clients, using the TestSupport Infrastructure
-        /// </summary>
-        /// <param name="testBase">the test class</param>
-        /// <returns>A subscription client, created from the current context (environment variables)</returns>
-        public static SubscriptionClient GetSubscriptionClient(this TestBase testBase)
-        {
-            return TestBase.GetServiceClient<SubscriptionClient>(new CSMTestEnvironmentFactory());
-        }
-
-        /// <summary>
         /// Get a default resource location for a given resource type
         /// </summary>
         /// <param name="client">The resource management client</param>

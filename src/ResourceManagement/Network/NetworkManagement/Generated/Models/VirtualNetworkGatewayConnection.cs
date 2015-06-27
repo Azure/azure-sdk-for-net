@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gateway connection type -Ipsec/Dedicated/VpnClient/Vnet2Vnet.
         /// Possible values for this property include: 'IPsec', 'Vnet2Vnet',
-        /// 'Dedicated', 'VPNClient'
+        /// 'ExpressRoute', 'VPNClient'
         /// </summary>
         [JsonProperty(PropertyName = "connectionType")]
         public VirtualNetworkGatewayConnectionType? ConnectionType { get; set; }

@@ -9,13 +9,13 @@ namespace Microsoft.Azure.Management.Network.Models
 
     /// <summary>
     /// </summary>
-    public partial class SecurityRuleListResponse
+    public partial class NetworkInterfaceListResult
     {
         /// <summary>
-        /// Gets security rules in a network security group
+        /// Gets or sets list of NetworkInterfaces in a resource group
         /// </summary>
         [JsonProperty(PropertyName = "value")]
-        public IList<SecurityRule> Value { get; set; }
+        public IList<NetworkInterface> Value { get; set; }
 
         /// <summary>
         /// Gets the URL to get the next set of results.

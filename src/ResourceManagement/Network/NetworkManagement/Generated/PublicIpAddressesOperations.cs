@@ -418,7 +418,7 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<PublicIpAddressListResponse>> ListAllWithOperationResponseAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<PublicIpAddressListResult>> ListAllWithOperationResponseAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             // Tracing
             bool shouldTrace = ServiceClientTracing.IsEnabled;
@@ -486,13 +486,13 @@ namespace Microsoft.Azure.Management.Network
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<PublicIpAddressListResponse>();
+            var result = new AzureOperationResponse<PublicIpAddressListResult>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             // Deserialize Response
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
-                result.Body = JsonConvert.DeserializeObject<PublicIpAddressListResponse>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<PublicIpAddressListResult>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -511,7 +511,7 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<PublicIpAddressListResponse>> ListWithOperationResponseAsync(string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<PublicIpAddressListResult>> ListWithOperationResponseAsync(string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -585,13 +585,13 @@ namespace Microsoft.Azure.Management.Network
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<PublicIpAddressListResponse>();
+            var result = new AzureOperationResponse<PublicIpAddressListResult>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             // Deserialize Response
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
-                result.Body = JsonConvert.DeserializeObject<PublicIpAddressListResponse>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<PublicIpAddressListResult>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -610,7 +610,7 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<PublicIpAddressListResponse>> ListAllNextWithOperationResponseAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<PublicIpAddressListResult>> ListAllNextWithOperationResponseAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextLink == null)
             {
@@ -677,13 +677,13 @@ namespace Microsoft.Azure.Management.Network
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<PublicIpAddressListResponse>();
+            var result = new AzureOperationResponse<PublicIpAddressListResult>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             // Deserialize Response
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
-                result.Body = JsonConvert.DeserializeObject<PublicIpAddressListResponse>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<PublicIpAddressListResult>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -702,7 +702,7 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<PublicIpAddressListResponse>> ListNextWithOperationResponseAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<PublicIpAddressListResult>> ListNextWithOperationResponseAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextLink == null)
             {
@@ -769,13 +769,13 @@ namespace Microsoft.Azure.Management.Network
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<PublicIpAddressListResponse>();
+            var result = new AzureOperationResponse<PublicIpAddressListResult>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             // Deserialize Response
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
-                result.Body = JsonConvert.DeserializeObject<PublicIpAddressListResponse>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<PublicIpAddressListResult>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {

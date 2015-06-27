@@ -16,9 +16,9 @@ namespace Networks.Tests
             {
                 Location = location,
                 Tags = new Dictionary<string, string>()
-                    {
-                       {"key","value"}
-                    },
+                {
+                    {"key","value"}
+                },
                 PublicIPAllocationMethod = IpAllocationMethod.Dynamic,
                 DnsSettings = new PublicIpAddressDnsSettings()
                 {

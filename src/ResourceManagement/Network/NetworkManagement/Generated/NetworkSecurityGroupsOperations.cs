@@ -128,7 +128,7 @@ namespace Microsoft.Azure.Management.Network
             HttpStatusCode statusCode = httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-            if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK") || statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "Accepted") || statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "NoContent")))
+            if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "NoContent") || statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "Accepted") || statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK")))
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
                 ex.Request = httpRequest;
@@ -420,7 +420,7 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<NetworkSecurityGroupListResponse>> ListAllWithOperationResponseAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<NetworkSecurityGroupListResult>> ListAllWithOperationResponseAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             // Tracing
             bool shouldTrace = ServiceClientTracing.IsEnabled;
@@ -488,13 +488,13 @@ namespace Microsoft.Azure.Management.Network
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<NetworkSecurityGroupListResponse>();
+            var result = new AzureOperationResponse<NetworkSecurityGroupListResult>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             // Deserialize Response
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
-                result.Body = JsonConvert.DeserializeObject<NetworkSecurityGroupListResponse>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<NetworkSecurityGroupListResult>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -513,7 +513,7 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<NetworkSecurityGroupListResponse>> ListWithOperationResponseAsync(string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<NetworkSecurityGroupListResult>> ListWithOperationResponseAsync(string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -587,13 +587,13 @@ namespace Microsoft.Azure.Management.Network
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<NetworkSecurityGroupListResponse>();
+            var result = new AzureOperationResponse<NetworkSecurityGroupListResult>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             // Deserialize Response
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
-                result.Body = JsonConvert.DeserializeObject<NetworkSecurityGroupListResponse>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<NetworkSecurityGroupListResult>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -612,7 +612,7 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<NetworkSecurityGroupListResponse>> ListAllNextWithOperationResponseAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<NetworkSecurityGroupListResult>> ListAllNextWithOperationResponseAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextLink == null)
             {
@@ -679,13 +679,13 @@ namespace Microsoft.Azure.Management.Network
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<NetworkSecurityGroupListResponse>();
+            var result = new AzureOperationResponse<NetworkSecurityGroupListResult>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             // Deserialize Response
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
-                result.Body = JsonConvert.DeserializeObject<NetworkSecurityGroupListResponse>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<NetworkSecurityGroupListResult>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -704,7 +704,7 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<NetworkSecurityGroupListResponse>> ListNextWithOperationResponseAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<NetworkSecurityGroupListResult>> ListNextWithOperationResponseAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextLink == null)
             {
@@ -771,13 +771,13 @@ namespace Microsoft.Azure.Management.Network
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<NetworkSecurityGroupListResponse>();
+            var result = new AzureOperationResponse<NetworkSecurityGroupListResult>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             // Deserialize Response
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
-                result.Body = JsonConvert.DeserializeObject<NetworkSecurityGroupListResponse>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<NetworkSecurityGroupListResult>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {

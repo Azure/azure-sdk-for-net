@@ -51,6 +51,8 @@ namespace Microsoft.Azure.Management.Network
         /// </summary>
         public int? LongRunningOperationRetryTimeout { get; set; }
 
+        public virtual IApplicationGatewaysOperations ApplicationGateways { get; private set; }
+
         public virtual ILoadBalancersOperations LoadBalancers { get; private set; }
 
         public virtual ILocalNetworkGatewaysOperations LocalNetworkGateways { get; private set; }
@@ -178,6 +180,7 @@ namespace Microsoft.Azure.Management.Network
         /// </summary>
         private void Initialize()
         {
+            this.ApplicationGateways = new ApplicationGatewaysOperations(this);
             this.LoadBalancers = new LoadBalancersOperations(this);
             this.LocalNetworkGateways = new LocalNetworkGatewaysOperations(this);
             this.NetworkInterfaces = new NetworkInterfacesOperations(this);
@@ -224,7 +227,7 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<DnsNameAvailabilityResponse>> CheckDnsNameAvailabilityWithOperationResponseAsync(string location, string domainNameLabel = default(string), CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<DnsNameAvailabilityResult>> CheckDnsNameAvailabilityWithOperationResponseAsync(string location, string domainNameLabel = default(string), CancellationToken cancellationToken = default(CancellationToken))
         {
             if (location == null)
             {
@@ -303,13 +306,13 @@ namespace Microsoft.Azure.Management.Network
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<DnsNameAvailabilityResponse>();
+            var result = new AzureOperationResponse<DnsNameAvailabilityResult>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             // Deserialize Response
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
-                result.Body = JsonConvert.DeserializeObject<DnsNameAvailabilityResponse>(responseContent, this.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<DnsNameAvailabilityResult>(responseContent, this.DeserializationSettings);
             }
             if (shouldTrace)
             {

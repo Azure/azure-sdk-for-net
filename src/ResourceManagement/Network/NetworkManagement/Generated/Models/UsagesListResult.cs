@@ -9,19 +9,13 @@ namespace Microsoft.Azure.Management.Network.Models
 
     /// <summary>
     /// </summary>
-    public partial class LoadBalancerListResponse
+    public partial class UsagesListResult
     {
         /// <summary>
-        /// Gets a list of LoadBalancers in a resource group
+        /// Gets or sets the list Network Resource Usages.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
-        public IList<LoadBalancer> Value { get; set; }
-
-        /// <summary>
-        /// Gets the URL to get the next set of results.
-        /// </summary>
-        [JsonProperty(PropertyName = "nextLink")]
-        public string NextLink { get; set; }
+        public IList<Usage> Value { get; set; }
 
         /// <summary>
         /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
