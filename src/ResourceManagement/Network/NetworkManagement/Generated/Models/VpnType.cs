@@ -5,14 +5,14 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for VirtualNetworkGatewaySize
+    /// Defines values for VpnType
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum VirtualNetworkGatewaySize
+    public enum VpnType
     {
-        [EnumMember(Value = "Default")]
-        Default,
-        [EnumMember(Value = "HighPerformance")]
-        HighPerformance
+        [EnumMember(Value = "PolicyBased")]
+        PolicyBased,
+        [EnumMember(Value = "RouteBased")]
+        RouteBased
     }
 }

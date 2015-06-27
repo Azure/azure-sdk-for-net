@@ -96,7 +96,7 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        Task<AzureOperationResponse<PublicIpAddressListResponse>> ListAllWithOperationResponseAsync(CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PublicIpAddressListResult>> ListAllWithOperationResponseAsync(CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The List publicIpAddress opertion retrieves all the
         /// publicIpAddresses in a resource group.
@@ -107,7 +107,7 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        Task<AzureOperationResponse<PublicIpAddressListResponse>> ListWithOperationResponseAsync(string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PublicIpAddressListResult>> ListWithOperationResponseAsync(string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The List publicIpAddress opertion retrieves all the
         /// publicIpAddresses in a subscription.
@@ -118,7 +118,7 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        Task<AzureOperationResponse<PublicIpAddressListResponse>> ListAllNextWithOperationResponseAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PublicIpAddressListResult>> ListAllNextWithOperationResponseAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The List publicIpAddress opertion retrieves all the
         /// publicIpAddresses in a resource group.
@@ -129,6 +129,6 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        Task<AzureOperationResponse<PublicIpAddressListResponse>> ListNextWithOperationResponseAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PublicIpAddressListResult>> ListNextWithOperationResponseAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

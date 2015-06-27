@@ -37,10 +37,10 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<NetworkInterfaceIpConfiguration> IpConfigurations { get; set; }
 
         /// <summary>
-        /// Gets or sets DNsSettings in  NetworkInterface
+        /// Gets or sets DNS Settings in  NetworkInterface
         /// </summary>
         [JsonProperty(PropertyName = "dnsSettings")]
-        public DnsSettings DnsSettings { get; set; }
+        public NetworkInterfaceDnsSettings DnsSettings { get; set; }
 
         /// <summary>
         /// Gets the MAC Address of the network interface

@@ -224,7 +224,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='operations'>
             /// The operations group for this extension method
             /// </param>
-            public static PublicIpAddressListResponse ListAll(this IPublicIpAddressesOperations operations)
+            public static PublicIpAddressListResult ListAll(this IPublicIpAddressesOperations operations)
             {
                 return Task.Factory.StartNew(s => ((IPublicIpAddressesOperations)s).ListAllAsync(), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -239,9 +239,9 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<PublicIpAddressListResponse> ListAllAsync( this IPublicIpAddressesOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PublicIpAddressListResult> ListAllAsync( this IPublicIpAddressesOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<PublicIpAddressListResponse> result = await operations.ListAllWithOperationResponseAsync(cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<PublicIpAddressListResult> result = await operations.ListAllWithOperationResponseAsync(cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -255,7 +255,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
-            public static PublicIpAddressListResponse List(this IPublicIpAddressesOperations operations, string resourceGroupName)
+            public static PublicIpAddressListResult List(this IPublicIpAddressesOperations operations, string resourceGroupName)
             {
                 return Task.Factory.StartNew(s => ((IPublicIpAddressesOperations)s).ListAsync(resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -273,9 +273,9 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<PublicIpAddressListResponse> ListAsync( this IPublicIpAddressesOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PublicIpAddressListResult> ListAsync( this IPublicIpAddressesOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<PublicIpAddressListResponse> result = await operations.ListWithOperationResponseAsync(resourceGroupName, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<PublicIpAddressListResult> result = await operations.ListWithOperationResponseAsync(resourceGroupName, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -289,7 +289,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='nextLink'>
             /// NextLink from the previous successful call to List operation.
             /// </param>
-            public static PublicIpAddressListResponse ListAllNext(this IPublicIpAddressesOperations operations, string nextLink)
+            public static PublicIpAddressListResult ListAllNext(this IPublicIpAddressesOperations operations, string nextLink)
             {
                 return Task.Factory.StartNew(s => ((IPublicIpAddressesOperations)s).ListAllNextAsync(nextLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -307,9 +307,9 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<PublicIpAddressListResponse> ListAllNextAsync( this IPublicIpAddressesOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PublicIpAddressListResult> ListAllNextAsync( this IPublicIpAddressesOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<PublicIpAddressListResponse> result = await operations.ListAllNextWithOperationResponseAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<PublicIpAddressListResult> result = await operations.ListAllNextWithOperationResponseAsync(nextLink, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -323,7 +323,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='nextLink'>
             /// NextLink from the previous successful call to List operation.
             /// </param>
-            public static PublicIpAddressListResponse ListNext(this IPublicIpAddressesOperations operations, string nextLink)
+            public static PublicIpAddressListResult ListNext(this IPublicIpAddressesOperations operations, string nextLink)
             {
                 return Task.Factory.StartNew(s => ((IPublicIpAddressesOperations)s).ListNextAsync(nextLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -341,9 +341,9 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<PublicIpAddressListResponse> ListNextAsync( this IPublicIpAddressesOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PublicIpAddressListResult> ListNextAsync( this IPublicIpAddressesOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<PublicIpAddressListResponse> result = await operations.ListNextWithOperationResponseAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<PublicIpAddressListResult> result = await operations.ListNextWithOperationResponseAsync(nextLink, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

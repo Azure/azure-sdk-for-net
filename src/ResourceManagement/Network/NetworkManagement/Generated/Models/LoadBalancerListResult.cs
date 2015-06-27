@@ -9,13 +9,13 @@ namespace Microsoft.Azure.Management.Network.Models
 
     /// <summary>
     /// </summary>
-    public partial class NetworkInterfaceListResponse
+    public partial class LoadBalancerListResult
     {
         /// <summary>
-        /// Gets or sets list of NetworkInterfaces in a resource group
+        /// Gets a list of LoadBalancers in a resource group
         /// </summary>
         [JsonProperty(PropertyName = "value")]
-        public IList<NetworkInterface> Value { get; set; }
+        public IList<LoadBalancer> Value { get; set; }
 
         /// <summary>
         /// Gets the URL to get the next set of results.

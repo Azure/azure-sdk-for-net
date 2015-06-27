@@ -235,7 +235,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
-            public static VirtualNetworkGatewayListResponse List(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName)
+            public static VirtualNetworkGatewayListResult List(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName)
             {
                 return Task.Factory.StartNew(s => ((IVirtualNetworkGatewaysOperations)s).ListAsync(resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -253,9 +253,9 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<VirtualNetworkGatewayListResponse> ListAsync( this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VirtualNetworkGatewayListResult> ListAsync( this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<VirtualNetworkGatewayListResponse> result = await operations.ListWithOperationResponseAsync(resourceGroupName, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<VirtualNetworkGatewayListResult> result = await operations.ListWithOperationResponseAsync(resourceGroupName, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -369,7 +369,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='nextLink'>
             /// NextLink from the previous successful call to List operation.
             /// </param>
-            public static VirtualNetworkGatewayListResponse ListNext(this IVirtualNetworkGatewaysOperations operations, string nextLink)
+            public static VirtualNetworkGatewayListResult ListNext(this IVirtualNetworkGatewaysOperations operations, string nextLink)
             {
                 return Task.Factory.StartNew(s => ((IVirtualNetworkGatewaysOperations)s).ListNextAsync(nextLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -387,9 +387,9 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<VirtualNetworkGatewayListResponse> ListNextAsync( this IVirtualNetworkGatewaysOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VirtualNetworkGatewayListResult> ListNextAsync( this IVirtualNetworkGatewaysOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<VirtualNetworkGatewayListResponse> result = await operations.ListNextWithOperationResponseAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<VirtualNetworkGatewayListResult> result = await operations.ListNextWithOperationResponseAsync(nextLink, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

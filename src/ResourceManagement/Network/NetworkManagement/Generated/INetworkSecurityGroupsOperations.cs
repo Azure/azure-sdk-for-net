@@ -98,7 +98,7 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        Task<AzureOperationResponse<NetworkSecurityGroupListResponse>> ListAllWithOperationResponseAsync(CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<NetworkSecurityGroupListResult>> ListAllWithOperationResponseAsync(CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The list NetworkSecurityGroups returns all network security groups
         /// in a resource group
@@ -109,7 +109,7 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        Task<AzureOperationResponse<NetworkSecurityGroupListResponse>> ListWithOperationResponseAsync(string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<NetworkSecurityGroupListResult>> ListWithOperationResponseAsync(string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The list NetworkSecurityGroups returns all network security groups
         /// in a subscription
@@ -120,7 +120,7 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        Task<AzureOperationResponse<NetworkSecurityGroupListResponse>> ListAllNextWithOperationResponseAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<NetworkSecurityGroupListResult>> ListAllNextWithOperationResponseAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The list NetworkSecurityGroups returns all network security groups
         /// in a resource group
@@ -131,6 +131,6 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        Task<AzureOperationResponse<NetworkSecurityGroupListResponse>> ListNextWithOperationResponseAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<NetworkSecurityGroupListResult>> ListNextWithOperationResponseAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

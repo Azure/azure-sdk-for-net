@@ -9,13 +9,13 @@ namespace Microsoft.Azure.Management.Network.Models
 
     /// <summary>
     /// </summary>
-    public partial class SubnetListResponse
+    public partial class NetworkSecurityGroupListResult
     {
         /// <summary>
-        /// Gets the subnets in a virtual network
+        /// Gets List of NetworkSecurityGroups in a resource group
         /// </summary>
         [JsonProperty(PropertyName = "value")]
-        public IList<Subnet> Value { get; set; }
+        public IList<NetworkSecurityGroup> Value { get; set; }
 
         /// <summary>
         /// Gets the URL to get the next set of results.

@@ -228,7 +228,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='operations'>
             /// The operations group for this extension method
             /// </param>
-            public static NetworkSecurityGroupListResponse ListAll(this INetworkSecurityGroupsOperations operations)
+            public static NetworkSecurityGroupListResult ListAll(this INetworkSecurityGroupsOperations operations)
             {
                 return Task.Factory.StartNew(s => ((INetworkSecurityGroupsOperations)s).ListAllAsync(), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -243,9 +243,9 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<NetworkSecurityGroupListResponse> ListAllAsync( this INetworkSecurityGroupsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<NetworkSecurityGroupListResult> ListAllAsync( this INetworkSecurityGroupsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<NetworkSecurityGroupListResponse> result = await operations.ListAllWithOperationResponseAsync(cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<NetworkSecurityGroupListResult> result = await operations.ListAllWithOperationResponseAsync(cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -259,7 +259,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
-            public static NetworkSecurityGroupListResponse List(this INetworkSecurityGroupsOperations operations, string resourceGroupName)
+            public static NetworkSecurityGroupListResult List(this INetworkSecurityGroupsOperations operations, string resourceGroupName)
             {
                 return Task.Factory.StartNew(s => ((INetworkSecurityGroupsOperations)s).ListAsync(resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -277,9 +277,9 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<NetworkSecurityGroupListResponse> ListAsync( this INetworkSecurityGroupsOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<NetworkSecurityGroupListResult> ListAsync( this INetworkSecurityGroupsOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<NetworkSecurityGroupListResponse> result = await operations.ListWithOperationResponseAsync(resourceGroupName, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<NetworkSecurityGroupListResult> result = await operations.ListWithOperationResponseAsync(resourceGroupName, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -293,7 +293,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='nextLink'>
             /// NextLink from the previous successful call to List operation.
             /// </param>
-            public static NetworkSecurityGroupListResponse ListAllNext(this INetworkSecurityGroupsOperations operations, string nextLink)
+            public static NetworkSecurityGroupListResult ListAllNext(this INetworkSecurityGroupsOperations operations, string nextLink)
             {
                 return Task.Factory.StartNew(s => ((INetworkSecurityGroupsOperations)s).ListAllNextAsync(nextLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -311,9 +311,9 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<NetworkSecurityGroupListResponse> ListAllNextAsync( this INetworkSecurityGroupsOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<NetworkSecurityGroupListResult> ListAllNextAsync( this INetworkSecurityGroupsOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<NetworkSecurityGroupListResponse> result = await operations.ListAllNextWithOperationResponseAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<NetworkSecurityGroupListResult> result = await operations.ListAllNextWithOperationResponseAsync(nextLink, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -327,7 +327,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='nextLink'>
             /// NextLink from the previous successful call to List operation.
             /// </param>
-            public static NetworkSecurityGroupListResponse ListNext(this INetworkSecurityGroupsOperations operations, string nextLink)
+            public static NetworkSecurityGroupListResult ListNext(this INetworkSecurityGroupsOperations operations, string nextLink)
             {
                 return Task.Factory.StartNew(s => ((INetworkSecurityGroupsOperations)s).ListNextAsync(nextLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -345,9 +345,9 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<NetworkSecurityGroupListResponse> ListNextAsync( this INetworkSecurityGroupsOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<NetworkSecurityGroupListResult> ListNextAsync( this INetworkSecurityGroupsOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<NetworkSecurityGroupListResponse> result = await operations.ListNextWithOperationResponseAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<NetworkSecurityGroupListResult> result = await operations.ListNextWithOperationResponseAsync(nextLink, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

@@ -220,7 +220,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='operations'>
             /// The operations group for this extension method
             /// </param>
-            public static NetworkInterfaceListResponse ListAll(this INetworkInterfacesOperations operations)
+            public static NetworkInterfaceListResult ListAll(this INetworkInterfacesOperations operations)
             {
                 return Task.Factory.StartNew(s => ((INetworkInterfacesOperations)s).ListAllAsync(), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -235,9 +235,9 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<NetworkInterfaceListResponse> ListAllAsync( this INetworkInterfacesOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<NetworkInterfaceListResult> ListAllAsync( this INetworkInterfacesOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<NetworkInterfaceListResponse> result = await operations.ListAllWithOperationResponseAsync(cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<NetworkInterfaceListResult> result = await operations.ListAllWithOperationResponseAsync(cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -251,7 +251,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
-            public static NetworkInterfaceListResponse List(this INetworkInterfacesOperations operations, string resourceGroupName)
+            public static NetworkInterfaceListResult List(this INetworkInterfacesOperations operations, string resourceGroupName)
             {
                 return Task.Factory.StartNew(s => ((INetworkInterfacesOperations)s).ListAsync(resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -269,9 +269,9 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<NetworkInterfaceListResponse> ListAsync( this INetworkInterfacesOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<NetworkInterfaceListResult> ListAsync( this INetworkInterfacesOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<NetworkInterfaceListResponse> result = await operations.ListWithOperationResponseAsync(resourceGroupName, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<NetworkInterfaceListResult> result = await operations.ListWithOperationResponseAsync(resourceGroupName, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -285,7 +285,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='nextLink'>
             /// NextLink from the previous successful call to List operation.
             /// </param>
-            public static NetworkInterfaceListResponse ListAllNext(this INetworkInterfacesOperations operations, string nextLink)
+            public static NetworkInterfaceListResult ListAllNext(this INetworkInterfacesOperations operations, string nextLink)
             {
                 return Task.Factory.StartNew(s => ((INetworkInterfacesOperations)s).ListAllNextAsync(nextLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -303,9 +303,9 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<NetworkInterfaceListResponse> ListAllNextAsync( this INetworkInterfacesOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<NetworkInterfaceListResult> ListAllNextAsync( this INetworkInterfacesOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<NetworkInterfaceListResponse> result = await operations.ListAllNextWithOperationResponseAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<NetworkInterfaceListResult> result = await operations.ListAllNextWithOperationResponseAsync(nextLink, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -319,7 +319,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='nextLink'>
             /// NextLink from the previous successful call to List operation.
             /// </param>
-            public static NetworkInterfaceListResponse ListNext(this INetworkInterfacesOperations operations, string nextLink)
+            public static NetworkInterfaceListResult ListNext(this INetworkInterfacesOperations operations, string nextLink)
             {
                 return Task.Factory.StartNew(s => ((INetworkInterfacesOperations)s).ListNextAsync(nextLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -337,9 +337,9 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<NetworkInterfaceListResponse> ListNextAsync( this INetworkInterfacesOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<NetworkInterfaceListResult> ListNextAsync( this INetworkInterfacesOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<NetworkInterfaceListResponse> result = await operations.ListNextWithOperationResponseAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<NetworkInterfaceListResult> result = await operations.ListNextWithOperationResponseAsync(nextLink, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

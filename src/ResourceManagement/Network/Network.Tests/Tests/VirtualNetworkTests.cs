@@ -1,5 +1,18 @@
-﻿using System.Collections.Generic;
-using System.Net;
+﻿//
+// Copyright (c) Microsoft.  All rights reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//   http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+
 using Microsoft.Azure.Management.Network;
 using Microsoft.Azure.Management.Network.Models;
 using Microsoft.Azure.Management.Resources;
@@ -7,6 +20,9 @@ using Microsoft.Azure.Management.Resources.Models;
 using Microsoft.Azure.Test;
 using Networks.Tests.Helpers;
 using ResourceGroups.Tests;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
 using Xunit;
 
 namespace Networks.Tests
@@ -95,18 +111,19 @@ namespace Networks.Tests
 
                 // Get all Vnets in a subscription
                 var getAllVnetInSubscription = networkResourceProviderClient.VirtualNetworks.ListAll();
-                Assert.Equal(vnetName, getAllVnetInSubscription.Value[0].Name);
-                Assert.Equal("Succeeded", getAllVnetInSubscription.Value[0].ProvisioningState);
-                Assert.Equal("10.0.0.0/16", getAllVnetInSubscription.Value[0].AddressSpace.AddressPrefixes[0]);
-                Assert.Equal(subnet1Name, getAllVnetInSubscription.Value[0].Subnets[0].Name);
-                Assert.Equal(subnet2Name, getAllVnetInSubscription.Value[0].Subnets[1].Name);
+                var vnpgateway = getAllVnetInSubscription.Value.FirstOrDefault(n => n.Name == vnetName);
+                Assert.NotNull(vnpgateway);
+                Assert.Equal("Succeeded", vnpgateway.ProvisioningState);
+                Assert.Equal("10.0.0.0/16", vnpgateway.AddressSpace.AddressPrefixes[0]);
+                Assert.Equal(subnet1Name, vnpgateway.Subnets[0].Name);
+                Assert.Equal(subnet2Name, vnpgateway.Subnets[1].Name);
 
                 // Delete Vnet
                 networkResourceProviderClient.VirtualNetworks.Delete(resourceGroupName, vnetName);
 
                 // Get all Vnets
                 getAllVnets = networkResourceProviderClient.VirtualNetworks.List(resourceGroupName);
-                Assert.Equal(0, getAllVnets.Value.Count);
+                Assert.Null(getAllVnets.Value);
             }
         }
     }

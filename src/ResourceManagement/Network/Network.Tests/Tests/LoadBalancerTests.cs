@@ -799,18 +799,18 @@ namespace Networks.Tests
                 // Verify the GET LoadBalancer
                 Assert.Equal(lbname, getLoadBalancer.Name);
                 Assert.Equal("Succeeded", getLoadBalancer.ProvisioningState);
-                Assert.False(getLoadBalancer.FrontendIPConfigurations.Any());
-                Assert.False(getLoadBalancer.BackendAddressPools.Any());
-                Assert.False(getLoadBalancer.LoadBalancingRules.Any());
-                Assert.False(getLoadBalancer.Probes.Any());
-                Assert.False(getLoadBalancer.InboundNatRules.Any());
+                Assert.Null(getLoadBalancer.FrontendIPConfigurations);
+                Assert.Null(getLoadBalancer.BackendAddressPools);
+                Assert.Null(getLoadBalancer.LoadBalancingRules);
+                Assert.Null(getLoadBalancer.Probes);
+                Assert.Null(getLoadBalancer.InboundNatRules);
 
                 // Delete LoadBalancer
                 networkResourceProviderClient.LoadBalancers.Delete(resourceGroupName, lbname);
 
                 // Verify Delete
                 var listLoadBalancer = networkResourceProviderClient.LoadBalancers.List(resourceGroupName);
-                Assert.Equal(0, listLoadBalancer.Value.Count);
+                Assert.Null(listLoadBalancer.Value);
             }
         }
 
@@ -1186,7 +1186,7 @@ namespace Networks.Tests
 
                 // Verify Delete
                 var listLoadBalancer = networkResourceProviderClient.LoadBalancers.List(resourceGroupName);
-                Assert.Equal(0, listLoadBalancer.Value.Count);
+                Assert.Null(listLoadBalancer.Value);
 
                 // Delete all NetworkInterfaces
                 networkResourceProviderClient.NetworkInterfaces.Delete(resourceGroupName, nic1name);

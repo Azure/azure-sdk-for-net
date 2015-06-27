@@ -9,13 +9,13 @@ namespace Microsoft.Azure.Management.Network.Models
 
     /// <summary>
     /// </summary>
-    public partial class PublicIpAddressListResponse
+    public partial class VirtualNetworkGatewayListResult
     {
         /// <summary>
-        /// Gets List of publicIP addresses that exists in a resource group
+        /// Gets List of VirtualNetworkGateways that exists in a resource group
         /// </summary>
         [JsonProperty(PropertyName = "value")]
-        public IList<PublicIpAddress> Value { get; set; }
+        public IList<VirtualNetworkGateway> Value { get; set; }
 
         /// <summary>
         /// Gets the URL to get the next set of results.

@@ -14,8 +14,8 @@ namespace Microsoft.Azure.Management.Network.Models
         IPsec,
         [EnumMember(Value = "Vnet2Vnet")]
         Vnet2Vnet,
-        [EnumMember(Value = "Dedicated")]
-        Dedicated,
+        [EnumMember(Value = "ExpressRoute")]
+        ExpressRoute,
         [EnumMember(Value = "VPNClient")]
         VPNClient
     }

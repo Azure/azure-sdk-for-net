@@ -9,7 +9,7 @@ namespace Microsoft.Azure.Management.Network.Models
 
     /// <summary>
     /// </summary>
-    public partial class LocalNetworkGatewayListResponse
+    public partial class LocalNetworkGatewayListResult
     {
         /// <summary>
         /// Gets List of LocalNetworkGateways that exists in a resource group

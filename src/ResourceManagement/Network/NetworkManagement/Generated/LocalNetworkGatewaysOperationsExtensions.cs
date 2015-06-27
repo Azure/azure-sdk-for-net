@@ -235,7 +235,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
-            public static LocalNetworkGatewayListResponse List(this ILocalNetworkGatewaysOperations operations, string resourceGroupName)
+            public static LocalNetworkGatewayListResult List(this ILocalNetworkGatewaysOperations operations, string resourceGroupName)
             {
                 return Task.Factory.StartNew(s => ((ILocalNetworkGatewaysOperations)s).ListAsync(resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -253,9 +253,9 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<LocalNetworkGatewayListResponse> ListAsync( this ILocalNetworkGatewaysOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<LocalNetworkGatewayListResult> ListAsync( this ILocalNetworkGatewaysOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<LocalNetworkGatewayListResponse> result = await operations.ListWithOperationResponseAsync(resourceGroupName, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<LocalNetworkGatewayListResult> result = await operations.ListWithOperationResponseAsync(resourceGroupName, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -269,7 +269,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='nextLink'>
             /// NextLink from the previous successful call to List operation.
             /// </param>
-            public static LocalNetworkGatewayListResponse ListNext(this ILocalNetworkGatewaysOperations operations, string nextLink)
+            public static LocalNetworkGatewayListResult ListNext(this ILocalNetworkGatewaysOperations operations, string nextLink)
             {
                 return Task.Factory.StartNew(s => ((ILocalNetworkGatewaysOperations)s).ListNextAsync(nextLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -287,9 +287,9 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<LocalNetworkGatewayListResponse> ListNextAsync( this ILocalNetworkGatewaysOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<LocalNetworkGatewayListResult> ListNextAsync( this ILocalNetworkGatewaysOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<LocalNetworkGatewayListResponse> result = await operations.ListNextWithOperationResponseAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<LocalNetworkGatewayListResult> result = await operations.ListNextWithOperationResponseAsync(nextLink, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

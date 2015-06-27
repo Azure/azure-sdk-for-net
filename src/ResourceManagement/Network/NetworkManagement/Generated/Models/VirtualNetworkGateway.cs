@@ -25,18 +25,18 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<VirtualNetworkGatewayIpConfiguration> IpConfigurations { get; set; }
 
         /// <summary>
-        /// The size of this virtual network gateway. Possible values for this
-        /// property include: 'Default', 'HighPerformance'
+        /// The type of this virtual network gateway. Possible values for this
+        /// property include: 'Vpn'
         /// </summary>
-        [JsonProperty(PropertyName = "gatewaySize")]
-        public VirtualNetworkGatewaySize? GatewaySize { get; set; }
+        [JsonProperty(PropertyName = "gatewayType")]
+        public VirtualNetworkGatewayType? GatewayType { get; set; }
 
         /// <summary>
         /// The type of this virtual network gateway. Possible values for this
-        /// property include: 'StaticRouting', 'DynamicRouting'
+        /// property include: 'PolicyBased', 'RouteBased'
         /// </summary>
-        [JsonProperty(PropertyName = "gatewayType")]
-        public VpnGatewayType? GatewayType { get; set; }
+        [JsonProperty(PropertyName = "vpnType")]
+        public VpnType? VpnType { get; set; }
 
         /// <summary>
         /// EnableBgp Flag

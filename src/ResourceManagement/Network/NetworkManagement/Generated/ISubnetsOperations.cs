@@ -115,7 +115,7 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        Task<AzureOperationResponse<SubnetListResponse>> ListWithOperationResponseAsync(string resourceGroupName, string virtualNetworkName, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<SubnetListResult>> ListWithOperationResponseAsync(string resourceGroupName, string virtualNetworkName, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The List subnets opertion retrieves all the subnets in a virtual
         /// network.
@@ -126,6 +126,6 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        Task<AzureOperationResponse<SubnetListResponse>> ListNextWithOperationResponseAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<SubnetListResult>> ListNextWithOperationResponseAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

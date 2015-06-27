@@ -153,7 +153,7 @@ namespace Microsoft.Azure.Management.Network
             HttpStatusCode statusCode = httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-            if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "Created") || statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK")))
+            if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK") || statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "Created")))
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
                 CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
@@ -175,12 +175,12 @@ namespace Microsoft.Azure.Management.Network
             result.Request = httpRequest;
             result.Response = httpResponse;
             // Deserialize Response
-            if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "Created"))
+            if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
                 result.Body = JsonConvert.DeserializeObject<VirtualNetworkGatewayConnection>(responseContent, this.Client.DeserializationSettings);
             }
             // Deserialize Response
-            if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
+            if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "Created"))
             {
                 result.Body = JsonConvert.DeserializeObject<VirtualNetworkGatewayConnection>(responseContent, this.Client.DeserializationSettings);
             }
@@ -549,11 +549,11 @@ namespace Microsoft.Azure.Management.Network
         public async Task<AzureOperationResponse<ConnectionSharedKey>> SetSharedKeyWithOperationResponseAsync(string resourceGroupName, string virtualNetworkGatewayConnectionName, ConnectionSharedKey parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            return await BeginSetSharedKeyWithOperationResponseAsync(
+            AzureOperationResponse<ConnectionSharedKey> response = await BeginSetSharedKeyWithOperationResponseAsync(
                 resourceGroupName, virtualNetworkGatewayConnectionName, parameters, cancellationToken);
-            //return await this.Client.GetPutOperationResultAsync<ConnectionSharedKey>(response, 
-            //    () => GetSharedKeyWithOperationResponseAsync(resourceGroupName, virtualNetworkGatewayConnectionName, cancellationToken),
-            //    cancellationToken);
+            return await this.Client.GetPutOperationResultAsync<ConnectionSharedKey>(response, 
+                () => GetSharedKeyWithOperationResponseAsync(resourceGroupName, virtualNetworkGatewayConnectionName, cancellationToken),
+                cancellationToken);
         }
 
         /// <summary>
@@ -698,7 +698,7 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<VirtualNetworkGatewayConnectionListResponse>> ListWithOperationResponseAsync(string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<VirtualNetworkGatewayConnectionListResult>> ListWithOperationResponseAsync(string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -772,13 +772,13 @@ namespace Microsoft.Azure.Management.Network
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<VirtualNetworkGatewayConnectionListResponse>();
+            var result = new AzureOperationResponse<VirtualNetworkGatewayConnectionListResult>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             // Deserialize Response
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
-                result.Body = JsonConvert.DeserializeObject<VirtualNetworkGatewayConnectionListResponse>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<VirtualNetworkGatewayConnectionListResult>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -908,7 +908,7 @@ namespace Microsoft.Azure.Management.Network
             HttpStatusCode statusCode = httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-            if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK") || statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "Created")))
+            if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK") || statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "Accepted")))
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
                 CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
@@ -934,11 +934,6 @@ namespace Microsoft.Azure.Management.Network
             {
                 result.Body = JsonConvert.DeserializeObject<ConnectionResetSharedKey>(responseContent, this.Client.DeserializationSettings);
             }
-            // Deserialize Response
-            if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "Created"))
-            {
-                result.Body = JsonConvert.DeserializeObject<ConnectionResetSharedKey>(responseContent, this.Client.DeserializationSettings);
-            }
             if (shouldTrace)
             {
                 ServiceClientTracing.Exit(invocationId, result);
@@ -956,7 +951,7 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<VirtualNetworkGatewayConnectionListResponse>> ListNextWithOperationResponseAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<VirtualNetworkGatewayConnectionListResult>> ListNextWithOperationResponseAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextLink == null)
             {
@@ -1023,13 +1018,13 @@ namespace Microsoft.Azure.Management.Network
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<VirtualNetworkGatewayConnectionListResponse>();
+            var result = new AzureOperationResponse<VirtualNetworkGatewayConnectionListResult>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             // Deserialize Response
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
-                result.Body = JsonConvert.DeserializeObject<VirtualNetworkGatewayConnectionListResponse>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<VirtualNetworkGatewayConnectionListResult>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {

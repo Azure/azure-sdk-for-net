@@ -119,7 +119,7 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        Task<AzureOperationResponse<SecurityRuleListResponse>> ListWithOperationResponseAsync(string resourceGroupName, string networkSecurityGroupName, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<SecurityRuleListResult>> ListWithOperationResponseAsync(string resourceGroupName, string networkSecurityGroupName, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The List network security rule opertion retrieves all the security
         /// rules in a network security group.
@@ -130,6 +130,6 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        Task<AzureOperationResponse<SecurityRuleListResponse>> ListNextWithOperationResponseAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<SecurityRuleListResult>> ListNextWithOperationResponseAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

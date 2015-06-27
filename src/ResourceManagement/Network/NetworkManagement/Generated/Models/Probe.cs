@@ -77,13 +77,6 @@ namespace Microsoft.Azure.Management.Network.Models
         public string RequestPath { get; set; }
 
         /// <summary>
-        /// Gets or sets Provisioning state of the PublicIP resource
-        /// Updating/Deleting/Failed
-        /// </summary>
-        [JsonProperty(PropertyName = "provisioningState")]
-        public string ProvisioningState { get; set; }
-
-        /// <summary>
         /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
         /// </summary>
         public override void Validate()
