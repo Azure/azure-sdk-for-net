@@ -186,6 +186,18 @@ namespace Microsoft.Azure.Management.Sql
             get { return this._recommendedElasticPools; }
         }
         
+        private IRecommendedIndexOperations _recommendedIndexes;
+        
+        /// <summary>
+        /// Represents all the operations for managing recommended indexes on
+        /// Azure SQL Databases. Contains operations to retrieve recommended
+        /// index and update state.
+        /// </summary>
+        public virtual IRecommendedIndexOperations RecommendedIndexes
+        {
+            get { return this._recommendedIndexes; }
+        }
+        
         private ISecureConnectionPolicyOperations _secureConnection;
         
         /// <summary>
@@ -269,6 +281,7 @@ namespace Microsoft.Azure.Management.Sql
             this._elasticPools = new ElasticPoolOperations(this);
             this._firewallRules = new FirewallRuleOperations(this);
             this._recommendedElasticPools = new RecommendedElasticPoolOperations(this);
+            this._recommendedIndexes = new RecommendedIndexOperations(this);
             this._secureConnection = new SecureConnectionPolicyOperations(this);
             this._servers = new ServerOperations(this);
             this._serverUpgrades = new ServerUpgradeOperations(this);
@@ -348,6 +361,7 @@ namespace Microsoft.Azure.Management.Sql
             this._elasticPools = new ElasticPoolOperations(this);
             this._firewallRules = new FirewallRuleOperations(this);
             this._recommendedElasticPools = new RecommendedElasticPoolOperations(this);
+            this._recommendedIndexes = new RecommendedIndexOperations(this);
             this._secureConnection = new SecureConnectionPolicyOperations(this);
             this._servers = new ServerOperations(this);
             this._serverUpgrades = new ServerUpgradeOperations(this);
