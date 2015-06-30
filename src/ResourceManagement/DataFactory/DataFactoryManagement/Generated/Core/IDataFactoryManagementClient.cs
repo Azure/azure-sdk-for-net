@@ -70,22 +70,6 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         }
         
         /// <summary>
-        /// Operations for managing data factory ActivityTypes.
-        /// </summary>
-        IActivityTypeOperations ActivityTypes
-        {
-            get; 
-        }
-        
-        /// <summary>
-        /// Operations for managing data factory ComputeTypes.
-        /// </summary>
-        IComputeTypeOperations ComputeTypes
-        {
-            get; 
-        }
-        
-        /// <summary>
         /// Operations for managing data factories.
         /// </summary>
         IDataFactoryOperations DataFactories
