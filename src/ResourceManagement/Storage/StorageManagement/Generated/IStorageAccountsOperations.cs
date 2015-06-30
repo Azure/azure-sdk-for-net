@@ -24,15 +24,13 @@ namespace Microsoft.Azure.Management.Storage
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        Task<AzureOperationResponse<CheckNameAvailabilityResponse>> CheckNameAvailabilityWithOperationResponseAsync(StorageAccountCheckNameAvailabilityParameters accountName, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<CheckNameAvailabilityResult>> CheckNameAvailabilityWithOperationResponseAsync(StorageAccountCheckNameAvailabilityParameters accountName, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Asynchronously creates a new storage account with the specified
         /// parameters. Existing accounts cannot be updated with this API and
         /// should instead use the Update Storage Account API. If an account
-        /// is already created and subsequent create request is issued with
-        /// exact same set of properties, the request succeeds.The max number
-        /// of storage accounts that can be created per subscription is
-        /// limited to 20.
+        /// is already created and subsequent PUT request is issued with
+        /// exact same set of properties, then HTTP 200 would be returned.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the userâ€™s subscription.
@@ -53,10 +51,8 @@ namespace Microsoft.Azure.Management.Storage
         /// Asynchronously creates a new storage account with the specified
         /// parameters. Existing accounts cannot be updated with this API and
         /// should instead use the Update Storage Account API. If an account
-        /// is already created and subsequent create request is issued with
-        /// exact same set of properties, the request succeeds.The max number
-        /// of storage accounts that can be created per subscription is
-        /// limited to 20.
+        /// is already created and subsequent PUT request is issued with
+        /// exact same set of properties, then HTTP 200 would be returned.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the userâ€™s subscription.
@@ -155,7 +151,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        Task<AzureOperationResponse<StorageAccountListResponse>> ListWithOperationResponseAsync(CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<StorageAccountListResult>> ListWithOperationResponseAsync(CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists all the storage accounts available under the given resource
         /// group. Note that storage keys are not returned; use the ListKeys
@@ -167,7 +163,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        Task<AzureOperationResponse<StorageAccountListResponse>> ListByResourceGroupWithOperationResponseAsync(string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<StorageAccountListResult>> ListByResourceGroupWithOperationResponseAsync(string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Regenerates the access keys for the specified storage account.
         /// </summary>
@@ -197,7 +193,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        Task<AzureOperationResponse<StorageAccountListResponse>> ListNextWithOperationResponseAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<StorageAccountListResult>> ListNextWithOperationResponseAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists all the storage accounts available under the given resource
         /// group. Note that storage keys are not returned; use the ListKeys
@@ -209,6 +205,6 @@ namespace Microsoft.Azure.Management.Storage
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        Task<AzureOperationResponse<StorageAccountListResponse>> ListByResourceGroupNextWithOperationResponseAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<StorageAccountListResult>> ListByResourceGroupNextWithOperationResponseAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

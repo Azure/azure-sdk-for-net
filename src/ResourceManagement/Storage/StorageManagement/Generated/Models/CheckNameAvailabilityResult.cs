@@ -9,7 +9,7 @@ namespace Microsoft.Azure.Management.Storage.Models
 
     /// <summary>
     /// </summary>
-    public partial class CheckNameAvailabilityResponse
+    public partial class CheckNameAvailabilityResult
     {
         /// <summary>
         /// Gets a boolean value that indicates whether the name is available

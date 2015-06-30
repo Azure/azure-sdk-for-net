@@ -9,7 +9,7 @@ namespace Microsoft.Azure.Management.Storage.Models
 
     /// <summary>
     /// </summary>
-    public partial class StorageAccountListResponse
+    public partial class StorageAccountListResult
     {
         /// <summary>
         /// Gets the list of storage accounts and their properties.

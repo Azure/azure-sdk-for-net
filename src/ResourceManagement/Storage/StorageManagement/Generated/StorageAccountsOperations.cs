@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<CheckNameAvailabilityResponse>> CheckNameAvailabilityWithOperationResponseAsync(StorageAccountCheckNameAvailabilityParameters accountName, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<CheckNameAvailabilityResult>> CheckNameAvailabilityWithOperationResponseAsync(StorageAccountCheckNameAvailabilityParameters accountName, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (accountName == null)
             {
@@ -108,7 +108,7 @@ namespace Microsoft.Azure.Management.Storage
             string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
             if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK")))
             {
-                CloudException ex = new CloudException(responseContent);
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
                 CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
                 if (errorBody != null)
                 {
@@ -124,13 +124,13 @@ namespace Microsoft.Azure.Management.Storage
                 throw ex;
             }
             // Create Result
-            AzureOperationResponse<CheckNameAvailabilityResponse> result = new AzureOperationResponse<CheckNameAvailabilityResponse>();
+            var result = new AzureOperationResponse<CheckNameAvailabilityResult>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             // Deserialize Response
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
-              result.Body = JsonConvert.DeserializeObject<CheckNameAvailabilityResponse>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<CheckNameAvailabilityResult>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -143,9 +143,8 @@ namespace Microsoft.Azure.Management.Storage
         /// Asynchronously creates a new storage account with the specified
         /// parameters. Existing accounts cannot be updated with this API and should
         /// instead use the Update Storage Account API. If an account is already
-        /// created and subsequent create request is issued with exact same set of
-        /// properties, the request succeeds.The max number of storage accounts that
-        /// can be created per subscription is limited to 20.
+        /// created and subsequent PUT request is issued with exact same set of
+        /// properties, then HTTP 200 would be returned.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the userâ€™s subscription.
@@ -175,9 +174,8 @@ namespace Microsoft.Azure.Management.Storage
         /// Asynchronously creates a new storage account with the specified
         /// parameters. Existing accounts cannot be updated with this API and should
         /// instead use the Update Storage Account API. If an account is already
-        /// created and subsequent create request is issued with exact same set of
-        /// properties, the request succeeds.The max number of storage accounts that
-        /// can be created per subscription is limited to 20.
+        /// created and subsequent PUT request is issued with exact same set of
+        /// properties, then HTTP 200 would be returned.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the userâ€™s subscription.
@@ -268,9 +266,9 @@ namespace Microsoft.Azure.Management.Storage
             HttpStatusCode statusCode = httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-            if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "Accepted") || statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK")))
+            if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK") || statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "Accepted")))
             {
-                CloudException ex = new CloudException(responseContent);
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
                 CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
                 if (errorBody != null)
                 {
@@ -286,13 +284,13 @@ namespace Microsoft.Azure.Management.Storage
                 throw ex;
             }
             // Create Result
-            AzureOperationResponse<StorageAccount> result = new AzureOperationResponse<StorageAccount>();
+            var result = new AzureOperationResponse<StorageAccount>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             // Deserialize Response
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
-              result.Body = JsonConvert.DeserializeObject<StorageAccount>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<StorageAccount>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -379,7 +377,7 @@ namespace Microsoft.Azure.Management.Storage
             string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
             if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK") || statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "NoContent")))
             {
-                CloudException ex = new CloudException(responseContent);
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
                 ex.Request = httpRequest;
                 ex.Response = httpResponse;
                 if (shouldTrace)
@@ -389,7 +387,7 @@ namespace Microsoft.Azure.Management.Storage
                 throw ex;
             }
             // Create Result
-            AzureOperationResponse result = new AzureOperationResponse();
+            var result = new AzureOperationResponse();
             result.Request = httpRequest;
             result.Response = httpResponse;
             if (shouldTrace)
@@ -479,7 +477,7 @@ namespace Microsoft.Azure.Management.Storage
             string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
             if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK")))
             {
-                CloudException ex = new CloudException(responseContent);
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
                 CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
                 if (errorBody != null)
                 {
@@ -495,13 +493,13 @@ namespace Microsoft.Azure.Management.Storage
                 throw ex;
             }
             // Create Result
-            AzureOperationResponse<StorageAccount> result = new AzureOperationResponse<StorageAccount>();
+            var result = new AzureOperationResponse<StorageAccount>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             // Deserialize Response
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
-              result.Body = JsonConvert.DeserializeObject<StorageAccount>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<StorageAccount>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -609,7 +607,7 @@ namespace Microsoft.Azure.Management.Storage
             string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
             if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK")))
             {
-                CloudException ex = new CloudException(responseContent);
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
                 CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
                 if (errorBody != null)
                 {
@@ -625,13 +623,13 @@ namespace Microsoft.Azure.Management.Storage
                 throw ex;
             }
             // Create Result
-            AzureOperationResponse<StorageAccount> result = new AzureOperationResponse<StorageAccount>();
+            var result = new AzureOperationResponse<StorageAccount>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             // Deserialize Response
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
-              result.Body = JsonConvert.DeserializeObject<StorageAccount>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<StorageAccount>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -716,7 +714,7 @@ namespace Microsoft.Azure.Management.Storage
             string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
             if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK")))
             {
-                CloudException ex = new CloudException(responseContent);
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
                 CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
                 if (errorBody != null)
                 {
@@ -732,13 +730,13 @@ namespace Microsoft.Azure.Management.Storage
                 throw ex;
             }
             // Create Result
-            AzureOperationResponse<StorageAccountKeys> result = new AzureOperationResponse<StorageAccountKeys>();
+            var result = new AzureOperationResponse<StorageAccountKeys>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             // Deserialize Response
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
-              result.Body = JsonConvert.DeserializeObject<StorageAccountKeys>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<StorageAccountKeys>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -754,7 +752,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<StorageAccountListResponse>> ListWithOperationResponseAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<StorageAccountListResult>> ListWithOperationResponseAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             // Tracing
             bool shouldTrace = ServiceClientTracing.IsEnabled;
@@ -806,7 +804,7 @@ namespace Microsoft.Azure.Management.Storage
             string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
             if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK")))
             {
-                CloudException ex = new CloudException(responseContent);
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
                 CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
                 if (errorBody != null)
                 {
@@ -822,13 +820,13 @@ namespace Microsoft.Azure.Management.Storage
                 throw ex;
             }
             // Create Result
-            AzureOperationResponse<StorageAccountListResponse> result = new AzureOperationResponse<StorageAccountListResponse>();
+            var result = new AzureOperationResponse<StorageAccountListResult>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             // Deserialize Response
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
-              result.Body = JsonConvert.DeserializeObject<StorageAccountListResponse>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<StorageAccountListResult>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -848,7 +846,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<StorageAccountListResponse>> ListByResourceGroupWithOperationResponseAsync(string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<StorageAccountListResult>> ListByResourceGroupWithOperationResponseAsync(string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -906,7 +904,7 @@ namespace Microsoft.Azure.Management.Storage
             string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
             if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK")))
             {
-                CloudException ex = new CloudException(responseContent);
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
                 CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
                 if (errorBody != null)
                 {
@@ -922,13 +920,13 @@ namespace Microsoft.Azure.Management.Storage
                 throw ex;
             }
             // Create Result
-            AzureOperationResponse<StorageAccountListResponse> result = new AzureOperationResponse<StorageAccountListResponse>();
+            var result = new AzureOperationResponse<StorageAccountListResult>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             // Deserialize Response
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
-              result.Body = JsonConvert.DeserializeObject<StorageAccountListResponse>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<StorageAccountListResult>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -1031,7 +1029,7 @@ namespace Microsoft.Azure.Management.Storage
             string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
             if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK")))
             {
-                CloudException ex = new CloudException(responseContent);
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
                 CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
                 if (errorBody != null)
                 {
@@ -1047,13 +1045,13 @@ namespace Microsoft.Azure.Management.Storage
                 throw ex;
             }
             // Create Result
-            AzureOperationResponse<StorageAccountKeys> result = new AzureOperationResponse<StorageAccountKeys>();
+            var result = new AzureOperationResponse<StorageAccountKeys>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             // Deserialize Response
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
-              result.Body = JsonConvert.DeserializeObject<StorageAccountKeys>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<StorageAccountKeys>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -1072,7 +1070,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<StorageAccountListResponse>> ListNextWithOperationResponseAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<StorageAccountListResult>> ListNextWithOperationResponseAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextLink == null)
             {
@@ -1123,7 +1121,7 @@ namespace Microsoft.Azure.Management.Storage
             string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
             if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK")))
             {
-                CloudException ex = new CloudException(responseContent);
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
                 CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
                 if (errorBody != null)
                 {
@@ -1139,13 +1137,13 @@ namespace Microsoft.Azure.Management.Storage
                 throw ex;
             }
             // Create Result
-            AzureOperationResponse<StorageAccountListResponse> result = new AzureOperationResponse<StorageAccountListResponse>();
+            var result = new AzureOperationResponse<StorageAccountListResult>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             // Deserialize Response
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
-              result.Body = JsonConvert.DeserializeObject<StorageAccountListResponse>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<StorageAccountListResult>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -1165,7 +1163,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<StorageAccountListResponse>> ListByResourceGroupNextWithOperationResponseAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<StorageAccountListResult>> ListByResourceGroupNextWithOperationResponseAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextLink == null)
             {
@@ -1216,7 +1214,7 @@ namespace Microsoft.Azure.Management.Storage
             string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
             if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK")))
             {
-                CloudException ex = new CloudException(responseContent);
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
                 CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
                 if (errorBody != null)
                 {
@@ -1232,13 +1230,13 @@ namespace Microsoft.Azure.Management.Storage
                 throw ex;
             }
             // Create Result
-            AzureOperationResponse<StorageAccountListResponse> result = new AzureOperationResponse<StorageAccountListResponse>();
+            var result = new AzureOperationResponse<StorageAccountListResult>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             // Deserialize Response
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
-              result.Body = JsonConvert.DeserializeObject<StorageAccountListResponse>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<StorageAccountListResult>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {

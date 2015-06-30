@@ -52,7 +52,7 @@
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/CheckNameAvailabilityResponse"
+              "$ref": "#/definitions/CheckNameAvailabilityResult"
             }
           }
         }
@@ -64,7 +64,7 @@
           "StorageAccounts"
         ],
         "operationId": "StorageAccounts_Create",
-        "description": "Asynchronously creates a new storage account with the specified parameters. Existing accounts cannot be updated with this API and should instead use the Update Storage Account API. If an account is already created and subsequent create request is issued with exact same set of properties, the request succeeds.The max number of storage accounts that can be created per subscription is limited to 20.",
+        "description": "Asynchronously creates a new storage account with the specified parameters. Existing accounts cannot be updated with this API and should instead use the Update Storage Account API. If an account is already created and subsequent PUT request is issued with exact same set of properties, then HTTP 200 would be returned. ",
         "parameters": [
           {
             "name": "subscriptionId",
@@ -88,6 +88,12 @@
             "description": "The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only.  "
           },
           {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
             "name": "parameters",
             "in": "body",
             "required": true,
@@ -98,14 +104,14 @@
           }
         ],
         "responses": {
-          "202": {
-            "description": ""
-          },
           "200": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/StorageAccount"
             }
+          },
+          "202": {
+            "description": ""
           }
         },
         "x-ms-long-running-operation": true
@@ -324,7 +330,7 @@
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/StorageAccountListResponse"
+              "$ref": "#/definitions/StorageAccountListResult"
             }
           }
         },
@@ -364,7 +370,7 @@
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/StorageAccountListResponse"
+              "$ref": "#/definitions/StorageAccountListResult"
             }
           }
         },
@@ -438,7 +444,7 @@
         }
       }
     },
-    "CheckNameAvailabilityResponse": {
+    "CheckNameAvailabilityResult": {
       "properties": {
         "nameAvailable": {
           "type": "boolean",
@@ -460,7 +466,7 @@
       },
       "description": "The CheckNameAvailability operation response."
     },
-    "StorageAccountPropertiesCreateParametersJson": {
+    "StorageAccountPropertiesCreateParameters": {
       "properties": {
         "accountType": {
           "type": "string",
@@ -479,7 +485,7 @@
     "StorageAccountCreateParameters": {
       "properties": {
         "properties": {
-          "$ref": "#/definitions/StorageAccountPropertiesCreateParametersJson"
+          "$ref": "#/definitions/StorageAccountPropertiesCreateParameters"
         }
       },
       "allOf": [
@@ -519,8 +525,18 @@
       },
       "description": "The custom domain assigned to this storage account. This can be set via Update."
     },
-    "StorageAccountPropertiesJson": {
+    "StorageAccountProperties": {
       "properties": {
+        "provisioningState": {
+          "type": "string",
+          "description": "Gets the status of the storage account at the time the operation was called.",
+          "enum": [
+            "Creating",
+            "ResolvingDNS",
+            "Succeeded"
+          ],
+          "x-ms-enum": "ProvisioningState"
+        },
         "accountType": {
           "type": "string",
           "description": "Gets the type of the storage account.",
@@ -586,7 +602,7 @@
     "StorageAccount": {
       "properties": {
         "properties": {
-          "$ref": "#/definitions/StorageAccountPropertiesJson"
+          "$ref": "#/definitions/StorageAccountProperties"
         }
       },
       "allOf": [
@@ -609,7 +625,7 @@
       },
       "description": "The access keys for the storage account."
     },
-    "StorageAccountListResponse": {
+    "StorageAccountListResult": {
       "properties": {
         "value": {
           "type": "array",
@@ -625,7 +641,7 @@
       },
       "description": "The list storage accounts operation response."
     },
-    "StorageAccountPropertiesUpdateParametersJson": {
+    "StorageAccountPropertiesUpdateParameters": {
       "properties": {
         "accountType": {
           "type": "string",
@@ -648,7 +664,7 @@
     "StorageAccountUpdateParameters": {
       "properties": {
         "properties": {
-          "$ref": "#/definitions/StorageAccountPropertiesUpdateParametersJson"
+          "$ref": "#/definitions/StorageAccountPropertiesUpdateParameters"
         }
       },
       "allOf": [
@@ -671,6 +687,37 @@
       }
     },
     "Resource": {
+      "properties": {
+        "id": {
+          "readOnly": true,
+          "type": "string",
+          "description": "Resource Id"
+        },
+        "name": {
+          "readOnly": true,
+          "type": "string",
+          "description": "Resource name"
+        },
+        "type": {
+          "readOnly": true,
+          "type": "string",
+          "description": "Resource type"
+        },
+        "location": {
+          "type": "string",
+          "description": "Resource location"
+        },
+        "tags": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Resource tags"
+        }
+      },
+      "x-ms-external": true
+    },
+    "SubResource": {
       "properties": {
         "id": {
           "type": "string",
