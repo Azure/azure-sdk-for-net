@@ -23,6 +23,7 @@
     <Compile Include="InMemoryTests\DummyResponseDelegatingHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="InMemoryTests\Utility.cs" />
+    <Compile Include="ScenarioTests\UpdateEnableNonSslPortBug.cs" />
     <Compile Include="ScenarioTests\CreateUpdateDeleteFunctionalTests.cs" />
     <Compile Include="ScenarioTests\GetListKeysFunctionalTests.cs" />
     <Compile Include="ScenarioTests\RedisCacheManagementHelper.cs" />
