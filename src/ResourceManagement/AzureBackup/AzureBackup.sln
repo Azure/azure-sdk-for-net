@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestDependencies", "..\..\T
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackupServices.Tests", "BackupServices.Tests\BackupServices.Tests.csproj", "{472DDC1D-318A-477C-949B-10811FDA6730}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackupServicesManagment", "BackupServicesManagment\BackupServicesManagment.csproj", "{38A6741C-77A3-42A8-A846-83373BE57C7F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackupServicesManagement", "BackupServicesManagement\BackupServicesManagement.csproj", "{38A6741C-77A3-42A8-A846-83373BE57C7F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
