@@ -370,13 +370,14 @@ namespace Networks.Tests
                 Init();
                 
                 var appGw = CreateApplicationGatewayWithSsl();
+                var appGwName = TestUtilities.GenerateName("azsmnet");
 
                 // Put AppGw
-                var putAppGwResponse = networkResourceProviderClient.ApplicationGateways.CreateOrUpdate(resourceGroupName, appGw.Name, appGw);                
+                var putAppGwResponse = networkResourceProviderClient.ApplicationGateways.CreateOrUpdate(resourceGroupName, appGwName, appGw);                
                 Assert.Equal("Succeeded", putAppGwResponse.ProvisioningState);
                 
                 // Get AppGw
-                var getResp = networkResourceProviderClient.ApplicationGateways.Get(resourceGroupName, appGw.Name);
+                var getResp = networkResourceProviderClient.ApplicationGateways.Get(resourceGroupName, appGwName);
                 CompareApplicationGateway(appGw, getResp);
 
                 // List AppGw
@@ -390,11 +391,13 @@ namespace Networks.Tests
                 //Add one more gateway
                 // Put AppGw
                 var appGw2 = CreateApplicationGateway();
-                putAppGwResponse = networkResourceProviderClient.ApplicationGateways.CreateOrUpdate(resourceGroupName, appGw2.Name, appGw2);
+                var appGw2Name = TestUtilities.GenerateName("azsmnet");
+
+                putAppGwResponse = networkResourceProviderClient.ApplicationGateways.CreateOrUpdate(resourceGroupName, appGw2Name, appGw2);
                 Assert.Equal("Succeeded", putAppGwResponse.ProvisioningState);
 
                 // Get AppGw
-                getResp = networkResourceProviderClient.ApplicationGateways.Get(resourceGroupName, appGw2.Name);
+                getResp = networkResourceProviderClient.ApplicationGateways.Get(resourceGroupName, appGw2Name);
                 CompareApplicationGateway(appGw2, getResp);
 
                 // List AppGw
@@ -406,19 +409,19 @@ namespace Networks.Tests
                 Assert.Equal(2, listAllAppGw.Value.Count);
 
                 //Start AppGw
-                networkResourceProviderClient.ApplicationGateways.Start(resourceGroupName, appGw.Name);
+                networkResourceProviderClient.ApplicationGateways.Start(resourceGroupName, appGwName);
 
-                networkResourceProviderClient.ApplicationGateways.Start(resourceGroupName, appGw2.Name);
+                networkResourceProviderClient.ApplicationGateways.Start(resourceGroupName, appGw2Name);
                 
                 //Stop AppGw
-                networkResourceProviderClient.ApplicationGateways.Stop(resourceGroupName, appGw.Name);
+                networkResourceProviderClient.ApplicationGateways.Stop(resourceGroupName, appGwName);
 
-                networkResourceProviderClient.ApplicationGateways.Stop(resourceGroupName, appGw2.Name);
+                networkResourceProviderClient.ApplicationGateways.Stop(resourceGroupName, appGw2Name);
                 
                 // Delete AppGw
-                networkResourceProviderClient.ApplicationGateways.Delete(resourceGroupName, appGw.Name);
+                networkResourceProviderClient.ApplicationGateways.Delete(resourceGroupName, appGwName);
 
-                networkResourceProviderClient.ApplicationGateways.Delete(resourceGroupName, appGw2.Name);
+                networkResourceProviderClient.ApplicationGateways.Delete(resourceGroupName, appGw2Name);
 
                 // Verify Delete
                 listAppGw = networkResourceProviderClient.ApplicationGateways.List(resourceGroupName);
