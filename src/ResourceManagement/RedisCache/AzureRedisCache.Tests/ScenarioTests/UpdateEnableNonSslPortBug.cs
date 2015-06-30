@@ -15,7 +15,7 @@ namespace AzureRedisCache.Tests
     public class UpdateEnableNonSslPortBug : TestBase
     {
         [Fact]
-        public void UpdateEnableNonSslPortBug()
+        public void UpdateEnableNonSslPortBugTest()
         {
             TestUtilities.StartTest();
             
