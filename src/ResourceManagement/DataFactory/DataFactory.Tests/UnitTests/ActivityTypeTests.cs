@@ -14,7 +14,6 @@
 // limitations under the License.
 // 
 
-#if ADF_INTERNAL
 using System;
 using System.Collections.Generic;
 using DataFactory.Tests.Framework;
@@ -74,5 +73,3 @@ namespace DataFactory.Tests.UnitTests
         }
     }
 }
-
-#endif

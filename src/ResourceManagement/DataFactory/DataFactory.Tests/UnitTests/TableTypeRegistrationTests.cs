@@ -14,7 +14,6 @@
 // limitations under the License.
 // 
 
-#if ADF_INTERNAL
 using System;
 using System.Globalization;
 using DataFactory.Tests.Framework;
@@ -31,10 +30,10 @@ namespace DataFactory.Tests.UnitTests
         [Trait(TraitName.Function, TestType.Registration)]
         public void CanRegisterTableType()
         {
-            this.Client.Tables.RegisterType<MyTableType>();
+            this.Client.RegisterType<MyTableType>(true);
 
             Assert.True(
-                this.Client.Tables.TypeIsRegistered<MyTableType>(),
+                this.Client.TypeIsRegistered<MyTableType>(),
                 string.Format(
                     CultureInfo.InvariantCulture,
                     "Type '{0}' was not successfully registered.",
@@ -48,7 +47,7 @@ namespace DataFactory.Tests.UnitTests
         {
             InvalidOperationException ex =
                 Assert.Throws<InvalidOperationException>(
-                    () => this.Client.Tables.RegisterType<AzureSqlTableLocation>());
+                    () => this.Client.RegisterType<AzureSqlTableLocation>());
 
             Assert.True(ex.Message.Contains("cannot be locally registered because it has the same name"));
         }
@@ -56,14 +55,13 @@ namespace DataFactory.Tests.UnitTests
         [Fact]
         [Trait(TraitName.TestType, TestType.Unit)]
         [Trait(TraitName.Function, TestType.Registration)]
-        public void RegisteringTableTypeTwiceThrowsException()
+        public void RegisteringTableTypeTwiceWithoutForceThrowsException()
         {
-            this.Client.Tables.RegisterType<MyTableType>();
+            this.Client.RegisterType<MyTableType>(true);
 
             InvalidOperationException ex =
-                Assert.Throws<InvalidOperationException>(() => this.Client.Tables.RegisterType<MyTableType>());
+                Assert.Throws<InvalidOperationException>(() => this.Client.RegisterType<MyTableType>());
             Assert.True(ex.Message.Contains("is already registered"));
         }
     }
 }
-#endif

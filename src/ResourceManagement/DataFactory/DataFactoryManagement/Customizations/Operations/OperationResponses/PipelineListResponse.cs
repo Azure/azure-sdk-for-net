@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// <summary>
         /// A list of the returned pipeline instances.
         /// </summary>
-        public IEnumerable<Pipeline> Pipelines { get; set; }
+        public IList<Pipeline> Pipelines { get; set; }
 
         /// <summary>
         /// The link (url) to the next page of results.

@@ -25,17 +25,15 @@ namespace Microsoft.Azure.Management.DataFactories
     {
         internal LinkedServiceConverter Converter { get; set; }
 
-#if ADF_INTERNAL
-        public void RegisterType<T>() where T : LinkedServiceTypeProperties
+        public void RegisterType<T>(bool force = false) 
         {
-            this.Converter.RegisterType<T>();
+            this.Converter.RegisterType<T>(force, typeof(LinkedService));
         }
 
-        public bool TypeIsRegistered<T>() where T : LinkedServiceTypeProperties
+        public bool TypeIsRegistered<T>() 
         {
             return this.Converter.TypeIsRegistered<T>();
         }
-#endif
 
         public void ValidateObject(LinkedService linkedService)
         {

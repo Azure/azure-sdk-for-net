@@ -17,7 +17,6 @@ using Microsoft.Azure.Management.DataFactories.Registration.Models;
 
 namespace Microsoft.Azure.Management.DataFactories.Conversion
 {
-#if ADF_INTERNAL
     internal abstract class CoreRegistrationConverter<TCore, TWrapper, TTypeProperties> :
         PolymorphicTypeConverter<TTypeProperties> where TTypeProperties : TypeProperties
     {
@@ -45,5 +44,4 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
         /// <param name="wrappedObject">The object to validate.</param>
         public abstract void ValidateWrappedObject(TWrapper wrappedObject);
     }
-#endif
 }

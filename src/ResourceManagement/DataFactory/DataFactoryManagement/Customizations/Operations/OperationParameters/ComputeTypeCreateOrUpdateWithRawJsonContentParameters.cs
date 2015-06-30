@@ -15,7 +15,6 @@
 
 namespace Microsoft.Azure.Management.DataFactories.Registration.Models
 {
-#if ADF_INTERNAL
     /// <summary>
     /// Parameters specifying the ComputeType definition in raw json content for a create or update
     /// operation.
@@ -57,5 +56,4 @@ namespace Microsoft.Azure.Management.DataFactories.Registration.Models
             this.Content = internalParameters.Content;
         }
     }
-#endif
 }

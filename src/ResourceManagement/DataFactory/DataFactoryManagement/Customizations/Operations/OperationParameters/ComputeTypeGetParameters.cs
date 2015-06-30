@@ -15,7 +15,6 @@
 
 namespace Microsoft.Azure.Management.DataFactories.Registration.Models
 {
-#if ADF_INTERNAL
     /// <summary>
     /// Parameters specifying how to return a ComputeType definition for a Get
     /// operation.
@@ -63,5 +62,4 @@ namespace Microsoft.Azure.Management.DataFactories.Registration.Models
             this.ComputeTypeName = internalParameters.ComputeTypeName;
         }
     }
-#endif
 }

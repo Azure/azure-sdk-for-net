@@ -13,12 +13,14 @@
 // limitations under the License.
 //
 
+using Microsoft.Azure.Management.DataFactories.Registration.Models;
+
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
     /// A copy activity translator.
     /// </summary>
-    public abstract class CopyTranslator
+    public abstract class CopyTranslator : IRegisteredType
     {
     }
 }

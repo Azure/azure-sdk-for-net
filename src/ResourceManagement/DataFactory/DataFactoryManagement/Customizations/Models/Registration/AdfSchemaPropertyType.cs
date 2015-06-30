@@ -15,7 +15,6 @@
 
 namespace Microsoft.Azure.Management.DataFactories.Registration.Models
 {
-#if ADF_INTERNAL
     public class AdfSchemaPropertyType
     {
         /// <summary>
@@ -48,5 +47,4 @@ namespace Microsoft.Azure.Management.DataFactories.Registration.Models
         /// </summary>
         public const string String = "string";
     }
-#endif
 }

@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// <summary>
         /// Jar libs. 
         /// </summary>
-        public IEnumerable<string> JarLibs { get; set; }
+        public IList<string> JarLibs { get; set; }
 
         /// <summary>
         /// Allows user to specify defines for MapReduce job request.

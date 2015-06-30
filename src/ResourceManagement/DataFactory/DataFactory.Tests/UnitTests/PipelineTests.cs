@@ -90,21 +90,19 @@ namespace DataFactory.Tests.UnitTests
             Assert.Contains("is required", ex.Message);
         }
 
-#if ADF_INTERNAL
-        [Fact]
-        [Trait(TraitName.TestType, TestType.Unit)]
-        [Trait(TraitName.Function, TestType.Conversion)]
-        public void PipelineWithExtraPropertiesTest()
-        {
-            List<JsonSampleInfo> samples =
-                JsonSampleCommon.GetJsonSamplesFromType<PipelineJsonSamples>()
-                    .Where(s => s.Version != null && s.Version.Equals("ExtraProperties"))
-                    .ToList();
+//        [Fact]
+//        [Trait(TraitName.TestType, TestType.Unit)]
+//        [Trait(TraitName.Function, TestType.Conversion)]
+//        public void PipelineWithExtraPropertiesTest()
+//        {
+//            List<JsonSampleInfo> samples =
+//                JsonSampleCommon.GetJsonSamplesFromType<PipelineJsonSamples>()
+//                    .Where(s => s.Version != null && s.Version.Equals("ExtraProperties"))
+//                    .ToList();
 
-            Assert.NotEmpty(samples);
-            this.TestPipelineJsonSamples(samples);
-        }
-#endif
+//            Assert.NotEmpty(samples);
+//            this.TestPipelineJsonSamples(samples);
+//        }
 
         [Fact]
         [Trait(TraitName.TestType, TestType.Unit)]

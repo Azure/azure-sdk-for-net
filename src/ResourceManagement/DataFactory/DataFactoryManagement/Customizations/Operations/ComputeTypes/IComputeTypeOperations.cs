@@ -20,7 +20,6 @@ using Microsoft.Azure.Management.DataFactories.Registration.Models;
 
 namespace Microsoft.Azure.Management.DataFactories
 {
-#if ADF_INTERNAL
     public interface IComputeTypeOperations
     {
         /// <summary>
@@ -189,5 +188,4 @@ namespace Microsoft.Azure.Management.DataFactories
         /// </returns>
         Task<ComputeTypeListResponse> ListNextAsync(string nextLink, CancellationToken cancellationToken);
     }
-#endif
 }

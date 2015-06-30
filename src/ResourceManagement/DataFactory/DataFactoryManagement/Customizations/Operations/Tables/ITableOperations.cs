@@ -24,10 +24,7 @@ namespace Microsoft.Azure.Management.DataFactories
     /// <summary>
     /// Operations for managing tables.
     /// </summary>
-    public interface ITableOperations
-#if ADF_INTERNAL
-        : ITypeRegistrationOperations<Table, TableTypeProperties>
-#endif
+    public interface ITableOperations : ITypeRegistrationOperations<Table>
     {
         /// <summary>
         /// Create a new table instance or update an existing instance.

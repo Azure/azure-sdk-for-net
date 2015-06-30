@@ -46,6 +46,14 @@
     <LibraryCustomConstants>NET45</LibraryCustomConstants>
   </PropertyGroup>
   
+  <PropertyGroup Condition=" '$(LibraryFxTarget)' == 'net40'" >
+    <LibraryCustomConstants>NET40</LibraryCustomConstants>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition=" '$(LibraryFxTarget)' == 'portable'" >
+    <LibraryCustomConstants>PORTABLE</LibraryCustomConstants>
+  </PropertyGroup>
+  
   <PropertyGroup Condition=" '$(CodeSign)' == 'true' " >
     <LibraryCustomConstants>$(LibraryCustomConstants);CODESIGN</LibraryCustomConstants>
   </PropertyGroup>

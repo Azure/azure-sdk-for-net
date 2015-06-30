@@ -24,10 +24,7 @@ namespace Microsoft.Azure.Management.DataFactories
     /// <summary>
     /// Operations for managing data factory linkedServices.
     /// </summary>
-    public interface ILinkedServiceOperations
-#if ADF_INTERNAL
-        : ITypeRegistrationOperations<LinkedService, LinkedServiceTypeProperties>
-#endif
+    public interface ILinkedServiceOperations : ITypeRegistrationOperations<LinkedService>
     {
         /// <summary>
         /// Create or update a data factory linkedService.

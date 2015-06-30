@@ -13,7 +13,6 @@
 // limitations under the License.
 //
 
-#if ADF_INTERNAL
 using Microsoft.Azure.Management.DataFactories.Registration.Models;
 using CoreRegistrationModel = Microsoft.Azure.Management.DataFactories.Core.Registration.Models;
 
@@ -52,4 +51,3 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
         }
     }
 }
-#endif
