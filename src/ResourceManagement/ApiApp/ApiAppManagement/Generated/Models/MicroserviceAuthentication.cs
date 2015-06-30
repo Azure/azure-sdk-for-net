@@ -20,43 +20,42 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 
-namespace Microsoft.Azure.Management.Redis.Models
+namespace Microsoft.Azure.Management.ApiApps.Models
 {
-    /// <summary>
-    /// Know values for MaxMemoryPolicy property.
-    /// </summary>
-    public static partial class MaxMemoryPolicy
+    public partial class MicroserviceAuthentication
     {
-        /// <summary>
-        /// VolatileLRU (volatile-lru in redis.conf).
-        /// </summary>
-        public const string VolatileLRU = "VolatileLRU";
+        private IList<string> _scopes;
         
         /// <summary>
-        /// AllKeysLRU (allkeys-lru in redis.conf).
+        /// Optional. Gets or sets scopes
         /// </summary>
-        public const string AllKeysLRU = "AllKeysLRU";
+        public IList<string> Scopes
+        {
+            get { return this._scopes; }
+            set { this._scopes = value; }
+        }
+        
+        private string _type;
         
         /// <summary>
-        /// VolatileRandom (volatile-random in redis.conf).
+        /// Optional. Gets or sets type
         /// </summary>
-        public const string VolatileRandom = "VolatileRandom";
+        public string Type
+        {
+            get { return this._type; }
+            set { this._type = value; }
+        }
         
         /// <summary>
-        /// AllKeysRandom (allkeys-random in redis.conf).
+        /// Initializes a new instance of the MicroserviceAuthentication class.
         /// </summary>
-        public const string AllKeysRandom = "AllKeysRandom";
-        
-        /// <summary>
-        /// VolatileTTL (volatile-ttl in redis.conf).
-        /// </summary>
-        public const string VolatileTTL = "VolatileTTL";
-        
-        /// <summary>
-        /// NoEviction (noeviction in redis.conf).
-        /// </summary>
-        public const string NoEviction = "NoEviction";
+        public MicroserviceAuthentication()
+        {
+            this.Scopes = new LazyList<string>();
+        }
     }
 }

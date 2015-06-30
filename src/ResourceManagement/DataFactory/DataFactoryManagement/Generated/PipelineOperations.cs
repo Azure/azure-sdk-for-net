@@ -332,14 +332,19 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 sourceValue["sourceRetryWait"] = derived3.SourceRetryWait.Value.ToString();
                                             }
                                         }
-                                        if (derived.Transformation.Source is RelationalSource)
+                                        if (derived.Transformation.Source is DocumentDbCollectionSource)
                                         {
-                                            sourceValue["type"] = "RelationalSource";
-                                            RelationalSource derived4 = ((RelationalSource)derived.Transformation.Source);
+                                            sourceValue["type"] = "DocumentDbCollectionSource";
+                                            DocumentDbCollectionSource derived4 = ((DocumentDbCollectionSource)derived.Transformation.Source);
                                             
                                             if (derived4.Query != null)
                                             {
                                                 sourceValue["query"] = derived4.Query;
+                                            }
+                                            
+                                            if (derived4.NestingSeparator != null)
+                                            {
+                                                sourceValue["nestingSeparator"] = derived4.NestingSeparator;
                                             }
                                             
                                             if (derived4.SourceRetryCount != null)
@@ -352,14 +357,14 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 sourceValue["sourceRetryWait"] = derived4.SourceRetryWait.Value.ToString();
                                             }
                                         }
-                                        if (derived.Transformation.Source is SqlSource)
+                                        if (derived.Transformation.Source is RelationalSource)
                                         {
-                                            sourceValue["type"] = "SqlSource";
-                                            SqlSource derived5 = ((SqlSource)derived.Transformation.Source);
+                                            sourceValue["type"] = "RelationalSource";
+                                            RelationalSource derived5 = ((RelationalSource)derived.Transformation.Source);
                                             
-                                            if (derived5.SqlReaderQuery != null)
+                                            if (derived5.Query != null)
                                             {
-                                                sourceValue["sqlReaderQuery"] = derived5.SqlReaderQuery;
+                                                sourceValue["query"] = derived5.Query;
                                             }
                                             
                                             if (derived5.SourceRetryCount != null)
@@ -372,10 +377,12 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 sourceValue["sourceRetryWait"] = derived5.SourceRetryWait.Value.ToString();
                                             }
                                         }
-                                        if (derived.Transformation.Source is FileSystemSource)
+                                        if (derived.Transformation.Source is RelationalSource.OdbcSource)
                                         {
-                                            sourceValue["type"] = "FileSystemSource";
-                                            FileSystemSource derived6 = ((FileSystemSource)derived.Transformation.Source);
+                                            sourceValue["type"] = "OdbcSource";
+                                            RelationalSource.OdbcSource derived6 = ((RelationalSource.OdbcSource)derived.Transformation.Source);
+                                            
+                                            sourceValue["odbcReaderQuery"] = derived6.OdbcReaderQuery;
                                             
                                             if (derived6.SourceRetryCount != null)
                                             {
@@ -387,17 +394,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 sourceValue["sourceRetryWait"] = derived6.SourceRetryWait.Value.ToString();
                                             }
                                         }
-                                        if (derived.Transformation.Source is OracleSource)
+                                        if (derived.Transformation.Source is RelationalSource.ODataSource)
                                         {
-                                            sourceValue["type"] = "OracleSource";
-                                            OracleSource derived7 = ((OracleSource)derived.Transformation.Source);
-                                            
-                                            if (derived7.OracleReaderQuery != null)
-                                            {
-                                                sourceValue["oracleReaderQuery"] = derived7.OracleReaderQuery;
-                                            }
-                                            
-                                            sourceValue["queryTimeout"] = derived7.QueryTimeout.ToString();
+                                            sourceValue["type"] = "ODataSource";
+                                            RelationalSource.ODataSource derived7 = ((RelationalSource.ODataSource)derived.Transformation.Source);
                                             
                                             if (derived7.SourceRetryCount != null)
                                             {
@@ -409,216 +409,85 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 sourceValue["sourceRetryWait"] = derived7.SourceRetryWait.Value.ToString();
                                             }
                                         }
+                                        if (derived.Transformation.Source is RelationalSource.HdfsSource)
+                                        {
+                                            sourceValue["type"] = "HdfsSource";
+                                            RelationalSource.HdfsSource derived8 = ((RelationalSource.HdfsSource)derived.Transformation.Source);
+                                            
+                                            if (derived8.SourceRetryCount != null)
+                                            {
+                                                sourceValue["sourceRetryCount"] = derived8.SourceRetryCount.Value;
+                                            }
+                                            
+                                            if (derived8.SourceRetryWait != null)
+                                            {
+                                                sourceValue["sourceRetryWait"] = derived8.SourceRetryWait.Value.ToString();
+                                            }
+                                        }
+                                        if (derived.Transformation.Source is SqlSource)
+                                        {
+                                            sourceValue["type"] = "SqlSource";
+                                            SqlSource derived9 = ((SqlSource)derived.Transformation.Source);
+                                            
+                                            if (derived9.SqlReaderQuery != null)
+                                            {
+                                                sourceValue["sqlReaderQuery"] = derived9.SqlReaderQuery;
+                                            }
+                                            
+                                            if (derived9.SourceRetryCount != null)
+                                            {
+                                                sourceValue["sourceRetryCount"] = derived9.SourceRetryCount.Value;
+                                            }
+                                            
+                                            if (derived9.SourceRetryWait != null)
+                                            {
+                                                sourceValue["sourceRetryWait"] = derived9.SourceRetryWait.Value.ToString();
+                                            }
+                                        }
+                                        if (derived.Transformation.Source is FileSystemSource)
+                                        {
+                                            sourceValue["type"] = "FileSystemSource";
+                                            FileSystemSource derived10 = ((FileSystemSource)derived.Transformation.Source);
+                                            
+                                            if (derived10.SourceRetryCount != null)
+                                            {
+                                                sourceValue["sourceRetryCount"] = derived10.SourceRetryCount.Value;
+                                            }
+                                            
+                                            if (derived10.SourceRetryWait != null)
+                                            {
+                                                sourceValue["sourceRetryWait"] = derived10.SourceRetryWait.Value.ToString();
+                                            }
+                                        }
+                                        if (derived.Transformation.Source is OracleSource)
+                                        {
+                                            sourceValue["type"] = "OracleSource";
+                                            OracleSource derived11 = ((OracleSource)derived.Transformation.Source);
+                                            
+                                            if (derived11.OracleReaderQuery != null)
+                                            {
+                                                sourceValue["oracleReaderQuery"] = derived11.OracleReaderQuery;
+                                            }
+                                            
+                                            sourceValue["queryTimeout"] = derived11.QueryTimeout.ToString();
+                                            
+                                            if (derived11.SourceRetryCount != null)
+                                            {
+                                                sourceValue["sourceRetryCount"] = derived11.SourceRetryCount.Value;
+                                            }
+                                            
+                                            if (derived11.SourceRetryWait != null)
+                                            {
+                                                sourceValue["sourceRetryWait"] = derived11.SourceRetryWait.Value.ToString();
+                                            }
+                                        }
                                         
                                         JObject sinkValue = new JObject();
                                         transformationValue["sink"] = sinkValue;
                                         if (derived.Transformation.Sink is AzureQueueSink)
                                         {
                                             sinkValue["type"] = "AzureQueueSink";
-                                            AzureQueueSink derived8 = ((AzureQueueSink)derived.Transformation.Sink);
-                                            
-                                            sinkValue["writeBatchSize"] = derived8.WriteBatchSize;
-                                            
-                                            sinkValue["writeBatchTimeout"] = derived8.WriteBatchTimeout.ToString();
-                                            
-                                            if (derived8.SinkRetryCount != null)
-                                            {
-                                                sinkValue["sinkRetryCount"] = derived8.SinkRetryCount.Value;
-                                            }
-                                            
-                                            if (derived8.SinkRetryWait != null)
-                                            {
-                                                sinkValue["sinkRetryWait"] = derived8.SinkRetryWait.Value.ToString();
-                                            }
-                                            
-                                            if (derived8.SinkPartitionData != null)
-                                            {
-                                                sinkValue["sinkPartitionData"] = derived8.SinkPartitionData.Value;
-                                            }
-                                        }
-                                        if (derived.Transformation.Sink is AzureTableSink)
-                                        {
-                                            sinkValue["type"] = "AzureTableSink";
-                                            AzureTableSink derived9 = ((AzureTableSink)derived.Transformation.Sink);
-                                            
-                                            sinkValue["azureTableRetryIntervalInSec"] = derived9.AzureTableRetryIntervalInSec;
-                                            
-                                            sinkValue["azureTableRetryTimes"] = derived9.AzureTableRetryTimes;
-                                            
-                                            if (derived9.AzureTableDefaultPartitionKeyValue != null)
-                                            {
-                                                sinkValue["azureTableDefaultPartitionKeyValue"] = derived9.AzureTableDefaultPartitionKeyValue;
-                                            }
-                                            
-                                            if (derived9.AzureTablePartitionKeyName != null)
-                                            {
-                                                sinkValue["azureTablePartitionKeyName"] = derived9.AzureTablePartitionKeyName;
-                                            }
-                                            
-                                            if (derived9.AzureTableRowKeyName != null)
-                                            {
-                                                sinkValue["azureTableRowKeyName"] = derived9.AzureTableRowKeyName;
-                                            }
-                                            
-                                            if (derived9.AzureTableInsertType != null)
-                                            {
-                                                sinkValue["azureTableInsertType"] = derived9.AzureTableInsertType;
-                                            }
-                                            
-                                            sinkValue["writeBatchSize"] = derived9.WriteBatchSize;
-                                            
-                                            sinkValue["writeBatchTimeout"] = derived9.WriteBatchTimeout.ToString();
-                                            
-                                            if (derived9.SinkRetryCount != null)
-                                            {
-                                                sinkValue["sinkRetryCount"] = derived9.SinkRetryCount.Value;
-                                            }
-                                            
-                                            if (derived9.SinkRetryWait != null)
-                                            {
-                                                sinkValue["sinkRetryWait"] = derived9.SinkRetryWait.Value.ToString();
-                                            }
-                                            
-                                            if (derived9.SinkPartitionData != null)
-                                            {
-                                                sinkValue["sinkPartitionData"] = derived9.SinkPartitionData.Value;
-                                            }
-                                        }
-                                        if (derived.Transformation.Sink is BlobSink)
-                                        {
-                                            sinkValue["type"] = "BlobSink";
-                                            BlobSink derived10 = ((BlobSink)derived.Transformation.Sink);
-                                            
-                                            if (derived10.BlockWriterBlockSize != null)
-                                            {
-                                                sinkValue["blockWriterBlockSize"] = derived10.BlockWriterBlockSize.Value;
-                                            }
-                                            
-                                            if (derived10.BlobWriterOverwriteFiles != null)
-                                            {
-                                                sinkValue["blobWriterOverwriteFiles"] = derived10.BlobWriterOverwriteFiles.Value;
-                                            }
-                                            
-                                            if (derived10.BlobWriterPartitionColumns != null)
-                                            {
-                                                sinkValue["blobWriterPartitionColumns"] = derived10.BlobWriterPartitionColumns;
-                                            }
-                                            
-                                            if (derived10.BlobWriterPartitionFormat != null)
-                                            {
-                                                sinkValue["blobWriterPartitionFormat"] = derived10.BlobWriterPartitionFormat;
-                                            }
-                                            
-                                            if (derived10.BlobWriterDateTimeFormat != null)
-                                            {
-                                                sinkValue["blobWriterDateTimeFormat"] = derived10.BlobWriterDateTimeFormat;
-                                            }
-                                            
-                                            if (derived10.BlobWriterSeparator != null)
-                                            {
-                                                sinkValue["blobWriterSeparator"] = derived10.BlobWriterSeparator;
-                                            }
-                                            
-                                            if (derived10.BlobWriterRowSuffix != null)
-                                            {
-                                                sinkValue["blobWriterRowSuffix"] = derived10.BlobWriterRowSuffix;
-                                            }
-                                            
-                                            if (derived10.BlobWriterAddHeader != null)
-                                            {
-                                                sinkValue["blobWriterAddHeader"] = derived10.BlobWriterAddHeader.Value;
-                                            }
-                                            
-                                            sinkValue["writeBatchSize"] = derived10.WriteBatchSize;
-                                            
-                                            sinkValue["writeBatchTimeout"] = derived10.WriteBatchTimeout.ToString();
-                                            
-                                            if (derived10.SinkRetryCount != null)
-                                            {
-                                                sinkValue["sinkRetryCount"] = derived10.SinkRetryCount.Value;
-                                            }
-                                            
-                                            if (derived10.SinkRetryWait != null)
-                                            {
-                                                sinkValue["sinkRetryWait"] = derived10.SinkRetryWait.Value.ToString();
-                                            }
-                                            
-                                            if (derived10.SinkPartitionData != null)
-                                            {
-                                                sinkValue["sinkPartitionData"] = derived10.SinkPartitionData.Value;
-                                            }
-                                        }
-                                        if (derived.Transformation.Sink is SqlSink)
-                                        {
-                                            sinkValue["type"] = "SqlSink";
-                                            SqlSink derived11 = ((SqlSink)derived.Transformation.Sink);
-                                            
-                                            if (derived11.SqlWriterStoredProcedureName != null)
-                                            {
-                                                sinkValue["sqlWriterStoredProcedureName"] = derived11.SqlWriterStoredProcedureName;
-                                            }
-                                            
-                                            if (derived11.SqlWriterTableType != null)
-                                            {
-                                                sinkValue["sqlWriterTableType"] = derived11.SqlWriterTableType;
-                                            }
-                                            
-                                            if (derived11.StoredProcedureParameters != null)
-                                            {
-                                                if (derived11.StoredProcedureParameters is ILazyCollection == false || ((ILazyCollection)derived11.StoredProcedureParameters).IsInitialized)
-                                                {
-                                                    JObject storedProcedureParametersDictionary = new JObject();
-                                                    foreach (KeyValuePair<string, StoredProcedureParameter> pair in derived11.StoredProcedureParameters)
-                                                    {
-                                                        string storedProcedureParametersKey = pair.Key;
-                                                        StoredProcedureParameter storedProcedureParametersValue = pair.Value;
-                                                        JObject storedProcedureParameterValue = new JObject();
-                                                        storedProcedureParametersDictionary[storedProcedureParametersKey] = storedProcedureParameterValue;
-                                                        
-                                                        storedProcedureParameterValue["value"] = storedProcedureParametersValue.Value;
-                                                        
-                                                        if (storedProcedureParametersValue.Type != null)
-                                                        {
-                                                            storedProcedureParameterValue["type"] = storedProcedureParametersValue.Type;
-                                                        }
-                                                    }
-                                                    sinkValue["storedProcedureParameters"] = storedProcedureParametersDictionary;
-                                                }
-                                            }
-                                            
-                                            sinkValue["writeBatchSize"] = derived11.WriteBatchSize;
-                                            
-                                            sinkValue["writeBatchTimeout"] = derived11.WriteBatchTimeout.ToString();
-                                            
-                                            if (derived11.SinkRetryCount != null)
-                                            {
-                                                sinkValue["sinkRetryCount"] = derived11.SinkRetryCount.Value;
-                                            }
-                                            
-                                            if (derived11.SinkRetryWait != null)
-                                            {
-                                                sinkValue["sinkRetryWait"] = derived11.SinkRetryWait.Value.ToString();
-                                            }
-                                            
-                                            if (derived11.SinkPartitionData != null)
-                                            {
-                                                sinkValue["sinkPartitionData"] = derived11.SinkPartitionData.Value;
-                                            }
-                                        }
-                                        if (derived.Transformation.Sink is OracleSink)
-                                        {
-                                            sinkValue["type"] = "OracleSink";
-                                            OracleSink derived12 = ((OracleSink)derived.Transformation.Sink);
-                                            
-                                            if (derived12.OracleWriterStoredProcedureName != null)
-                                            {
-                                                sinkValue["oracleWriterStoredProcedureName"] = derived12.OracleWriterStoredProcedureName;
-                                            }
-                                            
-                                            if (derived12.OracleWriterTableType != null)
-                                            {
-                                                sinkValue["oracleWriterTableType"] = derived12.OracleWriterTableType;
-                                            }
+                                            AzureQueueSink derived12 = ((AzureQueueSink)derived.Transformation.Sink);
                                             
                                             sinkValue["writeBatchSize"] = derived12.WriteBatchSize;
                                             
@@ -639,6 +508,248 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 sinkValue["sinkPartitionData"] = derived12.SinkPartitionData.Value;
                                             }
                                         }
+                                        if (derived.Transformation.Sink is AzureTableSink)
+                                        {
+                                            sinkValue["type"] = "AzureTableSink";
+                                            AzureTableSink derived13 = ((AzureTableSink)derived.Transformation.Sink);
+                                            
+                                            sinkValue["azureTableRetryIntervalInSec"] = derived13.AzureTableRetryIntervalInSec;
+                                            
+                                            sinkValue["azureTableRetryTimes"] = derived13.AzureTableRetryTimes;
+                                            
+                                            if (derived13.AzureTableDefaultPartitionKeyValue != null)
+                                            {
+                                                sinkValue["azureTableDefaultPartitionKeyValue"] = derived13.AzureTableDefaultPartitionKeyValue;
+                                            }
+                                            
+                                            if (derived13.AzureTablePartitionKeyName != null)
+                                            {
+                                                sinkValue["azureTablePartitionKeyName"] = derived13.AzureTablePartitionKeyName;
+                                            }
+                                            
+                                            if (derived13.AzureTableRowKeyName != null)
+                                            {
+                                                sinkValue["azureTableRowKeyName"] = derived13.AzureTableRowKeyName;
+                                            }
+                                            
+                                            if (derived13.AzureTableInsertType != null)
+                                            {
+                                                sinkValue["azureTableInsertType"] = derived13.AzureTableInsertType;
+                                            }
+                                            
+                                            sinkValue["writeBatchSize"] = derived13.WriteBatchSize;
+                                            
+                                            sinkValue["writeBatchTimeout"] = derived13.WriteBatchTimeout.ToString();
+                                            
+                                            if (derived13.SinkRetryCount != null)
+                                            {
+                                                sinkValue["sinkRetryCount"] = derived13.SinkRetryCount.Value;
+                                            }
+                                            
+                                            if (derived13.SinkRetryWait != null)
+                                            {
+                                                sinkValue["sinkRetryWait"] = derived13.SinkRetryWait.Value.ToString();
+                                            }
+                                            
+                                            if (derived13.SinkPartitionData != null)
+                                            {
+                                                sinkValue["sinkPartitionData"] = derived13.SinkPartitionData.Value;
+                                            }
+                                        }
+                                        if (derived.Transformation.Sink is BlobSink)
+                                        {
+                                            sinkValue["type"] = "BlobSink";
+                                            BlobSink derived14 = ((BlobSink)derived.Transformation.Sink);
+                                            
+                                            if (derived14.BlockWriterBlockSize != null)
+                                            {
+                                                sinkValue["blockWriterBlockSize"] = derived14.BlockWriterBlockSize.Value;
+                                            }
+                                            
+                                            if (derived14.BlobWriterOverwriteFiles != null)
+                                            {
+                                                sinkValue["blobWriterOverwriteFiles"] = derived14.BlobWriterOverwriteFiles.Value;
+                                            }
+                                            
+                                            if (derived14.BlobWriterPartitionColumns != null)
+                                            {
+                                                sinkValue["blobWriterPartitionColumns"] = derived14.BlobWriterPartitionColumns;
+                                            }
+                                            
+                                            if (derived14.BlobWriterPartitionFormat != null)
+                                            {
+                                                sinkValue["blobWriterPartitionFormat"] = derived14.BlobWriterPartitionFormat;
+                                            }
+                                            
+                                            if (derived14.BlobWriterDateTimeFormat != null)
+                                            {
+                                                sinkValue["blobWriterDateTimeFormat"] = derived14.BlobWriterDateTimeFormat;
+                                            }
+                                            
+                                            if (derived14.BlobWriterSeparator != null)
+                                            {
+                                                sinkValue["blobWriterSeparator"] = derived14.BlobWriterSeparator;
+                                            }
+                                            
+                                            if (derived14.BlobWriterRowSuffix != null)
+                                            {
+                                                sinkValue["blobWriterRowSuffix"] = derived14.BlobWriterRowSuffix;
+                                            }
+                                            
+                                            if (derived14.BlobWriterAddHeader != null)
+                                            {
+                                                sinkValue["blobWriterAddHeader"] = derived14.BlobWriterAddHeader.Value;
+                                            }
+                                            
+                                            sinkValue["writeBatchSize"] = derived14.WriteBatchSize;
+                                            
+                                            sinkValue["writeBatchTimeout"] = derived14.WriteBatchTimeout.ToString();
+                                            
+                                            if (derived14.SinkRetryCount != null)
+                                            {
+                                                sinkValue["sinkRetryCount"] = derived14.SinkRetryCount.Value;
+                                            }
+                                            
+                                            if (derived14.SinkRetryWait != null)
+                                            {
+                                                sinkValue["sinkRetryWait"] = derived14.SinkRetryWait.Value.ToString();
+                                            }
+                                            
+                                            if (derived14.SinkPartitionData != null)
+                                            {
+                                                sinkValue["sinkPartitionData"] = derived14.SinkPartitionData.Value;
+                                            }
+                                        }
+                                        if (derived.Transformation.Sink is DocumentDbCollectionSink)
+                                        {
+                                            sinkValue["type"] = "DocumentDbCollectionSink";
+                                            DocumentDbCollectionSink derived15 = ((DocumentDbCollectionSink)derived.Transformation.Sink);
+                                            
+                                            if (derived15.NestingSeparator != null)
+                                            {
+                                                sinkValue["nestingSeparator"] = derived15.NestingSeparator;
+                                            }
+                                            
+                                            sinkValue["writeBatchSize"] = derived15.WriteBatchSize;
+                                            
+                                            sinkValue["writeBatchTimeout"] = derived15.WriteBatchTimeout.ToString();
+                                            
+                                            if (derived15.SinkRetryCount != null)
+                                            {
+                                                sinkValue["sinkRetryCount"] = derived15.SinkRetryCount.Value;
+                                            }
+                                            
+                                            if (derived15.SinkRetryWait != null)
+                                            {
+                                                sinkValue["sinkRetryWait"] = derived15.SinkRetryWait.Value.ToString();
+                                            }
+                                            
+                                            if (derived15.SinkPartitionData != null)
+                                            {
+                                                sinkValue["sinkPartitionData"] = derived15.SinkPartitionData.Value;
+                                            }
+                                        }
+                                        if (derived.Transformation.Sink is SqlSink)
+                                        {
+                                            sinkValue["type"] = "SqlSink";
+                                            SqlSink derived16 = ((SqlSink)derived.Transformation.Sink);
+                                            
+                                            if (derived16.SqlWriterStoredProcedureName != null)
+                                            {
+                                                sinkValue["sqlWriterStoredProcedureName"] = derived16.SqlWriterStoredProcedureName;
+                                            }
+                                            
+                                            if (derived16.SqlWriterTableType != null)
+                                            {
+                                                sinkValue["sqlWriterTableType"] = derived16.SqlWriterTableType;
+                                            }
+                                            
+                                            if (derived16.SqlWriterCleanupScript != null)
+                                            {
+                                                sinkValue["sqlWriterCleanupScript"] = derived16.SqlWriterCleanupScript;
+                                            }
+                                            
+                                            if (derived16.SliceIdentifierColumnName != null)
+                                            {
+                                                sinkValue["sliceIdentifierColumnName"] = derived16.SliceIdentifierColumnName;
+                                            }
+                                            
+                                            if (derived16.StoredProcedureParameters != null)
+                                            {
+                                                if (derived16.StoredProcedureParameters is ILazyCollection == false || ((ILazyCollection)derived16.StoredProcedureParameters).IsInitialized)
+                                                {
+                                                    JObject storedProcedureParametersDictionary = new JObject();
+                                                    foreach (KeyValuePair<string, StoredProcedureParameter> pair in derived16.StoredProcedureParameters)
+                                                    {
+                                                        string storedProcedureParametersKey = pair.Key;
+                                                        StoredProcedureParameter storedProcedureParametersValue = pair.Value;
+                                                        JObject storedProcedureParameterValue = new JObject();
+                                                        storedProcedureParametersDictionary[storedProcedureParametersKey] = storedProcedureParameterValue;
+                                                        
+                                                        storedProcedureParameterValue["value"] = storedProcedureParametersValue.Value;
+                                                        
+                                                        if (storedProcedureParametersValue.Type != null)
+                                                        {
+                                                            storedProcedureParameterValue["type"] = storedProcedureParametersValue.Type;
+                                                        }
+                                                    }
+                                                    sinkValue["storedProcedureParameters"] = storedProcedureParametersDictionary;
+                                                }
+                                            }
+                                            
+                                            sinkValue["writeBatchSize"] = derived16.WriteBatchSize;
+                                            
+                                            sinkValue["writeBatchTimeout"] = derived16.WriteBatchTimeout.ToString();
+                                            
+                                            if (derived16.SinkRetryCount != null)
+                                            {
+                                                sinkValue["sinkRetryCount"] = derived16.SinkRetryCount.Value;
+                                            }
+                                            
+                                            if (derived16.SinkRetryWait != null)
+                                            {
+                                                sinkValue["sinkRetryWait"] = derived16.SinkRetryWait.Value.ToString();
+                                            }
+                                            
+                                            if (derived16.SinkPartitionData != null)
+                                            {
+                                                sinkValue["sinkPartitionData"] = derived16.SinkPartitionData.Value;
+                                            }
+                                        }
+                                        if (derived.Transformation.Sink is OracleSink)
+                                        {
+                                            sinkValue["type"] = "OracleSink";
+                                            OracleSink derived17 = ((OracleSink)derived.Transformation.Sink);
+                                            
+                                            if (derived17.OracleWriterStoredProcedureName != null)
+                                            {
+                                                sinkValue["oracleWriterStoredProcedureName"] = derived17.OracleWriterStoredProcedureName;
+                                            }
+                                            
+                                            if (derived17.OracleWriterTableType != null)
+                                            {
+                                                sinkValue["oracleWriterTableType"] = derived17.OracleWriterTableType;
+                                            }
+                                            
+                                            sinkValue["writeBatchSize"] = derived17.WriteBatchSize;
+                                            
+                                            sinkValue["writeBatchTimeout"] = derived17.WriteBatchTimeout.ToString();
+                                            
+                                            if (derived17.SinkRetryCount != null)
+                                            {
+                                                sinkValue["sinkRetryCount"] = derived17.SinkRetryCount.Value;
+                                            }
+                                            
+                                            if (derived17.SinkRetryWait != null)
+                                            {
+                                                sinkValue["sinkRetryWait"] = derived17.SinkRetryWait.Value.ToString();
+                                            }
+                                            
+                                            if (derived17.SinkPartitionData != null)
+                                            {
+                                                sinkValue["sinkPartitionData"] = derived17.SinkPartitionData.Value;
+                                            }
+                                        }
                                         
                                         if (derived.Transformation.Translator != null)
                                         {
@@ -647,11 +758,11 @@ namespace Microsoft.Azure.Management.DataFactories
                                             if (derived.Transformation.Translator is TabularTranslator)
                                             {
                                                 translatorValue["type"] = "TabularTranslator";
-                                                TabularTranslator derived13 = ((TabularTranslator)derived.Transformation.Translator);
+                                                TabularTranslator derived18 = ((TabularTranslator)derived.Transformation.Translator);
                                                 
-                                                if (derived13.ColumnMappings != null)
+                                                if (derived18.ColumnMappings != null)
                                                 {
-                                                    translatorValue["columnMappings"] = derived13.ColumnMappings;
+                                                    translatorValue["columnMappings"] = derived18.ColumnMappings;
                                                 }
                                             }
                                         }
@@ -754,122 +865,157 @@ namespace Microsoft.Azure.Management.DataFactories
                                 if (activitiesItem is HDInsightActivity)
                                 {
                                     baseActivityValue["type"] = "HDInsightActivity";
-                                    HDInsightActivity derived14 = ((HDInsightActivity)activitiesItem);
+                                    HDInsightActivity derived19 = ((HDInsightActivity)activitiesItem);
                                     
-                                    if (derived14.Transformation != null)
+                                    if (derived19.Transformation != null)
                                     {
                                         JObject transformationValue2 = new JObject();
                                         baseActivityValue["transformation"] = transformationValue2;
-                                        if (derived14.Transformation is Hive)
+                                        if (derived19.Transformation is Hive)
                                         {
                                             transformationValue2["type"] = "Hive";
-                                            Hive derived15 = ((Hive)derived14.Transformation);
+                                            Hive derived20 = ((Hive)derived19.Transformation);
                                             
-                                            if (derived15.Script != null)
+                                            if (derived20.Script != null)
                                             {
-                                                transformationValue2["script"] = derived15.Script;
+                                                transformationValue2["script"] = derived20.Script;
                                             }
                                             
-                                            if (derived15.ScriptPath != null)
+                                            if (derived20.ScriptPath != null)
                                             {
-                                                transformationValue2["scriptPath"] = derived15.ScriptPath;
+                                                transformationValue2["scriptPath"] = derived20.ScriptPath;
                                             }
                                             
-                                            if (derived15.ScriptLinkedService != null)
+                                            if (derived20.ScriptLinkedService != null)
                                             {
-                                                transformationValue2["scriptLinkedService"] = derived15.ScriptLinkedService;
+                                                transformationValue2["scriptLinkedService"] = derived20.ScriptLinkedService;
                                             }
                                             
-                                            if (derived15.ExtendedProperties != null)
+                                            if (derived20.Defines != null)
                                             {
-                                                if (derived15.ExtendedProperties is ILazyCollection == false || ((ILazyCollection)derived15.ExtendedProperties).IsInitialized)
+                                                if (derived20.Defines is ILazyCollection == false || ((ILazyCollection)derived20.Defines).IsInitialized)
+                                                {
+                                                    JObject definesDictionary = new JObject();
+                                                    foreach (KeyValuePair<string, string> pair2 in derived20.Defines)
+                                                    {
+                                                        string definesKey = pair2.Key;
+                                                        string definesValue = pair2.Value;
+                                                        definesDictionary[definesKey] = definesValue;
+                                                    }
+                                                    transformationValue2["defines"] = definesDictionary;
+                                                }
+                                            }
+                                            
+                                            if (derived20.ExtendedProperties != null)
+                                            {
+                                                if (derived20.ExtendedProperties is ILazyCollection == false || ((ILazyCollection)derived20.ExtendedProperties).IsInitialized)
                                                 {
                                                     JObject extendedPropertiesDictionary = new JObject();
-                                                    foreach (KeyValuePair<string, string> pair2 in derived15.ExtendedProperties)
+                                                    foreach (KeyValuePair<string, string> pair3 in derived20.ExtendedProperties)
                                                     {
-                                                        string extendedPropertiesKey = pair2.Key;
-                                                        string extendedPropertiesValue = pair2.Value;
+                                                        string extendedPropertiesKey = pair3.Key;
+                                                        string extendedPropertiesValue = pair3.Value;
                                                         extendedPropertiesDictionary[extendedPropertiesKey] = extendedPropertiesValue;
                                                     }
                                                     transformationValue2["extendedProperties"] = extendedPropertiesDictionary;
                                                 }
                                             }
                                             
-                                            if (derived15.StorageLinkedServices != null)
+                                            if (derived20.StorageLinkedServices != null)
                                             {
                                                 JArray storageLinkedServicesArray = new JArray();
-                                                foreach (string storageLinkedServicesItem in derived15.StorageLinkedServices)
+                                                foreach (string storageLinkedServicesItem in derived20.StorageLinkedServices)
                                                 {
                                                     storageLinkedServicesArray.Add(storageLinkedServicesItem);
                                                 }
                                                 transformationValue2["storageLinkedServices"] = storageLinkedServicesArray;
                                             }
+                                            
+                                            if (derived20.Arguments != null)
+                                            {
+                                                JArray argumentsArray = new JArray();
+                                                foreach (string argumentsItem in derived20.Arguments)
+                                                {
+                                                    argumentsArray.Add(argumentsItem);
+                                                }
+                                                transformationValue2["arguments"] = argumentsArray;
+                                            }
                                         }
-                                        if (derived14.Transformation is Pig)
+                                        if (derived19.Transformation is Pig)
                                         {
                                             transformationValue2["type"] = "Pig";
-                                            Pig derived16 = ((Pig)derived14.Transformation);
+                                            Pig derived21 = ((Pig)derived19.Transformation);
                                             
-                                            if (derived16.Script != null)
+                                            if (derived21.Script != null)
                                             {
-                                                transformationValue2["script"] = derived16.Script;
+                                                transformationValue2["script"] = derived21.Script;
                                             }
                                             
-                                            if (derived16.ScriptPath != null)
+                                            if (derived21.ScriptPath != null)
                                             {
-                                                transformationValue2["scriptPath"] = derived16.ScriptPath;
+                                                transformationValue2["scriptPath"] = derived21.ScriptPath;
                                             }
                                             
-                                            if (derived16.ScriptLinkedService != null)
+                                            if (derived21.ScriptLinkedService != null)
                                             {
-                                                transformationValue2["scriptLinkedService"] = derived16.ScriptLinkedService;
+                                                transformationValue2["scriptLinkedService"] = derived21.ScriptLinkedService;
                                             }
                                             
-                                            if (derived16.ExtendedProperties != null)
+                                            if (derived21.ExtendedProperties != null)
                                             {
-                                                if (derived16.ExtendedProperties is ILazyCollection == false || ((ILazyCollection)derived16.ExtendedProperties).IsInitialized)
+                                                if (derived21.ExtendedProperties is ILazyCollection == false || ((ILazyCollection)derived21.ExtendedProperties).IsInitialized)
                                                 {
                                                     JObject extendedPropertiesDictionary2 = new JObject();
-                                                    foreach (KeyValuePair<string, string> pair3 in derived16.ExtendedProperties)
+                                                    foreach (KeyValuePair<string, string> pair4 in derived21.ExtendedProperties)
                                                     {
-                                                        string extendedPropertiesKey2 = pair3.Key;
-                                                        string extendedPropertiesValue2 = pair3.Value;
+                                                        string extendedPropertiesKey2 = pair4.Key;
+                                                        string extendedPropertiesValue2 = pair4.Value;
                                                         extendedPropertiesDictionary2[extendedPropertiesKey2] = extendedPropertiesValue2;
                                                     }
                                                     transformationValue2["extendedProperties"] = extendedPropertiesDictionary2;
                                                 }
                                             }
                                             
-                                            if (derived16.StorageLinkedServices != null)
+                                            if (derived21.StorageLinkedServices != null)
                                             {
                                                 JArray storageLinkedServicesArray2 = new JArray();
-                                                foreach (string storageLinkedServicesItem2 in derived16.StorageLinkedServices)
+                                                foreach (string storageLinkedServicesItem2 in derived21.StorageLinkedServices)
                                                 {
                                                     storageLinkedServicesArray2.Add(storageLinkedServicesItem2);
                                                 }
                                                 transformationValue2["storageLinkedServices"] = storageLinkedServicesArray2;
                                             }
+                                            
+                                            if (derived21.Arguments != null)
+                                            {
+                                                JArray argumentsArray2 = new JArray();
+                                                foreach (string argumentsItem2 in derived21.Arguments)
+                                                {
+                                                    argumentsArray2.Add(argumentsItem2);
+                                                }
+                                                transformationValue2["arguments"] = argumentsArray2;
+                                            }
                                         }
-                                        if (derived14.Transformation is MapReduce)
+                                        if (derived19.Transformation is MapReduce)
                                         {
                                             transformationValue2["type"] = "MapReduce";
-                                            MapReduce derived17 = ((MapReduce)derived14.Transformation);
+                                            MapReduce derived22 = ((MapReduce)derived19.Transformation);
                                             
-                                            transformationValue2["className"] = derived17.ClassName;
+                                            transformationValue2["className"] = derived22.ClassName;
                                             
-                                            transformationValue2["jarFilePath"] = derived17.JarFilePath;
+                                            transformationValue2["jarFilePath"] = derived22.JarFilePath;
                                             
-                                            if (derived17.JarLinkedService != null)
+                                            if (derived22.JarLinkedService != null)
                                             {
-                                                transformationValue2["jarLinkedService"] = derived17.JarLinkedService;
+                                                transformationValue2["jarLinkedService"] = derived22.JarLinkedService;
                                             }
                                             
-                                            if (derived17.JarLibs != null)
+                                            if (derived22.JarLibs != null)
                                             {
-                                                if (derived17.JarLibs is ILazyCollection == false || ((ILazyCollection)derived17.JarLibs).IsInitialized)
+                                                if (derived22.JarLibs is ILazyCollection == false || ((ILazyCollection)derived22.JarLibs).IsInitialized)
                                                 {
                                                     JArray jarLibsArray = new JArray();
-                                                    foreach (string jarLibsItem in derived17.JarLibs)
+                                                    foreach (string jarLibsItem in derived22.JarLibs)
                                                     {
                                                         jarLibsArray.Add(jarLibsItem);
                                                     }
@@ -877,63 +1023,75 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 }
                                             }
                                             
-                                            if (derived17.Arguments != null)
+                                            if (derived22.Defines != null)
                                             {
-                                                if (derived17.Arguments is ILazyCollection == false || ((ILazyCollection)derived17.Arguments).IsInitialized)
+                                                if (derived22.Defines is ILazyCollection == false || ((ILazyCollection)derived22.Defines).IsInitialized)
                                                 {
-                                                    JArray argumentsArray = new JArray();
-                                                    foreach (string argumentsItem in derived17.Arguments)
+                                                    JObject definesDictionary2 = new JObject();
+                                                    foreach (KeyValuePair<string, string> pair5 in derived22.Defines)
                                                     {
-                                                        argumentsArray.Add(argumentsItem);
+                                                        string definesKey2 = pair5.Key;
+                                                        string definesValue2 = pair5.Value;
+                                                        definesDictionary2[definesKey2] = definesValue2;
                                                     }
-                                                    transformationValue2["arguments"] = argumentsArray;
+                                                    transformationValue2["defines"] = definesDictionary2;
                                                 }
                                             }
                                             
-                                            if (derived17.ExtendedProperties != null)
+                                            if (derived22.ExtendedProperties != null)
                                             {
-                                                if (derived17.ExtendedProperties is ILazyCollection == false || ((ILazyCollection)derived17.ExtendedProperties).IsInitialized)
+                                                if (derived22.ExtendedProperties is ILazyCollection == false || ((ILazyCollection)derived22.ExtendedProperties).IsInitialized)
                                                 {
                                                     JObject extendedPropertiesDictionary3 = new JObject();
-                                                    foreach (KeyValuePair<string, string> pair4 in derived17.ExtendedProperties)
+                                                    foreach (KeyValuePair<string, string> pair6 in derived22.ExtendedProperties)
                                                     {
-                                                        string extendedPropertiesKey3 = pair4.Key;
-                                                        string extendedPropertiesValue3 = pair4.Value;
+                                                        string extendedPropertiesKey3 = pair6.Key;
+                                                        string extendedPropertiesValue3 = pair6.Value;
                                                         extendedPropertiesDictionary3[extendedPropertiesKey3] = extendedPropertiesValue3;
                                                     }
                                                     transformationValue2["extendedProperties"] = extendedPropertiesDictionary3;
                                                 }
                                             }
                                             
-                                            if (derived17.StorageLinkedServices != null)
+                                            if (derived22.StorageLinkedServices != null)
                                             {
                                                 JArray storageLinkedServicesArray3 = new JArray();
-                                                foreach (string storageLinkedServicesItem3 in derived17.StorageLinkedServices)
+                                                foreach (string storageLinkedServicesItem3 in derived22.StorageLinkedServices)
                                                 {
                                                     storageLinkedServicesArray3.Add(storageLinkedServicesItem3);
                                                 }
                                                 transformationValue2["storageLinkedServices"] = storageLinkedServicesArray3;
                                             }
+                                            
+                                            if (derived22.Arguments != null)
+                                            {
+                                                JArray argumentsArray3 = new JArray();
+                                                foreach (string argumentsItem3 in derived22.Arguments)
+                                                {
+                                                    argumentsArray3.Add(argumentsItem3);
+                                                }
+                                                transformationValue2["arguments"] = argumentsArray3;
+                                            }
                                         }
-                                        if (derived14.Transformation is Streaming)
+                                        if (derived19.Transformation is Streaming)
                                         {
                                             transformationValue2["type"] = "Streaming";
-                                            Streaming derived18 = ((Streaming)derived14.Transformation);
+                                            Streaming derived23 = ((Streaming)derived19.Transformation);
                                             
-                                            transformationValue2["mapper"] = derived18.Mapper;
+                                            transformationValue2["mapper"] = derived23.Mapper;
                                             
-                                            transformationValue2["reducer"] = derived18.Reducer;
+                                            transformationValue2["reducer"] = derived23.Reducer;
                                             
-                                            transformationValue2["input"] = derived18.Input;
+                                            transformationValue2["input"] = derived23.Input;
                                             
-                                            transformationValue2["output"] = derived18.Output;
+                                            transformationValue2["output"] = derived23.Output;
                                             
-                                            if (derived18.FilePaths != null)
+                                            if (derived23.FilePaths != null)
                                             {
-                                                if (derived18.FilePaths is ILazyCollection == false || ((ILazyCollection)derived18.FilePaths).IsInitialized)
+                                                if (derived23.FilePaths is ILazyCollection == false || ((ILazyCollection)derived23.FilePaths).IsInitialized)
                                                 {
                                                     JArray filePathsArray = new JArray();
-                                                    foreach (string filePathsItem in derived18.FilePaths)
+                                                    foreach (string filePathsItem in derived23.FilePaths)
                                                     {
                                                         filePathsArray.Add(filePathsItem);
                                                     }
@@ -941,22 +1099,22 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 }
                                             }
                                             
-                                            if (derived18.FileLinkedService != null)
+                                            if (derived23.FileLinkedService != null)
                                             {
-                                                transformationValue2["fileLinkedService"] = derived18.FileLinkedService;
+                                                transformationValue2["fileLinkedService"] = derived23.FileLinkedService;
                                             }
                                             
-                                            if (derived18.Combiner != null)
+                                            if (derived23.Combiner != null)
                                             {
-                                                transformationValue2["combiner"] = derived18.Combiner;
+                                                transformationValue2["combiner"] = derived23.Combiner;
                                             }
                                             
-                                            if (derived18.CommandEnvironment != null)
+                                            if (derived23.CommandEnvironment != null)
                                             {
-                                                if (derived18.CommandEnvironment is ILazyCollection == false || ((ILazyCollection)derived18.CommandEnvironment).IsInitialized)
+                                                if (derived23.CommandEnvironment is ILazyCollection == false || ((ILazyCollection)derived23.CommandEnvironment).IsInitialized)
                                                 {
                                                     JArray commandEnvironmentArray = new JArray();
-                                                    foreach (string commandEnvironmentItem in derived18.CommandEnvironment)
+                                                    foreach (string commandEnvironmentItem in derived23.CommandEnvironment)
                                                     {
                                                         commandEnvironmentArray.Add(commandEnvironmentItem);
                                                     }
@@ -964,103 +1122,115 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 }
                                             }
                                             
-                                            if (derived18.Arguments != null)
+                                            if (derived23.Defines != null)
                                             {
-                                                if (derived18.Arguments is ILazyCollection == false || ((ILazyCollection)derived18.Arguments).IsInitialized)
+                                                if (derived23.Defines is ILazyCollection == false || ((ILazyCollection)derived23.Defines).IsInitialized)
                                                 {
-                                                    JArray argumentsArray2 = new JArray();
-                                                    foreach (string argumentsItem2 in derived18.Arguments)
+                                                    JObject definesDictionary3 = new JObject();
+                                                    foreach (KeyValuePair<string, string> pair7 in derived23.Defines)
                                                     {
-                                                        argumentsArray2.Add(argumentsItem2);
+                                                        string definesKey3 = pair7.Key;
+                                                        string definesValue3 = pair7.Value;
+                                                        definesDictionary3[definesKey3] = definesValue3;
                                                     }
-                                                    transformationValue2["arguments"] = argumentsArray2;
+                                                    transformationValue2["defines"] = definesDictionary3;
                                                 }
                                             }
                                             
-                                            if (derived18.ExtendedProperties != null)
+                                            if (derived23.ExtendedProperties != null)
                                             {
-                                                if (derived18.ExtendedProperties is ILazyCollection == false || ((ILazyCollection)derived18.ExtendedProperties).IsInitialized)
+                                                if (derived23.ExtendedProperties is ILazyCollection == false || ((ILazyCollection)derived23.ExtendedProperties).IsInitialized)
                                                 {
                                                     JObject extendedPropertiesDictionary4 = new JObject();
-                                                    foreach (KeyValuePair<string, string> pair5 in derived18.ExtendedProperties)
+                                                    foreach (KeyValuePair<string, string> pair8 in derived23.ExtendedProperties)
                                                     {
-                                                        string extendedPropertiesKey4 = pair5.Key;
-                                                        string extendedPropertiesValue4 = pair5.Value;
+                                                        string extendedPropertiesKey4 = pair8.Key;
+                                                        string extendedPropertiesValue4 = pair8.Value;
                                                         extendedPropertiesDictionary4[extendedPropertiesKey4] = extendedPropertiesValue4;
                                                     }
                                                     transformationValue2["extendedProperties"] = extendedPropertiesDictionary4;
                                                 }
                                             }
                                             
-                                            if (derived18.StorageLinkedServices != null)
+                                            if (derived23.StorageLinkedServices != null)
                                             {
                                                 JArray storageLinkedServicesArray4 = new JArray();
-                                                foreach (string storageLinkedServicesItem4 in derived18.StorageLinkedServices)
+                                                foreach (string storageLinkedServicesItem4 in derived23.StorageLinkedServices)
                                                 {
                                                     storageLinkedServicesArray4.Add(storageLinkedServicesItem4);
                                                 }
                                                 transformationValue2["storageLinkedServices"] = storageLinkedServicesArray4;
                                             }
+                                            
+                                            if (derived23.Arguments != null)
+                                            {
+                                                JArray argumentsArray4 = new JArray();
+                                                foreach (string argumentsItem4 in derived23.Arguments)
+                                                {
+                                                    argumentsArray4.Add(argumentsItem4);
+                                                }
+                                                transformationValue2["arguments"] = argumentsArray4;
+                                            }
                                         }
                                     }
                                     
-                                    baseActivityValue["name"] = derived14.Name;
+                                    baseActivityValue["name"] = derived19.Name;
                                     
-                                    if (derived14.Description != null)
+                                    if (derived19.Description != null)
                                     {
-                                        baseActivityValue["description"] = derived14.Description;
+                                        baseActivityValue["description"] = derived19.Description;
                                     }
                                     
-                                    if (derived14.LinkedServiceName != null)
+                                    if (derived19.LinkedServiceName != null)
                                     {
-                                        baseActivityValue["linkedServiceName"] = derived14.LinkedServiceName;
+                                        baseActivityValue["linkedServiceName"] = derived19.LinkedServiceName;
                                     }
                                     
-                                    if (derived14.Policy != null)
+                                    if (derived19.Policy != null)
                                     {
                                         JObject policyValue2 = new JObject();
                                         baseActivityValue["policy"] = policyValue2;
                                         
-                                        if (derived14.Policy.Timeout != null)
+                                        if (derived19.Policy.Timeout != null)
                                         {
-                                            policyValue2["timeout"] = derived14.Policy.Timeout.Value.ToString();
+                                            policyValue2["timeout"] = derived19.Policy.Timeout.Value.ToString();
                                         }
                                         
-                                        if (derived14.Policy.Delay != null)
+                                        if (derived19.Policy.Delay != null)
                                         {
-                                            policyValue2["delay"] = derived14.Policy.Delay.Value.ToString();
+                                            policyValue2["delay"] = derived19.Policy.Delay.Value.ToString();
                                         }
                                         
-                                        if (derived14.Policy.Concurrency != null)
+                                        if (derived19.Policy.Concurrency != null)
                                         {
-                                            policyValue2["concurrency"] = derived14.Policy.Concurrency.Value;
+                                            policyValue2["concurrency"] = derived19.Policy.Concurrency.Value;
                                         }
                                         
-                                        if (derived14.Policy.ExecutionPriorityOrder != null)
+                                        if (derived19.Policy.ExecutionPriorityOrder != null)
                                         {
-                                            policyValue2["executionPriorityOrder"] = derived14.Policy.ExecutionPriorityOrder;
+                                            policyValue2["executionPriorityOrder"] = derived19.Policy.ExecutionPriorityOrder;
                                         }
                                         
-                                        if (derived14.Policy.Retry != null)
+                                        if (derived19.Policy.Retry != null)
                                         {
-                                            policyValue2["retry"] = derived14.Policy.Retry.Value;
+                                            policyValue2["retry"] = derived19.Policy.Retry.Value;
                                         }
                                         
-                                        if (derived14.Policy.LongRetry != null)
+                                        if (derived19.Policy.LongRetry != null)
                                         {
-                                            policyValue2["longRetry"] = derived14.Policy.LongRetry.Value;
+                                            policyValue2["longRetry"] = derived19.Policy.LongRetry.Value;
                                         }
                                         
-                                        if (derived14.Policy.LongRetryInterval != null)
+                                        if (derived19.Policy.LongRetryInterval != null)
                                         {
-                                            policyValue2["longRetryInterval"] = derived14.Policy.LongRetryInterval.Value.ToString();
+                                            policyValue2["longRetryInterval"] = derived19.Policy.LongRetryInterval.Value.ToString();
                                         }
                                     }
                                     
-                                    if (derived14.Inputs != null)
+                                    if (derived19.Inputs != null)
                                     {
                                         JArray inputsArray2 = new JArray();
-                                        foreach (ActivityInput inputsItem2 in derived14.Inputs)
+                                        foreach (ActivityInput inputsItem2 in derived19.Inputs)
                                         {
                                             JObject activityInputValue2 = new JObject();
                                             inputsArray2.Add(activityInputValue2);
@@ -1085,10 +1255,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                         baseActivityValue["inputs"] = inputsArray2;
                                     }
                                     
-                                    if (derived14.Outputs != null)
+                                    if (derived19.Outputs != null)
                                     {
                                         JArray outputsArray2 = new JArray();
-                                        foreach (ActivityOutput outputsItem2 in derived14.Outputs)
+                                        foreach (ActivityOutput outputsItem2 in derived19.Outputs)
                                         {
                                             JObject activityOutputValue2 = new JObject();
                                             outputsArray2.Add(activityOutputValue2);
@@ -1101,33 +1271,33 @@ namespace Microsoft.Azure.Management.DataFactories
                                 if (activitiesItem is DotNetActivity)
                                 {
                                     baseActivityValue["type"] = "DotNetActivity";
-                                    DotNetActivity derived19 = ((DotNetActivity)activitiesItem);
+                                    DotNetActivity derived24 = ((DotNetActivity)activitiesItem);
                                     
-                                    if (derived19.Transformation != null)
+                                    if (derived24.Transformation != null)
                                     {
                                         JObject transformationValue3 = new JObject();
                                         baseActivityValue["transformation"] = transformationValue3;
                                         
-                                        transformationValue3["assemblyName"] = derived19.Transformation.AssemblyName;
+                                        transformationValue3["assemblyName"] = derived24.Transformation.AssemblyName;
                                         
-                                        transformationValue3["entryPoint"] = derived19.Transformation.EntryPoint;
+                                        transformationValue3["entryPoint"] = derived24.Transformation.EntryPoint;
                                         
-                                        if (derived19.Transformation.PackageLinkedService != null)
+                                        if (derived24.Transformation.PackageLinkedService != null)
                                         {
-                                            transformationValue3["packageLinkedService"] = derived19.Transformation.PackageLinkedService;
+                                            transformationValue3["packageLinkedService"] = derived24.Transformation.PackageLinkedService;
                                         }
                                         
-                                        transformationValue3["packageFile"] = derived19.Transformation.PackageFile;
+                                        transformationValue3["packageFile"] = derived24.Transformation.PackageFile;
                                         
-                                        if (derived19.Transformation.ExtendedProperties != null)
+                                        if (derived24.Transformation.ExtendedProperties != null)
                                         {
-                                            if (derived19.Transformation.ExtendedProperties is ILazyCollection == false || ((ILazyCollection)derived19.Transformation.ExtendedProperties).IsInitialized)
+                                            if (derived24.Transformation.ExtendedProperties is ILazyCollection == false || ((ILazyCollection)derived24.Transformation.ExtendedProperties).IsInitialized)
                                             {
                                                 JObject extendedPropertiesDictionary5 = new JObject();
-                                                foreach (KeyValuePair<string, string> pair6 in derived19.Transformation.ExtendedProperties)
+                                                foreach (KeyValuePair<string, string> pair9 in derived24.Transformation.ExtendedProperties)
                                                 {
-                                                    string extendedPropertiesKey5 = pair6.Key;
-                                                    string extendedPropertiesValue5 = pair6.Value;
+                                                    string extendedPropertiesKey5 = pair9.Key;
+                                                    string extendedPropertiesValue5 = pair9.Value;
                                                     extendedPropertiesDictionary5[extendedPropertiesKey5] = extendedPropertiesValue5;
                                                 }
                                                 transformationValue3["extendedProperties"] = extendedPropertiesDictionary5;
@@ -1135,63 +1305,63 @@ namespace Microsoft.Azure.Management.DataFactories
                                         }
                                     }
                                     
-                                    baseActivityValue["name"] = derived19.Name;
+                                    baseActivityValue["name"] = derived24.Name;
                                     
-                                    if (derived19.Description != null)
+                                    if (derived24.Description != null)
                                     {
-                                        baseActivityValue["description"] = derived19.Description;
+                                        baseActivityValue["description"] = derived24.Description;
                                     }
                                     
-                                    if (derived19.LinkedServiceName != null)
+                                    if (derived24.LinkedServiceName != null)
                                     {
-                                        baseActivityValue["linkedServiceName"] = derived19.LinkedServiceName;
+                                        baseActivityValue["linkedServiceName"] = derived24.LinkedServiceName;
                                     }
                                     
-                                    if (derived19.Policy != null)
+                                    if (derived24.Policy != null)
                                     {
                                         JObject policyValue3 = new JObject();
                                         baseActivityValue["policy"] = policyValue3;
                                         
-                                        if (derived19.Policy.Timeout != null)
+                                        if (derived24.Policy.Timeout != null)
                                         {
-                                            policyValue3["timeout"] = derived19.Policy.Timeout.Value.ToString();
+                                            policyValue3["timeout"] = derived24.Policy.Timeout.Value.ToString();
                                         }
                                         
-                                        if (derived19.Policy.Delay != null)
+                                        if (derived24.Policy.Delay != null)
                                         {
-                                            policyValue3["delay"] = derived19.Policy.Delay.Value.ToString();
+                                            policyValue3["delay"] = derived24.Policy.Delay.Value.ToString();
                                         }
                                         
-                                        if (derived19.Policy.Concurrency != null)
+                                        if (derived24.Policy.Concurrency != null)
                                         {
-                                            policyValue3["concurrency"] = derived19.Policy.Concurrency.Value;
+                                            policyValue3["concurrency"] = derived24.Policy.Concurrency.Value;
                                         }
                                         
-                                        if (derived19.Policy.ExecutionPriorityOrder != null)
+                                        if (derived24.Policy.ExecutionPriorityOrder != null)
                                         {
-                                            policyValue3["executionPriorityOrder"] = derived19.Policy.ExecutionPriorityOrder;
+                                            policyValue3["executionPriorityOrder"] = derived24.Policy.ExecutionPriorityOrder;
                                         }
                                         
-                                        if (derived19.Policy.Retry != null)
+                                        if (derived24.Policy.Retry != null)
                                         {
-                                            policyValue3["retry"] = derived19.Policy.Retry.Value;
+                                            policyValue3["retry"] = derived24.Policy.Retry.Value;
                                         }
                                         
-                                        if (derived19.Policy.LongRetry != null)
+                                        if (derived24.Policy.LongRetry != null)
                                         {
-                                            policyValue3["longRetry"] = derived19.Policy.LongRetry.Value;
+                                            policyValue3["longRetry"] = derived24.Policy.LongRetry.Value;
                                         }
                                         
-                                        if (derived19.Policy.LongRetryInterval != null)
+                                        if (derived24.Policy.LongRetryInterval != null)
                                         {
-                                            policyValue3["longRetryInterval"] = derived19.Policy.LongRetryInterval.Value.ToString();
+                                            policyValue3["longRetryInterval"] = derived24.Policy.LongRetryInterval.Value.ToString();
                                         }
                                     }
                                     
-                                    if (derived19.Inputs != null)
+                                    if (derived24.Inputs != null)
                                     {
                                         JArray inputsArray3 = new JArray();
-                                        foreach (ActivityInput inputsItem3 in derived19.Inputs)
+                                        foreach (ActivityInput inputsItem3 in derived24.Inputs)
                                         {
                                             JObject activityInputValue3 = new JObject();
                                             inputsArray3.Add(activityInputValue3);
@@ -1216,10 +1386,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                         baseActivityValue["inputs"] = inputsArray3;
                                     }
                                     
-                                    if (derived19.Outputs != null)
+                                    if (derived24.Outputs != null)
                                     {
                                         JArray outputsArray3 = new JArray();
-                                        foreach (ActivityOutput outputsItem3 in derived19.Outputs)
+                                        foreach (ActivityOutput outputsItem3 in derived24.Outputs)
                                         {
                                             JObject activityOutputValue3 = new JObject();
                                             outputsArray3.Add(activityOutputValue3);
@@ -1232,24 +1402,24 @@ namespace Microsoft.Azure.Management.DataFactories
                                 if (activitiesItem is StoredProcedureActivity)
                                 {
                                     baseActivityValue["type"] = "StoredProcedureActivity";
-                                    StoredProcedureActivity derived20 = ((StoredProcedureActivity)activitiesItem);
+                                    StoredProcedureActivity derived25 = ((StoredProcedureActivity)activitiesItem);
                                     
-                                    if (derived20.Transformation != null)
+                                    if (derived25.Transformation != null)
                                     {
                                         JObject transformationValue4 = new JObject();
                                         baseActivityValue["transformation"] = transformationValue4;
                                         
-                                        transformationValue4["storedProcedureName"] = derived20.Transformation.StoredProcedureName;
+                                        transformationValue4["storedProcedureName"] = derived25.Transformation.StoredProcedureName;
                                         
-                                        if (derived20.Transformation.StoredProcedureActivityParameters != null)
+                                        if (derived25.Transformation.StoredProcedureActivityParameters != null)
                                         {
-                                            if (derived20.Transformation.StoredProcedureActivityParameters is ILazyCollection == false || ((ILazyCollection)derived20.Transformation.StoredProcedureActivityParameters).IsInitialized)
+                                            if (derived25.Transformation.StoredProcedureActivityParameters is ILazyCollection == false || ((ILazyCollection)derived25.Transformation.StoredProcedureActivityParameters).IsInitialized)
                                             {
                                                 JObject storedProcedureParametersDictionary2 = new JObject();
-                                                foreach (KeyValuePair<string, string> pair7 in derived20.Transformation.StoredProcedureActivityParameters)
+                                                foreach (KeyValuePair<string, string> pair10 in derived25.Transformation.StoredProcedureActivityParameters)
                                                 {
-                                                    string storedProcedureParametersKey2 = pair7.Key;
-                                                    string storedProcedureParametersValue2 = pair7.Value;
+                                                    string storedProcedureParametersKey2 = pair10.Key;
+                                                    string storedProcedureParametersValue2 = pair10.Value;
                                                     storedProcedureParametersDictionary2[storedProcedureParametersKey2] = storedProcedureParametersValue2;
                                                 }
                                                 transformationValue4["storedProcedureParameters"] = storedProcedureParametersDictionary2;
@@ -1257,63 +1427,63 @@ namespace Microsoft.Azure.Management.DataFactories
                                         }
                                     }
                                     
-                                    baseActivityValue["name"] = derived20.Name;
+                                    baseActivityValue["name"] = derived25.Name;
                                     
-                                    if (derived20.Description != null)
+                                    if (derived25.Description != null)
                                     {
-                                        baseActivityValue["description"] = derived20.Description;
+                                        baseActivityValue["description"] = derived25.Description;
                                     }
                                     
-                                    if (derived20.LinkedServiceName != null)
+                                    if (derived25.LinkedServiceName != null)
                                     {
-                                        baseActivityValue["linkedServiceName"] = derived20.LinkedServiceName;
+                                        baseActivityValue["linkedServiceName"] = derived25.LinkedServiceName;
                                     }
                                     
-                                    if (derived20.Policy != null)
+                                    if (derived25.Policy != null)
                                     {
                                         JObject policyValue4 = new JObject();
                                         baseActivityValue["policy"] = policyValue4;
                                         
-                                        if (derived20.Policy.Timeout != null)
+                                        if (derived25.Policy.Timeout != null)
                                         {
-                                            policyValue4["timeout"] = derived20.Policy.Timeout.Value.ToString();
+                                            policyValue4["timeout"] = derived25.Policy.Timeout.Value.ToString();
                                         }
                                         
-                                        if (derived20.Policy.Delay != null)
+                                        if (derived25.Policy.Delay != null)
                                         {
-                                            policyValue4["delay"] = derived20.Policy.Delay.Value.ToString();
+                                            policyValue4["delay"] = derived25.Policy.Delay.Value.ToString();
                                         }
                                         
-                                        if (derived20.Policy.Concurrency != null)
+                                        if (derived25.Policy.Concurrency != null)
                                         {
-                                            policyValue4["concurrency"] = derived20.Policy.Concurrency.Value;
+                                            policyValue4["concurrency"] = derived25.Policy.Concurrency.Value;
                                         }
                                         
-                                        if (derived20.Policy.ExecutionPriorityOrder != null)
+                                        if (derived25.Policy.ExecutionPriorityOrder != null)
                                         {
-                                            policyValue4["executionPriorityOrder"] = derived20.Policy.ExecutionPriorityOrder;
+                                            policyValue4["executionPriorityOrder"] = derived25.Policy.ExecutionPriorityOrder;
                                         }
                                         
-                                        if (derived20.Policy.Retry != null)
+                                        if (derived25.Policy.Retry != null)
                                         {
-                                            policyValue4["retry"] = derived20.Policy.Retry.Value;
+                                            policyValue4["retry"] = derived25.Policy.Retry.Value;
                                         }
                                         
-                                        if (derived20.Policy.LongRetry != null)
+                                        if (derived25.Policy.LongRetry != null)
                                         {
-                                            policyValue4["longRetry"] = derived20.Policy.LongRetry.Value;
+                                            policyValue4["longRetry"] = derived25.Policy.LongRetry.Value;
                                         }
                                         
-                                        if (derived20.Policy.LongRetryInterval != null)
+                                        if (derived25.Policy.LongRetryInterval != null)
                                         {
-                                            policyValue4["longRetryInterval"] = derived20.Policy.LongRetryInterval.Value.ToString();
+                                            policyValue4["longRetryInterval"] = derived25.Policy.LongRetryInterval.Value.ToString();
                                         }
                                     }
                                     
-                                    if (derived20.Inputs != null)
+                                    if (derived25.Inputs != null)
                                     {
                                         JArray inputsArray4 = new JArray();
-                                        foreach (ActivityInput inputsItem4 in derived20.Inputs)
+                                        foreach (ActivityInput inputsItem4 in derived25.Inputs)
                                         {
                                             JObject activityInputValue4 = new JObject();
                                             inputsArray4.Add(activityInputValue4);
@@ -1338,10 +1508,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                         baseActivityValue["inputs"] = inputsArray4;
                                     }
                                     
-                                    if (derived20.Outputs != null)
+                                    if (derived25.Outputs != null)
                                     {
                                         JArray outputsArray4 = new JArray();
-                                        foreach (ActivityOutput outputsItem4 in derived20.Outputs)
+                                        foreach (ActivityOutput outputsItem4 in derived25.Outputs)
                                         {
                                             JObject activityOutputValue4 = new JObject();
                                             outputsArray4.Add(activityOutputValue4);
@@ -1354,22 +1524,22 @@ namespace Microsoft.Azure.Management.DataFactories
                                 if (activitiesItem is AzureMLBatchScoringActivity)
                                 {
                                     baseActivityValue["type"] = "AzureMLBatchScoringActivity";
-                                    AzureMLBatchScoringActivity derived21 = ((AzureMLBatchScoringActivity)activitiesItem);
+                                    AzureMLBatchScoringActivity derived26 = ((AzureMLBatchScoringActivity)activitiesItem);
                                     
-                                    if (derived21.Transformation != null)
+                                    if (derived26.Transformation != null)
                                     {
                                         JObject transformationValue5 = new JObject();
                                         baseActivityValue["transformation"] = transformationValue5;
                                         
-                                        if (derived21.Transformation.WebServiceParameters != null)
+                                        if (derived26.Transformation.WebServiceParameters != null)
                                         {
-                                            if (derived21.Transformation.WebServiceParameters is ILazyCollection == false || ((ILazyCollection)derived21.Transformation.WebServiceParameters).IsInitialized)
+                                            if (derived26.Transformation.WebServiceParameters is ILazyCollection == false || ((ILazyCollection)derived26.Transformation.WebServiceParameters).IsInitialized)
                                             {
                                                 JObject webServiceParametersDictionary = new JObject();
-                                                foreach (KeyValuePair<string, string> pair8 in derived21.Transformation.WebServiceParameters)
+                                                foreach (KeyValuePair<string, string> pair11 in derived26.Transformation.WebServiceParameters)
                                                 {
-                                                    string webServiceParametersKey = pair8.Key;
-                                                    string webServiceParametersValue = pair8.Value;
+                                                    string webServiceParametersKey = pair11.Key;
+                                                    string webServiceParametersValue = pair11.Value;
                                                     webServiceParametersDictionary[webServiceParametersKey] = webServiceParametersValue;
                                                 }
                                                 transformationValue5["webServiceParameters"] = webServiceParametersDictionary;
@@ -1377,63 +1547,63 @@ namespace Microsoft.Azure.Management.DataFactories
                                         }
                                     }
                                     
-                                    baseActivityValue["name"] = derived21.Name;
+                                    baseActivityValue["name"] = derived26.Name;
                                     
-                                    if (derived21.Description != null)
+                                    if (derived26.Description != null)
                                     {
-                                        baseActivityValue["description"] = derived21.Description;
+                                        baseActivityValue["description"] = derived26.Description;
                                     }
                                     
-                                    if (derived21.LinkedServiceName != null)
+                                    if (derived26.LinkedServiceName != null)
                                     {
-                                        baseActivityValue["linkedServiceName"] = derived21.LinkedServiceName;
+                                        baseActivityValue["linkedServiceName"] = derived26.LinkedServiceName;
                                     }
                                     
-                                    if (derived21.Policy != null)
+                                    if (derived26.Policy != null)
                                     {
                                         JObject policyValue5 = new JObject();
                                         baseActivityValue["policy"] = policyValue5;
                                         
-                                        if (derived21.Policy.Timeout != null)
+                                        if (derived26.Policy.Timeout != null)
                                         {
-                                            policyValue5["timeout"] = derived21.Policy.Timeout.Value.ToString();
+                                            policyValue5["timeout"] = derived26.Policy.Timeout.Value.ToString();
                                         }
                                         
-                                        if (derived21.Policy.Delay != null)
+                                        if (derived26.Policy.Delay != null)
                                         {
-                                            policyValue5["delay"] = derived21.Policy.Delay.Value.ToString();
+                                            policyValue5["delay"] = derived26.Policy.Delay.Value.ToString();
                                         }
                                         
-                                        if (derived21.Policy.Concurrency != null)
+                                        if (derived26.Policy.Concurrency != null)
                                         {
-                                            policyValue5["concurrency"] = derived21.Policy.Concurrency.Value;
+                                            policyValue5["concurrency"] = derived26.Policy.Concurrency.Value;
                                         }
                                         
-                                        if (derived21.Policy.ExecutionPriorityOrder != null)
+                                        if (derived26.Policy.ExecutionPriorityOrder != null)
                                         {
-                                            policyValue5["executionPriorityOrder"] = derived21.Policy.ExecutionPriorityOrder;
+                                            policyValue5["executionPriorityOrder"] = derived26.Policy.ExecutionPriorityOrder;
                                         }
                                         
-                                        if (derived21.Policy.Retry != null)
+                                        if (derived26.Policy.Retry != null)
                                         {
-                                            policyValue5["retry"] = derived21.Policy.Retry.Value;
+                                            policyValue5["retry"] = derived26.Policy.Retry.Value;
                                         }
                                         
-                                        if (derived21.Policy.LongRetry != null)
+                                        if (derived26.Policy.LongRetry != null)
                                         {
-                                            policyValue5["longRetry"] = derived21.Policy.LongRetry.Value;
+                                            policyValue5["longRetry"] = derived26.Policy.LongRetry.Value;
                                         }
                                         
-                                        if (derived21.Policy.LongRetryInterval != null)
+                                        if (derived26.Policy.LongRetryInterval != null)
                                         {
-                                            policyValue5["longRetryInterval"] = derived21.Policy.LongRetryInterval.Value.ToString();
+                                            policyValue5["longRetryInterval"] = derived26.Policy.LongRetryInterval.Value.ToString();
                                         }
                                     }
                                     
-                                    if (derived21.Inputs != null)
+                                    if (derived26.Inputs != null)
                                     {
                                         JArray inputsArray5 = new JArray();
-                                        foreach (ActivityInput inputsItem5 in derived21.Inputs)
+                                        foreach (ActivityInput inputsItem5 in derived26.Inputs)
                                         {
                                             JObject activityInputValue5 = new JObject();
                                             inputsArray5.Add(activityInputValue5);
@@ -1458,10 +1628,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                         baseActivityValue["inputs"] = inputsArray5;
                                     }
                                     
-                                    if (derived21.Outputs != null)
+                                    if (derived26.Outputs != null)
                                     {
                                         JArray outputsArray5 = new JArray();
-                                        foreach (ActivityOutput outputsItem5 in derived21.Outputs)
+                                        foreach (ActivityOutput outputsItem5 in derived26.Outputs)
                                         {
                                             JObject activityOutputValue5 = new JObject();
                                             outputsArray5.Add(activityOutputValue5);
@@ -1684,31 +1854,128 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         }
                                                         transformationInstance.Source = blobSourceInstance;
                                                     }
-                                                    if (typeName2 == "RelationalSource")
+                                                    if (typeName2 == "DocumentDbCollectionSource")
                                                     {
-                                                        RelationalSource relationalSourceInstance = new RelationalSource();
+                                                        DocumentDbCollectionSource documentDbCollectionSourceInstance = new DocumentDbCollectionSource();
                                                         
                                                         JToken queryValue = sourceValue2["query"];
                                                         if (queryValue != null && queryValue.Type != JTokenType.Null)
                                                         {
                                                             string queryInstance = ((string)queryValue);
-                                                            relationalSourceInstance.Query = queryInstance;
+                                                            documentDbCollectionSourceInstance.Query = queryInstance;
+                                                        }
+                                                        
+                                                        JToken nestingSeparatorValue = sourceValue2["nestingSeparator"];
+                                                        if (nestingSeparatorValue != null && nestingSeparatorValue.Type != JTokenType.Null)
+                                                        {
+                                                            string nestingSeparatorInstance = ((string)nestingSeparatorValue);
+                                                            documentDbCollectionSourceInstance.NestingSeparator = nestingSeparatorInstance;
                                                         }
                                                         
                                                         JToken sourceRetryCountValue3 = sourceValue2["sourceRetryCount"];
                                                         if (sourceRetryCountValue3 != null && sourceRetryCountValue3.Type != JTokenType.Null)
                                                         {
                                                             int sourceRetryCountInstance3 = ((int)sourceRetryCountValue3);
-                                                            relationalSourceInstance.SourceRetryCount = sourceRetryCountInstance3;
+                                                            documentDbCollectionSourceInstance.SourceRetryCount = sourceRetryCountInstance3;
                                                         }
                                                         
                                                         JToken sourceRetryWaitValue3 = sourceValue2["sourceRetryWait"];
                                                         if (sourceRetryWaitValue3 != null && sourceRetryWaitValue3.Type != JTokenType.Null)
                                                         {
                                                             TimeSpan sourceRetryWaitInstance3 = TimeSpan.Parse(((string)sourceRetryWaitValue3), CultureInfo.InvariantCulture);
-                                                            relationalSourceInstance.SourceRetryWait = sourceRetryWaitInstance3;
+                                                            documentDbCollectionSourceInstance.SourceRetryWait = sourceRetryWaitInstance3;
+                                                        }
+                                                        transformationInstance.Source = documentDbCollectionSourceInstance;
+                                                    }
+                                                    if (typeName2 == "RelationalSource")
+                                                    {
+                                                        RelationalSource relationalSourceInstance = new RelationalSource();
+                                                        
+                                                        JToken queryValue2 = sourceValue2["query"];
+                                                        if (queryValue2 != null && queryValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string queryInstance2 = ((string)queryValue2);
+                                                            relationalSourceInstance.Query = queryInstance2;
+                                                        }
+                                                        
+                                                        JToken sourceRetryCountValue4 = sourceValue2["sourceRetryCount"];
+                                                        if (sourceRetryCountValue4 != null && sourceRetryCountValue4.Type != JTokenType.Null)
+                                                        {
+                                                            int sourceRetryCountInstance4 = ((int)sourceRetryCountValue4);
+                                                            relationalSourceInstance.SourceRetryCount = sourceRetryCountInstance4;
+                                                        }
+                                                        
+                                                        JToken sourceRetryWaitValue4 = sourceValue2["sourceRetryWait"];
+                                                        if (sourceRetryWaitValue4 != null && sourceRetryWaitValue4.Type != JTokenType.Null)
+                                                        {
+                                                            TimeSpan sourceRetryWaitInstance4 = TimeSpan.Parse(((string)sourceRetryWaitValue4), CultureInfo.InvariantCulture);
+                                                            relationalSourceInstance.SourceRetryWait = sourceRetryWaitInstance4;
                                                         }
                                                         transformationInstance.Source = relationalSourceInstance;
+                                                    }
+                                                    if (typeName2 == "OdbcSource")
+                                                    {
+                                                        RelationalSource.OdbcSource odbcSourceInstance = new RelationalSource.OdbcSource();
+                                                        
+                                                        JToken odbcReaderQueryValue = sourceValue2["odbcReaderQuery"];
+                                                        if (odbcReaderQueryValue != null && odbcReaderQueryValue.Type != JTokenType.Null)
+                                                        {
+                                                            string odbcReaderQueryInstance = ((string)odbcReaderQueryValue);
+                                                            odbcSourceInstance.OdbcReaderQuery = odbcReaderQueryInstance;
+                                                        }
+                                                        
+                                                        JToken sourceRetryCountValue5 = sourceValue2["sourceRetryCount"];
+                                                        if (sourceRetryCountValue5 != null && sourceRetryCountValue5.Type != JTokenType.Null)
+                                                        {
+                                                            int sourceRetryCountInstance5 = ((int)sourceRetryCountValue5);
+                                                            odbcSourceInstance.SourceRetryCount = sourceRetryCountInstance5;
+                                                        }
+                                                        
+                                                        JToken sourceRetryWaitValue5 = sourceValue2["sourceRetryWait"];
+                                                        if (sourceRetryWaitValue5 != null && sourceRetryWaitValue5.Type != JTokenType.Null)
+                                                        {
+                                                            TimeSpan sourceRetryWaitInstance5 = TimeSpan.Parse(((string)sourceRetryWaitValue5), CultureInfo.InvariantCulture);
+                                                            odbcSourceInstance.SourceRetryWait = sourceRetryWaitInstance5;
+                                                        }
+                                                        transformationInstance.Source = odbcSourceInstance;
+                                                    }
+                                                    if (typeName2 == "ODataSource")
+                                                    {
+                                                        RelationalSource.ODataSource oDataSourceInstance = new RelationalSource.ODataSource();
+                                                        
+                                                        JToken sourceRetryCountValue6 = sourceValue2["sourceRetryCount"];
+                                                        if (sourceRetryCountValue6 != null && sourceRetryCountValue6.Type != JTokenType.Null)
+                                                        {
+                                                            int sourceRetryCountInstance6 = ((int)sourceRetryCountValue6);
+                                                            oDataSourceInstance.SourceRetryCount = sourceRetryCountInstance6;
+                                                        }
+                                                        
+                                                        JToken sourceRetryWaitValue6 = sourceValue2["sourceRetryWait"];
+                                                        if (sourceRetryWaitValue6 != null && sourceRetryWaitValue6.Type != JTokenType.Null)
+                                                        {
+                                                            TimeSpan sourceRetryWaitInstance6 = TimeSpan.Parse(((string)sourceRetryWaitValue6), CultureInfo.InvariantCulture);
+                                                            oDataSourceInstance.SourceRetryWait = sourceRetryWaitInstance6;
+                                                        }
+                                                        transformationInstance.Source = oDataSourceInstance;
+                                                    }
+                                                    if (typeName2 == "HdfsSource")
+                                                    {
+                                                        RelationalSource.HdfsSource hdfsSourceInstance = new RelationalSource.HdfsSource();
+                                                        
+                                                        JToken sourceRetryCountValue7 = sourceValue2["sourceRetryCount"];
+                                                        if (sourceRetryCountValue7 != null && sourceRetryCountValue7.Type != JTokenType.Null)
+                                                        {
+                                                            int sourceRetryCountInstance7 = ((int)sourceRetryCountValue7);
+                                                            hdfsSourceInstance.SourceRetryCount = sourceRetryCountInstance7;
+                                                        }
+                                                        
+                                                        JToken sourceRetryWaitValue7 = sourceValue2["sourceRetryWait"];
+                                                        if (sourceRetryWaitValue7 != null && sourceRetryWaitValue7.Type != JTokenType.Null)
+                                                        {
+                                                            TimeSpan sourceRetryWaitInstance7 = TimeSpan.Parse(((string)sourceRetryWaitValue7), CultureInfo.InvariantCulture);
+                                                            hdfsSourceInstance.SourceRetryWait = sourceRetryWaitInstance7;
+                                                        }
+                                                        transformationInstance.Source = hdfsSourceInstance;
                                                     }
                                                     if (typeName2 == "SqlSource")
                                                     {
@@ -1721,18 +1988,18 @@ namespace Microsoft.Azure.Management.DataFactories
                                                             sqlSourceInstance.SqlReaderQuery = sqlReaderQueryInstance;
                                                         }
                                                         
-                                                        JToken sourceRetryCountValue4 = sourceValue2["sourceRetryCount"];
-                                                        if (sourceRetryCountValue4 != null && sourceRetryCountValue4.Type != JTokenType.Null)
+                                                        JToken sourceRetryCountValue8 = sourceValue2["sourceRetryCount"];
+                                                        if (sourceRetryCountValue8 != null && sourceRetryCountValue8.Type != JTokenType.Null)
                                                         {
-                                                            int sourceRetryCountInstance4 = ((int)sourceRetryCountValue4);
-                                                            sqlSourceInstance.SourceRetryCount = sourceRetryCountInstance4;
+                                                            int sourceRetryCountInstance8 = ((int)sourceRetryCountValue8);
+                                                            sqlSourceInstance.SourceRetryCount = sourceRetryCountInstance8;
                                                         }
                                                         
-                                                        JToken sourceRetryWaitValue4 = sourceValue2["sourceRetryWait"];
-                                                        if (sourceRetryWaitValue4 != null && sourceRetryWaitValue4.Type != JTokenType.Null)
+                                                        JToken sourceRetryWaitValue8 = sourceValue2["sourceRetryWait"];
+                                                        if (sourceRetryWaitValue8 != null && sourceRetryWaitValue8.Type != JTokenType.Null)
                                                         {
-                                                            TimeSpan sourceRetryWaitInstance4 = TimeSpan.Parse(((string)sourceRetryWaitValue4), CultureInfo.InvariantCulture);
-                                                            sqlSourceInstance.SourceRetryWait = sourceRetryWaitInstance4;
+                                                            TimeSpan sourceRetryWaitInstance8 = TimeSpan.Parse(((string)sourceRetryWaitValue8), CultureInfo.InvariantCulture);
+                                                            sqlSourceInstance.SourceRetryWait = sourceRetryWaitInstance8;
                                                         }
                                                         transformationInstance.Source = sqlSourceInstance;
                                                     }
@@ -1740,18 +2007,18 @@ namespace Microsoft.Azure.Management.DataFactories
                                                     {
                                                         FileSystemSource fileSystemSourceInstance = new FileSystemSource();
                                                         
-                                                        JToken sourceRetryCountValue5 = sourceValue2["sourceRetryCount"];
-                                                        if (sourceRetryCountValue5 != null && sourceRetryCountValue5.Type != JTokenType.Null)
+                                                        JToken sourceRetryCountValue9 = sourceValue2["sourceRetryCount"];
+                                                        if (sourceRetryCountValue9 != null && sourceRetryCountValue9.Type != JTokenType.Null)
                                                         {
-                                                            int sourceRetryCountInstance5 = ((int)sourceRetryCountValue5);
-                                                            fileSystemSourceInstance.SourceRetryCount = sourceRetryCountInstance5;
+                                                            int sourceRetryCountInstance9 = ((int)sourceRetryCountValue9);
+                                                            fileSystemSourceInstance.SourceRetryCount = sourceRetryCountInstance9;
                                                         }
                                                         
-                                                        JToken sourceRetryWaitValue5 = sourceValue2["sourceRetryWait"];
-                                                        if (sourceRetryWaitValue5 != null && sourceRetryWaitValue5.Type != JTokenType.Null)
+                                                        JToken sourceRetryWaitValue9 = sourceValue2["sourceRetryWait"];
+                                                        if (sourceRetryWaitValue9 != null && sourceRetryWaitValue9.Type != JTokenType.Null)
                                                         {
-                                                            TimeSpan sourceRetryWaitInstance5 = TimeSpan.Parse(((string)sourceRetryWaitValue5), CultureInfo.InvariantCulture);
-                                                            fileSystemSourceInstance.SourceRetryWait = sourceRetryWaitInstance5;
+                                                            TimeSpan sourceRetryWaitInstance9 = TimeSpan.Parse(((string)sourceRetryWaitValue9), CultureInfo.InvariantCulture);
+                                                            fileSystemSourceInstance.SourceRetryWait = sourceRetryWaitInstance9;
                                                         }
                                                         transformationInstance.Source = fileSystemSourceInstance;
                                                     }
@@ -1773,18 +2040,18 @@ namespace Microsoft.Azure.Management.DataFactories
                                                             oracleSourceInstance.QueryTimeout = queryTimeoutInstance;
                                                         }
                                                         
-                                                        JToken sourceRetryCountValue6 = sourceValue2["sourceRetryCount"];
-                                                        if (sourceRetryCountValue6 != null && sourceRetryCountValue6.Type != JTokenType.Null)
+                                                        JToken sourceRetryCountValue10 = sourceValue2["sourceRetryCount"];
+                                                        if (sourceRetryCountValue10 != null && sourceRetryCountValue10.Type != JTokenType.Null)
                                                         {
-                                                            int sourceRetryCountInstance6 = ((int)sourceRetryCountValue6);
-                                                            oracleSourceInstance.SourceRetryCount = sourceRetryCountInstance6;
+                                                            int sourceRetryCountInstance10 = ((int)sourceRetryCountValue10);
+                                                            oracleSourceInstance.SourceRetryCount = sourceRetryCountInstance10;
                                                         }
                                                         
-                                                        JToken sourceRetryWaitValue6 = sourceValue2["sourceRetryWait"];
-                                                        if (sourceRetryWaitValue6 != null && sourceRetryWaitValue6.Type != JTokenType.Null)
+                                                        JToken sourceRetryWaitValue10 = sourceValue2["sourceRetryWait"];
+                                                        if (sourceRetryWaitValue10 != null && sourceRetryWaitValue10.Type != JTokenType.Null)
                                                         {
-                                                            TimeSpan sourceRetryWaitInstance6 = TimeSpan.Parse(((string)sourceRetryWaitValue6), CultureInfo.InvariantCulture);
-                                                            oracleSourceInstance.SourceRetryWait = sourceRetryWaitInstance6;
+                                                            TimeSpan sourceRetryWaitInstance10 = TimeSpan.Parse(((string)sourceRetryWaitValue10), CultureInfo.InvariantCulture);
+                                                            oracleSourceInstance.SourceRetryWait = sourceRetryWaitInstance10;
                                                         }
                                                         transformationInstance.Source = oracleSourceInstance;
                                                     }
@@ -2012,6 +2279,53 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         }
                                                         transformationInstance.Sink = blobSinkInstance;
                                                     }
+                                                    if (typeName3 == "DocumentDbCollectionSink")
+                                                    {
+                                                        DocumentDbCollectionSink documentDbCollectionSinkInstance = new DocumentDbCollectionSink();
+                                                        
+                                                        JToken nestingSeparatorValue2 = sinkValue2["nestingSeparator"];
+                                                        if (nestingSeparatorValue2 != null && nestingSeparatorValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string nestingSeparatorInstance2 = ((string)nestingSeparatorValue2);
+                                                            documentDbCollectionSinkInstance.NestingSeparator = nestingSeparatorInstance2;
+                                                        }
+                                                        
+                                                        JToken writeBatchSizeValue4 = sinkValue2["writeBatchSize"];
+                                                        if (writeBatchSizeValue4 != null && writeBatchSizeValue4.Type != JTokenType.Null)
+                                                        {
+                                                            int writeBatchSizeInstance4 = ((int)writeBatchSizeValue4);
+                                                            documentDbCollectionSinkInstance.WriteBatchSize = writeBatchSizeInstance4;
+                                                        }
+                                                        
+                                                        JToken writeBatchTimeoutValue4 = sinkValue2["writeBatchTimeout"];
+                                                        if (writeBatchTimeoutValue4 != null && writeBatchTimeoutValue4.Type != JTokenType.Null)
+                                                        {
+                                                            TimeSpan writeBatchTimeoutInstance4 = TimeSpan.Parse(((string)writeBatchTimeoutValue4), CultureInfo.InvariantCulture);
+                                                            documentDbCollectionSinkInstance.WriteBatchTimeout = writeBatchTimeoutInstance4;
+                                                        }
+                                                        
+                                                        JToken sinkRetryCountValue4 = sinkValue2["sinkRetryCount"];
+                                                        if (sinkRetryCountValue4 != null && sinkRetryCountValue4.Type != JTokenType.Null)
+                                                        {
+                                                            int sinkRetryCountInstance4 = ((int)sinkRetryCountValue4);
+                                                            documentDbCollectionSinkInstance.SinkRetryCount = sinkRetryCountInstance4;
+                                                        }
+                                                        
+                                                        JToken sinkRetryWaitValue4 = sinkValue2["sinkRetryWait"];
+                                                        if (sinkRetryWaitValue4 != null && sinkRetryWaitValue4.Type != JTokenType.Null)
+                                                        {
+                                                            TimeSpan sinkRetryWaitInstance4 = TimeSpan.Parse(((string)sinkRetryWaitValue4), CultureInfo.InvariantCulture);
+                                                            documentDbCollectionSinkInstance.SinkRetryWait = sinkRetryWaitInstance4;
+                                                        }
+                                                        
+                                                        JToken sinkPartitionDataValue4 = sinkValue2["sinkPartitionData"];
+                                                        if (sinkPartitionDataValue4 != null && sinkPartitionDataValue4.Type != JTokenType.Null)
+                                                        {
+                                                            bool sinkPartitionDataInstance4 = ((bool)sinkPartitionDataValue4);
+                                                            documentDbCollectionSinkInstance.SinkPartitionData = sinkPartitionDataInstance4;
+                                                        }
+                                                        transformationInstance.Sink = documentDbCollectionSinkInstance;
+                                                    }
                                                     if (typeName3 == "SqlSink")
                                                     {
                                                         SqlSink sqlSinkInstance = new SqlSink();
@@ -2028,6 +2342,20 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         {
                                                             string sqlWriterTableTypeInstance = ((string)sqlWriterTableTypeValue);
                                                             sqlSinkInstance.SqlWriterTableType = sqlWriterTableTypeInstance;
+                                                        }
+                                                        
+                                                        JToken sqlWriterCleanupScriptValue = sinkValue2["sqlWriterCleanupScript"];
+                                                        if (sqlWriterCleanupScriptValue != null && sqlWriterCleanupScriptValue.Type != JTokenType.Null)
+                                                        {
+                                                            string sqlWriterCleanupScriptInstance = ((string)sqlWriterCleanupScriptValue);
+                                                            sqlSinkInstance.SqlWriterCleanupScript = sqlWriterCleanupScriptInstance;
+                                                        }
+                                                        
+                                                        JToken sliceIdentifierColumnNameValue = sinkValue2["sliceIdentifierColumnName"];
+                                                        if (sliceIdentifierColumnNameValue != null && sliceIdentifierColumnNameValue.Type != JTokenType.Null)
+                                                        {
+                                                            string sliceIdentifierColumnNameInstance = ((string)sliceIdentifierColumnNameValue);
+                                                            sqlSinkInstance.SliceIdentifierColumnName = sliceIdentifierColumnNameInstance;
                                                         }
                                                         
                                                         JToken storedProcedureParametersSequenceElement = ((JToken)sinkValue2["storedProcedureParameters"]);
@@ -2056,39 +2384,39 @@ namespace Microsoft.Azure.Management.DataFactories
                                                             }
                                                         }
                                                         
-                                                        JToken writeBatchSizeValue4 = sinkValue2["writeBatchSize"];
-                                                        if (writeBatchSizeValue4 != null && writeBatchSizeValue4.Type != JTokenType.Null)
+                                                        JToken writeBatchSizeValue5 = sinkValue2["writeBatchSize"];
+                                                        if (writeBatchSizeValue5 != null && writeBatchSizeValue5.Type != JTokenType.Null)
                                                         {
-                                                            int writeBatchSizeInstance4 = ((int)writeBatchSizeValue4);
-                                                            sqlSinkInstance.WriteBatchSize = writeBatchSizeInstance4;
+                                                            int writeBatchSizeInstance5 = ((int)writeBatchSizeValue5);
+                                                            sqlSinkInstance.WriteBatchSize = writeBatchSizeInstance5;
                                                         }
                                                         
-                                                        JToken writeBatchTimeoutValue4 = sinkValue2["writeBatchTimeout"];
-                                                        if (writeBatchTimeoutValue4 != null && writeBatchTimeoutValue4.Type != JTokenType.Null)
+                                                        JToken writeBatchTimeoutValue5 = sinkValue2["writeBatchTimeout"];
+                                                        if (writeBatchTimeoutValue5 != null && writeBatchTimeoutValue5.Type != JTokenType.Null)
                                                         {
-                                                            TimeSpan writeBatchTimeoutInstance4 = TimeSpan.Parse(((string)writeBatchTimeoutValue4), CultureInfo.InvariantCulture);
-                                                            sqlSinkInstance.WriteBatchTimeout = writeBatchTimeoutInstance4;
+                                                            TimeSpan writeBatchTimeoutInstance5 = TimeSpan.Parse(((string)writeBatchTimeoutValue5), CultureInfo.InvariantCulture);
+                                                            sqlSinkInstance.WriteBatchTimeout = writeBatchTimeoutInstance5;
                                                         }
                                                         
-                                                        JToken sinkRetryCountValue4 = sinkValue2["sinkRetryCount"];
-                                                        if (sinkRetryCountValue4 != null && sinkRetryCountValue4.Type != JTokenType.Null)
+                                                        JToken sinkRetryCountValue5 = sinkValue2["sinkRetryCount"];
+                                                        if (sinkRetryCountValue5 != null && sinkRetryCountValue5.Type != JTokenType.Null)
                                                         {
-                                                            int sinkRetryCountInstance4 = ((int)sinkRetryCountValue4);
-                                                            sqlSinkInstance.SinkRetryCount = sinkRetryCountInstance4;
+                                                            int sinkRetryCountInstance5 = ((int)sinkRetryCountValue5);
+                                                            sqlSinkInstance.SinkRetryCount = sinkRetryCountInstance5;
                                                         }
                                                         
-                                                        JToken sinkRetryWaitValue4 = sinkValue2["sinkRetryWait"];
-                                                        if (sinkRetryWaitValue4 != null && sinkRetryWaitValue4.Type != JTokenType.Null)
+                                                        JToken sinkRetryWaitValue5 = sinkValue2["sinkRetryWait"];
+                                                        if (sinkRetryWaitValue5 != null && sinkRetryWaitValue5.Type != JTokenType.Null)
                                                         {
-                                                            TimeSpan sinkRetryWaitInstance4 = TimeSpan.Parse(((string)sinkRetryWaitValue4), CultureInfo.InvariantCulture);
-                                                            sqlSinkInstance.SinkRetryWait = sinkRetryWaitInstance4;
+                                                            TimeSpan sinkRetryWaitInstance5 = TimeSpan.Parse(((string)sinkRetryWaitValue5), CultureInfo.InvariantCulture);
+                                                            sqlSinkInstance.SinkRetryWait = sinkRetryWaitInstance5;
                                                         }
                                                         
-                                                        JToken sinkPartitionDataValue4 = sinkValue2["sinkPartitionData"];
-                                                        if (sinkPartitionDataValue4 != null && sinkPartitionDataValue4.Type != JTokenType.Null)
+                                                        JToken sinkPartitionDataValue5 = sinkValue2["sinkPartitionData"];
+                                                        if (sinkPartitionDataValue5 != null && sinkPartitionDataValue5.Type != JTokenType.Null)
                                                         {
-                                                            bool sinkPartitionDataInstance4 = ((bool)sinkPartitionDataValue4);
-                                                            sqlSinkInstance.SinkPartitionData = sinkPartitionDataInstance4;
+                                                            bool sinkPartitionDataInstance5 = ((bool)sinkPartitionDataValue5);
+                                                            sqlSinkInstance.SinkPartitionData = sinkPartitionDataInstance5;
                                                         }
                                                         transformationInstance.Sink = sqlSinkInstance;
                                                     }
@@ -2110,39 +2438,39 @@ namespace Microsoft.Azure.Management.DataFactories
                                                             oracleSinkInstance.OracleWriterTableType = oracleWriterTableTypeInstance;
                                                         }
                                                         
-                                                        JToken writeBatchSizeValue5 = sinkValue2["writeBatchSize"];
-                                                        if (writeBatchSizeValue5 != null && writeBatchSizeValue5.Type != JTokenType.Null)
+                                                        JToken writeBatchSizeValue6 = sinkValue2["writeBatchSize"];
+                                                        if (writeBatchSizeValue6 != null && writeBatchSizeValue6.Type != JTokenType.Null)
                                                         {
-                                                            int writeBatchSizeInstance5 = ((int)writeBatchSizeValue5);
-                                                            oracleSinkInstance.WriteBatchSize = writeBatchSizeInstance5;
+                                                            int writeBatchSizeInstance6 = ((int)writeBatchSizeValue6);
+                                                            oracleSinkInstance.WriteBatchSize = writeBatchSizeInstance6;
                                                         }
                                                         
-                                                        JToken writeBatchTimeoutValue5 = sinkValue2["writeBatchTimeout"];
-                                                        if (writeBatchTimeoutValue5 != null && writeBatchTimeoutValue5.Type != JTokenType.Null)
+                                                        JToken writeBatchTimeoutValue6 = sinkValue2["writeBatchTimeout"];
+                                                        if (writeBatchTimeoutValue6 != null && writeBatchTimeoutValue6.Type != JTokenType.Null)
                                                         {
-                                                            TimeSpan writeBatchTimeoutInstance5 = TimeSpan.Parse(((string)writeBatchTimeoutValue5), CultureInfo.InvariantCulture);
-                                                            oracleSinkInstance.WriteBatchTimeout = writeBatchTimeoutInstance5;
+                                                            TimeSpan writeBatchTimeoutInstance6 = TimeSpan.Parse(((string)writeBatchTimeoutValue6), CultureInfo.InvariantCulture);
+                                                            oracleSinkInstance.WriteBatchTimeout = writeBatchTimeoutInstance6;
                                                         }
                                                         
-                                                        JToken sinkRetryCountValue5 = sinkValue2["sinkRetryCount"];
-                                                        if (sinkRetryCountValue5 != null && sinkRetryCountValue5.Type != JTokenType.Null)
+                                                        JToken sinkRetryCountValue6 = sinkValue2["sinkRetryCount"];
+                                                        if (sinkRetryCountValue6 != null && sinkRetryCountValue6.Type != JTokenType.Null)
                                                         {
-                                                            int sinkRetryCountInstance5 = ((int)sinkRetryCountValue5);
-                                                            oracleSinkInstance.SinkRetryCount = sinkRetryCountInstance5;
+                                                            int sinkRetryCountInstance6 = ((int)sinkRetryCountValue6);
+                                                            oracleSinkInstance.SinkRetryCount = sinkRetryCountInstance6;
                                                         }
                                                         
-                                                        JToken sinkRetryWaitValue5 = sinkValue2["sinkRetryWait"];
-                                                        if (sinkRetryWaitValue5 != null && sinkRetryWaitValue5.Type != JTokenType.Null)
+                                                        JToken sinkRetryWaitValue6 = sinkValue2["sinkRetryWait"];
+                                                        if (sinkRetryWaitValue6 != null && sinkRetryWaitValue6.Type != JTokenType.Null)
                                                         {
-                                                            TimeSpan sinkRetryWaitInstance5 = TimeSpan.Parse(((string)sinkRetryWaitValue5), CultureInfo.InvariantCulture);
-                                                            oracleSinkInstance.SinkRetryWait = sinkRetryWaitInstance5;
+                                                            TimeSpan sinkRetryWaitInstance6 = TimeSpan.Parse(((string)sinkRetryWaitValue6), CultureInfo.InvariantCulture);
+                                                            oracleSinkInstance.SinkRetryWait = sinkRetryWaitInstance6;
                                                         }
                                                         
-                                                        JToken sinkPartitionDataValue5 = sinkValue2["sinkPartitionData"];
-                                                        if (sinkPartitionDataValue5 != null && sinkPartitionDataValue5.Type != JTokenType.Null)
+                                                        JToken sinkPartitionDataValue6 = sinkValue2["sinkPartitionData"];
+                                                        if (sinkPartitionDataValue6 != null && sinkPartitionDataValue6.Type != JTokenType.Null)
                                                         {
-                                                            bool sinkPartitionDataInstance5 = ((bool)sinkPartitionDataValue5);
-                                                            oracleSinkInstance.SinkPartitionData = sinkPartitionDataInstance5;
+                                                            bool sinkPartitionDataInstance6 = ((bool)sinkPartitionDataValue6);
+                                                            oracleSinkInstance.SinkPartitionData = sinkPartitionDataInstance6;
                                                         }
                                                         transformationInstance.Sink = oracleSinkInstance;
                                                     }
@@ -2333,13 +2661,24 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         hiveInstance.ScriptLinkedService = scriptLinkedServiceInstance;
                                                     }
                                                     
+                                                    JToken definesSequenceElement = ((JToken)transformationValue7["defines"]);
+                                                    if (definesSequenceElement != null && definesSequenceElement.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JProperty property2 in definesSequenceElement)
+                                                        {
+                                                            string definesKey4 = ((string)property2.Name);
+                                                            string definesValue4 = ((string)property2.Value);
+                                                            hiveInstance.Defines.Add(definesKey4, definesValue4);
+                                                        }
+                                                    }
+                                                    
                                                     JToken extendedPropertiesSequenceElement = ((JToken)transformationValue7["extendedProperties"]);
                                                     if (extendedPropertiesSequenceElement != null && extendedPropertiesSequenceElement.Type != JTokenType.Null)
                                                     {
-                                                        foreach (JProperty property2 in extendedPropertiesSequenceElement)
+                                                        foreach (JProperty property3 in extendedPropertiesSequenceElement)
                                                         {
-                                                            string extendedPropertiesKey6 = ((string)property2.Name);
-                                                            string extendedPropertiesValue6 = ((string)property2.Value);
+                                                            string extendedPropertiesKey6 = ((string)property3.Name);
+                                                            string extendedPropertiesValue6 = ((string)property3.Value);
                                                             hiveInstance.ExtendedProperties.Add(extendedPropertiesKey6, extendedPropertiesValue6);
                                                         }
                                                     }
@@ -2350,6 +2689,15 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         foreach (JToken storageLinkedServicesValue in ((JArray)storageLinkedServicesArray5))
                                                         {
                                                             hiveInstance.StorageLinkedServices.Add(((string)storageLinkedServicesValue));
+                                                        }
+                                                    }
+                                                    
+                                                    JToken argumentsArray5 = transformationValue7["arguments"];
+                                                    if (argumentsArray5 != null && argumentsArray5.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken argumentsValue in ((JArray)argumentsArray5))
+                                                        {
+                                                            hiveInstance.Arguments.Add(((string)argumentsValue));
                                                         }
                                                     }
                                                     hDInsightActivityInstance.Transformation = hiveInstance;
@@ -2382,10 +2730,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                     JToken extendedPropertiesSequenceElement2 = ((JToken)transformationValue7["extendedProperties"]);
                                                     if (extendedPropertiesSequenceElement2 != null && extendedPropertiesSequenceElement2.Type != JTokenType.Null)
                                                     {
-                                                        foreach (JProperty property3 in extendedPropertiesSequenceElement2)
+                                                        foreach (JProperty property4 in extendedPropertiesSequenceElement2)
                                                         {
-                                                            string extendedPropertiesKey7 = ((string)property3.Name);
-                                                            string extendedPropertiesValue7 = ((string)property3.Value);
+                                                            string extendedPropertiesKey7 = ((string)property4.Name);
+                                                            string extendedPropertiesValue7 = ((string)property4.Value);
                                                             pigInstance.ExtendedProperties.Add(extendedPropertiesKey7, extendedPropertiesValue7);
                                                         }
                                                     }
@@ -2396,6 +2744,15 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         foreach (JToken storageLinkedServicesValue2 in ((JArray)storageLinkedServicesArray6))
                                                         {
                                                             pigInstance.StorageLinkedServices.Add(((string)storageLinkedServicesValue2));
+                                                        }
+                                                    }
+                                                    
+                                                    JToken argumentsArray6 = transformationValue7["arguments"];
+                                                    if (argumentsArray6 != null && argumentsArray6.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken argumentsValue2 in ((JArray)argumentsArray6))
+                                                        {
+                                                            pigInstance.Arguments.Add(((string)argumentsValue2));
                                                         }
                                                     }
                                                     hDInsightActivityInstance.Transformation = pigInstance;
@@ -2434,22 +2791,24 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         }
                                                     }
                                                     
-                                                    JToken argumentsArray3 = transformationValue7["arguments"];
-                                                    if (argumentsArray3 != null && argumentsArray3.Type != JTokenType.Null)
+                                                    JToken definesSequenceElement2 = ((JToken)transformationValue7["defines"]);
+                                                    if (definesSequenceElement2 != null && definesSequenceElement2.Type != JTokenType.Null)
                                                     {
-                                                        foreach (JToken argumentsValue in ((JArray)argumentsArray3))
+                                                        foreach (JProperty property5 in definesSequenceElement2)
                                                         {
-                                                            mapReduceInstance.Arguments.Add(((string)argumentsValue));
+                                                            string definesKey5 = ((string)property5.Name);
+                                                            string definesValue5 = ((string)property5.Value);
+                                                            mapReduceInstance.Defines.Add(definesKey5, definesValue5);
                                                         }
                                                     }
                                                     
                                                     JToken extendedPropertiesSequenceElement3 = ((JToken)transformationValue7["extendedProperties"]);
                                                     if (extendedPropertiesSequenceElement3 != null && extendedPropertiesSequenceElement3.Type != JTokenType.Null)
                                                     {
-                                                        foreach (JProperty property4 in extendedPropertiesSequenceElement3)
+                                                        foreach (JProperty property6 in extendedPropertiesSequenceElement3)
                                                         {
-                                                            string extendedPropertiesKey8 = ((string)property4.Name);
-                                                            string extendedPropertiesValue8 = ((string)property4.Value);
+                                                            string extendedPropertiesKey8 = ((string)property6.Name);
+                                                            string extendedPropertiesValue8 = ((string)property6.Value);
                                                             mapReduceInstance.ExtendedProperties.Add(extendedPropertiesKey8, extendedPropertiesValue8);
                                                         }
                                                     }
@@ -2460,6 +2819,15 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         foreach (JToken storageLinkedServicesValue3 in ((JArray)storageLinkedServicesArray7))
                                                         {
                                                             mapReduceInstance.StorageLinkedServices.Add(((string)storageLinkedServicesValue3));
+                                                        }
+                                                    }
+                                                    
+                                                    JToken argumentsArray7 = transformationValue7["arguments"];
+                                                    if (argumentsArray7 != null && argumentsArray7.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken argumentsValue3 in ((JArray)argumentsArray7))
+                                                        {
+                                                            mapReduceInstance.Arguments.Add(((string)argumentsValue3));
                                                         }
                                                     }
                                                     hDInsightActivityInstance.Transformation = mapReduceInstance;
@@ -2528,22 +2896,24 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         }
                                                     }
                                                     
-                                                    JToken argumentsArray4 = transformationValue7["arguments"];
-                                                    if (argumentsArray4 != null && argumentsArray4.Type != JTokenType.Null)
+                                                    JToken definesSequenceElement3 = ((JToken)transformationValue7["defines"]);
+                                                    if (definesSequenceElement3 != null && definesSequenceElement3.Type != JTokenType.Null)
                                                     {
-                                                        foreach (JToken argumentsValue2 in ((JArray)argumentsArray4))
+                                                        foreach (JProperty property7 in definesSequenceElement3)
                                                         {
-                                                            streamingInstance.Arguments.Add(((string)argumentsValue2));
+                                                            string definesKey6 = ((string)property7.Name);
+                                                            string definesValue6 = ((string)property7.Value);
+                                                            streamingInstance.Defines.Add(definesKey6, definesValue6);
                                                         }
                                                     }
                                                     
                                                     JToken extendedPropertiesSequenceElement4 = ((JToken)transformationValue7["extendedProperties"]);
                                                     if (extendedPropertiesSequenceElement4 != null && extendedPropertiesSequenceElement4.Type != JTokenType.Null)
                                                     {
-                                                        foreach (JProperty property5 in extendedPropertiesSequenceElement4)
+                                                        foreach (JProperty property8 in extendedPropertiesSequenceElement4)
                                                         {
-                                                            string extendedPropertiesKey9 = ((string)property5.Name);
-                                                            string extendedPropertiesValue9 = ((string)property5.Value);
+                                                            string extendedPropertiesKey9 = ((string)property8.Name);
+                                                            string extendedPropertiesValue9 = ((string)property8.Value);
                                                             streamingInstance.ExtendedProperties.Add(extendedPropertiesKey9, extendedPropertiesValue9);
                                                         }
                                                     }
@@ -2554,6 +2924,15 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         foreach (JToken storageLinkedServicesValue4 in ((JArray)storageLinkedServicesArray8))
                                                         {
                                                             streamingInstance.StorageLinkedServices.Add(((string)storageLinkedServicesValue4));
+                                                        }
+                                                    }
+                                                    
+                                                    JToken argumentsArray8 = transformationValue7["arguments"];
+                                                    if (argumentsArray8 != null && argumentsArray8.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken argumentsValue4 in ((JArray)argumentsArray8))
+                                                        {
+                                                            streamingInstance.Arguments.Add(((string)argumentsValue4));
                                                         }
                                                     }
                                                     hDInsightActivityInstance.Transformation = streamingInstance;
@@ -2734,10 +3113,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 JToken extendedPropertiesSequenceElement5 = ((JToken)transformationValue8["extendedProperties"]);
                                                 if (extendedPropertiesSequenceElement5 != null && extendedPropertiesSequenceElement5.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JProperty property6 in extendedPropertiesSequenceElement5)
+                                                    foreach (JProperty property9 in extendedPropertiesSequenceElement5)
                                                     {
-                                                        string extendedPropertiesKey10 = ((string)property6.Name);
-                                                        string extendedPropertiesValue10 = ((string)property6.Value);
+                                                        string extendedPropertiesKey10 = ((string)property9.Name);
+                                                        string extendedPropertiesValue10 = ((string)property9.Value);
                                                         transformationInstance2.ExtendedProperties.Add(extendedPropertiesKey10, extendedPropertiesValue10);
                                                     }
                                                 }
@@ -2896,10 +3275,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 JToken storedProcedureParametersSequenceElement2 = ((JToken)transformationValue9["storedProcedureParameters"]);
                                                 if (storedProcedureParametersSequenceElement2 != null && storedProcedureParametersSequenceElement2.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JProperty property7 in storedProcedureParametersSequenceElement2)
+                                                    foreach (JProperty property10 in storedProcedureParametersSequenceElement2)
                                                     {
-                                                        string storedProcedureParametersKey4 = ((string)property7.Name);
-                                                        string storedProcedureParametersValue3 = ((string)property7.Value);
+                                                        string storedProcedureParametersKey4 = ((string)property10.Name);
+                                                        string storedProcedureParametersValue3 = ((string)property10.Value);
                                                         transformationInstance3.StoredProcedureActivityParameters.Add(storedProcedureParametersKey4, storedProcedureParametersValue3);
                                                     }
                                                 }
@@ -3051,10 +3430,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 JToken webServiceParametersSequenceElement = ((JToken)transformationValue10["webServiceParameters"]);
                                                 if (webServiceParametersSequenceElement != null && webServiceParametersSequenceElement.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JProperty property8 in webServiceParametersSequenceElement)
+                                                    foreach (JProperty property11 in webServiceParametersSequenceElement)
                                                     {
-                                                        string webServiceParametersKey2 = ((string)property8.Name);
-                                                        string webServiceParametersValue2 = ((string)property8.Value);
+                                                        string webServiceParametersKey2 = ((string)property11.Name);
+                                                        string webServiceParametersValue2 = ((string)property11.Value);
                                                         transformationInstance4.WebServiceParameters.Add(webServiceParametersKey2, webServiceParametersValue2);
                                                     }
                                                 }
@@ -3585,31 +3964,128 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         }
                                                         transformationInstance.Source = blobSourceInstance;
                                                     }
-                                                    if (typeName2 == "RelationalSource")
+                                                    if (typeName2 == "DocumentDbCollectionSource")
                                                     {
-                                                        RelationalSource relationalSourceInstance = new RelationalSource();
+                                                        DocumentDbCollectionSource documentDbCollectionSourceInstance = new DocumentDbCollectionSource();
                                                         
                                                         JToken queryValue = sourceValue["query"];
                                                         if (queryValue != null && queryValue.Type != JTokenType.Null)
                                                         {
                                                             string queryInstance = ((string)queryValue);
-                                                            relationalSourceInstance.Query = queryInstance;
+                                                            documentDbCollectionSourceInstance.Query = queryInstance;
+                                                        }
+                                                        
+                                                        JToken nestingSeparatorValue = sourceValue["nestingSeparator"];
+                                                        if (nestingSeparatorValue != null && nestingSeparatorValue.Type != JTokenType.Null)
+                                                        {
+                                                            string nestingSeparatorInstance = ((string)nestingSeparatorValue);
+                                                            documentDbCollectionSourceInstance.NestingSeparator = nestingSeparatorInstance;
                                                         }
                                                         
                                                         JToken sourceRetryCountValue3 = sourceValue["sourceRetryCount"];
                                                         if (sourceRetryCountValue3 != null && sourceRetryCountValue3.Type != JTokenType.Null)
                                                         {
                                                             int sourceRetryCountInstance3 = ((int)sourceRetryCountValue3);
-                                                            relationalSourceInstance.SourceRetryCount = sourceRetryCountInstance3;
+                                                            documentDbCollectionSourceInstance.SourceRetryCount = sourceRetryCountInstance3;
                                                         }
                                                         
                                                         JToken sourceRetryWaitValue3 = sourceValue["sourceRetryWait"];
                                                         if (sourceRetryWaitValue3 != null && sourceRetryWaitValue3.Type != JTokenType.Null)
                                                         {
                                                             TimeSpan sourceRetryWaitInstance3 = TimeSpan.Parse(((string)sourceRetryWaitValue3), CultureInfo.InvariantCulture);
-                                                            relationalSourceInstance.SourceRetryWait = sourceRetryWaitInstance3;
+                                                            documentDbCollectionSourceInstance.SourceRetryWait = sourceRetryWaitInstance3;
+                                                        }
+                                                        transformationInstance.Source = documentDbCollectionSourceInstance;
+                                                    }
+                                                    if (typeName2 == "RelationalSource")
+                                                    {
+                                                        RelationalSource relationalSourceInstance = new RelationalSource();
+                                                        
+                                                        JToken queryValue2 = sourceValue["query"];
+                                                        if (queryValue2 != null && queryValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string queryInstance2 = ((string)queryValue2);
+                                                            relationalSourceInstance.Query = queryInstance2;
+                                                        }
+                                                        
+                                                        JToken sourceRetryCountValue4 = sourceValue["sourceRetryCount"];
+                                                        if (sourceRetryCountValue4 != null && sourceRetryCountValue4.Type != JTokenType.Null)
+                                                        {
+                                                            int sourceRetryCountInstance4 = ((int)sourceRetryCountValue4);
+                                                            relationalSourceInstance.SourceRetryCount = sourceRetryCountInstance4;
+                                                        }
+                                                        
+                                                        JToken sourceRetryWaitValue4 = sourceValue["sourceRetryWait"];
+                                                        if (sourceRetryWaitValue4 != null && sourceRetryWaitValue4.Type != JTokenType.Null)
+                                                        {
+                                                            TimeSpan sourceRetryWaitInstance4 = TimeSpan.Parse(((string)sourceRetryWaitValue4), CultureInfo.InvariantCulture);
+                                                            relationalSourceInstance.SourceRetryWait = sourceRetryWaitInstance4;
                                                         }
                                                         transformationInstance.Source = relationalSourceInstance;
+                                                    }
+                                                    if (typeName2 == "OdbcSource")
+                                                    {
+                                                        RelationalSource.OdbcSource odbcSourceInstance = new RelationalSource.OdbcSource();
+                                                        
+                                                        JToken odbcReaderQueryValue = sourceValue["odbcReaderQuery"];
+                                                        if (odbcReaderQueryValue != null && odbcReaderQueryValue.Type != JTokenType.Null)
+                                                        {
+                                                            string odbcReaderQueryInstance = ((string)odbcReaderQueryValue);
+                                                            odbcSourceInstance.OdbcReaderQuery = odbcReaderQueryInstance;
+                                                        }
+                                                        
+                                                        JToken sourceRetryCountValue5 = sourceValue["sourceRetryCount"];
+                                                        if (sourceRetryCountValue5 != null && sourceRetryCountValue5.Type != JTokenType.Null)
+                                                        {
+                                                            int sourceRetryCountInstance5 = ((int)sourceRetryCountValue5);
+                                                            odbcSourceInstance.SourceRetryCount = sourceRetryCountInstance5;
+                                                        }
+                                                        
+                                                        JToken sourceRetryWaitValue5 = sourceValue["sourceRetryWait"];
+                                                        if (sourceRetryWaitValue5 != null && sourceRetryWaitValue5.Type != JTokenType.Null)
+                                                        {
+                                                            TimeSpan sourceRetryWaitInstance5 = TimeSpan.Parse(((string)sourceRetryWaitValue5), CultureInfo.InvariantCulture);
+                                                            odbcSourceInstance.SourceRetryWait = sourceRetryWaitInstance5;
+                                                        }
+                                                        transformationInstance.Source = odbcSourceInstance;
+                                                    }
+                                                    if (typeName2 == "ODataSource")
+                                                    {
+                                                        RelationalSource.ODataSource oDataSourceInstance = new RelationalSource.ODataSource();
+                                                        
+                                                        JToken sourceRetryCountValue6 = sourceValue["sourceRetryCount"];
+                                                        if (sourceRetryCountValue6 != null && sourceRetryCountValue6.Type != JTokenType.Null)
+                                                        {
+                                                            int sourceRetryCountInstance6 = ((int)sourceRetryCountValue6);
+                                                            oDataSourceInstance.SourceRetryCount = sourceRetryCountInstance6;
+                                                        }
+                                                        
+                                                        JToken sourceRetryWaitValue6 = sourceValue["sourceRetryWait"];
+                                                        if (sourceRetryWaitValue6 != null && sourceRetryWaitValue6.Type != JTokenType.Null)
+                                                        {
+                                                            TimeSpan sourceRetryWaitInstance6 = TimeSpan.Parse(((string)sourceRetryWaitValue6), CultureInfo.InvariantCulture);
+                                                            oDataSourceInstance.SourceRetryWait = sourceRetryWaitInstance6;
+                                                        }
+                                                        transformationInstance.Source = oDataSourceInstance;
+                                                    }
+                                                    if (typeName2 == "HdfsSource")
+                                                    {
+                                                        RelationalSource.HdfsSource hdfsSourceInstance = new RelationalSource.HdfsSource();
+                                                        
+                                                        JToken sourceRetryCountValue7 = sourceValue["sourceRetryCount"];
+                                                        if (sourceRetryCountValue7 != null && sourceRetryCountValue7.Type != JTokenType.Null)
+                                                        {
+                                                            int sourceRetryCountInstance7 = ((int)sourceRetryCountValue7);
+                                                            hdfsSourceInstance.SourceRetryCount = sourceRetryCountInstance7;
+                                                        }
+                                                        
+                                                        JToken sourceRetryWaitValue7 = sourceValue["sourceRetryWait"];
+                                                        if (sourceRetryWaitValue7 != null && sourceRetryWaitValue7.Type != JTokenType.Null)
+                                                        {
+                                                            TimeSpan sourceRetryWaitInstance7 = TimeSpan.Parse(((string)sourceRetryWaitValue7), CultureInfo.InvariantCulture);
+                                                            hdfsSourceInstance.SourceRetryWait = sourceRetryWaitInstance7;
+                                                        }
+                                                        transformationInstance.Source = hdfsSourceInstance;
                                                     }
                                                     if (typeName2 == "SqlSource")
                                                     {
@@ -3622,18 +4098,18 @@ namespace Microsoft.Azure.Management.DataFactories
                                                             sqlSourceInstance.SqlReaderQuery = sqlReaderQueryInstance;
                                                         }
                                                         
-                                                        JToken sourceRetryCountValue4 = sourceValue["sourceRetryCount"];
-                                                        if (sourceRetryCountValue4 != null && sourceRetryCountValue4.Type != JTokenType.Null)
+                                                        JToken sourceRetryCountValue8 = sourceValue["sourceRetryCount"];
+                                                        if (sourceRetryCountValue8 != null && sourceRetryCountValue8.Type != JTokenType.Null)
                                                         {
-                                                            int sourceRetryCountInstance4 = ((int)sourceRetryCountValue4);
-                                                            sqlSourceInstance.SourceRetryCount = sourceRetryCountInstance4;
+                                                            int sourceRetryCountInstance8 = ((int)sourceRetryCountValue8);
+                                                            sqlSourceInstance.SourceRetryCount = sourceRetryCountInstance8;
                                                         }
                                                         
-                                                        JToken sourceRetryWaitValue4 = sourceValue["sourceRetryWait"];
-                                                        if (sourceRetryWaitValue4 != null && sourceRetryWaitValue4.Type != JTokenType.Null)
+                                                        JToken sourceRetryWaitValue8 = sourceValue["sourceRetryWait"];
+                                                        if (sourceRetryWaitValue8 != null && sourceRetryWaitValue8.Type != JTokenType.Null)
                                                         {
-                                                            TimeSpan sourceRetryWaitInstance4 = TimeSpan.Parse(((string)sourceRetryWaitValue4), CultureInfo.InvariantCulture);
-                                                            sqlSourceInstance.SourceRetryWait = sourceRetryWaitInstance4;
+                                                            TimeSpan sourceRetryWaitInstance8 = TimeSpan.Parse(((string)sourceRetryWaitValue8), CultureInfo.InvariantCulture);
+                                                            sqlSourceInstance.SourceRetryWait = sourceRetryWaitInstance8;
                                                         }
                                                         transformationInstance.Source = sqlSourceInstance;
                                                     }
@@ -3641,18 +4117,18 @@ namespace Microsoft.Azure.Management.DataFactories
                                                     {
                                                         FileSystemSource fileSystemSourceInstance = new FileSystemSource();
                                                         
-                                                        JToken sourceRetryCountValue5 = sourceValue["sourceRetryCount"];
-                                                        if (sourceRetryCountValue5 != null && sourceRetryCountValue5.Type != JTokenType.Null)
+                                                        JToken sourceRetryCountValue9 = sourceValue["sourceRetryCount"];
+                                                        if (sourceRetryCountValue9 != null && sourceRetryCountValue9.Type != JTokenType.Null)
                                                         {
-                                                            int sourceRetryCountInstance5 = ((int)sourceRetryCountValue5);
-                                                            fileSystemSourceInstance.SourceRetryCount = sourceRetryCountInstance5;
+                                                            int sourceRetryCountInstance9 = ((int)sourceRetryCountValue9);
+                                                            fileSystemSourceInstance.SourceRetryCount = sourceRetryCountInstance9;
                                                         }
                                                         
-                                                        JToken sourceRetryWaitValue5 = sourceValue["sourceRetryWait"];
-                                                        if (sourceRetryWaitValue5 != null && sourceRetryWaitValue5.Type != JTokenType.Null)
+                                                        JToken sourceRetryWaitValue9 = sourceValue["sourceRetryWait"];
+                                                        if (sourceRetryWaitValue9 != null && sourceRetryWaitValue9.Type != JTokenType.Null)
                                                         {
-                                                            TimeSpan sourceRetryWaitInstance5 = TimeSpan.Parse(((string)sourceRetryWaitValue5), CultureInfo.InvariantCulture);
-                                                            fileSystemSourceInstance.SourceRetryWait = sourceRetryWaitInstance5;
+                                                            TimeSpan sourceRetryWaitInstance9 = TimeSpan.Parse(((string)sourceRetryWaitValue9), CultureInfo.InvariantCulture);
+                                                            fileSystemSourceInstance.SourceRetryWait = sourceRetryWaitInstance9;
                                                         }
                                                         transformationInstance.Source = fileSystemSourceInstance;
                                                     }
@@ -3674,18 +4150,18 @@ namespace Microsoft.Azure.Management.DataFactories
                                                             oracleSourceInstance.QueryTimeout = queryTimeoutInstance;
                                                         }
                                                         
-                                                        JToken sourceRetryCountValue6 = sourceValue["sourceRetryCount"];
-                                                        if (sourceRetryCountValue6 != null && sourceRetryCountValue6.Type != JTokenType.Null)
+                                                        JToken sourceRetryCountValue10 = sourceValue["sourceRetryCount"];
+                                                        if (sourceRetryCountValue10 != null && sourceRetryCountValue10.Type != JTokenType.Null)
                                                         {
-                                                            int sourceRetryCountInstance6 = ((int)sourceRetryCountValue6);
-                                                            oracleSourceInstance.SourceRetryCount = sourceRetryCountInstance6;
+                                                            int sourceRetryCountInstance10 = ((int)sourceRetryCountValue10);
+                                                            oracleSourceInstance.SourceRetryCount = sourceRetryCountInstance10;
                                                         }
                                                         
-                                                        JToken sourceRetryWaitValue6 = sourceValue["sourceRetryWait"];
-                                                        if (sourceRetryWaitValue6 != null && sourceRetryWaitValue6.Type != JTokenType.Null)
+                                                        JToken sourceRetryWaitValue10 = sourceValue["sourceRetryWait"];
+                                                        if (sourceRetryWaitValue10 != null && sourceRetryWaitValue10.Type != JTokenType.Null)
                                                         {
-                                                            TimeSpan sourceRetryWaitInstance6 = TimeSpan.Parse(((string)sourceRetryWaitValue6), CultureInfo.InvariantCulture);
-                                                            oracleSourceInstance.SourceRetryWait = sourceRetryWaitInstance6;
+                                                            TimeSpan sourceRetryWaitInstance10 = TimeSpan.Parse(((string)sourceRetryWaitValue10), CultureInfo.InvariantCulture);
+                                                            oracleSourceInstance.SourceRetryWait = sourceRetryWaitInstance10;
                                                         }
                                                         transformationInstance.Source = oracleSourceInstance;
                                                     }
@@ -3913,6 +4389,53 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         }
                                                         transformationInstance.Sink = blobSinkInstance;
                                                     }
+                                                    if (typeName3 == "DocumentDbCollectionSink")
+                                                    {
+                                                        DocumentDbCollectionSink documentDbCollectionSinkInstance = new DocumentDbCollectionSink();
+                                                        
+                                                        JToken nestingSeparatorValue2 = sinkValue["nestingSeparator"];
+                                                        if (nestingSeparatorValue2 != null && nestingSeparatorValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string nestingSeparatorInstance2 = ((string)nestingSeparatorValue2);
+                                                            documentDbCollectionSinkInstance.NestingSeparator = nestingSeparatorInstance2;
+                                                        }
+                                                        
+                                                        JToken writeBatchSizeValue4 = sinkValue["writeBatchSize"];
+                                                        if (writeBatchSizeValue4 != null && writeBatchSizeValue4.Type != JTokenType.Null)
+                                                        {
+                                                            int writeBatchSizeInstance4 = ((int)writeBatchSizeValue4);
+                                                            documentDbCollectionSinkInstance.WriteBatchSize = writeBatchSizeInstance4;
+                                                        }
+                                                        
+                                                        JToken writeBatchTimeoutValue4 = sinkValue["writeBatchTimeout"];
+                                                        if (writeBatchTimeoutValue4 != null && writeBatchTimeoutValue4.Type != JTokenType.Null)
+                                                        {
+                                                            TimeSpan writeBatchTimeoutInstance4 = TimeSpan.Parse(((string)writeBatchTimeoutValue4), CultureInfo.InvariantCulture);
+                                                            documentDbCollectionSinkInstance.WriteBatchTimeout = writeBatchTimeoutInstance4;
+                                                        }
+                                                        
+                                                        JToken sinkRetryCountValue4 = sinkValue["sinkRetryCount"];
+                                                        if (sinkRetryCountValue4 != null && sinkRetryCountValue4.Type != JTokenType.Null)
+                                                        {
+                                                            int sinkRetryCountInstance4 = ((int)sinkRetryCountValue4);
+                                                            documentDbCollectionSinkInstance.SinkRetryCount = sinkRetryCountInstance4;
+                                                        }
+                                                        
+                                                        JToken sinkRetryWaitValue4 = sinkValue["sinkRetryWait"];
+                                                        if (sinkRetryWaitValue4 != null && sinkRetryWaitValue4.Type != JTokenType.Null)
+                                                        {
+                                                            TimeSpan sinkRetryWaitInstance4 = TimeSpan.Parse(((string)sinkRetryWaitValue4), CultureInfo.InvariantCulture);
+                                                            documentDbCollectionSinkInstance.SinkRetryWait = sinkRetryWaitInstance4;
+                                                        }
+                                                        
+                                                        JToken sinkPartitionDataValue4 = sinkValue["sinkPartitionData"];
+                                                        if (sinkPartitionDataValue4 != null && sinkPartitionDataValue4.Type != JTokenType.Null)
+                                                        {
+                                                            bool sinkPartitionDataInstance4 = ((bool)sinkPartitionDataValue4);
+                                                            documentDbCollectionSinkInstance.SinkPartitionData = sinkPartitionDataInstance4;
+                                                        }
+                                                        transformationInstance.Sink = documentDbCollectionSinkInstance;
+                                                    }
                                                     if (typeName3 == "SqlSink")
                                                     {
                                                         SqlSink sqlSinkInstance = new SqlSink();
@@ -3929,6 +4452,20 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         {
                                                             string sqlWriterTableTypeInstance = ((string)sqlWriterTableTypeValue);
                                                             sqlSinkInstance.SqlWriterTableType = sqlWriterTableTypeInstance;
+                                                        }
+                                                        
+                                                        JToken sqlWriterCleanupScriptValue = sinkValue["sqlWriterCleanupScript"];
+                                                        if (sqlWriterCleanupScriptValue != null && sqlWriterCleanupScriptValue.Type != JTokenType.Null)
+                                                        {
+                                                            string sqlWriterCleanupScriptInstance = ((string)sqlWriterCleanupScriptValue);
+                                                            sqlSinkInstance.SqlWriterCleanupScript = sqlWriterCleanupScriptInstance;
+                                                        }
+                                                        
+                                                        JToken sliceIdentifierColumnNameValue = sinkValue["sliceIdentifierColumnName"];
+                                                        if (sliceIdentifierColumnNameValue != null && sliceIdentifierColumnNameValue.Type != JTokenType.Null)
+                                                        {
+                                                            string sliceIdentifierColumnNameInstance = ((string)sliceIdentifierColumnNameValue);
+                                                            sqlSinkInstance.SliceIdentifierColumnName = sliceIdentifierColumnNameInstance;
                                                         }
                                                         
                                                         JToken storedProcedureParametersSequenceElement = ((JToken)sinkValue["storedProcedureParameters"]);
@@ -3957,39 +4494,39 @@ namespace Microsoft.Azure.Management.DataFactories
                                                             }
                                                         }
                                                         
-                                                        JToken writeBatchSizeValue4 = sinkValue["writeBatchSize"];
-                                                        if (writeBatchSizeValue4 != null && writeBatchSizeValue4.Type != JTokenType.Null)
+                                                        JToken writeBatchSizeValue5 = sinkValue["writeBatchSize"];
+                                                        if (writeBatchSizeValue5 != null && writeBatchSizeValue5.Type != JTokenType.Null)
                                                         {
-                                                            int writeBatchSizeInstance4 = ((int)writeBatchSizeValue4);
-                                                            sqlSinkInstance.WriteBatchSize = writeBatchSizeInstance4;
+                                                            int writeBatchSizeInstance5 = ((int)writeBatchSizeValue5);
+                                                            sqlSinkInstance.WriteBatchSize = writeBatchSizeInstance5;
                                                         }
                                                         
-                                                        JToken writeBatchTimeoutValue4 = sinkValue["writeBatchTimeout"];
-                                                        if (writeBatchTimeoutValue4 != null && writeBatchTimeoutValue4.Type != JTokenType.Null)
+                                                        JToken writeBatchTimeoutValue5 = sinkValue["writeBatchTimeout"];
+                                                        if (writeBatchTimeoutValue5 != null && writeBatchTimeoutValue5.Type != JTokenType.Null)
                                                         {
-                                                            TimeSpan writeBatchTimeoutInstance4 = TimeSpan.Parse(((string)writeBatchTimeoutValue4), CultureInfo.InvariantCulture);
-                                                            sqlSinkInstance.WriteBatchTimeout = writeBatchTimeoutInstance4;
+                                                            TimeSpan writeBatchTimeoutInstance5 = TimeSpan.Parse(((string)writeBatchTimeoutValue5), CultureInfo.InvariantCulture);
+                                                            sqlSinkInstance.WriteBatchTimeout = writeBatchTimeoutInstance5;
                                                         }
                                                         
-                                                        JToken sinkRetryCountValue4 = sinkValue["sinkRetryCount"];
-                                                        if (sinkRetryCountValue4 != null && sinkRetryCountValue4.Type != JTokenType.Null)
+                                                        JToken sinkRetryCountValue5 = sinkValue["sinkRetryCount"];
+                                                        if (sinkRetryCountValue5 != null && sinkRetryCountValue5.Type != JTokenType.Null)
                                                         {
-                                                            int sinkRetryCountInstance4 = ((int)sinkRetryCountValue4);
-                                                            sqlSinkInstance.SinkRetryCount = sinkRetryCountInstance4;
+                                                            int sinkRetryCountInstance5 = ((int)sinkRetryCountValue5);
+                                                            sqlSinkInstance.SinkRetryCount = sinkRetryCountInstance5;
                                                         }
                                                         
-                                                        JToken sinkRetryWaitValue4 = sinkValue["sinkRetryWait"];
-                                                        if (sinkRetryWaitValue4 != null && sinkRetryWaitValue4.Type != JTokenType.Null)
+                                                        JToken sinkRetryWaitValue5 = sinkValue["sinkRetryWait"];
+                                                        if (sinkRetryWaitValue5 != null && sinkRetryWaitValue5.Type != JTokenType.Null)
                                                         {
-                                                            TimeSpan sinkRetryWaitInstance4 = TimeSpan.Parse(((string)sinkRetryWaitValue4), CultureInfo.InvariantCulture);
-                                                            sqlSinkInstance.SinkRetryWait = sinkRetryWaitInstance4;
+                                                            TimeSpan sinkRetryWaitInstance5 = TimeSpan.Parse(((string)sinkRetryWaitValue5), CultureInfo.InvariantCulture);
+                                                            sqlSinkInstance.SinkRetryWait = sinkRetryWaitInstance5;
                                                         }
                                                         
-                                                        JToken sinkPartitionDataValue4 = sinkValue["sinkPartitionData"];
-                                                        if (sinkPartitionDataValue4 != null && sinkPartitionDataValue4.Type != JTokenType.Null)
+                                                        JToken sinkPartitionDataValue5 = sinkValue["sinkPartitionData"];
+                                                        if (sinkPartitionDataValue5 != null && sinkPartitionDataValue5.Type != JTokenType.Null)
                                                         {
-                                                            bool sinkPartitionDataInstance4 = ((bool)sinkPartitionDataValue4);
-                                                            sqlSinkInstance.SinkPartitionData = sinkPartitionDataInstance4;
+                                                            bool sinkPartitionDataInstance5 = ((bool)sinkPartitionDataValue5);
+                                                            sqlSinkInstance.SinkPartitionData = sinkPartitionDataInstance5;
                                                         }
                                                         transformationInstance.Sink = sqlSinkInstance;
                                                     }
@@ -4011,39 +4548,39 @@ namespace Microsoft.Azure.Management.DataFactories
                                                             oracleSinkInstance.OracleWriterTableType = oracleWriterTableTypeInstance;
                                                         }
                                                         
-                                                        JToken writeBatchSizeValue5 = sinkValue["writeBatchSize"];
-                                                        if (writeBatchSizeValue5 != null && writeBatchSizeValue5.Type != JTokenType.Null)
+                                                        JToken writeBatchSizeValue6 = sinkValue["writeBatchSize"];
+                                                        if (writeBatchSizeValue6 != null && writeBatchSizeValue6.Type != JTokenType.Null)
                                                         {
-                                                            int writeBatchSizeInstance5 = ((int)writeBatchSizeValue5);
-                                                            oracleSinkInstance.WriteBatchSize = writeBatchSizeInstance5;
+                                                            int writeBatchSizeInstance6 = ((int)writeBatchSizeValue6);
+                                                            oracleSinkInstance.WriteBatchSize = writeBatchSizeInstance6;
                                                         }
                                                         
-                                                        JToken writeBatchTimeoutValue5 = sinkValue["writeBatchTimeout"];
-                                                        if (writeBatchTimeoutValue5 != null && writeBatchTimeoutValue5.Type != JTokenType.Null)
+                                                        JToken writeBatchTimeoutValue6 = sinkValue["writeBatchTimeout"];
+                                                        if (writeBatchTimeoutValue6 != null && writeBatchTimeoutValue6.Type != JTokenType.Null)
                                                         {
-                                                            TimeSpan writeBatchTimeoutInstance5 = TimeSpan.Parse(((string)writeBatchTimeoutValue5), CultureInfo.InvariantCulture);
-                                                            oracleSinkInstance.WriteBatchTimeout = writeBatchTimeoutInstance5;
+                                                            TimeSpan writeBatchTimeoutInstance6 = TimeSpan.Parse(((string)writeBatchTimeoutValue6), CultureInfo.InvariantCulture);
+                                                            oracleSinkInstance.WriteBatchTimeout = writeBatchTimeoutInstance6;
                                                         }
                                                         
-                                                        JToken sinkRetryCountValue5 = sinkValue["sinkRetryCount"];
-                                                        if (sinkRetryCountValue5 != null && sinkRetryCountValue5.Type != JTokenType.Null)
+                                                        JToken sinkRetryCountValue6 = sinkValue["sinkRetryCount"];
+                                                        if (sinkRetryCountValue6 != null && sinkRetryCountValue6.Type != JTokenType.Null)
                                                         {
-                                                            int sinkRetryCountInstance5 = ((int)sinkRetryCountValue5);
-                                                            oracleSinkInstance.SinkRetryCount = sinkRetryCountInstance5;
+                                                            int sinkRetryCountInstance6 = ((int)sinkRetryCountValue6);
+                                                            oracleSinkInstance.SinkRetryCount = sinkRetryCountInstance6;
                                                         }
                                                         
-                                                        JToken sinkRetryWaitValue5 = sinkValue["sinkRetryWait"];
-                                                        if (sinkRetryWaitValue5 != null && sinkRetryWaitValue5.Type != JTokenType.Null)
+                                                        JToken sinkRetryWaitValue6 = sinkValue["sinkRetryWait"];
+                                                        if (sinkRetryWaitValue6 != null && sinkRetryWaitValue6.Type != JTokenType.Null)
                                                         {
-                                                            TimeSpan sinkRetryWaitInstance5 = TimeSpan.Parse(((string)sinkRetryWaitValue5), CultureInfo.InvariantCulture);
-                                                            oracleSinkInstance.SinkRetryWait = sinkRetryWaitInstance5;
+                                                            TimeSpan sinkRetryWaitInstance6 = TimeSpan.Parse(((string)sinkRetryWaitValue6), CultureInfo.InvariantCulture);
+                                                            oracleSinkInstance.SinkRetryWait = sinkRetryWaitInstance6;
                                                         }
                                                         
-                                                        JToken sinkPartitionDataValue5 = sinkValue["sinkPartitionData"];
-                                                        if (sinkPartitionDataValue5 != null && sinkPartitionDataValue5.Type != JTokenType.Null)
+                                                        JToken sinkPartitionDataValue6 = sinkValue["sinkPartitionData"];
+                                                        if (sinkPartitionDataValue6 != null && sinkPartitionDataValue6.Type != JTokenType.Null)
                                                         {
-                                                            bool sinkPartitionDataInstance5 = ((bool)sinkPartitionDataValue5);
-                                                            oracleSinkInstance.SinkPartitionData = sinkPartitionDataInstance5;
+                                                            bool sinkPartitionDataInstance6 = ((bool)sinkPartitionDataValue6);
+                                                            oracleSinkInstance.SinkPartitionData = sinkPartitionDataInstance6;
                                                         }
                                                         transformationInstance.Sink = oracleSinkInstance;
                                                     }
@@ -4234,13 +4771,24 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         hiveInstance.ScriptLinkedService = scriptLinkedServiceInstance;
                                                     }
                                                     
+                                                    JToken definesSequenceElement = ((JToken)transformationValue2["defines"]);
+                                                    if (definesSequenceElement != null && definesSequenceElement.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JProperty property2 in definesSequenceElement)
+                                                        {
+                                                            string definesKey = ((string)property2.Name);
+                                                            string definesValue = ((string)property2.Value);
+                                                            hiveInstance.Defines.Add(definesKey, definesValue);
+                                                        }
+                                                    }
+                                                    
                                                     JToken extendedPropertiesSequenceElement = ((JToken)transformationValue2["extendedProperties"]);
                                                     if (extendedPropertiesSequenceElement != null && extendedPropertiesSequenceElement.Type != JTokenType.Null)
                                                     {
-                                                        foreach (JProperty property2 in extendedPropertiesSequenceElement)
+                                                        foreach (JProperty property3 in extendedPropertiesSequenceElement)
                                                         {
-                                                            string extendedPropertiesKey = ((string)property2.Name);
-                                                            string extendedPropertiesValue = ((string)property2.Value);
+                                                            string extendedPropertiesKey = ((string)property3.Name);
+                                                            string extendedPropertiesValue = ((string)property3.Value);
                                                             hiveInstance.ExtendedProperties.Add(extendedPropertiesKey, extendedPropertiesValue);
                                                         }
                                                     }
@@ -4251,6 +4799,15 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         foreach (JToken storageLinkedServicesValue in ((JArray)storageLinkedServicesArray))
                                                         {
                                                             hiveInstance.StorageLinkedServices.Add(((string)storageLinkedServicesValue));
+                                                        }
+                                                    }
+                                                    
+                                                    JToken argumentsArray = transformationValue2["arguments"];
+                                                    if (argumentsArray != null && argumentsArray.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken argumentsValue in ((JArray)argumentsArray))
+                                                        {
+                                                            hiveInstance.Arguments.Add(((string)argumentsValue));
                                                         }
                                                     }
                                                     hDInsightActivityInstance.Transformation = hiveInstance;
@@ -4283,10 +4840,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                     JToken extendedPropertiesSequenceElement2 = ((JToken)transformationValue2["extendedProperties"]);
                                                     if (extendedPropertiesSequenceElement2 != null && extendedPropertiesSequenceElement2.Type != JTokenType.Null)
                                                     {
-                                                        foreach (JProperty property3 in extendedPropertiesSequenceElement2)
+                                                        foreach (JProperty property4 in extendedPropertiesSequenceElement2)
                                                         {
-                                                            string extendedPropertiesKey2 = ((string)property3.Name);
-                                                            string extendedPropertiesValue2 = ((string)property3.Value);
+                                                            string extendedPropertiesKey2 = ((string)property4.Name);
+                                                            string extendedPropertiesValue2 = ((string)property4.Value);
                                                             pigInstance.ExtendedProperties.Add(extendedPropertiesKey2, extendedPropertiesValue2);
                                                         }
                                                     }
@@ -4297,6 +4854,15 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         foreach (JToken storageLinkedServicesValue2 in ((JArray)storageLinkedServicesArray2))
                                                         {
                                                             pigInstance.StorageLinkedServices.Add(((string)storageLinkedServicesValue2));
+                                                        }
+                                                    }
+                                                    
+                                                    JToken argumentsArray2 = transformationValue2["arguments"];
+                                                    if (argumentsArray2 != null && argumentsArray2.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken argumentsValue2 in ((JArray)argumentsArray2))
+                                                        {
+                                                            pigInstance.Arguments.Add(((string)argumentsValue2));
                                                         }
                                                     }
                                                     hDInsightActivityInstance.Transformation = pigInstance;
@@ -4335,22 +4901,24 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         }
                                                     }
                                                     
-                                                    JToken argumentsArray = transformationValue2["arguments"];
-                                                    if (argumentsArray != null && argumentsArray.Type != JTokenType.Null)
+                                                    JToken definesSequenceElement2 = ((JToken)transformationValue2["defines"]);
+                                                    if (definesSequenceElement2 != null && definesSequenceElement2.Type != JTokenType.Null)
                                                     {
-                                                        foreach (JToken argumentsValue in ((JArray)argumentsArray))
+                                                        foreach (JProperty property5 in definesSequenceElement2)
                                                         {
-                                                            mapReduceInstance.Arguments.Add(((string)argumentsValue));
+                                                            string definesKey2 = ((string)property5.Name);
+                                                            string definesValue2 = ((string)property5.Value);
+                                                            mapReduceInstance.Defines.Add(definesKey2, definesValue2);
                                                         }
                                                     }
                                                     
                                                     JToken extendedPropertiesSequenceElement3 = ((JToken)transformationValue2["extendedProperties"]);
                                                     if (extendedPropertiesSequenceElement3 != null && extendedPropertiesSequenceElement3.Type != JTokenType.Null)
                                                     {
-                                                        foreach (JProperty property4 in extendedPropertiesSequenceElement3)
+                                                        foreach (JProperty property6 in extendedPropertiesSequenceElement3)
                                                         {
-                                                            string extendedPropertiesKey3 = ((string)property4.Name);
-                                                            string extendedPropertiesValue3 = ((string)property4.Value);
+                                                            string extendedPropertiesKey3 = ((string)property6.Name);
+                                                            string extendedPropertiesValue3 = ((string)property6.Value);
                                                             mapReduceInstance.ExtendedProperties.Add(extendedPropertiesKey3, extendedPropertiesValue3);
                                                         }
                                                     }
@@ -4361,6 +4929,15 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         foreach (JToken storageLinkedServicesValue3 in ((JArray)storageLinkedServicesArray3))
                                                         {
                                                             mapReduceInstance.StorageLinkedServices.Add(((string)storageLinkedServicesValue3));
+                                                        }
+                                                    }
+                                                    
+                                                    JToken argumentsArray3 = transformationValue2["arguments"];
+                                                    if (argumentsArray3 != null && argumentsArray3.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken argumentsValue3 in ((JArray)argumentsArray3))
+                                                        {
+                                                            mapReduceInstance.Arguments.Add(((string)argumentsValue3));
                                                         }
                                                     }
                                                     hDInsightActivityInstance.Transformation = mapReduceInstance;
@@ -4429,22 +5006,24 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         }
                                                     }
                                                     
-                                                    JToken argumentsArray2 = transformationValue2["arguments"];
-                                                    if (argumentsArray2 != null && argumentsArray2.Type != JTokenType.Null)
+                                                    JToken definesSequenceElement3 = ((JToken)transformationValue2["defines"]);
+                                                    if (definesSequenceElement3 != null && definesSequenceElement3.Type != JTokenType.Null)
                                                     {
-                                                        foreach (JToken argumentsValue2 in ((JArray)argumentsArray2))
+                                                        foreach (JProperty property7 in definesSequenceElement3)
                                                         {
-                                                            streamingInstance.Arguments.Add(((string)argumentsValue2));
+                                                            string definesKey3 = ((string)property7.Name);
+                                                            string definesValue3 = ((string)property7.Value);
+                                                            streamingInstance.Defines.Add(definesKey3, definesValue3);
                                                         }
                                                     }
                                                     
                                                     JToken extendedPropertiesSequenceElement4 = ((JToken)transformationValue2["extendedProperties"]);
                                                     if (extendedPropertiesSequenceElement4 != null && extendedPropertiesSequenceElement4.Type != JTokenType.Null)
                                                     {
-                                                        foreach (JProperty property5 in extendedPropertiesSequenceElement4)
+                                                        foreach (JProperty property8 in extendedPropertiesSequenceElement4)
                                                         {
-                                                            string extendedPropertiesKey4 = ((string)property5.Name);
-                                                            string extendedPropertiesValue4 = ((string)property5.Value);
+                                                            string extendedPropertiesKey4 = ((string)property8.Name);
+                                                            string extendedPropertiesValue4 = ((string)property8.Value);
                                                             streamingInstance.ExtendedProperties.Add(extendedPropertiesKey4, extendedPropertiesValue4);
                                                         }
                                                     }
@@ -4455,6 +5034,15 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         foreach (JToken storageLinkedServicesValue4 in ((JArray)storageLinkedServicesArray4))
                                                         {
                                                             streamingInstance.StorageLinkedServices.Add(((string)storageLinkedServicesValue4));
+                                                        }
+                                                    }
+                                                    
+                                                    JToken argumentsArray4 = transformationValue2["arguments"];
+                                                    if (argumentsArray4 != null && argumentsArray4.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken argumentsValue4 in ((JArray)argumentsArray4))
+                                                        {
+                                                            streamingInstance.Arguments.Add(((string)argumentsValue4));
                                                         }
                                                     }
                                                     hDInsightActivityInstance.Transformation = streamingInstance;
@@ -4635,10 +5223,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 JToken extendedPropertiesSequenceElement5 = ((JToken)transformationValue3["extendedProperties"]);
                                                 if (extendedPropertiesSequenceElement5 != null && extendedPropertiesSequenceElement5.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JProperty property6 in extendedPropertiesSequenceElement5)
+                                                    foreach (JProperty property9 in extendedPropertiesSequenceElement5)
                                                     {
-                                                        string extendedPropertiesKey5 = ((string)property6.Name);
-                                                        string extendedPropertiesValue5 = ((string)property6.Value);
+                                                        string extendedPropertiesKey5 = ((string)property9.Name);
+                                                        string extendedPropertiesValue5 = ((string)property9.Value);
                                                         transformationInstance2.ExtendedProperties.Add(extendedPropertiesKey5, extendedPropertiesValue5);
                                                     }
                                                 }
@@ -4797,10 +5385,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 JToken storedProcedureParametersSequenceElement2 = ((JToken)transformationValue4["storedProcedureParameters"]);
                                                 if (storedProcedureParametersSequenceElement2 != null && storedProcedureParametersSequenceElement2.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JProperty property7 in storedProcedureParametersSequenceElement2)
+                                                    foreach (JProperty property10 in storedProcedureParametersSequenceElement2)
                                                     {
-                                                        string storedProcedureParametersKey2 = ((string)property7.Name);
-                                                        string storedProcedureParametersValue = ((string)property7.Value);
+                                                        string storedProcedureParametersKey2 = ((string)property10.Name);
+                                                        string storedProcedureParametersValue = ((string)property10.Value);
                                                         transformationInstance3.StoredProcedureActivityParameters.Add(storedProcedureParametersKey2, storedProcedureParametersValue);
                                                     }
                                                 }
@@ -4952,10 +5540,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 JToken webServiceParametersSequenceElement = ((JToken)transformationValue5["webServiceParameters"]);
                                                 if (webServiceParametersSequenceElement != null && webServiceParametersSequenceElement.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JProperty property8 in webServiceParametersSequenceElement)
+                                                    foreach (JProperty property11 in webServiceParametersSequenceElement)
                                                     {
-                                                        string webServiceParametersKey = ((string)property8.Name);
-                                                        string webServiceParametersValue = ((string)property8.Value);
+                                                        string webServiceParametersKey = ((string)property11.Name);
+                                                        string webServiceParametersValue = ((string)property11.Value);
                                                         transformationInstance4.WebServiceParameters.Add(webServiceParametersKey, webServiceParametersValue);
                                                     }
                                                 }
@@ -5351,11 +5939,11 @@ namespace Microsoft.Azure.Management.DataFactories
                     {
                         result.Status = OperationStatus.Failed;
                     }
-                    if (statusCode == HttpStatusCode.NoContent)
+                    if (statusCode == HttpStatusCode.OK)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
-                    if (statusCode == HttpStatusCode.OK)
+                    if (statusCode == HttpStatusCode.NoContent)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
@@ -5879,31 +6467,128 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         }
                                                         transformationInstance.Source = blobSourceInstance;
                                                     }
-                                                    if (typeName2 == "RelationalSource")
+                                                    if (typeName2 == "DocumentDbCollectionSource")
                                                     {
-                                                        RelationalSource relationalSourceInstance = new RelationalSource();
+                                                        DocumentDbCollectionSource documentDbCollectionSourceInstance = new DocumentDbCollectionSource();
                                                         
                                                         JToken queryValue = sourceValue["query"];
                                                         if (queryValue != null && queryValue.Type != JTokenType.Null)
                                                         {
                                                             string queryInstance = ((string)queryValue);
-                                                            relationalSourceInstance.Query = queryInstance;
+                                                            documentDbCollectionSourceInstance.Query = queryInstance;
+                                                        }
+                                                        
+                                                        JToken nestingSeparatorValue = sourceValue["nestingSeparator"];
+                                                        if (nestingSeparatorValue != null && nestingSeparatorValue.Type != JTokenType.Null)
+                                                        {
+                                                            string nestingSeparatorInstance = ((string)nestingSeparatorValue);
+                                                            documentDbCollectionSourceInstance.NestingSeparator = nestingSeparatorInstance;
                                                         }
                                                         
                                                         JToken sourceRetryCountValue3 = sourceValue["sourceRetryCount"];
                                                         if (sourceRetryCountValue3 != null && sourceRetryCountValue3.Type != JTokenType.Null)
                                                         {
                                                             int sourceRetryCountInstance3 = ((int)sourceRetryCountValue3);
-                                                            relationalSourceInstance.SourceRetryCount = sourceRetryCountInstance3;
+                                                            documentDbCollectionSourceInstance.SourceRetryCount = sourceRetryCountInstance3;
                                                         }
                                                         
                                                         JToken sourceRetryWaitValue3 = sourceValue["sourceRetryWait"];
                                                         if (sourceRetryWaitValue3 != null && sourceRetryWaitValue3.Type != JTokenType.Null)
                                                         {
                                                             TimeSpan sourceRetryWaitInstance3 = TimeSpan.Parse(((string)sourceRetryWaitValue3), CultureInfo.InvariantCulture);
-                                                            relationalSourceInstance.SourceRetryWait = sourceRetryWaitInstance3;
+                                                            documentDbCollectionSourceInstance.SourceRetryWait = sourceRetryWaitInstance3;
+                                                        }
+                                                        transformationInstance.Source = documentDbCollectionSourceInstance;
+                                                    }
+                                                    if (typeName2 == "RelationalSource")
+                                                    {
+                                                        RelationalSource relationalSourceInstance = new RelationalSource();
+                                                        
+                                                        JToken queryValue2 = sourceValue["query"];
+                                                        if (queryValue2 != null && queryValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string queryInstance2 = ((string)queryValue2);
+                                                            relationalSourceInstance.Query = queryInstance2;
+                                                        }
+                                                        
+                                                        JToken sourceRetryCountValue4 = sourceValue["sourceRetryCount"];
+                                                        if (sourceRetryCountValue4 != null && sourceRetryCountValue4.Type != JTokenType.Null)
+                                                        {
+                                                            int sourceRetryCountInstance4 = ((int)sourceRetryCountValue4);
+                                                            relationalSourceInstance.SourceRetryCount = sourceRetryCountInstance4;
+                                                        }
+                                                        
+                                                        JToken sourceRetryWaitValue4 = sourceValue["sourceRetryWait"];
+                                                        if (sourceRetryWaitValue4 != null && sourceRetryWaitValue4.Type != JTokenType.Null)
+                                                        {
+                                                            TimeSpan sourceRetryWaitInstance4 = TimeSpan.Parse(((string)sourceRetryWaitValue4), CultureInfo.InvariantCulture);
+                                                            relationalSourceInstance.SourceRetryWait = sourceRetryWaitInstance4;
                                                         }
                                                         transformationInstance.Source = relationalSourceInstance;
+                                                    }
+                                                    if (typeName2 == "OdbcSource")
+                                                    {
+                                                        RelationalSource.OdbcSource odbcSourceInstance = new RelationalSource.OdbcSource();
+                                                        
+                                                        JToken odbcReaderQueryValue = sourceValue["odbcReaderQuery"];
+                                                        if (odbcReaderQueryValue != null && odbcReaderQueryValue.Type != JTokenType.Null)
+                                                        {
+                                                            string odbcReaderQueryInstance = ((string)odbcReaderQueryValue);
+                                                            odbcSourceInstance.OdbcReaderQuery = odbcReaderQueryInstance;
+                                                        }
+                                                        
+                                                        JToken sourceRetryCountValue5 = sourceValue["sourceRetryCount"];
+                                                        if (sourceRetryCountValue5 != null && sourceRetryCountValue5.Type != JTokenType.Null)
+                                                        {
+                                                            int sourceRetryCountInstance5 = ((int)sourceRetryCountValue5);
+                                                            odbcSourceInstance.SourceRetryCount = sourceRetryCountInstance5;
+                                                        }
+                                                        
+                                                        JToken sourceRetryWaitValue5 = sourceValue["sourceRetryWait"];
+                                                        if (sourceRetryWaitValue5 != null && sourceRetryWaitValue5.Type != JTokenType.Null)
+                                                        {
+                                                            TimeSpan sourceRetryWaitInstance5 = TimeSpan.Parse(((string)sourceRetryWaitValue5), CultureInfo.InvariantCulture);
+                                                            odbcSourceInstance.SourceRetryWait = sourceRetryWaitInstance5;
+                                                        }
+                                                        transformationInstance.Source = odbcSourceInstance;
+                                                    }
+                                                    if (typeName2 == "ODataSource")
+                                                    {
+                                                        RelationalSource.ODataSource oDataSourceInstance = new RelationalSource.ODataSource();
+                                                        
+                                                        JToken sourceRetryCountValue6 = sourceValue["sourceRetryCount"];
+                                                        if (sourceRetryCountValue6 != null && sourceRetryCountValue6.Type != JTokenType.Null)
+                                                        {
+                                                            int sourceRetryCountInstance6 = ((int)sourceRetryCountValue6);
+                                                            oDataSourceInstance.SourceRetryCount = sourceRetryCountInstance6;
+                                                        }
+                                                        
+                                                        JToken sourceRetryWaitValue6 = sourceValue["sourceRetryWait"];
+                                                        if (sourceRetryWaitValue6 != null && sourceRetryWaitValue6.Type != JTokenType.Null)
+                                                        {
+                                                            TimeSpan sourceRetryWaitInstance6 = TimeSpan.Parse(((string)sourceRetryWaitValue6), CultureInfo.InvariantCulture);
+                                                            oDataSourceInstance.SourceRetryWait = sourceRetryWaitInstance6;
+                                                        }
+                                                        transformationInstance.Source = oDataSourceInstance;
+                                                    }
+                                                    if (typeName2 == "HdfsSource")
+                                                    {
+                                                        RelationalSource.HdfsSource hdfsSourceInstance = new RelationalSource.HdfsSource();
+                                                        
+                                                        JToken sourceRetryCountValue7 = sourceValue["sourceRetryCount"];
+                                                        if (sourceRetryCountValue7 != null && sourceRetryCountValue7.Type != JTokenType.Null)
+                                                        {
+                                                            int sourceRetryCountInstance7 = ((int)sourceRetryCountValue7);
+                                                            hdfsSourceInstance.SourceRetryCount = sourceRetryCountInstance7;
+                                                        }
+                                                        
+                                                        JToken sourceRetryWaitValue7 = sourceValue["sourceRetryWait"];
+                                                        if (sourceRetryWaitValue7 != null && sourceRetryWaitValue7.Type != JTokenType.Null)
+                                                        {
+                                                            TimeSpan sourceRetryWaitInstance7 = TimeSpan.Parse(((string)sourceRetryWaitValue7), CultureInfo.InvariantCulture);
+                                                            hdfsSourceInstance.SourceRetryWait = sourceRetryWaitInstance7;
+                                                        }
+                                                        transformationInstance.Source = hdfsSourceInstance;
                                                     }
                                                     if (typeName2 == "SqlSource")
                                                     {
@@ -5916,18 +6601,18 @@ namespace Microsoft.Azure.Management.DataFactories
                                                             sqlSourceInstance.SqlReaderQuery = sqlReaderQueryInstance;
                                                         }
                                                         
-                                                        JToken sourceRetryCountValue4 = sourceValue["sourceRetryCount"];
-                                                        if (sourceRetryCountValue4 != null && sourceRetryCountValue4.Type != JTokenType.Null)
+                                                        JToken sourceRetryCountValue8 = sourceValue["sourceRetryCount"];
+                                                        if (sourceRetryCountValue8 != null && sourceRetryCountValue8.Type != JTokenType.Null)
                                                         {
-                                                            int sourceRetryCountInstance4 = ((int)sourceRetryCountValue4);
-                                                            sqlSourceInstance.SourceRetryCount = sourceRetryCountInstance4;
+                                                            int sourceRetryCountInstance8 = ((int)sourceRetryCountValue8);
+                                                            sqlSourceInstance.SourceRetryCount = sourceRetryCountInstance8;
                                                         }
                                                         
-                                                        JToken sourceRetryWaitValue4 = sourceValue["sourceRetryWait"];
-                                                        if (sourceRetryWaitValue4 != null && sourceRetryWaitValue4.Type != JTokenType.Null)
+                                                        JToken sourceRetryWaitValue8 = sourceValue["sourceRetryWait"];
+                                                        if (sourceRetryWaitValue8 != null && sourceRetryWaitValue8.Type != JTokenType.Null)
                                                         {
-                                                            TimeSpan sourceRetryWaitInstance4 = TimeSpan.Parse(((string)sourceRetryWaitValue4), CultureInfo.InvariantCulture);
-                                                            sqlSourceInstance.SourceRetryWait = sourceRetryWaitInstance4;
+                                                            TimeSpan sourceRetryWaitInstance8 = TimeSpan.Parse(((string)sourceRetryWaitValue8), CultureInfo.InvariantCulture);
+                                                            sqlSourceInstance.SourceRetryWait = sourceRetryWaitInstance8;
                                                         }
                                                         transformationInstance.Source = sqlSourceInstance;
                                                     }
@@ -5935,18 +6620,18 @@ namespace Microsoft.Azure.Management.DataFactories
                                                     {
                                                         FileSystemSource fileSystemSourceInstance = new FileSystemSource();
                                                         
-                                                        JToken sourceRetryCountValue5 = sourceValue["sourceRetryCount"];
-                                                        if (sourceRetryCountValue5 != null && sourceRetryCountValue5.Type != JTokenType.Null)
+                                                        JToken sourceRetryCountValue9 = sourceValue["sourceRetryCount"];
+                                                        if (sourceRetryCountValue9 != null && sourceRetryCountValue9.Type != JTokenType.Null)
                                                         {
-                                                            int sourceRetryCountInstance5 = ((int)sourceRetryCountValue5);
-                                                            fileSystemSourceInstance.SourceRetryCount = sourceRetryCountInstance5;
+                                                            int sourceRetryCountInstance9 = ((int)sourceRetryCountValue9);
+                                                            fileSystemSourceInstance.SourceRetryCount = sourceRetryCountInstance9;
                                                         }
                                                         
-                                                        JToken sourceRetryWaitValue5 = sourceValue["sourceRetryWait"];
-                                                        if (sourceRetryWaitValue5 != null && sourceRetryWaitValue5.Type != JTokenType.Null)
+                                                        JToken sourceRetryWaitValue9 = sourceValue["sourceRetryWait"];
+                                                        if (sourceRetryWaitValue9 != null && sourceRetryWaitValue9.Type != JTokenType.Null)
                                                         {
-                                                            TimeSpan sourceRetryWaitInstance5 = TimeSpan.Parse(((string)sourceRetryWaitValue5), CultureInfo.InvariantCulture);
-                                                            fileSystemSourceInstance.SourceRetryWait = sourceRetryWaitInstance5;
+                                                            TimeSpan sourceRetryWaitInstance9 = TimeSpan.Parse(((string)sourceRetryWaitValue9), CultureInfo.InvariantCulture);
+                                                            fileSystemSourceInstance.SourceRetryWait = sourceRetryWaitInstance9;
                                                         }
                                                         transformationInstance.Source = fileSystemSourceInstance;
                                                     }
@@ -5968,18 +6653,18 @@ namespace Microsoft.Azure.Management.DataFactories
                                                             oracleSourceInstance.QueryTimeout = queryTimeoutInstance;
                                                         }
                                                         
-                                                        JToken sourceRetryCountValue6 = sourceValue["sourceRetryCount"];
-                                                        if (sourceRetryCountValue6 != null && sourceRetryCountValue6.Type != JTokenType.Null)
+                                                        JToken sourceRetryCountValue10 = sourceValue["sourceRetryCount"];
+                                                        if (sourceRetryCountValue10 != null && sourceRetryCountValue10.Type != JTokenType.Null)
                                                         {
-                                                            int sourceRetryCountInstance6 = ((int)sourceRetryCountValue6);
-                                                            oracleSourceInstance.SourceRetryCount = sourceRetryCountInstance6;
+                                                            int sourceRetryCountInstance10 = ((int)sourceRetryCountValue10);
+                                                            oracleSourceInstance.SourceRetryCount = sourceRetryCountInstance10;
                                                         }
                                                         
-                                                        JToken sourceRetryWaitValue6 = sourceValue["sourceRetryWait"];
-                                                        if (sourceRetryWaitValue6 != null && sourceRetryWaitValue6.Type != JTokenType.Null)
+                                                        JToken sourceRetryWaitValue10 = sourceValue["sourceRetryWait"];
+                                                        if (sourceRetryWaitValue10 != null && sourceRetryWaitValue10.Type != JTokenType.Null)
                                                         {
-                                                            TimeSpan sourceRetryWaitInstance6 = TimeSpan.Parse(((string)sourceRetryWaitValue6), CultureInfo.InvariantCulture);
-                                                            oracleSourceInstance.SourceRetryWait = sourceRetryWaitInstance6;
+                                                            TimeSpan sourceRetryWaitInstance10 = TimeSpan.Parse(((string)sourceRetryWaitValue10), CultureInfo.InvariantCulture);
+                                                            oracleSourceInstance.SourceRetryWait = sourceRetryWaitInstance10;
                                                         }
                                                         transformationInstance.Source = oracleSourceInstance;
                                                     }
@@ -6207,6 +6892,53 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         }
                                                         transformationInstance.Sink = blobSinkInstance;
                                                     }
+                                                    if (typeName3 == "DocumentDbCollectionSink")
+                                                    {
+                                                        DocumentDbCollectionSink documentDbCollectionSinkInstance = new DocumentDbCollectionSink();
+                                                        
+                                                        JToken nestingSeparatorValue2 = sinkValue["nestingSeparator"];
+                                                        if (nestingSeparatorValue2 != null && nestingSeparatorValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string nestingSeparatorInstance2 = ((string)nestingSeparatorValue2);
+                                                            documentDbCollectionSinkInstance.NestingSeparator = nestingSeparatorInstance2;
+                                                        }
+                                                        
+                                                        JToken writeBatchSizeValue4 = sinkValue["writeBatchSize"];
+                                                        if (writeBatchSizeValue4 != null && writeBatchSizeValue4.Type != JTokenType.Null)
+                                                        {
+                                                            int writeBatchSizeInstance4 = ((int)writeBatchSizeValue4);
+                                                            documentDbCollectionSinkInstance.WriteBatchSize = writeBatchSizeInstance4;
+                                                        }
+                                                        
+                                                        JToken writeBatchTimeoutValue4 = sinkValue["writeBatchTimeout"];
+                                                        if (writeBatchTimeoutValue4 != null && writeBatchTimeoutValue4.Type != JTokenType.Null)
+                                                        {
+                                                            TimeSpan writeBatchTimeoutInstance4 = TimeSpan.Parse(((string)writeBatchTimeoutValue4), CultureInfo.InvariantCulture);
+                                                            documentDbCollectionSinkInstance.WriteBatchTimeout = writeBatchTimeoutInstance4;
+                                                        }
+                                                        
+                                                        JToken sinkRetryCountValue4 = sinkValue["sinkRetryCount"];
+                                                        if (sinkRetryCountValue4 != null && sinkRetryCountValue4.Type != JTokenType.Null)
+                                                        {
+                                                            int sinkRetryCountInstance4 = ((int)sinkRetryCountValue4);
+                                                            documentDbCollectionSinkInstance.SinkRetryCount = sinkRetryCountInstance4;
+                                                        }
+                                                        
+                                                        JToken sinkRetryWaitValue4 = sinkValue["sinkRetryWait"];
+                                                        if (sinkRetryWaitValue4 != null && sinkRetryWaitValue4.Type != JTokenType.Null)
+                                                        {
+                                                            TimeSpan sinkRetryWaitInstance4 = TimeSpan.Parse(((string)sinkRetryWaitValue4), CultureInfo.InvariantCulture);
+                                                            documentDbCollectionSinkInstance.SinkRetryWait = sinkRetryWaitInstance4;
+                                                        }
+                                                        
+                                                        JToken sinkPartitionDataValue4 = sinkValue["sinkPartitionData"];
+                                                        if (sinkPartitionDataValue4 != null && sinkPartitionDataValue4.Type != JTokenType.Null)
+                                                        {
+                                                            bool sinkPartitionDataInstance4 = ((bool)sinkPartitionDataValue4);
+                                                            documentDbCollectionSinkInstance.SinkPartitionData = sinkPartitionDataInstance4;
+                                                        }
+                                                        transformationInstance.Sink = documentDbCollectionSinkInstance;
+                                                    }
                                                     if (typeName3 == "SqlSink")
                                                     {
                                                         SqlSink sqlSinkInstance = new SqlSink();
@@ -6223,6 +6955,20 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         {
                                                             string sqlWriterTableTypeInstance = ((string)sqlWriterTableTypeValue);
                                                             sqlSinkInstance.SqlWriterTableType = sqlWriterTableTypeInstance;
+                                                        }
+                                                        
+                                                        JToken sqlWriterCleanupScriptValue = sinkValue["sqlWriterCleanupScript"];
+                                                        if (sqlWriterCleanupScriptValue != null && sqlWriterCleanupScriptValue.Type != JTokenType.Null)
+                                                        {
+                                                            string sqlWriterCleanupScriptInstance = ((string)sqlWriterCleanupScriptValue);
+                                                            sqlSinkInstance.SqlWriterCleanupScript = sqlWriterCleanupScriptInstance;
+                                                        }
+                                                        
+                                                        JToken sliceIdentifierColumnNameValue = sinkValue["sliceIdentifierColumnName"];
+                                                        if (sliceIdentifierColumnNameValue != null && sliceIdentifierColumnNameValue.Type != JTokenType.Null)
+                                                        {
+                                                            string sliceIdentifierColumnNameInstance = ((string)sliceIdentifierColumnNameValue);
+                                                            sqlSinkInstance.SliceIdentifierColumnName = sliceIdentifierColumnNameInstance;
                                                         }
                                                         
                                                         JToken storedProcedureParametersSequenceElement = ((JToken)sinkValue["storedProcedureParameters"]);
@@ -6251,39 +6997,39 @@ namespace Microsoft.Azure.Management.DataFactories
                                                             }
                                                         }
                                                         
-                                                        JToken writeBatchSizeValue4 = sinkValue["writeBatchSize"];
-                                                        if (writeBatchSizeValue4 != null && writeBatchSizeValue4.Type != JTokenType.Null)
+                                                        JToken writeBatchSizeValue5 = sinkValue["writeBatchSize"];
+                                                        if (writeBatchSizeValue5 != null && writeBatchSizeValue5.Type != JTokenType.Null)
                                                         {
-                                                            int writeBatchSizeInstance4 = ((int)writeBatchSizeValue4);
-                                                            sqlSinkInstance.WriteBatchSize = writeBatchSizeInstance4;
+                                                            int writeBatchSizeInstance5 = ((int)writeBatchSizeValue5);
+                                                            sqlSinkInstance.WriteBatchSize = writeBatchSizeInstance5;
                                                         }
                                                         
-                                                        JToken writeBatchTimeoutValue4 = sinkValue["writeBatchTimeout"];
-                                                        if (writeBatchTimeoutValue4 != null && writeBatchTimeoutValue4.Type != JTokenType.Null)
+                                                        JToken writeBatchTimeoutValue5 = sinkValue["writeBatchTimeout"];
+                                                        if (writeBatchTimeoutValue5 != null && writeBatchTimeoutValue5.Type != JTokenType.Null)
                                                         {
-                                                            TimeSpan writeBatchTimeoutInstance4 = TimeSpan.Parse(((string)writeBatchTimeoutValue4), CultureInfo.InvariantCulture);
-                                                            sqlSinkInstance.WriteBatchTimeout = writeBatchTimeoutInstance4;
+                                                            TimeSpan writeBatchTimeoutInstance5 = TimeSpan.Parse(((string)writeBatchTimeoutValue5), CultureInfo.InvariantCulture);
+                                                            sqlSinkInstance.WriteBatchTimeout = writeBatchTimeoutInstance5;
                                                         }
                                                         
-                                                        JToken sinkRetryCountValue4 = sinkValue["sinkRetryCount"];
-                                                        if (sinkRetryCountValue4 != null && sinkRetryCountValue4.Type != JTokenType.Null)
+                                                        JToken sinkRetryCountValue5 = sinkValue["sinkRetryCount"];
+                                                        if (sinkRetryCountValue5 != null && sinkRetryCountValue5.Type != JTokenType.Null)
                                                         {
-                                                            int sinkRetryCountInstance4 = ((int)sinkRetryCountValue4);
-                                                            sqlSinkInstance.SinkRetryCount = sinkRetryCountInstance4;
+                                                            int sinkRetryCountInstance5 = ((int)sinkRetryCountValue5);
+                                                            sqlSinkInstance.SinkRetryCount = sinkRetryCountInstance5;
                                                         }
                                                         
-                                                        JToken sinkRetryWaitValue4 = sinkValue["sinkRetryWait"];
-                                                        if (sinkRetryWaitValue4 != null && sinkRetryWaitValue4.Type != JTokenType.Null)
+                                                        JToken sinkRetryWaitValue5 = sinkValue["sinkRetryWait"];
+                                                        if (sinkRetryWaitValue5 != null && sinkRetryWaitValue5.Type != JTokenType.Null)
                                                         {
-                                                            TimeSpan sinkRetryWaitInstance4 = TimeSpan.Parse(((string)sinkRetryWaitValue4), CultureInfo.InvariantCulture);
-                                                            sqlSinkInstance.SinkRetryWait = sinkRetryWaitInstance4;
+                                                            TimeSpan sinkRetryWaitInstance5 = TimeSpan.Parse(((string)sinkRetryWaitValue5), CultureInfo.InvariantCulture);
+                                                            sqlSinkInstance.SinkRetryWait = sinkRetryWaitInstance5;
                                                         }
                                                         
-                                                        JToken sinkPartitionDataValue4 = sinkValue["sinkPartitionData"];
-                                                        if (sinkPartitionDataValue4 != null && sinkPartitionDataValue4.Type != JTokenType.Null)
+                                                        JToken sinkPartitionDataValue5 = sinkValue["sinkPartitionData"];
+                                                        if (sinkPartitionDataValue5 != null && sinkPartitionDataValue5.Type != JTokenType.Null)
                                                         {
-                                                            bool sinkPartitionDataInstance4 = ((bool)sinkPartitionDataValue4);
-                                                            sqlSinkInstance.SinkPartitionData = sinkPartitionDataInstance4;
+                                                            bool sinkPartitionDataInstance5 = ((bool)sinkPartitionDataValue5);
+                                                            sqlSinkInstance.SinkPartitionData = sinkPartitionDataInstance5;
                                                         }
                                                         transformationInstance.Sink = sqlSinkInstance;
                                                     }
@@ -6305,39 +7051,39 @@ namespace Microsoft.Azure.Management.DataFactories
                                                             oracleSinkInstance.OracleWriterTableType = oracleWriterTableTypeInstance;
                                                         }
                                                         
-                                                        JToken writeBatchSizeValue5 = sinkValue["writeBatchSize"];
-                                                        if (writeBatchSizeValue5 != null && writeBatchSizeValue5.Type != JTokenType.Null)
+                                                        JToken writeBatchSizeValue6 = sinkValue["writeBatchSize"];
+                                                        if (writeBatchSizeValue6 != null && writeBatchSizeValue6.Type != JTokenType.Null)
                                                         {
-                                                            int writeBatchSizeInstance5 = ((int)writeBatchSizeValue5);
-                                                            oracleSinkInstance.WriteBatchSize = writeBatchSizeInstance5;
+                                                            int writeBatchSizeInstance6 = ((int)writeBatchSizeValue6);
+                                                            oracleSinkInstance.WriteBatchSize = writeBatchSizeInstance6;
                                                         }
                                                         
-                                                        JToken writeBatchTimeoutValue5 = sinkValue["writeBatchTimeout"];
-                                                        if (writeBatchTimeoutValue5 != null && writeBatchTimeoutValue5.Type != JTokenType.Null)
+                                                        JToken writeBatchTimeoutValue6 = sinkValue["writeBatchTimeout"];
+                                                        if (writeBatchTimeoutValue6 != null && writeBatchTimeoutValue6.Type != JTokenType.Null)
                                                         {
-                                                            TimeSpan writeBatchTimeoutInstance5 = TimeSpan.Parse(((string)writeBatchTimeoutValue5), CultureInfo.InvariantCulture);
-                                                            oracleSinkInstance.WriteBatchTimeout = writeBatchTimeoutInstance5;
+                                                            TimeSpan writeBatchTimeoutInstance6 = TimeSpan.Parse(((string)writeBatchTimeoutValue6), CultureInfo.InvariantCulture);
+                                                            oracleSinkInstance.WriteBatchTimeout = writeBatchTimeoutInstance6;
                                                         }
                                                         
-                                                        JToken sinkRetryCountValue5 = sinkValue["sinkRetryCount"];
-                                                        if (sinkRetryCountValue5 != null && sinkRetryCountValue5.Type != JTokenType.Null)
+                                                        JToken sinkRetryCountValue6 = sinkValue["sinkRetryCount"];
+                                                        if (sinkRetryCountValue6 != null && sinkRetryCountValue6.Type != JTokenType.Null)
                                                         {
-                                                            int sinkRetryCountInstance5 = ((int)sinkRetryCountValue5);
-                                                            oracleSinkInstance.SinkRetryCount = sinkRetryCountInstance5;
+                                                            int sinkRetryCountInstance6 = ((int)sinkRetryCountValue6);
+                                                            oracleSinkInstance.SinkRetryCount = sinkRetryCountInstance6;
                                                         }
                                                         
-                                                        JToken sinkRetryWaitValue5 = sinkValue["sinkRetryWait"];
-                                                        if (sinkRetryWaitValue5 != null && sinkRetryWaitValue5.Type != JTokenType.Null)
+                                                        JToken sinkRetryWaitValue6 = sinkValue["sinkRetryWait"];
+                                                        if (sinkRetryWaitValue6 != null && sinkRetryWaitValue6.Type != JTokenType.Null)
                                                         {
-                                                            TimeSpan sinkRetryWaitInstance5 = TimeSpan.Parse(((string)sinkRetryWaitValue5), CultureInfo.InvariantCulture);
-                                                            oracleSinkInstance.SinkRetryWait = sinkRetryWaitInstance5;
+                                                            TimeSpan sinkRetryWaitInstance6 = TimeSpan.Parse(((string)sinkRetryWaitValue6), CultureInfo.InvariantCulture);
+                                                            oracleSinkInstance.SinkRetryWait = sinkRetryWaitInstance6;
                                                         }
                                                         
-                                                        JToken sinkPartitionDataValue5 = sinkValue["sinkPartitionData"];
-                                                        if (sinkPartitionDataValue5 != null && sinkPartitionDataValue5.Type != JTokenType.Null)
+                                                        JToken sinkPartitionDataValue6 = sinkValue["sinkPartitionData"];
+                                                        if (sinkPartitionDataValue6 != null && sinkPartitionDataValue6.Type != JTokenType.Null)
                                                         {
-                                                            bool sinkPartitionDataInstance5 = ((bool)sinkPartitionDataValue5);
-                                                            oracleSinkInstance.SinkPartitionData = sinkPartitionDataInstance5;
+                                                            bool sinkPartitionDataInstance6 = ((bool)sinkPartitionDataValue6);
+                                                            oracleSinkInstance.SinkPartitionData = sinkPartitionDataInstance6;
                                                         }
                                                         transformationInstance.Sink = oracleSinkInstance;
                                                     }
@@ -6528,13 +7274,24 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         hiveInstance.ScriptLinkedService = scriptLinkedServiceInstance;
                                                     }
                                                     
+                                                    JToken definesSequenceElement = ((JToken)transformationValue2["defines"]);
+                                                    if (definesSequenceElement != null && definesSequenceElement.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JProperty property2 in definesSequenceElement)
+                                                        {
+                                                            string definesKey = ((string)property2.Name);
+                                                            string definesValue = ((string)property2.Value);
+                                                            hiveInstance.Defines.Add(definesKey, definesValue);
+                                                        }
+                                                    }
+                                                    
                                                     JToken extendedPropertiesSequenceElement = ((JToken)transformationValue2["extendedProperties"]);
                                                     if (extendedPropertiesSequenceElement != null && extendedPropertiesSequenceElement.Type != JTokenType.Null)
                                                     {
-                                                        foreach (JProperty property2 in extendedPropertiesSequenceElement)
+                                                        foreach (JProperty property3 in extendedPropertiesSequenceElement)
                                                         {
-                                                            string extendedPropertiesKey = ((string)property2.Name);
-                                                            string extendedPropertiesValue = ((string)property2.Value);
+                                                            string extendedPropertiesKey = ((string)property3.Name);
+                                                            string extendedPropertiesValue = ((string)property3.Value);
                                                             hiveInstance.ExtendedProperties.Add(extendedPropertiesKey, extendedPropertiesValue);
                                                         }
                                                     }
@@ -6545,6 +7302,15 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         foreach (JToken storageLinkedServicesValue in ((JArray)storageLinkedServicesArray))
                                                         {
                                                             hiveInstance.StorageLinkedServices.Add(((string)storageLinkedServicesValue));
+                                                        }
+                                                    }
+                                                    
+                                                    JToken argumentsArray = transformationValue2["arguments"];
+                                                    if (argumentsArray != null && argumentsArray.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken argumentsValue in ((JArray)argumentsArray))
+                                                        {
+                                                            hiveInstance.Arguments.Add(((string)argumentsValue));
                                                         }
                                                     }
                                                     hDInsightActivityInstance.Transformation = hiveInstance;
@@ -6577,10 +7343,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                     JToken extendedPropertiesSequenceElement2 = ((JToken)transformationValue2["extendedProperties"]);
                                                     if (extendedPropertiesSequenceElement2 != null && extendedPropertiesSequenceElement2.Type != JTokenType.Null)
                                                     {
-                                                        foreach (JProperty property3 in extendedPropertiesSequenceElement2)
+                                                        foreach (JProperty property4 in extendedPropertiesSequenceElement2)
                                                         {
-                                                            string extendedPropertiesKey2 = ((string)property3.Name);
-                                                            string extendedPropertiesValue2 = ((string)property3.Value);
+                                                            string extendedPropertiesKey2 = ((string)property4.Name);
+                                                            string extendedPropertiesValue2 = ((string)property4.Value);
                                                             pigInstance.ExtendedProperties.Add(extendedPropertiesKey2, extendedPropertiesValue2);
                                                         }
                                                     }
@@ -6591,6 +7357,15 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         foreach (JToken storageLinkedServicesValue2 in ((JArray)storageLinkedServicesArray2))
                                                         {
                                                             pigInstance.StorageLinkedServices.Add(((string)storageLinkedServicesValue2));
+                                                        }
+                                                    }
+                                                    
+                                                    JToken argumentsArray2 = transformationValue2["arguments"];
+                                                    if (argumentsArray2 != null && argumentsArray2.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken argumentsValue2 in ((JArray)argumentsArray2))
+                                                        {
+                                                            pigInstance.Arguments.Add(((string)argumentsValue2));
                                                         }
                                                     }
                                                     hDInsightActivityInstance.Transformation = pigInstance;
@@ -6629,22 +7404,24 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         }
                                                     }
                                                     
-                                                    JToken argumentsArray = transformationValue2["arguments"];
-                                                    if (argumentsArray != null && argumentsArray.Type != JTokenType.Null)
+                                                    JToken definesSequenceElement2 = ((JToken)transformationValue2["defines"]);
+                                                    if (definesSequenceElement2 != null && definesSequenceElement2.Type != JTokenType.Null)
                                                     {
-                                                        foreach (JToken argumentsValue in ((JArray)argumentsArray))
+                                                        foreach (JProperty property5 in definesSequenceElement2)
                                                         {
-                                                            mapReduceInstance.Arguments.Add(((string)argumentsValue));
+                                                            string definesKey2 = ((string)property5.Name);
+                                                            string definesValue2 = ((string)property5.Value);
+                                                            mapReduceInstance.Defines.Add(definesKey2, definesValue2);
                                                         }
                                                     }
                                                     
                                                     JToken extendedPropertiesSequenceElement3 = ((JToken)transformationValue2["extendedProperties"]);
                                                     if (extendedPropertiesSequenceElement3 != null && extendedPropertiesSequenceElement3.Type != JTokenType.Null)
                                                     {
-                                                        foreach (JProperty property4 in extendedPropertiesSequenceElement3)
+                                                        foreach (JProperty property6 in extendedPropertiesSequenceElement3)
                                                         {
-                                                            string extendedPropertiesKey3 = ((string)property4.Name);
-                                                            string extendedPropertiesValue3 = ((string)property4.Value);
+                                                            string extendedPropertiesKey3 = ((string)property6.Name);
+                                                            string extendedPropertiesValue3 = ((string)property6.Value);
                                                             mapReduceInstance.ExtendedProperties.Add(extendedPropertiesKey3, extendedPropertiesValue3);
                                                         }
                                                     }
@@ -6655,6 +7432,15 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         foreach (JToken storageLinkedServicesValue3 in ((JArray)storageLinkedServicesArray3))
                                                         {
                                                             mapReduceInstance.StorageLinkedServices.Add(((string)storageLinkedServicesValue3));
+                                                        }
+                                                    }
+                                                    
+                                                    JToken argumentsArray3 = transformationValue2["arguments"];
+                                                    if (argumentsArray3 != null && argumentsArray3.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken argumentsValue3 in ((JArray)argumentsArray3))
+                                                        {
+                                                            mapReduceInstance.Arguments.Add(((string)argumentsValue3));
                                                         }
                                                     }
                                                     hDInsightActivityInstance.Transformation = mapReduceInstance;
@@ -6723,22 +7509,24 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         }
                                                     }
                                                     
-                                                    JToken argumentsArray2 = transformationValue2["arguments"];
-                                                    if (argumentsArray2 != null && argumentsArray2.Type != JTokenType.Null)
+                                                    JToken definesSequenceElement3 = ((JToken)transformationValue2["defines"]);
+                                                    if (definesSequenceElement3 != null && definesSequenceElement3.Type != JTokenType.Null)
                                                     {
-                                                        foreach (JToken argumentsValue2 in ((JArray)argumentsArray2))
+                                                        foreach (JProperty property7 in definesSequenceElement3)
                                                         {
-                                                            streamingInstance.Arguments.Add(((string)argumentsValue2));
+                                                            string definesKey3 = ((string)property7.Name);
+                                                            string definesValue3 = ((string)property7.Value);
+                                                            streamingInstance.Defines.Add(definesKey3, definesValue3);
                                                         }
                                                     }
                                                     
                                                     JToken extendedPropertiesSequenceElement4 = ((JToken)transformationValue2["extendedProperties"]);
                                                     if (extendedPropertiesSequenceElement4 != null && extendedPropertiesSequenceElement4.Type != JTokenType.Null)
                                                     {
-                                                        foreach (JProperty property5 in extendedPropertiesSequenceElement4)
+                                                        foreach (JProperty property8 in extendedPropertiesSequenceElement4)
                                                         {
-                                                            string extendedPropertiesKey4 = ((string)property5.Name);
-                                                            string extendedPropertiesValue4 = ((string)property5.Value);
+                                                            string extendedPropertiesKey4 = ((string)property8.Name);
+                                                            string extendedPropertiesValue4 = ((string)property8.Value);
                                                             streamingInstance.ExtendedProperties.Add(extendedPropertiesKey4, extendedPropertiesValue4);
                                                         }
                                                     }
@@ -6749,6 +7537,15 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         foreach (JToken storageLinkedServicesValue4 in ((JArray)storageLinkedServicesArray4))
                                                         {
                                                             streamingInstance.StorageLinkedServices.Add(((string)storageLinkedServicesValue4));
+                                                        }
+                                                    }
+                                                    
+                                                    JToken argumentsArray4 = transformationValue2["arguments"];
+                                                    if (argumentsArray4 != null && argumentsArray4.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken argumentsValue4 in ((JArray)argumentsArray4))
+                                                        {
+                                                            streamingInstance.Arguments.Add(((string)argumentsValue4));
                                                         }
                                                     }
                                                     hDInsightActivityInstance.Transformation = streamingInstance;
@@ -6929,10 +7726,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 JToken extendedPropertiesSequenceElement5 = ((JToken)transformationValue3["extendedProperties"]);
                                                 if (extendedPropertiesSequenceElement5 != null && extendedPropertiesSequenceElement5.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JProperty property6 in extendedPropertiesSequenceElement5)
+                                                    foreach (JProperty property9 in extendedPropertiesSequenceElement5)
                                                     {
-                                                        string extendedPropertiesKey5 = ((string)property6.Name);
-                                                        string extendedPropertiesValue5 = ((string)property6.Value);
+                                                        string extendedPropertiesKey5 = ((string)property9.Name);
+                                                        string extendedPropertiesValue5 = ((string)property9.Value);
                                                         transformationInstance2.ExtendedProperties.Add(extendedPropertiesKey5, extendedPropertiesValue5);
                                                     }
                                                 }
@@ -7091,10 +7888,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 JToken storedProcedureParametersSequenceElement2 = ((JToken)transformationValue4["storedProcedureParameters"]);
                                                 if (storedProcedureParametersSequenceElement2 != null && storedProcedureParametersSequenceElement2.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JProperty property7 in storedProcedureParametersSequenceElement2)
+                                                    foreach (JProperty property10 in storedProcedureParametersSequenceElement2)
                                                     {
-                                                        string storedProcedureParametersKey2 = ((string)property7.Name);
-                                                        string storedProcedureParametersValue = ((string)property7.Value);
+                                                        string storedProcedureParametersKey2 = ((string)property10.Name);
+                                                        string storedProcedureParametersValue = ((string)property10.Value);
                                                         transformationInstance3.StoredProcedureActivityParameters.Add(storedProcedureParametersKey2, storedProcedureParametersValue);
                                                     }
                                                 }
@@ -7246,10 +8043,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 JToken webServiceParametersSequenceElement = ((JToken)transformationValue5["webServiceParameters"]);
                                                 if (webServiceParametersSequenceElement != null && webServiceParametersSequenceElement.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JProperty property8 in webServiceParametersSequenceElement)
+                                                    foreach (JProperty property11 in webServiceParametersSequenceElement)
                                                     {
-                                                        string webServiceParametersKey = ((string)property8.Name);
-                                                        string webServiceParametersValue = ((string)property8.Value);
+                                                        string webServiceParametersKey = ((string)property11.Name);
+                                                        string webServiceParametersValue = ((string)property11.Value);
                                                         transformationInstance4.WebServiceParameters.Add(webServiceParametersKey, webServiceParametersValue);
                                                     }
                                                 }
@@ -7693,31 +8490,128 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         }
                                                         transformationInstance.Source = blobSourceInstance;
                                                     }
-                                                    if (typeName2 == "RelationalSource")
+                                                    if (typeName2 == "DocumentDbCollectionSource")
                                                     {
-                                                        RelationalSource relationalSourceInstance = new RelationalSource();
+                                                        DocumentDbCollectionSource documentDbCollectionSourceInstance = new DocumentDbCollectionSource();
                                                         
                                                         JToken queryValue = sourceValue["query"];
                                                         if (queryValue != null && queryValue.Type != JTokenType.Null)
                                                         {
                                                             string queryInstance = ((string)queryValue);
-                                                            relationalSourceInstance.Query = queryInstance;
+                                                            documentDbCollectionSourceInstance.Query = queryInstance;
+                                                        }
+                                                        
+                                                        JToken nestingSeparatorValue = sourceValue["nestingSeparator"];
+                                                        if (nestingSeparatorValue != null && nestingSeparatorValue.Type != JTokenType.Null)
+                                                        {
+                                                            string nestingSeparatorInstance = ((string)nestingSeparatorValue);
+                                                            documentDbCollectionSourceInstance.NestingSeparator = nestingSeparatorInstance;
                                                         }
                                                         
                                                         JToken sourceRetryCountValue3 = sourceValue["sourceRetryCount"];
                                                         if (sourceRetryCountValue3 != null && sourceRetryCountValue3.Type != JTokenType.Null)
                                                         {
                                                             int sourceRetryCountInstance3 = ((int)sourceRetryCountValue3);
-                                                            relationalSourceInstance.SourceRetryCount = sourceRetryCountInstance3;
+                                                            documentDbCollectionSourceInstance.SourceRetryCount = sourceRetryCountInstance3;
                                                         }
                                                         
                                                         JToken sourceRetryWaitValue3 = sourceValue["sourceRetryWait"];
                                                         if (sourceRetryWaitValue3 != null && sourceRetryWaitValue3.Type != JTokenType.Null)
                                                         {
                                                             TimeSpan sourceRetryWaitInstance3 = TimeSpan.Parse(((string)sourceRetryWaitValue3), CultureInfo.InvariantCulture);
-                                                            relationalSourceInstance.SourceRetryWait = sourceRetryWaitInstance3;
+                                                            documentDbCollectionSourceInstance.SourceRetryWait = sourceRetryWaitInstance3;
+                                                        }
+                                                        transformationInstance.Source = documentDbCollectionSourceInstance;
+                                                    }
+                                                    if (typeName2 == "RelationalSource")
+                                                    {
+                                                        RelationalSource relationalSourceInstance = new RelationalSource();
+                                                        
+                                                        JToken queryValue2 = sourceValue["query"];
+                                                        if (queryValue2 != null && queryValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string queryInstance2 = ((string)queryValue2);
+                                                            relationalSourceInstance.Query = queryInstance2;
+                                                        }
+                                                        
+                                                        JToken sourceRetryCountValue4 = sourceValue["sourceRetryCount"];
+                                                        if (sourceRetryCountValue4 != null && sourceRetryCountValue4.Type != JTokenType.Null)
+                                                        {
+                                                            int sourceRetryCountInstance4 = ((int)sourceRetryCountValue4);
+                                                            relationalSourceInstance.SourceRetryCount = sourceRetryCountInstance4;
+                                                        }
+                                                        
+                                                        JToken sourceRetryWaitValue4 = sourceValue["sourceRetryWait"];
+                                                        if (sourceRetryWaitValue4 != null && sourceRetryWaitValue4.Type != JTokenType.Null)
+                                                        {
+                                                            TimeSpan sourceRetryWaitInstance4 = TimeSpan.Parse(((string)sourceRetryWaitValue4), CultureInfo.InvariantCulture);
+                                                            relationalSourceInstance.SourceRetryWait = sourceRetryWaitInstance4;
                                                         }
                                                         transformationInstance.Source = relationalSourceInstance;
+                                                    }
+                                                    if (typeName2 == "OdbcSource")
+                                                    {
+                                                        RelationalSource.OdbcSource odbcSourceInstance = new RelationalSource.OdbcSource();
+                                                        
+                                                        JToken odbcReaderQueryValue = sourceValue["odbcReaderQuery"];
+                                                        if (odbcReaderQueryValue != null && odbcReaderQueryValue.Type != JTokenType.Null)
+                                                        {
+                                                            string odbcReaderQueryInstance = ((string)odbcReaderQueryValue);
+                                                            odbcSourceInstance.OdbcReaderQuery = odbcReaderQueryInstance;
+                                                        }
+                                                        
+                                                        JToken sourceRetryCountValue5 = sourceValue["sourceRetryCount"];
+                                                        if (sourceRetryCountValue5 != null && sourceRetryCountValue5.Type != JTokenType.Null)
+                                                        {
+                                                            int sourceRetryCountInstance5 = ((int)sourceRetryCountValue5);
+                                                            odbcSourceInstance.SourceRetryCount = sourceRetryCountInstance5;
+                                                        }
+                                                        
+                                                        JToken sourceRetryWaitValue5 = sourceValue["sourceRetryWait"];
+                                                        if (sourceRetryWaitValue5 != null && sourceRetryWaitValue5.Type != JTokenType.Null)
+                                                        {
+                                                            TimeSpan sourceRetryWaitInstance5 = TimeSpan.Parse(((string)sourceRetryWaitValue5), CultureInfo.InvariantCulture);
+                                                            odbcSourceInstance.SourceRetryWait = sourceRetryWaitInstance5;
+                                                        }
+                                                        transformationInstance.Source = odbcSourceInstance;
+                                                    }
+                                                    if (typeName2 == "ODataSource")
+                                                    {
+                                                        RelationalSource.ODataSource oDataSourceInstance = new RelationalSource.ODataSource();
+                                                        
+                                                        JToken sourceRetryCountValue6 = sourceValue["sourceRetryCount"];
+                                                        if (sourceRetryCountValue6 != null && sourceRetryCountValue6.Type != JTokenType.Null)
+                                                        {
+                                                            int sourceRetryCountInstance6 = ((int)sourceRetryCountValue6);
+                                                            oDataSourceInstance.SourceRetryCount = sourceRetryCountInstance6;
+                                                        }
+                                                        
+                                                        JToken sourceRetryWaitValue6 = sourceValue["sourceRetryWait"];
+                                                        if (sourceRetryWaitValue6 != null && sourceRetryWaitValue6.Type != JTokenType.Null)
+                                                        {
+                                                            TimeSpan sourceRetryWaitInstance6 = TimeSpan.Parse(((string)sourceRetryWaitValue6), CultureInfo.InvariantCulture);
+                                                            oDataSourceInstance.SourceRetryWait = sourceRetryWaitInstance6;
+                                                        }
+                                                        transformationInstance.Source = oDataSourceInstance;
+                                                    }
+                                                    if (typeName2 == "HdfsSource")
+                                                    {
+                                                        RelationalSource.HdfsSource hdfsSourceInstance = new RelationalSource.HdfsSource();
+                                                        
+                                                        JToken sourceRetryCountValue7 = sourceValue["sourceRetryCount"];
+                                                        if (sourceRetryCountValue7 != null && sourceRetryCountValue7.Type != JTokenType.Null)
+                                                        {
+                                                            int sourceRetryCountInstance7 = ((int)sourceRetryCountValue7);
+                                                            hdfsSourceInstance.SourceRetryCount = sourceRetryCountInstance7;
+                                                        }
+                                                        
+                                                        JToken sourceRetryWaitValue7 = sourceValue["sourceRetryWait"];
+                                                        if (sourceRetryWaitValue7 != null && sourceRetryWaitValue7.Type != JTokenType.Null)
+                                                        {
+                                                            TimeSpan sourceRetryWaitInstance7 = TimeSpan.Parse(((string)sourceRetryWaitValue7), CultureInfo.InvariantCulture);
+                                                            hdfsSourceInstance.SourceRetryWait = sourceRetryWaitInstance7;
+                                                        }
+                                                        transformationInstance.Source = hdfsSourceInstance;
                                                     }
                                                     if (typeName2 == "SqlSource")
                                                     {
@@ -7730,18 +8624,18 @@ namespace Microsoft.Azure.Management.DataFactories
                                                             sqlSourceInstance.SqlReaderQuery = sqlReaderQueryInstance;
                                                         }
                                                         
-                                                        JToken sourceRetryCountValue4 = sourceValue["sourceRetryCount"];
-                                                        if (sourceRetryCountValue4 != null && sourceRetryCountValue4.Type != JTokenType.Null)
+                                                        JToken sourceRetryCountValue8 = sourceValue["sourceRetryCount"];
+                                                        if (sourceRetryCountValue8 != null && sourceRetryCountValue8.Type != JTokenType.Null)
                                                         {
-                                                            int sourceRetryCountInstance4 = ((int)sourceRetryCountValue4);
-                                                            sqlSourceInstance.SourceRetryCount = sourceRetryCountInstance4;
+                                                            int sourceRetryCountInstance8 = ((int)sourceRetryCountValue8);
+                                                            sqlSourceInstance.SourceRetryCount = sourceRetryCountInstance8;
                                                         }
                                                         
-                                                        JToken sourceRetryWaitValue4 = sourceValue["sourceRetryWait"];
-                                                        if (sourceRetryWaitValue4 != null && sourceRetryWaitValue4.Type != JTokenType.Null)
+                                                        JToken sourceRetryWaitValue8 = sourceValue["sourceRetryWait"];
+                                                        if (sourceRetryWaitValue8 != null && sourceRetryWaitValue8.Type != JTokenType.Null)
                                                         {
-                                                            TimeSpan sourceRetryWaitInstance4 = TimeSpan.Parse(((string)sourceRetryWaitValue4), CultureInfo.InvariantCulture);
-                                                            sqlSourceInstance.SourceRetryWait = sourceRetryWaitInstance4;
+                                                            TimeSpan sourceRetryWaitInstance8 = TimeSpan.Parse(((string)sourceRetryWaitValue8), CultureInfo.InvariantCulture);
+                                                            sqlSourceInstance.SourceRetryWait = sourceRetryWaitInstance8;
                                                         }
                                                         transformationInstance.Source = sqlSourceInstance;
                                                     }
@@ -7749,18 +8643,18 @@ namespace Microsoft.Azure.Management.DataFactories
                                                     {
                                                         FileSystemSource fileSystemSourceInstance = new FileSystemSource();
                                                         
-                                                        JToken sourceRetryCountValue5 = sourceValue["sourceRetryCount"];
-                                                        if (sourceRetryCountValue5 != null && sourceRetryCountValue5.Type != JTokenType.Null)
+                                                        JToken sourceRetryCountValue9 = sourceValue["sourceRetryCount"];
+                                                        if (sourceRetryCountValue9 != null && sourceRetryCountValue9.Type != JTokenType.Null)
                                                         {
-                                                            int sourceRetryCountInstance5 = ((int)sourceRetryCountValue5);
-                                                            fileSystemSourceInstance.SourceRetryCount = sourceRetryCountInstance5;
+                                                            int sourceRetryCountInstance9 = ((int)sourceRetryCountValue9);
+                                                            fileSystemSourceInstance.SourceRetryCount = sourceRetryCountInstance9;
                                                         }
                                                         
-                                                        JToken sourceRetryWaitValue5 = sourceValue["sourceRetryWait"];
-                                                        if (sourceRetryWaitValue5 != null && sourceRetryWaitValue5.Type != JTokenType.Null)
+                                                        JToken sourceRetryWaitValue9 = sourceValue["sourceRetryWait"];
+                                                        if (sourceRetryWaitValue9 != null && sourceRetryWaitValue9.Type != JTokenType.Null)
                                                         {
-                                                            TimeSpan sourceRetryWaitInstance5 = TimeSpan.Parse(((string)sourceRetryWaitValue5), CultureInfo.InvariantCulture);
-                                                            fileSystemSourceInstance.SourceRetryWait = sourceRetryWaitInstance5;
+                                                            TimeSpan sourceRetryWaitInstance9 = TimeSpan.Parse(((string)sourceRetryWaitValue9), CultureInfo.InvariantCulture);
+                                                            fileSystemSourceInstance.SourceRetryWait = sourceRetryWaitInstance9;
                                                         }
                                                         transformationInstance.Source = fileSystemSourceInstance;
                                                     }
@@ -7782,18 +8676,18 @@ namespace Microsoft.Azure.Management.DataFactories
                                                             oracleSourceInstance.QueryTimeout = queryTimeoutInstance;
                                                         }
                                                         
-                                                        JToken sourceRetryCountValue6 = sourceValue["sourceRetryCount"];
-                                                        if (sourceRetryCountValue6 != null && sourceRetryCountValue6.Type != JTokenType.Null)
+                                                        JToken sourceRetryCountValue10 = sourceValue["sourceRetryCount"];
+                                                        if (sourceRetryCountValue10 != null && sourceRetryCountValue10.Type != JTokenType.Null)
                                                         {
-                                                            int sourceRetryCountInstance6 = ((int)sourceRetryCountValue6);
-                                                            oracleSourceInstance.SourceRetryCount = sourceRetryCountInstance6;
+                                                            int sourceRetryCountInstance10 = ((int)sourceRetryCountValue10);
+                                                            oracleSourceInstance.SourceRetryCount = sourceRetryCountInstance10;
                                                         }
                                                         
-                                                        JToken sourceRetryWaitValue6 = sourceValue["sourceRetryWait"];
-                                                        if (sourceRetryWaitValue6 != null && sourceRetryWaitValue6.Type != JTokenType.Null)
+                                                        JToken sourceRetryWaitValue10 = sourceValue["sourceRetryWait"];
+                                                        if (sourceRetryWaitValue10 != null && sourceRetryWaitValue10.Type != JTokenType.Null)
                                                         {
-                                                            TimeSpan sourceRetryWaitInstance6 = TimeSpan.Parse(((string)sourceRetryWaitValue6), CultureInfo.InvariantCulture);
-                                                            oracleSourceInstance.SourceRetryWait = sourceRetryWaitInstance6;
+                                                            TimeSpan sourceRetryWaitInstance10 = TimeSpan.Parse(((string)sourceRetryWaitValue10), CultureInfo.InvariantCulture);
+                                                            oracleSourceInstance.SourceRetryWait = sourceRetryWaitInstance10;
                                                         }
                                                         transformationInstance.Source = oracleSourceInstance;
                                                     }
@@ -8021,6 +8915,53 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         }
                                                         transformationInstance.Sink = blobSinkInstance;
                                                     }
+                                                    if (typeName3 == "DocumentDbCollectionSink")
+                                                    {
+                                                        DocumentDbCollectionSink documentDbCollectionSinkInstance = new DocumentDbCollectionSink();
+                                                        
+                                                        JToken nestingSeparatorValue2 = sinkValue["nestingSeparator"];
+                                                        if (nestingSeparatorValue2 != null && nestingSeparatorValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string nestingSeparatorInstance2 = ((string)nestingSeparatorValue2);
+                                                            documentDbCollectionSinkInstance.NestingSeparator = nestingSeparatorInstance2;
+                                                        }
+                                                        
+                                                        JToken writeBatchSizeValue4 = sinkValue["writeBatchSize"];
+                                                        if (writeBatchSizeValue4 != null && writeBatchSizeValue4.Type != JTokenType.Null)
+                                                        {
+                                                            int writeBatchSizeInstance4 = ((int)writeBatchSizeValue4);
+                                                            documentDbCollectionSinkInstance.WriteBatchSize = writeBatchSizeInstance4;
+                                                        }
+                                                        
+                                                        JToken writeBatchTimeoutValue4 = sinkValue["writeBatchTimeout"];
+                                                        if (writeBatchTimeoutValue4 != null && writeBatchTimeoutValue4.Type != JTokenType.Null)
+                                                        {
+                                                            TimeSpan writeBatchTimeoutInstance4 = TimeSpan.Parse(((string)writeBatchTimeoutValue4), CultureInfo.InvariantCulture);
+                                                            documentDbCollectionSinkInstance.WriteBatchTimeout = writeBatchTimeoutInstance4;
+                                                        }
+                                                        
+                                                        JToken sinkRetryCountValue4 = sinkValue["sinkRetryCount"];
+                                                        if (sinkRetryCountValue4 != null && sinkRetryCountValue4.Type != JTokenType.Null)
+                                                        {
+                                                            int sinkRetryCountInstance4 = ((int)sinkRetryCountValue4);
+                                                            documentDbCollectionSinkInstance.SinkRetryCount = sinkRetryCountInstance4;
+                                                        }
+                                                        
+                                                        JToken sinkRetryWaitValue4 = sinkValue["sinkRetryWait"];
+                                                        if (sinkRetryWaitValue4 != null && sinkRetryWaitValue4.Type != JTokenType.Null)
+                                                        {
+                                                            TimeSpan sinkRetryWaitInstance4 = TimeSpan.Parse(((string)sinkRetryWaitValue4), CultureInfo.InvariantCulture);
+                                                            documentDbCollectionSinkInstance.SinkRetryWait = sinkRetryWaitInstance4;
+                                                        }
+                                                        
+                                                        JToken sinkPartitionDataValue4 = sinkValue["sinkPartitionData"];
+                                                        if (sinkPartitionDataValue4 != null && sinkPartitionDataValue4.Type != JTokenType.Null)
+                                                        {
+                                                            bool sinkPartitionDataInstance4 = ((bool)sinkPartitionDataValue4);
+                                                            documentDbCollectionSinkInstance.SinkPartitionData = sinkPartitionDataInstance4;
+                                                        }
+                                                        transformationInstance.Sink = documentDbCollectionSinkInstance;
+                                                    }
                                                     if (typeName3 == "SqlSink")
                                                     {
                                                         SqlSink sqlSinkInstance = new SqlSink();
@@ -8037,6 +8978,20 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         {
                                                             string sqlWriterTableTypeInstance = ((string)sqlWriterTableTypeValue);
                                                             sqlSinkInstance.SqlWriterTableType = sqlWriterTableTypeInstance;
+                                                        }
+                                                        
+                                                        JToken sqlWriterCleanupScriptValue = sinkValue["sqlWriterCleanupScript"];
+                                                        if (sqlWriterCleanupScriptValue != null && sqlWriterCleanupScriptValue.Type != JTokenType.Null)
+                                                        {
+                                                            string sqlWriterCleanupScriptInstance = ((string)sqlWriterCleanupScriptValue);
+                                                            sqlSinkInstance.SqlWriterCleanupScript = sqlWriterCleanupScriptInstance;
+                                                        }
+                                                        
+                                                        JToken sliceIdentifierColumnNameValue = sinkValue["sliceIdentifierColumnName"];
+                                                        if (sliceIdentifierColumnNameValue != null && sliceIdentifierColumnNameValue.Type != JTokenType.Null)
+                                                        {
+                                                            string sliceIdentifierColumnNameInstance = ((string)sliceIdentifierColumnNameValue);
+                                                            sqlSinkInstance.SliceIdentifierColumnName = sliceIdentifierColumnNameInstance;
                                                         }
                                                         
                                                         JToken storedProcedureParametersSequenceElement = ((JToken)sinkValue["storedProcedureParameters"]);
@@ -8065,39 +9020,39 @@ namespace Microsoft.Azure.Management.DataFactories
                                                             }
                                                         }
                                                         
-                                                        JToken writeBatchSizeValue4 = sinkValue["writeBatchSize"];
-                                                        if (writeBatchSizeValue4 != null && writeBatchSizeValue4.Type != JTokenType.Null)
+                                                        JToken writeBatchSizeValue5 = sinkValue["writeBatchSize"];
+                                                        if (writeBatchSizeValue5 != null && writeBatchSizeValue5.Type != JTokenType.Null)
                                                         {
-                                                            int writeBatchSizeInstance4 = ((int)writeBatchSizeValue4);
-                                                            sqlSinkInstance.WriteBatchSize = writeBatchSizeInstance4;
+                                                            int writeBatchSizeInstance5 = ((int)writeBatchSizeValue5);
+                                                            sqlSinkInstance.WriteBatchSize = writeBatchSizeInstance5;
                                                         }
                                                         
-                                                        JToken writeBatchTimeoutValue4 = sinkValue["writeBatchTimeout"];
-                                                        if (writeBatchTimeoutValue4 != null && writeBatchTimeoutValue4.Type != JTokenType.Null)
+                                                        JToken writeBatchTimeoutValue5 = sinkValue["writeBatchTimeout"];
+                                                        if (writeBatchTimeoutValue5 != null && writeBatchTimeoutValue5.Type != JTokenType.Null)
                                                         {
-                                                            TimeSpan writeBatchTimeoutInstance4 = TimeSpan.Parse(((string)writeBatchTimeoutValue4), CultureInfo.InvariantCulture);
-                                                            sqlSinkInstance.WriteBatchTimeout = writeBatchTimeoutInstance4;
+                                                            TimeSpan writeBatchTimeoutInstance5 = TimeSpan.Parse(((string)writeBatchTimeoutValue5), CultureInfo.InvariantCulture);
+                                                            sqlSinkInstance.WriteBatchTimeout = writeBatchTimeoutInstance5;
                                                         }
                                                         
-                                                        JToken sinkRetryCountValue4 = sinkValue["sinkRetryCount"];
-                                                        if (sinkRetryCountValue4 != null && sinkRetryCountValue4.Type != JTokenType.Null)
+                                                        JToken sinkRetryCountValue5 = sinkValue["sinkRetryCount"];
+                                                        if (sinkRetryCountValue5 != null && sinkRetryCountValue5.Type != JTokenType.Null)
                                                         {
-                                                            int sinkRetryCountInstance4 = ((int)sinkRetryCountValue4);
-                                                            sqlSinkInstance.SinkRetryCount = sinkRetryCountInstance4;
+                                                            int sinkRetryCountInstance5 = ((int)sinkRetryCountValue5);
+                                                            sqlSinkInstance.SinkRetryCount = sinkRetryCountInstance5;
                                                         }
                                                         
-                                                        JToken sinkRetryWaitValue4 = sinkValue["sinkRetryWait"];
-                                                        if (sinkRetryWaitValue4 != null && sinkRetryWaitValue4.Type != JTokenType.Null)
+                                                        JToken sinkRetryWaitValue5 = sinkValue["sinkRetryWait"];
+                                                        if (sinkRetryWaitValue5 != null && sinkRetryWaitValue5.Type != JTokenType.Null)
                                                         {
-                                                            TimeSpan sinkRetryWaitInstance4 = TimeSpan.Parse(((string)sinkRetryWaitValue4), CultureInfo.InvariantCulture);
-                                                            sqlSinkInstance.SinkRetryWait = sinkRetryWaitInstance4;
+                                                            TimeSpan sinkRetryWaitInstance5 = TimeSpan.Parse(((string)sinkRetryWaitValue5), CultureInfo.InvariantCulture);
+                                                            sqlSinkInstance.SinkRetryWait = sinkRetryWaitInstance5;
                                                         }
                                                         
-                                                        JToken sinkPartitionDataValue4 = sinkValue["sinkPartitionData"];
-                                                        if (sinkPartitionDataValue4 != null && sinkPartitionDataValue4.Type != JTokenType.Null)
+                                                        JToken sinkPartitionDataValue5 = sinkValue["sinkPartitionData"];
+                                                        if (sinkPartitionDataValue5 != null && sinkPartitionDataValue5.Type != JTokenType.Null)
                                                         {
-                                                            bool sinkPartitionDataInstance4 = ((bool)sinkPartitionDataValue4);
-                                                            sqlSinkInstance.SinkPartitionData = sinkPartitionDataInstance4;
+                                                            bool sinkPartitionDataInstance5 = ((bool)sinkPartitionDataValue5);
+                                                            sqlSinkInstance.SinkPartitionData = sinkPartitionDataInstance5;
                                                         }
                                                         transformationInstance.Sink = sqlSinkInstance;
                                                     }
@@ -8119,39 +9074,39 @@ namespace Microsoft.Azure.Management.DataFactories
                                                             oracleSinkInstance.OracleWriterTableType = oracleWriterTableTypeInstance;
                                                         }
                                                         
-                                                        JToken writeBatchSizeValue5 = sinkValue["writeBatchSize"];
-                                                        if (writeBatchSizeValue5 != null && writeBatchSizeValue5.Type != JTokenType.Null)
+                                                        JToken writeBatchSizeValue6 = sinkValue["writeBatchSize"];
+                                                        if (writeBatchSizeValue6 != null && writeBatchSizeValue6.Type != JTokenType.Null)
                                                         {
-                                                            int writeBatchSizeInstance5 = ((int)writeBatchSizeValue5);
-                                                            oracleSinkInstance.WriteBatchSize = writeBatchSizeInstance5;
+                                                            int writeBatchSizeInstance6 = ((int)writeBatchSizeValue6);
+                                                            oracleSinkInstance.WriteBatchSize = writeBatchSizeInstance6;
                                                         }
                                                         
-                                                        JToken writeBatchTimeoutValue5 = sinkValue["writeBatchTimeout"];
-                                                        if (writeBatchTimeoutValue5 != null && writeBatchTimeoutValue5.Type != JTokenType.Null)
+                                                        JToken writeBatchTimeoutValue6 = sinkValue["writeBatchTimeout"];
+                                                        if (writeBatchTimeoutValue6 != null && writeBatchTimeoutValue6.Type != JTokenType.Null)
                                                         {
-                                                            TimeSpan writeBatchTimeoutInstance5 = TimeSpan.Parse(((string)writeBatchTimeoutValue5), CultureInfo.InvariantCulture);
-                                                            oracleSinkInstance.WriteBatchTimeout = writeBatchTimeoutInstance5;
+                                                            TimeSpan writeBatchTimeoutInstance6 = TimeSpan.Parse(((string)writeBatchTimeoutValue6), CultureInfo.InvariantCulture);
+                                                            oracleSinkInstance.WriteBatchTimeout = writeBatchTimeoutInstance6;
                                                         }
                                                         
-                                                        JToken sinkRetryCountValue5 = sinkValue["sinkRetryCount"];
-                                                        if (sinkRetryCountValue5 != null && sinkRetryCountValue5.Type != JTokenType.Null)
+                                                        JToken sinkRetryCountValue6 = sinkValue["sinkRetryCount"];
+                                                        if (sinkRetryCountValue6 != null && sinkRetryCountValue6.Type != JTokenType.Null)
                                                         {
-                                                            int sinkRetryCountInstance5 = ((int)sinkRetryCountValue5);
-                                                            oracleSinkInstance.SinkRetryCount = sinkRetryCountInstance5;
+                                                            int sinkRetryCountInstance6 = ((int)sinkRetryCountValue6);
+                                                            oracleSinkInstance.SinkRetryCount = sinkRetryCountInstance6;
                                                         }
                                                         
-                                                        JToken sinkRetryWaitValue5 = sinkValue["sinkRetryWait"];
-                                                        if (sinkRetryWaitValue5 != null && sinkRetryWaitValue5.Type != JTokenType.Null)
+                                                        JToken sinkRetryWaitValue6 = sinkValue["sinkRetryWait"];
+                                                        if (sinkRetryWaitValue6 != null && sinkRetryWaitValue6.Type != JTokenType.Null)
                                                         {
-                                                            TimeSpan sinkRetryWaitInstance5 = TimeSpan.Parse(((string)sinkRetryWaitValue5), CultureInfo.InvariantCulture);
-                                                            oracleSinkInstance.SinkRetryWait = sinkRetryWaitInstance5;
+                                                            TimeSpan sinkRetryWaitInstance6 = TimeSpan.Parse(((string)sinkRetryWaitValue6), CultureInfo.InvariantCulture);
+                                                            oracleSinkInstance.SinkRetryWait = sinkRetryWaitInstance6;
                                                         }
                                                         
-                                                        JToken sinkPartitionDataValue5 = sinkValue["sinkPartitionData"];
-                                                        if (sinkPartitionDataValue5 != null && sinkPartitionDataValue5.Type != JTokenType.Null)
+                                                        JToken sinkPartitionDataValue6 = sinkValue["sinkPartitionData"];
+                                                        if (sinkPartitionDataValue6 != null && sinkPartitionDataValue6.Type != JTokenType.Null)
                                                         {
-                                                            bool sinkPartitionDataInstance5 = ((bool)sinkPartitionDataValue5);
-                                                            oracleSinkInstance.SinkPartitionData = sinkPartitionDataInstance5;
+                                                            bool sinkPartitionDataInstance6 = ((bool)sinkPartitionDataValue6);
+                                                            oracleSinkInstance.SinkPartitionData = sinkPartitionDataInstance6;
                                                         }
                                                         transformationInstance.Sink = oracleSinkInstance;
                                                     }
@@ -8342,13 +9297,24 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         hiveInstance.ScriptLinkedService = scriptLinkedServiceInstance;
                                                     }
                                                     
+                                                    JToken definesSequenceElement = ((JToken)transformationValue2["defines"]);
+                                                    if (definesSequenceElement != null && definesSequenceElement.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JProperty property2 in definesSequenceElement)
+                                                        {
+                                                            string definesKey = ((string)property2.Name);
+                                                            string definesValue = ((string)property2.Value);
+                                                            hiveInstance.Defines.Add(definesKey, definesValue);
+                                                        }
+                                                    }
+                                                    
                                                     JToken extendedPropertiesSequenceElement = ((JToken)transformationValue2["extendedProperties"]);
                                                     if (extendedPropertiesSequenceElement != null && extendedPropertiesSequenceElement.Type != JTokenType.Null)
                                                     {
-                                                        foreach (JProperty property2 in extendedPropertiesSequenceElement)
+                                                        foreach (JProperty property3 in extendedPropertiesSequenceElement)
                                                         {
-                                                            string extendedPropertiesKey = ((string)property2.Name);
-                                                            string extendedPropertiesValue = ((string)property2.Value);
+                                                            string extendedPropertiesKey = ((string)property3.Name);
+                                                            string extendedPropertiesValue = ((string)property3.Value);
                                                             hiveInstance.ExtendedProperties.Add(extendedPropertiesKey, extendedPropertiesValue);
                                                         }
                                                     }
@@ -8359,6 +9325,15 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         foreach (JToken storageLinkedServicesValue in ((JArray)storageLinkedServicesArray))
                                                         {
                                                             hiveInstance.StorageLinkedServices.Add(((string)storageLinkedServicesValue));
+                                                        }
+                                                    }
+                                                    
+                                                    JToken argumentsArray = transformationValue2["arguments"];
+                                                    if (argumentsArray != null && argumentsArray.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken argumentsValue in ((JArray)argumentsArray))
+                                                        {
+                                                            hiveInstance.Arguments.Add(((string)argumentsValue));
                                                         }
                                                     }
                                                     hDInsightActivityInstance.Transformation = hiveInstance;
@@ -8391,10 +9366,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                     JToken extendedPropertiesSequenceElement2 = ((JToken)transformationValue2["extendedProperties"]);
                                                     if (extendedPropertiesSequenceElement2 != null && extendedPropertiesSequenceElement2.Type != JTokenType.Null)
                                                     {
-                                                        foreach (JProperty property3 in extendedPropertiesSequenceElement2)
+                                                        foreach (JProperty property4 in extendedPropertiesSequenceElement2)
                                                         {
-                                                            string extendedPropertiesKey2 = ((string)property3.Name);
-                                                            string extendedPropertiesValue2 = ((string)property3.Value);
+                                                            string extendedPropertiesKey2 = ((string)property4.Name);
+                                                            string extendedPropertiesValue2 = ((string)property4.Value);
                                                             pigInstance.ExtendedProperties.Add(extendedPropertiesKey2, extendedPropertiesValue2);
                                                         }
                                                     }
@@ -8405,6 +9380,15 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         foreach (JToken storageLinkedServicesValue2 in ((JArray)storageLinkedServicesArray2))
                                                         {
                                                             pigInstance.StorageLinkedServices.Add(((string)storageLinkedServicesValue2));
+                                                        }
+                                                    }
+                                                    
+                                                    JToken argumentsArray2 = transformationValue2["arguments"];
+                                                    if (argumentsArray2 != null && argumentsArray2.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken argumentsValue2 in ((JArray)argumentsArray2))
+                                                        {
+                                                            pigInstance.Arguments.Add(((string)argumentsValue2));
                                                         }
                                                     }
                                                     hDInsightActivityInstance.Transformation = pigInstance;
@@ -8443,22 +9427,24 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         }
                                                     }
                                                     
-                                                    JToken argumentsArray = transformationValue2["arguments"];
-                                                    if (argumentsArray != null && argumentsArray.Type != JTokenType.Null)
+                                                    JToken definesSequenceElement2 = ((JToken)transformationValue2["defines"]);
+                                                    if (definesSequenceElement2 != null && definesSequenceElement2.Type != JTokenType.Null)
                                                     {
-                                                        foreach (JToken argumentsValue in ((JArray)argumentsArray))
+                                                        foreach (JProperty property5 in definesSequenceElement2)
                                                         {
-                                                            mapReduceInstance.Arguments.Add(((string)argumentsValue));
+                                                            string definesKey2 = ((string)property5.Name);
+                                                            string definesValue2 = ((string)property5.Value);
+                                                            mapReduceInstance.Defines.Add(definesKey2, definesValue2);
                                                         }
                                                     }
                                                     
                                                     JToken extendedPropertiesSequenceElement3 = ((JToken)transformationValue2["extendedProperties"]);
                                                     if (extendedPropertiesSequenceElement3 != null && extendedPropertiesSequenceElement3.Type != JTokenType.Null)
                                                     {
-                                                        foreach (JProperty property4 in extendedPropertiesSequenceElement3)
+                                                        foreach (JProperty property6 in extendedPropertiesSequenceElement3)
                                                         {
-                                                            string extendedPropertiesKey3 = ((string)property4.Name);
-                                                            string extendedPropertiesValue3 = ((string)property4.Value);
+                                                            string extendedPropertiesKey3 = ((string)property6.Name);
+                                                            string extendedPropertiesValue3 = ((string)property6.Value);
                                                             mapReduceInstance.ExtendedProperties.Add(extendedPropertiesKey3, extendedPropertiesValue3);
                                                         }
                                                     }
@@ -8469,6 +9455,15 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         foreach (JToken storageLinkedServicesValue3 in ((JArray)storageLinkedServicesArray3))
                                                         {
                                                             mapReduceInstance.StorageLinkedServices.Add(((string)storageLinkedServicesValue3));
+                                                        }
+                                                    }
+                                                    
+                                                    JToken argumentsArray3 = transformationValue2["arguments"];
+                                                    if (argumentsArray3 != null && argumentsArray3.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken argumentsValue3 in ((JArray)argumentsArray3))
+                                                        {
+                                                            mapReduceInstance.Arguments.Add(((string)argumentsValue3));
                                                         }
                                                     }
                                                     hDInsightActivityInstance.Transformation = mapReduceInstance;
@@ -8537,22 +9532,24 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         }
                                                     }
                                                     
-                                                    JToken argumentsArray2 = transformationValue2["arguments"];
-                                                    if (argumentsArray2 != null && argumentsArray2.Type != JTokenType.Null)
+                                                    JToken definesSequenceElement3 = ((JToken)transformationValue2["defines"]);
+                                                    if (definesSequenceElement3 != null && definesSequenceElement3.Type != JTokenType.Null)
                                                     {
-                                                        foreach (JToken argumentsValue2 in ((JArray)argumentsArray2))
+                                                        foreach (JProperty property7 in definesSequenceElement3)
                                                         {
-                                                            streamingInstance.Arguments.Add(((string)argumentsValue2));
+                                                            string definesKey3 = ((string)property7.Name);
+                                                            string definesValue3 = ((string)property7.Value);
+                                                            streamingInstance.Defines.Add(definesKey3, definesValue3);
                                                         }
                                                     }
                                                     
                                                     JToken extendedPropertiesSequenceElement4 = ((JToken)transformationValue2["extendedProperties"]);
                                                     if (extendedPropertiesSequenceElement4 != null && extendedPropertiesSequenceElement4.Type != JTokenType.Null)
                                                     {
-                                                        foreach (JProperty property5 in extendedPropertiesSequenceElement4)
+                                                        foreach (JProperty property8 in extendedPropertiesSequenceElement4)
                                                         {
-                                                            string extendedPropertiesKey4 = ((string)property5.Name);
-                                                            string extendedPropertiesValue4 = ((string)property5.Value);
+                                                            string extendedPropertiesKey4 = ((string)property8.Name);
+                                                            string extendedPropertiesValue4 = ((string)property8.Value);
                                                             streamingInstance.ExtendedProperties.Add(extendedPropertiesKey4, extendedPropertiesValue4);
                                                         }
                                                     }
@@ -8563,6 +9560,15 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         foreach (JToken storageLinkedServicesValue4 in ((JArray)storageLinkedServicesArray4))
                                                         {
                                                             streamingInstance.StorageLinkedServices.Add(((string)storageLinkedServicesValue4));
+                                                        }
+                                                    }
+                                                    
+                                                    JToken argumentsArray4 = transformationValue2["arguments"];
+                                                    if (argumentsArray4 != null && argumentsArray4.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken argumentsValue4 in ((JArray)argumentsArray4))
+                                                        {
+                                                            streamingInstance.Arguments.Add(((string)argumentsValue4));
                                                         }
                                                     }
                                                     hDInsightActivityInstance.Transformation = streamingInstance;
@@ -8743,10 +9749,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 JToken extendedPropertiesSequenceElement5 = ((JToken)transformationValue3["extendedProperties"]);
                                                 if (extendedPropertiesSequenceElement5 != null && extendedPropertiesSequenceElement5.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JProperty property6 in extendedPropertiesSequenceElement5)
+                                                    foreach (JProperty property9 in extendedPropertiesSequenceElement5)
                                                     {
-                                                        string extendedPropertiesKey5 = ((string)property6.Name);
-                                                        string extendedPropertiesValue5 = ((string)property6.Value);
+                                                        string extendedPropertiesKey5 = ((string)property9.Name);
+                                                        string extendedPropertiesValue5 = ((string)property9.Value);
                                                         transformationInstance2.ExtendedProperties.Add(extendedPropertiesKey5, extendedPropertiesValue5);
                                                     }
                                                 }
@@ -8905,10 +9911,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 JToken storedProcedureParametersSequenceElement2 = ((JToken)transformationValue4["storedProcedureParameters"]);
                                                 if (storedProcedureParametersSequenceElement2 != null && storedProcedureParametersSequenceElement2.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JProperty property7 in storedProcedureParametersSequenceElement2)
+                                                    foreach (JProperty property10 in storedProcedureParametersSequenceElement2)
                                                     {
-                                                        string storedProcedureParametersKey2 = ((string)property7.Name);
-                                                        string storedProcedureParametersValue = ((string)property7.Value);
+                                                        string storedProcedureParametersKey2 = ((string)property10.Name);
+                                                        string storedProcedureParametersValue = ((string)property10.Value);
                                                         transformationInstance3.StoredProcedureActivityParameters.Add(storedProcedureParametersKey2, storedProcedureParametersValue);
                                                     }
                                                 }
@@ -9060,10 +10066,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 JToken webServiceParametersSequenceElement = ((JToken)transformationValue5["webServiceParameters"]);
                                                 if (webServiceParametersSequenceElement != null && webServiceParametersSequenceElement.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JProperty property8 in webServiceParametersSequenceElement)
+                                                    foreach (JProperty property11 in webServiceParametersSequenceElement)
                                                     {
-                                                        string webServiceParametersKey = ((string)property8.Name);
-                                                        string webServiceParametersValue = ((string)property8.Value);
+                                                        string webServiceParametersKey = ((string)property11.Name);
+                                                        string webServiceParametersValue = ((string)property11.Value);
                                                         transformationInstance4.WebServiceParameters.Add(webServiceParametersKey, webServiceParametersValue);
                                                     }
                                                 }
@@ -9574,31 +10580,128 @@ namespace Microsoft.Azure.Management.DataFactories
                                                                 }
                                                                 transformationInstance.Source = blobSourceInstance;
                                                             }
-                                                            if (typeName2 == "RelationalSource")
+                                                            if (typeName2 == "DocumentDbCollectionSource")
                                                             {
-                                                                RelationalSource relationalSourceInstance = new RelationalSource();
+                                                                DocumentDbCollectionSource documentDbCollectionSourceInstance = new DocumentDbCollectionSource();
                                                                 
                                                                 JToken queryValue = sourceValue["query"];
                                                                 if (queryValue != null && queryValue.Type != JTokenType.Null)
                                                                 {
                                                                     string queryInstance = ((string)queryValue);
-                                                                    relationalSourceInstance.Query = queryInstance;
+                                                                    documentDbCollectionSourceInstance.Query = queryInstance;
+                                                                }
+                                                                
+                                                                JToken nestingSeparatorValue = sourceValue["nestingSeparator"];
+                                                                if (nestingSeparatorValue != null && nestingSeparatorValue.Type != JTokenType.Null)
+                                                                {
+                                                                    string nestingSeparatorInstance = ((string)nestingSeparatorValue);
+                                                                    documentDbCollectionSourceInstance.NestingSeparator = nestingSeparatorInstance;
                                                                 }
                                                                 
                                                                 JToken sourceRetryCountValue3 = sourceValue["sourceRetryCount"];
                                                                 if (sourceRetryCountValue3 != null && sourceRetryCountValue3.Type != JTokenType.Null)
                                                                 {
                                                                     int sourceRetryCountInstance3 = ((int)sourceRetryCountValue3);
-                                                                    relationalSourceInstance.SourceRetryCount = sourceRetryCountInstance3;
+                                                                    documentDbCollectionSourceInstance.SourceRetryCount = sourceRetryCountInstance3;
                                                                 }
                                                                 
                                                                 JToken sourceRetryWaitValue3 = sourceValue["sourceRetryWait"];
                                                                 if (sourceRetryWaitValue3 != null && sourceRetryWaitValue3.Type != JTokenType.Null)
                                                                 {
                                                                     TimeSpan sourceRetryWaitInstance3 = TimeSpan.Parse(((string)sourceRetryWaitValue3), CultureInfo.InvariantCulture);
-                                                                    relationalSourceInstance.SourceRetryWait = sourceRetryWaitInstance3;
+                                                                    documentDbCollectionSourceInstance.SourceRetryWait = sourceRetryWaitInstance3;
+                                                                }
+                                                                transformationInstance.Source = documentDbCollectionSourceInstance;
+                                                            }
+                                                            if (typeName2 == "RelationalSource")
+                                                            {
+                                                                RelationalSource relationalSourceInstance = new RelationalSource();
+                                                                
+                                                                JToken queryValue2 = sourceValue["query"];
+                                                                if (queryValue2 != null && queryValue2.Type != JTokenType.Null)
+                                                                {
+                                                                    string queryInstance2 = ((string)queryValue2);
+                                                                    relationalSourceInstance.Query = queryInstance2;
+                                                                }
+                                                                
+                                                                JToken sourceRetryCountValue4 = sourceValue["sourceRetryCount"];
+                                                                if (sourceRetryCountValue4 != null && sourceRetryCountValue4.Type != JTokenType.Null)
+                                                                {
+                                                                    int sourceRetryCountInstance4 = ((int)sourceRetryCountValue4);
+                                                                    relationalSourceInstance.SourceRetryCount = sourceRetryCountInstance4;
+                                                                }
+                                                                
+                                                                JToken sourceRetryWaitValue4 = sourceValue["sourceRetryWait"];
+                                                                if (sourceRetryWaitValue4 != null && sourceRetryWaitValue4.Type != JTokenType.Null)
+                                                                {
+                                                                    TimeSpan sourceRetryWaitInstance4 = TimeSpan.Parse(((string)sourceRetryWaitValue4), CultureInfo.InvariantCulture);
+                                                                    relationalSourceInstance.SourceRetryWait = sourceRetryWaitInstance4;
                                                                 }
                                                                 transformationInstance.Source = relationalSourceInstance;
+                                                            }
+                                                            if (typeName2 == "OdbcSource")
+                                                            {
+                                                                RelationalSource.OdbcSource odbcSourceInstance = new RelationalSource.OdbcSource();
+                                                                
+                                                                JToken odbcReaderQueryValue = sourceValue["odbcReaderQuery"];
+                                                                if (odbcReaderQueryValue != null && odbcReaderQueryValue.Type != JTokenType.Null)
+                                                                {
+                                                                    string odbcReaderQueryInstance = ((string)odbcReaderQueryValue);
+                                                                    odbcSourceInstance.OdbcReaderQuery = odbcReaderQueryInstance;
+                                                                }
+                                                                
+                                                                JToken sourceRetryCountValue5 = sourceValue["sourceRetryCount"];
+                                                                if (sourceRetryCountValue5 != null && sourceRetryCountValue5.Type != JTokenType.Null)
+                                                                {
+                                                                    int sourceRetryCountInstance5 = ((int)sourceRetryCountValue5);
+                                                                    odbcSourceInstance.SourceRetryCount = sourceRetryCountInstance5;
+                                                                }
+                                                                
+                                                                JToken sourceRetryWaitValue5 = sourceValue["sourceRetryWait"];
+                                                                if (sourceRetryWaitValue5 != null && sourceRetryWaitValue5.Type != JTokenType.Null)
+                                                                {
+                                                                    TimeSpan sourceRetryWaitInstance5 = TimeSpan.Parse(((string)sourceRetryWaitValue5), CultureInfo.InvariantCulture);
+                                                                    odbcSourceInstance.SourceRetryWait = sourceRetryWaitInstance5;
+                                                                }
+                                                                transformationInstance.Source = odbcSourceInstance;
+                                                            }
+                                                            if (typeName2 == "ODataSource")
+                                                            {
+                                                                RelationalSource.ODataSource oDataSourceInstance = new RelationalSource.ODataSource();
+                                                                
+                                                                JToken sourceRetryCountValue6 = sourceValue["sourceRetryCount"];
+                                                                if (sourceRetryCountValue6 != null && sourceRetryCountValue6.Type != JTokenType.Null)
+                                                                {
+                                                                    int sourceRetryCountInstance6 = ((int)sourceRetryCountValue6);
+                                                                    oDataSourceInstance.SourceRetryCount = sourceRetryCountInstance6;
+                                                                }
+                                                                
+                                                                JToken sourceRetryWaitValue6 = sourceValue["sourceRetryWait"];
+                                                                if (sourceRetryWaitValue6 != null && sourceRetryWaitValue6.Type != JTokenType.Null)
+                                                                {
+                                                                    TimeSpan sourceRetryWaitInstance6 = TimeSpan.Parse(((string)sourceRetryWaitValue6), CultureInfo.InvariantCulture);
+                                                                    oDataSourceInstance.SourceRetryWait = sourceRetryWaitInstance6;
+                                                                }
+                                                                transformationInstance.Source = oDataSourceInstance;
+                                                            }
+                                                            if (typeName2 == "HdfsSource")
+                                                            {
+                                                                RelationalSource.HdfsSource hdfsSourceInstance = new RelationalSource.HdfsSource();
+                                                                
+                                                                JToken sourceRetryCountValue7 = sourceValue["sourceRetryCount"];
+                                                                if (sourceRetryCountValue7 != null && sourceRetryCountValue7.Type != JTokenType.Null)
+                                                                {
+                                                                    int sourceRetryCountInstance7 = ((int)sourceRetryCountValue7);
+                                                                    hdfsSourceInstance.SourceRetryCount = sourceRetryCountInstance7;
+                                                                }
+                                                                
+                                                                JToken sourceRetryWaitValue7 = sourceValue["sourceRetryWait"];
+                                                                if (sourceRetryWaitValue7 != null && sourceRetryWaitValue7.Type != JTokenType.Null)
+                                                                {
+                                                                    TimeSpan sourceRetryWaitInstance7 = TimeSpan.Parse(((string)sourceRetryWaitValue7), CultureInfo.InvariantCulture);
+                                                                    hdfsSourceInstance.SourceRetryWait = sourceRetryWaitInstance7;
+                                                                }
+                                                                transformationInstance.Source = hdfsSourceInstance;
                                                             }
                                                             if (typeName2 == "SqlSource")
                                                             {
@@ -9611,18 +10714,18 @@ namespace Microsoft.Azure.Management.DataFactories
                                                                     sqlSourceInstance.SqlReaderQuery = sqlReaderQueryInstance;
                                                                 }
                                                                 
-                                                                JToken sourceRetryCountValue4 = sourceValue["sourceRetryCount"];
-                                                                if (sourceRetryCountValue4 != null && sourceRetryCountValue4.Type != JTokenType.Null)
+                                                                JToken sourceRetryCountValue8 = sourceValue["sourceRetryCount"];
+                                                                if (sourceRetryCountValue8 != null && sourceRetryCountValue8.Type != JTokenType.Null)
                                                                 {
-                                                                    int sourceRetryCountInstance4 = ((int)sourceRetryCountValue4);
-                                                                    sqlSourceInstance.SourceRetryCount = sourceRetryCountInstance4;
+                                                                    int sourceRetryCountInstance8 = ((int)sourceRetryCountValue8);
+                                                                    sqlSourceInstance.SourceRetryCount = sourceRetryCountInstance8;
                                                                 }
                                                                 
-                                                                JToken sourceRetryWaitValue4 = sourceValue["sourceRetryWait"];
-                                                                if (sourceRetryWaitValue4 != null && sourceRetryWaitValue4.Type != JTokenType.Null)
+                                                                JToken sourceRetryWaitValue8 = sourceValue["sourceRetryWait"];
+                                                                if (sourceRetryWaitValue8 != null && sourceRetryWaitValue8.Type != JTokenType.Null)
                                                                 {
-                                                                    TimeSpan sourceRetryWaitInstance4 = TimeSpan.Parse(((string)sourceRetryWaitValue4), CultureInfo.InvariantCulture);
-                                                                    sqlSourceInstance.SourceRetryWait = sourceRetryWaitInstance4;
+                                                                    TimeSpan sourceRetryWaitInstance8 = TimeSpan.Parse(((string)sourceRetryWaitValue8), CultureInfo.InvariantCulture);
+                                                                    sqlSourceInstance.SourceRetryWait = sourceRetryWaitInstance8;
                                                                 }
                                                                 transformationInstance.Source = sqlSourceInstance;
                                                             }
@@ -9630,18 +10733,18 @@ namespace Microsoft.Azure.Management.DataFactories
                                                             {
                                                                 FileSystemSource fileSystemSourceInstance = new FileSystemSource();
                                                                 
-                                                                JToken sourceRetryCountValue5 = sourceValue["sourceRetryCount"];
-                                                                if (sourceRetryCountValue5 != null && sourceRetryCountValue5.Type != JTokenType.Null)
+                                                                JToken sourceRetryCountValue9 = sourceValue["sourceRetryCount"];
+                                                                if (sourceRetryCountValue9 != null && sourceRetryCountValue9.Type != JTokenType.Null)
                                                                 {
-                                                                    int sourceRetryCountInstance5 = ((int)sourceRetryCountValue5);
-                                                                    fileSystemSourceInstance.SourceRetryCount = sourceRetryCountInstance5;
+                                                                    int sourceRetryCountInstance9 = ((int)sourceRetryCountValue9);
+                                                                    fileSystemSourceInstance.SourceRetryCount = sourceRetryCountInstance9;
                                                                 }
                                                                 
-                                                                JToken sourceRetryWaitValue5 = sourceValue["sourceRetryWait"];
-                                                                if (sourceRetryWaitValue5 != null && sourceRetryWaitValue5.Type != JTokenType.Null)
+                                                                JToken sourceRetryWaitValue9 = sourceValue["sourceRetryWait"];
+                                                                if (sourceRetryWaitValue9 != null && sourceRetryWaitValue9.Type != JTokenType.Null)
                                                                 {
-                                                                    TimeSpan sourceRetryWaitInstance5 = TimeSpan.Parse(((string)sourceRetryWaitValue5), CultureInfo.InvariantCulture);
-                                                                    fileSystemSourceInstance.SourceRetryWait = sourceRetryWaitInstance5;
+                                                                    TimeSpan sourceRetryWaitInstance9 = TimeSpan.Parse(((string)sourceRetryWaitValue9), CultureInfo.InvariantCulture);
+                                                                    fileSystemSourceInstance.SourceRetryWait = sourceRetryWaitInstance9;
                                                                 }
                                                                 transformationInstance.Source = fileSystemSourceInstance;
                                                             }
@@ -9663,18 +10766,18 @@ namespace Microsoft.Azure.Management.DataFactories
                                                                     oracleSourceInstance.QueryTimeout = queryTimeoutInstance;
                                                                 }
                                                                 
-                                                                JToken sourceRetryCountValue6 = sourceValue["sourceRetryCount"];
-                                                                if (sourceRetryCountValue6 != null && sourceRetryCountValue6.Type != JTokenType.Null)
+                                                                JToken sourceRetryCountValue10 = sourceValue["sourceRetryCount"];
+                                                                if (sourceRetryCountValue10 != null && sourceRetryCountValue10.Type != JTokenType.Null)
                                                                 {
-                                                                    int sourceRetryCountInstance6 = ((int)sourceRetryCountValue6);
-                                                                    oracleSourceInstance.SourceRetryCount = sourceRetryCountInstance6;
+                                                                    int sourceRetryCountInstance10 = ((int)sourceRetryCountValue10);
+                                                                    oracleSourceInstance.SourceRetryCount = sourceRetryCountInstance10;
                                                                 }
                                                                 
-                                                                JToken sourceRetryWaitValue6 = sourceValue["sourceRetryWait"];
-                                                                if (sourceRetryWaitValue6 != null && sourceRetryWaitValue6.Type != JTokenType.Null)
+                                                                JToken sourceRetryWaitValue10 = sourceValue["sourceRetryWait"];
+                                                                if (sourceRetryWaitValue10 != null && sourceRetryWaitValue10.Type != JTokenType.Null)
                                                                 {
-                                                                    TimeSpan sourceRetryWaitInstance6 = TimeSpan.Parse(((string)sourceRetryWaitValue6), CultureInfo.InvariantCulture);
-                                                                    oracleSourceInstance.SourceRetryWait = sourceRetryWaitInstance6;
+                                                                    TimeSpan sourceRetryWaitInstance10 = TimeSpan.Parse(((string)sourceRetryWaitValue10), CultureInfo.InvariantCulture);
+                                                                    oracleSourceInstance.SourceRetryWait = sourceRetryWaitInstance10;
                                                                 }
                                                                 transformationInstance.Source = oracleSourceInstance;
                                                             }
@@ -9902,6 +11005,53 @@ namespace Microsoft.Azure.Management.DataFactories
                                                                 }
                                                                 transformationInstance.Sink = blobSinkInstance;
                                                             }
+                                                            if (typeName3 == "DocumentDbCollectionSink")
+                                                            {
+                                                                DocumentDbCollectionSink documentDbCollectionSinkInstance = new DocumentDbCollectionSink();
+                                                                
+                                                                JToken nestingSeparatorValue2 = sinkValue["nestingSeparator"];
+                                                                if (nestingSeparatorValue2 != null && nestingSeparatorValue2.Type != JTokenType.Null)
+                                                                {
+                                                                    string nestingSeparatorInstance2 = ((string)nestingSeparatorValue2);
+                                                                    documentDbCollectionSinkInstance.NestingSeparator = nestingSeparatorInstance2;
+                                                                }
+                                                                
+                                                                JToken writeBatchSizeValue4 = sinkValue["writeBatchSize"];
+                                                                if (writeBatchSizeValue4 != null && writeBatchSizeValue4.Type != JTokenType.Null)
+                                                                {
+                                                                    int writeBatchSizeInstance4 = ((int)writeBatchSizeValue4);
+                                                                    documentDbCollectionSinkInstance.WriteBatchSize = writeBatchSizeInstance4;
+                                                                }
+                                                                
+                                                                JToken writeBatchTimeoutValue4 = sinkValue["writeBatchTimeout"];
+                                                                if (writeBatchTimeoutValue4 != null && writeBatchTimeoutValue4.Type != JTokenType.Null)
+                                                                {
+                                                                    TimeSpan writeBatchTimeoutInstance4 = TimeSpan.Parse(((string)writeBatchTimeoutValue4), CultureInfo.InvariantCulture);
+                                                                    documentDbCollectionSinkInstance.WriteBatchTimeout = writeBatchTimeoutInstance4;
+                                                                }
+                                                                
+                                                                JToken sinkRetryCountValue4 = sinkValue["sinkRetryCount"];
+                                                                if (sinkRetryCountValue4 != null && sinkRetryCountValue4.Type != JTokenType.Null)
+                                                                {
+                                                                    int sinkRetryCountInstance4 = ((int)sinkRetryCountValue4);
+                                                                    documentDbCollectionSinkInstance.SinkRetryCount = sinkRetryCountInstance4;
+                                                                }
+                                                                
+                                                                JToken sinkRetryWaitValue4 = sinkValue["sinkRetryWait"];
+                                                                if (sinkRetryWaitValue4 != null && sinkRetryWaitValue4.Type != JTokenType.Null)
+                                                                {
+                                                                    TimeSpan sinkRetryWaitInstance4 = TimeSpan.Parse(((string)sinkRetryWaitValue4), CultureInfo.InvariantCulture);
+                                                                    documentDbCollectionSinkInstance.SinkRetryWait = sinkRetryWaitInstance4;
+                                                                }
+                                                                
+                                                                JToken sinkPartitionDataValue4 = sinkValue["sinkPartitionData"];
+                                                                if (sinkPartitionDataValue4 != null && sinkPartitionDataValue4.Type != JTokenType.Null)
+                                                                {
+                                                                    bool sinkPartitionDataInstance4 = ((bool)sinkPartitionDataValue4);
+                                                                    documentDbCollectionSinkInstance.SinkPartitionData = sinkPartitionDataInstance4;
+                                                                }
+                                                                transformationInstance.Sink = documentDbCollectionSinkInstance;
+                                                            }
                                                             if (typeName3 == "SqlSink")
                                                             {
                                                                 SqlSink sqlSinkInstance = new SqlSink();
@@ -9918,6 +11068,20 @@ namespace Microsoft.Azure.Management.DataFactories
                                                                 {
                                                                     string sqlWriterTableTypeInstance = ((string)sqlWriterTableTypeValue);
                                                                     sqlSinkInstance.SqlWriterTableType = sqlWriterTableTypeInstance;
+                                                                }
+                                                                
+                                                                JToken sqlWriterCleanupScriptValue = sinkValue["sqlWriterCleanupScript"];
+                                                                if (sqlWriterCleanupScriptValue != null && sqlWriterCleanupScriptValue.Type != JTokenType.Null)
+                                                                {
+                                                                    string sqlWriterCleanupScriptInstance = ((string)sqlWriterCleanupScriptValue);
+                                                                    sqlSinkInstance.SqlWriterCleanupScript = sqlWriterCleanupScriptInstance;
+                                                                }
+                                                                
+                                                                JToken sliceIdentifierColumnNameValue = sinkValue["sliceIdentifierColumnName"];
+                                                                if (sliceIdentifierColumnNameValue != null && sliceIdentifierColumnNameValue.Type != JTokenType.Null)
+                                                                {
+                                                                    string sliceIdentifierColumnNameInstance = ((string)sliceIdentifierColumnNameValue);
+                                                                    sqlSinkInstance.SliceIdentifierColumnName = sliceIdentifierColumnNameInstance;
                                                                 }
                                                                 
                                                                 JToken storedProcedureParametersSequenceElement = ((JToken)sinkValue["storedProcedureParameters"]);
@@ -9946,39 +11110,39 @@ namespace Microsoft.Azure.Management.DataFactories
                                                                     }
                                                                 }
                                                                 
-                                                                JToken writeBatchSizeValue4 = sinkValue["writeBatchSize"];
-                                                                if (writeBatchSizeValue4 != null && writeBatchSizeValue4.Type != JTokenType.Null)
+                                                                JToken writeBatchSizeValue5 = sinkValue["writeBatchSize"];
+                                                                if (writeBatchSizeValue5 != null && writeBatchSizeValue5.Type != JTokenType.Null)
                                                                 {
-                                                                    int writeBatchSizeInstance4 = ((int)writeBatchSizeValue4);
-                                                                    sqlSinkInstance.WriteBatchSize = writeBatchSizeInstance4;
+                                                                    int writeBatchSizeInstance5 = ((int)writeBatchSizeValue5);
+                                                                    sqlSinkInstance.WriteBatchSize = writeBatchSizeInstance5;
                                                                 }
                                                                 
-                                                                JToken writeBatchTimeoutValue4 = sinkValue["writeBatchTimeout"];
-                                                                if (writeBatchTimeoutValue4 != null && writeBatchTimeoutValue4.Type != JTokenType.Null)
+                                                                JToken writeBatchTimeoutValue5 = sinkValue["writeBatchTimeout"];
+                                                                if (writeBatchTimeoutValue5 != null && writeBatchTimeoutValue5.Type != JTokenType.Null)
                                                                 {
-                                                                    TimeSpan writeBatchTimeoutInstance4 = TimeSpan.Parse(((string)writeBatchTimeoutValue4), CultureInfo.InvariantCulture);
-                                                                    sqlSinkInstance.WriteBatchTimeout = writeBatchTimeoutInstance4;
+                                                                    TimeSpan writeBatchTimeoutInstance5 = TimeSpan.Parse(((string)writeBatchTimeoutValue5), CultureInfo.InvariantCulture);
+                                                                    sqlSinkInstance.WriteBatchTimeout = writeBatchTimeoutInstance5;
                                                                 }
                                                                 
-                                                                JToken sinkRetryCountValue4 = sinkValue["sinkRetryCount"];
-                                                                if (sinkRetryCountValue4 != null && sinkRetryCountValue4.Type != JTokenType.Null)
+                                                                JToken sinkRetryCountValue5 = sinkValue["sinkRetryCount"];
+                                                                if (sinkRetryCountValue5 != null && sinkRetryCountValue5.Type != JTokenType.Null)
                                                                 {
-                                                                    int sinkRetryCountInstance4 = ((int)sinkRetryCountValue4);
-                                                                    sqlSinkInstance.SinkRetryCount = sinkRetryCountInstance4;
+                                                                    int sinkRetryCountInstance5 = ((int)sinkRetryCountValue5);
+                                                                    sqlSinkInstance.SinkRetryCount = sinkRetryCountInstance5;
                                                                 }
                                                                 
-                                                                JToken sinkRetryWaitValue4 = sinkValue["sinkRetryWait"];
-                                                                if (sinkRetryWaitValue4 != null && sinkRetryWaitValue4.Type != JTokenType.Null)
+                                                                JToken sinkRetryWaitValue5 = sinkValue["sinkRetryWait"];
+                                                                if (sinkRetryWaitValue5 != null && sinkRetryWaitValue5.Type != JTokenType.Null)
                                                                 {
-                                                                    TimeSpan sinkRetryWaitInstance4 = TimeSpan.Parse(((string)sinkRetryWaitValue4), CultureInfo.InvariantCulture);
-                                                                    sqlSinkInstance.SinkRetryWait = sinkRetryWaitInstance4;
+                                                                    TimeSpan sinkRetryWaitInstance5 = TimeSpan.Parse(((string)sinkRetryWaitValue5), CultureInfo.InvariantCulture);
+                                                                    sqlSinkInstance.SinkRetryWait = sinkRetryWaitInstance5;
                                                                 }
                                                                 
-                                                                JToken sinkPartitionDataValue4 = sinkValue["sinkPartitionData"];
-                                                                if (sinkPartitionDataValue4 != null && sinkPartitionDataValue4.Type != JTokenType.Null)
+                                                                JToken sinkPartitionDataValue5 = sinkValue["sinkPartitionData"];
+                                                                if (sinkPartitionDataValue5 != null && sinkPartitionDataValue5.Type != JTokenType.Null)
                                                                 {
-                                                                    bool sinkPartitionDataInstance4 = ((bool)sinkPartitionDataValue4);
-                                                                    sqlSinkInstance.SinkPartitionData = sinkPartitionDataInstance4;
+                                                                    bool sinkPartitionDataInstance5 = ((bool)sinkPartitionDataValue5);
+                                                                    sqlSinkInstance.SinkPartitionData = sinkPartitionDataInstance5;
                                                                 }
                                                                 transformationInstance.Sink = sqlSinkInstance;
                                                             }
@@ -10000,39 +11164,39 @@ namespace Microsoft.Azure.Management.DataFactories
                                                                     oracleSinkInstance.OracleWriterTableType = oracleWriterTableTypeInstance;
                                                                 }
                                                                 
-                                                                JToken writeBatchSizeValue5 = sinkValue["writeBatchSize"];
-                                                                if (writeBatchSizeValue5 != null && writeBatchSizeValue5.Type != JTokenType.Null)
+                                                                JToken writeBatchSizeValue6 = sinkValue["writeBatchSize"];
+                                                                if (writeBatchSizeValue6 != null && writeBatchSizeValue6.Type != JTokenType.Null)
                                                                 {
-                                                                    int writeBatchSizeInstance5 = ((int)writeBatchSizeValue5);
-                                                                    oracleSinkInstance.WriteBatchSize = writeBatchSizeInstance5;
+                                                                    int writeBatchSizeInstance6 = ((int)writeBatchSizeValue6);
+                                                                    oracleSinkInstance.WriteBatchSize = writeBatchSizeInstance6;
                                                                 }
                                                                 
-                                                                JToken writeBatchTimeoutValue5 = sinkValue["writeBatchTimeout"];
-                                                                if (writeBatchTimeoutValue5 != null && writeBatchTimeoutValue5.Type != JTokenType.Null)
+                                                                JToken writeBatchTimeoutValue6 = sinkValue["writeBatchTimeout"];
+                                                                if (writeBatchTimeoutValue6 != null && writeBatchTimeoutValue6.Type != JTokenType.Null)
                                                                 {
-                                                                    TimeSpan writeBatchTimeoutInstance5 = TimeSpan.Parse(((string)writeBatchTimeoutValue5), CultureInfo.InvariantCulture);
-                                                                    oracleSinkInstance.WriteBatchTimeout = writeBatchTimeoutInstance5;
+                                                                    TimeSpan writeBatchTimeoutInstance6 = TimeSpan.Parse(((string)writeBatchTimeoutValue6), CultureInfo.InvariantCulture);
+                                                                    oracleSinkInstance.WriteBatchTimeout = writeBatchTimeoutInstance6;
                                                                 }
                                                                 
-                                                                JToken sinkRetryCountValue5 = sinkValue["sinkRetryCount"];
-                                                                if (sinkRetryCountValue5 != null && sinkRetryCountValue5.Type != JTokenType.Null)
+                                                                JToken sinkRetryCountValue6 = sinkValue["sinkRetryCount"];
+                                                                if (sinkRetryCountValue6 != null && sinkRetryCountValue6.Type != JTokenType.Null)
                                                                 {
-                                                                    int sinkRetryCountInstance5 = ((int)sinkRetryCountValue5);
-                                                                    oracleSinkInstance.SinkRetryCount = sinkRetryCountInstance5;
+                                                                    int sinkRetryCountInstance6 = ((int)sinkRetryCountValue6);
+                                                                    oracleSinkInstance.SinkRetryCount = sinkRetryCountInstance6;
                                                                 }
                                                                 
-                                                                JToken sinkRetryWaitValue5 = sinkValue["sinkRetryWait"];
-                                                                if (sinkRetryWaitValue5 != null && sinkRetryWaitValue5.Type != JTokenType.Null)
+                                                                JToken sinkRetryWaitValue6 = sinkValue["sinkRetryWait"];
+                                                                if (sinkRetryWaitValue6 != null && sinkRetryWaitValue6.Type != JTokenType.Null)
                                                                 {
-                                                                    TimeSpan sinkRetryWaitInstance5 = TimeSpan.Parse(((string)sinkRetryWaitValue5), CultureInfo.InvariantCulture);
-                                                                    oracleSinkInstance.SinkRetryWait = sinkRetryWaitInstance5;
+                                                                    TimeSpan sinkRetryWaitInstance6 = TimeSpan.Parse(((string)sinkRetryWaitValue6), CultureInfo.InvariantCulture);
+                                                                    oracleSinkInstance.SinkRetryWait = sinkRetryWaitInstance6;
                                                                 }
                                                                 
-                                                                JToken sinkPartitionDataValue5 = sinkValue["sinkPartitionData"];
-                                                                if (sinkPartitionDataValue5 != null && sinkPartitionDataValue5.Type != JTokenType.Null)
+                                                                JToken sinkPartitionDataValue6 = sinkValue["sinkPartitionData"];
+                                                                if (sinkPartitionDataValue6 != null && sinkPartitionDataValue6.Type != JTokenType.Null)
                                                                 {
-                                                                    bool sinkPartitionDataInstance5 = ((bool)sinkPartitionDataValue5);
-                                                                    oracleSinkInstance.SinkPartitionData = sinkPartitionDataInstance5;
+                                                                    bool sinkPartitionDataInstance6 = ((bool)sinkPartitionDataValue6);
+                                                                    oracleSinkInstance.SinkPartitionData = sinkPartitionDataInstance6;
                                                                 }
                                                                 transformationInstance.Sink = oracleSinkInstance;
                                                             }
@@ -10223,13 +11387,24 @@ namespace Microsoft.Azure.Management.DataFactories
                                                                 hiveInstance.ScriptLinkedService = scriptLinkedServiceInstance;
                                                             }
                                                             
+                                                            JToken definesSequenceElement = ((JToken)transformationValue2["defines"]);
+                                                            if (definesSequenceElement != null && definesSequenceElement.Type != JTokenType.Null)
+                                                            {
+                                                                foreach (JProperty property2 in definesSequenceElement)
+                                                                {
+                                                                    string definesKey = ((string)property2.Name);
+                                                                    string definesValue = ((string)property2.Value);
+                                                                    hiveInstance.Defines.Add(definesKey, definesValue);
+                                                                }
+                                                            }
+                                                            
                                                             JToken extendedPropertiesSequenceElement = ((JToken)transformationValue2["extendedProperties"]);
                                                             if (extendedPropertiesSequenceElement != null && extendedPropertiesSequenceElement.Type != JTokenType.Null)
                                                             {
-                                                                foreach (JProperty property2 in extendedPropertiesSequenceElement)
+                                                                foreach (JProperty property3 in extendedPropertiesSequenceElement)
                                                                 {
-                                                                    string extendedPropertiesKey = ((string)property2.Name);
-                                                                    string extendedPropertiesValue = ((string)property2.Value);
+                                                                    string extendedPropertiesKey = ((string)property3.Name);
+                                                                    string extendedPropertiesValue = ((string)property3.Value);
                                                                     hiveInstance.ExtendedProperties.Add(extendedPropertiesKey, extendedPropertiesValue);
                                                                 }
                                                             }
@@ -10240,6 +11415,15 @@ namespace Microsoft.Azure.Management.DataFactories
                                                                 foreach (JToken storageLinkedServicesValue in ((JArray)storageLinkedServicesArray))
                                                                 {
                                                                     hiveInstance.StorageLinkedServices.Add(((string)storageLinkedServicesValue));
+                                                                }
+                                                            }
+                                                            
+                                                            JToken argumentsArray = transformationValue2["arguments"];
+                                                            if (argumentsArray != null && argumentsArray.Type != JTokenType.Null)
+                                                            {
+                                                                foreach (JToken argumentsValue in ((JArray)argumentsArray))
+                                                                {
+                                                                    hiveInstance.Arguments.Add(((string)argumentsValue));
                                                                 }
                                                             }
                                                             hDInsightActivityInstance.Transformation = hiveInstance;
@@ -10272,10 +11456,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                             JToken extendedPropertiesSequenceElement2 = ((JToken)transformationValue2["extendedProperties"]);
                                                             if (extendedPropertiesSequenceElement2 != null && extendedPropertiesSequenceElement2.Type != JTokenType.Null)
                                                             {
-                                                                foreach (JProperty property3 in extendedPropertiesSequenceElement2)
+                                                                foreach (JProperty property4 in extendedPropertiesSequenceElement2)
                                                                 {
-                                                                    string extendedPropertiesKey2 = ((string)property3.Name);
-                                                                    string extendedPropertiesValue2 = ((string)property3.Value);
+                                                                    string extendedPropertiesKey2 = ((string)property4.Name);
+                                                                    string extendedPropertiesValue2 = ((string)property4.Value);
                                                                     pigInstance.ExtendedProperties.Add(extendedPropertiesKey2, extendedPropertiesValue2);
                                                                 }
                                                             }
@@ -10286,6 +11470,15 @@ namespace Microsoft.Azure.Management.DataFactories
                                                                 foreach (JToken storageLinkedServicesValue2 in ((JArray)storageLinkedServicesArray2))
                                                                 {
                                                                     pigInstance.StorageLinkedServices.Add(((string)storageLinkedServicesValue2));
+                                                                }
+                                                            }
+                                                            
+                                                            JToken argumentsArray2 = transformationValue2["arguments"];
+                                                            if (argumentsArray2 != null && argumentsArray2.Type != JTokenType.Null)
+                                                            {
+                                                                foreach (JToken argumentsValue2 in ((JArray)argumentsArray2))
+                                                                {
+                                                                    pigInstance.Arguments.Add(((string)argumentsValue2));
                                                                 }
                                                             }
                                                             hDInsightActivityInstance.Transformation = pigInstance;
@@ -10324,22 +11517,24 @@ namespace Microsoft.Azure.Management.DataFactories
                                                                 }
                                                             }
                                                             
-                                                            JToken argumentsArray = transformationValue2["arguments"];
-                                                            if (argumentsArray != null && argumentsArray.Type != JTokenType.Null)
+                                                            JToken definesSequenceElement2 = ((JToken)transformationValue2["defines"]);
+                                                            if (definesSequenceElement2 != null && definesSequenceElement2.Type != JTokenType.Null)
                                                             {
-                                                                foreach (JToken argumentsValue in ((JArray)argumentsArray))
+                                                                foreach (JProperty property5 in definesSequenceElement2)
                                                                 {
-                                                                    mapReduceInstance.Arguments.Add(((string)argumentsValue));
+                                                                    string definesKey2 = ((string)property5.Name);
+                                                                    string definesValue2 = ((string)property5.Value);
+                                                                    mapReduceInstance.Defines.Add(definesKey2, definesValue2);
                                                                 }
                                                             }
                                                             
                                                             JToken extendedPropertiesSequenceElement3 = ((JToken)transformationValue2["extendedProperties"]);
                                                             if (extendedPropertiesSequenceElement3 != null && extendedPropertiesSequenceElement3.Type != JTokenType.Null)
                                                             {
-                                                                foreach (JProperty property4 in extendedPropertiesSequenceElement3)
+                                                                foreach (JProperty property6 in extendedPropertiesSequenceElement3)
                                                                 {
-                                                                    string extendedPropertiesKey3 = ((string)property4.Name);
-                                                                    string extendedPropertiesValue3 = ((string)property4.Value);
+                                                                    string extendedPropertiesKey3 = ((string)property6.Name);
+                                                                    string extendedPropertiesValue3 = ((string)property6.Value);
                                                                     mapReduceInstance.ExtendedProperties.Add(extendedPropertiesKey3, extendedPropertiesValue3);
                                                                 }
                                                             }
@@ -10350,6 +11545,15 @@ namespace Microsoft.Azure.Management.DataFactories
                                                                 foreach (JToken storageLinkedServicesValue3 in ((JArray)storageLinkedServicesArray3))
                                                                 {
                                                                     mapReduceInstance.StorageLinkedServices.Add(((string)storageLinkedServicesValue3));
+                                                                }
+                                                            }
+                                                            
+                                                            JToken argumentsArray3 = transformationValue2["arguments"];
+                                                            if (argumentsArray3 != null && argumentsArray3.Type != JTokenType.Null)
+                                                            {
+                                                                foreach (JToken argumentsValue3 in ((JArray)argumentsArray3))
+                                                                {
+                                                                    mapReduceInstance.Arguments.Add(((string)argumentsValue3));
                                                                 }
                                                             }
                                                             hDInsightActivityInstance.Transformation = mapReduceInstance;
@@ -10418,22 +11622,24 @@ namespace Microsoft.Azure.Management.DataFactories
                                                                 }
                                                             }
                                                             
-                                                            JToken argumentsArray2 = transformationValue2["arguments"];
-                                                            if (argumentsArray2 != null && argumentsArray2.Type != JTokenType.Null)
+                                                            JToken definesSequenceElement3 = ((JToken)transformationValue2["defines"]);
+                                                            if (definesSequenceElement3 != null && definesSequenceElement3.Type != JTokenType.Null)
                                                             {
-                                                                foreach (JToken argumentsValue2 in ((JArray)argumentsArray2))
+                                                                foreach (JProperty property7 in definesSequenceElement3)
                                                                 {
-                                                                    streamingInstance.Arguments.Add(((string)argumentsValue2));
+                                                                    string definesKey3 = ((string)property7.Name);
+                                                                    string definesValue3 = ((string)property7.Value);
+                                                                    streamingInstance.Defines.Add(definesKey3, definesValue3);
                                                                 }
                                                             }
                                                             
                                                             JToken extendedPropertiesSequenceElement4 = ((JToken)transformationValue2["extendedProperties"]);
                                                             if (extendedPropertiesSequenceElement4 != null && extendedPropertiesSequenceElement4.Type != JTokenType.Null)
                                                             {
-                                                                foreach (JProperty property5 in extendedPropertiesSequenceElement4)
+                                                                foreach (JProperty property8 in extendedPropertiesSequenceElement4)
                                                                 {
-                                                                    string extendedPropertiesKey4 = ((string)property5.Name);
-                                                                    string extendedPropertiesValue4 = ((string)property5.Value);
+                                                                    string extendedPropertiesKey4 = ((string)property8.Name);
+                                                                    string extendedPropertiesValue4 = ((string)property8.Value);
                                                                     streamingInstance.ExtendedProperties.Add(extendedPropertiesKey4, extendedPropertiesValue4);
                                                                 }
                                                             }
@@ -10444,6 +11650,15 @@ namespace Microsoft.Azure.Management.DataFactories
                                                                 foreach (JToken storageLinkedServicesValue4 in ((JArray)storageLinkedServicesArray4))
                                                                 {
                                                                     streamingInstance.StorageLinkedServices.Add(((string)storageLinkedServicesValue4));
+                                                                }
+                                                            }
+                                                            
+                                                            JToken argumentsArray4 = transformationValue2["arguments"];
+                                                            if (argumentsArray4 != null && argumentsArray4.Type != JTokenType.Null)
+                                                            {
+                                                                foreach (JToken argumentsValue4 in ((JArray)argumentsArray4))
+                                                                {
+                                                                    streamingInstance.Arguments.Add(((string)argumentsValue4));
                                                                 }
                                                             }
                                                             hDInsightActivityInstance.Transformation = streamingInstance;
@@ -10624,10 +11839,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         JToken extendedPropertiesSequenceElement5 = ((JToken)transformationValue3["extendedProperties"]);
                                                         if (extendedPropertiesSequenceElement5 != null && extendedPropertiesSequenceElement5.Type != JTokenType.Null)
                                                         {
-                                                            foreach (JProperty property6 in extendedPropertiesSequenceElement5)
+                                                            foreach (JProperty property9 in extendedPropertiesSequenceElement5)
                                                             {
-                                                                string extendedPropertiesKey5 = ((string)property6.Name);
-                                                                string extendedPropertiesValue5 = ((string)property6.Value);
+                                                                string extendedPropertiesKey5 = ((string)property9.Name);
+                                                                string extendedPropertiesValue5 = ((string)property9.Value);
                                                                 transformationInstance2.ExtendedProperties.Add(extendedPropertiesKey5, extendedPropertiesValue5);
                                                             }
                                                         }
@@ -10786,10 +12001,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         JToken storedProcedureParametersSequenceElement2 = ((JToken)transformationValue4["storedProcedureParameters"]);
                                                         if (storedProcedureParametersSequenceElement2 != null && storedProcedureParametersSequenceElement2.Type != JTokenType.Null)
                                                         {
-                                                            foreach (JProperty property7 in storedProcedureParametersSequenceElement2)
+                                                            foreach (JProperty property10 in storedProcedureParametersSequenceElement2)
                                                             {
-                                                                string storedProcedureParametersKey2 = ((string)property7.Name);
-                                                                string storedProcedureParametersValue = ((string)property7.Value);
+                                                                string storedProcedureParametersKey2 = ((string)property10.Name);
+                                                                string storedProcedureParametersValue = ((string)property10.Value);
                                                                 transformationInstance3.StoredProcedureActivityParameters.Add(storedProcedureParametersKey2, storedProcedureParametersValue);
                                                             }
                                                         }
@@ -10941,10 +12156,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         JToken webServiceParametersSequenceElement = ((JToken)transformationValue5["webServiceParameters"]);
                                                         if (webServiceParametersSequenceElement != null && webServiceParametersSequenceElement.Type != JTokenType.Null)
                                                         {
-                                                            foreach (JProperty property8 in webServiceParametersSequenceElement)
+                                                            foreach (JProperty property11 in webServiceParametersSequenceElement)
                                                             {
-                                                                string webServiceParametersKey = ((string)property8.Name);
-                                                                string webServiceParametersValue = ((string)property8.Value);
+                                                                string webServiceParametersKey = ((string)property11.Name);
+                                                                string webServiceParametersValue = ((string)property11.Value);
                                                                 transformationInstance4.WebServiceParameters.Add(webServiceParametersKey, webServiceParametersValue);
                                                             }
                                                         }
@@ -11405,31 +12620,128 @@ namespace Microsoft.Azure.Management.DataFactories
                                                                 }
                                                                 transformationInstance.Source = blobSourceInstance;
                                                             }
-                                                            if (typeName2 == "RelationalSource")
+                                                            if (typeName2 == "DocumentDbCollectionSource")
                                                             {
-                                                                RelationalSource relationalSourceInstance = new RelationalSource();
+                                                                DocumentDbCollectionSource documentDbCollectionSourceInstance = new DocumentDbCollectionSource();
                                                                 
                                                                 JToken queryValue = sourceValue["query"];
                                                                 if (queryValue != null && queryValue.Type != JTokenType.Null)
                                                                 {
                                                                     string queryInstance = ((string)queryValue);
-                                                                    relationalSourceInstance.Query = queryInstance;
+                                                                    documentDbCollectionSourceInstance.Query = queryInstance;
+                                                                }
+                                                                
+                                                                JToken nestingSeparatorValue = sourceValue["nestingSeparator"];
+                                                                if (nestingSeparatorValue != null && nestingSeparatorValue.Type != JTokenType.Null)
+                                                                {
+                                                                    string nestingSeparatorInstance = ((string)nestingSeparatorValue);
+                                                                    documentDbCollectionSourceInstance.NestingSeparator = nestingSeparatorInstance;
                                                                 }
                                                                 
                                                                 JToken sourceRetryCountValue3 = sourceValue["sourceRetryCount"];
                                                                 if (sourceRetryCountValue3 != null && sourceRetryCountValue3.Type != JTokenType.Null)
                                                                 {
                                                                     int sourceRetryCountInstance3 = ((int)sourceRetryCountValue3);
-                                                                    relationalSourceInstance.SourceRetryCount = sourceRetryCountInstance3;
+                                                                    documentDbCollectionSourceInstance.SourceRetryCount = sourceRetryCountInstance3;
                                                                 }
                                                                 
                                                                 JToken sourceRetryWaitValue3 = sourceValue["sourceRetryWait"];
                                                                 if (sourceRetryWaitValue3 != null && sourceRetryWaitValue3.Type != JTokenType.Null)
                                                                 {
                                                                     TimeSpan sourceRetryWaitInstance3 = TimeSpan.Parse(((string)sourceRetryWaitValue3), CultureInfo.InvariantCulture);
-                                                                    relationalSourceInstance.SourceRetryWait = sourceRetryWaitInstance3;
+                                                                    documentDbCollectionSourceInstance.SourceRetryWait = sourceRetryWaitInstance3;
+                                                                }
+                                                                transformationInstance.Source = documentDbCollectionSourceInstance;
+                                                            }
+                                                            if (typeName2 == "RelationalSource")
+                                                            {
+                                                                RelationalSource relationalSourceInstance = new RelationalSource();
+                                                                
+                                                                JToken queryValue2 = sourceValue["query"];
+                                                                if (queryValue2 != null && queryValue2.Type != JTokenType.Null)
+                                                                {
+                                                                    string queryInstance2 = ((string)queryValue2);
+                                                                    relationalSourceInstance.Query = queryInstance2;
+                                                                }
+                                                                
+                                                                JToken sourceRetryCountValue4 = sourceValue["sourceRetryCount"];
+                                                                if (sourceRetryCountValue4 != null && sourceRetryCountValue4.Type != JTokenType.Null)
+                                                                {
+                                                                    int sourceRetryCountInstance4 = ((int)sourceRetryCountValue4);
+                                                                    relationalSourceInstance.SourceRetryCount = sourceRetryCountInstance4;
+                                                                }
+                                                                
+                                                                JToken sourceRetryWaitValue4 = sourceValue["sourceRetryWait"];
+                                                                if (sourceRetryWaitValue4 != null && sourceRetryWaitValue4.Type != JTokenType.Null)
+                                                                {
+                                                                    TimeSpan sourceRetryWaitInstance4 = TimeSpan.Parse(((string)sourceRetryWaitValue4), CultureInfo.InvariantCulture);
+                                                                    relationalSourceInstance.SourceRetryWait = sourceRetryWaitInstance4;
                                                                 }
                                                                 transformationInstance.Source = relationalSourceInstance;
+                                                            }
+                                                            if (typeName2 == "OdbcSource")
+                                                            {
+                                                                RelationalSource.OdbcSource odbcSourceInstance = new RelationalSource.OdbcSource();
+                                                                
+                                                                JToken odbcReaderQueryValue = sourceValue["odbcReaderQuery"];
+                                                                if (odbcReaderQueryValue != null && odbcReaderQueryValue.Type != JTokenType.Null)
+                                                                {
+                                                                    string odbcReaderQueryInstance = ((string)odbcReaderQueryValue);
+                                                                    odbcSourceInstance.OdbcReaderQuery = odbcReaderQueryInstance;
+                                                                }
+                                                                
+                                                                JToken sourceRetryCountValue5 = sourceValue["sourceRetryCount"];
+                                                                if (sourceRetryCountValue5 != null && sourceRetryCountValue5.Type != JTokenType.Null)
+                                                                {
+                                                                    int sourceRetryCountInstance5 = ((int)sourceRetryCountValue5);
+                                                                    odbcSourceInstance.SourceRetryCount = sourceRetryCountInstance5;
+                                                                }
+                                                                
+                                                                JToken sourceRetryWaitValue5 = sourceValue["sourceRetryWait"];
+                                                                if (sourceRetryWaitValue5 != null && sourceRetryWaitValue5.Type != JTokenType.Null)
+                                                                {
+                                                                    TimeSpan sourceRetryWaitInstance5 = TimeSpan.Parse(((string)sourceRetryWaitValue5), CultureInfo.InvariantCulture);
+                                                                    odbcSourceInstance.SourceRetryWait = sourceRetryWaitInstance5;
+                                                                }
+                                                                transformationInstance.Source = odbcSourceInstance;
+                                                            }
+                                                            if (typeName2 == "ODataSource")
+                                                            {
+                                                                RelationalSource.ODataSource oDataSourceInstance = new RelationalSource.ODataSource();
+                                                                
+                                                                JToken sourceRetryCountValue6 = sourceValue["sourceRetryCount"];
+                                                                if (sourceRetryCountValue6 != null && sourceRetryCountValue6.Type != JTokenType.Null)
+                                                                {
+                                                                    int sourceRetryCountInstance6 = ((int)sourceRetryCountValue6);
+                                                                    oDataSourceInstance.SourceRetryCount = sourceRetryCountInstance6;
+                                                                }
+                                                                
+                                                                JToken sourceRetryWaitValue6 = sourceValue["sourceRetryWait"];
+                                                                if (sourceRetryWaitValue6 != null && sourceRetryWaitValue6.Type != JTokenType.Null)
+                                                                {
+                                                                    TimeSpan sourceRetryWaitInstance6 = TimeSpan.Parse(((string)sourceRetryWaitValue6), CultureInfo.InvariantCulture);
+                                                                    oDataSourceInstance.SourceRetryWait = sourceRetryWaitInstance6;
+                                                                }
+                                                                transformationInstance.Source = oDataSourceInstance;
+                                                            }
+                                                            if (typeName2 == "HdfsSource")
+                                                            {
+                                                                RelationalSource.HdfsSource hdfsSourceInstance = new RelationalSource.HdfsSource();
+                                                                
+                                                                JToken sourceRetryCountValue7 = sourceValue["sourceRetryCount"];
+                                                                if (sourceRetryCountValue7 != null && sourceRetryCountValue7.Type != JTokenType.Null)
+                                                                {
+                                                                    int sourceRetryCountInstance7 = ((int)sourceRetryCountValue7);
+                                                                    hdfsSourceInstance.SourceRetryCount = sourceRetryCountInstance7;
+                                                                }
+                                                                
+                                                                JToken sourceRetryWaitValue7 = sourceValue["sourceRetryWait"];
+                                                                if (sourceRetryWaitValue7 != null && sourceRetryWaitValue7.Type != JTokenType.Null)
+                                                                {
+                                                                    TimeSpan sourceRetryWaitInstance7 = TimeSpan.Parse(((string)sourceRetryWaitValue7), CultureInfo.InvariantCulture);
+                                                                    hdfsSourceInstance.SourceRetryWait = sourceRetryWaitInstance7;
+                                                                }
+                                                                transformationInstance.Source = hdfsSourceInstance;
                                                             }
                                                             if (typeName2 == "SqlSource")
                                                             {
@@ -11442,18 +12754,18 @@ namespace Microsoft.Azure.Management.DataFactories
                                                                     sqlSourceInstance.SqlReaderQuery = sqlReaderQueryInstance;
                                                                 }
                                                                 
-                                                                JToken sourceRetryCountValue4 = sourceValue["sourceRetryCount"];
-                                                                if (sourceRetryCountValue4 != null && sourceRetryCountValue4.Type != JTokenType.Null)
+                                                                JToken sourceRetryCountValue8 = sourceValue["sourceRetryCount"];
+                                                                if (sourceRetryCountValue8 != null && sourceRetryCountValue8.Type != JTokenType.Null)
                                                                 {
-                                                                    int sourceRetryCountInstance4 = ((int)sourceRetryCountValue4);
-                                                                    sqlSourceInstance.SourceRetryCount = sourceRetryCountInstance4;
+                                                                    int sourceRetryCountInstance8 = ((int)sourceRetryCountValue8);
+                                                                    sqlSourceInstance.SourceRetryCount = sourceRetryCountInstance8;
                                                                 }
                                                                 
-                                                                JToken sourceRetryWaitValue4 = sourceValue["sourceRetryWait"];
-                                                                if (sourceRetryWaitValue4 != null && sourceRetryWaitValue4.Type != JTokenType.Null)
+                                                                JToken sourceRetryWaitValue8 = sourceValue["sourceRetryWait"];
+                                                                if (sourceRetryWaitValue8 != null && sourceRetryWaitValue8.Type != JTokenType.Null)
                                                                 {
-                                                                    TimeSpan sourceRetryWaitInstance4 = TimeSpan.Parse(((string)sourceRetryWaitValue4), CultureInfo.InvariantCulture);
-                                                                    sqlSourceInstance.SourceRetryWait = sourceRetryWaitInstance4;
+                                                                    TimeSpan sourceRetryWaitInstance8 = TimeSpan.Parse(((string)sourceRetryWaitValue8), CultureInfo.InvariantCulture);
+                                                                    sqlSourceInstance.SourceRetryWait = sourceRetryWaitInstance8;
                                                                 }
                                                                 transformationInstance.Source = sqlSourceInstance;
                                                             }
@@ -11461,18 +12773,18 @@ namespace Microsoft.Azure.Management.DataFactories
                                                             {
                                                                 FileSystemSource fileSystemSourceInstance = new FileSystemSource();
                                                                 
-                                                                JToken sourceRetryCountValue5 = sourceValue["sourceRetryCount"];
-                                                                if (sourceRetryCountValue5 != null && sourceRetryCountValue5.Type != JTokenType.Null)
+                                                                JToken sourceRetryCountValue9 = sourceValue["sourceRetryCount"];
+                                                                if (sourceRetryCountValue9 != null && sourceRetryCountValue9.Type != JTokenType.Null)
                                                                 {
-                                                                    int sourceRetryCountInstance5 = ((int)sourceRetryCountValue5);
-                                                                    fileSystemSourceInstance.SourceRetryCount = sourceRetryCountInstance5;
+                                                                    int sourceRetryCountInstance9 = ((int)sourceRetryCountValue9);
+                                                                    fileSystemSourceInstance.SourceRetryCount = sourceRetryCountInstance9;
                                                                 }
                                                                 
-                                                                JToken sourceRetryWaitValue5 = sourceValue["sourceRetryWait"];
-                                                                if (sourceRetryWaitValue5 != null && sourceRetryWaitValue5.Type != JTokenType.Null)
+                                                                JToken sourceRetryWaitValue9 = sourceValue["sourceRetryWait"];
+                                                                if (sourceRetryWaitValue9 != null && sourceRetryWaitValue9.Type != JTokenType.Null)
                                                                 {
-                                                                    TimeSpan sourceRetryWaitInstance5 = TimeSpan.Parse(((string)sourceRetryWaitValue5), CultureInfo.InvariantCulture);
-                                                                    fileSystemSourceInstance.SourceRetryWait = sourceRetryWaitInstance5;
+                                                                    TimeSpan sourceRetryWaitInstance9 = TimeSpan.Parse(((string)sourceRetryWaitValue9), CultureInfo.InvariantCulture);
+                                                                    fileSystemSourceInstance.SourceRetryWait = sourceRetryWaitInstance9;
                                                                 }
                                                                 transformationInstance.Source = fileSystemSourceInstance;
                                                             }
@@ -11494,18 +12806,18 @@ namespace Microsoft.Azure.Management.DataFactories
                                                                     oracleSourceInstance.QueryTimeout = queryTimeoutInstance;
                                                                 }
                                                                 
-                                                                JToken sourceRetryCountValue6 = sourceValue["sourceRetryCount"];
-                                                                if (sourceRetryCountValue6 != null && sourceRetryCountValue6.Type != JTokenType.Null)
+                                                                JToken sourceRetryCountValue10 = sourceValue["sourceRetryCount"];
+                                                                if (sourceRetryCountValue10 != null && sourceRetryCountValue10.Type != JTokenType.Null)
                                                                 {
-                                                                    int sourceRetryCountInstance6 = ((int)sourceRetryCountValue6);
-                                                                    oracleSourceInstance.SourceRetryCount = sourceRetryCountInstance6;
+                                                                    int sourceRetryCountInstance10 = ((int)sourceRetryCountValue10);
+                                                                    oracleSourceInstance.SourceRetryCount = sourceRetryCountInstance10;
                                                                 }
                                                                 
-                                                                JToken sourceRetryWaitValue6 = sourceValue["sourceRetryWait"];
-                                                                if (sourceRetryWaitValue6 != null && sourceRetryWaitValue6.Type != JTokenType.Null)
+                                                                JToken sourceRetryWaitValue10 = sourceValue["sourceRetryWait"];
+                                                                if (sourceRetryWaitValue10 != null && sourceRetryWaitValue10.Type != JTokenType.Null)
                                                                 {
-                                                                    TimeSpan sourceRetryWaitInstance6 = TimeSpan.Parse(((string)sourceRetryWaitValue6), CultureInfo.InvariantCulture);
-                                                                    oracleSourceInstance.SourceRetryWait = sourceRetryWaitInstance6;
+                                                                    TimeSpan sourceRetryWaitInstance10 = TimeSpan.Parse(((string)sourceRetryWaitValue10), CultureInfo.InvariantCulture);
+                                                                    oracleSourceInstance.SourceRetryWait = sourceRetryWaitInstance10;
                                                                 }
                                                                 transformationInstance.Source = oracleSourceInstance;
                                                             }
@@ -11733,6 +13045,53 @@ namespace Microsoft.Azure.Management.DataFactories
                                                                 }
                                                                 transformationInstance.Sink = blobSinkInstance;
                                                             }
+                                                            if (typeName3 == "DocumentDbCollectionSink")
+                                                            {
+                                                                DocumentDbCollectionSink documentDbCollectionSinkInstance = new DocumentDbCollectionSink();
+                                                                
+                                                                JToken nestingSeparatorValue2 = sinkValue["nestingSeparator"];
+                                                                if (nestingSeparatorValue2 != null && nestingSeparatorValue2.Type != JTokenType.Null)
+                                                                {
+                                                                    string nestingSeparatorInstance2 = ((string)nestingSeparatorValue2);
+                                                                    documentDbCollectionSinkInstance.NestingSeparator = nestingSeparatorInstance2;
+                                                                }
+                                                                
+                                                                JToken writeBatchSizeValue4 = sinkValue["writeBatchSize"];
+                                                                if (writeBatchSizeValue4 != null && writeBatchSizeValue4.Type != JTokenType.Null)
+                                                                {
+                                                                    int writeBatchSizeInstance4 = ((int)writeBatchSizeValue4);
+                                                                    documentDbCollectionSinkInstance.WriteBatchSize = writeBatchSizeInstance4;
+                                                                }
+                                                                
+                                                                JToken writeBatchTimeoutValue4 = sinkValue["writeBatchTimeout"];
+                                                                if (writeBatchTimeoutValue4 != null && writeBatchTimeoutValue4.Type != JTokenType.Null)
+                                                                {
+                                                                    TimeSpan writeBatchTimeoutInstance4 = TimeSpan.Parse(((string)writeBatchTimeoutValue4), CultureInfo.InvariantCulture);
+                                                                    documentDbCollectionSinkInstance.WriteBatchTimeout = writeBatchTimeoutInstance4;
+                                                                }
+                                                                
+                                                                JToken sinkRetryCountValue4 = sinkValue["sinkRetryCount"];
+                                                                if (sinkRetryCountValue4 != null && sinkRetryCountValue4.Type != JTokenType.Null)
+                                                                {
+                                                                    int sinkRetryCountInstance4 = ((int)sinkRetryCountValue4);
+                                                                    documentDbCollectionSinkInstance.SinkRetryCount = sinkRetryCountInstance4;
+                                                                }
+                                                                
+                                                                JToken sinkRetryWaitValue4 = sinkValue["sinkRetryWait"];
+                                                                if (sinkRetryWaitValue4 != null && sinkRetryWaitValue4.Type != JTokenType.Null)
+                                                                {
+                                                                    TimeSpan sinkRetryWaitInstance4 = TimeSpan.Parse(((string)sinkRetryWaitValue4), CultureInfo.InvariantCulture);
+                                                                    documentDbCollectionSinkInstance.SinkRetryWait = sinkRetryWaitInstance4;
+                                                                }
+                                                                
+                                                                JToken sinkPartitionDataValue4 = sinkValue["sinkPartitionData"];
+                                                                if (sinkPartitionDataValue4 != null && sinkPartitionDataValue4.Type != JTokenType.Null)
+                                                                {
+                                                                    bool sinkPartitionDataInstance4 = ((bool)sinkPartitionDataValue4);
+                                                                    documentDbCollectionSinkInstance.SinkPartitionData = sinkPartitionDataInstance4;
+                                                                }
+                                                                transformationInstance.Sink = documentDbCollectionSinkInstance;
+                                                            }
                                                             if (typeName3 == "SqlSink")
                                                             {
                                                                 SqlSink sqlSinkInstance = new SqlSink();
@@ -11749,6 +13108,20 @@ namespace Microsoft.Azure.Management.DataFactories
                                                                 {
                                                                     string sqlWriterTableTypeInstance = ((string)sqlWriterTableTypeValue);
                                                                     sqlSinkInstance.SqlWriterTableType = sqlWriterTableTypeInstance;
+                                                                }
+                                                                
+                                                                JToken sqlWriterCleanupScriptValue = sinkValue["sqlWriterCleanupScript"];
+                                                                if (sqlWriterCleanupScriptValue != null && sqlWriterCleanupScriptValue.Type != JTokenType.Null)
+                                                                {
+                                                                    string sqlWriterCleanupScriptInstance = ((string)sqlWriterCleanupScriptValue);
+                                                                    sqlSinkInstance.SqlWriterCleanupScript = sqlWriterCleanupScriptInstance;
+                                                                }
+                                                                
+                                                                JToken sliceIdentifierColumnNameValue = sinkValue["sliceIdentifierColumnName"];
+                                                                if (sliceIdentifierColumnNameValue != null && sliceIdentifierColumnNameValue.Type != JTokenType.Null)
+                                                                {
+                                                                    string sliceIdentifierColumnNameInstance = ((string)sliceIdentifierColumnNameValue);
+                                                                    sqlSinkInstance.SliceIdentifierColumnName = sliceIdentifierColumnNameInstance;
                                                                 }
                                                                 
                                                                 JToken storedProcedureParametersSequenceElement = ((JToken)sinkValue["storedProcedureParameters"]);
@@ -11777,39 +13150,39 @@ namespace Microsoft.Azure.Management.DataFactories
                                                                     }
                                                                 }
                                                                 
-                                                                JToken writeBatchSizeValue4 = sinkValue["writeBatchSize"];
-                                                                if (writeBatchSizeValue4 != null && writeBatchSizeValue4.Type != JTokenType.Null)
+                                                                JToken writeBatchSizeValue5 = sinkValue["writeBatchSize"];
+                                                                if (writeBatchSizeValue5 != null && writeBatchSizeValue5.Type != JTokenType.Null)
                                                                 {
-                                                                    int writeBatchSizeInstance4 = ((int)writeBatchSizeValue4);
-                                                                    sqlSinkInstance.WriteBatchSize = writeBatchSizeInstance4;
+                                                                    int writeBatchSizeInstance5 = ((int)writeBatchSizeValue5);
+                                                                    sqlSinkInstance.WriteBatchSize = writeBatchSizeInstance5;
                                                                 }
                                                                 
-                                                                JToken writeBatchTimeoutValue4 = sinkValue["writeBatchTimeout"];
-                                                                if (writeBatchTimeoutValue4 != null && writeBatchTimeoutValue4.Type != JTokenType.Null)
+                                                                JToken writeBatchTimeoutValue5 = sinkValue["writeBatchTimeout"];
+                                                                if (writeBatchTimeoutValue5 != null && writeBatchTimeoutValue5.Type != JTokenType.Null)
                                                                 {
-                                                                    TimeSpan writeBatchTimeoutInstance4 = TimeSpan.Parse(((string)writeBatchTimeoutValue4), CultureInfo.InvariantCulture);
-                                                                    sqlSinkInstance.WriteBatchTimeout = writeBatchTimeoutInstance4;
+                                                                    TimeSpan writeBatchTimeoutInstance5 = TimeSpan.Parse(((string)writeBatchTimeoutValue5), CultureInfo.InvariantCulture);
+                                                                    sqlSinkInstance.WriteBatchTimeout = writeBatchTimeoutInstance5;
                                                                 }
                                                                 
-                                                                JToken sinkRetryCountValue4 = sinkValue["sinkRetryCount"];
-                                                                if (sinkRetryCountValue4 != null && sinkRetryCountValue4.Type != JTokenType.Null)
+                                                                JToken sinkRetryCountValue5 = sinkValue["sinkRetryCount"];
+                                                                if (sinkRetryCountValue5 != null && sinkRetryCountValue5.Type != JTokenType.Null)
                                                                 {
-                                                                    int sinkRetryCountInstance4 = ((int)sinkRetryCountValue4);
-                                                                    sqlSinkInstance.SinkRetryCount = sinkRetryCountInstance4;
+                                                                    int sinkRetryCountInstance5 = ((int)sinkRetryCountValue5);
+                                                                    sqlSinkInstance.SinkRetryCount = sinkRetryCountInstance5;
                                                                 }
                                                                 
-                                                                JToken sinkRetryWaitValue4 = sinkValue["sinkRetryWait"];
-                                                                if (sinkRetryWaitValue4 != null && sinkRetryWaitValue4.Type != JTokenType.Null)
+                                                                JToken sinkRetryWaitValue5 = sinkValue["sinkRetryWait"];
+                                                                if (sinkRetryWaitValue5 != null && sinkRetryWaitValue5.Type != JTokenType.Null)
                                                                 {
-                                                                    TimeSpan sinkRetryWaitInstance4 = TimeSpan.Parse(((string)sinkRetryWaitValue4), CultureInfo.InvariantCulture);
-                                                                    sqlSinkInstance.SinkRetryWait = sinkRetryWaitInstance4;
+                                                                    TimeSpan sinkRetryWaitInstance5 = TimeSpan.Parse(((string)sinkRetryWaitValue5), CultureInfo.InvariantCulture);
+                                                                    sqlSinkInstance.SinkRetryWait = sinkRetryWaitInstance5;
                                                                 }
                                                                 
-                                                                JToken sinkPartitionDataValue4 = sinkValue["sinkPartitionData"];
-                                                                if (sinkPartitionDataValue4 != null && sinkPartitionDataValue4.Type != JTokenType.Null)
+                                                                JToken sinkPartitionDataValue5 = sinkValue["sinkPartitionData"];
+                                                                if (sinkPartitionDataValue5 != null && sinkPartitionDataValue5.Type != JTokenType.Null)
                                                                 {
-                                                                    bool sinkPartitionDataInstance4 = ((bool)sinkPartitionDataValue4);
-                                                                    sqlSinkInstance.SinkPartitionData = sinkPartitionDataInstance4;
+                                                                    bool sinkPartitionDataInstance5 = ((bool)sinkPartitionDataValue5);
+                                                                    sqlSinkInstance.SinkPartitionData = sinkPartitionDataInstance5;
                                                                 }
                                                                 transformationInstance.Sink = sqlSinkInstance;
                                                             }
@@ -11831,39 +13204,39 @@ namespace Microsoft.Azure.Management.DataFactories
                                                                     oracleSinkInstance.OracleWriterTableType = oracleWriterTableTypeInstance;
                                                                 }
                                                                 
-                                                                JToken writeBatchSizeValue5 = sinkValue["writeBatchSize"];
-                                                                if (writeBatchSizeValue5 != null && writeBatchSizeValue5.Type != JTokenType.Null)
+                                                                JToken writeBatchSizeValue6 = sinkValue["writeBatchSize"];
+                                                                if (writeBatchSizeValue6 != null && writeBatchSizeValue6.Type != JTokenType.Null)
                                                                 {
-                                                                    int writeBatchSizeInstance5 = ((int)writeBatchSizeValue5);
-                                                                    oracleSinkInstance.WriteBatchSize = writeBatchSizeInstance5;
+                                                                    int writeBatchSizeInstance6 = ((int)writeBatchSizeValue6);
+                                                                    oracleSinkInstance.WriteBatchSize = writeBatchSizeInstance6;
                                                                 }
                                                                 
-                                                                JToken writeBatchTimeoutValue5 = sinkValue["writeBatchTimeout"];
-                                                                if (writeBatchTimeoutValue5 != null && writeBatchTimeoutValue5.Type != JTokenType.Null)
+                                                                JToken writeBatchTimeoutValue6 = sinkValue["writeBatchTimeout"];
+                                                                if (writeBatchTimeoutValue6 != null && writeBatchTimeoutValue6.Type != JTokenType.Null)
                                                                 {
-                                                                    TimeSpan writeBatchTimeoutInstance5 = TimeSpan.Parse(((string)writeBatchTimeoutValue5), CultureInfo.InvariantCulture);
-                                                                    oracleSinkInstance.WriteBatchTimeout = writeBatchTimeoutInstance5;
+                                                                    TimeSpan writeBatchTimeoutInstance6 = TimeSpan.Parse(((string)writeBatchTimeoutValue6), CultureInfo.InvariantCulture);
+                                                                    oracleSinkInstance.WriteBatchTimeout = writeBatchTimeoutInstance6;
                                                                 }
                                                                 
-                                                                JToken sinkRetryCountValue5 = sinkValue["sinkRetryCount"];
-                                                                if (sinkRetryCountValue5 != null && sinkRetryCountValue5.Type != JTokenType.Null)
+                                                                JToken sinkRetryCountValue6 = sinkValue["sinkRetryCount"];
+                                                                if (sinkRetryCountValue6 != null && sinkRetryCountValue6.Type != JTokenType.Null)
                                                                 {
-                                                                    int sinkRetryCountInstance5 = ((int)sinkRetryCountValue5);
-                                                                    oracleSinkInstance.SinkRetryCount = sinkRetryCountInstance5;
+                                                                    int sinkRetryCountInstance6 = ((int)sinkRetryCountValue6);
+                                                                    oracleSinkInstance.SinkRetryCount = sinkRetryCountInstance6;
                                                                 }
                                                                 
-                                                                JToken sinkRetryWaitValue5 = sinkValue["sinkRetryWait"];
-                                                                if (sinkRetryWaitValue5 != null && sinkRetryWaitValue5.Type != JTokenType.Null)
+                                                                JToken sinkRetryWaitValue6 = sinkValue["sinkRetryWait"];
+                                                                if (sinkRetryWaitValue6 != null && sinkRetryWaitValue6.Type != JTokenType.Null)
                                                                 {
-                                                                    TimeSpan sinkRetryWaitInstance5 = TimeSpan.Parse(((string)sinkRetryWaitValue5), CultureInfo.InvariantCulture);
-                                                                    oracleSinkInstance.SinkRetryWait = sinkRetryWaitInstance5;
+                                                                    TimeSpan sinkRetryWaitInstance6 = TimeSpan.Parse(((string)sinkRetryWaitValue6), CultureInfo.InvariantCulture);
+                                                                    oracleSinkInstance.SinkRetryWait = sinkRetryWaitInstance6;
                                                                 }
                                                                 
-                                                                JToken sinkPartitionDataValue5 = sinkValue["sinkPartitionData"];
-                                                                if (sinkPartitionDataValue5 != null && sinkPartitionDataValue5.Type != JTokenType.Null)
+                                                                JToken sinkPartitionDataValue6 = sinkValue["sinkPartitionData"];
+                                                                if (sinkPartitionDataValue6 != null && sinkPartitionDataValue6.Type != JTokenType.Null)
                                                                 {
-                                                                    bool sinkPartitionDataInstance5 = ((bool)sinkPartitionDataValue5);
-                                                                    oracleSinkInstance.SinkPartitionData = sinkPartitionDataInstance5;
+                                                                    bool sinkPartitionDataInstance6 = ((bool)sinkPartitionDataValue6);
+                                                                    oracleSinkInstance.SinkPartitionData = sinkPartitionDataInstance6;
                                                                 }
                                                                 transformationInstance.Sink = oracleSinkInstance;
                                                             }
@@ -12054,13 +13427,24 @@ namespace Microsoft.Azure.Management.DataFactories
                                                                 hiveInstance.ScriptLinkedService = scriptLinkedServiceInstance;
                                                             }
                                                             
+                                                            JToken definesSequenceElement = ((JToken)transformationValue2["defines"]);
+                                                            if (definesSequenceElement != null && definesSequenceElement.Type != JTokenType.Null)
+                                                            {
+                                                                foreach (JProperty property2 in definesSequenceElement)
+                                                                {
+                                                                    string definesKey = ((string)property2.Name);
+                                                                    string definesValue = ((string)property2.Value);
+                                                                    hiveInstance.Defines.Add(definesKey, definesValue);
+                                                                }
+                                                            }
+                                                            
                                                             JToken extendedPropertiesSequenceElement = ((JToken)transformationValue2["extendedProperties"]);
                                                             if (extendedPropertiesSequenceElement != null && extendedPropertiesSequenceElement.Type != JTokenType.Null)
                                                             {
-                                                                foreach (JProperty property2 in extendedPropertiesSequenceElement)
+                                                                foreach (JProperty property3 in extendedPropertiesSequenceElement)
                                                                 {
-                                                                    string extendedPropertiesKey = ((string)property2.Name);
-                                                                    string extendedPropertiesValue = ((string)property2.Value);
+                                                                    string extendedPropertiesKey = ((string)property3.Name);
+                                                                    string extendedPropertiesValue = ((string)property3.Value);
                                                                     hiveInstance.ExtendedProperties.Add(extendedPropertiesKey, extendedPropertiesValue);
                                                                 }
                                                             }
@@ -12071,6 +13455,15 @@ namespace Microsoft.Azure.Management.DataFactories
                                                                 foreach (JToken storageLinkedServicesValue in ((JArray)storageLinkedServicesArray))
                                                                 {
                                                                     hiveInstance.StorageLinkedServices.Add(((string)storageLinkedServicesValue));
+                                                                }
+                                                            }
+                                                            
+                                                            JToken argumentsArray = transformationValue2["arguments"];
+                                                            if (argumentsArray != null && argumentsArray.Type != JTokenType.Null)
+                                                            {
+                                                                foreach (JToken argumentsValue in ((JArray)argumentsArray))
+                                                                {
+                                                                    hiveInstance.Arguments.Add(((string)argumentsValue));
                                                                 }
                                                             }
                                                             hDInsightActivityInstance.Transformation = hiveInstance;
@@ -12103,10 +13496,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                             JToken extendedPropertiesSequenceElement2 = ((JToken)transformationValue2["extendedProperties"]);
                                                             if (extendedPropertiesSequenceElement2 != null && extendedPropertiesSequenceElement2.Type != JTokenType.Null)
                                                             {
-                                                                foreach (JProperty property3 in extendedPropertiesSequenceElement2)
+                                                                foreach (JProperty property4 in extendedPropertiesSequenceElement2)
                                                                 {
-                                                                    string extendedPropertiesKey2 = ((string)property3.Name);
-                                                                    string extendedPropertiesValue2 = ((string)property3.Value);
+                                                                    string extendedPropertiesKey2 = ((string)property4.Name);
+                                                                    string extendedPropertiesValue2 = ((string)property4.Value);
                                                                     pigInstance.ExtendedProperties.Add(extendedPropertiesKey2, extendedPropertiesValue2);
                                                                 }
                                                             }
@@ -12117,6 +13510,15 @@ namespace Microsoft.Azure.Management.DataFactories
                                                                 foreach (JToken storageLinkedServicesValue2 in ((JArray)storageLinkedServicesArray2))
                                                                 {
                                                                     pigInstance.StorageLinkedServices.Add(((string)storageLinkedServicesValue2));
+                                                                }
+                                                            }
+                                                            
+                                                            JToken argumentsArray2 = transformationValue2["arguments"];
+                                                            if (argumentsArray2 != null && argumentsArray2.Type != JTokenType.Null)
+                                                            {
+                                                                foreach (JToken argumentsValue2 in ((JArray)argumentsArray2))
+                                                                {
+                                                                    pigInstance.Arguments.Add(((string)argumentsValue2));
                                                                 }
                                                             }
                                                             hDInsightActivityInstance.Transformation = pigInstance;
@@ -12155,22 +13557,24 @@ namespace Microsoft.Azure.Management.DataFactories
                                                                 }
                                                             }
                                                             
-                                                            JToken argumentsArray = transformationValue2["arguments"];
-                                                            if (argumentsArray != null && argumentsArray.Type != JTokenType.Null)
+                                                            JToken definesSequenceElement2 = ((JToken)transformationValue2["defines"]);
+                                                            if (definesSequenceElement2 != null && definesSequenceElement2.Type != JTokenType.Null)
                                                             {
-                                                                foreach (JToken argumentsValue in ((JArray)argumentsArray))
+                                                                foreach (JProperty property5 in definesSequenceElement2)
                                                                 {
-                                                                    mapReduceInstance.Arguments.Add(((string)argumentsValue));
+                                                                    string definesKey2 = ((string)property5.Name);
+                                                                    string definesValue2 = ((string)property5.Value);
+                                                                    mapReduceInstance.Defines.Add(definesKey2, definesValue2);
                                                                 }
                                                             }
                                                             
                                                             JToken extendedPropertiesSequenceElement3 = ((JToken)transformationValue2["extendedProperties"]);
                                                             if (extendedPropertiesSequenceElement3 != null && extendedPropertiesSequenceElement3.Type != JTokenType.Null)
                                                             {
-                                                                foreach (JProperty property4 in extendedPropertiesSequenceElement3)
+                                                                foreach (JProperty property6 in extendedPropertiesSequenceElement3)
                                                                 {
-                                                                    string extendedPropertiesKey3 = ((string)property4.Name);
-                                                                    string extendedPropertiesValue3 = ((string)property4.Value);
+                                                                    string extendedPropertiesKey3 = ((string)property6.Name);
+                                                                    string extendedPropertiesValue3 = ((string)property6.Value);
                                                                     mapReduceInstance.ExtendedProperties.Add(extendedPropertiesKey3, extendedPropertiesValue3);
                                                                 }
                                                             }
@@ -12181,6 +13585,15 @@ namespace Microsoft.Azure.Management.DataFactories
                                                                 foreach (JToken storageLinkedServicesValue3 in ((JArray)storageLinkedServicesArray3))
                                                                 {
                                                                     mapReduceInstance.StorageLinkedServices.Add(((string)storageLinkedServicesValue3));
+                                                                }
+                                                            }
+                                                            
+                                                            JToken argumentsArray3 = transformationValue2["arguments"];
+                                                            if (argumentsArray3 != null && argumentsArray3.Type != JTokenType.Null)
+                                                            {
+                                                                foreach (JToken argumentsValue3 in ((JArray)argumentsArray3))
+                                                                {
+                                                                    mapReduceInstance.Arguments.Add(((string)argumentsValue3));
                                                                 }
                                                             }
                                                             hDInsightActivityInstance.Transformation = mapReduceInstance;
@@ -12249,22 +13662,24 @@ namespace Microsoft.Azure.Management.DataFactories
                                                                 }
                                                             }
                                                             
-                                                            JToken argumentsArray2 = transformationValue2["arguments"];
-                                                            if (argumentsArray2 != null && argumentsArray2.Type != JTokenType.Null)
+                                                            JToken definesSequenceElement3 = ((JToken)transformationValue2["defines"]);
+                                                            if (definesSequenceElement3 != null && definesSequenceElement3.Type != JTokenType.Null)
                                                             {
-                                                                foreach (JToken argumentsValue2 in ((JArray)argumentsArray2))
+                                                                foreach (JProperty property7 in definesSequenceElement3)
                                                                 {
-                                                                    streamingInstance.Arguments.Add(((string)argumentsValue2));
+                                                                    string definesKey3 = ((string)property7.Name);
+                                                                    string definesValue3 = ((string)property7.Value);
+                                                                    streamingInstance.Defines.Add(definesKey3, definesValue3);
                                                                 }
                                                             }
                                                             
                                                             JToken extendedPropertiesSequenceElement4 = ((JToken)transformationValue2["extendedProperties"]);
                                                             if (extendedPropertiesSequenceElement4 != null && extendedPropertiesSequenceElement4.Type != JTokenType.Null)
                                                             {
-                                                                foreach (JProperty property5 in extendedPropertiesSequenceElement4)
+                                                                foreach (JProperty property8 in extendedPropertiesSequenceElement4)
                                                                 {
-                                                                    string extendedPropertiesKey4 = ((string)property5.Name);
-                                                                    string extendedPropertiesValue4 = ((string)property5.Value);
+                                                                    string extendedPropertiesKey4 = ((string)property8.Name);
+                                                                    string extendedPropertiesValue4 = ((string)property8.Value);
                                                                     streamingInstance.ExtendedProperties.Add(extendedPropertiesKey4, extendedPropertiesValue4);
                                                                 }
                                                             }
@@ -12275,6 +13690,15 @@ namespace Microsoft.Azure.Management.DataFactories
                                                                 foreach (JToken storageLinkedServicesValue4 in ((JArray)storageLinkedServicesArray4))
                                                                 {
                                                                     streamingInstance.StorageLinkedServices.Add(((string)storageLinkedServicesValue4));
+                                                                }
+                                                            }
+                                                            
+                                                            JToken argumentsArray4 = transformationValue2["arguments"];
+                                                            if (argumentsArray4 != null && argumentsArray4.Type != JTokenType.Null)
+                                                            {
+                                                                foreach (JToken argumentsValue4 in ((JArray)argumentsArray4))
+                                                                {
+                                                                    streamingInstance.Arguments.Add(((string)argumentsValue4));
                                                                 }
                                                             }
                                                             hDInsightActivityInstance.Transformation = streamingInstance;
@@ -12455,10 +13879,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         JToken extendedPropertiesSequenceElement5 = ((JToken)transformationValue3["extendedProperties"]);
                                                         if (extendedPropertiesSequenceElement5 != null && extendedPropertiesSequenceElement5.Type != JTokenType.Null)
                                                         {
-                                                            foreach (JProperty property6 in extendedPropertiesSequenceElement5)
+                                                            foreach (JProperty property9 in extendedPropertiesSequenceElement5)
                                                             {
-                                                                string extendedPropertiesKey5 = ((string)property6.Name);
-                                                                string extendedPropertiesValue5 = ((string)property6.Value);
+                                                                string extendedPropertiesKey5 = ((string)property9.Name);
+                                                                string extendedPropertiesValue5 = ((string)property9.Value);
                                                                 transformationInstance2.ExtendedProperties.Add(extendedPropertiesKey5, extendedPropertiesValue5);
                                                             }
                                                         }
@@ -12617,10 +14041,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         JToken storedProcedureParametersSequenceElement2 = ((JToken)transformationValue4["storedProcedureParameters"]);
                                                         if (storedProcedureParametersSequenceElement2 != null && storedProcedureParametersSequenceElement2.Type != JTokenType.Null)
                                                         {
-                                                            foreach (JProperty property7 in storedProcedureParametersSequenceElement2)
+                                                            foreach (JProperty property10 in storedProcedureParametersSequenceElement2)
                                                             {
-                                                                string storedProcedureParametersKey2 = ((string)property7.Name);
-                                                                string storedProcedureParametersValue = ((string)property7.Value);
+                                                                string storedProcedureParametersKey2 = ((string)property10.Name);
+                                                                string storedProcedureParametersValue = ((string)property10.Value);
                                                                 transformationInstance3.StoredProcedureActivityParameters.Add(storedProcedureParametersKey2, storedProcedureParametersValue);
                                                             }
                                                         }
@@ -12772,10 +14196,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         JToken webServiceParametersSequenceElement = ((JToken)transformationValue5["webServiceParameters"]);
                                                         if (webServiceParametersSequenceElement != null && webServiceParametersSequenceElement.Type != JTokenType.Null)
                                                         {
-                                                            foreach (JProperty property8 in webServiceParametersSequenceElement)
+                                                            foreach (JProperty property11 in webServiceParametersSequenceElement)
                                                             {
-                                                                string webServiceParametersKey = ((string)property8.Name);
-                                                                string webServiceParametersValue = ((string)property8.Value);
+                                                                string webServiceParametersKey = ((string)property11.Name);
+                                                                string webServiceParametersValue = ((string)property11.Value);
                                                                 transformationInstance4.WebServiceParameters.Add(webServiceParametersKey, webServiceParametersValue);
                                                             }
                                                         }

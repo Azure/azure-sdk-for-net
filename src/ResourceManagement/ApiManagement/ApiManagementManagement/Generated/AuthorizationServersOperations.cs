@@ -138,7 +138,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + "Microsoft.ApiManagement";
             url = url + "/service/";
             url = url + Uri.EscapeDataString(serviceName);
-            url = url + "/authorization-servers/";
+            url = url + "/authorizationServers/";
             url = url + Uri.EscapeDataString(authsid);
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2014-02-14");
@@ -445,7 +445,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + "Microsoft.ApiManagement";
             url = url + "/service/";
             url = url + Uri.EscapeDataString(serviceName);
-            url = url + "/authorization-servers/";
+            url = url + "/authorizationServers/";
             url = url + Uri.EscapeDataString(authsid);
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2014-02-14");
@@ -600,7 +600,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + "Microsoft.ApiManagement";
             url = url + "/service/";
             url = url + Uri.EscapeDataString(serviceName);
-            url = url + "/authorization-servers/";
+            url = url + "/authorizationServers/";
             url = url + Uri.EscapeDataString(authsid);
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2014-02-14");
@@ -915,7 +915,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + "Microsoft.ApiManagement";
             url = url + "/service/";
             url = url + Uri.EscapeDataString(serviceName);
-            url = url + "/authorization-servers";
+            url = url + "/authorizationServers";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2014-02-14");
             List<string> odataFilter = new List<string>();
@@ -1586,7 +1586,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + "Microsoft.ApiManagement";
             url = url + "/service/";
             url = url + Uri.EscapeDataString(serviceName);
-            url = url + "/authorization-servers/";
+            url = url + "/authorizationServers/";
             url = url + Uri.EscapeDataString(authsid);
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2014-02-14");
@@ -1772,7 +1772,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + "Microsoft.ApiManagement";
             url = url + "/service/";
             url = url + Uri.EscapeDataString(serviceName);
-            url = url + "/authorization-servers/";
+            url = url + "/authorizationServers/";
             url = url + Uri.EscapeDataString(authsid);
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2014-02-14");

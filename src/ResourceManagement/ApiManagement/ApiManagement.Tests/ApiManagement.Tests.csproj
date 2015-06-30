@@ -42,6 +42,7 @@
     <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.ProductSubscriptions.cs" />
     <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.Regions.cs" />
     <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.Reports.cs" />
+    <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.UserSubscriptions.cs" />
     <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.Subscriptions.cs" />
     <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.UserGroups.cs" />
     <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.UserIdentities.cs" />
@@ -203,6 +204,9 @@
     <None Include="SessionRecords\SmapiFunctionalTests\ApisCreateListUpdateDelete.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\SmapiFunctionalTests\ApisCreateListUpdateDelete.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\SmapiFunctionalTests\AuthorizationServersCreateListUpdateDelete.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -242,6 +246,9 @@
     <None Include="SessionRecords\SmapiFunctionalTests\SubscriptionsCreateListUpdateDelete.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\SmapiFunctionalTests\SubscriptionsCreateListUpdateDelete.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\SmapiFunctionalTests\UserGroupsListAddRemove.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -249,6 +256,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\SmapiFunctionalTests\UsersCreateListUpdateDelete.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\SmapiFunctionalTests\UserSubscriptionsList.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\SmapiTestsFixture\CreateApiManagementService.json">

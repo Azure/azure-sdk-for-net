@@ -13,6 +13,7 @@
 // limitations under the License.
 //
 
+using Hyak.Common;
 using Microsoft.Azure;
 using Microsoft.Azure.Management.Authorization;
 using Microsoft.Azure.Management.Resources;
@@ -25,8 +26,7 @@ namespace Authorization.Tests
 {
     public class PermissionsTests : TestBase
     {
-        const string RESOURCE_TEST_LOCATION= "South Central US"; 
-
+        const string RESOURCE_TEST_LOCATION = "westus"; 
         const string WEBSITE_RP_VERSION = "2014-04-01";
 
         public ResourceManagementClient GetResourceManagementClient()
@@ -158,25 +158,23 @@ namespace Authorization.Tests
             {
                 context.Start();
                 string resourceName = TestUtilities.GenerateName("csmr");
-
                 var authzClient = GetAuthorizationManagementClient();
 
-                var resourcePermissions = authzClient.Permissions.ListForResource(
-                    "NonExistentResourceGroup",
-                    new ResourceIdentity
-                    {
-                        ResourceName = resourceName,
-                        ResourceProviderNamespace = "Microsoft.Web",
-                        ResourceType = "sites",
-                    }
-                );
-
-                Assert.NotNull(resourcePermissions);
-                Assert.Equal(HttpStatusCode.OK, resourcePermissions.StatusCode);
-                Assert.NotNull(resourcePermissions.Permissions);
-                Assert.NotNull(resourcePermissions.Permissions[0]);
-                Assert.NotNull(resourcePermissions.Permissions[0].Actions);
-                Assert.Equal("*", resourcePermissions.Permissions[0].Actions[0]);
+                try
+                {
+                    authzClient.Permissions.ListForResource(
+                        "NonExistentResourceGroup",
+                        new ResourceIdentity
+                        {
+                            ResourceName = resourceName,
+                            ResourceProviderNamespace = "Microsoft.Web",
+                            ResourceType = "sites",
+                        });
+                }
+                catch (CloudException ce)
+                {
+                    Assert.Equal("ResourceGroupNotFound", ce.Error.Code);
+                }
             }
         }
     }

@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Search
         /// <see href="https://msdn.microsoft.com/library/azure/dn798927.aspx"/>
         /// </summary>
         /// <param name="searchText">
-        /// A full-text search query expression; See
+        /// A full-text search query expression; Use null or "*" to match all documents. See
         /// <see href="https://msdn.microsoft.com/library/azure/dn798920.aspx"/> for more information about search
         /// query syntax.
         /// </param>
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Search
         /// from the index.
         /// </typeparam>
         /// <param name="searchText">
-        /// A full-text search query expression; See
+        /// A full-text search query expression; Use null or "*" to match all documents. See
         /// <see href="https://msdn.microsoft.com/library/azure/dn798920.aspx"/> for more information about search
         /// query syntax.
         /// </param>

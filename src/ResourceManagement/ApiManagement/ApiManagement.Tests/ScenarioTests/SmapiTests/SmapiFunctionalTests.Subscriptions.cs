@@ -134,7 +134,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.SmapiTest
                 string patchedName = TestUtilities.GenerateName("patchedName");
                 string patchedPk = TestUtilities.GenerateName("patchedPk");
                 string patchedSk = TestUtilities.GenerateName("patchedSk");
-                var patchedExpirationDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month + 2, 20);
+                var patchedExpirationDate = new DateTime(2025, 5 + 2, 20);
 
                 var patchResponse = ApiManagementClient.Subscriptions.Update(
                     ResourceGroupName,
