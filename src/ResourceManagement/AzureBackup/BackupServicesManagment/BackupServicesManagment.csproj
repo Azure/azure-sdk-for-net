@@ -6,8 +6,8 @@
     <ProjectGuid>{38A6741C-77A3-42A8-A846-83373BE57C7F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Microsoft.WindowsAzure.Management.BackupServicesManagment</RootNamespace>
-    <AssemblyName>Microsoft.WindowsAzure.Management.BackupServicesManagment</AssemblyName>
+    <RootNamespace>Microsoft.Azure.Management.BackupServicesManagment</RootNamespace>
+    <AssemblyName>Microsoft.Azure.Management.BackupServicesManagment</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>e42a5965</NuGetPackageImportStamp>
@@ -101,10 +101,10 @@
     <Compile Include="Generated\VaultOperationsExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Microsoft.WindowsAzure.Management.BackupServices.nuget.proj">
+    <None Include="Microsoft.Azure.Management.BackupServices.nuget.proj">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Microsoft.WindowsAzure.Management.BackupServices.nuspec">
+    <None Include="Microsoft.Azure.Management.BackupServices.nuspec">
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
@@ -120,11 +120,4 @@
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(LibraryFxTarget)' == 'portable' " />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(LibraryFxTarget)' != 'portable' " />
   <Import Project="$(LibraryNugetPackageFolder)\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('$(LibraryNugetPackageFolder)\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
-  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
-  </Target>
 </Project>
