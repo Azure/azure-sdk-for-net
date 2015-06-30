@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='featureName'>
             /// Previewed feature name in the resource provider.
             /// </param>
-            public static FeatureResponse Get(this IFeaturesOperations operations, string resourceProviderNamespace, string featureName)
+            public static FeatureResult Get(this IFeaturesOperations operations, string resourceProviderNamespace, string featureName)
             {
                 return Task.Factory.StartNew(s => ((IFeaturesOperations)s).GetAsync(resourceProviderNamespace, featureName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -103,9 +103,9 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<FeatureResponse> GetAsync( this IFeaturesOperations operations, string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<FeatureResult> GetAsync( this IFeaturesOperations operations, string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<FeatureResponse> result = await operations.GetWithOperationResponseAsync(resourceProviderNamespace, featureName, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<FeatureResult> result = await operations.GetWithOperationResponseAsync(resourceProviderNamespace, featureName, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -121,7 +121,7 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='featureName'>
             /// Previewed feature name in the resource provider.
             /// </param>
-            public static FeatureResponse Register(this IFeaturesOperations operations, string resourceProviderNamespace, string featureName)
+            public static FeatureResult Register(this IFeaturesOperations operations, string resourceProviderNamespace, string featureName)
             {
                 return Task.Factory.StartNew(s => ((IFeaturesOperations)s).RegisterAsync(resourceProviderNamespace, featureName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -141,9 +141,9 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<FeatureResponse> RegisterAsync( this IFeaturesOperations operations, string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<FeatureResult> RegisterAsync( this IFeaturesOperations operations, string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<FeatureResponse> result = await operations.RegisterWithOperationResponseAsync(resourceProviderNamespace, featureName, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<FeatureResult> result = await operations.RegisterWithOperationResponseAsync(resourceProviderNamespace, featureName, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

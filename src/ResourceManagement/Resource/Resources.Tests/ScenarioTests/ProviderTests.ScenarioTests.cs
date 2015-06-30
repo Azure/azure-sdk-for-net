@@ -156,8 +156,8 @@ namespace ResourceGroups.Tests
             Assert.Equal(HttpMethod.Get, handler.Method);
             Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
 
-            Assert.NotEmpty(insightsProvider.Provider.ResourceTypes);
-            var operationResourceType = insightsProvider.Provider.ResourceTypes.Single(x => x.Name == "operations");
+            Assert.NotEmpty(insightsProvider.ResourceTypes);
+            var operationResourceType = insightsProvider.ResourceTypes.Single(x => x.ResourceType == "operations");
             IList<string> operationsSupportedApiVersions = operationResourceType.ApiVersions;
             string latestSupportedApiVersion = DefaultApiVersion;
             
@@ -174,14 +174,14 @@ namespace ResourceGroups.Tests
                 ResourceProviderApiVersion = latestSupportedApiVersion
             };
 
-            var operations = client.ResourceProviderOperationDetails.List(identity);
+            var operations = client.ResourceProviderOperationDetails.List(identity.ResourceProviderNamespace, identity.ResourceProviderApiVersion);
 
             Assert.NotNull(operations);
-            Assert.NotEmpty(operations.ResourceProviderOperationDetails);
-            Assert.NotEmpty(operations.ResourceProviderOperationDetails[0].Name);
-            Assert.NotNull(operations.ResourceProviderOperationDetails[0].ResourceProviderOperationDisplayProperties);
+            Assert.NotEmpty(operations.Value);
+            Assert.NotEmpty(operations.Value[0].Name);
+            Assert.NotNull(operations.Value[0].Display);
             IEnumerable<ResourceProviderOperationDefinition> definitions =
-                operations.ResourceProviderOperationDetails.Where(op => string.Equals(op.Name, "Microsoft.Insights/AlertRules/Write", StringComparison.InvariantCultureIgnoreCase));
+                operations.Value.Where(op => string.Equals(op.Name, "Microsoft.Insights/AlertRules/Write", StringComparison.InvariantCultureIgnoreCase));
             Assert.NotNull(definitions);
             Assert.NotEmpty(definitions);
             Assert.Equal(1, definitions.Count());
@@ -195,7 +195,7 @@ namespace ResourceGroups.Tests
                 ResourceProviderApiVersion = "2015-01-01"
             };
 
-            Assert.Throws<Hyak.Common.CloudException>(() => client.ResourceProviderOperationDetails.List(identity));
+            Assert.Throws<CloudException>(() => client.ResourceProviderOperationDetails.List(identity.ResourceProviderNamespace, identity.ResourceProviderApiVersion));
             TestUtilities.EndTest();
         }
     }

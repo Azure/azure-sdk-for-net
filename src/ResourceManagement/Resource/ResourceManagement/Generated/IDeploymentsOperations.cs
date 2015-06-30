@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        Task<AzureOperationResponse<DeploymentValidateResponse>> ValidateWithOperationResponseAsync(string resourceGroupName, string deploymentName, Deployment parameters, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DeploymentValidateResult>> ValidateWithOperationResponseAsync(string resourceGroupName, string deploymentName, Deployment parameters, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Create a named template deployment using a template.
         /// </summary>

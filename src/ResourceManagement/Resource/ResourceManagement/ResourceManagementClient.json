@@ -326,7 +326,7 @@
           "ResourceGroups"
         ],
         "operationId": "ResourceGroups_Delete",
-        "description": "Delete resource group and all of its resources. ",
+        "description": "Begin deleting resource group.To determine whether the operation has finished processing the request, call GetLongRunningOperationStatus.",
         "parameters": [
           {
             "name": "subscriptionId",
@@ -1230,19 +1230,13 @@
           "204": {
             "description": "",
             "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/ResourceProviderOperationDefinition"
-              }
+              "$ref": "#/definitions/ResourceProviderOperationDetailListResult"
             }
           },
           "200": {
             "description": "",
             "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/ResourceProviderOperationDefinition"
-              }
+              "$ref": "#/definitions/ResourceProviderOperationDetailListResult"
             }
           }
         }
@@ -1291,7 +1285,7 @@
         }
       }
     },
-    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/deployments/{deploymentName}/validate": {
+    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/microsoft.resources/deployments/{deploymentName}/validate": {
       "post": {
         "tags": [
           "Deployments"
@@ -1340,13 +1334,13 @@
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/DeploymentValidateResponse"
+              "$ref": "#/definitions/DeploymentValidateResult"
             }
           },
           "400": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/DeploymentValidateResponse"
+              "$ref": "#/definitions/DeploymentValidateResult"
             }
           }
         }
@@ -1695,6 +1689,10 @@
             "type": "string"
           },
           "description": "Gets or sets the tags attached to the resource group."
+        },
+        "provisioningState": {
+          "type": "string",
+          "description": "Gets or sets resource group provisioning state."
         }
       },
       "description": "Resource group information."
@@ -1731,6 +1729,10 @@
             "type": "string"
           },
           "description": "Gets or sets the tags attached to the resource group."
+        },
+        "provisioningState": {
+          "type": "string",
+          "description": "Gets or sets resource group provisioning state."
         }
       },
       "description": "Resource group information."
@@ -1951,6 +1953,18 @@
       },
       "description": "Resource provider operation information."
     },
+    "ResourceProviderOperationDetailListResult": {
+      "properties": {
+        "value": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ResourceProviderOperationDefinition"
+          },
+          "description": "Gets or sets the list of resource provider operations."
+        }
+      },
+      "description": "List of resource provider operations."
+    },
     "TemplateLink": {
       "properties": {
         "uri": {
@@ -2155,7 +2169,7 @@
       },
       "description": "Deployment properties with additional details."
     },
-    "DeploymentValidateResponse": {
+    "DeploymentValidateResult": {
       "properties": {
         "error": {
           "$ref": "#/definitions/ResourceManagementErrorWithDetails",
@@ -2202,6 +2216,37 @@
       "description": "List of deployments."
     },
     "Resource": {
+      "properties": {
+        "id": {
+          "readOnly": true,
+          "type": "string",
+          "description": "Resource Id"
+        },
+        "name": {
+          "readOnly": true,
+          "type": "string",
+          "description": "Resource name"
+        },
+        "type": {
+          "readOnly": true,
+          "type": "string",
+          "description": "Resource type"
+        },
+        "location": {
+          "type": "string",
+          "description": "Resource location"
+        },
+        "tags": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Resource tags"
+        }
+      },
+      "x-ms-external": true
+    },
+    "SubResource": {
       "properties": {
         "id": {
           "type": "string",

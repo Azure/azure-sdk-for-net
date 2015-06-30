@@ -12,10 +12,12 @@ namespace Microsoft.Azure.Management.Resources.Models
     public partial class ManagementLockProperties
     {
         /// <summary>
-        /// Gets or sets the lock level of the management lock.
+        /// Gets or sets the lock level of the management lock. Possible
+        /// values for this property include: 'NotSpecified', 'CanNotDelete',
+        /// 'ReadOnly'
         /// </summary>
         [JsonProperty(PropertyName = "level")]
-        public string Level { get; set; }
+        public LockLevel? Level { get; set; }
 
         /// <summary>
         /// Gets or sets the notes of the management lock.
@@ -28,7 +30,6 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// </summary>
         public virtual void Validate()
         {
-            //Nothing to validate
         }
     }
 }

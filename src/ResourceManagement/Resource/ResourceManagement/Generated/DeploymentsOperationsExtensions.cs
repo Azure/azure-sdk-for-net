@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='parameters'>
             /// Deployment to validate.
             /// </param>
-            public static DeploymentValidateResponse Validate(this IDeploymentsOperations operations, string resourceGroupName, string deploymentName, Deployment parameters)
+            public static DeploymentValidateResult Validate(this IDeploymentsOperations operations, string resourceGroupName, string deploymentName, Deployment parameters)
             {
                 return Task.Factory.StartNew(s => ((IDeploymentsOperations)s).ValidateAsync(resourceGroupName, deploymentName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -87,9 +87,9 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<DeploymentValidateResponse> ValidateAsync( this IDeploymentsOperations operations, string resourceGroupName, string deploymentName, Deployment parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DeploymentValidateResult> ValidateAsync( this IDeploymentsOperations operations, string resourceGroupName, string deploymentName, Deployment parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<DeploymentValidateResponse> result = await operations.ValidateWithOperationResponseAsync(resourceGroupName, deploymentName, parameters, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<DeploymentValidateResult> result = await operations.ValidateWithOperationResponseAsync(resourceGroupName, deploymentName, parameters, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

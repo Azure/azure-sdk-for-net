@@ -9,37 +9,29 @@ namespace Microsoft.Azure.Management.Resources.Models
 
     /// <summary>
     /// </summary>
-    public partial class FeatureResponse
+    public partial class DeploymentValidateResult
     {
         /// <summary>
-        /// Gets or sets the name of the feature.
+        /// Gets or sets validation error.
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
+        [JsonProperty(PropertyName = "error")]
+        public ResourceManagementErrorWithDetails Error { get; set; }
 
         /// <summary>
-        /// Gets or sets the properties of the previewed feature.
+        /// Gets or sets the template deployment properties.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
-        public FeatureProperties Properties { get; set; }
-
-        /// <summary>
-        /// Gets or sets the Id of the feature.
-        /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
-
-        /// <summary>
-        /// Gets or sets the type of the feature.
-        /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; set; }
+        public DeploymentPropertiesExtended Properties { get; set; }
 
         /// <summary>
         /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
         /// </summary>
         public virtual void Validate()
         {
+            if (this.Error != null)
+            {
+                this.Error.Validate();
+            }
             if (this.Properties != null)
             {
                 this.Properties.Validate();

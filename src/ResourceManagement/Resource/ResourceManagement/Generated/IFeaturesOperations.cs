@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        Task<AzureOperationResponse<FeatureResponse>> GetWithOperationResponseAsync(string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<FeatureResult>> GetWithOperationResponseAsync(string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Registers for a previewed feature of a resource provider.
         /// </summary>
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        Task<AzureOperationResponse<FeatureResponse>> RegisterWithOperationResponseAsync(string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<FeatureResult>> RegisterWithOperationResponseAsync(string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets a list of previewed features for all the providers in the
         /// current subscription.

@@ -232,7 +232,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<FeatureResponse>> GetWithOperationResponseAsync(string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<FeatureResult>> GetWithOperationResponseAsync(string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceProviderNamespace == null)
             {
@@ -312,13 +312,13 @@ namespace Microsoft.Azure.Management.Resources
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<FeatureResponse>();
+            var result = new AzureOperationResponse<FeatureResult>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             // Deserialize Response
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
-                result.Body = JsonConvert.DeserializeObject<FeatureResponse>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<FeatureResult>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -339,7 +339,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<FeatureResponse>> RegisterWithOperationResponseAsync(string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<FeatureResult>> RegisterWithOperationResponseAsync(string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceProviderNamespace == null)
             {
@@ -419,13 +419,13 @@ namespace Microsoft.Azure.Management.Resources
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<FeatureResponse>();
+            var result = new AzureOperationResponse<FeatureResult>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             // Deserialize Response
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
-                result.Body = JsonConvert.DeserializeObject<FeatureResponse>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<FeatureResult>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {

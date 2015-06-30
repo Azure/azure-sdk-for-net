@@ -672,7 +672,13 @@
       "properties": {
         "level": {
           "type": "string",
-          "description": "Gets or sets the lock level of the management lock."
+          "description": "Gets or sets the lock level of the management lock.",
+          "enum": [
+            "NotSpecified",
+            "CanNotDelete",
+            "ReadOnly"
+          ],
+          "x-ms-enum": "LockLevel"
         },
         "notes": {
           "type": "string",
@@ -719,6 +725,37 @@
       "description": "List of management locks."
     },
     "Resource": {
+      "properties": {
+        "id": {
+          "readOnly": true,
+          "type": "string",
+          "description": "Resource Id"
+        },
+        "name": {
+          "readOnly": true,
+          "type": "string",
+          "description": "Resource name"
+        },
+        "type": {
+          "readOnly": true,
+          "type": "string",
+          "description": "Resource type"
+        },
+        "location": {
+          "type": "string",
+          "description": "Resource location"
+        },
+        "tags": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Resource tags"
+        }
+      },
+      "x-ms-external": true
+    },
+    "SubResource": {
       "properties": {
         "id": {
           "type": "string",

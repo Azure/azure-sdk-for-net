@@ -130,7 +130,7 @@
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/FeatureResponse"
+              "$ref": "#/definitions/FeatureResult"
             }
           }
         }
@@ -176,7 +176,7 @@
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/FeatureResponse"
+              "$ref": "#/definitions/FeatureResult"
             }
           }
         }
@@ -232,7 +232,7 @@
       },
       "description": "Previewed feature information."
     },
-    "FeatureResponse": {
+    "FeatureResult": {
       "properties": {
         "name": {
           "type": "string",
@@ -258,7 +258,7 @@
         "value": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/FeatureResponse"
+            "$ref": "#/definitions/FeatureResult"
           },
           "description": "Gets or sets the list of Features."
         },
@@ -270,6 +270,37 @@
       "description": "List of previewed features."
     },
     "Resource": {
+      "properties": {
+        "id": {
+          "readOnly": true,
+          "type": "string",
+          "description": "Resource Id"
+        },
+        "name": {
+          "readOnly": true,
+          "type": "string",
+          "description": "Resource name"
+        },
+        "type": {
+          "readOnly": true,
+          "type": "string",
+          "description": "Resource type"
+        },
+        "location": {
+          "type": "string",
+          "description": "Resource location"
+        },
+        "tags": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Resource tags"
+        }
+      },
+      "x-ms-external": true
+    },
+    "SubResource": {
       "properties": {
         "id": {
           "type": "string",

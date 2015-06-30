@@ -145,7 +145,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<DeploymentValidateResponse>> ValidateWithOperationResponseAsync(string resourceGroupName, string deploymentName, Deployment parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<DeploymentValidateResult>> ValidateWithOperationResponseAsync(string resourceGroupName, string deploymentName, Deployment parameters, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -178,7 +178,7 @@ namespace Microsoft.Azure.Management.Resources
             }
             // Construct URL
             string url = this.Client.BaseUri.AbsoluteUri + 
-                         "//subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/deployments/{deploymentName}/validate";
+                         "//subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/microsoft.resources/deployments/{deploymentName}/validate";
             if (this.Client.Credentials == null)
             {
                 throw new ArgumentNullException("Credentials", "SubscriptionCloudCredentials are missing from the client.");
@@ -238,18 +238,18 @@ namespace Microsoft.Azure.Management.Resources
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<DeploymentValidateResponse>();
+            var result = new AzureOperationResponse<DeploymentValidateResult>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             // Deserialize Response
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
-                result.Body = JsonConvert.DeserializeObject<DeploymentValidateResponse>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<DeploymentValidateResult>(responseContent, this.Client.DeserializationSettings);
             }
             // Deserialize Response
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "BadRequest"))
             {
-                result.Body = JsonConvert.DeserializeObject<DeploymentValidateResponse>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<DeploymentValidateResult>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {

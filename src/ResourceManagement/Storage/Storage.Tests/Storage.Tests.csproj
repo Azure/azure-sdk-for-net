@@ -63,12 +63,12 @@
       <HintPath>..\..\..\..\packages\Microsoft.Azure.Common.3.0.9\lib\net45\Microsoft.Azure.Common.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.Azure.Test.Framework, Version=2.0.5626.20089, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Microsoft.Azure.Test.Framework.2.0.5626.20089-prerelease\lib\net45\Microsoft.Azure.Test.Framework.dll</HintPath>
+    <Reference Include="Microsoft.Azure.Test.Framework, Version=2.0.5658.29898, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\Microsoft.Azure.Test.Framework.2.0.5658.29898-prerelease\lib\net45\Microsoft.Azure.Test.Framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Azure.Test.HttpRecorder, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Microsoft.Azure.Test.HttpRecorder.2.0.5626.20089-prerelease\lib\net45\Microsoft.Azure.Test.HttpRecorder.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Microsoft.Azure.Test.HttpRecorder.2.0.5658.29898-prerelease\lib\net45\Microsoft.Azure.Test.HttpRecorder.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Data.Edm, Version=5.6.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
