@@ -1,0 +1,59 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/69d3b60e-9ed0-414d-abc2-02a54d09b7a8/resourceGroups/Group-1/providers/Microsoft.Sql/servers/demo-ne/databases/index-demo/schemas/[dbo]/tables/[Person]/recommendedIndexes/nci_wi_Person_25F9812A-26A3-4ECA-B078-B2982817D12C?api-version=2014-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjlkM2I2MGUtOWVkMC00MTRkLWFiYzItMDJhNTRkMDliN2E4L3Jlc291cmNlR3JvdXBzL0dyb3VwLTEvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9kZW1vLW5lL2RhdGFiYXNlcy9pbmRleC1kZW1vL3NjaGVtYXMvJTVCZGJvJTVEL3RhYmxlcy8lNUJQZXJzb24lNUQvcmVjb21tZW5kZWRJbmRleGVzL25jaV93aV9QZXJzb25fMjVGOTgxMkEtMjZBMy00RUNBLUIwNzgtQjI5ODI4MTdEMTJDP2FwaS12ZXJzaW9uPTIwMTQtMDQtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/69d3b60e-9ed0-414d-abc2-02a54d09b7a8/resourceGroups/Group-1/providers/Microsoft.Sql/servers/demo-ne/databases/index-demo/schemas/[dbo]/tables/[Person]/recommendedIndexes/nci_wi_Person_25F9812A-26A3-4ECA-B078-B2982817D12C\",\r\n  \"name\": \"nci_wi_Person_25F9812A-26A3-4ECA-B078-B2982817D12C\",\r\n  \"type\": \"Microsoft.Sql/servers/databases/schemas/tables/recommendedIndexes\",\r\n  \"properties\": {\r\n    \"action\": \"Create\",\r\n    \"state\": \"Active\",\r\n    \"created\": \"2015-06-22T13:18:00\",\r\n    \"lastModified\": \"2015-06-22T13:18:00\",\r\n    \"indexType\": \"NONCLUSTERED\",\r\n    \"schema\": \"[dbo]\",\r\n    \"table\": \"[Person]\",\r\n    \"columns\": [\r\n      \"[FirstName]\",\r\n      \"[LastName]\"\r\n    ],\r\n    \"includedColumns\": [\r\n      \"[MiddleName]\",\r\n      \"[Suffix]\"\r\n    ],\r\n    \"indexScript\": \"create nonclustered index [nci_wi_Person_25F9812A-26A3-4ECA-B078-B2982817D12C] on [dbo].[Person] ([FirstName], [LastName]) include ([MiddleName], [Suffix]) with (online = on)\",\r\n    \"estimatedImpact\": [\r\n      {\r\n        \"name\": \"benefit\",\r\n        \"unit\": \"unitless\",\r\n        \"changeValueAbsolute\": 3.0,\r\n        \"changeValueRelative\": null\r\n      },\r\n      {\r\n        \"name\": \"space_change\",\r\n        \"unit\": \"megabytes\",\r\n        \"changeValueAbsolute\": 0.0,\r\n        \"changeValueRelative\": null\r\n      },\r\n      {\r\n        \"name\": \"action_duration\",\r\n        \"unit\": \"seconds\",\r\n        \"changeValueAbsolute\": 60.0,\r\n        \"changeValueRelative\": null\r\n      }\r\n    ],\r\n    \"reportedImpact\": [\r\n      {\r\n        \"name\": \"space_change\",\r\n        \"unit\": \"megabytes\",\r\n        \"changeValueAbsolute\": null,\r\n        \"changeValueRelative\": null\r\n      },\r\n      {\r\n        \"name\": \"action_duration\",\r\n        \"unit\": \"seconds\",\r\n        \"changeValueAbsolute\": null,\r\n        \"changeValueRelative\": null\r\n      },\r\n      {\r\n        \"name\": \"queries_with_improved_performance\",\r\n        \"unit\": \"count\",\r\n        \"changeValueAbsolute\": null,\r\n        \"changeValueRelative\": null\r\n      },\r\n      {\r\n        \"name\": \"queries_with_regressed_performance\",\r\n        \"unit\": \"count\",\r\n        \"changeValueAbsolute\": null,\r\n        \"changeValueRelative\": null\r\n      },\r\n      {\r\n        \"name\": \"DTU utilization\",\r\n        \"unit\": \"DTUs\",\r\n        \"changeValueAbsolute\": null,\r\n        \"changeValueRelative\": null\r\n      },\r\n      {\r\n        \"name\": \"cpu_utilization\",\r\n        \"unit\": \"cores\",\r\n        \"changeValueAbsolute\": null,\r\n        \"changeValueRelative\": null\r\n      },\r\n      {\r\n        \"name\": \"logical_reads\",\r\n        \"unit\": \"reads/second\",\r\n        \"changeValueAbsolute\": null,\r\n        \"changeValueRelative\": null\r\n      },\r\n      {\r\n        \"name\": \"logical_writes\",\r\n        \"unit\": \"writes/second\",\r\n        \"changeValueAbsolute\": null,\r\n        \"changeValueRelative\": null\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1979"
+        ],
+        "Content-Type": [
+          "application/json; odata=minimalmetadata; streaming=true; charset=utf-8"
+        ],
+        "x-ms-request-id": [
+          "6aa16647-c19d-4bb3-b071-187ee346a16d"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14994"
+        ],
+        "x-ms-correlation-request-id": [
+          "ea48552e-90b8-47c0-9832-3b226f8d0bb0"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTEUROPE:20150622T151645Z:ea48552e-90b8-47c0-9832-3b226f8d0bb0"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Mon, 22 Jun 2015 15:16:45 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "69d3b60e-9ed0-414d-abc2-02a54d09b7a8"
+  }
+}
