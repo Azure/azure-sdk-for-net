@@ -92,18 +92,6 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids />
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(LibraryFxTarget)' == 'windows8' ">
-    <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(LibraryFxTarget)' == 'wp80' ">
-    <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{C089C8C0-30E0-4E22-80C0-CE093F111A43};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(LibraryFxTarget)' == 'wpa81' ">
-    <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{C089C8C0-30E0-4E22-80C0-CE093F111A43};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
-  </PropertyGroup>
 
   <Target Name="InformationAboutThisBuild" BeforeTargets="BeforeBuild">
     <Error Text="The current build type has not been defined." Condition=" '$(LibraryFxTarget)' == '' " />
