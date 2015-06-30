@@ -56,6 +56,9 @@
     <None Include="SessionRecords\AzureRedisCache.Tests.TestsFixture\.ctor.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\AzureRedisCache.Tests.UpdateEnableNonSslPortBug\UpdateEnableNonSslPortBugTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\TestDependencies\TestDependencies.csproj">
