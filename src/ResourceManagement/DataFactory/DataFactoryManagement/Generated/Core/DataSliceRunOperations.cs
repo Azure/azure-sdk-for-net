@@ -245,6 +245,13 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                 dataSliceRunInstance.ActivityName = activityNameInstance;
                             }
                             
+                            JToken activityRunIdValue = responseDoc["activityRunId"];
+                            if (activityRunIdValue != null && activityRunIdValue.Type != JTokenType.Null)
+                            {
+                                string activityRunIdInstance = ((string)activityRunIdValue);
+                                dataSliceRunInstance.ActivityRunId = activityRunIdInstance;
+                            }
+                            
                             JToken computeClusterNameValue = responseDoc["computeClusterName"];
                             if (computeClusterNameValue != null && computeClusterNameValue.Type != JTokenType.Null)
                             {
@@ -909,6 +916,13 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                         dataSliceRunInstance.ActivityName = activityNameInstance;
                                     }
                                     
+                                    JToken activityRunIdValue = valueValue["activityRunId"];
+                                    if (activityRunIdValue != null && activityRunIdValue.Type != JTokenType.Null)
+                                    {
+                                        string activityRunIdInstance = ((string)activityRunIdValue);
+                                        dataSliceRunInstance.ActivityRunId = activityRunIdInstance;
+                                    }
+                                    
                                     JToken computeClusterNameValue = valueValue["computeClusterName"];
                                     if (computeClusterNameValue != null && computeClusterNameValue.Type != JTokenType.Null)
                                     {
@@ -1314,6 +1328,13 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                     {
                                         string activityNameInstance = ((string)activityNameValue);
                                         dataSliceRunInstance.ActivityName = activityNameInstance;
+                                    }
+                                    
+                                    JToken activityRunIdValue = valueValue["activityRunId"];
+                                    if (activityRunIdValue != null && activityRunIdValue.Type != JTokenType.Null)
+                                    {
+                                        string activityRunIdInstance = ((string)activityRunIdValue);
+                                        dataSliceRunInstance.ActivityRunId = activityRunIdInstance;
                                     }
                                     
                                     JToken computeClusterNameValue = valueValue["computeClusterName"];
