@@ -6,8 +6,8 @@
     <ProjectGuid>{38A6741C-77A3-42A8-A846-83373BE57C7F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Microsoft.Azure.Management.BackupServicesManagment</RootNamespace>
-    <AssemblyName>Microsoft.Azure.Management.BackupServicesManagment</AssemblyName>
+    <RootNamespace>Microsoft.Azure.Management.BackupServicesManagement</RootNamespace>
+    <AssemblyName>Microsoft.Azure.Management.BackupServicesManagement</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>e42a5965</NuGetPackageImportStamp>

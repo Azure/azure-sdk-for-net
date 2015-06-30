@@ -17,10 +17,10 @@
     <tags>Microsoft Azure backup management "azure backup management" REST HTTP client azureofficial windowsazureofficial</tags>
     <references>
       <group targetFramework="portable-net45+wp8+wpa81+win">
-        <reference file="Microsoft.Azure.Management.BackupServicesManagment.dll" />
+        <reference file="Microsoft.Azure.Management.BackupServicesManagement.dll" />
       </group>
       <group targetFramework="net40">
-        <reference file="Microsoft.Azure.Management.BackupServicesManagment.dll" />
+        <reference file="Microsoft.Azure.Management.BackupServicesManagement.dll" />
       </group>
     </references>
     <dependencies>
@@ -28,12 +28,12 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="ResourceManagement\AzureBackup\BackupServicesManagment\**\*.cs" target="src" />
-    <file src="..\binaries\portable\Microsoft.Azure.Management.BackupServicesManagment.dll" target="lib\portable-net45+wp8+wpa81+win" />
-    <file src="..\binaries\portable\Microsoft.Azure.Management.BackupServicesManagment.pdb" target="lib\portable-net45+wp8+wpa81+win" />
-    <file src="..\binaries\portable\Microsoft.Azure.Management.BackupServicesManagment.xml" target="lib\portable-net45+wp8+wpa81+win" />
-    <file src="..\binaries\net40\Microsoft.Azure.Management.BackupServicesManagment.dll" target="lib\net40" />
-    <file src="..\binaries\net40\Microsoft.Azure.Management.BackupServicesManagment.pdb" target="lib\net40" />
-    <file src="..\binaries\net40\Microsoft.Azure.Management.BackupServicesManagment.xml" target="lib\net40" />
+    <file src="ResourceManagement\AzureBackup\BackupServicesManagement\**\*.cs" target="src" />
+    <file src="..\binaries\portable\Microsoft.Azure.Management.BackupServicesManagement.dll" target="lib\portable-net45+wp8+wpa81+win" />
+    <file src="..\binaries\portable\Microsoft.Azure.Management.BackupServicesManagement.pdb" target="lib\portable-net45+wp8+wpa81+win" />
+    <file src="..\binaries\portable\Microsoft.Azure.Management.BackupServicesManagement.xml" target="lib\portable-net45+wp8+wpa81+win" />
+    <file src="..\binaries\net40\Microsoft.Azure.Management.BackupServicesManagement.dll" target="lib\net40" />
+    <file src="..\binaries\net40\Microsoft.Azure.Management.BackupServicesManagement.pdb" target="lib\net40" />
+    <file src="..\binaries\net40\Microsoft.Azure.Management.BackupServicesManagement.xml" target="lib\net40" />
   </files>
 </package>

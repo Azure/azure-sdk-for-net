@@ -28,6 +28,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Resources\Security.Cryptography.dll</HintPath>
     </Reference>
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web.Extensions" />
   </ItemGroup>
@@ -36,9 +37,9 @@
       <Project>{40f35645-00ee-4df2-b66e-7624546b66df}</Project>
       <Name>TestDependencies</Name>
     </ProjectReference>
-    <ProjectReference Include="..\BackupServicesManagment\BackupServicesManagment.csproj">
+    <ProjectReference Include="..\BackupServicesManagement\BackupServicesManagement.csproj">
       <Project>{38a6741c-77a3-42a8-a846-83373be57c7f}</Project>
-      <Name>BackupServicesManagment</Name>
+      <Name>BackupServicesManagement</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
