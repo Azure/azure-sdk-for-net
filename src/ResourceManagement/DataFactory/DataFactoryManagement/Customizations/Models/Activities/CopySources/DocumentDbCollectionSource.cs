@@ -15,7 +15,6 @@
 
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
-#if ADF_INTERNAL
     /// <summary>
     /// A copy activity Document Database Collection source.
     /// </summary>
@@ -31,5 +30,4 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// </summary>
         public string NestingSeparator { get; set; }
     }
-#endif
 }

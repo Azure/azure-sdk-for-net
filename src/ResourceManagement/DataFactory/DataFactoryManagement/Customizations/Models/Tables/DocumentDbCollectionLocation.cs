@@ -15,7 +15,6 @@
 
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
-#if ADF_INTERNAL
     /// <summary>
     /// Document Database Collection location.
     /// </summary>
@@ -26,5 +25,4 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// </summary>
         public string CollectionName { get; set; }
     }
-#endif
 }

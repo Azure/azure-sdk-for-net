@@ -23,7 +23,6 @@ using Microsoft.Azure.Management.DataFactories.Registration.Models;
 
 namespace Microsoft.Azure.Management.DataFactories
 {
-#if ADF_INTERNAL
     public class ComputeTypeOperations : IServiceOperations<DataFactoryManagementClient>, 
                                          IComputeTypeOperations
     {
@@ -163,5 +162,4 @@ namespace Microsoft.Azure.Management.DataFactories
             return new ComputeTypeListResponse(response, this.Client);
         }
     }
-#endif
 }

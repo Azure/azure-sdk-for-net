@@ -85,6 +85,26 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             set { this._longRunningOperationRetryTimeout = value; }
         }
         
+        private IActivityTypeOperations _activityTypes;
+        
+        /// <summary>
+        /// Operations for managing data factory ActivityTypes.
+        /// </summary>
+        public virtual IActivityTypeOperations ActivityTypes
+        {
+            get { return this._activityTypes; }
+        }
+        
+        private IComputeTypeOperations _computeTypes;
+        
+        /// <summary>
+        /// Operations for managing data factory ComputeTypes.
+        /// </summary>
+        public virtual IComputeTypeOperations ComputeTypes
+        {
+            get { return this._computeTypes; }
+        }
+        
         private IDataFactoryOperations _dataFactories;
         
         /// <summary>
@@ -181,6 +201,8 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         public DataFactoryManagementClient()
             : base()
         {
+            this._activityTypes = new ActivityTypeOperations(this);
+            this._computeTypes = new ComputeTypeOperations(this);
             this._dataFactories = new DataFactoryOperations(this);
             this._dataSlices = new DataSliceOperations(this);
             this._dataSliceRuns = new DataSliceRunOperations(this);
@@ -262,6 +284,8 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         public DataFactoryManagementClient(HttpClient httpClient)
             : base(httpClient)
         {
+            this._activityTypes = new ActivityTypeOperations(this);
+            this._computeTypes = new ComputeTypeOperations(this);
             this._dataFactories = new DataFactoryOperations(this);
             this._dataSlices = new DataSliceOperations(this);
             this._dataSliceRuns = new DataSliceRunOperations(this);
@@ -412,7 +436,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-05-01-preview");
+                httpRequest.Headers.Add("x-ms-version", "2015-07-01-preview");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();

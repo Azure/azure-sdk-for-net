@@ -13,6 +13,11 @@
   </PropertyGroup>
   <Import Project="..\..\..\..\tools\Library.Settings.targets" />
   <ItemGroup>
+    <Compile Include="Customizations\Conversion\GenericRegisteredTypeConverter.cs" />
+    <Compile Include="Customizations\Models\IRegisteredType.cs" />
+    <Compile Include="Customizations\Models\LinkedServices\HDInsightSchemaGenerationProperties.cs" />
+    <Compile Include="Customizations\Models\LinkedServices\InputPartitionOptions.cs" />
+    <Compile Include="Customizations\Models\LinkedServices\SchemaGenerationTypes.cs" />
     <Compile Include="Customizations\Models\Tables\Compression\CompressionLevel.cs" />
     <Compile Include="Customizations\Models\Tables\Compression\GenericCompression.cs" />
     <Compile Include="Customizations\Models\Tables\Compression\BZip2Compression.cs" />
@@ -38,6 +43,7 @@
     <Compile Include="Customizations\Operations\DataFactories\DataFactoryOperationsExtensions.cs" />
     <Compile Include="Customizations\Operations\DataFactories\IDataFactoryOperations.cs" />
     <Compile Include="Customizations\Operations\DataSlices\IDataSliceOperations.cs" />
+    <Compile Include="Customizations\DataFactoryManagementClient.Registration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Customizations\AdfResourceProperties.cs" />
     <Compile Include="Customizations\AdfTypeNameAttribute.cs" />
@@ -66,14 +72,11 @@
     <Compile Include="Customizations\Models\Activities\CopyActivity.cs" />
     <Compile Include="Customizations\Models\Activities\CopyLocation.cs" />
     <Compile Include="Customizations\Models\Activities\CopySinks\AzureQueueSink.cs" />
-    <Compile Include="Customizations\Models\Activities\CopySinks\AzureSearchIndexSink.cs" />
     <Compile Include="Customizations\Models\Activities\CopySinks\AzureTableSink.cs" />
     <Compile Include="Customizations\Models\Activities\CopySinks\BlobSink.cs" />
     <Compile Include="Customizations\Models\Activities\CopySinks\CopySink.cs" />
     <Compile Include="Customizations\Models\Activities\CopySinks\DocumentDbCollectionSink.cs" />
     <Compile Include="Customizations\Models\Activities\CopySinks\OracleSink.cs" />
-    <Compile Include="Customizations\Models\Activities\CopySinks\PropertySink.cs" />
-    <Compile Include="Customizations\Models\Activities\CopySinks\ServiceBusSink.cs" />
     <Compile Include="Customizations\Models\Activities\CopySinks\SqlSink.cs" />
     <Compile Include="Customizations\Models\Activities\CopySinks\StoredProcedureParameter.cs" />
     <Compile Include="Customizations\Models\Activities\CopySinks\StoredProcedureParameterType.cs" />
@@ -82,12 +85,10 @@
     <Compile Include="Customizations\Models\Activities\CopySources\CopySource.cs" />
     <Compile Include="Customizations\Models\Activities\CopySources\DocumentDbCollectionSource.cs" />
     <Compile Include="Customizations\Models\Activities\CopySources\FileSystemSource.cs" />
-    <Compile Include="Customizations\Models\Activities\CopySources\MdsSource.cs" />
     <Compile Include="Customizations\Models\Activities\CopySources\OracleSource.cs" />
     <Compile Include="Customizations\Models\Activities\CopySources\RelationalSource.cs" />
     <Compile Include="Customizations\Models\Activities\CopySources\SqlSource.cs" />
     <Compile Include="Customizations\Models\Activities\CopyTranslators\CopyTranslator.cs" />
-    <Compile Include="Customizations\Models\Activities\CopyTranslators\DataInsightTranslator.cs" />
     <Compile Include="Customizations\Models\Activities\CopyTranslators\TabularTranslator.cs" />
     <Compile Include="Customizations\Models\Activities\CustomActivity.cs" />
     <Compile Include="Customizations\Models\Activities\DotNetActivity.cs" />
@@ -97,25 +98,20 @@
     <Compile Include="Customizations\Models\Activities\HDInsightMapReduceActivity.cs" />
     <Compile Include="Customizations\Models\Activities\HDInsightPigActivity.cs" />
     <Compile Include="Customizations\Models\Activities\HDInsightStreamingActivity.cs" />
-    <Compile Include="Customizations\Models\Activities\NullActivity.cs" />
     <Compile Include="Customizations\Models\Activities\StoredProcedureActivity.cs" />
     <Compile Include="Customizations\Models\AdfRequiredAttribute.cs" />
     <Compile Include="Customizations\Models\LinkedServices\AzureBatchLinkedService.cs" />
     <Compile Include="Customizations\Models\LinkedServices\AzureMLLinkedService.cs" />
-    <Compile Include="Customizations\Models\LinkedServices\AzureSearchIndexLinkedService.cs" />
-    <Compile Include="Customizations\Models\LinkedServices\AzureServiceBusLinkedService.cs" />
     <Compile Include="Customizations\Models\LinkedServices\AzureSqlLinkedService.cs" />
     <Compile Include="Customizations\Models\LinkedServices\AzureStorageLinkedService.cs" />
     <Compile Include="Customizations\Models\LinkedServices\CustomLinkedService.cs" />
     <Compile Include="Customizations\Models\LinkedServices\DocumentDbLinkedService.cs" />
     <Compile Include="Customizations\Models\LinkedServices\GenericLinkedService.cs" />
-    <Compile Include="Customizations\Models\LinkedServices\HCatalogProperties.cs" />
     <Compile Include="Customizations\Models\LinkedServices\HDInsightBYOCLinkedService.cs" />
     <Compile Include="Customizations\Models\LinkedServices\HDInsightOnDemandLinkedService.cs" />
     <Compile Include="Customizations\Models\LinkedServices\LinkedService.cs" />
     <Compile Include="Customizations\Models\LinkedServices\LinkedServiceProperties.cs" />
     <Compile Include="Customizations\Models\LinkedServices\LinkedServiceTypeProperties.cs" />
-    <Compile Include="Customizations\Models\LinkedServices\MdsLinkedService.cs" />
     <Compile Include="Customizations\Models\LinkedServices\OnPremisesDb2LinkedService.cs" />
     <Compile Include="Customizations\Models\LinkedServices\OnPremisesFileSystemLinkedService.cs" />
     <Compile Include="Customizations\Models\LinkedServices\OnPremisesMySqlLinkedService.cs" />
@@ -135,14 +131,11 @@
     <Compile Include="Customizations\Models\Registration\ComputeTypeProperties.cs" />
     <Compile Include="Customizations\Models\Registration\TypeProperties.cs" />
     <Compile Include="Customizations\Models\Tables\AzureBlobLocation.cs" />
-    <Compile Include="Customizations\Models\Tables\AzureQueueLocation.cs" />
-    <Compile Include="Customizations\Models\Tables\AzureSearchIndexLocation.cs" />
     <Compile Include="Customizations\Models\Tables\AzureSqlTableLocation.cs" />
     <Compile Include="Customizations\Models\Tables\AzureTableLocation.cs" />
     <Compile Include="Customizations\Models\Tables\CustomLocation.cs" />
     <Compile Include="Customizations\Models\Tables\DocumentDbCollectionLocation.cs" />
     <Compile Include="Customizations\Models\Tables\GenericTable.cs" />
-    <Compile Include="Customizations\Models\Tables\MdsTableLocation.cs" />
     <Compile Include="Customizations\Models\Tables\OnPremisesFileSystemLocation.cs" />
     <Compile Include="Customizations\Models\Tables\OnPremisesOracleTableLocation.cs" />
     <Compile Include="Customizations\Models\Tables\OnPremisesSqlServerTableLocation.cs" />
@@ -152,8 +145,6 @@
     <Compile Include="Customizations\Models\Tables\Partitions\PartitionValue.cs" />
     <Compile Include="Customizations\Models\Tables\RelationalTableLocation.cs" />
     <Compile Include="Customizations\Models\Tables\StorageFormats\AvroFormat.cs" />
-    <Compile Include="Customizations\Models\Tables\StorageFormats\BondFormat.cs" />
-    <Compile Include="Customizations\Models\Tables\StorageFormats\JsonFormat.cs" />
     <Compile Include="Customizations\Models\Tables\StorageFormats\StorageFormat.cs" />
     <Compile Include="Customizations\Models\Tables\StorageFormats\TextFormat.cs" />
     <Compile Include="Customizations\Models\Tables\Table.cs" />
@@ -208,8 +199,7 @@
     <Compile Include="Customizations\Operations\Tables\TableOperations.cs" />
     <Compile Include="Customizations\Operations\Tables\TableOperationsExtensions.cs" />
     <Compile Include="Customizations\DataFactoryManagementClient.Customization.cs" />
-    <Compile Include="Generated\**\*.cs" Condition="'$(ADF_INTERNAL)'!='true'" />
-    <Compile Include="GeneratedInternal\**\*.cs" Condition="'$(ADF_INTERNAL)'=='true'" />
+    <Compile Include="Generated\**\*.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Microsoft.Azure.Management.DataFactories.nuspec">

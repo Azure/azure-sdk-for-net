@@ -20,7 +20,6 @@ using Microsoft.Azure.Management.DataFactories.Registration.Models;
 
 namespace Microsoft.Azure.Management.DataFactories
 {
-#if ADF_INTERNAL
     public static class ActivityTypeOperationsExtensions
     {
         /// <summary>
@@ -472,5 +471,4 @@ namespace Microsoft.Azure.Management.DataFactories
             return operations.ListNextAsync(nextLink, CancellationToken.None);
         }
     }
-#endif
 }

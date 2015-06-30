@@ -43,19 +43,11 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         public IDictionary<string, string> Defines { get; set; }
 
         /// <summary>
-        /// User specified property bag used in Hive scripts. There is no restriction on the
-        /// keys or values that can be used. User needs to consume and interpret the content accordingly in
-        /// their customized Hive script.
-        /// </summary>
-        public IDictionary<string, string> ExtendedProperties { get; set; }
-
-        /// <summary>
         /// Initializes a new instance of the HDInsightHiveActivity class.
         /// </summary>
         public HDInsightHiveActivity()
         {
             this.Defines = new Dictionary<string, string>();
-            this.ExtendedProperties = new Dictionary<string, string>();
         }
     }
 }

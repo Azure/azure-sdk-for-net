@@ -19,11 +19,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.Management.DataFactories.Models;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-#if ADF_INTERNAL
 using CoreRegistrationModel = Microsoft.Azure.Management.DataFactories.Core.Registration.Models;
-#endif
 
 namespace Microsoft.Azure.Management.DataFactories.Core
 {
@@ -275,9 +271,8 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             return handler.Json;
         }
 
-#if ADF_INTERNAL
         /// <summary>
-        /// Serializes the given <see cref="ActivityType" /> into JSON, by mocking a create request to 
+        /// Serializes the given <see cref="Registration.Models.ActivityType" /> into JSON, by mocking a create request to 
         /// exercise the client's serialization logic.
         /// </summary>
         /// <param name="item">The object to serialize.</param>
@@ -295,7 +290,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         }
 
         /// <summary>
-        /// Serializes the given <see cref="ComputeType" /> into JSON, by mocking a create request to 
+        /// Serializes the given <see cref="Registration.Models.ComputeType" /> into JSON, by mocking a create request to 
         /// exercise the client's serialization logic.
         /// </summary>
         /// <param name="item">The object to serialize.</param>
@@ -311,7 +306,6 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             client.ComputeTypes.CreateOrUpdate(resourceGroupName, dataFactoryName, createParams);
             return handler.Json;
         }
-#endif
 
         #endregion JSON serialization
 
@@ -410,7 +404,6 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             return getResponse.DataFactory;
         }
 
-#if ADF_INTERNAL
         /// <summary>
         /// Deserializes the given json into an Hydra OM InternalActivityType instance, by mocking a get request to 
         /// exercise the client's deserialization logic.
@@ -460,7 +453,6 @@ namespace Microsoft.Azure.Management.DataFactories.Core
 
             return getResponse.ComputeType;
         }
-#endif
 
         #endregion JSON deserialization
     }

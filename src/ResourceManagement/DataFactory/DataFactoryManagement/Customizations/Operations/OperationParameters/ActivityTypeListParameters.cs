@@ -15,7 +15,6 @@
 
 namespace Microsoft.Azure.Management.DataFactories.Registration.Models
 {
-#if ADF_INTERNAL
     /// <summary>
     /// Parameters specifying how to return a list of ActivityType definitions
     /// for a List operation.
@@ -55,5 +54,4 @@ namespace Microsoft.Azure.Management.DataFactories.Registration.Models
             this.Resolved = internalParameters.Resolved;
         }
     }
-#endif
 }

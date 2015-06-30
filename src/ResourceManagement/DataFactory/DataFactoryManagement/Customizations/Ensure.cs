@@ -22,6 +22,8 @@ namespace Microsoft.Azure.Management.DataFactories
 {
     internal static class Ensure
     {
+#if PORTABLE
+
         public static void IsNotNull<T>(T value, string name)
         {
             if (value == null)
@@ -39,26 +41,27 @@ namespace Microsoft.Azure.Management.DataFactories
                 throw new ArgumentNullException(name, msg);
             }
         }
+#else
+        public static void IsNotNull<T>(T value, string name)
+        {
+            if (value == null)
+            {
+                string method = GetFirstForeignMethodOnStack();
+                string msg = string.Format(CultureInfo.InvariantCulture, "'{0}' may not be null in {1}", name, method);
+                throw new ArgumentNullException(name, msg);
+            }
+        }
 
-        //public static void IsNotNull<T>(T value, string name)
-        //{
-        //    if (value == null)
-        //    {
-        //        string method = GetFirstForeignMethodOnStack();
-        //        string msg = string.Format(CultureInfo.InvariantCulture, "'{0}' may not be null in {1}", name, method);
-        //        throw new ArgumentNullException(name, msg);
-        //    }
-        //}
-
-        //public static void IsNotNullOrEmpty(string value, string name)
-        //{
-        //    if (value == null)
-        //    {
-        //        string method = GetFirstForeignMethodOnStack();
-        //        string msg = string.Format(CultureInfo.InvariantCulture, "'{0}' may not be null in {1}", name, method);
-        //        throw new ArgumentNullException(name, msg);
-        //    }
-        //}
+        public static void IsNotNullOrEmpty(string value, string name)
+        {
+            if (value == null)
+            {
+                string method = GetFirstForeignMethodOnStack();
+                string msg = string.Format(CultureInfo.InvariantCulture, "'{0}' may not be null in {1}", name, method);
+                throw new ArgumentNullException(name, msg);
+            }
+        }
+#endif
 
         public static void IsNotNullOperationException<T>(T value, string name)
         {
@@ -81,37 +84,39 @@ namespace Microsoft.Azure.Management.DataFactories
             } 
         }
 
-        ///// <summary>
-        ///// Crawls the current call stack and retrieves the name of the first "foreign" method.
-        ///// A method is considered foreign if it's not part of this class.
-        ///// </summary>
-        ///// <param name="stackFramesToSkip">The stack frames to skip.</param>
-        ///// <returns>The name of the first foreign method on the call stack.</returns>
-        //private static string GetFirstForeignMethodOnStack(int stackFramesToSkip = 2)
-        //{
-        //    string ret = string.Empty;
+#if !PORTABLE
 
-        //    // 5: Reasonable upper limit so that we won't work too hard
-        //    for (int framesToSkip = stackFramesToSkip + 1; framesToSkip < stackFramesToSkip + 5; framesToSkip++)
-        //    {
-        //        StackFrame callPoint = new StackFrame(framesToSkip, true);
-        //        if (callPoint.GetMethod() == null)
-        //        {
-        //            // reached the end of the call stack
-        //            break;
-        //        }
+        /// <summary>
+        /// Crawls the current call stack and retrieves the name of the first "foreign" method.
+        /// A method is considered foreign if it's not part of this class.
+        /// </summary>
+        /// <param name="stackFramesToSkip">The stack frames to skip.</param>
+        /// <returns>The name of the first foreign method on the call stack.</returns>
+        private static string GetFirstForeignMethodOnStack(int stackFramesToSkip = 2)
+        {
+            string ret = string.Empty;
 
-        //        string callPointMethod = GetFullyQualifiedMemberName(callPoint.GetMethod());
-        //        ret = "method '" + callPointMethod + "' (" + callPoint + ")";
+            // 5: Reasonable upper limit so that we won't work too hard
+            for (int framesToSkip = stackFramesToSkip + 1; framesToSkip < stackFramesToSkip + 5; framesToSkip++)
+            {
+                StackFrame callPoint = new StackFrame(framesToSkip, true);
+                if (callPoint.GetMethod() == null)
+                {
+                    // reached the end of the call stack
+                    break;
+                }
 
-        //        if (!callPointMethod.Contains("Microsoft.Azure.Management.DataFactories.Ensure"))
-        //        {
-        //            break;
-        //        }
-        //    }
+                string callPointMethod = GetFullyQualifiedMemberName(callPoint.GetMethod());
+                ret = "method '" + callPointMethod + "' (" + callPoint + ")";
 
-        //    return ret;
-        //}
+                if (!callPointMethod.Contains("Microsoft.Azure.Management.DataFactories.Ensure"))
+                {
+                    break;
+                }
+            }
+
+            return ret;
+        }
 
         /// <summary>
         /// Given a member reference, find its fully qualified name (assembly, class, member)
@@ -131,5 +136,6 @@ namespace Microsoft.Azure.Management.DataFactories
 
             return ret;
         }
+#endif
     }
 }

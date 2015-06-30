@@ -15,7 +15,6 @@
 
 namespace Microsoft.Azure.Management.DataFactories.Registration.Models
 {
-#if ADF_INTERNAL
     /// <summary>
     /// Parameters specifying the ComputeType definition for a create or update
     /// operation.
@@ -47,5 +46,4 @@ namespace Microsoft.Azure.Management.DataFactories.Registration.Models
             this.ComputeType = computeType;
         }
     }
-#endif
 }

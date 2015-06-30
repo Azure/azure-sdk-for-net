@@ -186,7 +186,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                 url = url + Uri.EscapeDataString(parameters.Table.Name);
             }
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-07-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -795,7 +795,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + "/tables/";
             url = url + Uri.EscapeDataString(tableName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-07-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1229,7 +1229,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + "/tables/";
             url = url + Uri.EscapeDataString(tableName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-07-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1309,11 +1309,11 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                     {
                         result.Status = OperationStatus.Failed;
                     }
-                    if (statusCode == HttpStatusCode.NoContent)
+                    if (statusCode == HttpStatusCode.OK)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
-                    if (statusCode == HttpStatusCode.OK)
+                    if (statusCode == HttpStatusCode.NoContent)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
@@ -1640,7 +1640,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + "/tables/";
             url = url + Uri.EscapeDataString(tableName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-07-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2026,7 +2026,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                 
                 // Set Headers
                 httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
-                httpRequest.Headers.Add("x-ms-version", "2015-05-01-preview");
+                httpRequest.Headers.Add("x-ms-version", "2015-07-01-preview");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2420,7 +2420,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + Uri.EscapeDataString(dataFactoryName);
             url = url + "/tables";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-07-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);

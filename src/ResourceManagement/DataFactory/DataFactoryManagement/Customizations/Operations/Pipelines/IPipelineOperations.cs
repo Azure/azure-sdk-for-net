@@ -25,10 +25,7 @@ namespace Microsoft.Azure.Management.DataFactories
     /// <summary>
     /// Operations for managing pipelines.
     /// </summary>
-    public interface IPipelineOperations
-#if ADF_INTERNAL
-        : ITypeRegistrationOperations<Pipeline, ActivityTypeProperties>
-#endif
+    public interface IPipelineOperations : ITypeRegistrationOperations<Pipeline>
     {
         /// <summary>
         /// Create or update a pipeline instance.

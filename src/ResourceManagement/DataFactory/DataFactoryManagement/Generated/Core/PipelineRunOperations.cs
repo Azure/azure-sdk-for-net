@@ -175,7 +175,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             {
                 queryParameters.Add("status=" + Uri.EscapeDataString(parameters.RunRecordStatus.ToString()));
             }
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-07-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -284,6 +284,13 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                     {
                                         string activityNameInstance = ((string)activityNameValue);
                                         dataSliceRunInstance.ActivityName = activityNameInstance;
+                                    }
+                                    
+                                    JToken activityRunIdValue = valueValue["activityRunId"];
+                                    if (activityRunIdValue != null && activityRunIdValue.Type != JTokenType.Null)
+                                    {
+                                        string activityRunIdInstance = ((string)activityRunIdValue);
+                                        dataSliceRunInstance.ActivityRunId = activityRunIdInstance;
                                     }
                                     
                                     JToken computeClusterNameValue = valueValue["computeClusterName"];
@@ -691,6 +698,13 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                     {
                                         string activityNameInstance = ((string)activityNameValue);
                                         dataSliceRunInstance.ActivityName = activityNameInstance;
+                                    }
+                                    
+                                    JToken activityRunIdValue = valueValue["activityRunId"];
+                                    if (activityRunIdValue != null && activityRunIdValue.Type != JTokenType.Null)
+                                    {
+                                        string activityRunIdInstance = ((string)activityRunIdValue);
+                                        dataSliceRunInstance.ActivityRunId = activityRunIdInstance;
                                     }
                                     
                                     JToken computeClusterNameValue = valueValue["computeClusterName"];

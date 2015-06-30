@@ -154,7 +154,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                 url = url + Uri.EscapeDataString(parameters.Hub.Name);
             }
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-07-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -455,7 +455,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + "/hubs/";
             url = url + Uri.EscapeDataString(hubName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-07-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -727,7 +727,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + "/hubs/";
             url = url + Uri.EscapeDataString(hubName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-07-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1053,7 +1053,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + "/hubs/";
             url = url + Uri.EscapeDataString(hubName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-07-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1256,7 +1256,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                 
                 // Set Headers
                 httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
-                httpRequest.Headers.Add("x-ms-version", "2015-05-01-preview");
+                httpRequest.Headers.Add("x-ms-version", "2015-07-01-preview");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1467,7 +1467,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + Uri.EscapeDataString(dataFactoryName);
             url = url + "/hubs";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-07-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);

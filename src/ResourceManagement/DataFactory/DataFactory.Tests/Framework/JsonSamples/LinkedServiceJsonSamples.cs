@@ -40,38 +40,6 @@ namespace DataFactory.Tests.Framework.JsonSamples
 }
 ";
 
-#if ADF_INTERNAL
-        [JsonSample(propertyBagKeys: new string[] 
-            { 
-                // Identify user-provided property names. These should always be cased exactly as the user 
-                // specified, rather than converted to camel/Pascal-cased.
-                "properties.extendedProperties.PropertyBagPropertyName1",
-                "properties.extendedProperties.propertyBagPropertyName2"
-            })]
-        public const string AzureServiceBusLinkedService = @"
-{
-    name: ""LinkedService-AzureServiceBus"",
-    properties:
-    {
-        type: ""AzureServiceBusLinkedService"",
-        typeProperties:
-        {
-            endpoint: ""sb://azuredatafactory.servicebus.windows.net/"",
-            sharedAccessKeyName : ""RootManageSharedAccessKey"",
-            sharedAccessKey : ""FTTa0PM8="",
-            activityQueueName: ""test1"",
-            statusQueueName:  ""status1"",
-            transportProtocolVersion: ""1.0-preview"",
-            extendedProperties:
-            {
-                PropertyBagPropertyName1: ""PropertyBagPropertyValue1"",
-                propertyBagPropertyName2: ""PropertyBagPropertyValue2""
-            }
-        }
-    }
-}";
-#endif
-
         [JsonSample]
         public const string HDInsightOnDemandLinkedService = @"
 {
@@ -139,25 +107,6 @@ namespace DataFactory.Tests.Framework.JsonSamples
     }
 }";
 
-#if ADF_INTERNAL
-        [JsonSample]
-        public const string MdsLinkedService = @"
-{
-    name: ""Test-MDS-LinkedService"",
-    properties:
-    {
-        type: ""MdsLinkedService"",
-        hubName: ""testHub"",
-        typeProperties:
-        {
-            endpoint: ""MyEndpoint"",
-            certificateBody: ""MyCertificateBody"",
-            certificatePassword: ""MyCertificatePassword""
-        }
-    }
-}";
-#endif
-
         [JsonSample]
         public const string AzureMLLinkedServiceJson = @"
 {
@@ -192,7 +141,6 @@ namespace DataFactory.Tests.Framework.JsonSamples
 }
 ";
 
-//#if ADF_INTERNAL
 //        [JsonSample("ExtraProperties")]
 //        public const string ExtraPropertiesLinkedService = @"
 //{
@@ -212,7 +160,6 @@ namespace DataFactory.Tests.Framework.JsonSamples
 //        }
 //    }
 //}";
-//#endif
 
         [JsonSample]
         public const string HDInsightBYOCWithHCatalogLinkedService = @"
@@ -228,10 +175,12 @@ namespace DataFactory.Tests.Framework.JsonSamples
             userName: ""MyUserName"",
             password: ""$EncryptedString$MyEncryptedPassword"",
             linkedServiceName: ""MyStorageAssetName"",
-            hcatalog:
+		    hcatalogLinkedServiceName : ""Asset-HcatDb"",
+		    schemaGeneration:
 		    {
-			    linkedServiceName : ""Asset-HcatDb"",
-			    recoverPartitions : true
+			    type : ""Output"",
+			    inputPartition : ""None"",
+			    alterSchema : false
 		    }
         }
     }
@@ -304,7 +253,6 @@ namespace DataFactory.Tests.Framework.JsonSamples
     }
 }";
 
-#if ADF_INTERNAL
         [JsonSample]
         public const string DocDbLinkedService = @"
 {
@@ -317,6 +265,5 @@ namespace DataFactory.Tests.Framework.JsonSamples
         }
     }
 }";
-#endif
     }
 }

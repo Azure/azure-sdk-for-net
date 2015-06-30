@@ -15,7 +15,6 @@
 
 namespace Microsoft.Azure.Management.DataFactories.Registration.Models
 {
-#if ADF_INTERNAL
     public abstract class TypeProperties
     {
         /// <summary>
@@ -28,5 +27,4 @@ namespace Microsoft.Azure.Management.DataFactories.Registration.Models
         /// </summary>
         public AdfTypeSchema Schema { get; set; }
     }
-#endif
 }

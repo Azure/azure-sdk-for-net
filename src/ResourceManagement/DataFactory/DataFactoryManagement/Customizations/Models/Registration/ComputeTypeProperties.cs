@@ -13,7 +13,6 @@
 // limitations under the License.
 //
 
-#if ADF_INTERNAL
 using System.Collections.Generic;
 using Microsoft.Azure.Management.DataFactories.Core.Registration.Models;
 
@@ -32,4 +31,3 @@ namespace Microsoft.Azure.Management.DataFactories.Registration.Models
         public IList<string> SupportedActivities { get; set; }
     }
 }
-#endif

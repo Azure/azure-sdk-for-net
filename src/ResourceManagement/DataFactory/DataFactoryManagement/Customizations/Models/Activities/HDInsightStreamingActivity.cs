@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// Paths to streaming job files. Can be directories.
         /// </summary>
         [AdfRequired]
-        public IEnumerable<string> FilePaths { get; set; }
+        public IList<string> FilePaths { get; set; }
 
         /// <summary>
         /// Linked service where the files are located.
@@ -65,18 +65,12 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// <summary>
         /// Command line environment values.
         /// </summary>
-        public IEnumerable<string> CommandEnvironment { get; set; }
+        public IList<string> CommandEnvironment { get; set; }
 
         /// <summary>
         /// Allows user to specify defines for streaming job request.
         /// </summary>
         public IDictionary<string, string> Defines { get; set; }
-
-        /// <summary>
-        /// User specified property bag. There is no restriction on the keys or 
-        /// values that can be used. These are passed as Defines in the streaming job request.
-        /// </summary>
-        public IDictionary<string, string> ExtendedProperties { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the HDInsightStreamingActivity class.
@@ -85,7 +79,6 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         {
             this.CommandEnvironment = new List<string>();
             this.Defines = new Dictionary<string, string>();
-            this.ExtendedProperties = new Dictionary<string, string>();
             this.FilePaths = new List<string>();
         }
     }

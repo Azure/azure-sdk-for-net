@@ -25,17 +25,15 @@ namespace Microsoft.Azure.Management.DataFactories
     {
         internal PipelineConverter Converter { get; set; }
 
-#if ADF_INTERNAL
-        public void RegisterType<T>() where T : ActivityTypeProperties
+        public void RegisterType<T>(bool force = false)
         {
-            this.Converter.RegisterType<T>();
+            this.Converter.RegisterType<T>(force, typeof(Activity));
         }
 
-        public bool TypeIsRegistered<T>() where T : ActivityTypeProperties
+        public bool TypeIsRegistered<T>() 
         {
             return this.Converter.TypeIsRegistered<T>();
         }
-#endif
 
         public void ValidateObject(Pipeline pipeline)
         {
