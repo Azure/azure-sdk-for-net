@@ -51,8 +51,8 @@ namespace Networks.Tests
         {
             var virtualNetwork = TestHelper.CreateVirtualNetwork(vnetName, subnetName, resourceGroupName, location, networkResourceProviderClient);
             var getSubnetResponse = networkResourceProviderClient.Subnets.Get(resourceGroupName, vnetName, subnetName);            
-            Console.WriteLine("Virtual Network GatewaySubnet Id: {0}", getSubnetResponse.Subnet.Id);
-            return getSubnetResponse.Subnet;
+            Console.WriteLine("Virtual Network GatewaySubnet Id: {0}", getSubnetResponse.Id);
+            return getSubnetResponse;
         }
 
         private ApplicationGatewaySslCertificate CreateSslCertificate(string sslCertName, string password)
@@ -82,7 +82,6 @@ namespace Networks.Tests
             var appGw = new ApplicationGateway()
             {
                 Location = location,
-                Name = appGwName,
                 Sku = new ApplicationGatewaySku()
                     {
                         Name = ApplicationGatewaySkuName.StandardMedium,
@@ -94,7 +93,7 @@ namespace Networks.Tests
                         new ApplicationGatewayIpConfiguration()
                         {
                             Name = gatewayIpConfigName,
-                            Subnet = new ResourceId()
+                            Subnet = new Subnet()
                             {
                                 Id = subnet.Id
                             }
@@ -105,8 +104,8 @@ namespace Networks.Tests
                         new ApplicationGatewayFrontendIpConfiguration()
                         {
                             Name = frontendIpConfigName,
-                            PrivateIpAllocationMethod = IpAllocationMethod.Dynamic,
-                            Subnet = new ResourceId()
+                            PrivateIPAllocationMethod = IpAllocationMethod.Dynamic,
+                            Subnet = new Subnet()
                             {
                                 Id = subnet.Id
                             }                          
@@ -153,12 +152,12 @@ namespace Networks.Tests
                         new ApplicationGatewayHttpListener()
                         {
                             Name = httpListenerName,
-                            FrontendPort = new ResourceId()
+                            FrontendPort = new SubResource()
                             {
                                 Id = GetChildAppGwResourceId(networkResourceProviderClient.Credentials.SubscriptionId,
                                     resourceGroupName, appGwName, "frontendPorts", frontendPortName)
                             },
-                            FrontendIpConfiguration = new ResourceId()
+                            FrontendIpConfiguration = new SubResource()
                             {
                                 Id = GetChildAppGwResourceId(networkResourceProviderClient.Credentials.SubscriptionId,
                                     resourceGroupName, appGwName, "frontendIPConfigurations", frontendIpConfigName)
@@ -173,17 +172,17 @@ namespace Networks.Tests
                         {
                             Name = requestRoutingRuleName,
                             RuleType = ApplicationGatewayRequestRoutingRuleType.Basic,
-                            HttpListener = new ResourceId()
+                            HttpListener = new SubResource()
                             {
                                 Id = GetChildAppGwResourceId(networkResourceProviderClient.Credentials.SubscriptionId,
                                     resourceGroupName, appGwName, "httpListeners", httpListenerName)
                             },
-                            BackendAddressPool = new ResourceId()
+                            BackendAddressPool = new SubResource()
                             {
                                 Id = GetChildAppGwResourceId(networkResourceProviderClient.Credentials.SubscriptionId,
                                     resourceGroupName, appGwName, "backendAddressPools", backendAddressPoolName)
                             },
-                            BackendHttpSettings = new ResourceId()
+                            BackendHttpSettings = new SubResource()
                             {
                                 Id = GetChildAppGwResourceId(networkResourceProviderClient.Credentials.SubscriptionId,
                                     resourceGroupName, appGwName, "backendHttpSettingsCollection", backendHttpSettingsName)
@@ -211,7 +210,6 @@ namespace Networks.Tests
             var appGw = new ApplicationGateway()
             {
                 Location = location,
-                Name = appGwName,
                 Sku = new ApplicationGatewaySku()
                 {
                     Name = ApplicationGatewaySkuName.StandardLarge,
@@ -223,7 +221,7 @@ namespace Networks.Tests
                         new ApplicationGatewayIpConfiguration()
                         {
                             Name = gatewayIpConfigName,
-                            Subnet = new ResourceId()
+                            Subnet = new SubResource()
                             {
                                 Id = subnet.Id
                             }
@@ -238,8 +236,8 @@ namespace Networks.Tests
                         new ApplicationGatewayFrontendIpConfiguration()
                         {
                             Name = frontendIpConfigName,
-                            PrivateIpAllocationMethod = IpAllocationMethod.Dynamic,
-                            Subnet = new ResourceId()
+                            PrivateIPAllocationMethod = IpAllocationMethod.Dynamic,
+                            Subnet = new SubResource()
                             {
                                 Id = subnet.Id
                             }                          
@@ -286,17 +284,17 @@ namespace Networks.Tests
                         new ApplicationGatewayHttpListener()
                         {
                             Name = httpListenerName,
-                            FrontendPort = new ResourceId()
+                            FrontendPort = new SubResource()
                             {
                                 Id = GetChildAppGwResourceId(networkResourceProviderClient.Credentials.SubscriptionId,
                                     resourceGroupName, appGwName, "frontendPorts", frontendPortName)
                             },
-                            FrontendIpConfiguration = new ResourceId()
+                            FrontendIpConfiguration = new SubResource()
                             {
                                 Id = GetChildAppGwResourceId(networkResourceProviderClient.Credentials.SubscriptionId,
                                     resourceGroupName, appGwName, "frontendIPConfigurations", frontendIpConfigName)
                             },
-                            SslCertificate = new ResourceId()
+                            SslCertificate = new SubResource()
                             {
                                 Id = GetChildAppGwResourceId(networkResourceProviderClient.Credentials.SubscriptionId,
                                     resourceGroupName, appGwName, "sslCertificates", sslCertName)
@@ -310,17 +308,17 @@ namespace Networks.Tests
                         {
                             Name = requestRoutingRuleName,
                             RuleType = ApplicationGatewayRequestRoutingRuleType.Basic,
-                            HttpListener = new ResourceId()
+                            HttpListener = new SubResource()
                             {
                                 Id = GetChildAppGwResourceId(networkResourceProviderClient.Credentials.SubscriptionId,
                                     resourceGroupName, appGwName, "httpListeners", httpListenerName)
                             },
-                            BackendAddressPool = new ResourceId()
+                            BackendAddressPool = new SubResource()
                             {
                                 Id = GetChildAppGwResourceId(networkResourceProviderClient.Credentials.SubscriptionId,
                                     resourceGroupName, appGwName, "backendAddressPools", backendAddressPoolName)
                             },
-                            BackendHttpSettings = new ResourceId()
+                            BackendHttpSettings = new SubResource()
                             {
                                 Id = GetChildAppGwResourceId(networkResourceProviderClient.Credentials.SubscriptionId,
                                     resourceGroupName, appGwName, "backendHttpSettingsCollection", backendHttpSettingsName)
@@ -375,68 +373,56 @@ namespace Networks.Tests
 
                 // Put AppGw
                 var putAppGwResponse = networkResourceProviderClient.ApplicationGateways.CreateOrUpdate(resourceGroupName, appGw.Name, appGw);                
-                Assert.Equal(HttpStatusCode.OK, putAppGwResponse.StatusCode);
-                Assert.Equal("Succeeded", putAppGwResponse.Status);
+                Assert.Equal("Succeeded", putAppGwResponse.ProvisioningState);
                 
                 // Get AppGw
                 var getResp = networkResourceProviderClient.ApplicationGateways.Get(resourceGroupName, appGw.Name);
-                CompareApplicationGateway(appGw, getResp.ApplicationGateway);
+                CompareApplicationGateway(appGw, getResp);
 
                 // List AppGw
                 var listAppGw = networkResourceProviderClient.ApplicationGateways.List(resourceGroupName);
-                Assert.Equal(1, listAppGw.ApplicationGateways.Count);
+                Assert.Equal(1, listAppGw.Value.Count);
 
                 // List all AppGw
                 var listAllAppGw = networkResourceProviderClient.ApplicationGateways.ListAll();
-                Assert.Equal(1, listAllAppGw.ApplicationGateways.Count);
+                Assert.Equal(1, listAllAppGw.Value.Count);
 
                 //Add one more gateway
                 // Put AppGw
                 var appGw2 = CreateApplicationGateway();
                 putAppGwResponse = networkResourceProviderClient.ApplicationGateways.CreateOrUpdate(resourceGroupName, appGw2.Name, appGw2);
-                Assert.Equal(HttpStatusCode.OK, putAppGwResponse.StatusCode);
-                Assert.Equal("Succeeded", putAppGwResponse.Status);
+                Assert.Equal("Succeeded", putAppGwResponse.ProvisioningState);
 
                 // Get AppGw
                 getResp = networkResourceProviderClient.ApplicationGateways.Get(resourceGroupName, appGw2.Name);
-                CompareApplicationGateway(appGw2, getResp.ApplicationGateway);
+                CompareApplicationGateway(appGw2, getResp);
 
                 // List AppGw
                 listAppGw = networkResourceProviderClient.ApplicationGateways.List(resourceGroupName);
-                Assert.Equal(2, listAppGw.ApplicationGateways.Count);
+                Assert.Equal(2, listAppGw.Value.Count);
 
                 // List all AppGw
                 listAllAppGw = networkResourceProviderClient.ApplicationGateways.ListAll();
-                Assert.Equal(2, listAllAppGw.ApplicationGateways.Count);
+                Assert.Equal(2, listAllAppGw.Value.Count);
 
                 //Start AppGw
-                var startResult = networkResourceProviderClient.ApplicationGateways.Start(resourceGroupName, appGw.Name);
-                Assert.Equal(HttpStatusCode.OK, startResult.StatusCode);
-                Assert.Equal("Succeeded", startResult.Status);
+                networkResourceProviderClient.ApplicationGateways.Start(resourceGroupName, appGw.Name);
 
-                startResult = networkResourceProviderClient.ApplicationGateways.Start(resourceGroupName, appGw2.Name);
-                Assert.Equal(HttpStatusCode.OK, startResult.StatusCode);
-                Assert.Equal("Succeeded", startResult.Status);
+                networkResourceProviderClient.ApplicationGateways.Start(resourceGroupName, appGw2.Name);
                 
                 //Stop AppGw
-                var stopResult = networkResourceProviderClient.ApplicationGateways.Stop(resourceGroupName, appGw.Name);
-                Assert.Equal(HttpStatusCode.OK, stopResult.StatusCode);
-                Assert.Equal("Succeeded", stopResult.Status);
+                networkResourceProviderClient.ApplicationGateways.Stop(resourceGroupName, appGw.Name);
 
-                stopResult = networkResourceProviderClient.ApplicationGateways.Stop(resourceGroupName, appGw2.Name);
-                Assert.Equal(HttpStatusCode.OK, stopResult.StatusCode);
-                Assert.Equal("Succeeded", stopResult.Status);
+                networkResourceProviderClient.ApplicationGateways.Stop(resourceGroupName, appGw2.Name);
                 
                 // Delete AppGw
-                var deleteResult = networkResourceProviderClient.ApplicationGateways.Delete(resourceGroupName, appGw.Name);
-                Assert.Equal(HttpStatusCode.OK, deleteResult.StatusCode);
+                networkResourceProviderClient.ApplicationGateways.Delete(resourceGroupName, appGw.Name);
 
-                deleteResult = networkResourceProviderClient.ApplicationGateways.Delete(resourceGroupName, appGw2.Name);
-                Assert.Equal(HttpStatusCode.OK, deleteResult.StatusCode);
+                networkResourceProviderClient.ApplicationGateways.Delete(resourceGroupName, appGw2.Name);
 
                 // Verify Delete
                 listAppGw = networkResourceProviderClient.ApplicationGateways.List(resourceGroupName);
-                Assert.Equal(0, listAppGw.ApplicationGateways.Count);
+                Assert.Null(listAppGw.Value);
             }
         }        
     }

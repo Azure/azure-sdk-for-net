@@ -19,7 +19,8 @@ namespace Networks.Tests.Helpers
         {
             handler.IsPassThrough = true;
             var client = TestBase.GetServiceClient<NetworkResourceProviderClient>(new CSMTestEnvironmentFactory(), handler);
-            if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Playback")
+            if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == null ||
+                Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Playback")
             {
                 client.LongRunningOperationRetryTimeout = 0;
             }
