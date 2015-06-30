@@ -20,46 +20,45 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
+using Microsoft.Azure.Management.Network.Models;
 
 namespace Microsoft.Azure.Management.Network.Models
 {
     /// <summary>
-    /// Dns Settings of a resource
+    /// Frontend Port of application gateway
     /// </summary>
-    public partial class DnsSettings
+    public partial class ApplicationGatewayFrontendPort : ChildResource
     {
-        private IList<string> _appliedDnsServers;
+        private int _port;
         
         /// <summary>
-        /// Optional. Gets or sets list of Applied DNS servers IP addresses
+        /// Optional. Gets or sets the frontend port
         /// </summary>
-        public IList<string> AppliedDnsServers
+        public int Port
         {
-            get { return this._appliedDnsServers; }
-            set { this._appliedDnsServers = value; }
+            get { return this._port; }
+            set { this._port = value; }
         }
         
-        private IList<string> _dnsServers;
+        private string _provisioningState;
         
         /// <summary>
-        /// Optional. Gets or sets list of DNS servers IP addresses
+        /// Optional. Gets or sets Provisioning state of the frontend port
+        /// resource Updating/Deleting/Failed
         /// </summary>
-        public IList<string> DnsServers
+        public string ProvisioningState
         {
-            get { return this._dnsServers; }
-            set { this._dnsServers = value; }
+            get { return this._provisioningState; }
+            set { this._provisioningState = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the DnsSettings class.
+        /// Initializes a new instance of the ApplicationGatewayFrontendPort
+        /// class.
         /// </summary>
-        public DnsSettings()
+        public ApplicationGatewayFrontendPort()
         {
-            this.AppliedDnsServers = new LazyList<string>();
-            this.DnsServers = new LazyList<string>();
         }
     }
 }

@@ -24,19 +24,16 @@ using System.Linq;
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    /// <summary>
-    /// The different SKUs that a gateway can have.
-    /// </summary>
-    public static partial class VirtualNetworkGatewaySize
+    public static partial class ApplicationGatewayCookieBasedAffinity
     {
         /// <summary>
-        /// Default gateway size.
+        /// Enables cookie based affinity of application gateway
         /// </summary>
-        public const string Default = "Default";
+        public const string Enabled = "Enabled";
         
         /// <summary>
-        /// HighPerformance gateway size.
+        /// Disables cookie based affinity of application gateway
         /// </summary>
-        public const string HighPerformance = "HighPerformance";
+        public const string Disabled = "Disabled";
     }
 }

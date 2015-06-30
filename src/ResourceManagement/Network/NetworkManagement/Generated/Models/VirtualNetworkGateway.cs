@@ -43,17 +43,6 @@ namespace Microsoft.Azure.Management.Network.Models
             set { this._enableBgp = value; }
         }
         
-        private string _gatewaySize;
-        
-        /// <summary>
-        /// Optional. The size of this virtual network gateway.
-        /// </summary>
-        public string GatewaySize
-        {
-            get { return this._gatewaySize; }
-            set { this._gatewaySize = value; }
-        }
-        
         private string _gatewayType;
         
         /// <summary>
@@ -86,6 +75,17 @@ namespace Microsoft.Azure.Management.Network.Models
         {
             get { return this._provisioningState; }
             set { this._provisioningState = value; }
+        }
+        
+        private string _vpnType;
+        
+        /// <summary>
+        /// Optional. The type of this virtual network gateway.
+        /// </summary>
+        public string VpnType
+        {
+            get { return this._vpnType; }
+            set { this._vpnType = value; }
         }
         
         /// <summary>

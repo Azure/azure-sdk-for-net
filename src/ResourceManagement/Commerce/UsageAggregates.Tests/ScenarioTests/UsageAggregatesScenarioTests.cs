@@ -124,16 +124,9 @@ namespace UsageAggregatesTest.ScenarioTests
             // Validate headers 
             Assert.Equal(HttpMethod.Get, handler.Method);
 
-            // Validate "instanceData":{"resourceUri":"http://azure.com","tags":"tag1","location":"loc","additionalInfo":"OSVersion","partNumber":"namespace","orderNumber":"abc3"}
-            UsageInstanceData instanceData = result.UsageAggregations[0].Properties.InstanceData;
-
-            Assert.Equal("http://azure.com/", instanceData.ResourceUri.ToString());
-            Assert.Equal("tag1", instanceData.Tags);
-            Assert.Equal("loc", instanceData.Location);
-
-            Assert.Equal("OSVersion", instanceData.AdditionalInfo);
-            Assert.Equal("namespace", instanceData.PartNumber);
-            Assert.Equal("abc3", instanceData.OrderNumber);
+            string instanceData = result.UsageAggregations[0].Properties.InstanceData;
+            
+            Assert.False(string.IsNullOrEmpty(instanceData));
 
         }
     }
