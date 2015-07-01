@@ -175,6 +175,17 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
                 set { this._state = value; }
             }
             
+            private string _virtualIPName;
+            
+            /// <summary>
+            /// Optional. The name of the virtual IP that we should reserve.
+            /// </summary>
+            public string VirtualIPName
+            {
+                get { return this._virtualIPName; }
+                set { this._virtualIPName = value; }
+            }
+            
             /// <summary>
             /// Initializes a new instance of the ReservedIP class.
             /// </summary>
