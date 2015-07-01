@@ -251,7 +251,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -396,7 +396,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -568,7 +568,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -696,7 +696,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -838,7 +838,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -986,7 +986,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1023,6 +1023,13 @@ namespace Microsoft.WindowsAzure.Management.Network
                         XElement typeElement = new XElement(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
                         typeElement.Value = parameters.NextHop.Type;
                         nextHopTypeElement.Add(typeElement);
+                    }
+                    
+                    if (parameters.NextHop.IpAddress != null)
+                    {
+                        XElement ipAddressElement = new XElement(XName.Get("IpAddress", "http://schemas.microsoft.com/windowsazure"));
+                        ipAddressElement.Value = parameters.NextHop.IpAddress;
+                        nextHopTypeElement.Add(ipAddressElement);
                     }
                 }
                 
@@ -1360,6 +1367,456 @@ namespace Microsoft.WindowsAzure.Management.Network
         }
         
         /// <summary>
+        /// Get the effective route table for the provided network interface in
+        /// this subscription.
+        /// </summary>
+        /// <param name='serviceName'>
+        /// Required. The name of the cloud service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required. The name of the deployment.
+        /// </param>
+        /// <param name='roleinstanceName'>
+        /// Required. The name of the role instance.
+        /// </param>
+        /// <param name='networkInterfaceName'>
+        /// Required. The name of the network interface.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async Task<GetEffectiveRouteTableResponse> GetEffectiveRouteTableForNetworkInterfaceAsync(string serviceName, string deploymentName, string roleinstanceName, string networkInterfaceName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (serviceName == null)
+            {
+                throw new ArgumentNullException("serviceName");
+            }
+            if (deploymentName == null)
+            {
+                throw new ArgumentNullException("deploymentName");
+            }
+            if (roleinstanceName == null)
+            {
+                throw new ArgumentNullException("roleinstanceName");
+            }
+            if (networkInterfaceName == null)
+            {
+                throw new ArgumentNullException("networkInterfaceName");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("serviceName", serviceName);
+                tracingParameters.Add("deploymentName", deploymentName);
+                tracingParameters.Add("roleinstanceName", roleinstanceName);
+                tracingParameters.Add("networkInterfaceName", networkInterfaceName);
+                TracingAdapter.Enter(invocationId, this, "GetEffectiveRouteTableForNetworkInterfaceAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/hostedservices/";
+            url = url + Uri.EscapeDataString(serviceName);
+            url = url + "/deployments/";
+            url = url + Uri.EscapeDataString(deploymentName);
+            url = url + "/roleinstances/";
+            url = url + Uri.EscapeDataString(roleinstanceName);
+            url = url + "/networkinterfaces/";
+            url = url + Uri.EscapeDataString(networkInterfaceName);
+            url = url + "/effectiveroutetable";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode >= HttpStatusCode.BadRequest)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    GetEffectiveRouteTableResponse result = null;
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new GetEffectiveRouteTableResponse();
+                    XDocument responseDoc = XDocument.Parse(responseContent);
+                    
+                    XElement effectiveRouteTableElement = responseDoc.Element(XName.Get("EffectiveRouteTable", "http://schemas.microsoft.com/windowsazure"));
+                    if (effectiveRouteTableElement != null)
+                    {
+                        EffectiveRouteTable effectiveRouteTableInstance = new EffectiveRouteTable();
+                        result.EffectiveRouteTable = effectiveRouteTableInstance;
+                        
+                        XElement effectiveRouteListSequenceElement = effectiveRouteTableElement.Element(XName.Get("EffectiveRouteList", "http://schemas.microsoft.com/windowsazure"));
+                        if (effectiveRouteListSequenceElement != null)
+                        {
+                            foreach (XElement effectiveRouteListElement in effectiveRouteListSequenceElement.Elements(XName.Get("EffectiveRoute", "http://schemas.microsoft.com/windowsazure")))
+                            {
+                                EffectiveRoute effectiveRouteInstance = new EffectiveRoute();
+                                effectiveRouteTableInstance.EffectiveRoutes.Add(effectiveRouteInstance);
+                                
+                                XElement nameElement = effectiveRouteListElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                if (nameElement != null)
+                                {
+                                    string nameInstance = nameElement.Value;
+                                    effectiveRouteInstance.Name = nameInstance;
+                                }
+                                
+                                XElement sourceElement = effectiveRouteListElement.Element(XName.Get("Source", "http://schemas.microsoft.com/windowsazure"));
+                                if (sourceElement != null)
+                                {
+                                    string sourceInstance = sourceElement.Value;
+                                    effectiveRouteInstance.Source = sourceInstance;
+                                }
+                                
+                                XElement statusElement = effectiveRouteListElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
+                                if (statusElement != null)
+                                {
+                                    string statusInstance = statusElement.Value;
+                                    effectiveRouteInstance.Status = statusInstance;
+                                }
+                                
+                                XElement addressPrefixesSequenceElement = effectiveRouteListElement.Element(XName.Get("AddressPrefixes", "http://schemas.microsoft.com/windowsazure"));
+                                if (addressPrefixesSequenceElement != null)
+                                {
+                                    foreach (XElement addressPrefixesElement in addressPrefixesSequenceElement.Elements(XName.Get("AddressPrefix", "http://schemas.microsoft.com/windowsazure")))
+                                    {
+                                        effectiveRouteInstance.AddressPrefixes.Add(addressPrefixesElement.Value);
+                                    }
+                                }
+                                
+                                XElement effectiveNextHopElement = effectiveRouteListElement.Element(XName.Get("EffectiveNextHop", "http://schemas.microsoft.com/windowsazure"));
+                                if (effectiveNextHopElement != null)
+                                {
+                                    EffectiveNextHop effectiveNextHopInstance = new EffectiveNextHop();
+                                    effectiveRouteInstance.EffectiveNextHop = effectiveNextHopInstance;
+                                    
+                                    XElement typeElement = effectiveNextHopElement.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
+                                    if (typeElement != null)
+                                    {
+                                        string typeInstance = typeElement.Value;
+                                        effectiveNextHopInstance.Type = typeInstance;
+                                    }
+                                    
+                                    XElement ipAddressesSequenceElement = effectiveNextHopElement.Element(XName.Get("IpAddresses", "http://schemas.microsoft.com/windowsazure"));
+                                    if (ipAddressesSequenceElement != null)
+                                    {
+                                        foreach (XElement ipAddressesElement in ipAddressesSequenceElement.Elements(XName.Get("IpAddress", "http://schemas.microsoft.com/windowsazure")))
+                                        {
+                                            effectiveNextHopInstance.IpAddresses.Add(ipAddressesElement.Value);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    
+                    result.StatusCode = statusCode;
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Get the effective route table for the provided role instance in
+        /// this subscription.
+        /// </summary>
+        /// <param name='serviceName'>
+        /// Required. The name of the cloud service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required. The name of the deployment.
+        /// </param>
+        /// <param name='roleinstanceName'>
+        /// Required. The name of the role instance.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async Task<GetEffectiveRouteTableResponse> GetEffectiveRouteTableForRoleInstanceAsync(string serviceName, string deploymentName, string roleinstanceName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (serviceName == null)
+            {
+                throw new ArgumentNullException("serviceName");
+            }
+            if (deploymentName == null)
+            {
+                throw new ArgumentNullException("deploymentName");
+            }
+            if (roleinstanceName == null)
+            {
+                throw new ArgumentNullException("roleinstanceName");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("serviceName", serviceName);
+                tracingParameters.Add("deploymentName", deploymentName);
+                tracingParameters.Add("roleinstanceName", roleinstanceName);
+                TracingAdapter.Enter(invocationId, this, "GetEffectiveRouteTableForRoleInstanceAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/hostedservices/";
+            url = url + Uri.EscapeDataString(serviceName);
+            url = url + "/deployments/";
+            url = url + Uri.EscapeDataString(deploymentName);
+            url = url + "/roleinstances/";
+            url = url + Uri.EscapeDataString(roleinstanceName);
+            url = url + "/effectiveroutetable";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode >= HttpStatusCode.BadRequest)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    GetEffectiveRouteTableResponse result = null;
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new GetEffectiveRouteTableResponse();
+                    XDocument responseDoc = XDocument.Parse(responseContent);
+                    
+                    XElement effectiveRouteTableElement = responseDoc.Element(XName.Get("EffectiveRouteTable", "http://schemas.microsoft.com/windowsazure"));
+                    if (effectiveRouteTableElement != null)
+                    {
+                        EffectiveRouteTable effectiveRouteTableInstance = new EffectiveRouteTable();
+                        result.EffectiveRouteTable = effectiveRouteTableInstance;
+                        
+                        XElement effectiveRouteListSequenceElement = effectiveRouteTableElement.Element(XName.Get("EffectiveRouteList", "http://schemas.microsoft.com/windowsazure"));
+                        if (effectiveRouteListSequenceElement != null)
+                        {
+                            foreach (XElement effectiveRouteListElement in effectiveRouteListSequenceElement.Elements(XName.Get("EffectiveRoute", "http://schemas.microsoft.com/windowsazure")))
+                            {
+                                EffectiveRoute effectiveRouteInstance = new EffectiveRoute();
+                                effectiveRouteTableInstance.EffectiveRoutes.Add(effectiveRouteInstance);
+                                
+                                XElement nameElement = effectiveRouteListElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                if (nameElement != null)
+                                {
+                                    string nameInstance = nameElement.Value;
+                                    effectiveRouteInstance.Name = nameInstance;
+                                }
+                                
+                                XElement sourceElement = effectiveRouteListElement.Element(XName.Get("Source", "http://schemas.microsoft.com/windowsazure"));
+                                if (sourceElement != null)
+                                {
+                                    string sourceInstance = sourceElement.Value;
+                                    effectiveRouteInstance.Source = sourceInstance;
+                                }
+                                
+                                XElement statusElement = effectiveRouteListElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
+                                if (statusElement != null)
+                                {
+                                    string statusInstance = statusElement.Value;
+                                    effectiveRouteInstance.Status = statusInstance;
+                                }
+                                
+                                XElement addressPrefixesSequenceElement = effectiveRouteListElement.Element(XName.Get("AddressPrefixes", "http://schemas.microsoft.com/windowsazure"));
+                                if (addressPrefixesSequenceElement != null)
+                                {
+                                    foreach (XElement addressPrefixesElement in addressPrefixesSequenceElement.Elements(XName.Get("AddressPrefix", "http://schemas.microsoft.com/windowsazure")))
+                                    {
+                                        effectiveRouteInstance.AddressPrefixes.Add(addressPrefixesElement.Value);
+                                    }
+                                }
+                                
+                                XElement effectiveNextHopElement = effectiveRouteListElement.Element(XName.Get("EffectiveNextHop", "http://schemas.microsoft.com/windowsazure"));
+                                if (effectiveNextHopElement != null)
+                                {
+                                    EffectiveNextHop effectiveNextHopInstance = new EffectiveNextHop();
+                                    effectiveRouteInstance.EffectiveNextHop = effectiveNextHopInstance;
+                                    
+                                    XElement typeElement = effectiveNextHopElement.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
+                                    if (typeElement != null)
+                                    {
+                                        string typeInstance = typeElement.Value;
+                                        effectiveNextHopInstance.Type = typeInstance;
+                                    }
+                                    
+                                    XElement ipAddressesSequenceElement = effectiveNextHopElement.Element(XName.Get("IpAddresses", "http://schemas.microsoft.com/windowsazure"));
+                                    if (ipAddressesSequenceElement != null)
+                                    {
+                                        foreach (XElement ipAddressesElement in ipAddressesSequenceElement.Elements(XName.Get("IpAddress", "http://schemas.microsoft.com/windowsazure")))
+                                        {
+                                            effectiveNextHopInstance.IpAddresses.Add(ipAddressesElement.Value);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    
+                    result.StatusCode = statusCode;
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
         /// Get the specified route table for this subscription.
         /// </summary>
         /// <param name='routeTableName'>
@@ -1423,7 +1880,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1532,6 +1989,13 @@ namespace Microsoft.WindowsAzure.Management.Network
                                         {
                                             string typeInstance = typeElement.Value;
                                             nextHopTypeInstance.Type = typeInstance;
+                                        }
+                                        
+                                        XElement ipAddressElement = nextHopTypeElement.Element(XName.Get("IpAddress", "http://schemas.microsoft.com/windowsazure"));
+                                        if (ipAddressElement != null)
+                                        {
+                                            string ipAddressInstance = ipAddressElement.Value;
+                                            nextHopTypeInstance.IpAddress = ipAddressInstance;
                                         }
                                     }
                                     
@@ -1654,7 +2118,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1809,7 +2273,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1919,6 +2383,13 @@ namespace Microsoft.WindowsAzure.Management.Network
                                             string typeInstance = typeElement.Value;
                                             nextHopTypeInstance.Type = typeInstance;
                                         }
+                                        
+                                        XElement ipAddressElement = nextHopTypeElement.Element(XName.Get("IpAddress", "http://schemas.microsoft.com/windowsazure"));
+                                        if (ipAddressElement != null)
+                                        {
+                                            string ipAddressInstance = ipAddressElement.Value;
+                                            nextHopTypeInstance.IpAddress = ipAddressInstance;
+                                        }
                                     }
                                     
                                     XElement metricElement = routeListElement.Element(XName.Get("Metric", "http://schemas.microsoft.com/windowsazure"));
@@ -2018,7 +2489,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2129,6 +2600,13 @@ namespace Microsoft.WindowsAzure.Management.Network
                                             {
                                                 string typeInstance = typeElement.Value;
                                                 nextHopTypeInstance.Type = typeInstance;
+                                            }
+                                            
+                                            XElement ipAddressElement = nextHopTypeElement.Element(XName.Get("IpAddress", "http://schemas.microsoft.com/windowsazure"));
+                                            if (ipAddressElement != null)
+                                            {
+                                                string ipAddressInstance = ipAddressElement.Value;
+                                                nextHopTypeInstance.IpAddress = ipAddressInstance;
                                             }
                                         }
                                         

@@ -4,6 +4,10 @@ using Hyak.Common;
 using Microsoft.WindowsAzure.Management.Network;
 using Microsoft.WindowsAzure.Management.Network.Models;
 using Microsoft.Azure.Test;
+using Microsoft.WindowsAzure.Management.Compute;
+using Microsoft.WindowsAzure.Management.Compute.Models;
+using Microsoft.WindowsAzure.Management.Storage;
+using Microsoft.WindowsAzure.Testing;
 using Xunit;
 
 namespace Network.Tests
@@ -11,7 +15,9 @@ namespace Network.Tests
     public class NetworkSecurityGroupIntegrationTests
     {
         #region NetworkSecurityGroups
+
         [Fact]
+        [Trait("Feature", "NetworkSecurityGroups")]
         public void TestCreateNetworkSecurityGroupWithNullNameFails()
         {
             using (var undoContext = UndoContext.Current)
@@ -45,6 +51,7 @@ namespace Network.Tests
         }
 
         [Fact]
+        [Trait("Feature", "NetworkSecurityGroups")]
         public void TestCreateNetworkSecurityGroupSucceeds()
         {
             using (var undoContext = UndoContext.Current)
@@ -69,7 +76,8 @@ namespace Network.Tests
             }
         }
 
-        [Fact(Skip = "Test failing. Ed needs to re-record these.")]
+        [Fact]
+        [Trait("Feature", "NetworkSecurityGroups")]
         public void TestCreateNetworkSecurityGroupFullDetailsSucceeds()
         {
             using (var undoContext = UndoContext.Current)
@@ -90,12 +98,14 @@ namespace Network.Tests
                     Assert.Equal(securityGroupName, response.Name);
                     Assert.Equal(securityGroupLabel, response.Label);
                     Assert.Equal(securityGroupLocation, response.Location);
-                    Assert.Empty(response.Rules);
+                    // Default rules
+                    Assert.NotEmpty(response.Rules);
                 }
             }
         }
 
         [Fact]
+        [Trait("Feature", "NetworkSecurityGroups")]
         public void TestListNetworkSecurityGroup()
         {
             using (var undoContext = UndoContext.Current)
@@ -119,8 +129,8 @@ namespace Network.Tests
             }
         }
 
-        [Fact(Skip = "Bug in RDFE in that Delete doesn't work." +
-                     "When fixed, also uncomment the deletion in the Dispose of NetworkTestBase")]
+        [Fact]
+        [Trait("Feature", "NetworkSecurityGroups")]
         public void TestDeleteNetworkSecurityGroup()
         {
             using (var undoContext = UndoContext.Current)
@@ -155,7 +165,8 @@ namespace Network.Tests
 
         #region NetworkSecurityRules
 
-        [Fact(Skip = "Test failing. Ed needs to re-record these.")]
+        [Fact]
+        [Trait("Feature", "NetworkSecurityGroups")]
         public void TestSetAndDeleteNetworkSecurityRule()
         {
             using (var undoContext = UndoContext.Current)
@@ -196,7 +207,7 @@ namespace Network.Tests
                     Assert.Equal(securityGroupName, response.Name);
                     Assert.Equal(securityGroupLabel, response.Label);
                     Assert.Equal(securityGroupLocation, response.Location);
-                    Assert.NotEmpty(response.Rules);
+                    Assert.NotEmpty(response.Rules.Where(r => string.Equals(r.Name, ruleName)));
 
                     NetworkSecurityRule rule = response.Rules.First();
                     Assert.Equal(ruleName, rule.Name);
@@ -206,17 +217,13 @@ namespace Network.Tests
                     Assert.Equal(destinationPortRange, rule.DestinationPortRange);
                     Assert.Equal(priority, rule.Priority);
                     Assert.Equal(protocol, rule.Protocol);
-
-                    // Pending a fix in RDFE
-/*
                     Assert.Equal(action, rule.Action);
                     Assert.Equal(type, rule.Type);
-*/
 
                     // action
                     _testFixture.NetworkClient.NetworkSecurityGroups.DeleteRule(securityGroupName, ruleName);
                     NetworkSecurityGroupGetResponse afterDeleteGetRuleresponse = _testFixture.NetworkClient.NetworkSecurityGroups.Get(securityGroupName, "full");
-                    Assert.Empty(afterDeleteGetRuleresponse.Rules);
+                    Assert.Empty(afterDeleteGetRuleresponse.Rules.Where(r => string.Equals(r.Name, ruleName)));
                 }
             }
         }
@@ -226,6 +233,7 @@ namespace Network.Tests
         #region Subnets
 
         [Fact]
+        [Trait("Feature", "NetworkSecurityGroups")]
         public void AddAndRemoveNetworkSecurityGroupToSubnet()
         {
             using (var undoContext = UndoContext.Current)
@@ -247,7 +255,7 @@ namespace Network.Tests
                     string subnetName = "FrontEndSubnet5";
                     _testFixture.SetSimpleVirtualNetwork();
 
-                    NetworkSecurityGroupAddToSubnetParameters parameters = new NetworkSecurityGroupAddToSubnetParameters()
+                    NetworkSecurityGroupAddAssociationParameters parameters = new NetworkSecurityGroupAddAssociationParameters()
                     {
                         Name = securityGroupName
                     };
@@ -270,6 +278,414 @@ namespace Network.Tests
 
                     // assert
                     Assert.Throws<CloudException>(() => _testFixture.NetworkClient.NetworkSecurityGroups.GetForSubnet(vnetName, subnetName));
+                }
+            }
+        }
+
+        #endregion
+
+        #region Role
+
+        [Fact]
+        [Trait("Feature", "NetworkSecurityGroups")]
+        public void AddAndRemoveNetworkSecurityGroupToRole()
+        {
+            using (var undoContext = UndoContext.Current)
+            {
+                undoContext.Start();
+                using (NetworkTestBase _testFixture = new NetworkTestBase())
+                {
+                    // setup
+                    bool storageAccountCreated = false;
+                    bool hostedServiceCreated = false;
+
+                    string serviceName = _testFixture.GenerateRandomName();
+                    string deploymentName = _testFixture.GenerateRandomName();
+                    string roleName = "WebRole1";
+                    string location = _testFixture.ManagementClient.GetDefaultLocation("Storage", "Compute", "PersistentVMRole");
+
+                    string storageAccountName = _testFixture.GenerateRandomName().ToLower();
+
+                    // create Network Security Group
+                    string securityGroupName = _testFixture.GenerateRandomNetworkSecurityGroupName();
+                    string securityGroupLabel = _testFixture.GenerateRandomName();
+                    string securityGroupLocation = "North Central US";
+                    _testFixture.CreateNetworkSecurityGroup(securityGroupName, securityGroupLabel, securityGroupLocation);
+
+                    _testFixture.CreateStorageAccount(location, storageAccountName, out storageAccountCreated);
+                    _testFixture.SetSimpleVirtualNetwork();
+                    _testFixture.CreateHostedService(location, serviceName, out hostedServiceCreated);
+                    var deployment = _testFixture.CreatePaaSDeployment(
+                        storageAccountName,
+                        serviceName,
+                        deploymentName,
+                        NetworkTestConstants.OneWebOneWorkerPkgFilePath,
+                        NetworkTestConstants.VnetOneWebOneWorkerCscfgFilePath);
+
+                    try
+                    {
+                        // action 1
+                        var associationParams = new NetworkSecurityGroupAddAssociationParameters(securityGroupName);
+                        _testFixture.NetworkClient.NetworkSecurityGroups.AddToRole(serviceName, deploymentName, roleName,
+                            associationParams);
+
+                        // assert 1
+                        NetworkSecurityGroupGetAssociationResponse response =
+                            _testFixture.NetworkClient.NetworkSecurityGroups.GetForRole(serviceName, deploymentName, roleName);
+                        Assert.Equal(associationParams.Name, response.Name);
+
+                        // action 2
+                        _testFixture.NetworkClient.NetworkSecurityGroups.RemoveFromRole(
+                            serviceName,
+                            deploymentName,
+                            roleName,
+                            securityGroupName);
+
+                        // assert 2
+                        Assert.Throws<CloudException>(() =>
+                            _testFixture.NetworkClient.NetworkSecurityGroups.GetForRole(serviceName, deploymentName, roleName));
+                    }
+                    finally
+                    {
+                        if (storageAccountCreated)
+                        {
+                            _testFixture.StorageClient.StorageAccounts.Delete(storageAccountName);
+                        }
+                        if (hostedServiceCreated)
+                        {
+                            _testFixture.ComputeClient.HostedServices.DeleteAll(serviceName);
+                        }
+                    }
+                }
+            }
+        }
+
+        [Fact]
+        [Trait("Feature", "NetworkSecurityGroups")]
+        public void CreateVMWithNetworkSecurityGroupOnRole()
+        {
+            using (var undoContext = UndoContext.Current)
+            {
+                undoContext.Start();
+                using (NetworkTestBase _testFixture = new NetworkTestBase())
+                {
+                    // setup
+                    bool storageAccountCreated = false;
+                    bool hostedServiceCreated = false;
+
+                    string serviceName = _testFixture.GenerateRandomName();
+                    string deploymentName = _testFixture.GenerateRandomName();
+                    string roleName = _testFixture.GenerateRandomName();
+                    string networkInterfaceName = _testFixture.GenerateRandomName();
+                    string location = _testFixture.ManagementClient.GetDefaultLocation("Storage", "Compute", "PersistentVMRole");
+                    string virtualNetworkName = "virtualNetworkSiteName";
+                    string subnetName = "FrontEndSubnet5";
+
+                    string storageAccountName = _testFixture.GenerateRandomName().ToLower();
+
+                    // create Network Security Group
+                    string securityGroupName = _testFixture.GenerateRandomNetworkSecurityGroupName();
+                    string securityGroupLabel = _testFixture.GenerateRandomName();
+                    string securityGroupLocation = "North Central US";
+                    _testFixture.CreateNetworkSecurityGroup(securityGroupName, securityGroupLabel, securityGroupLocation);
+
+                    _testFixture.CreateStorageAccount(location, storageAccountName, out storageAccountCreated);
+                    _testFixture.SetSimpleVirtualNetwork();
+                    _testFixture.CreateHostedService(location, serviceName, out hostedServiceCreated);
+
+                    var multiNICVMDeployment = _testFixture.CreateMultiNICIaaSDeploymentParameters(
+                            serviceName,
+                            deploymentName,
+                            roleName,
+                            networkInterfaceName,
+                            storageAccountName,
+                            virtualNetworkName,
+                            subnetName);
+
+                    var configurationSets = multiNICVMDeployment.Roles.Single(
+                        r => string.Equals(r.RoleName, roleName)).ConfigurationSets;
+
+                    configurationSets
+                        .Single(
+                            cs => string.Equals(cs.ConfigurationSetType, ConfigurationSetTypes.NetworkConfiguration))
+                        .NetworkSecurityGroup = securityGroupName;
+
+                    try
+                    {
+                        // action 1: create Deployment with NSG
+                        _testFixture.ComputeClient.VirtualMachines.CreateDeployment(
+                            serviceName,
+                            multiNICVMDeployment);
+
+                        // assert 1
+                        NetworkSecurityGroupGetAssociationResponse response =
+                            _testFixture.NetworkClient.NetworkSecurityGroups.GetForRole(
+                            serviceName,
+                            deploymentName,
+                            roleName);
+                        Assert.Equal(securityGroupName, response.Name);
+
+                        var deployment = _testFixture.ComputeClient.Deployments.GetBySlot(serviceName,
+                            DeploymentSlot.Production);
+
+                        Assert.Equal(
+                            securityGroupName,
+                            deployment.Roles.Single(r => string.Equals(r.RoleName, roleName))
+                                .ConfigurationSets.Single(
+                                    cs =>
+                                        string.Equals(cs.ConfigurationSetType,
+                                            ConfigurationSetTypes.NetworkConfiguration))
+                                .NetworkSecurityGroup);
+
+                        // action 2: update deployment without NSG
+                        configurationSets
+                            .Single(
+                                cs => string.Equals(cs.ConfigurationSetType, ConfigurationSetTypes.NetworkConfiguration))
+                            .NetworkSecurityGroup = null;
+
+                        _testFixture.ComputeClient.VirtualMachines.Update(serviceName, deploymentName, roleName,
+                            new VirtualMachineUpdateParameters()
+                            {
+                                RoleName = roleName,
+                                ConfigurationSets = configurationSets,
+                                OSVirtualHardDisk = _testFixture.GetOSVirtualHardDisk(storageAccountName, serviceName)
+                            });
+
+                        // assert 2
+                        deployment = _testFixture.ComputeClient.Deployments.GetBySlot(serviceName,
+                            DeploymentSlot.Production);
+
+                        Assert.Null(
+                            deployment.Roles.Single(r => string.Equals(r.RoleName, roleName))
+                                .ConfigurationSets.Single(
+                                    cs =>
+                                        string.Equals(cs.ConfigurationSetType,
+                                            ConfigurationSetTypes.NetworkConfiguration))
+                                .NetworkSecurityGroup);
+                    }
+
+                    finally
+                    {
+                        if (hostedServiceCreated)
+                        {
+                            _testFixture.ComputeClient.HostedServices.DeleteAll(serviceName);
+                        }
+                    }
+                }
+            }
+        }
+
+        #endregion
+
+
+        #region NICs
+
+        [Fact]
+        [Trait("Feature", "NetworkSecurityGroups")]
+        public void AddAndRemoveNetworkSecurityGroupToNIC()
+        {
+            using (var undoContext = UndoContext.Current)
+            {
+                undoContext.Start();
+                using (NetworkTestBase _testFixture = new NetworkTestBase())
+                {
+                    // setup
+                    bool storageAccountCreated = false;
+                    bool hostedServiceCreated = false;
+
+                    string serviceName = _testFixture.GenerateRandomName();
+                    string deploymentName = _testFixture.GenerateRandomName();
+                    string roleName = _testFixture.GenerateRandomName();
+                    string networkInterfaceName = _testFixture.GenerateRandomName();
+                    string location = _testFixture.ManagementClient.GetDefaultLocation("Storage", "Compute", "PersistentVMRole");
+                    string virtualNetworkName = "virtualNetworkSiteName";
+                    string subnetName = "FrontEndSubnet5";
+
+                    string storageAccountName = _testFixture.GenerateRandomName().ToLower();
+
+                    // create Network Security Group
+                    string securityGroupName = _testFixture.GenerateRandomNetworkSecurityGroupName();
+                    string securityGroupLabel = _testFixture.GenerateRandomName();
+                    string securityGroupLocation = "North Central US";
+                    _testFixture.CreateNetworkSecurityGroup(securityGroupName, securityGroupLabel, securityGroupLocation);
+
+                    _testFixture.CreateStorageAccount(location, storageAccountName, out storageAccountCreated);
+                    _testFixture.SetSimpleVirtualNetwork();
+                    _testFixture.CreateHostedService(location, serviceName, out hostedServiceCreated);
+                    _testFixture.ComputeClient.VirtualMachines.CreateDeployment(
+                        serviceName,
+                        _testFixture.CreateMultiNICIaaSDeploymentParameters(
+                            serviceName,
+                            deploymentName,
+                            roleName,
+                            networkInterfaceName,
+                            storageAccountName,
+                            virtualNetworkName,
+                            subnetName));
+
+                    try
+                    {
+                        // action 1
+                        var associationParams = new NetworkSecurityGroupAddAssociationParameters(securityGroupName);
+                        _testFixture.NetworkClient.NetworkSecurityGroups.AddToNetworkInterface(
+                            serviceName,
+                            deploymentName,
+                            roleName,
+                            networkInterfaceName,
+                            associationParams);
+
+                        // assert 1
+                        NetworkSecurityGroupGetAssociationResponse response =
+                            _testFixture.NetworkClient.NetworkSecurityGroups.GetForNetworkInterface(
+                            serviceName,
+                            deploymentName,
+                            roleName,
+                            networkInterfaceName);
+                        Assert.Equal(associationParams.Name, response.Name);
+
+                        // action 2
+                        _testFixture.NetworkClient.NetworkSecurityGroups.RemoveFromNetworkInterface(
+                            serviceName,
+                            deploymentName,
+                            roleName,
+                            networkInterfaceName,
+                            securityGroupName);
+
+                        // assert 2
+                        Assert.Throws<CloudException>(() =>_testFixture.NetworkClient.NetworkSecurityGroups.GetForNetworkInterface(
+                                serviceName,
+                                deploymentName,
+                                roleName,
+                                networkInterfaceName));
+                    }
+
+                    finally
+                    {
+                        if (hostedServiceCreated)
+                        {
+                            _testFixture.ComputeClient.HostedServices.DeleteAll(serviceName);
+                        }
+                    }
+                }
+            }
+        }
+
+        [Fact]
+        [Trait("Feature", "NetworkSecurityGroups")]
+        public void CreateVMWithNetworkSecurityGroupOnNIC()
+        {
+            using (var undoContext = UndoContext.Current)
+            {
+                undoContext.Start();
+                using (NetworkTestBase _testFixture = new NetworkTestBase())
+                {
+                    // setup
+                    bool storageAccountCreated = false;
+                    bool hostedServiceCreated = false;
+
+                    string serviceName = _testFixture.GenerateRandomName();
+                    string deploymentName = _testFixture.GenerateRandomName();
+                    string roleName = _testFixture.GenerateRandomName();
+                    string networkInterfaceName = _testFixture.GenerateRandomName();
+                    string location = _testFixture.ManagementClient.GetDefaultLocation("Storage", "Compute", "PersistentVMRole");
+                    string virtualNetworkName = "virtualNetworkSiteName";
+                    string subnetName = "FrontEndSubnet5";
+
+                    string storageAccountName = _testFixture.GenerateRandomName().ToLower();
+
+                    // create Network Security Group
+                    string securityGroupName = _testFixture.GenerateRandomNetworkSecurityGroupName();
+                    string securityGroupLabel = _testFixture.GenerateRandomName();
+                    string securityGroupLocation = "North Central US";
+                    _testFixture.CreateNetworkSecurityGroup(securityGroupName, securityGroupLabel, securityGroupLocation);
+
+                    _testFixture.CreateStorageAccount(location, storageAccountName, out storageAccountCreated);
+                    _testFixture.SetSimpleVirtualNetwork();
+                    _testFixture.CreateHostedService(location, serviceName, out hostedServiceCreated);
+
+                    var multiNICVMDeployment = _testFixture.CreateMultiNICIaaSDeploymentParameters(
+                            serviceName,
+                            deploymentName,
+                            roleName,
+                            networkInterfaceName,
+                            storageAccountName,
+                            virtualNetworkName,
+                            subnetName);
+
+                    var configurationSets = multiNICVMDeployment.Roles.Single(
+                        r => string.Equals(r.RoleName, roleName)).ConfigurationSets;
+
+                    configurationSets
+                        .Single(
+                            cs => string.Equals(cs.ConfigurationSetType, ConfigurationSetTypes.NetworkConfiguration))
+                        .NetworkInterfaces.Single(nic => string.Equals(nic.Name, networkInterfaceName))
+                        .NetworkSecurityGroup = securityGroupName;
+
+                    try
+                    {
+                        // action 1: create Deployment with NSG
+                        _testFixture.ComputeClient.VirtualMachines.CreateDeployment(
+                            serviceName,
+                            multiNICVMDeployment);
+
+                        // assert 1
+                        NetworkSecurityGroupGetAssociationResponse response =
+                            _testFixture.NetworkClient.NetworkSecurityGroups.GetForNetworkInterface(
+                            serviceName,
+                            deploymentName,
+                            roleName,
+                            networkInterfaceName);
+                        Assert.Equal(securityGroupName, response.Name);
+
+                        var deployment = _testFixture.ComputeClient.Deployments.GetBySlot(serviceName,
+                            DeploymentSlot.Production);
+
+                        Assert.Equal(
+                            securityGroupName,
+                            deployment.Roles.Single(r => string.Equals(r.RoleName, roleName))
+                                .ConfigurationSets.Single(
+                                    cs =>
+                                        string.Equals(cs.ConfigurationSetType,
+                                            ConfigurationSetTypes.NetworkConfiguration))
+                                .NetworkInterfaces.Single(nic => string.Equals(nic.Name, networkInterfaceName))
+                                .NetworkSecurityGroup);
+
+                        // action 2: update deployment without NSG
+                        configurationSets
+                            .Single(
+                                cs => string.Equals(cs.ConfigurationSetType, ConfigurationSetTypes.NetworkConfiguration))
+                            .NetworkInterfaces.Single(nic => string.Equals(nic.Name, networkInterfaceName))
+                            .NetworkSecurityGroup = null;
+
+                        _testFixture.ComputeClient.VirtualMachines.Update(serviceName, deploymentName, roleName,
+                            new VirtualMachineUpdateParameters()
+                            {
+                                RoleName = roleName,
+                                ConfigurationSets = configurationSets,
+                                OSVirtualHardDisk = _testFixture.GetOSVirtualHardDisk(storageAccountName, serviceName)
+                            });
+
+                        // assert 2
+                        deployment = _testFixture.ComputeClient.Deployments.GetBySlot(serviceName,
+                            DeploymentSlot.Production);
+
+                        Assert.Null(
+                            deployment.Roles.Single(r => string.Equals(r.RoleName, roleName))
+                                .ConfigurationSets.Single(
+                                    cs =>
+                                        string.Equals(cs.ConfigurationSetType,
+                                            ConfigurationSetTypes.NetworkConfiguration))
+                                .NetworkInterfaces.Single(nic => string.Equals(nic.Name, networkInterfaceName))
+                                .NetworkSecurityGroup);
+                    }
+
+                    finally
+                    {
+                        if (hostedServiceCreated)
+                        {
+                            _testFixture.ComputeClient.HostedServices.DeleteAll(serviceName);
+                        }
+                    }
                 }
             }
         }

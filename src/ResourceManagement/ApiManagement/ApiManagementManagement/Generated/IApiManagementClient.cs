@@ -74,9 +74,203 @@ namespace Microsoft.Azure.Management.ApiManagement
         }
         
         /// <summary>
-        /// Operations for managing Api Management service.
+        /// Operations for managing API Operation Policy.
         /// </summary>
-        IApiManagementOperations ApiManagement
+        IApiOperationPolicyOperations ApiOperationPolicy
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Operations for managing API Operations.
+        /// </summary>
+        IApiOperationsOperations ApiOperations
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Operations for managing API Policy.
+        /// </summary>
+        IApiPolicyOperations ApiPolicy
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Operations for listing API associated Products.
+        /// </summary>
+        IApiProductsOperations ApiProducts
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Operations for managing APIs.
+        /// </summary>
+        IApisOperations Apis
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Operations for managing Authorization Servers.
+        /// </summary>
+        IAuthorizationServersOperations AuthorizationServers
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Operations for managing Certificates.
+        /// </summary>
+        ICertificatesOperations Certificates
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Operations for managing Groups.
+        /// </summary>
+        IGroupsOperations Groups
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Operations for managing Group Users (list, add, remove users within
+        /// a group).
+        /// </summary>
+        IGroupUsersOperations GroupUsers
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Operations for managing Policy Snippets.
+        /// </summary>
+        IPolicySnippetsOperations PolicySnippents
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Operations for managing Product APIs.
+        /// </summary>
+        IProductApisOperations ProductApis
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Operations for managing Product Groups.
+        /// </summary>
+        IProductGroupsOperations ProductGroups
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Operations for managing Product Policy.
+        /// </summary>
+        IProductPolicyOperations ProductPolicy
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Operations for managing Products.
+        /// </summary>
+        IProductsOperations Products
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Operations for managing Product Subscriptions.
+        /// </summary>
+        IProductSubscriptionsOperations ProductSubscriptions
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Operations for managing Regions.
+        /// </summary>
+        IRegionsOperations Regions
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Operations for managing Reports.
+        /// </summary>
+        IReportsOperations Reports
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Operations for managing Api Management service provisioning
+        /// (create/remove, backup/restore, scale, etc.).
+        /// </summary>
+        IResourceProviderOperations ResourceProvider
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Operations for managing Subscriptions.
+        /// </summary>
+        ISubscriptionsOperations Subscriptions
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Operations for managing Tenant Policy.
+        /// </summary>
+        ITenantPolicyOperations TenantPolicy
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Operations for managing User Applications.
+        /// </summary>
+        IUserApplicationsOperations UserApplications
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Operations for managing User Groups.
+        /// </summary>
+        IUserGroupsOperations UserGroups
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Operations for managing User Identities.
+        /// </summary>
+        IUserIdentitiesOperations UserIdentities
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Operations for managing Users.
+        /// </summary>
+        IUsersOperations Users
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Operations for managing User Subscriptions.
+        /// </summary>
+        IUserSubscriptionsOperations UserSubscriptions
         {
             get; 
         }

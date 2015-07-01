@@ -32,17 +32,6 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     /// </summary>
     public partial class Streaming : HDInsightActivityPropertiesBase
     {
-        private IList<string> _arguments;
-        
-        /// <summary>
-        /// Optional. User specified arguments to MapReduce.
-        /// </summary>
-        public IList<string> Arguments
-        {
-            get { return this._arguments; }
-            set { this._arguments = value; }
-        }
-        
         private string _combiner;
         
         /// <summary>
@@ -63,6 +52,30 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         {
             get { return this._commandEnvironment; }
             set { this._commandEnvironment = value; }
+        }
+        
+        private IDictionary<string, string> _defines;
+        
+        /// <summary>
+        /// Optional. Allows user to specify defines for streaming job request.
+        /// </summary>
+        public IDictionary<string, string> Defines
+        {
+            get { return this._defines; }
+            set { this._defines = value; }
+        }
+        
+        private IDictionary<string, string> _extendedProperties;
+        
+        /// <summary>
+        /// Optional. User specified property bag. There is no restriction on
+        /// the keys or values that can be used. These are passed as Defines
+        /// in the streaming job request
+        /// </summary>
+        public IDictionary<string, string> ExtendedProperties
+        {
+            get { return this._extendedProperties; }
+            set { this._extendedProperties = value; }
         }
         
         private string _fileLinkedService;
@@ -136,8 +149,9 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// </summary>
         public Streaming()
         {
-            this.Arguments = new LazyList<string>();
             this.CommandEnvironment = new LazyList<string>();
+            this.Defines = new LazyDictionary<string, string>();
+            this.ExtendedProperties = new LazyDictionary<string, string>();
             this.FilePaths = new LazyList<string>();
         }
     }

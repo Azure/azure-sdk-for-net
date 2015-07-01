@@ -16,6 +16,7 @@
     <Compile Include="ApplicationGateways\TestOperations\StartApplicationGateway.cs" />
     <Compile Include="ApplicationGateways\TestOperations\StopApplicationGateway.cs" />
     <Compile Include="ApplicationGatewayTestClient.cs" />
+    <Compile Include="ComputeManagementTestUtilities.cs" />
     <Compile Include="Gateways\CreateGatewayTests.cs" />
     <Compile Include="Gateways\GenerateVpnClientPackageTests.cs" />
     <Compile Include="Gateways\GetDiagnosticsTests.cs" />
@@ -38,13 +39,22 @@
     <Compile Include="Gateways\TestOperations\SetDefaultSites.cs" />
     <Compile Include="Gateways\TestOperations\SetIPsecParameters.cs" />
     <Compile Include="Gateways\TestOperations\SetSharedKey.cs" />
+    <Compile Include="Gateways\DiagnosticsV2Tests.cs" />
+    <Compile Include="Gateways\IPsecParametersV2Tests.cs" />
+    <Compile Include="Gateways\LocalNetworkGatewayTests.cs" />
+    <Compile Include="Gateways\SharedKeyV2Tests.cs" />
+    <Compile Include="Gateways\VirtualNetworkGatewayConnectionTests.cs" />
+    <Compile Include="Gateways\VirtualNetworkGatewayTests.cs" />
     <Compile Include="GatewayTestClient.cs" />
+    <Compile Include="IPForwardingIntegrationTests.cs" />
+    <Compile Include="ManagementTestUtilities.cs" />
     <Compile Include="NetworkSecurityGroupIntegrationTests.cs" />
     <Compile Include="NetworkTestBase.cs" />
     <Compile Include="NetworkTestConstants.cs" />
     <Compile Include="Routes\AddRouteTableToSubnetTests.cs" />
     <Compile Include="Routes\CreateRouteTableTests.cs" />
     <Compile Include="Routes\DeleteRouteTests.cs" />
+    <Compile Include="Routes\GetEffectiveRouteTableTests.cs" />
     <Compile Include="Routes\GetRouteTableForSubnetTests.cs" />
     <Compile Include="Routes\GetRouteTableTests.cs" />
     <Compile Include="Routes\DeleteRouteTableTests.cs" />
@@ -59,6 +69,7 @@
     <Compile Include="Routes\TestOperations\RemoveRouteTableFromSubnet.cs" />
     <Compile Include="Routes\TestOperations\SetRoute.cs" />
     <Compile Include="RouteTestClient.cs" />
+    <Compile Include="StorageTestUtilities.cs" />
     <Compile Include="TestOperation.cs" />
     <Compile Include="Networks\GetConfigurationTests.cs" />
     <Compile Include="Networks\ListTests.cs" />
@@ -83,7 +94,14 @@
     <None Include="OneWebOneWorker.cspkg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="packages.config" />
     <None Include="SessionRecords\Network.Tests.ApplicationGateways.SetupApplicationGatewayTests\CreateApplicationGateway.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Network.Tests.Routes.GetEffectiveRouteTableTests\GetEffectiveRouteTableOnNICSucceeds.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Network.Tests.Routes.GetEffectiveRouteTableTests\GetEffectiveRouteTableOnRoleSucceeds.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Network.Tests.VipMobilityTests\TestAssociateReserveIP.json">
@@ -103,6 +121,12 @@
     </None>
     <None Include="TestData\SimpleNetworkConfiguration.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="TestData\CoexistenceFeatureNetworkConfiguration.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="TestData\VnetOneWebOneWorker.cscfg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -364,6 +388,22 @@
     <None Include="SessionRecords\Network.Tests.NetworkSecurityGroupIntegrationTests\TestSetAndDeleteNetworkSecurityRule.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+
+    <None Include="SessionRecords\Network.Tests.NetworkSecurityGroupIntegrationTests\AddAndRemoveNetworkSecurityGroupToNIC.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Network.Tests.NetworkSecurityGroupIntegrationTests\AddAndRemoveNetworkSecurityGroupToRole.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Network.Tests.NetworkSecurityGroupIntegrationTests\CreateVMWithNetworkSecurityGroupOnNIC.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Network.Tests.NetworkSecurityGroupIntegrationTests\CreateVMWithNetworkSecurityGroupOnRole.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Network.Tests.NetworkSecurityGroupIntegrationTests\TestDeleteNetworkSecurityGroup.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\Network.Tests.Routes.AddRouteTableToSubnetTests\AddRouteTableToSubnet.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -529,42 +569,50 @@
     <None Include="SessionRecords\Network.Tests.Routes.SetRouteTests\SetRouteWithNullRouteNameInParameters.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\Network.Tests.IPForwardingIntegrationTests\SetIPForwardingOnNICSucceeds.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Network.Tests.IPForwardingIntegrationTests\SetIPForwardingOnRoleSucceeds.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Network.Tests.Gateways.VirtualNetworkGatewayTests\VirtualNetworkGatewayAPIsTests.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+	<None Include="SessionRecords\Network.Tests.Gateways.VirtualNetworkGatewayTests\VirtualNetworkGatewayStandardSkuValidationTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Network.Tests.Gateways.VirtualNetworkGatewayConnectionTests\VirtualNetworkGatewayConnectionAPIsTests.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Network.Tests.Gateways.SharedKeyV2Tests\SharedKeyV2APIsTests.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Network.Tests.Gateways.LocallNetworkGatewayTests\LocalNetworkGatewayAPIsTests.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Network.Tests.Gateways.IPsecParametersV2Tests\IPsecParametersV2APIsTests.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Network.Tests.Gateways.DiagnosticsV2Tests\DiagnosticsV2APIsTests.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.WindowsAzure.Management.Compute">
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.WindowsAzure.Management.Compute.12.2.0-preview\lib\net40\Microsoft.WindowsAzure.Management.Compute.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\TestDependencies\TestDependencies.csproj">
       <Project>{40f35645-00ee-4df2-b66e-7624546b66df}</Project>
       <Name>TestDependencies</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Compute\Compute.Tests\Compute.Tests.csproj">
-      <Project>{defdbed3-88e9-422a-8d2b-9eaeb47581a4}</Project>
-      <Name>Compute.Tests</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Compute\ComputeManagement\ComputeManagement.csproj">
-      <Project>{7e8328ec-e439-4cf2-b375-16eb2edaf34d}</Project>
-      <Name>ComputeManagement</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Management\Management.Tests\Management.Tests.csproj">
-      <Project>{8036af51-11b3-4c2a-b588-70f4c9fb562b}</Project>
-      <Name>Management.Tests</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Management\Management\Management.csproj">
-      <Project>{2b6d304f-5dc0-4052-a8ab-80e53c291e5f}</Project>
-      <Name>Management</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Storage\StorageManagement\StorageManagement.csproj">
-      <Project>{77f0bec3-fbcd-43a4-af45-8a55846a6897}</Project>
-      <Name>StorageManagement</Name>
-    </ProjectReference>
     <ProjectReference Include="..\NetworkManagement\NetworkManagement.csproj">
       <Project>{7f032828-b8ec-4716-8bc4-af2fa703b24b}</Project>
       <Name>NetworkManagement</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Storage\Storage.Management.Tests\Storage.Management.Tests.csproj">
-      <Project>{45aa601d-3ad1-449a-9427-0dff3339333b}</Project>
-      <Name>Storage.Management.Tests</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

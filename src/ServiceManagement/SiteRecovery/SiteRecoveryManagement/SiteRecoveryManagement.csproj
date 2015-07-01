@@ -13,6 +13,10 @@
     <NuGetPackageImportStamp>e42a5965</NuGetPackageImportStamp>
   </PropertyGroup>
   <Import Project="..\..\..\..\tools\Library.Settings.targets" />
+  <PropertyGroup>
+    <!--TODO: generated code has memeber naming confliction with inherited ones, please fix spec and remove the warn suppression -->
+    <NoWarn>$(NoWarn);0108</NoWarn>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="Generated\**\*.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

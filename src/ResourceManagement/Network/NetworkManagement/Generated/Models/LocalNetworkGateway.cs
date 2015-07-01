@@ -41,15 +41,15 @@ namespace Microsoft.Azure.Management.Network.Models
             set { this._gatewayIpAddress = value; }
         }
         
-        private AddressSpace _localNetworkSiteAddressSpace;
+        private AddressSpace _localNetworkAddressSpace;
         
         /// <summary>
         /// Optional. Local network site Address space
         /// </summary>
-        public AddressSpace LocalNetworkSiteAddressSpace
+        public AddressSpace LocalNetworkAddressSpace
         {
-            get { return this._localNetworkSiteAddressSpace; }
-            set { this._localNetworkSiteAddressSpace = value; }
+            get { return this._localNetworkAddressSpace; }
+            set { this._localNetworkAddressSpace = value; }
         }
         
         private string _provisioningState;

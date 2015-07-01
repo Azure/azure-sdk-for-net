@@ -12,10 +12,10 @@
 // limitations under the License.
 //
 
-using Microsoft.Azure.Management.RemoteApp;
-using Microsoft.Azure.Management.RemoteApp.Models;
 using Microsoft.Azure.Test;
 using Microsoft.Azure.Test.HttpRecorder;
+using Microsoft.WindowsAzure.Management.RemoteApp;
+using Microsoft.WindowsAzure.Management.RemoteApp.Models;
 using System.Collections.Generic;
 using System.Net;
 using Xunit;
@@ -25,7 +25,7 @@ namespace RemoteApp.Tests
     /// <summary>
     /// RemoteApp collection program publishing test cases
     /// </summary>
-    public class PublishingTests : TestBase
+    public class PublishingTests : RemoteAppTestBase
     {
         private const int AppPublihingStatusCheckIntervalSeconds = 10;
         private const int AppPublihingStatusCheckMaxRetries = 12;
@@ -317,14 +317,6 @@ namespace RemoteApp.Tests
                 Assert.NotNull(publishResult.ResultList);
                 Assert.True(publishResult.StatusCode == HttpStatusCode.OK);
             }
-        }
-
-        private RemoteAppManagementClient GetRemoteAppManagementClient()
-        {
-            RemoteAppManagementClient client =
-                TestBase.GetServiceClient<RemoteAppManagementClient>(new RDFETestEnvironmentFactory());
-            client.RdfeNamespace = "rdst15";
-            return client;
         }
     }
 }

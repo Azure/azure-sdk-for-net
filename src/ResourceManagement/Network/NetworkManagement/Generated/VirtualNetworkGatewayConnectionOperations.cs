@@ -271,14 +271,14 @@ namespace Microsoft.Azure.Management.Network
                         }
                     }
                     
-                    if (parameters.VirtualNetworkGateway1.GatewaySize != null)
-                    {
-                        virtualNetworkGateway1Value["gatewaySize"] = parameters.VirtualNetworkGateway1.GatewaySize;
-                    }
-                    
                     if (parameters.VirtualNetworkGateway1.GatewayType != null)
                     {
                         virtualNetworkGateway1Value["gatewayType"] = parameters.VirtualNetworkGateway1.GatewayType;
+                    }
+                    
+                    if (parameters.VirtualNetworkGateway1.VpnType != null)
+                    {
+                        virtualNetworkGateway1Value["vpnType"] = parameters.VirtualNetworkGateway1.VpnType;
                     }
                     
                     virtualNetworkGateway1Value["enableBgp"] = parameters.VirtualNetworkGateway1.EnableBgp;
@@ -394,14 +394,14 @@ namespace Microsoft.Azure.Management.Network
                         }
                     }
                     
-                    if (parameters.VirtualNetworkGateway2.GatewaySize != null)
-                    {
-                        virtualNetworkGateway2Value["gatewaySize"] = parameters.VirtualNetworkGateway2.GatewaySize;
-                    }
-                    
                     if (parameters.VirtualNetworkGateway2.GatewayType != null)
                     {
                         virtualNetworkGateway2Value["gatewayType"] = parameters.VirtualNetworkGateway2.GatewayType;
+                    }
+                    
+                    if (parameters.VirtualNetworkGateway2.VpnType != null)
+                    {
+                        virtualNetworkGateway2Value["vpnType"] = parameters.VirtualNetworkGateway2.VpnType;
                     }
                     
                     virtualNetworkGateway2Value["enableBgp"] = parameters.VirtualNetworkGateway2.EnableBgp;
@@ -451,28 +451,28 @@ namespace Microsoft.Azure.Management.Network
                     JObject localNetworkGateway2Value = new JObject();
                     propertiesValue["localNetworkGateway2"] = localNetworkGateway2Value;
                     
-                    if (parameters.LocalNetworkGateway2.GatewayIpAddress != null)
+                    if (parameters.LocalNetworkGateway2.LocalNetworkAddressSpace != null)
                     {
-                        localNetworkGateway2Value["gatewayIpAddress"] = parameters.LocalNetworkGateway2.GatewayIpAddress;
-                    }
-                    
-                    if (parameters.LocalNetworkGateway2.LocalNetworkSiteAddressSpace != null)
-                    {
-                        JObject localNetworkSiteAddressSpaceValue = new JObject();
-                        localNetworkGateway2Value["localNetworkSiteAddressSpace"] = localNetworkSiteAddressSpaceValue;
+                        JObject localNetworkAddressSpaceValue = new JObject();
+                        localNetworkGateway2Value["localNetworkAddressSpace"] = localNetworkAddressSpaceValue;
                         
-                        if (parameters.LocalNetworkGateway2.LocalNetworkSiteAddressSpace.AddressPrefixes != null)
+                        if (parameters.LocalNetworkGateway2.LocalNetworkAddressSpace.AddressPrefixes != null)
                         {
-                            if (parameters.LocalNetworkGateway2.LocalNetworkSiteAddressSpace.AddressPrefixes is ILazyCollection == false || ((ILazyCollection)parameters.LocalNetworkGateway2.LocalNetworkSiteAddressSpace.AddressPrefixes).IsInitialized)
+                            if (parameters.LocalNetworkGateway2.LocalNetworkAddressSpace.AddressPrefixes is ILazyCollection == false || ((ILazyCollection)parameters.LocalNetworkGateway2.LocalNetworkAddressSpace.AddressPrefixes).IsInitialized)
                             {
                                 JArray addressPrefixesArray = new JArray();
-                                foreach (string addressPrefixesItem in parameters.LocalNetworkGateway2.LocalNetworkSiteAddressSpace.AddressPrefixes)
+                                foreach (string addressPrefixesItem in parameters.LocalNetworkGateway2.LocalNetworkAddressSpace.AddressPrefixes)
                                 {
                                     addressPrefixesArray.Add(addressPrefixesItem);
                                 }
-                                localNetworkSiteAddressSpaceValue["addressPrefixes"] = addressPrefixesArray;
+                                localNetworkAddressSpaceValue["addressPrefixes"] = addressPrefixesArray;
                             }
                         }
+                    }
+                    
+                    if (parameters.LocalNetworkGateway2.GatewayIpAddress != null)
+                    {
+                        localNetworkGateway2Value["gatewayIpAddress"] = parameters.LocalNetworkGateway2.GatewayIpAddress;
                     }
                     
                     if (parameters.LocalNetworkGateway2.ProvisioningState != null)
@@ -704,18 +704,18 @@ namespace Microsoft.Azure.Management.Network
                                         }
                                     }
                                     
-                                    JToken gatewaySizeValue = virtualNetworkGateway1Value2["gatewaySize"];
-                                    if (gatewaySizeValue != null && gatewaySizeValue.Type != JTokenType.Null)
-                                    {
-                                        string gatewaySizeInstance = ((string)gatewaySizeValue);
-                                        virtualNetworkGateway1Instance.GatewaySize = gatewaySizeInstance;
-                                    }
-                                    
                                     JToken gatewayTypeValue = virtualNetworkGateway1Value2["gatewayType"];
                                     if (gatewayTypeValue != null && gatewayTypeValue.Type != JTokenType.Null)
                                     {
                                         string gatewayTypeInstance = ((string)gatewayTypeValue);
                                         virtualNetworkGateway1Instance.GatewayType = gatewayTypeInstance;
+                                    }
+                                    
+                                    JToken vpnTypeValue = virtualNetworkGateway1Value2["vpnType"];
+                                    if (vpnTypeValue != null && vpnTypeValue.Type != JTokenType.Null)
+                                    {
+                                        string vpnTypeInstance = ((string)vpnTypeValue);
+                                        virtualNetworkGateway1Instance.VpnType = vpnTypeInstance;
                                     }
                                     
                                     JToken enableBgpValue = virtualNetworkGateway1Value2["enableBgp"];
@@ -865,18 +865,18 @@ namespace Microsoft.Azure.Management.Network
                                         }
                                     }
                                     
-                                    JToken gatewaySizeValue2 = virtualNetworkGateway2Value2["gatewaySize"];
-                                    if (gatewaySizeValue2 != null && gatewaySizeValue2.Type != JTokenType.Null)
-                                    {
-                                        string gatewaySizeInstance2 = ((string)gatewaySizeValue2);
-                                        virtualNetworkGateway2Instance.GatewaySize = gatewaySizeInstance2;
-                                    }
-                                    
                                     JToken gatewayTypeValue2 = virtualNetworkGateway2Value2["gatewayType"];
                                     if (gatewayTypeValue2 != null && gatewayTypeValue2.Type != JTokenType.Null)
                                     {
                                         string gatewayTypeInstance2 = ((string)gatewayTypeValue2);
                                         virtualNetworkGateway2Instance.GatewayType = gatewayTypeInstance2;
+                                    }
+                                    
+                                    JToken vpnTypeValue2 = virtualNetworkGateway2Value2["vpnType"];
+                                    if (vpnTypeValue2 != null && vpnTypeValue2.Type != JTokenType.Null)
+                                    {
+                                        string vpnTypeInstance2 = ((string)vpnTypeValue2);
+                                        virtualNetworkGateway2Instance.VpnType = vpnTypeInstance2;
                                     }
                                     
                                     JToken enableBgpValue2 = virtualNetworkGateway2Value2["enableBgp"];
@@ -946,27 +946,27 @@ namespace Microsoft.Azure.Management.Network
                                     LocalNetworkGateway localNetworkGateway2Instance = new LocalNetworkGateway();
                                     virtualNetworkGatewayConnectionInstance.LocalNetworkGateway2 = localNetworkGateway2Instance;
                                     
+                                    JToken localNetworkAddressSpaceValue2 = localNetworkGateway2Value2["localNetworkAddressSpace"];
+                                    if (localNetworkAddressSpaceValue2 != null && localNetworkAddressSpaceValue2.Type != JTokenType.Null)
+                                    {
+                                        AddressSpace localNetworkAddressSpaceInstance = new AddressSpace();
+                                        localNetworkGateway2Instance.LocalNetworkAddressSpace = localNetworkAddressSpaceInstance;
+                                        
+                                        JToken addressPrefixesArray2 = localNetworkAddressSpaceValue2["addressPrefixes"];
+                                        if (addressPrefixesArray2 != null && addressPrefixesArray2.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken addressPrefixesValue in ((JArray)addressPrefixesArray2))
+                                            {
+                                                localNetworkAddressSpaceInstance.AddressPrefixes.Add(((string)addressPrefixesValue));
+                                            }
+                                        }
+                                    }
+                                    
                                     JToken gatewayIpAddressValue = localNetworkGateway2Value2["gatewayIpAddress"];
                                     if (gatewayIpAddressValue != null && gatewayIpAddressValue.Type != JTokenType.Null)
                                     {
                                         string gatewayIpAddressInstance = ((string)gatewayIpAddressValue);
                                         localNetworkGateway2Instance.GatewayIpAddress = gatewayIpAddressInstance;
-                                    }
-                                    
-                                    JToken localNetworkSiteAddressSpaceValue2 = localNetworkGateway2Value2["localNetworkSiteAddressSpace"];
-                                    if (localNetworkSiteAddressSpaceValue2 != null && localNetworkSiteAddressSpaceValue2.Type != JTokenType.Null)
-                                    {
-                                        AddressSpace localNetworkSiteAddressSpaceInstance = new AddressSpace();
-                                        localNetworkGateway2Instance.LocalNetworkSiteAddressSpace = localNetworkSiteAddressSpaceInstance;
-                                        
-                                        JToken addressPrefixesArray2 = localNetworkSiteAddressSpaceValue2["addressPrefixes"];
-                                        if (addressPrefixesArray2 != null && addressPrefixesArray2.Type != JTokenType.Null)
-                                        {
-                                            foreach (JToken addressPrefixesValue in ((JArray)addressPrefixesArray2))
-                                            {
-                                                localNetworkSiteAddressSpaceInstance.AddressPrefixes.Add(((string)addressPrefixesValue));
-                                            }
-                                        }
                                     }
                                     
                                     JToken provisioningStateValue5 = localNetworkGateway2Value2["provisioningState"];
@@ -1494,7 +1494,7 @@ namespace Microsoft.Azure.Management.Network
                         TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Created)
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
@@ -1508,7 +1508,7 @@ namespace Microsoft.Azure.Management.Network
                     // Create Result
                     ConnectionResetSharedKeyPutResponse result = null;
                     // Deserialize Response
-                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Created)
+                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -2294,18 +2294,18 @@ namespace Microsoft.Azure.Management.Network
                                         }
                                     }
                                     
-                                    JToken gatewaySizeValue = virtualNetworkGateway1Value["gatewaySize"];
-                                    if (gatewaySizeValue != null && gatewaySizeValue.Type != JTokenType.Null)
-                                    {
-                                        string gatewaySizeInstance = ((string)gatewaySizeValue);
-                                        virtualNetworkGateway1Instance.GatewaySize = gatewaySizeInstance;
-                                    }
-                                    
                                     JToken gatewayTypeValue = virtualNetworkGateway1Value["gatewayType"];
                                     if (gatewayTypeValue != null && gatewayTypeValue.Type != JTokenType.Null)
                                     {
                                         string gatewayTypeInstance = ((string)gatewayTypeValue);
                                         virtualNetworkGateway1Instance.GatewayType = gatewayTypeInstance;
+                                    }
+                                    
+                                    JToken vpnTypeValue = virtualNetworkGateway1Value["vpnType"];
+                                    if (vpnTypeValue != null && vpnTypeValue.Type != JTokenType.Null)
+                                    {
+                                        string vpnTypeInstance = ((string)vpnTypeValue);
+                                        virtualNetworkGateway1Instance.VpnType = vpnTypeInstance;
                                     }
                                     
                                     JToken enableBgpValue = virtualNetworkGateway1Value["enableBgp"];
@@ -2455,18 +2455,18 @@ namespace Microsoft.Azure.Management.Network
                                         }
                                     }
                                     
-                                    JToken gatewaySizeValue2 = virtualNetworkGateway2Value["gatewaySize"];
-                                    if (gatewaySizeValue2 != null && gatewaySizeValue2.Type != JTokenType.Null)
-                                    {
-                                        string gatewaySizeInstance2 = ((string)gatewaySizeValue2);
-                                        virtualNetworkGateway2Instance.GatewaySize = gatewaySizeInstance2;
-                                    }
-                                    
                                     JToken gatewayTypeValue2 = virtualNetworkGateway2Value["gatewayType"];
                                     if (gatewayTypeValue2 != null && gatewayTypeValue2.Type != JTokenType.Null)
                                     {
                                         string gatewayTypeInstance2 = ((string)gatewayTypeValue2);
                                         virtualNetworkGateway2Instance.GatewayType = gatewayTypeInstance2;
+                                    }
+                                    
+                                    JToken vpnTypeValue2 = virtualNetworkGateway2Value["vpnType"];
+                                    if (vpnTypeValue2 != null && vpnTypeValue2.Type != JTokenType.Null)
+                                    {
+                                        string vpnTypeInstance2 = ((string)vpnTypeValue2);
+                                        virtualNetworkGateway2Instance.VpnType = vpnTypeInstance2;
                                     }
                                     
                                     JToken enableBgpValue2 = virtualNetworkGateway2Value["enableBgp"];
@@ -2536,27 +2536,27 @@ namespace Microsoft.Azure.Management.Network
                                     LocalNetworkGateway localNetworkGateway2Instance = new LocalNetworkGateway();
                                     virtualNetworkGatewayConnectionInstance.LocalNetworkGateway2 = localNetworkGateway2Instance;
                                     
+                                    JToken localNetworkAddressSpaceValue = localNetworkGateway2Value["localNetworkAddressSpace"];
+                                    if (localNetworkAddressSpaceValue != null && localNetworkAddressSpaceValue.Type != JTokenType.Null)
+                                    {
+                                        AddressSpace localNetworkAddressSpaceInstance = new AddressSpace();
+                                        localNetworkGateway2Instance.LocalNetworkAddressSpace = localNetworkAddressSpaceInstance;
+                                        
+                                        JToken addressPrefixesArray = localNetworkAddressSpaceValue["addressPrefixes"];
+                                        if (addressPrefixesArray != null && addressPrefixesArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken addressPrefixesValue in ((JArray)addressPrefixesArray))
+                                            {
+                                                localNetworkAddressSpaceInstance.AddressPrefixes.Add(((string)addressPrefixesValue));
+                                            }
+                                        }
+                                    }
+                                    
                                     JToken gatewayIpAddressValue = localNetworkGateway2Value["gatewayIpAddress"];
                                     if (gatewayIpAddressValue != null && gatewayIpAddressValue.Type != JTokenType.Null)
                                     {
                                         string gatewayIpAddressInstance = ((string)gatewayIpAddressValue);
                                         localNetworkGateway2Instance.GatewayIpAddress = gatewayIpAddressInstance;
-                                    }
-                                    
-                                    JToken localNetworkSiteAddressSpaceValue = localNetworkGateway2Value["localNetworkSiteAddressSpace"];
-                                    if (localNetworkSiteAddressSpaceValue != null && localNetworkSiteAddressSpaceValue.Type != JTokenType.Null)
-                                    {
-                                        AddressSpace localNetworkSiteAddressSpaceInstance = new AddressSpace();
-                                        localNetworkGateway2Instance.LocalNetworkSiteAddressSpace = localNetworkSiteAddressSpaceInstance;
-                                        
-                                        JToken addressPrefixesArray = localNetworkSiteAddressSpaceValue["addressPrefixes"];
-                                        if (addressPrefixesArray != null && addressPrefixesArray.Type != JTokenType.Null)
-                                        {
-                                            foreach (JToken addressPrefixesValue in ((JArray)addressPrefixesArray))
-                                            {
-                                                localNetworkSiteAddressSpaceInstance.AddressPrefixes.Add(((string)addressPrefixesValue));
-                                            }
-                                        }
                                     }
                                     
                                     JToken provisioningStateValue5 = localNetworkGateway2Value["provisioningState"];
@@ -3103,18 +3103,18 @@ namespace Microsoft.Azure.Management.Network
                                                 }
                                             }
                                             
-                                            JToken gatewaySizeValue = virtualNetworkGateway1Value["gatewaySize"];
-                                            if (gatewaySizeValue != null && gatewaySizeValue.Type != JTokenType.Null)
-                                            {
-                                                string gatewaySizeInstance = ((string)gatewaySizeValue);
-                                                virtualNetworkGateway1Instance.GatewaySize = gatewaySizeInstance;
-                                            }
-                                            
                                             JToken gatewayTypeValue = virtualNetworkGateway1Value["gatewayType"];
                                             if (gatewayTypeValue != null && gatewayTypeValue.Type != JTokenType.Null)
                                             {
                                                 string gatewayTypeInstance = ((string)gatewayTypeValue);
                                                 virtualNetworkGateway1Instance.GatewayType = gatewayTypeInstance;
+                                            }
+                                            
+                                            JToken vpnTypeValue = virtualNetworkGateway1Value["vpnType"];
+                                            if (vpnTypeValue != null && vpnTypeValue.Type != JTokenType.Null)
+                                            {
+                                                string vpnTypeInstance = ((string)vpnTypeValue);
+                                                virtualNetworkGateway1Instance.VpnType = vpnTypeInstance;
                                             }
                                             
                                             JToken enableBgpValue = virtualNetworkGateway1Value["enableBgp"];
@@ -3264,18 +3264,18 @@ namespace Microsoft.Azure.Management.Network
                                                 }
                                             }
                                             
-                                            JToken gatewaySizeValue2 = virtualNetworkGateway2Value["gatewaySize"];
-                                            if (gatewaySizeValue2 != null && gatewaySizeValue2.Type != JTokenType.Null)
-                                            {
-                                                string gatewaySizeInstance2 = ((string)gatewaySizeValue2);
-                                                virtualNetworkGateway2Instance.GatewaySize = gatewaySizeInstance2;
-                                            }
-                                            
                                             JToken gatewayTypeValue2 = virtualNetworkGateway2Value["gatewayType"];
                                             if (gatewayTypeValue2 != null && gatewayTypeValue2.Type != JTokenType.Null)
                                             {
                                                 string gatewayTypeInstance2 = ((string)gatewayTypeValue2);
                                                 virtualNetworkGateway2Instance.GatewayType = gatewayTypeInstance2;
+                                            }
+                                            
+                                            JToken vpnTypeValue2 = virtualNetworkGateway2Value["vpnType"];
+                                            if (vpnTypeValue2 != null && vpnTypeValue2.Type != JTokenType.Null)
+                                            {
+                                                string vpnTypeInstance2 = ((string)vpnTypeValue2);
+                                                virtualNetworkGateway2Instance.VpnType = vpnTypeInstance2;
                                             }
                                             
                                             JToken enableBgpValue2 = virtualNetworkGateway2Value["enableBgp"];
@@ -3345,27 +3345,27 @@ namespace Microsoft.Azure.Management.Network
                                             LocalNetworkGateway localNetworkGateway2Instance = new LocalNetworkGateway();
                                             virtualNetworkGatewayConnectionJsonFormatInstance.LocalNetworkGateway2 = localNetworkGateway2Instance;
                                             
+                                            JToken localNetworkAddressSpaceValue = localNetworkGateway2Value["localNetworkAddressSpace"];
+                                            if (localNetworkAddressSpaceValue != null && localNetworkAddressSpaceValue.Type != JTokenType.Null)
+                                            {
+                                                AddressSpace localNetworkAddressSpaceInstance = new AddressSpace();
+                                                localNetworkGateway2Instance.LocalNetworkAddressSpace = localNetworkAddressSpaceInstance;
+                                                
+                                                JToken addressPrefixesArray = localNetworkAddressSpaceValue["addressPrefixes"];
+                                                if (addressPrefixesArray != null && addressPrefixesArray.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken addressPrefixesValue in ((JArray)addressPrefixesArray))
+                                                    {
+                                                        localNetworkAddressSpaceInstance.AddressPrefixes.Add(((string)addressPrefixesValue));
+                                                    }
+                                                }
+                                            }
+                                            
                                             JToken gatewayIpAddressValue = localNetworkGateway2Value["gatewayIpAddress"];
                                             if (gatewayIpAddressValue != null && gatewayIpAddressValue.Type != JTokenType.Null)
                                             {
                                                 string gatewayIpAddressInstance = ((string)gatewayIpAddressValue);
                                                 localNetworkGateway2Instance.GatewayIpAddress = gatewayIpAddressInstance;
-                                            }
-                                            
-                                            JToken localNetworkSiteAddressSpaceValue = localNetworkGateway2Value["localNetworkSiteAddressSpace"];
-                                            if (localNetworkSiteAddressSpaceValue != null && localNetworkSiteAddressSpaceValue.Type != JTokenType.Null)
-                                            {
-                                                AddressSpace localNetworkSiteAddressSpaceInstance = new AddressSpace();
-                                                localNetworkGateway2Instance.LocalNetworkSiteAddressSpace = localNetworkSiteAddressSpaceInstance;
-                                                
-                                                JToken addressPrefixesArray = localNetworkSiteAddressSpaceValue["addressPrefixes"];
-                                                if (addressPrefixesArray != null && addressPrefixesArray.Type != JTokenType.Null)
-                                                {
-                                                    foreach (JToken addressPrefixesValue in ((JArray)addressPrefixesArray))
-                                                    {
-                                                        localNetworkSiteAddressSpaceInstance.AddressPrefixes.Add(((string)addressPrefixesValue));
-                                                    }
-                                                }
                                             }
                                             
                                             JToken provisioningStateValue5 = localNetworkGateway2Value["provisioningState"];

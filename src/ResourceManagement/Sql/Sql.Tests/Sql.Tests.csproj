@@ -10,7 +10,9 @@
   <ItemGroup>
     <Compile Include="Helpers\BasicDelegatingHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScenarioTests\Sql2.BackupScenarioTests.cs" />
     <Compile Include="ScenarioTests\Sql2.ElasticPoolScenarioTests.cs" />
+    <Compile Include="ScenarioTests\Sql2.RecommendedIndexScenarioTests.cs" />
     <Compile Include="ScenarioTests\Sql2.ServiceTierAdvisorScenarioTests.cs" />
     <Compile Include="ScenarioTests\Sql2.RecommendedElasticPoolScenarioTests.cs" />
     <Compile Include="ScenarioTests\Sql2.SecureConnectionScenarioTest.cs" />
@@ -25,6 +27,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2AuditScenarioTest\ServerAuditingPolicyLifecycleTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2BackupScenarioTest\ListRestorePointsTest.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2DataMaskingScenarioTests\DataMaskingPolicyLifecycleTest.json">
@@ -60,6 +65,18 @@
     <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2RecommendedElasticPoolScenarioTests\ListPoolsExpanded.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2RecommendedIndexScenarioTests\GetSingleRecommendation.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2RecommendedIndexScenarioTests\ListAllIndexesForServer.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2RecommendedIndexScenarioTests\UpdateState.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2ScenarioTest\DatabaseActivationTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2ScenarioTest\DatabaseCRUDTest.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -82,6 +99,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2ServerUpgradeScenarioTest\PositiveTestWithCancel.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2ServerUpgradeScenarioTest\PositiveTestWithElasticPool.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2ServerUpgradeScenarioTest\PositiveTestWithRecommendedDatabase.json">
@@ -107,10 +127,6 @@
     <ProjectReference Include="..\..\..\TestDependencies\TestDependencies.csproj">
       <Project>{40f35645-00ee-4df2-b66e-7624546b66df}</Project>
       <Name>TestDependencies</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Resource\ResourceManagement\ResourceManagement.csproj">
-      <Project>{165ef660-235b-45af-83cb-0d32bef4c1a2}</Project>
-      <Name>ResourceManagement</Name>
     </ProjectReference>
     <ProjectReference Include="..\SqlManagement\SqlManagement.csproj">
       <Project>{04b53727-16e6-4ef0-9116-04c7f1c33842}</Project>

@@ -13,15 +13,15 @@
 // limitations under the License.
 //
 
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Management.Storage.Models;
 using Microsoft.Azure.Test;
-using System;
 using System.Linq;
 using System.Net;
 using Xunit;
+using Hyak.Common;
 
 namespace Compute.Tests
 {
@@ -42,6 +42,7 @@ namespace Compute.Tests
         /// Delete RG
         /// </summary>
         [Fact]
+        [Trait("Name", "TestVMScenarioOperations")]
         public void TestVMScenarioOperations()
         {
             using (var context = UndoContext.Current)
@@ -49,7 +50,7 @@ namespace Compute.Tests
                 context.Start();
                 EnsureClientsInitialized();
 
-                string imgRefId = GetPlatformOSImage(useWindowsImage: true);
+                ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
                 // Create resource group
                 var rgName = TestUtilities.GenerateName(TestPrefix);
                 string storageAccountName = TestUtilities.GenerateName(TestPrefix);
@@ -58,9 +59,15 @@ namespace Compute.Tests
                 try
                 {
                     // Create Storage Account, so that both the VMs can share it
-                    var storageAccountOutput = CreateStorageAccount( rgName, storageAccountName );
+                    var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
 
-                    var vm1 = CreateVM(rgName, asName, storageAccountOutput, imgRefId, out inputVM);
+                    var deleteVMResponse = m_CrpClient.VirtualMachines.Delete(rgName, "VMDoesNotExist");
+                    Assert.True(deleteVMResponse.Status == OperationStatus.Succeeded);
+
+                    var deleteASResponse = m_CrpClient.AvailabilitySets.Delete(rgName, "ASDoesNotExist");
+                    Assert.True(deleteASResponse.StatusCode == HttpStatusCode.NoContent);
+
+                    var vm1 = CreateVM_NoAsyncTracking(rgName, asName, storageAccountOutput, imageRef, out inputVM);
 
                     var getVMWithInstanceViewResponse = m_CrpClient.VirtualMachines.GetWithInstanceView(rgName, inputVM.Name);
                     Assert.True(getVMWithInstanceViewResponse.StatusCode == HttpStatusCode.OK);
@@ -81,7 +88,7 @@ namespace Compute.Tests
                     Helpers.ValidateVirtualMachineSizeListResponse(listVMSizesResponse);
 
                     var lroResponse = m_CrpClient.VirtualMachines.Delete(rgName, inputVM.Name);
-                    Assert.True(lroResponse.Status != ComputeOperationStatus.Failed);
+                    Assert.True(lroResponse.Status != OperationStatus.Failed);
                 }
                 finally
                 {
@@ -90,64 +97,5 @@ namespace Compute.Tests
                 }
             }
         }
-
-        [Fact]
-        public void TestVMScenarioWithPlan()
-        {
-            using (var context = UndoContext.Current)
-            {
-                context.Start();
-                EnsureClientsInitialized();
-
-                string imgRefId = GetPlatformOSImage(useWindowsImage: true);
-                var rgName = TestUtilities.GenerateName(TestPrefix);
-                string storageAccountName = TestUtilities.GenerateName(TestPrefix);
-                string asName = TestUtilities.GenerateName("as");
-                VirtualMachine inputVM;
-                try
-                {
-                    var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
-
-                    var imageRef = new ImageReference 
-                            { 
-                               Publisher = "datastax",
-                               Offer = "datastax-enterprise-non-production-use-only",
-                               Sku = "sandbox_single-node",
-                               Version = "latest",
-                            };
-
-                    var plan = new Microsoft.Azure.Management.Compute.Models.Plan
-                    {
-                        Publisher = imageRef.Publisher,
-                        Product = imageRef.Offer,
-                        Name = imageRef.Sku,
-                    };
-                    var vm1 = CreateVM(rgName, asName, storageAccountOutput, imgRefId, out inputVM, (vm) =>
-                        {
-                            vm.StorageProfile.SourceImage = null;
-                            vm.StorageProfile.ImageReference = imageRef;
-                            vm.Plan = plan; 
-                        }                        
-                        );
-
-                    var getVMResponse = m_CrpClient.VirtualMachines.Get(rgName, inputVM.Name);
-                    Assert.True(getVMResponse.StatusCode == HttpStatusCode.OK);
-                    ValidateVM(inputVM, getVMResponse.VirtualMachine, Helpers.GetVMReferenceId(m_subId, rgName, inputVM.Name));
-
-                    var listResponse = m_CrpClient.VirtualMachines.List(rgName);
-                    Assert.True(listResponse.StatusCode == HttpStatusCode.OK);
-                    ValidateVM(inputVM, listResponse.VirtualMachines.FirstOrDefault(x => x.Name == inputVM.Name),
-                        Helpers.GetVMReferenceId(m_subId, rgName, inputVM.Name));
-
-                }
-                finally
-                {
-                    var deleteResourceGroupResponse = m_ResourcesClient.ResourceGroups.Delete(rgName);
-                    Assert.True(deleteResourceGroupResponse.StatusCode == HttpStatusCode.OK);
-                }
-            }
-        }
-
-
     }
 }

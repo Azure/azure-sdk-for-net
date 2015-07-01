@@ -15,21 +15,45 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ApiManagementClientUndoHandler.cs" />
+    <Compile Include="ApiManagementResourceProviderUndoHandler.cs" />
     <Compile Include="ApiManagementHelper.cs" />
-    <Compile Include="ScenarioTests\ResourceProviderTests\ResourceProviderFunctionalTests.UpdateHostname.cs" />
-    <Compile Include="ScenarioTests\ResourceProviderTests\ResourceProviderFunctionalTests.ManageVirtualNetworks.cs" />
-    <Compile Include="ScenarioTests\ResourceProviderTests\ResourceProviderFunctionalTests.ManageDeployments.cs" />
-    <Compile Include="ScenarioTests\ResourceProviderTests\ResourceProviderFunctionalTests.GetSsoToken.cs" />
-    <Compile Include="ScenarioTests\ResourceProviderTests\ResourceProviderFunctionalTests.CreateListUpdateDelete.cs" />
-    <Compile Include="ScenarioTests\ResourceProviderTests\ResourceProviderFunctionalTests.CheckServiceNameAvailability.cs" />
     <Compile Include="ScenarioTests\ResourceProviderTests\ResourceProviderFunctionalTests.BackupRestore.cs" />
+    <Compile Include="ScenarioTests\ResourceProviderTests\ResourceProviderFunctionalTests.CheckServiceNameAvailability.cs" />
+    <Compile Include="ScenarioTests\ResourceProviderTests\ResourceProviderFunctionalTests.CreateListUpdateDelete.cs" />
     <Compile Include="ScenarioTests\ResourceProviderTests\ResourceProviderFunctionalTests.cs" />
+    <Compile Include="ScenarioTests\ResourceProviderTests\ResourceProviderFunctionalTests.GetSsoToken.cs" />
+    <Compile Include="ScenarioTests\ResourceProviderTests\ResourceProviderFunctionalTests.ManageDeployments.cs" />
+    <Compile Include="ScenarioTests\ResourceProviderTests\ResourceProviderFunctionalTests.ManageVirtualNetworks.cs" />
+    <Compile Include="ScenarioTests\ResourceProviderTests\ResourceProviderFunctionalTests.UpdateHostname.cs" />
+    <Compile Include="ScenarioTests\SmapiTestsFixture.cs" />
+    <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.ApiOperations.cs" />
+    <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.ApiProducts.cs" />
+    <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.Apis.cs" />
+    <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.AuthorizationServers.cs" />
+    <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.Certificates.cs" />
+    <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.cs" />
+    <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.Groups.cs" />
+    <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.GroupUsers.cs" />
+    <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.Policy.cs" />
+    <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.PolicySnippets.cs" />
+    <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.ProductApis.cs" />
+    <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.ProductGroups.cs" />
+    <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.Products.cs" />
+    <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.ProductSubscriptions.cs" />
+    <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.Regions.cs" />
+    <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.Reports.cs" />
+    <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.UserSubscriptions.cs" />
+    <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.Subscriptions.cs" />
+    <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.UserGroups.cs" />
+    <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.UserIdentities.cs" />
+    <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.Users.cs" />
     <Compile Include="ScenarioTests\TestsFixture.cs" />
     <Compile Include="UndoContextDiscoveryExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\_.preview.int-azure-api.net.pfx" />
+    <None Include="Resources\testcertificate.pfx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\Features.Tests.LiveFeatureTests\RegisterFeature.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -168,43 +192,96 @@
     <None Include="SessionRecords\ResourceProviderFunctionalTests\UpdateHostname.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\SmapiFunctionalTests\ApiImportExport.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\SmapiFunctionalTests\ApiOperationsCreateListUpdateDelete.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\SmapiFunctionalTests\ApiProductsCreateListUpdateDelete.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\SmapiFunctionalTests\ApisCreateListUpdateDelete.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\SmapiFunctionalTests\ApisCreateListUpdateDelete.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\SmapiFunctionalTests\AuthorizationServersCreateListUpdateDelete.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\SmapiFunctionalTests\CertificatesCreateListUpdateDelete.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\SmapiFunctionalTests\GroupsCreateListUpdateDelete.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\SmapiFunctionalTests\GroupUsersListAddRemove.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\SmapiFunctionalTests\PolicyCreateGetUpdateDelete.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\SmapiFunctionalTests\PolicySnippetsList.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\SmapiFunctionalTests\ProductApisListAddRemove.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\SmapiFunctionalTests\ProductGroupsListAddRemove.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\SmapiFunctionalTests\ProductsCreateListUpdateDelete.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\SmapiFunctionalTests\ProductSubscriptionsList.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\SmapiFunctionalTests\RegionsList.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\SmapiFunctionalTests\ReportsQuery.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\SmapiFunctionalTests\SubscriptionsCreateListUpdateDelete.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\SmapiFunctionalTests\SubscriptionsCreateListUpdateDelete.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\SmapiFunctionalTests\UserGroupsListAddRemove.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\SmapiFunctionalTests\UserIdentitiesList.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\SmapiFunctionalTests\UsersCreateListUpdateDelete.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\SmapiFunctionalTests\UserSubscriptionsList.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\SmapiTestsFixture\CreateApiManagementService.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\ServiceManagement\Management\Management\Management.csproj">
-      <Project>{2b6d304f-5dc0-4052-a8ab-80e53c291e5f}</Project>
-      <Name>Management</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\ServiceManagement\Storage\StorageManagement\StorageManagement.csproj">
-      <Project>{77f0bec3-fbcd-43a4-af45-8a55846a6897}</Project>
-      <Name>StorageManagement</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\TestDependencies\TestDependencies.csproj">
       <Project>{40f35645-00ee-4df2-b66e-7624546b66df}</Project>
       <Name>TestDependencies</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\ServiceManagement\Management\Management.Tests\Management.Tests.csproj">
-      <Project>{8036af51-11b3-4c2a-b588-70f4c9fb562b}</Project>
-      <Name>Management.Tests</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Resource\ResourceManagement\ResourceManagement.csproj">
-      <Project>{165ef660-235b-45af-83cb-0d32bef4c1a2}</Project>
-      <Name>ResourceManagement</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Resource\Resources.Tests\Resources.Tests.csproj">
-      <Project>{be9d7270-27cb-45eb-bd26-fea68087e835}</Project>
-      <Name>Resources.Tests</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\ServiceManagement\Storage\Storage.Management.Tests\Storage.Management.Tests.csproj">
-      <Project>{45aa601d-3ad1-449a-9427-0dff3339333b}</Project>
-      <Name>Storage.Management.Tests</Name>
     </ProjectReference>
     <ProjectReference Include="..\ApiManagementManagement\ApiManagementManagement.csproj">
       <Project>{c85d57a0-bfc7-4483-aaef-9abb9313873b}</Project>
       <Name>ApiManagementManagement</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\WADLYahoo.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup />
 </Project>

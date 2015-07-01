@@ -42,6 +42,12 @@
     <Compile Include="Generated\Models\AzureBackupVaultProperties.cs" />
     <Compile Include="Generated\Models\BackupSchedule.cs" />
     <Compile Include="Generated\Models\ContainerInfo.cs" />
+    <Compile Include="Generated\Models\CSMBaseResponse.cs" />
+    <Compile Include="Generated\Models\CSMContainerListResponse.cs" />
+    <Compile Include="Generated\Models\CSMContainerListResponse1.cs" />
+    <Compile Include="Generated\Models\CSMContainerProperties.cs" />
+    <Compile Include="Generated\Models\CSMContainerResponse.cs" />
+    <Compile Include="Generated\Models\CSMListResponse.cs" />
     <Compile Include="Generated\Models\CustomRequestHeaders.cs" />
     <Compile Include="Generated\Models\DataSourceInfo.cs" />
     <Compile Include="Generated\Models\DataSourceListResponse.cs" />

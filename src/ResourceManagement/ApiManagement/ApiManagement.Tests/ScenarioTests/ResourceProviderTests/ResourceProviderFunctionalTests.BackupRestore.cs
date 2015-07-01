@@ -14,14 +14,12 @@
 
 namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.ResourceProviderTests
 {
-    using System;
     using System.Net;
     using global::ApiManagement.Tests;
     using Microsoft.Azure.Management.ApiManagement.Models;
     using Microsoft.Azure.Test;
     using Microsoft.WindowsAzure.Management.Storage;
     using Microsoft.WindowsAzure.Management.Storage.Models;
-    using Microsoft.WindowsAzure.Testing;
     using Xunit;
 
     public partial class ResourceProviderFunctionalTests
@@ -36,7 +34,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.ResourceP
                 TryCreateApiService();
 
                 // create storage account with blob container for the API Management backup
-                var storageManagementClient = this.GetStorageManagementClient();
+                var storageManagementClient = GetServiceClient<StorageManagementClient>();
 
                 var storageAccountName = TestUtilities.GenerateName("hydraapimstorage");
                 Assert.True(
@@ -70,7 +68,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.ResourceP
                     BackupName = apimBackupName
                 };
                 var response =
-                    apiManagementClient.ApiManagement.Backup(
+                    apiManagementClient.ResourceProvider.Backup(
                         ResourceGroupName,
                         ApiManagementServiceName,
                         backupRestoreParameters);
@@ -79,10 +77,10 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.ResourceP
 
                 // restore Api Management service from backup
 
-                ApiManagementHelper.RefreshAccessToken(apiManagementClient);
+                apiManagementClient.RefreshAccessToken();
 
                 response =
-                    apiManagementClient.ApiManagement.Restore(
+                    apiManagementClient.ResourceProvider.Restore(
                         ResourceGroupName,
                         ApiManagementServiceName,
                         backupRestoreParameters);
@@ -90,7 +88,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.ResourceP
                 Assert.NotNull(response);
                 Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
-                var getResponse = apiManagementClient.ApiManagement.Get(ResourceGroupName, ApiManagementServiceName);
+                var getResponse = apiManagementClient.ResourceProvider.Get(ResourceGroupName, ApiManagementServiceName);
                 Assert.NotNull(getResponse);
                 Assert.Equal(HttpStatusCode.OK, getResponse.StatusCode);
                 Assert.NotNull(getResponse.Value);

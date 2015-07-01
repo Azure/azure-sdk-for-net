@@ -23,6 +23,7 @@ using System.Net;
 using Xunit;
 using System;
 using System.Collections.Generic;
+using Microsoft.Azure;
 
 namespace Compute.Tests
 {
@@ -46,7 +47,7 @@ namespace Compute.Tests
                 context.Start();
                 EnsureClientsInitialized();
 
-                string imgRefId = GetPlatformOSImage(useWindowsImage: true);
+                ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
                 // Create resource group
                 var rgName = TestUtilities.GenerateName(TestPrefix);
                 string storageAccountName = TestUtilities.GenerateName(TestPrefix);
@@ -60,10 +61,10 @@ namespace Compute.Tests
                     // Create Storage Account, so that both the VMs can share it
                     var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
 
-                    var vm1 = CreateVM(rgName, asName, storageAccountOutput, imgRefId, out inputVM, AddCertificateInfo);
+                    var vm1 = CreateVM_NoAsyncTracking(rgName, asName, storageAccountOutput, imageRef, out inputVM, AddCertificateInfo);
 
                     var lroResponse = m_CrpClient.VirtualMachines.Delete(rgName, inputVM.Name);
-                    Assert.True(lroResponse.Status != ComputeOperationStatus.Failed);
+                    Assert.True(lroResponse.Status != OperationStatus.Failed);
                 }
                 finally
                 {

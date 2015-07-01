@@ -13,10 +13,10 @@
 //
 
 using Hyak.Common;
-using Microsoft.Azure.Management.RemoteApp;
-using Microsoft.Azure.Management.RemoteApp.Models;
 using Microsoft.Azure.Test;
 using Microsoft.Azure.Test.HttpRecorder;
+using Microsoft.WindowsAzure.Management.RemoteApp;
+using Microsoft.WindowsAzure.Management.RemoteApp.Models;
 using System;
 using System.Net;
 using Xunit;
@@ -26,7 +26,7 @@ namespace RemoteApp.Tests
     /// <summary>
     /// RemoteApp collection specific test cases
     /// </summary>
-    public class CollectionTests : TestBase
+    public class CollectionTests : RemoteAppTestBase
     {
         /// <summary>
         /// Testing of querying a list of collections
@@ -38,7 +38,7 @@ namespace RemoteApp.Tests
             {
                 undoContext.Start();
 
-                var client = GetRemoteAppManagementClient();
+                RemoteAppManagementClient client = GetRemoteAppManagementClient();
 
                 Assert.DoesNotThrow(() =>
                 {
@@ -583,14 +583,6 @@ namespace RemoteApp.Tests
                 OperationResultWithTrackingId response = client.Collections.Delete(queriedCollection.Collection.Name);
                 Assert.True(result.StatusCode == HttpStatusCode.OK, "Delete collection did not return OK.");
             }
-        }
-
-        private RemoteAppManagementClient GetRemoteAppManagementClient()
-        {
-            RemoteAppManagementClient client =
-                TestBase.GetServiceClient<RemoteAppManagementClient>(new RDFETestEnvironmentFactory());
-            client.RdfeNamespace = "rdst15";
-            return client;
         }
     }
 }

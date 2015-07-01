@@ -25,6 +25,7 @@ using System.Net.Http;
 using Hyak.Common;
 using Microsoft.Azure;
 using Microsoft.Azure.Management.ApiManagement;
+using Microsoft.Azure.Management.ApiManagement.SmapiModels;
 
 namespace Microsoft.Azure.Management.ApiManagement
 {
@@ -87,14 +88,256 @@ namespace Microsoft.Azure.Management.ApiManagement
             set { this._longRunningOperationRetryTimeout = value; }
         }
         
-        private IApiManagementOperations _apiManagement;
+        private IApiOperationPolicyOperations _apiOperationPolicy;
         
         /// <summary>
-        /// Operations for managing Api Management service.
+        /// Operations for managing API Operation Policy.
         /// </summary>
-        public virtual IApiManagementOperations ApiManagement
+        public virtual IApiOperationPolicyOperations ApiOperationPolicy
         {
-            get { return this._apiManagement; }
+            get { return this._apiOperationPolicy; }
+        }
+        
+        private IApiOperationsOperations _apiOperations;
+        
+        /// <summary>
+        /// Operations for managing API Operations.
+        /// </summary>
+        public virtual IApiOperationsOperations ApiOperations
+        {
+            get { return this._apiOperations; }
+        }
+        
+        private IApiPolicyOperations _apiPolicy;
+        
+        /// <summary>
+        /// Operations for managing API Policy.
+        /// </summary>
+        public virtual IApiPolicyOperations ApiPolicy
+        {
+            get { return this._apiPolicy; }
+        }
+        
+        private IApiProductsOperations _apiProducts;
+        
+        /// <summary>
+        /// Operations for listing API associated Products.
+        /// </summary>
+        public virtual IApiProductsOperations ApiProducts
+        {
+            get { return this._apiProducts; }
+        }
+        
+        private IApisOperations _apis;
+        
+        /// <summary>
+        /// Operations for managing APIs.
+        /// </summary>
+        public virtual IApisOperations Apis
+        {
+            get { return this._apis; }
+        }
+        
+        private IAuthorizationServersOperations _authorizationServers;
+        
+        /// <summary>
+        /// Operations for managing Authorization Servers.
+        /// </summary>
+        public virtual IAuthorizationServersOperations AuthorizationServers
+        {
+            get { return this._authorizationServers; }
+        }
+        
+        private ICertificatesOperations _certificates;
+        
+        /// <summary>
+        /// Operations for managing Certificates.
+        /// </summary>
+        public virtual ICertificatesOperations Certificates
+        {
+            get { return this._certificates; }
+        }
+        
+        private IGroupsOperations _groups;
+        
+        /// <summary>
+        /// Operations for managing Groups.
+        /// </summary>
+        public virtual IGroupsOperations Groups
+        {
+            get { return this._groups; }
+        }
+        
+        private IGroupUsersOperations _groupUsers;
+        
+        /// <summary>
+        /// Operations for managing Group Users (list, add, remove users within
+        /// a group).
+        /// </summary>
+        public virtual IGroupUsersOperations GroupUsers
+        {
+            get { return this._groupUsers; }
+        }
+        
+        private IPolicySnippetsOperations _policySnippents;
+        
+        /// <summary>
+        /// Operations for managing Policy Snippets.
+        /// </summary>
+        public virtual IPolicySnippetsOperations PolicySnippents
+        {
+            get { return this._policySnippents; }
+        }
+        
+        private IProductApisOperations _productApis;
+        
+        /// <summary>
+        /// Operations for managing Product APIs.
+        /// </summary>
+        public virtual IProductApisOperations ProductApis
+        {
+            get { return this._productApis; }
+        }
+        
+        private IProductGroupsOperations _productGroups;
+        
+        /// <summary>
+        /// Operations for managing Product Groups.
+        /// </summary>
+        public virtual IProductGroupsOperations ProductGroups
+        {
+            get { return this._productGroups; }
+        }
+        
+        private IProductPolicyOperations _productPolicy;
+        
+        /// <summary>
+        /// Operations for managing Product Policy.
+        /// </summary>
+        public virtual IProductPolicyOperations ProductPolicy
+        {
+            get { return this._productPolicy; }
+        }
+        
+        private IProductsOperations _products;
+        
+        /// <summary>
+        /// Operations for managing Products.
+        /// </summary>
+        public virtual IProductsOperations Products
+        {
+            get { return this._products; }
+        }
+        
+        private IProductSubscriptionsOperations _productSubscriptions;
+        
+        /// <summary>
+        /// Operations for managing Product Subscriptions.
+        /// </summary>
+        public virtual IProductSubscriptionsOperations ProductSubscriptions
+        {
+            get { return this._productSubscriptions; }
+        }
+        
+        private IRegionsOperations _regions;
+        
+        /// <summary>
+        /// Operations for managing Regions.
+        /// </summary>
+        public virtual IRegionsOperations Regions
+        {
+            get { return this._regions; }
+        }
+        
+        private IReportsOperations _reports;
+        
+        /// <summary>
+        /// Operations for managing Reports.
+        /// </summary>
+        public virtual IReportsOperations Reports
+        {
+            get { return this._reports; }
+        }
+        
+        private IResourceProviderOperations _resourceProvider;
+        
+        /// <summary>
+        /// Operations for managing Api Management service provisioning
+        /// (create/remove, backup/restore, scale, etc.).
+        /// </summary>
+        public virtual IResourceProviderOperations ResourceProvider
+        {
+            get { return this._resourceProvider; }
+        }
+        
+        private ISubscriptionsOperations _subscriptions;
+        
+        /// <summary>
+        /// Operations for managing Subscriptions.
+        /// </summary>
+        public virtual ISubscriptionsOperations Subscriptions
+        {
+            get { return this._subscriptions; }
+        }
+        
+        private ITenantPolicyOperations _tenantPolicy;
+        
+        /// <summary>
+        /// Operations for managing Tenant Policy.
+        /// </summary>
+        public virtual ITenantPolicyOperations TenantPolicy
+        {
+            get { return this._tenantPolicy; }
+        }
+        
+        private IUserApplicationsOperations _userApplications;
+        
+        /// <summary>
+        /// Operations for managing User Applications.
+        /// </summary>
+        public virtual IUserApplicationsOperations UserApplications
+        {
+            get { return this._userApplications; }
+        }
+        
+        private IUserGroupsOperations _userGroups;
+        
+        /// <summary>
+        /// Operations for managing User Groups.
+        /// </summary>
+        public virtual IUserGroupsOperations UserGroups
+        {
+            get { return this._userGroups; }
+        }
+        
+        private IUserIdentitiesOperations _userIdentities;
+        
+        /// <summary>
+        /// Operations for managing User Identities.
+        /// </summary>
+        public virtual IUserIdentitiesOperations UserIdentities
+        {
+            get { return this._userIdentities; }
+        }
+        
+        private IUsersOperations _users;
+        
+        /// <summary>
+        /// Operations for managing Users.
+        /// </summary>
+        public virtual IUsersOperations Users
+        {
+            get { return this._users; }
+        }
+        
+        private IUserSubscriptionsOperations _userSubscriptions;
+        
+        /// <summary>
+        /// Operations for managing User Subscriptions.
+        /// </summary>
+        public virtual IUserSubscriptionsOperations UserSubscriptions
+        {
+            get { return this._userSubscriptions; }
         }
         
         /// <summary>
@@ -103,7 +346,31 @@ namespace Microsoft.Azure.Management.ApiManagement
         public ApiManagementClient()
             : base()
         {
-            this._apiManagement = new ApiManagementOperations(this);
+            this._apiOperationPolicy = new ApiOperationPolicyOperations(this);
+            this._apiOperations = new ApiOperationsOperations(this);
+            this._apiPolicy = new ApiPolicyOperations(this);
+            this._apiProducts = new ApiProductsOperations(this);
+            this._apis = new ApisOperations(this);
+            this._authorizationServers = new AuthorizationServersOperations(this);
+            this._certificates = new CertificatesOperations(this);
+            this._groups = new GroupsOperations(this);
+            this._groupUsers = new GroupUsersOperations(this);
+            this._policySnippents = new PolicySnippetsOperations(this);
+            this._productApis = new ProductApisOperations(this);
+            this._productGroups = new ProductGroupsOperations(this);
+            this._productPolicy = new ProductPolicyOperations(this);
+            this._products = new ProductsOperations(this);
+            this._productSubscriptions = new ProductSubscriptionsOperations(this);
+            this._regions = new RegionsOperations(this);
+            this._reports = new ReportsOperations(this);
+            this._resourceProvider = new ResourceProviderOperations(this);
+            this._subscriptions = new SubscriptionsOperations(this);
+            this._tenantPolicy = new TenantPolicyOperations(this);
+            this._userApplications = new UserApplicationsOperations(this);
+            this._userGroups = new UserGroupsOperations(this);
+            this._userIdentities = new UserIdentitiesOperations(this);
+            this._users = new UsersOperations(this);
+            this._userSubscriptions = new UserSubscriptionsOperations(this);
             this._apiVersion = "2014-02-14";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
@@ -169,7 +436,31 @@ namespace Microsoft.Azure.Management.ApiManagement
         public ApiManagementClient(HttpClient httpClient)
             : base(httpClient)
         {
-            this._apiManagement = new ApiManagementOperations(this);
+            this._apiOperationPolicy = new ApiOperationPolicyOperations(this);
+            this._apiOperations = new ApiOperationsOperations(this);
+            this._apiPolicy = new ApiPolicyOperations(this);
+            this._apiProducts = new ApiProductsOperations(this);
+            this._apis = new ApisOperations(this);
+            this._authorizationServers = new AuthorizationServersOperations(this);
+            this._certificates = new CertificatesOperations(this);
+            this._groups = new GroupsOperations(this);
+            this._groupUsers = new GroupUsersOperations(this);
+            this._policySnippents = new PolicySnippetsOperations(this);
+            this._productApis = new ProductApisOperations(this);
+            this._productGroups = new ProductGroupsOperations(this);
+            this._productPolicy = new ProductPolicyOperations(this);
+            this._products = new ProductsOperations(this);
+            this._productSubscriptions = new ProductSubscriptionsOperations(this);
+            this._regions = new RegionsOperations(this);
+            this._reports = new ReportsOperations(this);
+            this._resourceProvider = new ResourceProviderOperations(this);
+            this._subscriptions = new SubscriptionsOperations(this);
+            this._tenantPolicy = new TenantPolicyOperations(this);
+            this._userApplications = new UserApplicationsOperations(this);
+            this._userGroups = new UserGroupsOperations(this);
+            this._userIdentities = new UserIdentitiesOperations(this);
+            this._users = new UsersOperations(this);
+            this._userSubscriptions = new UserSubscriptionsOperations(this);
             this._apiVersion = "2014-02-14";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
@@ -255,6 +546,287 @@ namespace Microsoft.Azure.Management.ApiManagement
                 
                 clonedClient.Credentials.InitializeServiceClient(clonedClient);
             }
+        }
+        
+        /// <summary>
+        /// Parse enum values for type BearerTokenSendingMethodsContract.
+        /// </summary>
+        /// <param name='value'>
+        /// The value to parse.
+        /// </param>
+        /// <returns>
+        /// The enum value.
+        /// </returns>
+        internal static BearerTokenSendingMethodsContract ParseBearerTokenSendingMethodsContract(string value)
+        {
+            if ("authorizationHeader".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return BearerTokenSendingMethodsContract.AuthorizationHeader;
+            }
+            if ("query".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return BearerTokenSendingMethodsContract.Query;
+            }
+            throw new ArgumentOutOfRangeException("value");
+        }
+        
+        /// <summary>
+        /// Convert an enum of type BearerTokenSendingMethodsContract to a
+        /// string.
+        /// </summary>
+        /// <param name='value'>
+        /// The value to convert to a string.
+        /// </param>
+        /// <returns>
+        /// The enum value as a string.
+        /// </returns>
+        internal static string BearerTokenSendingMethodsContractToString(BearerTokenSendingMethodsContract value)
+        {
+            if (value == BearerTokenSendingMethodsContract.AuthorizationHeader)
+            {
+                return "authorizationHeader";
+            }
+            if (value == BearerTokenSendingMethodsContract.Query)
+            {
+                return "query";
+            }
+            throw new ArgumentOutOfRangeException("value");
+        }
+        
+        /// <summary>
+        /// Parse enum values for type GrantTypesContract.
+        /// </summary>
+        /// <param name='value'>
+        /// The value to parse.
+        /// </param>
+        /// <returns>
+        /// The enum value.
+        /// </returns>
+        internal static GrantTypesContract ParseGrantTypesContract(string value)
+        {
+            if ("authorizationCode".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return GrantTypesContract.AuthorizationCode;
+            }
+            if ("implicit".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return GrantTypesContract.Implicit;
+            }
+            if ("resourceOwnerPassword".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return GrantTypesContract.ResourceOwnerPassword;
+            }
+            if ("clientCredentials".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return GrantTypesContract.ClientCredentials;
+            }
+            throw new ArgumentOutOfRangeException("value");
+        }
+        
+        /// <summary>
+        /// Convert an enum of type GrantTypesContract to a string.
+        /// </summary>
+        /// <param name='value'>
+        /// The value to convert to a string.
+        /// </param>
+        /// <returns>
+        /// The enum value as a string.
+        /// </returns>
+        internal static string GrantTypesContractToString(GrantTypesContract value)
+        {
+            if (value == GrantTypesContract.AuthorizationCode)
+            {
+                return "authorizationCode";
+            }
+            if (value == GrantTypesContract.Implicit)
+            {
+                return "implicit";
+            }
+            if (value == GrantTypesContract.ResourceOwnerPassword)
+            {
+                return "resourceOwnerPassword";
+            }
+            if (value == GrantTypesContract.ClientCredentials)
+            {
+                return "clientCredentials";
+            }
+            throw new ArgumentOutOfRangeException("value");
+        }
+        
+        /// <summary>
+        /// Parse enum values for type MethodContract.
+        /// </summary>
+        /// <param name='value'>
+        /// The value to parse.
+        /// </param>
+        /// <returns>
+        /// The enum value.
+        /// </returns>
+        internal static MethodContract ParseMethodContract(string value)
+        {
+            if ("HEAD".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return MethodContract.Head;
+            }
+            if ("OPTIONS".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return MethodContract.Options;
+            }
+            if ("TRACE".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return MethodContract.Trace;
+            }
+            if ("GET".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return MethodContract.Get;
+            }
+            if ("POST".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return MethodContract.Post;
+            }
+            if ("PUT".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return MethodContract.Put;
+            }
+            if ("PATCH".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return MethodContract.Patch;
+            }
+            if ("DELETE".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return MethodContract.Delete;
+            }
+            throw new ArgumentOutOfRangeException("value");
+        }
+        
+        /// <summary>
+        /// Convert an enum of type MethodContract to a string.
+        /// </summary>
+        /// <param name='value'>
+        /// The value to convert to a string.
+        /// </param>
+        /// <returns>
+        /// The enum value as a string.
+        /// </returns>
+        internal static string MethodContractToString(MethodContract value)
+        {
+            if (value == MethodContract.Head)
+            {
+                return "HEAD";
+            }
+            if (value == MethodContract.Options)
+            {
+                return "OPTIONS";
+            }
+            if (value == MethodContract.Trace)
+            {
+                return "TRACE";
+            }
+            if (value == MethodContract.Get)
+            {
+                return "GET";
+            }
+            if (value == MethodContract.Post)
+            {
+                return "POST";
+            }
+            if (value == MethodContract.Put)
+            {
+                return "PUT";
+            }
+            if (value == MethodContract.Patch)
+            {
+                return "PATCH";
+            }
+            if (value == MethodContract.Delete)
+            {
+                return "DELETE";
+            }
+            throw new ArgumentOutOfRangeException("value");
+        }
+        
+        /// <summary>
+        /// Parse enum values for type ReportsAggregation.
+        /// </summary>
+        /// <param name='value'>
+        /// The value to parse.
+        /// </param>
+        /// <returns>
+        /// The enum value.
+        /// </returns>
+        internal static ReportsAggregation ParseReportsAggregation(string value)
+        {
+            if ("byApi".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return ReportsAggregation.ByApi;
+            }
+            if ("byGeo".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return ReportsAggregation.ByGeo;
+            }
+            if ("byOperation".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return ReportsAggregation.ByOperation;
+            }
+            if ("byProduct".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return ReportsAggregation.ByProduct;
+            }
+            if ("bySubscription".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return ReportsAggregation.BySubscription;
+            }
+            if ("byTime".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return ReportsAggregation.ByTime;
+            }
+            if ("byUser".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return ReportsAggregation.ByUser;
+            }
+            throw new ArgumentOutOfRangeException("value");
+        }
+        
+        /// <summary>
+        /// Convert an enum of type ReportsAggregation to a string.
+        /// </summary>
+        /// <param name='value'>
+        /// The value to convert to a string.
+        /// </param>
+        /// <returns>
+        /// The enum value as a string.
+        /// </returns>
+        internal static string ReportsAggregationToString(ReportsAggregation value)
+        {
+            if (value == ReportsAggregation.ByApi)
+            {
+                return "byApi";
+            }
+            if (value == ReportsAggregation.ByGeo)
+            {
+                return "byGeo";
+            }
+            if (value == ReportsAggregation.ByOperation)
+            {
+                return "byOperation";
+            }
+            if (value == ReportsAggregation.ByProduct)
+            {
+                return "byProduct";
+            }
+            if (value == ReportsAggregation.BySubscription)
+            {
+                return "bySubscription";
+            }
+            if (value == ReportsAggregation.ByTime)
+            {
+                return "byTime";
+            }
+            if (value == ReportsAggregation.ByUser)
+            {
+                return "byUser";
+            }
+            throw new ArgumentOutOfRangeException("value");
         }
     }
 }

@@ -24,7 +24,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Hyak.Common;
 
-namespace Microsoft.Azure.Management.RemoteApp.Models
+namespace Microsoft.WindowsAzure.Management.RemoteApp.Models
 {
     /// <summary>
     /// Contains a map of URIs for application icons.

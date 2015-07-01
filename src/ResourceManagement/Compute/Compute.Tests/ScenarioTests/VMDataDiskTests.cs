@@ -13,6 +13,7 @@
 // limitations under the License.
 //
 
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.Resources;
@@ -36,7 +37,7 @@ namespace Compute.Tests
                 context.Start();
                 EnsureClientsInitialized();
 
-                string imgRefId = GetPlatformOSImage(useWindowsImage: true);
+                ImageReference imgageRef = GetPlatformVMImage(useWindowsImage: true);
                 // Create resource group
                 var rgName = TestUtilities.GenerateName(TestPrefix);
                 string storageAccountName = TestUtilities.GenerateName(TestPrefix);
@@ -121,7 +122,7 @@ namespace Compute.Tests
                         };
                     };
 
-                    var vm1 = CreateVM(rgName, asName, storageAccountOutput, imgRefId, out inputVM, addDataDiskToVM);
+                    var vm1 = CreateVM_NoAsyncTracking(rgName, asName, storageAccountOutput, imgageRef, out inputVM, addDataDiskToVM);
 
                     var getVMWithInstanceViewResponse = m_CrpClient.VirtualMachines.GetWithInstanceView(rgName, inputVM.Name);
                     Assert.True(getVMWithInstanceViewResponse.StatusCode == HttpStatusCode.OK);
@@ -133,7 +134,7 @@ namespace Compute.Tests
                     Assert.True(vmReCreateResponse.Status != ComputeOperationStatus.Failed);
 
                     var lroResponse = m_CrpClient.VirtualMachines.Delete(rgName, inputVM.Name);
-                    Assert.True(lroResponse.Status != ComputeOperationStatus.Failed);
+                    Assert.True(lroResponse.Status != OperationStatus.Failed);
 
                     passed = true;
                 }

@@ -13,6 +13,7 @@
 // limitations under the License.
 //
 
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.Resources;
@@ -28,22 +29,20 @@ namespace Compute.Tests
 {
     public class VMMarketplaceTest : VMTestBase
     {
-        public const string vmmPublisherName = "marketplace-test";
-        public const string vmmOfferName = "marketplace-offer-preview";
-        public const string vmmSku = "basic";
-        public const string vmmVer = "1.0.0";
+        public const string vmmPublisherName = "datastax";
+        public const string vmmOfferName = "datastax-enterprise-non-production-use-only";
+        public const string vmmSku = "sandbox_single-node";
 
         public VirtualMachineImage GetMarketplaceImage()
         {
+            ImageReference imageRef = FindVMImage(vmmPublisherName, vmmOfferName, vmmSku);
+            // Query the image directly in order to get all the properties, including PurchasePlan
             var parameters = new VirtualMachineImageGetParameters
             {
                 Location = m_location,
-                PublisherName = vmmPublisherName,
-                Offer = vmmOfferName,
-                Skus = vmmSku,
-                Version = vmmVer
+                PublisherName = vmmPublisherName, Offer = vmmOfferName, Skus = vmmSku,
+                Version = imageRef.Version
             };
-
             return m_CrpClient.VirtualMachineImages.Get(parameters).VirtualMachineImage;
         }
 
@@ -55,7 +54,7 @@ namespace Compute.Tests
                 context.Start();
                 EnsureClientsInitialized();
 
-                string imgRefId = GetPlatformOSImage(useWindowsImage: true);
+                ImageReference dummyImageRef = GetPlatformVMImage(useWindowsImage: true);
                 // Create resource group
                 var rgName = TestUtilities.GenerateName(TestPrefix);
                 string storageAccountName = TestUtilities.GenerateName(TestPrefix);
@@ -70,54 +69,49 @@ namespace Compute.Tests
 
                     Action<VirtualMachine> useVMMImage = vm =>
                     {
-                        vm.StorageProfile.SourceImage = null;
                         vm.StorageProfile.DataDisks = null;
                         vm.StorageProfile.ImageReference = new ImageReference
                         {
                             Publisher = vmmPublisherName,
                             Offer = vmmOfferName,
                             Sku = vmmSku,
-                            Version = vmmVer
+                            Version = img.Name
                         };
 
-                        /* vm.Plan = new Plan
+                        vm.Plan = new Plan
                         {
                             Name = img.PurchasePlan.Name,
                             Product = img.PurchasePlan.Product,
                             PromotionCode = null,
                             Publisher = img.PurchasePlan.Publisher
-                        }; */
+                        }; 
                     };
 
-                    var vm1 = CreateVM(rgName, asName, storageAccountOutput, imgRefId, out inputVM, useVMMImage);
+                    var vm1 = CreateVM_NoAsyncTracking(rgName, asName, storageAccountOutput, dummyImageRef, out inputVM, useVMMImage);
 
                     // Validate the VMM Plan field
                     ValidateMarketplaceVMPlanField(vm1, img);
 
-                    var getVMWithInstanceViewResponse = m_CrpClient.VirtualMachines.GetWithInstanceView(rgName, inputVM.Name);
-                    Assert.True(getVMWithInstanceViewResponse.StatusCode == HttpStatusCode.OK);
-                    Assert.True(getVMWithInstanceViewResponse.VirtualMachine != null, "VM in Get");
-                    ValidateVMInstanceView(inputVM, getVMWithInstanceViewResponse.VirtualMachine);
-
                     var lroResponse = m_CrpClient.VirtualMachines.Delete(rgName, inputVM.Name);
-                    Assert.True(lroResponse.Status != ComputeOperationStatus.Failed);
+                    Assert.Equal(OperationStatus.Succeeded, lroResponse.Status);
                 }
                 finally
                 {
-                    var deleteResourceGroupResponse = m_ResourcesClient.ResourceGroups.Delete(rgName);
-                    Assert.True(deleteResourceGroupResponse.StatusCode == HttpStatusCode.OK);
+                    // Don't wait for RG deletion since it's too slow, and there is nothing interesting expected with 
+                    // the resources from this test.
+                    var deleteResourceGroupResponse = m_ResourcesClient.ResourceGroups.BeginDeleting(rgName);
+                    Assert.True(deleteResourceGroupResponse.StatusCode == HttpStatusCode.Accepted ||
+                        deleteResourceGroupResponse.StatusCode == HttpStatusCode.NotFound);
                 }
             }
         }
 
         private void ValidateMarketplaceVMPlanField(VirtualMachine vm, VirtualMachineImage img)
         {
-            if (vm.Plan != null)
-            {
-                Assert.True(vm.Plan.Name != null);
-                Assert.True(vm.Plan.Product != null);
-                Assert.True(vm.Plan.PromotionCode != null);
-            }
+            Assert.NotNull(vm.Plan);
+            Assert.Equal(img.PurchasePlan.Publisher, vm.Plan.Publisher);
+            Assert.Equal(img.PurchasePlan.Product, vm.Plan.Product);
+            Assert.Equal(img.PurchasePlan.Name, vm.Plan.Name);
         }
     }
 }

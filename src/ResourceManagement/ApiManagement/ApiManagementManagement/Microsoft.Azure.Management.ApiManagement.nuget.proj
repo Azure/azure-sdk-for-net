@@ -5,7 +5,7 @@
     Microsoft.Azure.Management.ApiManagement
     -->
     <SdkNuGetPackage Include="Microsoft.Azure.Management.ApiManagement">
-      <PackageVersion>0.3.3-preview</PackageVersion>
+      <PackageVersion>1.0.2-preview</PackageVersion>
       <Folder>$(MSBuildThisFileDirectory)</Folder>
     </SdkNuGetPackage>
   </ItemGroup>

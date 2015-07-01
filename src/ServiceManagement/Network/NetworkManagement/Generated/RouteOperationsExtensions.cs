@@ -602,6 +602,124 @@ namespace Microsoft.WindowsAzure.Management.Network
         }
         
         /// <summary>
+        /// Get the effective route table for the provided network interface in
+        /// this subscription.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IRouteOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required. The name of the cloud service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required. The name of the deployment.
+        /// </param>
+        /// <param name='roleinstanceName'>
+        /// Required. The name of the role instance.
+        /// </param>
+        /// <param name='networkInterfaceName'>
+        /// Required. The name of the network interface.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static GetEffectiveRouteTableResponse GetEffectiveRouteTableForNetworkInterface(this IRouteOperations operations, string serviceName, string deploymentName, string roleinstanceName, string networkInterfaceName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IRouteOperations)s).GetEffectiveRouteTableForNetworkInterfaceAsync(serviceName, deploymentName, roleinstanceName, networkInterfaceName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Get the effective route table for the provided network interface in
+        /// this subscription.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IRouteOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required. The name of the cloud service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required. The name of the deployment.
+        /// </param>
+        /// <param name='roleinstanceName'>
+        /// Required. The name of the role instance.
+        /// </param>
+        /// <param name='networkInterfaceName'>
+        /// Required. The name of the network interface.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<GetEffectiveRouteTableResponse> GetEffectiveRouteTableForNetworkInterfaceAsync(this IRouteOperations operations, string serviceName, string deploymentName, string roleinstanceName, string networkInterfaceName)
+        {
+            return operations.GetEffectiveRouteTableForNetworkInterfaceAsync(serviceName, deploymentName, roleinstanceName, networkInterfaceName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Get the effective route table for the provided role instance in
+        /// this subscription.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IRouteOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required. The name of the cloud service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required. The name of the deployment.
+        /// </param>
+        /// <param name='roleinstanceName'>
+        /// Required. The name of the role instance.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static GetEffectiveRouteTableResponse GetEffectiveRouteTableForRoleInstance(this IRouteOperations operations, string serviceName, string deploymentName, string roleinstanceName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IRouteOperations)s).GetEffectiveRouteTableForRoleInstanceAsync(serviceName, deploymentName, roleinstanceName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Get the effective route table for the provided role instance in
+        /// this subscription.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IRouteOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required. The name of the cloud service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required. The name of the deployment.
+        /// </param>
+        /// <param name='roleinstanceName'>
+        /// Required. The name of the role instance.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<GetEffectiveRouteTableResponse> GetEffectiveRouteTableForRoleInstanceAsync(this IRouteOperations operations, string serviceName, string deploymentName, string roleinstanceName)
+        {
+            return operations.GetEffectiveRouteTableForRoleInstanceAsync(serviceName, deploymentName, roleinstanceName, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Get the specified route table for this subscription.
         /// </summary>
         /// <param name='operations'>
