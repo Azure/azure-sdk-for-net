@@ -80,7 +80,8 @@ namespace DataFactory.Tests.Framework.JsonSamples
                     defines:
                     {
                         PropertyBagPropertyName1: ""PropertyBagValue1""
-                    }
+                    },
+                    getDebugInfo : ""Failure""
                 },
                 linkedServiceName: ""MyLinkedServiceName""
             }
