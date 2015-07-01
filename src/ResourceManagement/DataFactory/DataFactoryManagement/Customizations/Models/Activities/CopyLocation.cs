@@ -13,9 +13,11 @@
 // limitations under the License.
 //
 
+using Microsoft.Azure.Management.DataFactories.Registration.Models;
+
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
-    public abstract class CopyLocation
+    public abstract class CopyLocation : IRegisteredType
     {
     }
 }

@@ -13,18 +13,9 @@
 // limitations under the License.
 //
 
-namespace Microsoft.Azure.Management.DataFactories.Models
+namespace Microsoft.Azure.Management.DataFactories.Registration.Models
 {
-#if ADF_INTERNAL
-    /// <summary>
-    /// MDS location.
-    /// </summary>
-    public class MdsLocation : TableTypeProperties
+    public interface IRegisteredType
     {
-        /// <summary>
-        /// The MDS table name.
-        /// </summary>
-        public string TableName { get; set; }
     }
-#endif
 }

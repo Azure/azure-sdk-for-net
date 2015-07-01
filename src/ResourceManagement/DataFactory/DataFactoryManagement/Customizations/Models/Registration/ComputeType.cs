@@ -16,7 +16,6 @@
 
 namespace Microsoft.Azure.Management.DataFactories.Registration.Models
 {
-#if ADF_INTERNAL
     public class ComputeType 
     {
         /// <summary>
@@ -29,5 +28,4 @@ namespace Microsoft.Azure.Management.DataFactories.Registration.Models
         /// </summary>
         public ComputeTypeProperties Properties { get; set; }
     }
-#endif
 }

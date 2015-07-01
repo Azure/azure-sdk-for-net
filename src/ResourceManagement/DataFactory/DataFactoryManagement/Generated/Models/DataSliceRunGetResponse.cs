@@ -21,42 +21,31 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.DataFactories.Models;
 
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
-    /// A hub is a group of related linked services and tables where pipeline
-    /// activities run.
+    /// The get Data Slice Run operation response.
     /// </summary>
-    public partial class Hub
+    public partial class DataSliceRunGetResponse : AzureOperationResponse
     {
-        private string _name;
+        private DataSliceRun _dataSliceRun;
         
         /// <summary>
-        /// Optional. Name of the hub.
+        /// Optional. Data Slice Run record.
         /// </summary>
-        public string Name
+        public DataSliceRun DataSliceRun
         {
-            get { return this._name; }
-            set { this._name = value; }
-        }
-        
-        private HubBaseProperties _properties;
-        
-        /// <summary>
-        /// Optional. Hub properties.
-        /// </summary>
-        public HubBaseProperties Properties
-        {
-            get { return this._properties; }
-            set { this._properties = value; }
+            get { return this._dataSliceRun; }
+            set { this._dataSliceRun = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the Hub class.
+        /// Initializes a new instance of the DataSliceRunGetResponse class.
         /// </summary>
-        public Hub()
+        public DataSliceRunGetResponse()
         {
         }
     }

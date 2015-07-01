@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         public string Database { get; set; }
 
         /// <summary>
-        /// Optional. The encryptedCredential for authentication.
+        /// Optional. The encrypted credential for authentication.
         /// </summary>]
         public string EncryptedCredential { get; set; }
 

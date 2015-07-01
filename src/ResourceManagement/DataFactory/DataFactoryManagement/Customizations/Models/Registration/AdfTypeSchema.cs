@@ -18,7 +18,6 @@ using Newtonsoft.Json;
 
 namespace Microsoft.Azure.Management.DataFactories.Registration.Models
 {
-#if ADF_INTERNAL
     /// <summary>
     /// Schema for a registered type.
     /// </summary>
@@ -59,5 +58,4 @@ namespace Microsoft.Azure.Management.DataFactories.Registration.Models
                 new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore });
         }
     }
-#endif
 }

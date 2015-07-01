@@ -35,7 +35,6 @@ namespace Microsoft.Azure.Management.DataFactories
         /// </summary>
         SubscriptionCloudCredentials Credentials { get; set; }
 
-#if ADF_INTERNAL
         /// <summary>
         /// Operations for managing data factory ActivityTypes.
         /// </summary>
@@ -45,7 +44,6 @@ namespace Microsoft.Azure.Management.DataFactories
         /// Operations for managing data factory ComputeTypes.
         /// </summary>
         IComputeTypeOperations ComputeTypes { get; }
-#endif
 
         /// <summary>
         /// Operations for managing data factories.

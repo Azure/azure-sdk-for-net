@@ -27,7 +27,7 @@ namespace DataFactory.Tests.UnitTests.TestClasses
         public class MyClass
         {
             [AdfRequired]
-            public int Number { get; set; }
+            public int? Number { get; set; }
         }
     }
 }

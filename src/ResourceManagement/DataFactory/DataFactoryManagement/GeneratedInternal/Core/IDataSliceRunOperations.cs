@@ -33,6 +33,26 @@ namespace Microsoft.Azure.Management.DataFactories.Core
     public partial interface IDataSliceRunOperations
     {
         /// <summary>
+        /// Gets a Data Slice Run instance.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name of the data factory.
+        /// </param>
+        /// <param name='dataFactoryName'>
+        /// A unique data factory instance name.
+        /// </param>
+        /// <param name='runId'>
+        /// A unique Data Slice Run Id.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The get Data Slice Run operation response.
+        /// </returns>
+        Task<DataSliceRunGetResponse> GetAsync(string resourceGroupName, string dataFactoryName, string runId, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// Gets logs for a data slice run
         /// </summary>
         /// <param name='resourceGroupName'>

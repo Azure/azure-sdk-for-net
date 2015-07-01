@@ -1,9 +1,9 @@
 {
-    "name": "LinkedService-CuratedWikiData",
-    "properties": {
-        "type": "AzureStorageLinkedService",
-        "typeProperties": { 
-            "connectionString": "DefaultEndpointsProtocol=https;AccountName=**********;AccountKey=**********"
-        }        
+  "name": "LinkedService-CuratedWikiData",
+  "properties": {
+    "type": "AzureStorageLinkedService",
+    "typeProperties": {
+      "connectionString": "DefaultEndpointsProtocol=https;AccountName=mytestaccountname;AccountKey=mytestaccountkey"
     }
+  }
 }

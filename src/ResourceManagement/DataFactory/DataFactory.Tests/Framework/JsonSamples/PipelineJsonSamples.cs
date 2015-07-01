@@ -241,75 +241,6 @@ namespace DataFactory.Tests.Framework.JsonSamples
 }
 ";
 
-#if ADF_INTERNAL
-        [JsonSample]
-        public const string CopyMdsToAzureTable = @"
-{
-    name: ""MyPipelineName"",
-    properties:
-    {
-        description : ""Copy from MDS to Azure table"",
-        hubName: ""MyHDIHub"",
-        activities:
-        [
-            {
-                type: ""CopyActivity"",
-                name: ""MyActivityName"",
-                typeProperties:
-                {
-                    source: 
-                    {
-                        type: ""MdsSource"",
-                        sourceRetryCount: ""2"",
-                        sourceRetryWait: ""00:00:01"",
-                        mdsTimeSpan: ""01:00:00"",
-                        mdsStartTime: ""2014-02-27T12:00:00"",
-                        mdsSourceWindowSize: ""00:30:00"",
-                        lastTableVersions: 5,
-                        queryString: ""SELECT 1"",
-                        enableMdsDebugLog: true,
-                        mdsSourceParallelReaderCount: 5
-                    },
-                    sink: 
-                    {
-                        type: ""AzureTableSink"",
-                        writeBatchSize: 1000000,
-                        writeBatchTimeout: ""01:00:00"",
-                        azureTableRetryIntervalInSec: 5,
-                        azureTableRetryTimes: 6,
-                        azureTableDefaultPartitionKeyValue: ""MyKeyValue"",
-                        azureTablePartitionKeyName: ""MyPartitionKeyName"",
-                        azureTableRowKeyName: ""MyRowKeyName"",
-                        azureTableInsertType: ""MyInsertType""
-                    }
-                },
-                inputs: 
-                [ 
-                    {
-                        name: ""MyInput""
-                    }
-                ],
-                outputs: 
-                [ 
-                    {
-                        name: ""MyOutput""
-                    }
-                ],
-                policy:
-                {
-                    concurrency: 3,
-                    executionPriorityOrder: ""NewestFirst"",
-                    retry: 3,
-                    timeout: ""00:00:05""
-                },
-                linkedServiceName: ""MyLinkedServiceName""
-            }
-        ]
-    }
-}
-";
-#endif
-
         [JsonSample]
         public const string CopyAzureTableToSql = @"
 {
@@ -416,160 +347,6 @@ namespace DataFactory.Tests.Framework.JsonSamples
     }
 }
 ";
-
-#if ADF_INTERNAL
-        [JsonSample]
-        public const string CopyBlobToProperty = @"
-{
-    name: ""MyPipelineName"",
-    properties:
-    {
-        description : ""Copy from Blob to Property"",
-        hubName: ""MyHDIHub"",
-        activities:
-        [
-            {
-                type: ""CopyActivity"",
-                name: ""MyActivityName"",
-                typeProperties:
-                {
-                    source: 
-                    {
-                        type: ""BlobSource"",
-                        sourceRetryCount: ""2"",
-                        sourceRetryWait: ""00:00:01"",
-                        blobColumnSeparators: ""My column separators"",
-                        treatEmptyAsNull: ""False"",
-                        nullValues: ""My null values""
-                    },
-                    sink: 
-                    {
-                        type: ""PropertySink"",
-                        writeBatchSize: 1000000,
-                        writeBatchTimeout: ""01:00:00""
-                    }
-                },
-                inputs: 
-                [ 
-                    {
-                        name: ""RawBlob""
-                    }
-                ],
-                outputs: 
-                [ 
-                    {
-                        name: ""ProcessedBlob""
-                    }
-                ],
-                linkedServiceName: ""MyLinkedServiceName""
-            }
-        ]
-    }
-}
-";
-#endif
-
-#if ADF_INTERNAL
-        [JsonSample]
-        public const string CopyBlobToServiceBus = @"
-{
-    name: ""MyPipelineName"",
-    properties:
-    {
-        description : ""Copy from Blob to Service Bus"",
-        hubName: ""MyHDIHub"",
-        activities:
-        [
-            {
-                type: ""CopyActivity"",
-                name: ""MyActivityName"",
-                typeProperties:
-                {
-                    source: 
-                    {
-                        type: ""BlobSource"",
-                        sourceRetryCount: ""2"",
-                        sourceRetryWait: ""00:00:01"",
-                        blobColumnSeparators: ""My column separators"",
-                        treatEmptyAsNull: ""False"",
-                        nullValues: ""My null values""
-                    },
-                    sink: 
-                    {
-                        type: ""ServiceBusSink"",
-                        writeBatchSize: 1000000,
-                        writeBatchTimeout: ""01:00:00"",
-                        bodyStreamColumnName: ""MyColumnName""
-                    }
-                },
-                inputs: 
-                [ 
-                    {
-                        name: ""RawBlob""
-                    }
-                ],
-                outputs: 
-                [ 
-                    {
-                        name: ""ProcessedBlob""
-                    }
-                ],
-                linkedServiceName: ""MyLinkedServiceName""
-            }
-        ]
-    }
-}
-";
-#endif
-
-#if ADF_INTERNAL
-        [JsonSample]
-        public const string NullPipeline = @"
-{
-    name: ""My null pipeline"",
-    properties: 
-    {
-        description : ""null pipeline description"",
-        hubName : ""MyHub"",
-        activities:
-        [
-            {
-                name: ""TestActivity"",
-                description: ""Test activity description"", 
-                type: ""NullActivity"",
-                typeProperties: 
-                {
-                    successDelay: ""00:00:01"",
-                    failureDelay: ""00:00:01"",
-                    failureCount: 1
-                },
-                inputs: 
-                [ 
-                    {
-                        name: ""RawBlob""
-                    }
-                ],
-                outputs: 
-                [ 
-                    {
-                        name: ""ProcessedBlob""
-                    }
-                ],
-                linkedServiceName: ""MyLinkedServiceName"",
-                policy:
-                {
-                    concurrency: 3,
-                    executionPriorityOrder: ""NewestFirst"",
-                    retry: 3,
-                        timeout: ""00:00:05"",
-                        delay: ""00:00:01""
-                }
-            }
-        ]
-    }
-}
-";
-#endif
 
         [JsonSample]
         public const string PipelineOptionalHubName = @"
@@ -749,7 +526,6 @@ namespace DataFactory.Tests.Framework.JsonSamples
 }
 ";
 
-//#if ADF_INTERNAL
 //        [JsonSample("ExtraProperties")]
 //        public const string ExtraPropertiesPipeline = @"
 //{
@@ -793,7 +569,6 @@ namespace DataFactory.Tests.Framework.JsonSamples
 //        ]
 //    }
 //}";
-//#endif
 
         [JsonSample(propertyBagKeys: new string[] 
             { 

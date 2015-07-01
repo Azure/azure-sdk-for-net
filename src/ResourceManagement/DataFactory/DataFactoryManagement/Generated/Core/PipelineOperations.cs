@@ -208,7 +208,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                 url = url + Uri.EscapeDataString(parameters.Pipeline.Name);
             }
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-07-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -309,6 +309,11 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                     if (activitiesItem.Policy.ExecutionPriorityOrder != null)
                                     {
                                         policyValue["executionPriorityOrder"] = activitiesItem.Policy.ExecutionPriorityOrder;
+                                    }
+                                    
+                                    if (activitiesItem.Policy.Style != null)
+                                    {
+                                        policyValue["style"] = activitiesItem.Policy.Style;
                                     }
                                     
                                     if (activitiesItem.Policy.Retry != null)
@@ -561,6 +566,13 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                             {
                                                 string executionPriorityOrderInstance = ((string)executionPriorityOrderValue);
                                                 policyInstance.ExecutionPriorityOrder = executionPriorityOrderInstance;
+                                            }
+                                            
+                                            JToken styleValue = policyValue2["style"];
+                                            if (styleValue != null && styleValue.Type != JTokenType.Null)
+                                            {
+                                                string styleInstance = ((string)styleValue);
+                                                policyInstance.Style = styleInstance;
                                             }
                                             
                                             JToken retryValue = policyValue2["retry"];
@@ -828,7 +840,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + "/datapipelines/";
             url = url + Uri.EscapeDataString(dataPipelineName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-07-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1006,6 +1018,13 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                             {
                                                 string executionPriorityOrderInstance = ((string)executionPriorityOrderValue);
                                                 policyInstance.ExecutionPriorityOrder = executionPriorityOrderInstance;
+                                            }
+                                            
+                                            JToken styleValue = policyValue["style"];
+                                            if (styleValue != null && styleValue.Type != JTokenType.Null)
+                                            {
+                                                string styleInstance = ((string)styleValue);
+                                                policyInstance.Style = styleInstance;
                                             }
                                             
                                             JToken retryValue = policyValue["retry"];
@@ -1261,7 +1280,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + "/datapipelines/";
             url = url + Uri.EscapeDataString(dataPipelineName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-07-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1341,11 +1360,11 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                     {
                         result.Status = OperationStatus.Failed;
                     }
-                    if (statusCode == HttpStatusCode.OK)
+                    if (statusCode == HttpStatusCode.NoContent)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
-                    if (statusCode == HttpStatusCode.NoContent)
+                    if (statusCode == HttpStatusCode.OK)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
@@ -1671,7 +1690,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + "/datapipelines/";
             url = url + Uri.EscapeDataString(dataPipelineName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-07-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1844,6 +1863,13 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                             {
                                                 string executionPriorityOrderInstance = ((string)executionPriorityOrderValue);
                                                 policyInstance.ExecutionPriorityOrder = executionPriorityOrderInstance;
+                                            }
+                                            
+                                            JToken styleValue = policyValue["style"];
+                                            if (styleValue != null && styleValue.Type != JTokenType.Null)
+                                            {
+                                                string styleInstance = ((string)styleValue);
+                                                policyInstance.Style = styleInstance;
                                             }
                                             
                                             JToken retryValue = policyValue["retry"];
@@ -2056,7 +2082,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                 
                 // Set Headers
                 httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
-                httpRequest.Headers.Add("x-ms-version", "2015-05-01-preview");
+                httpRequest.Headers.Add("x-ms-version", "2015-07-01-preview");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2202,6 +2228,13 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                             {
                                                 string executionPriorityOrderInstance = ((string)executionPriorityOrderValue);
                                                 policyInstance.ExecutionPriorityOrder = executionPriorityOrderInstance;
+                                            }
+                                            
+                                            JToken styleValue = policyValue["style"];
+                                            if (styleValue != null && styleValue.Type != JTokenType.Null)
+                                            {
+                                                string styleInstance = ((string)styleValue);
+                                                policyInstance.Style = styleInstance;
                                             }
                                             
                                             JToken retryValue = policyValue["retry"];
@@ -2449,7 +2482,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + Uri.EscapeDataString(dataFactoryName);
             url = url + "/datapipelines";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-07-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2627,6 +2660,13 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                                     {
                                                         string executionPriorityOrderInstance = ((string)executionPriorityOrderValue);
                                                         policyInstance.ExecutionPriorityOrder = executionPriorityOrderInstance;
+                                                    }
+                                                    
+                                                    JToken styleValue = policyValue["style"];
+                                                    if (styleValue != null && styleValue.Type != JTokenType.Null)
+                                                    {
+                                                        string styleInstance = ((string)styleValue);
+                                                        policyInstance.Style = styleInstance;
                                                     }
                                                     
                                                     JToken retryValue = policyValue["retry"];
@@ -3004,6 +3044,13 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                                         policyInstance.ExecutionPriorityOrder = executionPriorityOrderInstance;
                                                     }
                                                     
+                                                    JToken styleValue = policyValue["style"];
+                                                    if (styleValue != null && styleValue.Type != JTokenType.Null)
+                                                    {
+                                                        string styleInstance = ((string)styleValue);
+                                                        policyInstance.Style = styleInstance;
+                                                    }
+                                                    
                                                     JToken retryValue = policyValue["retry"];
                                                     if (retryValue != null && retryValue.Type != JTokenType.Null)
                                                     {
@@ -3267,7 +3314,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + Uri.EscapeDataString(dataPipelineName);
             url = url + "/resume";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-07-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -3467,7 +3514,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             queryParameters.Add("end=" + Uri.EscapeDataString(parameters.ActivePeriodEndTime));
             queryParameters.Add("autoResolve=" + Uri.EscapeDataString(parameters.AutoResolve.ToString().ToLower()));
             queryParameters.Add("forceRecalc=" + Uri.EscapeDataString(parameters.ForceRecalc.ToString().ToLower()));
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-07-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -3646,7 +3693,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + Uri.EscapeDataString(dataPipelineName);
             url = url + "/pause";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-07-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);

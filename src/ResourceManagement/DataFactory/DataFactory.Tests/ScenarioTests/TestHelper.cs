@@ -43,14 +43,8 @@ namespace DataFactory.Tests.ScenarioTests
 
         public static string GetDefaultLocation()
         {
-            ManagementClient managementClient = TestBase.GetServiceClient<ManagementClient>();
-
-            var serviceLocations = managementClient.Locations.ListAsync()
-                    .Result.ToList();
-
-            return serviceLocations.Any(l => l.Name.Equals("West US"))
-                ? "West US"
-                : serviceLocations.FirstOrDefault().Name;
+            // ADF will always use the below region for http mock test in Dogfood
+            return "Brazil South";
         }
     }
 }

@@ -23,11 +23,13 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// <summary>
         /// Name of the table.
         /// </summary>
+        [AdfRequired]
         public string Name { get; set; }
 
         /// <summary>
         /// Table properties.
         /// </summary>
+        [AdfRequired]
         public TableProperties Properties { get; set; }
 
         /// <summary>

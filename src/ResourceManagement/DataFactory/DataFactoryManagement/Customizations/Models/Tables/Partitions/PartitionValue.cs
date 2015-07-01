@@ -13,12 +13,14 @@
 // limitations under the License.
 //
 
+using Microsoft.Azure.Management.DataFactories.Registration.Models;
+
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
     /// The value of a partition.
     /// </summary>
-    public abstract class PartitionValue
+    public abstract class PartitionValue : IRegisteredType
     {
     }
 }

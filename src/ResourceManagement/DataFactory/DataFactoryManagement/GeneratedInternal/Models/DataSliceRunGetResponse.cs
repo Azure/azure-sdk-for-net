@@ -21,27 +21,32 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
+using Microsoft.Azure.Management.DataFactories.Models;
 
-namespace Microsoft.Azure.Management.DataFactories.Common.Models
+namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
-    /// Scheduler style.
+    /// The get Data Slice Run operation response.
     /// </summary>
-    public static partial class SchedulerStyle
+    public partial class DataSliceRunGetResponse : AzureOperationResponse
     {
-        /// <summary>
-        /// Not specified.
-        /// </summary>
-        public const string NotSpecified = "NotSpecified";
+        private DataSliceRun _dataSliceRun;
         
         /// <summary>
-        /// Start of interval.
+        /// Optional. Data Slice Run record.
         /// </summary>
-        public const string StartOfInterval = "StartOfInterval";
+        public DataSliceRun DataSliceRun
+        {
+            get { return this._dataSliceRun; }
+            set { this._dataSliceRun = value; }
+        }
         
         /// <summary>
-        /// End of interval.
+        /// Initializes a new instance of the DataSliceRunGetResponse class.
         /// </summary>
-        public const string EndOfInterval = "EndOfInterval";
+        public DataSliceRunGetResponse()
+        {
+        }
     }
 }

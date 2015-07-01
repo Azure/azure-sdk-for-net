@@ -31,6 +31,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Hyak.Common;
+using Hyak.Common.Internals;
 using Microsoft.Azure;
 using Microsoft.Azure.Management.DataFactories.Common.Models;
 using Microsoft.Azure.Management.DataFactories.Core;
@@ -40,17 +41,17 @@ using Newtonsoft.Json.Linq;
 namespace Microsoft.Azure.Management.DataFactories.Core
 {
     /// <summary>
-    /// Operations for managing data factory ActivityTypes.
+    /// Operations for managing data factory ComputeTypes.
     /// </summary>
-    internal partial class ActivityTypeOperations : IServiceOperations<DataFactoryManagementClient>, IActivityTypeOperations
+    internal partial class ComputeTypeOperations : IServiceOperations<DataFactoryManagementClient>, IComputeTypeOperations
     {
         /// <summary>
-        /// Initializes a new instance of the ActivityTypeOperations class.
+        /// Initializes a new instance of the ComputeTypeOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal ActivityTypeOperations(DataFactoryManagementClient client)
+        internal ComputeTypeOperations(DataFactoryManagementClient client)
         {
             this._client = client;
         }
@@ -67,7 +68,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         }
         
         /// <summary>
-        /// Delete an ActivityType instance.
+        /// Delete a ComputeType instance.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. The resource group name of the data factory.
@@ -75,8 +76,8 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         /// <param name='dataFactoryName'>
         /// Required. The name of the data factory.
         /// </param>
-        /// <param name='activityTypeName'>
-        /// Required. The name of the activityType.
+        /// <param name='computeTypeName'>
+        /// Required. The name of the computeType.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -84,7 +85,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         /// <returns>
         /// A standard service response for long running operations.
         /// </returns>
-        public async Task<LongRunningOperationResponse> BeginDeleteAsync(string resourceGroupName, string dataFactoryName, string activityTypeName, CancellationToken cancellationToken)
+        public async Task<LongRunningOperationResponse> BeginDeleteAsync(string resourceGroupName, string dataFactoryName, string computeTypeName, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -111,17 +112,17 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             {
                 throw new ArgumentOutOfRangeException("dataFactoryName");
             }
-            if (activityTypeName == null)
+            if (computeTypeName == null)
             {
-                throw new ArgumentNullException("activityTypeName");
+                throw new ArgumentNullException("computeTypeName");
             }
-            if (activityTypeName != null && activityTypeName.Length > 260)
+            if (computeTypeName != null && computeTypeName.Length > 260)
             {
-                throw new ArgumentOutOfRangeException("activityTypeName");
+                throw new ArgumentOutOfRangeException("computeTypeName");
             }
-            if (Regex.IsMatch(activityTypeName, "^[A-Za-z0-9_][^<>*#.%&:\\\\+?/]*$") == false)
+            if (Regex.IsMatch(computeTypeName, "^[A-Za-z0-9_][^<>*#.%&:\\\\+?/]*$") == false)
             {
-                throw new ArgumentOutOfRangeException("activityTypeName");
+                throw new ArgumentOutOfRangeException("computeTypeName");
             }
             
             // Tracing
@@ -133,7 +134,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("dataFactoryName", dataFactoryName);
-                tracingParameters.Add("activityTypeName", activityTypeName);
+                tracingParameters.Add("computeTypeName", computeTypeName);
                 TracingAdapter.Enter(invocationId, this, "BeginDeleteAsync", tracingParameters);
             }
             
@@ -148,10 +149,10 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/Microsoft.DataFactory/datafactories/";
             url = url + Uri.EscapeDataString(dataFactoryName);
-            url = url + "/activityTypes/";
-            url = url + Uri.EscapeDataString(activityTypeName);
+            url = url + "/computeTypes/";
+            url = url + Uri.EscapeDataString(computeTypeName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-07-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -231,11 +232,11 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                     {
                         result.Status = OperationStatus.Failed;
                     }
-                    if (statusCode == HttpStatusCode.NoContent)
+                    if (statusCode == HttpStatusCode.OK)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
-                    if (statusCode == HttpStatusCode.OK)
+                    if (statusCode == HttpStatusCode.NoContent)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
@@ -264,7 +265,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         }
         
         /// <summary>
-        /// Create or update an ActivityType.
+        /// Create or update a ComputeType.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. The resource group name of the data factory.
@@ -273,16 +274,16 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         /// Required. The name of the data factory.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The parameters required to create or update an
-        /// ActivityType definition.
+        /// Required. The parameters required to create or update a ComputeType
+        /// definition.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The create or update ActivityType operation response.
+        /// The create or update ComputeType operation response.
         /// </returns>
-        public async Task<ActivityTypeCreateOrUpdateResponse> CreateOrUpdateAsync(string resourceGroupName, string dataFactoryName, ActivityTypeCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
+        public async Task<ComputeTypeCreateOrUpdateResponse> CreateOrUpdateAsync(string resourceGroupName, string dataFactoryName, ComputeTypeCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -313,33 +314,41 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             {
                 throw new ArgumentNullException("parameters");
             }
-            if (parameters.ActivityType == null)
+            if (parameters.ComputeType == null)
             {
-                throw new ArgumentNullException("parameters.ActivityType");
+                throw new ArgumentNullException("parameters.ComputeType");
             }
-            if (parameters.ActivityType.Name == null)
+            if (parameters.ComputeType.Name == null)
             {
-                throw new ArgumentNullException("parameters.ActivityType.Name");
+                throw new ArgumentNullException("parameters.ComputeType.Name");
             }
-            if (parameters.ActivityType.Name != null && parameters.ActivityType.Name.Length > 260)
+            if (parameters.ComputeType.Name != null && parameters.ComputeType.Name.Length > 260)
             {
-                throw new ArgumentOutOfRangeException("parameters.ActivityType.Name");
+                throw new ArgumentOutOfRangeException("parameters.ComputeType.Name");
             }
-            if (Regex.IsMatch(parameters.ActivityType.Name, "^[A-Za-z0-9_][^<>*#.%&:\\\\+?/]*$") == false)
+            if (Regex.IsMatch(parameters.ComputeType.Name, "^[A-Za-z0-9_][^<>*#.%&:\\\\+?/]*$") == false)
             {
-                throw new ArgumentOutOfRangeException("parameters.ActivityType.Name");
+                throw new ArgumentOutOfRangeException("parameters.ComputeType.Name");
             }
-            if (parameters.ActivityType.Properties == null)
+            if (parameters.ComputeType.Properties == null)
             {
-                throw new ArgumentNullException("parameters.ActivityType.Properties");
+                throw new ArgumentNullException("parameters.ComputeType.Properties");
             }
-            if (parameters.ActivityType.Properties.Schema == null)
+            if (parameters.ComputeType.Properties.Schema == null)
             {
-                throw new ArgumentNullException("parameters.ActivityType.Properties.Schema");
+                throw new ArgumentNullException("parameters.ComputeType.Properties.Schema");
             }
-            if (parameters.ActivityType.Properties.Scope == null)
+            if (parameters.ComputeType.Properties.Scope == null)
             {
-                throw new ArgumentNullException("parameters.ActivityType.Properties.Scope");
+                throw new ArgumentNullException("parameters.ComputeType.Properties.Scope");
+            }
+            if (parameters.ComputeType.Properties.SupportedActivities == null)
+            {
+                throw new ArgumentNullException("parameters.ComputeType.Properties.SupportedActivities");
+            }
+            if (parameters.ComputeType.Properties.Transport == null)
+            {
+                throw new ArgumentNullException("parameters.ComputeType.Properties.Transport");
             }
             
             // Tracing
@@ -366,10 +375,10 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/Microsoft.DataFactory/datafactories/";
             url = url + Uri.EscapeDataString(dataFactoryName);
-            url = url + "/activityTypes/";
-            url = url + Uri.EscapeDataString(parameters.ActivityType.Name);
+            url = url + "/computeTypes/";
+            url = url + Uri.EscapeDataString(parameters.ComputeType.Name);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-07-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -406,22 +415,53 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                 string requestContent = null;
                 JToken requestDoc = null;
                 
-                JObject activityTypeCreateOrUpdateParametersValue = new JObject();
-                requestDoc = activityTypeCreateOrUpdateParametersValue;
+                JObject computeTypeCreateOrUpdateParametersValue = new JObject();
+                requestDoc = computeTypeCreateOrUpdateParametersValue;
                 
-                activityTypeCreateOrUpdateParametersValue["name"] = parameters.ActivityType.Name;
+                computeTypeCreateOrUpdateParametersValue["name"] = parameters.ComputeType.Name;
                 
                 JObject propertiesValue = new JObject();
-                activityTypeCreateOrUpdateParametersValue["properties"] = propertiesValue;
+                computeTypeCreateOrUpdateParametersValue["properties"] = propertiesValue;
                 
-                propertiesValue["scope"] = parameters.ActivityType.Properties.Scope;
+                propertiesValue["scope"] = parameters.ComputeType.Properties.Scope;
                 
-                if (parameters.ActivityType.Properties.BaseType != null)
+                JObject transportValue = new JObject();
+                propertiesValue["transport"] = transportValue;
+                if (parameters.ComputeType.Properties.Transport is ServiceBusTransport)
                 {
-                    propertiesValue["baseType"] = parameters.ActivityType.Properties.BaseType;
+                    transportValue["type"] = "ServiceBus";
+                    ServiceBusTransport derived = ((ServiceBusTransport)parameters.ComputeType.Properties.Transport);
+                    
+                    transportValue["activityRequestQueue"] = derived.ActivityRequestQueue;
+                    
+                    transportValue["activityStatusQueue"] = derived.ActivityStatusQueue;
+                    
+                    transportValue["serviceBusEndpoint"] = derived.ServiceBusEndpoint;
+                    
+                    transportValue["serviceBusSharedAccessKeyName"] = derived.ServiceBusSharedAccessKeyName;
+                    
+                    transportValue["serviceBusSharedAccessKey"] = derived.ServiceBusSharedAccessKey;
+                    
+                    if (derived.TransportProtocolVersion != null)
+                    {
+                        transportValue["transportProtocolVersion"] = derived.TransportProtocolVersion;
+                    }
                 }
                 
-                propertiesValue["schema"] = JObject.Parse(parameters.ActivityType.Properties.Schema);
+                if (parameters.ComputeType.Properties.SupportedActivities != null)
+                {
+                    if (parameters.ComputeType.Properties.SupportedActivities is ILazyCollection == false || ((ILazyCollection)parameters.ComputeType.Properties.SupportedActivities).IsInitialized)
+                    {
+                        JArray supportedActivitiesArray = new JArray();
+                        foreach (string supportedActivitiesItem in parameters.ComputeType.Properties.SupportedActivities)
+                        {
+                            supportedActivitiesArray.Add(supportedActivitiesItem);
+                        }
+                        propertiesValue["supportedActivities"] = supportedActivitiesArray;
+                    }
+                }
+                
+                propertiesValue["schema"] = JObject.Parse(parameters.ComputeType.Properties.Schema);
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
@@ -454,13 +494,13 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                     }
                     
                     // Create Result
-                    ActivityTypeCreateOrUpdateResponse result = null;
+                    ComputeTypeCreateOrUpdateResponse result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Created)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new ActivityTypeCreateOrUpdateResponse();
+                        result = new ComputeTypeCreateOrUpdateResponse();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -469,21 +509,21 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            ActivityType activityTypeInstance = new ActivityType();
-                            result.ActivityType = activityTypeInstance;
+                            ComputeType computeTypeInstance = new ComputeType();
+                            result.ComputeType = computeTypeInstance;
                             
                             JToken nameValue = responseDoc["name"];
                             if (nameValue != null && nameValue.Type != JTokenType.Null)
                             {
                                 string nameInstance = ((string)nameValue);
-                                activityTypeInstance.Name = nameInstance;
+                                computeTypeInstance.Name = nameInstance;
                             }
                             
                             JToken propertiesValue2 = responseDoc["properties"];
                             if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
                             {
-                                ActivityTypeProperties propertiesInstance = new ActivityTypeProperties();
-                                activityTypeInstance.Properties = propertiesInstance;
+                                ComputeTypeProperties propertiesInstance = new ComputeTypeProperties();
+                                computeTypeInstance.Properties = propertiesInstance;
                                 
                                 JToken scopeValue = propertiesValue2["scope"];
                                 if (scopeValue != null && scopeValue.Type != JTokenType.Null)
@@ -492,11 +532,66 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                     propertiesInstance.Scope = scopeInstance;
                                 }
                                 
-                                JToken baseTypeValue = propertiesValue2["baseType"];
-                                if (baseTypeValue != null && baseTypeValue.Type != JTokenType.Null)
+                                JToken transportValue2 = propertiesValue2["transport"];
+                                if (transportValue2 != null && transportValue2.Type != JTokenType.Null)
                                 {
-                                    string baseTypeInstance = ((string)baseTypeValue);
-                                    propertiesInstance.BaseType = baseTypeInstance;
+                                    string typeName = ((string)transportValue2["type"]);
+                                    if (typeName == "ServiceBus")
+                                    {
+                                        ServiceBusTransport serviceBusTransportInstance = new ServiceBusTransport();
+                                        
+                                        JToken activityRequestQueueValue = transportValue2["activityRequestQueue"];
+                                        if (activityRequestQueueValue != null && activityRequestQueueValue.Type != JTokenType.Null)
+                                        {
+                                            string activityRequestQueueInstance = ((string)activityRequestQueueValue);
+                                            serviceBusTransportInstance.ActivityRequestQueue = activityRequestQueueInstance;
+                                        }
+                                        
+                                        JToken activityStatusQueueValue = transportValue2["activityStatusQueue"];
+                                        if (activityStatusQueueValue != null && activityStatusQueueValue.Type != JTokenType.Null)
+                                        {
+                                            string activityStatusQueueInstance = ((string)activityStatusQueueValue);
+                                            serviceBusTransportInstance.ActivityStatusQueue = activityStatusQueueInstance;
+                                        }
+                                        
+                                        JToken serviceBusEndpointValue = transportValue2["serviceBusEndpoint"];
+                                        if (serviceBusEndpointValue != null && serviceBusEndpointValue.Type != JTokenType.Null)
+                                        {
+                                            string serviceBusEndpointInstance = ((string)serviceBusEndpointValue);
+                                            serviceBusTransportInstance.ServiceBusEndpoint = serviceBusEndpointInstance;
+                                        }
+                                        
+                                        JToken serviceBusSharedAccessKeyNameValue = transportValue2["serviceBusSharedAccessKeyName"];
+                                        if (serviceBusSharedAccessKeyNameValue != null && serviceBusSharedAccessKeyNameValue.Type != JTokenType.Null)
+                                        {
+                                            string serviceBusSharedAccessKeyNameInstance = ((string)serviceBusSharedAccessKeyNameValue);
+                                            serviceBusTransportInstance.ServiceBusSharedAccessKeyName = serviceBusSharedAccessKeyNameInstance;
+                                        }
+                                        
+                                        JToken serviceBusSharedAccessKeyValue = transportValue2["serviceBusSharedAccessKey"];
+                                        if (serviceBusSharedAccessKeyValue != null && serviceBusSharedAccessKeyValue.Type != JTokenType.Null)
+                                        {
+                                            string serviceBusSharedAccessKeyInstance = ((string)serviceBusSharedAccessKeyValue);
+                                            serviceBusTransportInstance.ServiceBusSharedAccessKey = serviceBusSharedAccessKeyInstance;
+                                        }
+                                        
+                                        JToken transportProtocolVersionValue = transportValue2["transportProtocolVersion"];
+                                        if (transportProtocolVersionValue != null && transportProtocolVersionValue.Type != JTokenType.Null)
+                                        {
+                                            string transportProtocolVersionInstance = ((string)transportProtocolVersionValue);
+                                            serviceBusTransportInstance.TransportProtocolVersion = transportProtocolVersionInstance;
+                                        }
+                                        propertiesInstance.Transport = serviceBusTransportInstance;
+                                    }
+                                }
+                                
+                                JToken supportedActivitiesArray2 = propertiesValue2["supportedActivities"];
+                                if (supportedActivitiesArray2 != null && supportedActivitiesArray2.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken supportedActivitiesValue in ((JArray)supportedActivitiesArray2))
+                                    {
+                                        propertiesInstance.SupportedActivities.Add(((string)supportedActivitiesValue));
+                                    }
                                 }
                                 
                                 JToken schemaValue = propertiesValue2["schema"];
@@ -539,7 +634,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         }
         
         /// <summary>
-        /// Create or update an ActivityType.
+        /// Create or update a ComputeType.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. The resource group name of the data factory.
@@ -547,20 +642,20 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         /// <param name='dataFactoryName'>
         /// Required. The name of the data factory.
         /// </param>
-        /// <param name='activityTypeName'>
-        /// Required. An ActivityType name.
+        /// <param name='computeTypeName'>
+        /// Required. A ComputeType name.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The parameters required to create or update an
-        /// ActivityType definition.
+        /// Required. The parameters required to create or update a ComputeType
+        /// definition.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The create or update ActivityType operation response.
+        /// The create or update ComputeType operation response.
         /// </returns>
-        public async Task<ActivityTypeCreateOrUpdateResponse> CreateOrUpdateWithRawJsonContentAsync(string resourceGroupName, string dataFactoryName, string activityTypeName, ActivityTypeCreateOrUpdateWithRawJsonContentParameters parameters, CancellationToken cancellationToken)
+        public async Task<ComputeTypeCreateOrUpdateResponse> CreateOrUpdateWithRawJsonContentAsync(string resourceGroupName, string dataFactoryName, string computeTypeName, ComputeTypeCreateOrUpdateWithRawJsonContentParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -587,17 +682,17 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             {
                 throw new ArgumentOutOfRangeException("dataFactoryName");
             }
-            if (activityTypeName == null)
+            if (computeTypeName == null)
             {
-                throw new ArgumentNullException("activityTypeName");
+                throw new ArgumentNullException("computeTypeName");
             }
-            if (activityTypeName != null && activityTypeName.Length > 260)
+            if (computeTypeName != null && computeTypeName.Length > 260)
             {
-                throw new ArgumentOutOfRangeException("activityTypeName");
+                throw new ArgumentOutOfRangeException("computeTypeName");
             }
-            if (Regex.IsMatch(activityTypeName, "^[A-Za-z0-9_][^<>*#.%&:\\\\+?/]*$") == false)
+            if (Regex.IsMatch(computeTypeName, "^[A-Za-z0-9_][^<>*#.%&:\\\\+?/]*$") == false)
             {
-                throw new ArgumentOutOfRangeException("activityTypeName");
+                throw new ArgumentOutOfRangeException("computeTypeName");
             }
             if (parameters == null)
             {
@@ -617,7 +712,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("dataFactoryName", dataFactoryName);
-                tracingParameters.Add("activityTypeName", activityTypeName);
+                tracingParameters.Add("computeTypeName", computeTypeName);
                 tracingParameters.Add("parameters", parameters);
                 TracingAdapter.Enter(invocationId, this, "CreateOrUpdateWithRawJsonContentAsync", tracingParameters);
             }
@@ -633,10 +728,10 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/Microsoft.DataFactory/datafactories/";
             url = url + Uri.EscapeDataString(dataFactoryName);
-            url = url + "/activityTypes/";
-            url = url + Uri.EscapeDataString(activityTypeName);
+            url = url + "/computeTypes/";
+            url = url + Uri.EscapeDataString(computeTypeName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-07-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -701,13 +796,13 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                     }
                     
                     // Create Result
-                    ActivityTypeCreateOrUpdateResponse result = null;
+                    ComputeTypeCreateOrUpdateResponse result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Created)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new ActivityTypeCreateOrUpdateResponse();
+                        result = new ComputeTypeCreateOrUpdateResponse();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -716,21 +811,21 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            ActivityType activityTypeInstance = new ActivityType();
-                            result.ActivityType = activityTypeInstance;
+                            ComputeType computeTypeInstance = new ComputeType();
+                            result.ComputeType = computeTypeInstance;
                             
                             JToken nameValue = responseDoc["name"];
                             if (nameValue != null && nameValue.Type != JTokenType.Null)
                             {
                                 string nameInstance = ((string)nameValue);
-                                activityTypeInstance.Name = nameInstance;
+                                computeTypeInstance.Name = nameInstance;
                             }
                             
                             JToken propertiesValue = responseDoc["properties"];
                             if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                             {
-                                ActivityTypeProperties propertiesInstance = new ActivityTypeProperties();
-                                activityTypeInstance.Properties = propertiesInstance;
+                                ComputeTypeProperties propertiesInstance = new ComputeTypeProperties();
+                                computeTypeInstance.Properties = propertiesInstance;
                                 
                                 JToken scopeValue = propertiesValue["scope"];
                                 if (scopeValue != null && scopeValue.Type != JTokenType.Null)
@@ -739,11 +834,66 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                     propertiesInstance.Scope = scopeInstance;
                                 }
                                 
-                                JToken baseTypeValue = propertiesValue["baseType"];
-                                if (baseTypeValue != null && baseTypeValue.Type != JTokenType.Null)
+                                JToken transportValue = propertiesValue["transport"];
+                                if (transportValue != null && transportValue.Type != JTokenType.Null)
                                 {
-                                    string baseTypeInstance = ((string)baseTypeValue);
-                                    propertiesInstance.BaseType = baseTypeInstance;
+                                    string typeName = ((string)transportValue["type"]);
+                                    if (typeName == "ServiceBus")
+                                    {
+                                        ServiceBusTransport serviceBusTransportInstance = new ServiceBusTransport();
+                                        
+                                        JToken activityRequestQueueValue = transportValue["activityRequestQueue"];
+                                        if (activityRequestQueueValue != null && activityRequestQueueValue.Type != JTokenType.Null)
+                                        {
+                                            string activityRequestQueueInstance = ((string)activityRequestQueueValue);
+                                            serviceBusTransportInstance.ActivityRequestQueue = activityRequestQueueInstance;
+                                        }
+                                        
+                                        JToken activityStatusQueueValue = transportValue["activityStatusQueue"];
+                                        if (activityStatusQueueValue != null && activityStatusQueueValue.Type != JTokenType.Null)
+                                        {
+                                            string activityStatusQueueInstance = ((string)activityStatusQueueValue);
+                                            serviceBusTransportInstance.ActivityStatusQueue = activityStatusQueueInstance;
+                                        }
+                                        
+                                        JToken serviceBusEndpointValue = transportValue["serviceBusEndpoint"];
+                                        if (serviceBusEndpointValue != null && serviceBusEndpointValue.Type != JTokenType.Null)
+                                        {
+                                            string serviceBusEndpointInstance = ((string)serviceBusEndpointValue);
+                                            serviceBusTransportInstance.ServiceBusEndpoint = serviceBusEndpointInstance;
+                                        }
+                                        
+                                        JToken serviceBusSharedAccessKeyNameValue = transportValue["serviceBusSharedAccessKeyName"];
+                                        if (serviceBusSharedAccessKeyNameValue != null && serviceBusSharedAccessKeyNameValue.Type != JTokenType.Null)
+                                        {
+                                            string serviceBusSharedAccessKeyNameInstance = ((string)serviceBusSharedAccessKeyNameValue);
+                                            serviceBusTransportInstance.ServiceBusSharedAccessKeyName = serviceBusSharedAccessKeyNameInstance;
+                                        }
+                                        
+                                        JToken serviceBusSharedAccessKeyValue = transportValue["serviceBusSharedAccessKey"];
+                                        if (serviceBusSharedAccessKeyValue != null && serviceBusSharedAccessKeyValue.Type != JTokenType.Null)
+                                        {
+                                            string serviceBusSharedAccessKeyInstance = ((string)serviceBusSharedAccessKeyValue);
+                                            serviceBusTransportInstance.ServiceBusSharedAccessKey = serviceBusSharedAccessKeyInstance;
+                                        }
+                                        
+                                        JToken transportProtocolVersionValue = transportValue["transportProtocolVersion"];
+                                        if (transportProtocolVersionValue != null && transportProtocolVersionValue.Type != JTokenType.Null)
+                                        {
+                                            string transportProtocolVersionInstance = ((string)transportProtocolVersionValue);
+                                            serviceBusTransportInstance.TransportProtocolVersion = transportProtocolVersionInstance;
+                                        }
+                                        propertiesInstance.Transport = serviceBusTransportInstance;
+                                    }
+                                }
+                                
+                                JToken supportedActivitiesArray = propertiesValue["supportedActivities"];
+                                if (supportedActivitiesArray != null && supportedActivitiesArray.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken supportedActivitiesValue in ((JArray)supportedActivitiesArray))
+                                    {
+                                        propertiesInstance.SupportedActivities.Add(((string)supportedActivitiesValue));
+                                    }
                                 }
                                 
                                 JToken schemaValue = propertiesValue["schema"];
@@ -786,7 +936,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         }
         
         /// <summary>
-        /// Delete an ActivityType instance.
+        /// Delete a ComputeType instance.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. The resource group name of the data factory.
@@ -794,8 +944,8 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         /// <param name='dataFactoryName'>
         /// Required. The name of the data factory.
         /// </param>
-        /// <param name='activityTypeName'>
-        /// Required. The name of the activityType.
+        /// <param name='computeTypeName'>
+        /// Required. The name of the computeType.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -803,7 +953,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         /// <returns>
         /// A standard service response for long running operations.
         /// </returns>
-        public async Task<LongRunningOperationResponse> DeleteAsync(string resourceGroupName, string dataFactoryName, string activityTypeName, CancellationToken cancellationToken)
+        public async Task<LongRunningOperationResponse> DeleteAsync(string resourceGroupName, string dataFactoryName, string computeTypeName, CancellationToken cancellationToken)
         {
             DataFactoryManagementClient client = this.Client;
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -814,12 +964,12 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("dataFactoryName", dataFactoryName);
-                tracingParameters.Add("activityTypeName", activityTypeName);
+                tracingParameters.Add("computeTypeName", computeTypeName);
                 TracingAdapter.Enter(invocationId, this, "DeleteAsync", tracingParameters);
             }
             
             cancellationToken.ThrowIfCancellationRequested();
-            LongRunningOperationResponse response = await client.ActivityTypes.BeginDeleteAsync(resourceGroupName, dataFactoryName, activityTypeName, cancellationToken).ConfigureAwait(false);
+            LongRunningOperationResponse response = await client.ComputeTypes.BeginDeleteAsync(resourceGroupName, dataFactoryName, computeTypeName, cancellationToken).ConfigureAwait(false);
             if (response.Status == OperationStatus.Succeeded)
             {
                 return response;
@@ -861,7 +1011,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         }
         
         /// <summary>
-        /// Gets an ActivityType instance.
+        /// Gets a ComputeType instance.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. The resource group name of the data factory.
@@ -870,16 +1020,15 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         /// Required. The name of the data factory.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters specifying how to get an ActivityType
-        /// definition.
+        /// Required. Parameters specifying how to get a ComputeType definition.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The Get ActivityType operation response.
+        /// The Get ComputeType operation response.
         /// </returns>
-        public async Task<ActivityTypeGetResponse> GetAsync(string resourceGroupName, string dataFactoryName, ActivityTypeGetParameters parameters, CancellationToken cancellationToken)
+        public async Task<ComputeTypeGetResponse> GetAsync(string resourceGroupName, string dataFactoryName, ComputeTypeGetParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -910,17 +1059,17 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             {
                 throw new ArgumentNullException("parameters");
             }
-            if (parameters.ActivityTypeName == null)
+            if (parameters.ComputeTypeName == null)
             {
-                throw new ArgumentNullException("parameters.ActivityTypeName");
+                throw new ArgumentNullException("parameters.ComputeTypeName");
             }
-            if (parameters.ActivityTypeName != null && parameters.ActivityTypeName.Length > 260)
+            if (parameters.ComputeTypeName != null && parameters.ComputeTypeName.Length > 260)
             {
-                throw new ArgumentOutOfRangeException("parameters.ActivityTypeName");
+                throw new ArgumentOutOfRangeException("parameters.ComputeTypeName");
             }
-            if (Regex.IsMatch(parameters.ActivityTypeName, "^[A-Za-z0-9_][^<>*#.%&:\\\\+?/]*$") == false)
+            if (Regex.IsMatch(parameters.ComputeTypeName, "^[A-Za-z0-9_][^<>*#.%&:\\\\+?/]*$") == false)
             {
-                throw new ArgumentOutOfRangeException("parameters.ActivityTypeName");
+                throw new ArgumentOutOfRangeException("parameters.ComputeTypeName");
             }
             if (parameters.RegistrationScope == null)
             {
@@ -951,12 +1100,11 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/Microsoft.DataFactory/datafactories/";
             url = url + Uri.EscapeDataString(dataFactoryName);
-            url = url + "/activityTypes/";
-            url = url + Uri.EscapeDataString(parameters.ActivityTypeName);
+            url = url + "/computeTypes/";
+            url = url + Uri.EscapeDataString(parameters.ComputeTypeName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-07-01-preview");
             queryParameters.Add("scope=" + Uri.EscapeDataString(parameters.RegistrationScope));
-            queryParameters.Add("resolved=" + Uri.EscapeDataString(parameters.Resolved.ToString().ToLower()));
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1016,13 +1164,13 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                     }
                     
                     // Create Result
-                    ActivityTypeGetResponse result = null;
+                    ComputeTypeGetResponse result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new ActivityTypeGetResponse();
+                        result = new ComputeTypeGetResponse();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -1031,21 +1179,21 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            ActivityType activityTypeInstance = new ActivityType();
-                            result.ActivityType = activityTypeInstance;
+                            ComputeType computeTypeInstance = new ComputeType();
+                            result.ComputeType = computeTypeInstance;
                             
                             JToken nameValue = responseDoc["name"];
                             if (nameValue != null && nameValue.Type != JTokenType.Null)
                             {
                                 string nameInstance = ((string)nameValue);
-                                activityTypeInstance.Name = nameInstance;
+                                computeTypeInstance.Name = nameInstance;
                             }
                             
                             JToken propertiesValue = responseDoc["properties"];
                             if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                             {
-                                ActivityTypeProperties propertiesInstance = new ActivityTypeProperties();
-                                activityTypeInstance.Properties = propertiesInstance;
+                                ComputeTypeProperties propertiesInstance = new ComputeTypeProperties();
+                                computeTypeInstance.Properties = propertiesInstance;
                                 
                                 JToken scopeValue = propertiesValue["scope"];
                                 if (scopeValue != null && scopeValue.Type != JTokenType.Null)
@@ -1054,11 +1202,66 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                     propertiesInstance.Scope = scopeInstance;
                                 }
                                 
-                                JToken baseTypeValue = propertiesValue["baseType"];
-                                if (baseTypeValue != null && baseTypeValue.Type != JTokenType.Null)
+                                JToken transportValue = propertiesValue["transport"];
+                                if (transportValue != null && transportValue.Type != JTokenType.Null)
                                 {
-                                    string baseTypeInstance = ((string)baseTypeValue);
-                                    propertiesInstance.BaseType = baseTypeInstance;
+                                    string typeName = ((string)transportValue["type"]);
+                                    if (typeName == "ServiceBus")
+                                    {
+                                        ServiceBusTransport serviceBusTransportInstance = new ServiceBusTransport();
+                                        
+                                        JToken activityRequestQueueValue = transportValue["activityRequestQueue"];
+                                        if (activityRequestQueueValue != null && activityRequestQueueValue.Type != JTokenType.Null)
+                                        {
+                                            string activityRequestQueueInstance = ((string)activityRequestQueueValue);
+                                            serviceBusTransportInstance.ActivityRequestQueue = activityRequestQueueInstance;
+                                        }
+                                        
+                                        JToken activityStatusQueueValue = transportValue["activityStatusQueue"];
+                                        if (activityStatusQueueValue != null && activityStatusQueueValue.Type != JTokenType.Null)
+                                        {
+                                            string activityStatusQueueInstance = ((string)activityStatusQueueValue);
+                                            serviceBusTransportInstance.ActivityStatusQueue = activityStatusQueueInstance;
+                                        }
+                                        
+                                        JToken serviceBusEndpointValue = transportValue["serviceBusEndpoint"];
+                                        if (serviceBusEndpointValue != null && serviceBusEndpointValue.Type != JTokenType.Null)
+                                        {
+                                            string serviceBusEndpointInstance = ((string)serviceBusEndpointValue);
+                                            serviceBusTransportInstance.ServiceBusEndpoint = serviceBusEndpointInstance;
+                                        }
+                                        
+                                        JToken serviceBusSharedAccessKeyNameValue = transportValue["serviceBusSharedAccessKeyName"];
+                                        if (serviceBusSharedAccessKeyNameValue != null && serviceBusSharedAccessKeyNameValue.Type != JTokenType.Null)
+                                        {
+                                            string serviceBusSharedAccessKeyNameInstance = ((string)serviceBusSharedAccessKeyNameValue);
+                                            serviceBusTransportInstance.ServiceBusSharedAccessKeyName = serviceBusSharedAccessKeyNameInstance;
+                                        }
+                                        
+                                        JToken serviceBusSharedAccessKeyValue = transportValue["serviceBusSharedAccessKey"];
+                                        if (serviceBusSharedAccessKeyValue != null && serviceBusSharedAccessKeyValue.Type != JTokenType.Null)
+                                        {
+                                            string serviceBusSharedAccessKeyInstance = ((string)serviceBusSharedAccessKeyValue);
+                                            serviceBusTransportInstance.ServiceBusSharedAccessKey = serviceBusSharedAccessKeyInstance;
+                                        }
+                                        
+                                        JToken transportProtocolVersionValue = transportValue["transportProtocolVersion"];
+                                        if (transportProtocolVersionValue != null && transportProtocolVersionValue.Type != JTokenType.Null)
+                                        {
+                                            string transportProtocolVersionInstance = ((string)transportProtocolVersionValue);
+                                            serviceBusTransportInstance.TransportProtocolVersion = transportProtocolVersionInstance;
+                                        }
+                                        propertiesInstance.Transport = serviceBusTransportInstance;
+                                    }
+                                }
+                                
+                                JToken supportedActivitiesArray = propertiesValue["supportedActivities"];
+                                if (supportedActivitiesArray != null && supportedActivitiesArray.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken supportedActivitiesValue in ((JArray)supportedActivitiesArray))
+                                    {
+                                        propertiesInstance.SupportedActivities.Add(((string)supportedActivitiesValue));
+                                    }
                                 }
                                 
                                 JToken schemaValue = propertiesValue["schema"];
@@ -1101,8 +1304,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         }
         
         /// <summary>
-        /// Gets the first page of ActivityType instances with the link to the
-        /// next page.
+        /// Gets a ComputeType instance.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. The resource group name of the data factory.
@@ -1111,16 +1313,16 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         /// Required. The name of the data factory.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters specifying how to return a list of
-        /// ActivityType definitions.
+        /// Required. Parameters specifying how to return a list of ComputeType
+        /// definitions for a List operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The List ActivityType operation response.
+        /// The List ComputeType operation response.
         /// </returns>
-        public async Task<ActivityTypeListResponse> ListAsync(string resourceGroupName, string dataFactoryName, ActivityTypeListParameters parameters, CancellationToken cancellationToken)
+        public async Task<ComputeTypeListResponse> ListAsync(string resourceGroupName, string dataFactoryName, ComputeTypeListParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -1151,6 +1353,10 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             {
                 throw new ArgumentNullException("parameters");
             }
+            if (parameters.RegistrationScope == null)
+            {
+                throw new ArgumentNullException("parameters.RegistrationScope");
+            }
             
             // Tracing
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -1176,18 +1382,14 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/Microsoft.DataFactory/datafactories/";
             url = url + Uri.EscapeDataString(dataFactoryName);
-            url = url + "/activityTypes";
+            url = url + "/computeTypes";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
-            if (parameters.ActivityTypeName != null)
+            queryParameters.Add("api-version=2015-07-01-preview");
+            if (parameters.ComputeTypeName != null)
             {
-                queryParameters.Add("name=" + Uri.EscapeDataString(parameters.ActivityTypeName));
+                queryParameters.Add("name=" + Uri.EscapeDataString(parameters.ComputeTypeName));
             }
-            if (parameters.RegistrationScope != null)
-            {
-                queryParameters.Add("scope=" + Uri.EscapeDataString(parameters.RegistrationScope));
-            }
-            queryParameters.Add("resolved=" + Uri.EscapeDataString(parameters.Resolved.ToString().ToLower()));
+            queryParameters.Add("scope=" + Uri.EscapeDataString(parameters.RegistrationScope));
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1247,13 +1449,13 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                     }
                     
                     // Create Result
-                    ActivityTypeListResponse result = null;
+                    ComputeTypeListResponse result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new ActivityTypeListResponse();
+                        result = new ComputeTypeListResponse();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -1267,21 +1469,21 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                             {
                                 foreach (JToken valueValue in ((JArray)valueArray))
                                 {
-                                    ActivityType activityTypeInstance = new ActivityType();
-                                    result.ActivityTypes.Add(activityTypeInstance);
+                                    ComputeType computeTypeInstance = new ComputeType();
+                                    result.ComputeTypes.Add(computeTypeInstance);
                                     
                                     JToken nameValue = valueValue["name"];
                                     if (nameValue != null && nameValue.Type != JTokenType.Null)
                                     {
                                         string nameInstance = ((string)nameValue);
-                                        activityTypeInstance.Name = nameInstance;
+                                        computeTypeInstance.Name = nameInstance;
                                     }
                                     
                                     JToken propertiesValue = valueValue["properties"];
                                     if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                     {
-                                        ActivityTypeProperties propertiesInstance = new ActivityTypeProperties();
-                                        activityTypeInstance.Properties = propertiesInstance;
+                                        ComputeTypeProperties propertiesInstance = new ComputeTypeProperties();
+                                        computeTypeInstance.Properties = propertiesInstance;
                                         
                                         JToken scopeValue = propertiesValue["scope"];
                                         if (scopeValue != null && scopeValue.Type != JTokenType.Null)
@@ -1290,11 +1492,66 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                             propertiesInstance.Scope = scopeInstance;
                                         }
                                         
-                                        JToken baseTypeValue = propertiesValue["baseType"];
-                                        if (baseTypeValue != null && baseTypeValue.Type != JTokenType.Null)
+                                        JToken transportValue = propertiesValue["transport"];
+                                        if (transportValue != null && transportValue.Type != JTokenType.Null)
                                         {
-                                            string baseTypeInstance = ((string)baseTypeValue);
-                                            propertiesInstance.BaseType = baseTypeInstance;
+                                            string typeName = ((string)transportValue["type"]);
+                                            if (typeName == "ServiceBus")
+                                            {
+                                                ServiceBusTransport serviceBusTransportInstance = new ServiceBusTransport();
+                                                
+                                                JToken activityRequestQueueValue = transportValue["activityRequestQueue"];
+                                                if (activityRequestQueueValue != null && activityRequestQueueValue.Type != JTokenType.Null)
+                                                {
+                                                    string activityRequestQueueInstance = ((string)activityRequestQueueValue);
+                                                    serviceBusTransportInstance.ActivityRequestQueue = activityRequestQueueInstance;
+                                                }
+                                                
+                                                JToken activityStatusQueueValue = transportValue["activityStatusQueue"];
+                                                if (activityStatusQueueValue != null && activityStatusQueueValue.Type != JTokenType.Null)
+                                                {
+                                                    string activityStatusQueueInstance = ((string)activityStatusQueueValue);
+                                                    serviceBusTransportInstance.ActivityStatusQueue = activityStatusQueueInstance;
+                                                }
+                                                
+                                                JToken serviceBusEndpointValue = transportValue["serviceBusEndpoint"];
+                                                if (serviceBusEndpointValue != null && serviceBusEndpointValue.Type != JTokenType.Null)
+                                                {
+                                                    string serviceBusEndpointInstance = ((string)serviceBusEndpointValue);
+                                                    serviceBusTransportInstance.ServiceBusEndpoint = serviceBusEndpointInstance;
+                                                }
+                                                
+                                                JToken serviceBusSharedAccessKeyNameValue = transportValue["serviceBusSharedAccessKeyName"];
+                                                if (serviceBusSharedAccessKeyNameValue != null && serviceBusSharedAccessKeyNameValue.Type != JTokenType.Null)
+                                                {
+                                                    string serviceBusSharedAccessKeyNameInstance = ((string)serviceBusSharedAccessKeyNameValue);
+                                                    serviceBusTransportInstance.ServiceBusSharedAccessKeyName = serviceBusSharedAccessKeyNameInstance;
+                                                }
+                                                
+                                                JToken serviceBusSharedAccessKeyValue = transportValue["serviceBusSharedAccessKey"];
+                                                if (serviceBusSharedAccessKeyValue != null && serviceBusSharedAccessKeyValue.Type != JTokenType.Null)
+                                                {
+                                                    string serviceBusSharedAccessKeyInstance = ((string)serviceBusSharedAccessKeyValue);
+                                                    serviceBusTransportInstance.ServiceBusSharedAccessKey = serviceBusSharedAccessKeyInstance;
+                                                }
+                                                
+                                                JToken transportProtocolVersionValue = transportValue["transportProtocolVersion"];
+                                                if (transportProtocolVersionValue != null && transportProtocolVersionValue.Type != JTokenType.Null)
+                                                {
+                                                    string transportProtocolVersionInstance = ((string)transportProtocolVersionValue);
+                                                    serviceBusTransportInstance.TransportProtocolVersion = transportProtocolVersionInstance;
+                                                }
+                                                propertiesInstance.Transport = serviceBusTransportInstance;
+                                            }
+                                        }
+                                        
+                                        JToken supportedActivitiesArray = propertiesValue["supportedActivities"];
+                                        if (supportedActivitiesArray != null && supportedActivitiesArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken supportedActivitiesValue in ((JArray)supportedActivitiesArray))
+                                            {
+                                                propertiesInstance.SupportedActivities.Add(((string)supportedActivitiesValue));
+                                            }
                                         }
                                         
                                         JToken schemaValue = propertiesValue["schema"];
@@ -1346,19 +1603,19 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         }
         
         /// <summary>
-        /// Gets the next page of ActivityType instances with the link to the
+        /// Gets the next page of ComputeType instances with the link to the
         /// next page.
         /// </summary>
         /// <param name='nextLink'>
-        /// Required. The url to the next ActivityTypes page.
+        /// Required. The url to the next ComputeTypes page.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The List ActivityType operation response.
+        /// The List ComputeType operation response.
         /// </returns>
-        public async Task<ActivityTypeListResponse> ListNextAsync(string nextLink, CancellationToken cancellationToken)
+        public async Task<ComputeTypeListResponse> ListNextAsync(string nextLink, CancellationToken cancellationToken)
         {
             // Validate
             if (nextLink == null)
@@ -1424,13 +1681,13 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                     }
                     
                     // Create Result
-                    ActivityTypeListResponse result = null;
+                    ComputeTypeListResponse result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new ActivityTypeListResponse();
+                        result = new ComputeTypeListResponse();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -1444,21 +1701,21 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                             {
                                 foreach (JToken valueValue in ((JArray)valueArray))
                                 {
-                                    ActivityType activityTypeInstance = new ActivityType();
-                                    result.ActivityTypes.Add(activityTypeInstance);
+                                    ComputeType computeTypeInstance = new ComputeType();
+                                    result.ComputeTypes.Add(computeTypeInstance);
                                     
                                     JToken nameValue = valueValue["name"];
                                     if (nameValue != null && nameValue.Type != JTokenType.Null)
                                     {
                                         string nameInstance = ((string)nameValue);
-                                        activityTypeInstance.Name = nameInstance;
+                                        computeTypeInstance.Name = nameInstance;
                                     }
                                     
                                     JToken propertiesValue = valueValue["properties"];
                                     if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                     {
-                                        ActivityTypeProperties propertiesInstance = new ActivityTypeProperties();
-                                        activityTypeInstance.Properties = propertiesInstance;
+                                        ComputeTypeProperties propertiesInstance = new ComputeTypeProperties();
+                                        computeTypeInstance.Properties = propertiesInstance;
                                         
                                         JToken scopeValue = propertiesValue["scope"];
                                         if (scopeValue != null && scopeValue.Type != JTokenType.Null)
@@ -1467,11 +1724,66 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                             propertiesInstance.Scope = scopeInstance;
                                         }
                                         
-                                        JToken baseTypeValue = propertiesValue["baseType"];
-                                        if (baseTypeValue != null && baseTypeValue.Type != JTokenType.Null)
+                                        JToken transportValue = propertiesValue["transport"];
+                                        if (transportValue != null && transportValue.Type != JTokenType.Null)
                                         {
-                                            string baseTypeInstance = ((string)baseTypeValue);
-                                            propertiesInstance.BaseType = baseTypeInstance;
+                                            string typeName = ((string)transportValue["type"]);
+                                            if (typeName == "ServiceBus")
+                                            {
+                                                ServiceBusTransport serviceBusTransportInstance = new ServiceBusTransport();
+                                                
+                                                JToken activityRequestQueueValue = transportValue["activityRequestQueue"];
+                                                if (activityRequestQueueValue != null && activityRequestQueueValue.Type != JTokenType.Null)
+                                                {
+                                                    string activityRequestQueueInstance = ((string)activityRequestQueueValue);
+                                                    serviceBusTransportInstance.ActivityRequestQueue = activityRequestQueueInstance;
+                                                }
+                                                
+                                                JToken activityStatusQueueValue = transportValue["activityStatusQueue"];
+                                                if (activityStatusQueueValue != null && activityStatusQueueValue.Type != JTokenType.Null)
+                                                {
+                                                    string activityStatusQueueInstance = ((string)activityStatusQueueValue);
+                                                    serviceBusTransportInstance.ActivityStatusQueue = activityStatusQueueInstance;
+                                                }
+                                                
+                                                JToken serviceBusEndpointValue = transportValue["serviceBusEndpoint"];
+                                                if (serviceBusEndpointValue != null && serviceBusEndpointValue.Type != JTokenType.Null)
+                                                {
+                                                    string serviceBusEndpointInstance = ((string)serviceBusEndpointValue);
+                                                    serviceBusTransportInstance.ServiceBusEndpoint = serviceBusEndpointInstance;
+                                                }
+                                                
+                                                JToken serviceBusSharedAccessKeyNameValue = transportValue["serviceBusSharedAccessKeyName"];
+                                                if (serviceBusSharedAccessKeyNameValue != null && serviceBusSharedAccessKeyNameValue.Type != JTokenType.Null)
+                                                {
+                                                    string serviceBusSharedAccessKeyNameInstance = ((string)serviceBusSharedAccessKeyNameValue);
+                                                    serviceBusTransportInstance.ServiceBusSharedAccessKeyName = serviceBusSharedAccessKeyNameInstance;
+                                                }
+                                                
+                                                JToken serviceBusSharedAccessKeyValue = transportValue["serviceBusSharedAccessKey"];
+                                                if (serviceBusSharedAccessKeyValue != null && serviceBusSharedAccessKeyValue.Type != JTokenType.Null)
+                                                {
+                                                    string serviceBusSharedAccessKeyInstance = ((string)serviceBusSharedAccessKeyValue);
+                                                    serviceBusTransportInstance.ServiceBusSharedAccessKey = serviceBusSharedAccessKeyInstance;
+                                                }
+                                                
+                                                JToken transportProtocolVersionValue = transportValue["transportProtocolVersion"];
+                                                if (transportProtocolVersionValue != null && transportProtocolVersionValue.Type != JTokenType.Null)
+                                                {
+                                                    string transportProtocolVersionInstance = ((string)transportProtocolVersionValue);
+                                                    serviceBusTransportInstance.TransportProtocolVersion = transportProtocolVersionInstance;
+                                                }
+                                                propertiesInstance.Transport = serviceBusTransportInstance;
+                                            }
+                                        }
+                                        
+                                        JToken supportedActivitiesArray = propertiesValue["supportedActivities"];
+                                        if (supportedActivitiesArray != null && supportedActivitiesArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken supportedActivitiesValue in ((JArray)supportedActivitiesArray))
+                                            {
+                                                propertiesInstance.SupportedActivities.Add(((string)supportedActivitiesValue));
+                                            }
                                         }
                                         
                                         JToken schemaValue = propertiesValue["schema"];

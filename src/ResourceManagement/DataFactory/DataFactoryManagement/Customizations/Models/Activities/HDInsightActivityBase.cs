@@ -25,12 +25,12 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// <summary>
         /// Storage linked services.
         /// </summary>
-        public IEnumerable<string> StorageLinkedServices { get; set; }
+        public IList<string> StorageLinkedServices { get; set; }
 
         /// <summary>
         /// User specified arguments to HDInsightActivity.
         /// </summary>
-        public IEnumerable<string> Arguments { get; set; }
+        public IList<string> Arguments { get; set; }
 
         /// <summary>
         /// The <see cref="HDInsightActivityDebugInfoOption"/> settings to use.

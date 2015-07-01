@@ -26,60 +26,11 @@ using Newtonsoft.Json.Linq;
 namespace Microsoft.Azure.Management.DataFactories.Conversion
 {
     internal abstract class CoreTypeConverter<TCore, TWrapper, TExtensibleTypeProperties, TGenericTypeProperties> :
-        PolymorphicTypeConverter<TExtensibleTypeProperties>
+        GenericRegisteredTypeConverter<TExtensibleTypeProperties>
         where TExtensibleTypeProperties : TypeProperties
         where TGenericTypeProperties : TExtensibleTypeProperties, IGenericTypeProperties, new()
-    {
-        protected IDictionary<string, Type> TypeMap { get; private set; }
-
-        protected CoreTypeConverter()
-        {
-            this.TypeMap = new Dictionary<string, Type>();
-        }
-
-        /// <summary>
-        /// Registers a type for conversion to and from its Core type.
-        /// </summary>
-        /// <typeparam name="T">The type to register.</typeparam>
-        public void RegisterType<T>() where T : TExtensibleTypeProperties
-        {
-            Type type = typeof(T);
-            string typeName = type.Name;
-            string wrapperTypeName = typeof(TWrapper).Name;
-
-            if (ReservedTypes.ContainsKey(typeName))
-            {
-                throw new InvalidOperationException(string.Format(
-                        CultureInfo.InvariantCulture,
-                        "{0} type '{1}' cannot be locally registered because it has the same name as a built-in ADF {0} type.",
-                        wrapperTypeName,
-                        typeName));
-            }
-
-            if (this.TypeMap.ContainsKey(typeName))
-            {
-                throw new InvalidOperationException(string.Format(
-                        CultureInfo.InvariantCulture,
-                        "A {0} type with the name '{1}' is already registered.",
-                        wrapperTypeName,
-                        typeName));
-            }
-
-            this.TypeMap.Add(typeName, type);
-        }
-
-        public bool TypeIsRegistered<T>() where T : TExtensibleTypeProperties
-        {
-            string typeName = typeof(T).Name;
-            return ReservedTypes.ContainsKey(typeName) || this.TypeMap.ContainsKey(typeName);
-        }
-
-        public bool TryGetRegisteredType(string typeName, out Type type)
-        {
-            return ReservedTypes.TryGetValue(typeName, out type) || this.TypeMap.TryGetValue(typeName, out type);
-        }
-
-        #region Abstract methods
+    {       
+       #region Abstract methods
 
         /// <summary>
         /// Converts <paramref name="wrappedObject"/> from type TCore to TWrapper.
@@ -172,7 +123,17 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
 
             if (ImplementsIList(property))
             {
-                //this.ValidateList(actualValue as IList);
+#if NET45
+                this.ValidateList(actualValue as IList);
+#endif
+                return;
+            }
+
+            if (ImplementsIDictionary(property))
+            {
+#if NET45
+                this.ValidateDictionary(actualValue as IDictionary);
+#endif
                 return;
             }
                 
@@ -206,24 +167,56 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
             }
         }
 
-        //private void ValidateList(IEnumerable list)
-        //{
-        //    if (list == null)
-        //    {
-        //        throw new ArgumentNullException("list", "Some properties of the type cannot be casted to IList.");
-        //    }
+#if NET45
+        private void ValidateList(IList list)
+        {
+            if (list == null)
+            {
+                throw new ArgumentNullException("list", "Some properties of the type cannot be cast to IList.");
+            }
 
-        //    Type type = list.GetType().GetTypeInfo().GenericTypeArguments[0];
-        //    List<PropertyInfo> props = GetPropertiesToValidate(type).ToList();
+            Type type = list.GetType().GetTypeInfo().GenericTypeArguments[0];
+            if (!ShouldValidateMembers(type))
+            {
+                return;
+            }
 
-        //    foreach (object item in list)
-        //    {
-        //        foreach (PropertyInfo property in props)
-        //        {
-        //            this.ValidateTypeProperty(property, item);
-        //        }
-        //    }
-        //}
+            List<PropertyInfo> props = type.GetProperties(ConversionCommon.DefaultBindingFlags).ToList();
+
+            foreach (object item in list)
+            {
+                foreach (PropertyInfo property in props)
+                {
+                    this.ValidateTypeProperty(property, item);
+                }
+            }
+        }
+
+        private void ValidateDictionary(IDictionary list)
+        {
+            if (list == null)
+            {
+                throw new ArgumentNullException("list", "Some properties of the type cannot be cast to IDictionary.");
+            }
+
+            Type type = list.GetType().GetTypeInfo().GenericTypeArguments[1];
+            if (!ShouldValidateMembers(type))
+            {
+                return;
+            }
+
+            List<PropertyInfo> props =
+                type.GetProperties(ConversionCommon.DefaultBindingFlags).ToList();
+
+            foreach (DictionaryEntry item in list)
+            {
+                foreach (PropertyInfo property in props)
+                {
+                    this.ValidateTypeProperty(property, item.Value);
+                }
+            }
+        }
+#endif
 
         private static bool ImplementsIList(PropertyInfo property)
         {
@@ -241,11 +234,6 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
                           .Any(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(IDictionary<,>));
         }
 
-        private static IEnumerable<PropertyInfo> GetPropertiesToValidate(Type type)
-        {
-            return type.GetProperties(ConversionCommon.DefaultBindingFlags).Where(ShouldValidateMembers);
-        }
-
         // Get the properties of value that are not primitive/value types 
         // and cannot be indexed (e.g. not an array)
         private static bool ShouldValidateMembers(PropertyInfo propertyInfo)
@@ -254,11 +242,17 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
             bool preCheck = type.IsPrimitive || type.IsValueType || type.BaseType == typeof(object)
                             || propertyInfo.GetIndexParameters().Any();
 
-            if (preCheck)
-            {
-                return false;
-            }
+            return !preCheck && IsNotNullable(type);
+        }
 
+        private static bool ShouldValidateMembers(Type type)
+        {
+            bool preCheck = type.IsPrimitive || type.IsValueType || type == typeof(string) || type == typeof(object);
+            return !preCheck && IsNotNullable(type);
+        }
+
+        private static bool IsNotNullable(Type type)
+        {
             Type underlyingType = Nullable.GetUnderlyingType(type);
             if (underlyingType != null)
             {

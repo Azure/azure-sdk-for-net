@@ -34,6 +34,17 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         public string SqlWriterTableType { get; set; }
 
         /// <summary>
+        /// Optional. Name of the SQL column which is used to save slice
+        /// identifier information, to support idempotent copy.
+        /// </summary>
+        public string SliceIdentifierColumnName { get; set; }
+
+        /// <summary>
+        /// Optional. SQL writer cleanup script.
+        /// </summary>
+        public string SqlWriterCleanupScript { get; set; }
+
+        /// <summary>
         /// SQL stored procedure parameters.
         /// </summary>
         public IDictionary<string, StoredProcedureParameter> StoredProcedureParameters { get; set; }

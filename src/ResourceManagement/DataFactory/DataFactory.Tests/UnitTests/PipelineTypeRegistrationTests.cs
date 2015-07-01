@@ -14,7 +14,6 @@
 // limitations under the License.
 // 
 
-#if ADF_INTERNAL
 using System;
 using System.Globalization;
 using DataFactory.Tests.Framework;
@@ -31,10 +30,10 @@ namespace DataFactory.Tests.UnitTests
         [Trait(TraitName.Function, TestType.Registration)]
         public void CanRegisterActivityTypeForPipeline()
         {
-            this.Client.Pipelines.RegisterType<MyActivityType>();
+            this.Client.RegisterType<MyActivityType>(true);
 
             Assert.True(
-                this.Client.Pipelines.TypeIsRegistered<MyActivityType>(),
+                this.Client.TypeIsRegistered<MyActivityType>(),
                 string.Format(
                     CultureInfo.InvariantCulture,
                     "Type '{0}' was not successfully registered.",
@@ -47,7 +46,7 @@ namespace DataFactory.Tests.UnitTests
         public void RegisteringActivityTypeForPipelineWithReservedNameThrowsException()
         {
             InvalidOperationException ex = Assert.Throws<InvalidOperationException>(
-                () => this.Client.Pipelines.RegisterType<HDInsightHiveActivity>());
+                () => this.Client.RegisterType<HDInsightHiveActivity>());
 
             Assert.True(ex.Message.Contains("cannot be locally registered because it has the same name"));
         }
@@ -59,8 +58,8 @@ namespace DataFactory.Tests.UnitTests
         {
             try
             {
-                this.Client.Pipelines.RegisterType<MyActivityType>();
-                this.Client.Pipelines.RegisterType<MyActivityType>();
+                this.Client.RegisterType<MyActivityType>();
+                this.Client.RegisterType<MyActivityType>();
             }
             catch (InvalidOperationException ex)
             {
@@ -69,4 +68,3 @@ namespace DataFactory.Tests.UnitTests
         }
     }
 }
-#endif

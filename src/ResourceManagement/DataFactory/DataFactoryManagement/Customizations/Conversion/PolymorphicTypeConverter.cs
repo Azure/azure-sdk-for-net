@@ -1,4 +1,10 @@
-﻿//   http://www.apache.org/licenses/LICENSE-2.0
+﻿//
+// Copyright (c) Microsoft.  All rights reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//   http://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
@@ -11,7 +17,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Reflection;
 using Microsoft.Azure.Management.DataFactories.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -76,10 +81,10 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
                         MissingMemberHandling = MissingMemberHandling.Ignore,
                         ContractResolver = new CamelCasePropertyNamesContractResolver()
                     });
-
+ 
             string typeName = GetTypeName(value.GetType());
             obj.Add(DataFactoryConstants.KeyPolymorphicType, new JValue(typeName));
-
+            
             writer.WriteToken(obj.CreateReader());
         }
 

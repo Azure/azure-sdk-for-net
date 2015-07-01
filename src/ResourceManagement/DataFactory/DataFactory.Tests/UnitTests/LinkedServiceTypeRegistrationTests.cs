@@ -14,13 +14,13 @@
 // limitations under the License.
 // 
 
-#if ADF_INTERNAL
 using System;
 using System.Globalization;
 using DataFactory.Tests.Framework;
 using DataFactory.Tests.UnitTests.TestClasses;
 using Microsoft.Azure.Management.DataFactories.Models;
 using Xunit;
+
 namespace DataFactory.Tests.UnitTests
 {
     public class LinkedServiceTypeRegistrationTests : UnitTestBase
@@ -30,10 +30,10 @@ namespace DataFactory.Tests.UnitTests
         [Trait(TraitName.Function, TestType.Registration)]
         public void CanRegisterLinkedServiceType()
         {
-            this.Client.LinkedServices.RegisterType<MyLinkedServiceType>();
+            this.Client.RegisterType<MyLinkedServiceType>(true);
 
             Assert.True(
-                this.Client.LinkedServices.TypeIsRegistered<MyLinkedServiceType>(),
+                this.Client.TypeIsRegistered<MyLinkedServiceType>(),
                 string.Format(
                     CultureInfo.InvariantCulture,
                     "Type '{0}' was not successfully registered.",
@@ -46,21 +46,20 @@ namespace DataFactory.Tests.UnitTests
         public void RegisteringLinkedServiceTypeWithReservedNameThrowsException()
         {
             InvalidOperationException ex = Assert.Throws<InvalidOperationException>(
-                () => this.Client.LinkedServices.RegisterType<AzureSqlLinkedService>());
+                () => this.Client.RegisterType<AzureSqlLinkedService>());
             Assert.True(ex.Message.Contains("cannot be locally registered because it has the same name"));
         }
 
         [Fact]
         [Trait(TraitName.TestType, TestType.Unit)]
         [Trait(TraitName.Function, TestType.Registration)]
-        public void RegisteringLinkedServiceTypeTwiceThrowsException()
+        public void RegisteringLinkedServiceTypeTwiceWithoutForceThrowsException()
         {
-            this.Client.LinkedServices.RegisterType<MyLinkedServiceType>();
+            this.Client.RegisterType<MyLinkedServiceType>(true);
 
             InvalidOperationException ex = Assert.Throws<InvalidOperationException>(
-                () => this.Client.LinkedServices.RegisterType<MyLinkedServiceType>());
+                () => this.Client.RegisterType<MyLinkedServiceType>());
             Assert.True(ex.Message.Contains("is already registered"));
         }
     }
 }
-#endif

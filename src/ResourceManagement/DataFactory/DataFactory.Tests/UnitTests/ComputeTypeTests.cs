@@ -15,7 +15,6 @@
 // 
 // ----------------------------------------------------------------------------------
 
-#if ADF_INTERNAL
 using System;
 using System.Collections.Generic;
 using DataFactory.Tests.Framework;
@@ -44,7 +43,7 @@ namespace DataFactory.Tests.UnitTests
         public void ComputeTypeJsonConstsToWrappedObjectTest()
         {
             IEnumerable<JsonSampleInfo> samples =
-                JsonSampleCommon.GetJsonSamplesFromType<RegisteredComputeTypeJsonSamples>(JsonSampleType.ClientOnly);
+                JsonSampleCommon.GetJsonSamplesFromType<RegisteredComputeTypeJsonSamples>();
 
             this.TestComputeTypeJsonSamples(samples);
         }
@@ -75,4 +74,3 @@ namespace DataFactory.Tests.UnitTests
         }
     }
 }
-#endif

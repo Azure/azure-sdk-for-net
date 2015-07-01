@@ -23,7 +23,6 @@ using Microsoft.Azure.Management.DataFactories.Registration.Models;
 
 namespace Microsoft.Azure.Management.DataFactories
 {
-#if ADF_INTERNAL
     /// <summary>
     /// Operations for managing data factory ActivityTypes.
     /// </summary>
@@ -297,5 +296,4 @@ namespace Microsoft.Azure.Management.DataFactories
             return new ActivityTypeListResponse(response, this.Client);
         }
     }
-#endif
 }

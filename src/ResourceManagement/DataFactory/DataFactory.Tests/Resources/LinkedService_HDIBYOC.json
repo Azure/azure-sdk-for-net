@@ -1,12 +1,12 @@
 {
-    "name": "HDILinkedService",
-    "properties": {
-        "type": "HDInsightBYOCLinkedService",
-        "typeProperties": {
-            "clusterUri": "https://test1.azurehdinsight.net/",
-            "userName": "admin",
-            "password": "**********",
-            "linkedServiceName": "LinkedService-CuratedWikiData"
-        }
+  "name": "HDILinkedService",
+  "properties": {
+    "type": "HDInsightBYOCLinkedService",
+    "typeProperties": {
+      "clusterUri": "https://testhdi.azurehdinsight.net/",
+      "userName": "testaccount",
+      "password": "fakepassword",
+      "linkedServiceName": "LinkedService-CuratedWikiData"
     }
+  }
 }

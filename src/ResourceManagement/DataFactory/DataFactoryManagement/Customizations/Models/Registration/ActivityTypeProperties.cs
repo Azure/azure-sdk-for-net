@@ -15,7 +15,6 @@
 
 namespace Microsoft.Azure.Management.DataFactories.Registration.Models
 {
-#if ADF_INTERNAL
     /// <summary>
     /// Activity type properties.
     /// </summary>
@@ -26,5 +25,4 @@ namespace Microsoft.Azure.Management.DataFactories.Registration.Models
         /// </summary>
         public string BaseType { get; set; }
     }
-#endif
 }

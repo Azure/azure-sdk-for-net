@@ -15,7 +15,6 @@
 
 namespace Microsoft.Azure.Management.DataFactories.Registration.Models
 {
-#if ADF_INTERNAL
     public class ActivityType
     {
         /// <summary>
@@ -28,5 +27,4 @@ namespace Microsoft.Azure.Management.DataFactories.Registration.Models
         /// </summary>
         public ActivityTypeProperties Properties { get; set; }
     }
-#endif
 }

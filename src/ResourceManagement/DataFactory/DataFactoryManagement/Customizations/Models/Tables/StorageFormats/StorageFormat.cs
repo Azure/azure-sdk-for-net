@@ -13,12 +13,14 @@
 // limitations under the License.
 //
 
+using Microsoft.Azure.Management.DataFactories.Registration.Models;
+
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
     /// The format definition of a storage.
     /// </summary>
-    public abstract class StorageFormat
+    public abstract class StorageFormat : IRegisteredType
     {
         /// <summary>
         /// The serializer.

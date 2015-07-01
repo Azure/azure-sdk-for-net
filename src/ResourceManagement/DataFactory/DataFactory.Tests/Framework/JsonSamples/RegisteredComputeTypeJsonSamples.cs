@@ -14,7 +14,6 @@
 // limitations under the License.
 // 
 
-#if ADF_INTERNAL
 namespace DataFactory.Tests.Framework.JsonSamples
 {
     /// <summary>
@@ -112,4 +111,3 @@ namespace DataFactory.Tests.Framework.JsonSamples
 }";
     }
 }
-#endif

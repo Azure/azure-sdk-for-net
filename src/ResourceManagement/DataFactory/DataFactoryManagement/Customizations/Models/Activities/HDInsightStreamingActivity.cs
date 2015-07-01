@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// Paths to streaming job files. Can be directories.
         /// </summary>
         [AdfRequired]
-        public IEnumerable<string> FilePaths { get; set; }
+        public IList<string> FilePaths { get; set; }
 
         /// <summary>
         /// Linked service where the files are located.
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// <summary>
         /// Command line environment values.
         /// </summary>
-        public IEnumerable<string> CommandEnvironment { get; set; }
+        public IList<string> CommandEnvironment { get; set; }
 
         /// <summary>
         /// Allows user to specify defines for streaming job request.

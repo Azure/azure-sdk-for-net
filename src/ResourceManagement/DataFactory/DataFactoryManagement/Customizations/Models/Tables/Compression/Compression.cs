@@ -13,12 +13,14 @@
 // limitations under the License.
 //
 
+using Microsoft.Azure.Management.DataFactories.Registration.Models;
+
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
     /// The compression method used on a table.
     /// </summary>
-    public abstract class Compression
+    public abstract class Compression : IRegisteredType
     {
     }
 }
