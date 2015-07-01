@@ -18,6 +18,7 @@ using System;
 using System.IO;
 using System.Net;
 using DataFactory.Tests.Framework;
+using Microsoft.Azure.Management.DataFactories;
 using Microsoft.Azure.Management.DataFactories.Common.Models;
 using Microsoft.Azure.Management.DataFactories.Core;
 using Microsoft.Azure.Management.DataFactories.Models;
@@ -187,6 +188,22 @@ namespace DataFactory.Tests.ScenarioTests
                 var sliceResponse = client.DataSlices.List(resourceGroupName, factoryName, TableNameAggregatedData, startTime, endTime);
                 Assert.True(sliceResponse.StatusCode == HttpStatusCode.OK);
                 Assert.True(sliceResponse.DataSlices.Count == 2);
+
+                // verify list and get slice run
+                foreach (var slice in sliceResponse.DataSlices)
+                {
+                    var listSliceRunResponse = client.DataSliceRuns.List(resourceGroupName, factoryName,
+                        TableNameAggregatedData, slice.Start.ConvertToISO8601DateTimeString());
+                    Assert.True(listSliceRunResponse.StatusCode == HttpStatusCode.OK);
+
+                    foreach (var dataSliceRun in listSliceRunResponse.DataSliceRuns)
+                    {
+                        var getSliceRunResponse = client.DataSliceRuns.Get(resourceGroupName, factoryName,
+                            dataSliceRun.Id);
+
+                        Assert.True(getSliceRunResponse.StatusCode == HttpStatusCode.OK);
+                    }
+                }
             }
         }
     }

@@ -65,5 +65,13 @@ namespace Microsoft.Azure.Management.DataFactories
         {
             return await this.Client.InternalClient.DataSliceRuns.ListNextAsync(nextLink, cancellationToken);
         }
+
+        public async Task<DataSliceRunGetResponse> GetAsync(string resourceGroupName, string dataFactoryName, string runId, CancellationToken cancellationToken)
+        {
+            return await this.Client.InternalClient.DataSliceRuns.GetAsync(resourceGroupName, 
+                dataFactoryName, 
+                runId, 
+                cancellationToken);
+        }
     }
 }

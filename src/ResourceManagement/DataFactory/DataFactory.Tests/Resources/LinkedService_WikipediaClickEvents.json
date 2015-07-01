@@ -3,7 +3,7 @@
   "properties": {
     "type": "AzureStorageLinkedService",
     "typeProperties": {
-      "connectionString": "DefaultEndpointsProtocol=https;AccountName=**********;AccountKey=**********"
+      "connectionString": "DefaultEndpointsProtocol=https;AccountName=mywikistorage;AccountKey=mytestaccountkey"
     }
   }
 }

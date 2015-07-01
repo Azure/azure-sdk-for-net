@@ -23,6 +23,58 @@ namespace Microsoft.Azure.Management.DataFactories
     public static class DataSliceRunOperationsExtensions
     {
         /// <summary>
+        /// Gets a Data Slice Run instance.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.DataFactories.Core.IDataSliceRunOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The resource group name of the data factory.
+        /// </param>
+        /// <param name='dataFactoryName'>
+        /// Required. A unique data factory instance name.
+        /// </param>
+        /// <param name='runId'>
+        /// Required. A unique Data Slice Run Id.
+        /// </param>
+        /// <returns>
+        /// The get Data Slice Run operation response.
+        /// </returns>
+        public static DataSliceRunGetResponse Get(this IDataSliceRunOperations operations, string resourceGroupName, string dataFactoryName, string runId)
+        {
+            return Task.Factory.StartNew((object s) =>
+            {
+                return ((IDataSliceRunOperations)s).GetAsync(resourceGroupName, dataFactoryName, runId);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+
+        /// <summary>
+        /// Gets a Data Slice Run instance.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.DataFactories.Core.IDataSliceRunOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The resource group name of the data factory.
+        /// </param>
+        /// <param name='dataFactoryName'>
+        /// Required. A unique data factory instance name.
+        /// </param>
+        /// <param name='runId'>
+        /// Required. A unique Data Slice Run Id.
+        /// </param>
+        /// <returns>
+        /// The get Data Slice Run operation response.
+        /// </returns>
+        public static Task<DataSliceRunGetResponse> GetAsync(this IDataSliceRunOperations operations, string resourceGroupName, string dataFactoryName, string runId)
+        {
+            return operations.GetAsync(resourceGroupName, dataFactoryName, runId, CancellationToken.None);
+        }
+
+        /// <summary>
         /// Gets logs for a data slice run
         /// </summary>
         /// <param name='operations'>
