@@ -22,18 +22,21 @@
 using System;
 using System.Linq;
 
-namespace Microsoft.Azure.Management.Network.Models
+namespace Microsoft.Azure.Management.Sql.Models
 {
-    public static partial class VpnGatewayType
+    /// <summary>
+    /// Defines the valid table types of Azure SQL Database.
+    /// </summary>
+    public static partial class TableType
     {
         /// <summary>
-        /// Virtual network StaticRouting gateway type
+        /// Standard SQL table.
         /// </summary>
-        public const string StaticRouting = "StaticRouting";
+        public const string BaseTable = "BaseTable";
         
         /// <summary>
-        /// Virtual network DynamicRouting gateway type
+        /// SQL View
         /// </summary>
-        public const string DynamicRouting = "DynamicRouting";
+        public const string View = "View";
     }
 }

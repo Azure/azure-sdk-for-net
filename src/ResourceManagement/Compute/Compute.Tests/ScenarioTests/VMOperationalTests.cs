@@ -48,7 +48,7 @@ namespace Compute.Tests
                 context.Start();
                 EnsureClientsInitialized();
 
-                string imgRefId = GetPlatformOSImage(useWindowsImage: true);
+                ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
 
                 // Create resource group
                 string rg1Name = TestUtilities.GenerateName(TestPrefix) + 1;
@@ -62,21 +62,21 @@ namespace Compute.Tests
                     // Create Storage Account, so that both the VMs can share it
                     var storageAccountOutput = CreateStorageAccount(rg1Name, storageAccountName);
 
-                    VirtualMachine vm1 = CreateVM(rg1Name, asName, storageAccountOutput, imgRefId, out inputVM1);
+                    VirtualMachine vm1 = CreateVM_NoAsyncTracking(rg1Name, asName, storageAccountOutput, imageRef, out inputVM1);
 
                     var startOperationResponse = m_CrpClient.VirtualMachines.BeginStarting(rg1Name, vm1.Name);
                     Assert.Equal(HttpStatusCode.Accepted, startOperationResponse.StatusCode);
                     ComputeLongRunningOperationResponse lroResponse = m_CrpClient.VirtualMachines.Start(rg1Name, vm1.Name);
                     Assert.Equal(ComputeOperationStatus.Succeeded, lroResponse.Status);
 
-                    var stopOperationResponse = m_CrpClient.VirtualMachines.BeginPoweringOff(rg1Name, vm1.Name);
-                    Assert.Equal(HttpStatusCode.Accepted, startOperationResponse.StatusCode);
-                    lroResponse = m_CrpClient.VirtualMachines.PowerOff(rg1Name, vm1.Name);
-                    Assert.Equal(ComputeOperationStatus.Succeeded, lroResponse.Status);
-
                     var restartOperationResponse = m_CrpClient.VirtualMachines.BeginRestarting(rg1Name, vm1.Name);
                     Assert.Equal(HttpStatusCode.Accepted, startOperationResponse.StatusCode);
                     lroResponse = m_CrpClient.VirtualMachines.Restart(rg1Name, vm1.Name);
+                    Assert.Equal(ComputeOperationStatus.Succeeded, lroResponse.Status); 
+                    
+                    var stopOperationResponse = m_CrpClient.VirtualMachines.BeginPoweringOff(rg1Name, vm1.Name);
+                    Assert.Equal(HttpStatusCode.Accepted, startOperationResponse.StatusCode);
+                    lroResponse = m_CrpClient.VirtualMachines.PowerOff(rg1Name, vm1.Name);
                     Assert.Equal(ComputeOperationStatus.Succeeded, lroResponse.Status);
 
                     var deallocateOperationResponse = m_CrpClient.VirtualMachines.BeginDeallocating(rg1Name, vm1.Name);

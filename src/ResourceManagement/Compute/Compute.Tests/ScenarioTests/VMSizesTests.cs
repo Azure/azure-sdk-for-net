@@ -26,12 +26,10 @@ namespace Compute.Tests
         [Fact]
         public void TestListVMSizes()
         {
-            var handler = new RecordedDelegatingHandler {StatusCodeToReturn = HttpStatusCode.OK};
-
             using (var context = UndoContext.Current)
             {
                 context.Start();
-                var computeClient = ComputeManagementTestUtilities.GetComputeManagementClient(handler);
+                var computeClient = ComputeManagementTestUtilities.GetComputeManagementClient();
                 string location = ComputeManagementTestUtilities.DefaultLocation.Replace(" ", "");
 
                 VirtualMachineSizeListResponse virtualMachineSizeListResponse = computeClient.VirtualMachineSizes.List(location);

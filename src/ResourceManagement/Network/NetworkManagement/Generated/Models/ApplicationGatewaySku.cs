@@ -20,46 +20,54 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
 
 namespace Microsoft.Azure.Management.Network.Models
 {
     /// <summary>
-    /// Dns Settings of a resource
+    /// SKU of application gateway
     /// </summary>
-    public partial class DnsSettings
+    public partial class ApplicationGatewaySku
     {
-        private IList<string> _appliedDnsServers;
+        private int _capacity;
         
         /// <summary>
-        /// Optional. Gets or sets list of Applied DNS servers IP addresses
+        /// Optional. Gets or sets capacity (instance count) of application
+        /// gateway
         /// </summary>
-        public IList<string> AppliedDnsServers
+        public int Capacity
         {
-            get { return this._appliedDnsServers; }
-            set { this._appliedDnsServers = value; }
+            get { return this._capacity; }
+            set { this._capacity = value; }
         }
         
-        private IList<string> _dnsServers;
+        private string _name;
         
         /// <summary>
-        /// Optional. Gets or sets list of DNS servers IP addresses
+        /// Optional. Gets or sets name of application gateway SKU
         /// </summary>
-        public IList<string> DnsServers
+        public string Name
         {
-            get { return this._dnsServers; }
-            set { this._dnsServers = value; }
+            get { return this._name; }
+            set { this._name = value; }
+        }
+        
+        private string _tier;
+        
+        /// <summary>
+        /// Optional. Gets or sets tier of application gateway
+        /// </summary>
+        public string Tier
+        {
+            get { return this._tier; }
+            set { this._tier = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the DnsSettings class.
+        /// Initializes a new instance of the ApplicationGatewaySku class.
         /// </summary>
-        public DnsSettings()
+        public ApplicationGatewaySku()
         {
-            this.AppliedDnsServers = new LazyList<string>();
-            this.DnsServers = new LazyList<string>();
         }
     }
 }

@@ -21,42 +21,44 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure.Management.Network.Models;
 
-namespace Microsoft.Azure.Management.Redis.Models
+namespace Microsoft.Azure.Management.Network.Models
 {
     /// <summary>
-    /// Know values for MaxMemoryPolicy property.
+    /// Frontend Port of application gateway
     /// </summary>
-    public static partial class MaxMemoryPolicy
+    public partial class ApplicationGatewayFrontendPort : ChildResource
     {
-        /// <summary>
-        /// VolatileLRU (volatile-lru in redis.conf).
-        /// </summary>
-        public const string VolatileLRU = "VolatileLRU";
+        private int _port;
         
         /// <summary>
-        /// AllKeysLRU (allkeys-lru in redis.conf).
+        /// Optional. Gets or sets the frontend port
         /// </summary>
-        public const string AllKeysLRU = "AllKeysLRU";
+        public int Port
+        {
+            get { return this._port; }
+            set { this._port = value; }
+        }
+        
+        private string _provisioningState;
         
         /// <summary>
-        /// VolatileRandom (volatile-random in redis.conf).
+        /// Optional. Gets or sets Provisioning state of the frontend port
+        /// resource Updating/Deleting/Failed
         /// </summary>
-        public const string VolatileRandom = "VolatileRandom";
+        public string ProvisioningState
+        {
+            get { return this._provisioningState; }
+            set { this._provisioningState = value; }
+        }
         
         /// <summary>
-        /// AllKeysRandom (allkeys-random in redis.conf).
+        /// Initializes a new instance of the ApplicationGatewayFrontendPort
+        /// class.
         /// </summary>
-        public const string AllKeysRandom = "AllKeysRandom";
-        
-        /// <summary>
-        /// VolatileTTL (volatile-ttl in redis.conf).
-        /// </summary>
-        public const string VolatileTTL = "VolatileTTL";
-        
-        /// <summary>
-        /// NoEviction (noeviction in redis.conf).
-        /// </summary>
-        public const string NoEviction = "NoEviction";
+        public ApplicationGatewayFrontendPort()
+        {
+        }
     }
 }

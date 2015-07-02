@@ -1748,17 +1748,6 @@ namespace Microsoft.Azure.Management.Compute.Models
             set { this._oSDisk = value; }
         }
         
-        private SourceImageReference _sourceImage;
-        
-        /// <summary>
-        /// Optional. Gets or sets the source image reference.
-        /// </summary>
-        public SourceImageReference SourceImage
-        {
-            get { return this._sourceImage; }
-            set { this._sourceImage = value; }
-        }
-        
         /// <summary>
         /// Initializes a new instance of the StorageProfile class.
         /// </summary>
@@ -4090,7 +4079,7 @@ namespace Microsoft.Azure.Management.Compute
             this._virtualMachineImages = new VirtualMachineImageOperations(this);
             this._virtualMachines = new VirtualMachineOperations(this);
             this._virtualMachineSizes = new VirtualMachineSizeOperations(this);
-            this._apiVersion = "2015-05-01-preview";
+            this._apiVersion = "2015-06-15";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
@@ -4162,7 +4151,7 @@ namespace Microsoft.Azure.Management.Compute
             this._virtualMachineImages = new VirtualMachineImageOperations(this);
             this._virtualMachines = new VirtualMachineOperations(this);
             this._virtualMachineSizes = new VirtualMachineSizeOperations(this);
-            this._apiVersion = "2015-05-01-preview";
+            this._apiVersion = "2015-06-15";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
@@ -5143,7 +5132,7 @@ namespace Microsoft.Azure.Management.Compute
                 url = url + Uri.EscapeDataString(parameters.Name);
             }
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-06-15");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -5535,7 +5524,7 @@ namespace Microsoft.Azure.Management.Compute
             url = url + "/availabilitySets/";
             url = url + Uri.EscapeDataString(availabilitySetName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-06-15");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -5679,7 +5668,7 @@ namespace Microsoft.Azure.Management.Compute
             url = url + "/availabilitySets/";
             url = url + Uri.EscapeDataString(availabilitySetName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-06-15");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -5950,7 +5939,7 @@ namespace Microsoft.Azure.Management.Compute
             url = url + "Microsoft.Compute";
             url = url + "/availabilitySets";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-06-15");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -6239,7 +6228,7 @@ namespace Microsoft.Azure.Management.Compute
             url = url + Uri.EscapeDataString(availabilitySetName);
             url = url + "/vmSizes";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-06-15");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -6542,7 +6531,7 @@ namespace Microsoft.Azure.Management.Compute
             url = url + Uri.EscapeDataString(location);
             url = url + "/usages";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-06-15");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -6971,7 +6960,7 @@ namespace Microsoft.Azure.Management.Compute
                 url = url + Uri.EscapeDataString(parameters.Version);
             }
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-06-15");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -7198,7 +7187,7 @@ namespace Microsoft.Azure.Management.Compute
             }
             url = url + "/artifacttypes/vmextension/types";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-06-15");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -7402,7 +7391,7 @@ namespace Microsoft.Azure.Management.Compute
             }
             url = url + "/versions";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-06-15");
             if (parameters != null && parameters.FilterExpression != null)
             {
                 queryParameters.Add(parameters.FilterExpression);
@@ -8100,7 +8089,7 @@ namespace Microsoft.Azure.Management.Compute
                 url = url + Uri.EscapeDataString(extensionParameters.Name);
             }
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-06-15");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -8659,7 +8648,7 @@ namespace Microsoft.Azure.Management.Compute
             url = url + "/extensions/";
             url = url + Uri.EscapeDataString(vmExtensionName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-06-15");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -8734,11 +8723,11 @@ namespace Microsoft.Azure.Management.Compute
                     {
                         result.Status = OperationStatus.Failed;
                     }
-                    if (statusCode == HttpStatusCode.OK)
+                    if (statusCode == HttpStatusCode.NoContent)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
-                    if (statusCode == HttpStatusCode.NoContent)
+                    if (statusCode == HttpStatusCode.OK)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
@@ -8961,7 +8950,7 @@ namespace Microsoft.Azure.Management.Compute
             url = url + "/extensions/";
             url = url + Uri.EscapeDataString(vmExtensionName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-06-15");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -9345,7 +9334,7 @@ namespace Microsoft.Azure.Management.Compute
             url = url + Uri.EscapeDataString(vmExtensionName);
             List<string> queryParameters = new List<string>();
             queryParameters.Add("$expand=instanceView");
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-06-15");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -10046,7 +10035,7 @@ namespace Microsoft.Azure.Management.Compute
                 url = url + Uri.EscapeDataString(parameters.Version);
             }
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-06-15");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -10315,7 +10304,7 @@ namespace Microsoft.Azure.Management.Compute
             }
             url = url + "/versions";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-06-15");
             if (parameters != null && parameters.FilterExpression != null)
             {
                 queryParameters.Add(parameters.FilterExpression);
@@ -10514,7 +10503,7 @@ namespace Microsoft.Azure.Management.Compute
             }
             url = url + "/artifacttypes/vmimage/offers";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-06-15");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -10700,7 +10689,7 @@ namespace Microsoft.Azure.Management.Compute
             }
             url = url + "/publishers";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-06-15");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -10904,7 +10893,7 @@ namespace Microsoft.Azure.Management.Compute
             }
             url = url + "/skus";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-06-15");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -12515,7 +12504,7 @@ namespace Microsoft.Azure.Management.Compute
             url = url + Uri.EscapeDataString(vmName);
             url = url + "/capture";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-06-15");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -12736,7 +12725,7 @@ namespace Microsoft.Azure.Management.Compute
                 url = url + Uri.EscapeDataString(parameters.Name);
             }
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-06-15");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -12843,17 +12832,6 @@ namespace Microsoft.Azure.Management.Compute
                         if (parameters.StorageProfile.ImageReference.Version != null)
                         {
                             imageReferenceValue["version"] = parameters.StorageProfile.ImageReference.Version;
-                        }
-                    }
-                    
-                    if (parameters.StorageProfile.SourceImage != null)
-                    {
-                        JObject sourceImageValue = new JObject();
-                        storageProfileValue["sourceImage"] = sourceImageValue;
-                        
-                        if (parameters.StorageProfile.SourceImage.ReferenceUri != null)
-                        {
-                            sourceImageValue["id"] = parameters.StorageProfile.SourceImage.ReferenceUri;
                         }
                     }
                     
@@ -13856,20 +13834,6 @@ namespace Microsoft.Azure.Management.Compute
                                         }
                                     }
                                     
-                                    JToken sourceImageValue2 = storageProfileValue2["sourceImage"];
-                                    if (sourceImageValue2 != null && sourceImageValue2.Type != JTokenType.Null)
-                                    {
-                                        SourceImageReference sourceImageInstance = new SourceImageReference();
-                                        storageProfileInstance.SourceImage = sourceImageInstance;
-                                        
-                                        JToken idValue = sourceImageValue2["id"];
-                                        if (idValue != null && idValue.Type != JTokenType.Null)
-                                        {
-                                            string idInstance = ((string)idValue);
-                                            sourceImageInstance.ReferenceUri = idInstance;
-                                        }
-                                    }
-                                    
                                     JToken osDiskValue2 = storageProfileValue2["osDisk"];
                                     if (osDiskValue2 != null && osDiskValue2.Type != JTokenType.Null)
                                     {
@@ -14197,11 +14161,11 @@ namespace Microsoft.Azure.Management.Compute
                                                 SourceVaultReference sourceVaultInstance = new SourceVaultReference();
                                                 vaultSecretGroupInstance.SourceVault = sourceVaultInstance;
                                                 
-                                                JToken idValue2 = sourceVaultValue2["id"];
-                                                if (idValue2 != null && idValue2.Type != JTokenType.Null)
+                                                JToken idValue = sourceVaultValue2["id"];
+                                                if (idValue != null && idValue.Type != JTokenType.Null)
                                                 {
-                                                    string idInstance2 = ((string)idValue2);
-                                                    sourceVaultInstance.ReferenceUri = idInstance2;
+                                                    string idInstance = ((string)idValue);
+                                                    sourceVaultInstance.ReferenceUri = idInstance;
                                                 }
                                             }
                                             
@@ -14257,11 +14221,11 @@ namespace Microsoft.Azure.Management.Compute
                                                 }
                                             }
                                             
-                                            JToken idValue3 = networkInterfacesValue["id"];
-                                            if (idValue3 != null && idValue3.Type != JTokenType.Null)
+                                            JToken idValue2 = networkInterfacesValue["id"];
+                                            if (idValue2 != null && idValue2.Type != JTokenType.Null)
                                             {
-                                                string idInstance3 = ((string)idValue3);
-                                                networkInterfaceReferenceJsonInstance.ReferenceUri = idInstance3;
+                                                string idInstance2 = ((string)idValue2);
+                                                networkInterfaceReferenceJsonInstance.ReferenceUri = idInstance2;
                                             }
                                         }
                                     }
@@ -14273,11 +14237,11 @@ namespace Microsoft.Azure.Management.Compute
                                     AvailabilitySetReference availabilitySetInstance = new AvailabilitySetReference();
                                     virtualMachineInstance.AvailabilitySetReference = availabilitySetInstance;
                                     
-                                    JToken idValue4 = availabilitySetValue2["id"];
-                                    if (idValue4 != null && idValue4.Type != JTokenType.Null)
+                                    JToken idValue3 = availabilitySetValue2["id"];
+                                    if (idValue3 != null && idValue3.Type != JTokenType.Null)
                                     {
-                                        string idInstance4 = ((string)idValue4);
-                                        availabilitySetInstance.ReferenceUri = idInstance4;
+                                        string idInstance3 = ((string)idValue3);
+                                        availabilitySetInstance.ReferenceUri = idInstance3;
                                     }
                                 }
                                 
@@ -14850,11 +14814,11 @@ namespace Microsoft.Azure.Management.Compute
                                         }
                                     }
                                     
-                                    JToken idValue5 = resourcesValue["id"];
-                                    if (idValue5 != null && idValue5.Type != JTokenType.Null)
+                                    JToken idValue4 = resourcesValue["id"];
+                                    if (idValue4 != null && idValue4.Type != JTokenType.Null)
                                     {
-                                        string idInstance5 = ((string)idValue5);
-                                        virtualMachineExtensionJsonInstance.Id = idInstance5;
+                                        string idInstance4 = ((string)idValue4);
+                                        virtualMachineExtensionJsonInstance.Id = idInstance4;
                                     }
                                     
                                     JToken nameValue7 = resourcesValue["name"];
@@ -14891,11 +14855,11 @@ namespace Microsoft.Azure.Management.Compute
                                 }
                             }
                             
-                            JToken idValue6 = responseDoc["id"];
-                            if (idValue6 != null && idValue6.Type != JTokenType.Null)
+                            JToken idValue5 = responseDoc["id"];
+                            if (idValue5 != null && idValue5.Type != JTokenType.Null)
                             {
-                                string idInstance6 = ((string)idValue6);
-                                virtualMachineInstance.Id = idInstance6;
+                                string idInstance5 = ((string)idValue5);
+                                virtualMachineInstance.Id = idInstance5;
                             }
                             
                             JToken nameValue8 = responseDoc["name"];
@@ -15023,7 +14987,7 @@ namespace Microsoft.Azure.Management.Compute
             url = url + Uri.EscapeDataString(vmName);
             url = url + "/deallocate";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-06-15");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -15173,7 +15137,7 @@ namespace Microsoft.Azure.Management.Compute
             url = url + "/";
             url = url + Uri.EscapeDataString(vmName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-06-15");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -15248,11 +15212,11 @@ namespace Microsoft.Azure.Management.Compute
                     {
                         result.Status = OperationStatus.Failed;
                     }
-                    if (statusCode == HttpStatusCode.NoContent)
+                    if (statusCode == HttpStatusCode.OK)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
-                    if (statusCode == HttpStatusCode.OK)
+                    if (statusCode == HttpStatusCode.NoContent)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
@@ -15336,7 +15300,7 @@ namespace Microsoft.Azure.Management.Compute
             url = url + Uri.EscapeDataString(vmName);
             url = url + "/powerOff";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-06-15");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -15487,7 +15451,7 @@ namespace Microsoft.Azure.Management.Compute
             url = url + Uri.EscapeDataString(vmName);
             url = url + "/restart";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-06-15");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -15638,7 +15602,7 @@ namespace Microsoft.Azure.Management.Compute
             url = url + Uri.EscapeDataString(vmName);
             url = url + "/start";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-06-15");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -16039,7 +16003,7 @@ namespace Microsoft.Azure.Management.Compute
             url = url + Uri.EscapeDataString(vmName);
             url = url + "/generalize";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-06-15");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -16185,7 +16149,7 @@ namespace Microsoft.Azure.Management.Compute
             url = url + "/";
             url = url + Uri.EscapeDataString(vmName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-06-15");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -16352,20 +16316,6 @@ namespace Microsoft.Azure.Management.Compute
                                         {
                                             string versionInstance = ((string)versionValue);
                                             imageReferenceInstance.Version = versionInstance;
-                                        }
-                                    }
-                                    
-                                    JToken sourceImageValue = storageProfileValue["sourceImage"];
-                                    if (sourceImageValue != null && sourceImageValue.Type != JTokenType.Null)
-                                    {
-                                        SourceImageReference sourceImageInstance = new SourceImageReference();
-                                        storageProfileInstance.SourceImage = sourceImageInstance;
-                                        
-                                        JToken idValue = sourceImageValue["id"];
-                                        if (idValue != null && idValue.Type != JTokenType.Null)
-                                        {
-                                            string idInstance = ((string)idValue);
-                                            sourceImageInstance.ReferenceUri = idInstance;
                                         }
                                     }
                                     
@@ -16696,11 +16646,11 @@ namespace Microsoft.Azure.Management.Compute
                                                 SourceVaultReference sourceVaultInstance = new SourceVaultReference();
                                                 vaultSecretGroupInstance.SourceVault = sourceVaultInstance;
                                                 
-                                                JToken idValue2 = sourceVaultValue["id"];
-                                                if (idValue2 != null && idValue2.Type != JTokenType.Null)
+                                                JToken idValue = sourceVaultValue["id"];
+                                                if (idValue != null && idValue.Type != JTokenType.Null)
                                                 {
-                                                    string idInstance2 = ((string)idValue2);
-                                                    sourceVaultInstance.ReferenceUri = idInstance2;
+                                                    string idInstance = ((string)idValue);
+                                                    sourceVaultInstance.ReferenceUri = idInstance;
                                                 }
                                             }
                                             
@@ -16756,11 +16706,11 @@ namespace Microsoft.Azure.Management.Compute
                                                 }
                                             }
                                             
-                                            JToken idValue3 = networkInterfacesValue["id"];
-                                            if (idValue3 != null && idValue3.Type != JTokenType.Null)
+                                            JToken idValue2 = networkInterfacesValue["id"];
+                                            if (idValue2 != null && idValue2.Type != JTokenType.Null)
                                             {
-                                                string idInstance3 = ((string)idValue3);
-                                                networkInterfaceReferenceJsonInstance.ReferenceUri = idInstance3;
+                                                string idInstance2 = ((string)idValue2);
+                                                networkInterfaceReferenceJsonInstance.ReferenceUri = idInstance2;
                                             }
                                         }
                                     }
@@ -16772,11 +16722,11 @@ namespace Microsoft.Azure.Management.Compute
                                     AvailabilitySetReference availabilitySetInstance = new AvailabilitySetReference();
                                     virtualMachineInstance.AvailabilitySetReference = availabilitySetInstance;
                                     
-                                    JToken idValue4 = availabilitySetValue["id"];
-                                    if (idValue4 != null && idValue4.Type != JTokenType.Null)
+                                    JToken idValue3 = availabilitySetValue["id"];
+                                    if (idValue3 != null && idValue3.Type != JTokenType.Null)
                                     {
-                                        string idInstance4 = ((string)idValue4);
-                                        availabilitySetInstance.ReferenceUri = idInstance4;
+                                        string idInstance3 = ((string)idValue3);
+                                        availabilitySetInstance.ReferenceUri = idInstance3;
                                     }
                                 }
                                 
@@ -17349,11 +17299,11 @@ namespace Microsoft.Azure.Management.Compute
                                         }
                                     }
                                     
-                                    JToken idValue5 = resourcesValue["id"];
-                                    if (idValue5 != null && idValue5.Type != JTokenType.Null)
+                                    JToken idValue4 = resourcesValue["id"];
+                                    if (idValue4 != null && idValue4.Type != JTokenType.Null)
                                     {
-                                        string idInstance5 = ((string)idValue5);
-                                        virtualMachineExtensionJsonInstance.Id = idInstance5;
+                                        string idInstance4 = ((string)idValue4);
+                                        virtualMachineExtensionJsonInstance.Id = idInstance4;
                                     }
                                     
                                     JToken nameValue7 = resourcesValue["name"];
@@ -17390,11 +17340,11 @@ namespace Microsoft.Azure.Management.Compute
                                 }
                             }
                             
-                            JToken idValue6 = responseDoc["id"];
-                            if (idValue6 != null && idValue6.Type != JTokenType.Null)
+                            JToken idValue5 = responseDoc["id"];
+                            if (idValue5 != null && idValue5.Type != JTokenType.Null)
                             {
-                                string idInstance6 = ((string)idValue6);
-                                virtualMachineInstance.Id = idInstance6;
+                                string idInstance5 = ((string)idValue5);
+                                virtualMachineInstance.Id = idInstance5;
                             }
                             
                             JToken nameValue8 = responseDoc["name"];
@@ -17516,7 +17466,7 @@ namespace Microsoft.Azure.Management.Compute
             url = url + Uri.EscapeDataString(vmName);
             List<string> queryParameters = new List<string>();
             queryParameters.Add("$expand=instanceView");
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-06-15");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -17683,20 +17633,6 @@ namespace Microsoft.Azure.Management.Compute
                                         {
                                             string versionInstance = ((string)versionValue);
                                             imageReferenceInstance.Version = versionInstance;
-                                        }
-                                    }
-                                    
-                                    JToken sourceImageValue = storageProfileValue["sourceImage"];
-                                    if (sourceImageValue != null && sourceImageValue.Type != JTokenType.Null)
-                                    {
-                                        SourceImageReference sourceImageInstance = new SourceImageReference();
-                                        storageProfileInstance.SourceImage = sourceImageInstance;
-                                        
-                                        JToken idValue = sourceImageValue["id"];
-                                        if (idValue != null && idValue.Type != JTokenType.Null)
-                                        {
-                                            string idInstance = ((string)idValue);
-                                            sourceImageInstance.ReferenceUri = idInstance;
                                         }
                                     }
                                     
@@ -18027,11 +17963,11 @@ namespace Microsoft.Azure.Management.Compute
                                                 SourceVaultReference sourceVaultInstance = new SourceVaultReference();
                                                 vaultSecretGroupInstance.SourceVault = sourceVaultInstance;
                                                 
-                                                JToken idValue2 = sourceVaultValue["id"];
-                                                if (idValue2 != null && idValue2.Type != JTokenType.Null)
+                                                JToken idValue = sourceVaultValue["id"];
+                                                if (idValue != null && idValue.Type != JTokenType.Null)
                                                 {
-                                                    string idInstance2 = ((string)idValue2);
-                                                    sourceVaultInstance.ReferenceUri = idInstance2;
+                                                    string idInstance = ((string)idValue);
+                                                    sourceVaultInstance.ReferenceUri = idInstance;
                                                 }
                                             }
                                             
@@ -18087,11 +18023,11 @@ namespace Microsoft.Azure.Management.Compute
                                                 }
                                             }
                                             
-                                            JToken idValue3 = networkInterfacesValue["id"];
-                                            if (idValue3 != null && idValue3.Type != JTokenType.Null)
+                                            JToken idValue2 = networkInterfacesValue["id"];
+                                            if (idValue2 != null && idValue2.Type != JTokenType.Null)
                                             {
-                                                string idInstance3 = ((string)idValue3);
-                                                networkInterfaceReferenceJsonInstance.ReferenceUri = idInstance3;
+                                                string idInstance2 = ((string)idValue2);
+                                                networkInterfaceReferenceJsonInstance.ReferenceUri = idInstance2;
                                             }
                                         }
                                     }
@@ -18103,11 +18039,11 @@ namespace Microsoft.Azure.Management.Compute
                                     AvailabilitySetReference availabilitySetInstance = new AvailabilitySetReference();
                                     virtualMachineInstance.AvailabilitySetReference = availabilitySetInstance;
                                     
-                                    JToken idValue4 = availabilitySetValue["id"];
-                                    if (idValue4 != null && idValue4.Type != JTokenType.Null)
+                                    JToken idValue3 = availabilitySetValue["id"];
+                                    if (idValue3 != null && idValue3.Type != JTokenType.Null)
                                     {
-                                        string idInstance4 = ((string)idValue4);
-                                        availabilitySetInstance.ReferenceUri = idInstance4;
+                                        string idInstance3 = ((string)idValue3);
+                                        availabilitySetInstance.ReferenceUri = idInstance3;
                                     }
                                 }
                                 
@@ -18680,11 +18616,11 @@ namespace Microsoft.Azure.Management.Compute
                                         }
                                     }
                                     
-                                    JToken idValue5 = resourcesValue["id"];
-                                    if (idValue5 != null && idValue5.Type != JTokenType.Null)
+                                    JToken idValue4 = resourcesValue["id"];
+                                    if (idValue4 != null && idValue4.Type != JTokenType.Null)
                                     {
-                                        string idInstance5 = ((string)idValue5);
-                                        virtualMachineExtensionJsonInstance.Id = idInstance5;
+                                        string idInstance4 = ((string)idValue4);
+                                        virtualMachineExtensionJsonInstance.Id = idInstance4;
                                     }
                                     
                                     JToken nameValue7 = resourcesValue["name"];
@@ -18721,11 +18657,11 @@ namespace Microsoft.Azure.Management.Compute
                                 }
                             }
                             
-                            JToken idValue6 = responseDoc["id"];
-                            if (idValue6 != null && idValue6.Type != JTokenType.Null)
+                            JToken idValue5 = responseDoc["id"];
+                            if (idValue5 != null && idValue5.Type != JTokenType.Null)
                             {
-                                string idInstance6 = ((string)idValue6);
-                                virtualMachineInstance.Id = idInstance6;
+                                string idInstance5 = ((string)idValue5);
+                                virtualMachineInstance.Id = idInstance5;
                             }
                             
                             JToken nameValue8 = responseDoc["name"];
@@ -18836,7 +18772,7 @@ namespace Microsoft.Azure.Management.Compute
             url = url + "/";
             url = url + "virtualMachines";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-06-15");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -19008,20 +18944,6 @@ namespace Microsoft.Azure.Management.Compute
                                                 {
                                                     string versionInstance = ((string)versionValue);
                                                     imageReferenceInstance.Version = versionInstance;
-                                                }
-                                            }
-                                            
-                                            JToken sourceImageValue = storageProfileValue["sourceImage"];
-                                            if (sourceImageValue != null && sourceImageValue.Type != JTokenType.Null)
-                                            {
-                                                SourceImageReference sourceImageInstance = new SourceImageReference();
-                                                storageProfileInstance.SourceImage = sourceImageInstance;
-                                                
-                                                JToken idValue = sourceImageValue["id"];
-                                                if (idValue != null && idValue.Type != JTokenType.Null)
-                                                {
-                                                    string idInstance = ((string)idValue);
-                                                    sourceImageInstance.ReferenceUri = idInstance;
                                                 }
                                             }
                                             
@@ -19352,11 +19274,11 @@ namespace Microsoft.Azure.Management.Compute
                                                         SourceVaultReference sourceVaultInstance = new SourceVaultReference();
                                                         vaultSecretGroupInstance.SourceVault = sourceVaultInstance;
                                                         
-                                                        JToken idValue2 = sourceVaultValue["id"];
-                                                        if (idValue2 != null && idValue2.Type != JTokenType.Null)
+                                                        JToken idValue = sourceVaultValue["id"];
+                                                        if (idValue != null && idValue.Type != JTokenType.Null)
                                                         {
-                                                            string idInstance2 = ((string)idValue2);
-                                                            sourceVaultInstance.ReferenceUri = idInstance2;
+                                                            string idInstance = ((string)idValue);
+                                                            sourceVaultInstance.ReferenceUri = idInstance;
                                                         }
                                                     }
                                                     
@@ -19412,11 +19334,11 @@ namespace Microsoft.Azure.Management.Compute
                                                         }
                                                     }
                                                     
-                                                    JToken idValue3 = networkInterfacesValue["id"];
-                                                    if (idValue3 != null && idValue3.Type != JTokenType.Null)
+                                                    JToken idValue2 = networkInterfacesValue["id"];
+                                                    if (idValue2 != null && idValue2.Type != JTokenType.Null)
                                                     {
-                                                        string idInstance3 = ((string)idValue3);
-                                                        networkInterfaceReferenceJsonInstance.ReferenceUri = idInstance3;
+                                                        string idInstance2 = ((string)idValue2);
+                                                        networkInterfaceReferenceJsonInstance.ReferenceUri = idInstance2;
                                                     }
                                                 }
                                             }
@@ -19428,11 +19350,11 @@ namespace Microsoft.Azure.Management.Compute
                                             AvailabilitySetReference availabilitySetInstance = new AvailabilitySetReference();
                                             virtualMachineJsonInstance.AvailabilitySetReference = availabilitySetInstance;
                                             
-                                            JToken idValue4 = availabilitySetValue["id"];
-                                            if (idValue4 != null && idValue4.Type != JTokenType.Null)
+                                            JToken idValue3 = availabilitySetValue["id"];
+                                            if (idValue3 != null && idValue3.Type != JTokenType.Null)
                                             {
-                                                string idInstance4 = ((string)idValue4);
-                                                availabilitySetInstance.ReferenceUri = idInstance4;
+                                                string idInstance3 = ((string)idValue3);
+                                                availabilitySetInstance.ReferenceUri = idInstance3;
                                             }
                                         }
                                         
@@ -20005,11 +19927,11 @@ namespace Microsoft.Azure.Management.Compute
                                                 }
                                             }
                                             
-                                            JToken idValue5 = resourcesValue["id"];
-                                            if (idValue5 != null && idValue5.Type != JTokenType.Null)
+                                            JToken idValue4 = resourcesValue["id"];
+                                            if (idValue4 != null && idValue4.Type != JTokenType.Null)
                                             {
-                                                string idInstance5 = ((string)idValue5);
-                                                virtualMachineExtensionJsonInstance.Id = idInstance5;
+                                                string idInstance4 = ((string)idValue4);
+                                                virtualMachineExtensionJsonInstance.Id = idInstance4;
                                             }
                                             
                                             JToken nameValue7 = resourcesValue["name"];
@@ -20046,11 +19968,11 @@ namespace Microsoft.Azure.Management.Compute
                                         }
                                     }
                                     
-                                    JToken idValue6 = valueValue["id"];
-                                    if (idValue6 != null && idValue6.Type != JTokenType.Null)
+                                    JToken idValue5 = valueValue["id"];
+                                    if (idValue5 != null && idValue5.Type != JTokenType.Null)
                                     {
-                                        string idInstance6 = ((string)idValue6);
-                                        virtualMachineJsonInstance.Id = idInstance6;
+                                        string idInstance5 = ((string)idValue5);
+                                        virtualMachineJsonInstance.Id = idInstance5;
                                     }
                                     
                                     JToken nameValue8 = valueValue["name"];
@@ -20167,7 +20089,7 @@ namespace Microsoft.Azure.Management.Compute
             url = url + "/";
             url = url + "virtualMachines";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-06-15");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -20339,20 +20261,6 @@ namespace Microsoft.Azure.Management.Compute
                                                 {
                                                     string versionInstance = ((string)versionValue);
                                                     imageReferenceInstance.Version = versionInstance;
-                                                }
-                                            }
-                                            
-                                            JToken sourceImageValue = storageProfileValue["sourceImage"];
-                                            if (sourceImageValue != null && sourceImageValue.Type != JTokenType.Null)
-                                            {
-                                                SourceImageReference sourceImageInstance = new SourceImageReference();
-                                                storageProfileInstance.SourceImage = sourceImageInstance;
-                                                
-                                                JToken idValue = sourceImageValue["id"];
-                                                if (idValue != null && idValue.Type != JTokenType.Null)
-                                                {
-                                                    string idInstance = ((string)idValue);
-                                                    sourceImageInstance.ReferenceUri = idInstance;
                                                 }
                                             }
                                             
@@ -20683,11 +20591,11 @@ namespace Microsoft.Azure.Management.Compute
                                                         SourceVaultReference sourceVaultInstance = new SourceVaultReference();
                                                         vaultSecretGroupInstance.SourceVault = sourceVaultInstance;
                                                         
-                                                        JToken idValue2 = sourceVaultValue["id"];
-                                                        if (idValue2 != null && idValue2.Type != JTokenType.Null)
+                                                        JToken idValue = sourceVaultValue["id"];
+                                                        if (idValue != null && idValue.Type != JTokenType.Null)
                                                         {
-                                                            string idInstance2 = ((string)idValue2);
-                                                            sourceVaultInstance.ReferenceUri = idInstance2;
+                                                            string idInstance = ((string)idValue);
+                                                            sourceVaultInstance.ReferenceUri = idInstance;
                                                         }
                                                     }
                                                     
@@ -20743,11 +20651,11 @@ namespace Microsoft.Azure.Management.Compute
                                                         }
                                                     }
                                                     
-                                                    JToken idValue3 = networkInterfacesValue["id"];
-                                                    if (idValue3 != null && idValue3.Type != JTokenType.Null)
+                                                    JToken idValue2 = networkInterfacesValue["id"];
+                                                    if (idValue2 != null && idValue2.Type != JTokenType.Null)
                                                     {
-                                                        string idInstance3 = ((string)idValue3);
-                                                        networkInterfaceReferenceJsonInstance.ReferenceUri = idInstance3;
+                                                        string idInstance2 = ((string)idValue2);
+                                                        networkInterfaceReferenceJsonInstance.ReferenceUri = idInstance2;
                                                     }
                                                 }
                                             }
@@ -20759,11 +20667,11 @@ namespace Microsoft.Azure.Management.Compute
                                             AvailabilitySetReference availabilitySetInstance = new AvailabilitySetReference();
                                             virtualMachineJsonInstance.AvailabilitySetReference = availabilitySetInstance;
                                             
-                                            JToken idValue4 = availabilitySetValue["id"];
-                                            if (idValue4 != null && idValue4.Type != JTokenType.Null)
+                                            JToken idValue3 = availabilitySetValue["id"];
+                                            if (idValue3 != null && idValue3.Type != JTokenType.Null)
                                             {
-                                                string idInstance4 = ((string)idValue4);
-                                                availabilitySetInstance.ReferenceUri = idInstance4;
+                                                string idInstance3 = ((string)idValue3);
+                                                availabilitySetInstance.ReferenceUri = idInstance3;
                                             }
                                         }
                                         
@@ -21336,11 +21244,11 @@ namespace Microsoft.Azure.Management.Compute
                                                 }
                                             }
                                             
-                                            JToken idValue5 = resourcesValue["id"];
-                                            if (idValue5 != null && idValue5.Type != JTokenType.Null)
+                                            JToken idValue4 = resourcesValue["id"];
+                                            if (idValue4 != null && idValue4.Type != JTokenType.Null)
                                             {
-                                                string idInstance5 = ((string)idValue5);
-                                                virtualMachineExtensionJsonInstance.Id = idInstance5;
+                                                string idInstance4 = ((string)idValue4);
+                                                virtualMachineExtensionJsonInstance.Id = idInstance4;
                                             }
                                             
                                             JToken nameValue7 = resourcesValue["name"];
@@ -21377,11 +21285,11 @@ namespace Microsoft.Azure.Management.Compute
                                         }
                                     }
                                     
-                                    JToken idValue6 = valueValue["id"];
-                                    if (idValue6 != null && idValue6.Type != JTokenType.Null)
+                                    JToken idValue5 = valueValue["id"];
+                                    if (idValue5 != null && idValue5.Type != JTokenType.Null)
                                     {
-                                        string idInstance6 = ((string)idValue6);
-                                        virtualMachineJsonInstance.Id = idInstance6;
+                                        string idInstance5 = ((string)idValue5);
+                                        virtualMachineJsonInstance.Id = idInstance5;
                                     }
                                     
                                     JToken nameValue8 = valueValue["name"];
@@ -21513,7 +21421,7 @@ namespace Microsoft.Azure.Management.Compute
             url = url + Uri.EscapeDataString(vmName);
             url = url + "/vmSizes";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-06-15");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -21866,20 +21774,6 @@ namespace Microsoft.Azure.Management.Compute
                                                 }
                                             }
                                             
-                                            JToken sourceImageValue = storageProfileValue["sourceImage"];
-                                            if (sourceImageValue != null && sourceImageValue.Type != JTokenType.Null)
-                                            {
-                                                SourceImageReference sourceImageInstance = new SourceImageReference();
-                                                storageProfileInstance.SourceImage = sourceImageInstance;
-                                                
-                                                JToken idValue = sourceImageValue["id"];
-                                                if (idValue != null && idValue.Type != JTokenType.Null)
-                                                {
-                                                    string idInstance = ((string)idValue);
-                                                    sourceImageInstance.ReferenceUri = idInstance;
-                                                }
-                                            }
-                                            
                                             JToken osDiskValue = storageProfileValue["osDisk"];
                                             if (osDiskValue != null && osDiskValue.Type != JTokenType.Null)
                                             {
@@ -22207,11 +22101,11 @@ namespace Microsoft.Azure.Management.Compute
                                                         SourceVaultReference sourceVaultInstance = new SourceVaultReference();
                                                         vaultSecretGroupInstance.SourceVault = sourceVaultInstance;
                                                         
-                                                        JToken idValue2 = sourceVaultValue["id"];
-                                                        if (idValue2 != null && idValue2.Type != JTokenType.Null)
+                                                        JToken idValue = sourceVaultValue["id"];
+                                                        if (idValue != null && idValue.Type != JTokenType.Null)
                                                         {
-                                                            string idInstance2 = ((string)idValue2);
-                                                            sourceVaultInstance.ReferenceUri = idInstance2;
+                                                            string idInstance = ((string)idValue);
+                                                            sourceVaultInstance.ReferenceUri = idInstance;
                                                         }
                                                     }
                                                     
@@ -22267,11 +22161,11 @@ namespace Microsoft.Azure.Management.Compute
                                                         }
                                                     }
                                                     
-                                                    JToken idValue3 = networkInterfacesValue["id"];
-                                                    if (idValue3 != null && idValue3.Type != JTokenType.Null)
+                                                    JToken idValue2 = networkInterfacesValue["id"];
+                                                    if (idValue2 != null && idValue2.Type != JTokenType.Null)
                                                     {
-                                                        string idInstance3 = ((string)idValue3);
-                                                        networkInterfaceReferenceJsonInstance.ReferenceUri = idInstance3;
+                                                        string idInstance2 = ((string)idValue2);
+                                                        networkInterfaceReferenceJsonInstance.ReferenceUri = idInstance2;
                                                     }
                                                 }
                                             }
@@ -22283,11 +22177,11 @@ namespace Microsoft.Azure.Management.Compute
                                             AvailabilitySetReference availabilitySetInstance = new AvailabilitySetReference();
                                             virtualMachineJsonInstance.AvailabilitySetReference = availabilitySetInstance;
                                             
-                                            JToken idValue4 = availabilitySetValue["id"];
-                                            if (idValue4 != null && idValue4.Type != JTokenType.Null)
+                                            JToken idValue3 = availabilitySetValue["id"];
+                                            if (idValue3 != null && idValue3.Type != JTokenType.Null)
                                             {
-                                                string idInstance4 = ((string)idValue4);
-                                                availabilitySetInstance.ReferenceUri = idInstance4;
+                                                string idInstance3 = ((string)idValue3);
+                                                availabilitySetInstance.ReferenceUri = idInstance3;
                                             }
                                         }
                                         
@@ -22860,11 +22754,11 @@ namespace Microsoft.Azure.Management.Compute
                                                 }
                                             }
                                             
-                                            JToken idValue5 = resourcesValue["id"];
-                                            if (idValue5 != null && idValue5.Type != JTokenType.Null)
+                                            JToken idValue4 = resourcesValue["id"];
+                                            if (idValue4 != null && idValue4.Type != JTokenType.Null)
                                             {
-                                                string idInstance5 = ((string)idValue5);
-                                                virtualMachineExtensionJsonInstance.Id = idInstance5;
+                                                string idInstance4 = ((string)idValue4);
+                                                virtualMachineExtensionJsonInstance.Id = idInstance4;
                                             }
                                             
                                             JToken nameValue7 = resourcesValue["name"];
@@ -22901,11 +22795,11 @@ namespace Microsoft.Azure.Management.Compute
                                         }
                                     }
                                     
-                                    JToken idValue6 = valueValue["id"];
-                                    if (idValue6 != null && idValue6.Type != JTokenType.Null)
+                                    JToken idValue5 = valueValue["id"];
+                                    if (idValue5 != null && idValue5.Type != JTokenType.Null)
                                     {
-                                        string idInstance6 = ((string)idValue6);
-                                        virtualMachineJsonInstance.Id = idInstance6;
+                                        string idInstance5 = ((string)idValue5);
+                                        virtualMachineJsonInstance.Id = idInstance5;
                                     }
                                     
                                     JToken nameValue8 = valueValue["name"];
@@ -23308,7 +23202,7 @@ namespace Microsoft.Azure.Management.Compute
             url = url + Uri.EscapeDataString(location);
             url = url + "/vmSizes";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-06-15");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);

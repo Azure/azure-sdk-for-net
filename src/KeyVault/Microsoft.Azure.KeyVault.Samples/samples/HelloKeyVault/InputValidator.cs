@@ -138,7 +138,7 @@ namespace Sample.Microsoft.HelloKeyVault
             var algorithm = GetArgumentValue( tag );
             if ( algorithm == string.Empty )
             {
-                algorithm = "RSA_OAEP";
+                algorithm = JsonWebKeyEncryptionAlgorithm.RSAOAEP;
                 Console.Out.WriteLine( tag + " is not provided. Using default value!" );
             }
             return algorithm;

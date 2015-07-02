@@ -47,5 +47,69 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         public RelationalSource()
         {
         }
+        
+        /// <summary>
+        /// A copy activity HDFS source.
+        /// </summary>
+        public partial class HdfsSource : CopySource
+        {
+            /// <summary>
+            /// Initializes a new instance of the HdfsSource class.
+            /// </summary>
+            public HdfsSource()
+            {
+            }
+        }
+        
+        /// <summary>
+        /// A copy activity OData source.
+        /// </summary>
+        public partial class ODataSource : CopySource
+        {
+            /// <summary>
+            /// Initializes a new instance of the ODataSource class.
+            /// </summary>
+            public ODataSource()
+            {
+            }
+        }
+        
+        /// <summary>
+        /// A copy activity ODBC source.
+        /// </summary>
+        public partial class OdbcSource : CopySource
+        {
+            private string _odbcReaderQuery;
+            
+            /// <summary>
+            /// Required. Gets or sets ODBC reader query.
+            /// </summary>
+            public string OdbcReaderQuery
+            {
+                get { return this._odbcReaderQuery; }
+                set { this._odbcReaderQuery = value; }
+            }
+            
+            /// <summary>
+            /// Initializes a new instance of the OdbcSource class.
+            /// </summary>
+            public OdbcSource()
+            {
+            }
+            
+            /// <summary>
+            /// Initializes a new instance of the OdbcSource class with
+            /// required arguments.
+            /// </summary>
+            public OdbcSource(string odbcReaderQuery)
+                : this()
+            {
+                if (odbcReaderQuery == null)
+                {
+                    throw new ArgumentNullException("odbcReaderQuery");
+                }
+                this.OdbcReaderQuery = odbcReaderQuery;
+            }
+        }
     }
 }
