@@ -721,9 +721,9 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         /// <param name='tableName'>
         /// Required. A unique table instance name.
         /// </param>
-        /// <param name='dataSliceStartTime'>
-        /// Required. The start time of the data slice queried in round-trip
-        /// ISO 8601 format.
+        /// <param name='parameters'>
+        /// Required. Parameters for specifying the filters to list data slice
+        /// runs of the table.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -731,7 +731,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         /// <returns>
         /// The List data slice runs operation response.
         /// </returns>
-        public async Task<DataSliceRunListResponse> ListAsync(string resourceGroupName, string dataFactoryName, string tableName, string dataSliceStartTime, CancellationToken cancellationToken)
+        public async Task<DataSliceRunListResponse> ListAsync(string resourceGroupName, string dataFactoryName, string tableName, DataSliceRunListParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -770,9 +770,9 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             {
                 throw new ArgumentOutOfRangeException("tableName");
             }
-            if (dataSliceStartTime == null)
+            if (parameters == null)
             {
-                throw new ArgumentNullException("dataSliceStartTime");
+                throw new ArgumentNullException("parameters");
             }
             
             // Tracing
@@ -785,7 +785,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("dataFactoryName", dataFactoryName);
                 tracingParameters.Add("tableName", tableName);
-                tracingParameters.Add("dataSliceStartTime", dataSliceStartTime);
+                tracingParameters.Add("parameters", parameters);
                 TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
             }
             
@@ -804,7 +804,10 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + Uri.EscapeDataString(tableName);
             url = url + "/sliceruns";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("startTime=" + Uri.EscapeDataString(dataSliceStartTime));
+            if (parameters.DataSliceStartTime != null)
+            {
+                queryParameters.Add("startTime=" + Uri.EscapeDataString(parameters.DataSliceStartTime.ToString()));
+            }
             queryParameters.Add("api-version=2015-07-01-preview");
             if (queryParameters.Count > 0)
             {
@@ -1163,11 +1166,11 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                 }
                             }
                             
-                            JToken odatanextLinkValue = responseDoc["@odata.nextLink"];
-                            if (odatanextLinkValue != null && odatanextLinkValue.Type != JTokenType.Null)
+                            JToken nextLinkValue = responseDoc["nextLink"];
+                            if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
                             {
-                                string odatanextLinkInstance = ((string)odatanextLinkValue);
-                                result.NextLink = odatanextLinkInstance;
+                                string nextLinkInstance = ((string)nextLinkValue);
+                                result.NextLink = nextLinkInstance;
                             }
                         }
                         
@@ -1577,11 +1580,11 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                 }
                             }
                             
-                            JToken odatanextLinkValue = responseDoc["@odata.nextLink"];
-                            if (odatanextLinkValue != null && odatanextLinkValue.Type != JTokenType.Null)
+                            JToken nextLinkValue = responseDoc["nextLink"];
+                            if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
                             {
-                                string odatanextLinkInstance = ((string)odatanextLinkValue);
-                                result.NextLink = odatanextLinkInstance;
+                                string nextLinkInstance = ((string)nextLinkValue);
+                                result.NextLink = nextLinkInstance;
                             }
                         }
                         

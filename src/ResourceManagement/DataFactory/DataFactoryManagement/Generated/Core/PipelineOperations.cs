@@ -311,11 +311,6 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                         policyValue["executionPriorityOrder"] = activitiesItem.Policy.ExecutionPriorityOrder;
                                     }
                                     
-                                    if (activitiesItem.Policy.Style != null)
-                                    {
-                                        policyValue["style"] = activitiesItem.Policy.Style;
-                                    }
-                                    
                                     if (activitiesItem.Policy.Retry != null)
                                     {
                                         policyValue["retry"] = activitiesItem.Policy.Retry.Value;
@@ -566,13 +561,6 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                             {
                                                 string executionPriorityOrderInstance = ((string)executionPriorityOrderValue);
                                                 policyInstance.ExecutionPriorityOrder = executionPriorityOrderInstance;
-                                            }
-                                            
-                                            JToken styleValue = policyValue2["style"];
-                                            if (styleValue != null && styleValue.Type != JTokenType.Null)
-                                            {
-                                                string styleInstance = ((string)styleValue);
-                                                policyInstance.Style = styleInstance;
                                             }
                                             
                                             JToken retryValue = policyValue2["retry"];
@@ -1018,13 +1006,6 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                             {
                                                 string executionPriorityOrderInstance = ((string)executionPriorityOrderValue);
                                                 policyInstance.ExecutionPriorityOrder = executionPriorityOrderInstance;
-                                            }
-                                            
-                                            JToken styleValue = policyValue["style"];
-                                            if (styleValue != null && styleValue.Type != JTokenType.Null)
-                                            {
-                                                string styleInstance = ((string)styleValue);
-                                                policyInstance.Style = styleInstance;
                                             }
                                             
                                             JToken retryValue = policyValue["retry"];
@@ -1865,13 +1846,6 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                                 policyInstance.ExecutionPriorityOrder = executionPriorityOrderInstance;
                                             }
                                             
-                                            JToken styleValue = policyValue["style"];
-                                            if (styleValue != null && styleValue.Type != JTokenType.Null)
-                                            {
-                                                string styleInstance = ((string)styleValue);
-                                                policyInstance.Style = styleInstance;
-                                            }
-                                            
                                             JToken retryValue = policyValue["retry"];
                                             if (retryValue != null && retryValue.Type != JTokenType.Null)
                                             {
@@ -2228,13 +2202,6 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                             {
                                                 string executionPriorityOrderInstance = ((string)executionPriorityOrderValue);
                                                 policyInstance.ExecutionPriorityOrder = executionPriorityOrderInstance;
-                                            }
-                                            
-                                            JToken styleValue = policyValue["style"];
-                                            if (styleValue != null && styleValue.Type != JTokenType.Null)
-                                            {
-                                                string styleInstance = ((string)styleValue);
-                                                policyInstance.Style = styleInstance;
                                             }
                                             
                                             JToken retryValue = policyValue["retry"];
@@ -2662,13 +2629,6 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                                         policyInstance.ExecutionPriorityOrder = executionPriorityOrderInstance;
                                                     }
                                                     
-                                                    JToken styleValue = policyValue["style"];
-                                                    if (styleValue != null && styleValue.Type != JTokenType.Null)
-                                                    {
-                                                        string styleInstance = ((string)styleValue);
-                                                        policyInstance.Style = styleInstance;
-                                                    }
-                                                    
                                                     JToken retryValue = policyValue["retry"];
                                                     if (retryValue != null && retryValue.Type != JTokenType.Null)
                                                     {
@@ -2807,11 +2767,11 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                 }
                             }
                             
-                            JToken odatanextLinkValue = responseDoc["@odata.nextLink"];
-                            if (odatanextLinkValue != null && odatanextLinkValue.Type != JTokenType.Null)
+                            JToken nextLinkValue = responseDoc["nextLink"];
+                            if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
                             {
-                                string odatanextLinkInstance = ((string)odatanextLinkValue);
-                                result.NextLink = odatanextLinkInstance;
+                                string nextLinkInstance = ((string)nextLinkValue);
+                                result.NextLink = nextLinkInstance;
                             }
                         }
                         
@@ -3044,13 +3004,6 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                                         policyInstance.ExecutionPriorityOrder = executionPriorityOrderInstance;
                                                     }
                                                     
-                                                    JToken styleValue = policyValue["style"];
-                                                    if (styleValue != null && styleValue.Type != JTokenType.Null)
-                                                    {
-                                                        string styleInstance = ((string)styleValue);
-                                                        policyInstance.Style = styleInstance;
-                                                    }
-                                                    
                                                     JToken retryValue = policyValue["retry"];
                                                     if (retryValue != null && retryValue.Type != JTokenType.Null)
                                                     {
@@ -3189,11 +3142,11 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                 }
                             }
                             
-                            JToken odatanextLinkValue = responseDoc["@odata.nextLink"];
-                            if (odatanextLinkValue != null && odatanextLinkValue.Type != JTokenType.Null)
+                            JToken nextLinkValue = responseDoc["nextLink"];
+                            if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
                             {
-                                string odatanextLinkInstance = ((string)odatanextLinkValue);
-                                result.NextLink = odatanextLinkInstance;
+                                string nextLinkInstance = ((string)nextLinkValue);
+                                result.NextLink = nextLinkInstance;
                             }
                         }
                         

@@ -77,13 +77,9 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         /// <param name='tableName'>
         /// Required. A unique table instance name.
         /// </param>
-        /// <param name='dataSliceRangeStartTime'>
-        /// Required. The data slice range start time in round-trip ISO 8601
-        /// format.
-        /// </param>
-        /// <param name='dataSliceRangeEndTime'>
-        /// Required. The data slice range end time in round-trip ISO 8601
-        /// format.
+        /// <param name='parameters'>
+        /// Required. Parameters specifying how to list data slices of the
+        /// table.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -91,7 +87,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         /// <returns>
         /// The List data slices operation response.
         /// </returns>
-        public async Task<DataSliceListResponse> ListAsync(string resourceGroupName, string dataFactoryName, string tableName, string dataSliceRangeStartTime, string dataSliceRangeEndTime, CancellationToken cancellationToken)
+        public async Task<DataSliceListResponse> ListAsync(string resourceGroupName, string dataFactoryName, string tableName, DataSliceListParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -130,13 +126,9 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             {
                 throw new ArgumentOutOfRangeException("tableName");
             }
-            if (dataSliceRangeStartTime == null)
+            if (parameters == null)
             {
-                throw new ArgumentNullException("dataSliceRangeStartTime");
-            }
-            if (dataSliceRangeEndTime == null)
-            {
-                throw new ArgumentNullException("dataSliceRangeEndTime");
+                throw new ArgumentNullException("parameters");
             }
             
             // Tracing
@@ -149,8 +141,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("dataFactoryName", dataFactoryName);
                 tracingParameters.Add("tableName", tableName);
-                tracingParameters.Add("dataSliceRangeStartTime", dataSliceRangeStartTime);
-                tracingParameters.Add("dataSliceRangeEndTime", dataSliceRangeEndTime);
+                tracingParameters.Add("parameters", parameters);
                 TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
             }
             
@@ -169,8 +160,14 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + Uri.EscapeDataString(tableName);
             url = url + "/slices";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("start=" + Uri.EscapeDataString(dataSliceRangeStartTime));
-            queryParameters.Add("end=" + Uri.EscapeDataString(dataSliceRangeEndTime));
+            if (parameters.DataSliceRangeStartTime != null)
+            {
+                queryParameters.Add("start=" + Uri.EscapeDataString(parameters.DataSliceRangeStartTime.ToString()));
+            }
+            if (parameters.DataSliceRangeEndTime != null)
+            {
+                queryParameters.Add("end=" + Uri.EscapeDataString(parameters.DataSliceRangeEndTime.ToString()));
+            }
             queryParameters.Add("api-version=2015-07-01-preview");
             if (queryParameters.Count > 0)
             {
@@ -298,11 +295,11 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                 }
                             }
                             
-                            JToken odatanextLinkValue = responseDoc["@odata.nextLink"];
-                            if (odatanextLinkValue != null && odatanextLinkValue.Type != JTokenType.Null)
+                            JToken nextLinkValue = responseDoc["nextLink"];
+                            if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
                             {
-                                string odatanextLinkInstance = ((string)odatanextLinkValue);
-                                result.NextLink = odatanextLinkInstance;
+                                string nextLinkInstance = ((string)nextLinkValue);
+                                result.NextLink = nextLinkInstance;
                             }
                         }
                         
@@ -482,11 +479,11 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                 }
                             }
                             
-                            JToken odatanextLinkValue = responseDoc["@odata.nextLink"];
-                            if (odatanextLinkValue != null && odatanextLinkValue.Type != JTokenType.Null)
+                            JToken nextLinkValue = responseDoc["nextLink"];
+                            if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
                             {
-                                string odatanextLinkInstance = ((string)odatanextLinkValue);
-                                result.NextLink = odatanextLinkInstance;
+                                string nextLinkInstance = ((string)nextLinkValue);
+                                result.NextLink = nextLinkInstance;
                             }
                         }
                         
