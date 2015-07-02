@@ -67,11 +67,6 @@ namespace BackupServices.Tests
                 Assert.NotNull(response.ResourceCertificateAndACSDetails);
 
                 // Basic Validation                
-                Assert.True(string.Equals(rawCertDataString, response.ResourceCertificateAndACSDetails.Certificate),
-                            "Downloaded and uploaded cert raw data don't match");
-                Assert.True(string.Equals(cert.Thumbprint, response.ResourceCertificateAndACSDetails.Thumbprint,
-                                          StringComparison.OrdinalIgnoreCase),
-                            "Downloaded and uploaded cert thumbprints don't match");
                 Assert.False(string.IsNullOrEmpty(response.ResourceCertificateAndACSDetails.GlobalAcsHostName),
                              "Returned Global ACS Host Name shouldn't be null or empty");
                 Assert.False(string.IsNullOrEmpty(response.ResourceCertificateAndACSDetails.GlobalAcsNamespace),
