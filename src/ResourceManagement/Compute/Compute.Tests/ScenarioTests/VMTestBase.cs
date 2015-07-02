@@ -14,6 +14,7 @@
 //
 
 using Compute.Tests;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.Network;
@@ -72,12 +73,8 @@ namespace Compute.Tests
         protected ImageReference FindVMImage(string publisher, string offer, string sku)
         {
             VirtualMachineImageResourceList images = m_CrpClient.VirtualMachineImages.List(
-                new VirtualMachineImageListParameters
-                {
-                    Location = m_location, 
-                    PublisherName = publisher, Offer = offer, Skus = sku,
-                    FilterExpression = "$top=1"
-                });
+                location: m_location, publisherName: publisher, offer: offer, skus: sku,
+                parametersFilterExpressionunencoded: "$top=1");
             VirtualMachineImageResource image = images.Resources.First();
             return new ImageReference
             {
@@ -126,26 +123,23 @@ namespace Compute.Tests
                 };
 
                 StorageAccount storageAccountOutput = m_SrpClient.StorageAccounts.Create(rgName,
-                    storageAccountName, stoInput).StorageAccount;
+                    storageAccountName, stoInput);
                 bool created = false;
                 while (!created)
                 {
                     ComputeManagementTestUtilities.WaitSeconds(10);
                     var stos = m_SrpClient.StorageAccounts.ListByResourceGroup(rgName);
                     created =
-                        stos.StorageAccounts.Any(
+                        stos.Value.Any(
                             t =>
                                 StringComparer.OrdinalIgnoreCase.Equals(t.Name, storageAccountName));
                 }
-
-                storageAccountOutput.Name = storageAccountName; // TODO: try to remove this in a future recording
 
                 return storageAccountOutput;
             }
             catch
             {
-                var deleteRg1Response = m_ResourcesClient.ResourceGroups.Delete(rgName);
-                Assert.True(deleteRg1Response.StatusCode == HttpStatusCode.OK);
+                m_ResourcesClient.ResourceGroups.Delete(rgName);
                 throw;
             }
         }
@@ -166,18 +160,18 @@ namespace Compute.Tests
                         Location = m_location
                     });
 
-                PublicIpAddressGetResponse getPublicIpAddressResponse = createWithPublicIpAddress ? null : CreatePublicIP(rgName);
+                PublicIpAddress getPublicIpAddressResponse = createWithPublicIpAddress ? null : CreatePublicIP(rgName);
                 
-                SubnetGetResponse subnetResponse = CreateVNET(rgName);
+                Subnet subnetResponse = CreateVNET(rgName);
 
-                NetworkInterfaceGetResponse nicResponse = CreateNIC(
+                NetworkInterface nicResponse = CreateNIC(
                     rgName, 
-                    subnetResponse.Subnet, 
-                    getPublicIpAddressResponse != null ? getPublicIpAddressResponse.PublicIpAddress : null);
+                    subnetResponse, 
+                    getPublicIpAddressResponse != null ? getPublicIpAddressResponse.IpAddress : null);
 
                 string asetId = CreateAvailabilitySet(rgName, asName);
 
-                inputVM = CreateDefaultVMInput(rgName, storageAccount.Name, imageRef, asetId, nicResponse.NetworkInterface.Id);
+                inputVM = CreateDefaultVMInput(rgName, storageAccount.Name, imageRef, asetId, nicResponse.Id);
                 if (vmCustomizer != null)
                 {
                     vmCustomizer(inputVM);
@@ -185,8 +179,7 @@ namespace Compute.Tests
 
                 string expectedVMReferenceId = Helpers.GetVMReferenceId(m_subId, rgName, inputVM.Name);
 
-                var createOrUpdateResponse = m_CrpClient.VirtualMachines.BeginCreatingOrUpdating (
-                     rgName,  inputVM);
+                var createOrUpdateResponse = m_CrpClient.VirtualMachines.CreateOrUpdate(rgName, inputVM.Name, inputVM);
 
                 Assert.True(createOrUpdateResponse.StatusCode == HttpStatusCode.Created);
 
@@ -221,7 +214,7 @@ namespace Compute.Tests
             }
         }
 
-        protected PublicIpAddressGetResponse CreatePublicIP(string rgName)
+        protected PublicIpAddress CreatePublicIP(string rgName)
         {
             // Create publicIP
             string publicIpName = TestUtilities.GenerateName();
@@ -234,7 +227,7 @@ namespace Compute.Tests
                     {
                         {"key", "value"}
                     },
-                PublicIpAllocationMethod = IpAllocationMethod.Dynamic,
+                PublicIPAllocationMethod = IpAllocationMethod.Dynamic,
                 DnsSettings = new PublicIpAddressDnsSettings()
                 {
                     DomainNameLabel = domainNameLabel
@@ -246,7 +239,7 @@ namespace Compute.Tests
             return getPublicIpAddressResponse;
         }
 
-        protected SubnetGetResponse CreateVNET(string rgName)
+        protected Subnet CreateVNET(string rgName)
         {
             // Create Vnet
             // Populate parameter for Put Vnet
@@ -285,7 +278,7 @@ namespace Compute.Tests
             return getSubnetResponse;
         }
 
-        protected NetworkInterfaceGetResponse CreateNIC(string rgName, Subnet subnet, PublicIpAddress publicIPaddress, string nicname = null)
+        protected NetworkInterface CreateNIC(string rgName, Subnet subnet, string publicIPaddress, string nicname = null)
         {
             // Create Nic
             nicname = nicname ?? TestUtilities.GenerateName();
@@ -294,7 +287,6 @@ namespace Compute.Tests
             var nicParameters = new NetworkInterface()
             {
                 Location = m_location,
-                Name = nicname,
                 Tags = new Dictionary<string, string>()
                 {
                     { "key" ,"value" }
@@ -304,7 +296,7 @@ namespace Compute.Tests
                     new NetworkInterfaceIpConfiguration()
                     {
                         Name = ipConfigName,
-                        PrivateIpAllocationMethod = IpAllocationMethod.Dynamic,
+                        PrivateIPAllocationMethod = IpAllocationMethod.Dynamic,
                         Subnet = subnet,
                     }
                 }
@@ -312,7 +304,7 @@ namespace Compute.Tests
 
             if (publicIPaddress != null)
             {
-                nicParameters.IpConfigurations[0].PublicIpAddress = new ResourceId { Id = publicIPaddress.Id };
+                nicParameters.IpConfigurations[0].PublicIPAddress = new SubResource { Id = publicIPaddress.Id };
             }
 
             var putNicResponse = m_NrpClient.NetworkInterfaces.CreateOrUpdate(rgName, nicname, nicParameters);
@@ -326,7 +318,6 @@ namespace Compute.Tests
             var inputAvailabilitySet = new AvailabilitySet
             {
                 Location = m_location,
-                Name = asName,
                 Tags = new Dictionary<string, string>()
                     {
                         {"RG", "rg"},
@@ -337,10 +328,10 @@ namespace Compute.Tests
             // Create an Availability Set and then create a VM inside this availability set
             var asCreateOrUpdateResponse = m_CrpClient.AvailabilitySets.CreateOrUpdate(
                 rgName,
+                asName,
                 inputAvailabilitySet
             );
-            var asetId = Helpers.GetAvailabilitySetRef(m_subId, rgName, asCreateOrUpdateResponse.AvailabilitySet.Name);
-            Assert.True(asCreateOrUpdateResponse.StatusCode == HttpStatusCode.OK);
+            var asetId = Helpers.GetAvailabilitySetRef(m_subId, rgName, asCreateOrUpdateResponse.Name);
             return asetId;
         }
 
@@ -352,26 +343,24 @@ namespace Compute.Tests
             var vhduri = vhdContainer + string.Format("/{0}.vhd", TestUtilities.GenerateName(TestPrefix));
             var osVhduri = vhdContainer + string.Format("/os{0}.vhd", TestUtilities.GenerateName(TestPrefix));
 
-            return new VirtualMachine
+            var vm = new VirtualMachine
             {
-                Name = TestUtilities.GenerateName("vm"),
                 Location = m_location,
                 Tags = new Dictionary<string, string>() { { "RG", "rg" }, { "testTag", "1" } },
-                Type = "Microsoft.Compute/virtualMachines",
-                AvailabilitySetReference = new AvailabilitySetReference { ReferenceUri = asetId },
+                AvailabilitySet = new AvailabilitySetReference { Id = asetId },
                 HardwareProfile = new HardwareProfile
                 {
-                    VirtualMachineSize = VirtualMachineSizeTypes.StandardA0
+                    VmSize = VirtualMachineSizeTypes.StandardA0
                 },
                 StorageProfile = new StorageProfile
                 {
                     ImageReference = imageRef,
-                    OSDisk = new OSDisk
+                    OsDisk = new OSDisk
                     {
                         Caching = CachingTypes.None,
                         CreateOption = DiskCreateOptionTypes.FromImage,
                         Name = "test",
-                        VirtualHardDisk = new VirtualHardDisk
+                        Vhd = new VirtualHardDisk
                         {
                             Uri = osVhduri
                         }
@@ -384,17 +373,21 @@ namespace Compute.Tests
                         {
                             new NetworkInterfaceReference
                             {
-                                ReferenceUri = nicId
+                                Id = nicId
                             }
                         }
                 },
-                OSProfile = new OSProfile
+                OsProfile = new OSProfile
                 {
                     AdminUsername = "Foo12",
                     AdminPassword = "BaR@123" + rgName,
                     ComputerName = "test"
                 }
             };
+
+            typeof(VirtualMachine).GetProperty("Name").SetValue(vm, TestUtilities.GenerateName("vm"));
+            typeof(VirtualMachine).GetProperty("Type").SetValue(vm, TestUtilities.GenerateName("Microsoft.Compute/virtualMachines"));
+            return vm;
         }
         
         protected void ValidateLROResponse(ComputeLongRunningOperationResponse lroResponse, string operationId)

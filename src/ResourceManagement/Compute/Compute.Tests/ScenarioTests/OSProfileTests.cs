@@ -13,6 +13,7 @@
 // limitations under the License.
 //
 
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.Network;
@@ -38,9 +39,9 @@ namespace Compute.Tests
     {
         private static readonly string CustomData = Convert.ToBase64String(Encoding.UTF8.GetBytes("echo 'Hello World'"));
 
-        private const string OOBESystem = PassNames.OOBESystem;
-        private const string MicrosoftWindowsShellSetup = ComponentNames.MicrosoftWindowsShellSetup;
-        private const string AutoLogon = SettingNames.AutoLogon;
+        private const PassNames OOBESystem = PassNames.OobeSystem;
+        private const ComponentNames MicrosoftWindowsShellSetup = ComponentNames.MicrosoftWindowsShellSetup;
+        private const SettingNames AutoLogon = SettingNames.AutoLogon;
 
         private const string PacificStandardTime = "Pacific Standard Time";
 
@@ -68,16 +69,16 @@ namespace Compute.Tests
             "oe6IQTw7zJF7xuBIzTYwjOCM197GKW7xc4GU4JZIN+faZ7njl/fxfUNdlqvgZUUn" +
             "kfdrzU3PZPl0w9NuncgEje/PZ+YtZvIsnH7MLSPeIGNQwW6V2kc8";
 
-        private void EnableWinRMCustomDataAndUnattendContent(string rgName, string keyVaultName, Uri winRMCertificateUrl, string autoLogonContent, VirtualMachine inputVM)
+        private void EnableWinRMCustomDataAndUnattendContent(string rgName, string keyVaultName, string winRMCertificateUrl, string autoLogonContent, VirtualMachine inputVM)
         {
-            OSProfile osProfile = inputVM.OSProfile;
+            OSProfile osProfile = inputVM.OsProfile;
             osProfile.CustomData = CustomData;
             osProfile.WindowsConfiguration = new WindowsConfiguration
             {
                 ProvisionVMAgent = true,
                 EnableAutomaticUpdates = false,
                 TimeZone = PacificStandardTime,
-                AdditionalUnattendContents = new List<AdditionalUnattendContent>
+                AdditionalUnattendContent = new List<AdditionalUnattendContent>
                     {
                         new AdditionalUnattendContent 
                         {
@@ -87,7 +88,7 @@ namespace Compute.Tests
                             Content = autoLogonContent
                         }
                     },
-                WinRMConfiguration = new WinRMConfiguration
+                WinRM = new WinRMConfiguration
                 {
                     Listeners = new List<WinRMListener>
                         {
@@ -114,7 +115,7 @@ namespace Compute.Tests
                              new VaultCertificate
                              {
                                  CertificateStore = "My",
-                                 CertificateUrl = winRMCertificateUrl.AbsoluteUri
+                                 CertificateUrl = winRMCertificateUrl
                              }
                          }
                     }
@@ -123,7 +124,7 @@ namespace Compute.Tests
 
         private void ValidateWinRMCustomDataAndUnattendContent(string rgName, string keyVaultName, Uri winRMCertificateUrl, string autoLogonContent, VirtualMachine outputVM)
         {
-            OSProfile osProfile = outputVM.OSProfile;
+            OSProfile osProfile = outputVM.OsProfile;
             // CustomData:
             Assert.Equal(osProfile.CustomData, CustomData);
 
@@ -137,23 +138,23 @@ namespace Compute.Tests
             Assert.Equal(PacificStandardTime, osProfile.WindowsConfiguration.TimeZone);
 
             // WinRM
-            Assert.NotNull(osProfile.WindowsConfiguration.WinRMConfiguration);
-            var listeners = osProfile.WindowsConfiguration.WinRMConfiguration.Listeners;
+            Assert.NotNull(osProfile.WindowsConfiguration.WinRM);
+            var listeners = osProfile.WindowsConfiguration.WinRM.Listeners;
             Assert.NotNull(listeners);
             Assert.Equal(2, listeners.Count);
 
-            if (listeners[0].Protocol.Equals(ProtocolTypes.Http, StringComparison.InvariantCultureIgnoreCase))
+            if (listeners[0].Protocol == ProtocolTypes.Http)
             {
                 Assert.Null(listeners[0].CertificateUrl);
 
-                Assert.True(listeners[1].Protocol.Equals(ProtocolTypes.Https, StringComparison.InvariantCultureIgnoreCase));
-                Assert.True(listeners[1].CertificateUrl.AbsoluteUri.Equals(winRMCertificateUrl.AbsoluteUri, StringComparison.OrdinalIgnoreCase));
+                Assert.True(listeners[1].Protocol == ProtocolTypes.Https);
+                Assert.True(listeners[1].CertificateUrl.Equals(winRMCertificateUrl.AbsoluteUri, StringComparison.OrdinalIgnoreCase));
             }
-            else if (listeners[0].Protocol.Equals(ProtocolTypes.Https, StringComparison.InvariantCultureIgnoreCase))
+            else if (listeners[0].Protocol == ProtocolTypes.Https)
             {
-                Assert.True(listeners[0].CertificateUrl.AbsoluteUri.Equals(winRMCertificateUrl.AbsoluteUri, StringComparison.OrdinalIgnoreCase));
+                Assert.True(listeners[0].CertificateUrl.Equals(winRMCertificateUrl.AbsoluteUri, StringComparison.OrdinalIgnoreCase));
 
-                Assert.True(listeners[1].Protocol.Equals(ProtocolTypes.Http, StringComparison.InvariantCultureIgnoreCase));
+                Assert.True(listeners[1].Protocol == ProtocolTypes.Http);
                 Assert.Null(listeners[1].CertificateUrl);
             }
             else
@@ -163,7 +164,7 @@ namespace Compute.Tests
             }
 
             // AdditionalUnattendContent
-            var additionalContents = osProfile.WindowsConfiguration.AdditionalUnattendContents;
+            var additionalContents = osProfile.WindowsConfiguration.AdditionalUnattendContent;
             Assert.NotNull(additionalContents);
             Assert.Equal(1, additionalContents.Count);
             Assert.Equal(OOBESystem, additionalContents[0].PassName);
@@ -191,11 +192,11 @@ namespace Compute.Tests
 
                 // The following variables are defined here to allow validation
                 string autoLogonContent = null;
-                Uri winRMCertificateUrl = SecretVaultHelper.AddSecret(m_subId, rgName, keyVaultName, winRMCertificateBase64).Result;
+                string winRMCertificateUrl = SecretVaultHelper.AddSecret(m_subId, rgName, keyVaultName, winRMCertificateBase64).Result;
 
                 Action<VirtualMachine> enableWinRMCustomDataAndUnattendContent = inputVM =>
                     {
-                        autoLogonContent = GetAutoLogonContent(5, inputVM.OSProfile.AdminUsername, inputVM.OSProfile.AdminPassword);
+                        autoLogonContent = GetAutoLogonContent(5, inputVM.OsProfile.AdminUsername, inputVM.OsProfile.AdminPassword);
                         EnableWinRMCustomDataAndUnattendContent(rgName, keyVaultName, winRMCertificateUrl, autoLogonContent, inputVM);
                     };
 
@@ -297,14 +298,13 @@ namespace Compute.Tests
                 ValidateVMInstanceView(inputVM, getVMWithInstanceViewResponse.VirtualMachine);
 
                 var lroResponse = m_CrpClient.VirtualMachines.CreateOrUpdate(rgName, vm);
-                Assert.True(lroResponse.Status == ComputeOperationStatus.Succeeded);
+                Assert.True(lroResponse.ProvisioningState == "Succeeded");
                 if (vmValidator != null)
                 {
                     vmValidator(vm);
                 }
 
-                var deleteOperationResponse = m_CrpClient.VirtualMachines.BeginDeleting(rgName, vm.Name);
-                Assert.True(deleteOperationResponse.StatusCode == HttpStatusCode.Accepted);
+                m_CrpClient.VirtualMachines.Delete(rgName, vm.Name);
 
                 // TODO: VM delete operation takes too long, disable it for now
                 // lroResponse = m_CrpClient.VirtualMachines.Delete(rgName, vm.Name);
@@ -317,8 +317,7 @@ namespace Compute.Tests
                     // TODO: RG delete operation takes too long, disable it for now
                     // var deleteResourceGroupResponse = m_ResourcesClient.ResourceGroups.Delete(rgName);
                     // Assert.True(deleteResourceGroupResponse.StatusCode == HttpStatusCode.OK);
-                    var deleteResourceGroupResponse = m_ResourcesClient.ResourceGroups.BeginDeleting(rgName);
-                    Assert.True(deleteResourceGroupResponse.StatusCode == HttpStatusCode.Accepted);
+                    m_ResourcesClient.ResourceGroups.Delete(rgName);
                 }
             }
         }
@@ -374,14 +373,14 @@ namespace Compute.Tests
         {
         }
 
-        public static async Task<SourceVaultReference> GetVaultId(string subId, string rgName, string keyVaultName)
+        public static async Task<SubResource> GetVaultId(string subId, string rgName, string keyVaultName)
         {
-            return new SourceVaultReference { ReferenceUri = KeyVaultId };
+            return new SubResource { Id = KeyVaultId };
         }
 
-        public static async Task<Uri> AddSecret(string subId, string rgName, string keyVaultName, string secret)
+        public static async Task<string> AddSecret(string subId, string rgName, string keyVaultName, string secret)
         {
-            return CertificateUrl;
+            return CertificateUrl.AbsoluteUri;
         }
 
         public static async Task DeleteSecret(string subId, string rgName, string keyVaultName, string secret)

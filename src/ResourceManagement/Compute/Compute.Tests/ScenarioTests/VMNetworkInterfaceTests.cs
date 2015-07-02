@@ -55,38 +55,37 @@ namespace Compute.Tests
                     // Create Storage Account, so that both the VMs can share it
                     var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
 
-                    SubnetGetResponse subnetResponse = CreateVNET(rgName);
+                    Subnet subnetResponse = CreateVNET(rgName);
 
-                    NetworkInterfaceGetResponse nicResponse = CreateNIC(rgName, subnetResponse.Subnet, null);
+                    NetworkInterface nicResponse = CreateNIC(rgName, subnetResponse, null);
 
                     string asetId = CreateAvailabilitySet(rgName, asName);
 
-                    inputVM = CreateDefaultVMInput(rgName, storageAccountName, imageRef, asetId, nicResponse.NetworkInterface.Id);
+                    inputVM = CreateDefaultVMInput(rgName, storageAccountName, imageRef, asetId, nicResponse.Id);
                     
                     string expectedVMReferenceId = Helpers.GetVMReferenceId(m_subId, rgName, inputVM.Name);
 
                     var createOrUpdateResponse = m_CrpClient.VirtualMachines.CreateOrUpdate(
-                         rgName, inputVM);
+                         rgName, inputVM.Name, inputVM);
 
-                    Assert.True(createOrUpdateResponse.StatusCode == HttpStatusCode.OK);
+                    Assert.NotNull(createOrUpdateResponse);
 
                     var getVMResponse = m_CrpClient.VirtualMachines.Get(rgName, inputVM.Name);
 
                     Assert.True(
-                        getVMResponse.VirtualMachine.AvailabilitySetReference.ReferenceUri
+                        getVMResponse.AvailabilitySet.Id
                             .ToLowerInvariant() == asetId.ToLowerInvariant());
-                    ValidateVM(inputVM, getVMResponse.VirtualMachine, expectedVMReferenceId);
+                    ValidateVM(inputVM, getVMResponse, expectedVMReferenceId);
 
-                    var getNicResponse = m_NrpClient.NetworkInterfaces.Get(rgName, nicResponse.NetworkInterface.Name);
-                    Assert.NotNull(getNicResponse.NetworkInterface.MacAddress);
-                    Assert.NotNull(getNicResponse.NetworkInterface.Primary);
-                    Assert.True(getNicResponse.NetworkInterface.Primary != null && getNicResponse.NetworkInterface.Primary.Value);
+                    var getNicResponse = m_NrpClient.NetworkInterfaces.Get(rgName, nicResponse.Name);
+                    Assert.NotNull(getNicResponse.MacAddress);
+                    Assert.NotNull(getNicResponse.Primary);
+                    Assert.True(getNicResponse.Primary != null && getNicResponse.Primary.Value);
                 }
                 finally
                 {
                     // Cleanup the created resources
-                    var deleteRg1Response = m_ResourcesClient.ResourceGroups.Delete(rgName);
-                    Assert.True(deleteRg1Response.StatusCode == HttpStatusCode.OK);
+                    m_ResourcesClient.ResourceGroups.Delete(rgName);
                 }
             }
         }
@@ -119,18 +118,18 @@ namespace Compute.Tests
                     // Create Storage Account, so that both the VMs can share it
                     var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
 
-                    SubnetGetResponse subnetResponse = CreateVNET(rgName);
+                    Subnet subnetResponse = CreateVNET(rgName);
 
                     string nicname1 = TestUtilities.GenerateName();
                     string nicname2 = TestUtilities.GenerateName();
-                    NetworkInterfaceGetResponse nicResponse1 = CreateNIC(rgName, subnetResponse.Subnet, null, nicname1);
-                    NetworkInterfaceGetResponse nicResponse2 = CreateNIC(rgName, subnetResponse.Subnet, null, nicname2);
+                    NetworkInterface nicResponse1 = CreateNIC(rgName, subnetResponse, null, nicname1);
+                    NetworkInterface nicResponse2 = CreateNIC(rgName, subnetResponse, null, nicname2);
                     string asetId = CreateAvailabilitySet(rgName, asName);
 
-                    inputVM = CreateDefaultVMInput(rgName, storageAccountName, imageRef, asetId, nicResponse1.NetworkInterface.Id);
+                    inputVM = CreateDefaultVMInput(rgName, storageAccountName, imageRef, asetId, nicResponse1.Id);
 
-                    inputVM.HardwareProfile.VirtualMachineSize = VirtualMachineSizeTypes.StandardA4;
-                    inputVM.NetworkProfile.NetworkInterfaces[0].Primary = false;
+                    inputVM.HardwareProfile.VmSize = VirtualMachineSizeTypes.StandardA4;
+                    inputVM.NetworkProfile.NetworkInterfaces[0].Properties.Primary = false;
 
                     inputVM.NetworkProfile.NetworkInterfaces.Add(new NetworkInterfaceReference
                                                                      {

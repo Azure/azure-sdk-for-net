@@ -37,25 +37,33 @@ namespace Compute.Tests
         public static ComputeManagementClient GetComputeManagementClient(TestEnvironmentFactory factory, RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
-            return TestBase.GetServiceClient<ComputeManagementClient>(factory).WithHandler(handler);
+            var client = TestBase.GetServiceClient<ComputeManagementClient>(factory, handler);
+            client.LongRunningOperationRetryTimeout = 0;
+            return client;
         }
 
         public static ResourceManagementClient GetResourceManagementClient(RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
-            return TestBase.GetServiceClient<ResourceManagementClient>(new CSMTestEnvironmentFactory()).WithHandler(handler);
+            var client = TestBase.GetServiceClient<ResourceManagementClient>(new CSMTestEnvironmentFactory(), handler);
+            client.LongRunningOperationRetryTimeout = 0;
+            return client;
         }
 
         public static NetworkResourceProviderClient GetNetworkResourceProviderClient(RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
-            return TestBase.GetServiceClient<NetworkResourceProviderClient>(new CSMTestEnvironmentFactory()).WithHandler(handler);
+            var client = TestBase.GetServiceClient<NetworkResourceProviderClient>(new CSMTestEnvironmentFactory(), handler);
+            client.LongRunningOperationRetryTimeout = 0;
+            return client;
         }
 
         public static StorageManagementClient GetStorageManagementClient(RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
-            return TestBase.GetServiceClient<StorageManagementClient>(new CSMTestEnvironmentFactory()).WithHandler(handler);
+            var client = TestBase.GetServiceClient<StorageManagementClient>(new CSMTestEnvironmentFactory(), handler);
+            client.LongRunningOperationRetryTimeout = 0;
+            return client;
         }
 
         public static void WaitSeconds(double seconds)
