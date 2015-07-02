@@ -39,7 +39,7 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="SessionRecords\BackupServices.Tests.VaultTests\UpdateStorageTypeOnLockedResourceFailsTest.json" />
+    <None Include="SessionRecords\BackupServices.Tests.VaultTests\UpdateStorageTypeReturnsValidCodeTest.json" />
     <None Include="SessionRecords\BackupServices.Tests.VaultTests\UploadCertReturnsValidResponseTest.json" />
   </ItemGroup>
   <ItemGroup>

@@ -88,10 +88,8 @@ namespace BackupServices.Tests
         }
 
         [Fact]
-        public void UpdateStorageTypeOnLockedResourceFailsTest()
+        public void UpdateStorageTypeReturnsValidCodeTest()
         {
-            bool validationSucceeded = false;
-
             using (UndoContext undoContext = UndoContext.Current)
             {
                 undoContext.Start();
@@ -106,27 +104,11 @@ namespace BackupServices.Tests
                     },
                 };
 
-                try
-                {
-                    OperationResponse response = client.Vault.UpdateStorageType(updateVaultStorageTypeRequest, GetCustomRequestHeaders());
-                }
-                catch (Exception ex)
-                {
-                    if (ex.GetType() == typeof(Hyak.Common.CloudException))
-                    {
-                        Hyak.Common.CloudException cloudEx = ex as Hyak.Common.CloudException;
-                        if (cloudEx.Error.GetType() == typeof(Hyak.Common.CloudError))
-                        {
-                            Hyak.Common.CloudError cloudError = cloudEx.Error as Hyak.Common.CloudError;
-                            if (cloudError.Code == "StorageModelModifyError")
-                            {
-                                validationSucceeded = true;
-                            }
-                        }
-                    }
-                }
+                OperationResponse response = client.Vault.UpdateStorageType(updateVaultStorageTypeRequest, GetCustomRequestHeaders());
 
-                Assert.True(validationSucceeded);
+                // Response Validation
+                Assert.NotNull(response);
+                Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
             }
         }
     }
