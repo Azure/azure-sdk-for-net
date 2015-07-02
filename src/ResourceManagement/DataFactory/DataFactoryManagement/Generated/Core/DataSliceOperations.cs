@@ -130,6 +130,14 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             {
                 throw new ArgumentNullException("parameters");
             }
+            if (parameters.DataSliceRangeEndTime == null)
+            {
+                throw new ArgumentNullException("parameters.DataSliceRangeEndTime");
+            }
+            if (parameters.DataSliceRangeStartTime == null)
+            {
+                throw new ArgumentNullException("parameters.DataSliceRangeStartTime");
+            }
             
             // Tracing
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -160,14 +168,8 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + Uri.EscapeDataString(tableName);
             url = url + "/slices";
             List<string> queryParameters = new List<string>();
-            if (parameters.DataSliceRangeStartTime != null)
-            {
-                queryParameters.Add("start=" + Uri.EscapeDataString(parameters.DataSliceRangeStartTime.ToString()));
-            }
-            if (parameters.DataSliceRangeEndTime != null)
-            {
-                queryParameters.Add("end=" + Uri.EscapeDataString(parameters.DataSliceRangeEndTime.ToString()));
-            }
+            queryParameters.Add("start=" + Uri.EscapeDataString(parameters.DataSliceRangeStartTime));
+            queryParameters.Add("end=" + Uri.EscapeDataString(parameters.DataSliceRangeEndTime));
             queryParameters.Add("api-version=2015-07-01-preview");
             if (queryParameters.Count > 0)
             {

@@ -29,11 +29,54 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     /// </summary>
     public partial class DataSliceListParameters
     {
+        private string _dataSliceRangeEndTime;
+        
+        /// <summary>
+        /// Required. The data slice range end time in round-trip ISO 8601
+        /// format.
+        /// </summary>
+        public string DataSliceRangeEndTime
+        {
+            get { return this._dataSliceRangeEndTime; }
+            set { this._dataSliceRangeEndTime = value; }
+        }
+        
+        private string _dataSliceRangeStartTime;
+        
+        /// <summary>
+        /// Required. The data slice range start time in round-trip ISO 8601
+        /// format.
+        /// </summary>
+        public string DataSliceRangeStartTime
+        {
+            get { return this._dataSliceRangeStartTime; }
+            set { this._dataSliceRangeStartTime = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the DataSliceListParameters class.
         /// </summary>
         public DataSliceListParameters()
         {
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the DataSliceListParameters class
+        /// with required arguments.
+        /// </summary>
+        public DataSliceListParameters(string dataSliceRangeStartTime, string dataSliceRangeEndTime)
+            : this()
+        {
+            if (dataSliceRangeStartTime == null)
+            {
+                throw new ArgumentNullException("dataSliceRangeStartTime");
+            }
+            if (dataSliceRangeEndTime == null)
+            {
+                throw new ArgumentNullException("dataSliceRangeEndTime");
+            }
+            this.DataSliceRangeStartTime = dataSliceRangeStartTime;
+            this.DataSliceRangeEndTime = dataSliceRangeEndTime;
         }
     }
 }

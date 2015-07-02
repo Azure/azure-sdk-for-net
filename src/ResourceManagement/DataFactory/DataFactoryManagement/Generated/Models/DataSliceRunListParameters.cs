@@ -30,11 +30,37 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     /// </summary>
     public partial class DataSliceRunListParameters
     {
+        private string _dataSliceStartTime;
+        
+        /// <summary>
+        /// Required. The start time of the data slice queried in round-trip
+        /// ISO 8601 format.
+        /// </summary>
+        public string DataSliceStartTime
+        {
+            get { return this._dataSliceStartTime; }
+            set { this._dataSliceStartTime = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the DataSliceRunListParameters class.
         /// </summary>
         public DataSliceRunListParameters()
         {
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the DataSliceRunListParameters class
+        /// with required arguments.
+        /// </summary>
+        public DataSliceRunListParameters(string dataSliceStartTime)
+            : this()
+        {
+            if (dataSliceStartTime == null)
+            {
+                throw new ArgumentNullException("dataSliceStartTime");
+            }
+            this.DataSliceStartTime = dataSliceStartTime;
         }
     }
 }

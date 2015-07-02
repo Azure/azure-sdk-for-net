@@ -82,12 +82,9 @@ namespace Microsoft.Azure.Management.DataFactories
         /// <param name='tableName'>
         /// A unique table instance name.
         /// </param>
-        /// <param name='dataSliceStartTime'>
-        /// The start time of the data slice queried in round-trip ISO 8601
+        /// <param name='parameters'>
+        /// Parameters specifying how to list data slice runs of the table.
         /// format.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
         /// </param>
         /// <returns>
         /// The List data slice runs operation response.
@@ -96,7 +93,7 @@ namespace Microsoft.Azure.Management.DataFactories
             string resourceGroupName,
             string dataFactoryName,
             string tableName,
-            string dataSliceStartTime,
+            DataSliceRunListParameters parameters,
             CancellationToken cancellationToken);
 
         /// <summary>

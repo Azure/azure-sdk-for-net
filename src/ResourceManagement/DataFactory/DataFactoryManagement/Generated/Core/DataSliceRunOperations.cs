@@ -774,6 +774,10 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             {
                 throw new ArgumentNullException("parameters");
             }
+            if (parameters.DataSliceStartTime == null)
+            {
+                throw new ArgumentNullException("parameters.DataSliceStartTime");
+            }
             
             // Tracing
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -804,10 +808,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + Uri.EscapeDataString(tableName);
             url = url + "/sliceruns";
             List<string> queryParameters = new List<string>();
-            if (parameters.DataSliceStartTime != null)
-            {
-                queryParameters.Add("startTime=" + Uri.EscapeDataString(parameters.DataSliceStartTime.ToString()));
-            }
+            queryParameters.Add("startTime=" + Uri.EscapeDataString(parameters.DataSliceStartTime));
             queryParameters.Add("api-version=2015-07-01-preview");
             if (queryParameters.Count > 0)
             {
