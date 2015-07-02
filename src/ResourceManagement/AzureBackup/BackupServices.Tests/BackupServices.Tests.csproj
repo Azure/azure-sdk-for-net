@@ -8,15 +8,8 @@
   <Import Project="..\..\..\..\tools\Library.Settings.targets" />
   <Import Project="$(LibraryToolsFolder)\Test.Dependencies.target" />
   <ItemGroup>
-    <Compile Include="Helpers\ContainerTestHelper.cs" />
     <Compile Include="Helpers\VaultTestHelper.cs" />
-    <Compile Include="ScenarioTests\AzureBackupItemTests.cs" />
     <Compile Include="ScenarioTests\BackupServicesTestBase.cs" />
-    <Compile Include="ScenarioTests\BackUpTests.cs" />
-    <Compile Include="ScenarioTests\ContainerTests.cs" />
-    <Compile Include="ScenarioTests\JobsTests.cs" />
-    <Compile Include="ScenarioTests\ProtectionPolicyTests.cs" />
-    <Compile Include="ScenarioTests\RecoveryPointTests.cs" />
     <Compile Include="ScenarioTests\VaultTests.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -46,26 +39,7 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="SessionRecords\BackupServices.Tests.AzureBackupItemTests\DisableAzureBackupProtectionTest.json" />
-    <None Include="SessionRecords\BackupServices.Tests.AzureBackupItemTests\EnableAzureBackupProtectionTest.json" />
-    <None Include="SessionRecords\BackupServices.Tests.AzureBackupItemTests\ListAzureBackupItemDSTest.json" />
-    <None Include="SessionRecords\BackupServices.Tests.AzureBackupItemTests\ListAzureBackupItemPOTest.json" />
-    <None Include="SessionRecords\BackupServices.Tests.BackUpTests\TriggerBackUpTest.json" />
-    <None Include="SessionRecords\BackupServices.Tests.ContainerTests\ListContainersReturnsValidResponseTest.json" />
-    <None Include="SessionRecords\BackupServices.Tests.ContainerTests\RegisterContainersReturnsValidResponseTest.json" />
-    <None Include="SessionRecords\BackupServices.Tests.ContainerTests\UnRegisterContainersReturnsValidResponseTest.json" />
-    <None Include="SessionRecords\BackupServices.Tests.DisableAzureBackupProtectionTest\DisableAzureBackupProtection.json" />
-    <None Include="SessionRecords\BackupServices.Tests.EnableAzureBackupProtectionTest\EnableAzureBackupProtection.json" />
-    <None Include="SessionRecords\BackupServices.Tests.GetAzureBackupItemPOTest\ListAzureBackupItemPOTest.json" />
-    <None Include="SessionRecords\BackupServices.Tests.GetAzureBackupItemsDSTest\ListAzureBackupItemDSTest.json" />
-    <None Include="SessionRecords\BackupServices.Tests.JobsTests\CancelJobTest.json" />
-    <None Include="SessionRecords\BackupServices.Tests.JobsTests\GetJobDetailsTest.json" />
-    <None Include="SessionRecords\BackupServices.Tests.JobsTests\ListGetJobsTest.json" />
-    <None Include="SessionRecords\BackupServices.Tests.ProtectionPolicyTests\AddProtectionPolicyTest.json" />
-    <None Include="SessionRecords\BackupServices.Tests.ProtectionPolicyTests\DeleteProtectionPolicyTest.json" />
-    <None Include="SessionRecords\BackupServices.Tests.ProtectionPolicyTests\ListProtectionPolicyTest.json" />
-    <None Include="SessionRecords\BackupServices.Tests.ProtectionPolicyTests\UpdateProtectionPolicyTest.json" />
-    <None Include="SessionRecords\BackupServices.Tests.RecoveryPointTests\ListRecoveryPointTest.json" />
+    <None Include="SessionRecords\BackupServices.Tests.VaultTests\UpdateStorageTypeOnLockedResourceFailsTest.json" />
     <None Include="SessionRecords\BackupServices.Tests.VaultTests\UploadCertReturnsValidResponseTest.json" />
   </ItemGroup>
   <ItemGroup>
