@@ -39,14 +39,30 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="SessionRecords\BackupServices.Tests.VaultTests\CreateOrUpdateVaultReturnsValidCodeTest.json" />
-    <None Include="SessionRecords\BackupServices.Tests.VaultTests\DeleteVaultRemovesVaultTest.json" />
-    <None Include="SessionRecords\BackupServices.Tests.VaultTests\GetResourceStorageConfigReturnsStorageTypeTest.json" />
-    <None Include="SessionRecords\BackupServices.Tests.VaultTests\GetVaultReturnsSameVaultTest.json" />
-    <None Include="SessionRecords\BackupServices.Tests.VaultTests\ListVaultsByResourceGroupReturnsVaultsinResourceGroup.json" />
-    <None Include="SessionRecords\BackupServices.Tests.VaultTests\ListVaultsReturnsVaultsInSubscriptionTest.json" />
-    <None Include="SessionRecords\BackupServices.Tests.VaultTests\UpdateStorageTypeReturnsValidCodeTest.json" />
-    <None Include="SessionRecords\BackupServices.Tests.VaultTests\UploadCertReturnsValidResponseTest.json" />
+    <None Include="SessionRecords\BackupServices.Tests.VaultTests\CreateOrUpdateVaultReturnsValidCodeTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\BackupServices.Tests.VaultTests\DeleteVaultRemovesVaultTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\BackupServices.Tests.VaultTests\GetResourceStorageConfigReturnsStorageTypeTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\BackupServices.Tests.VaultTests\GetVaultReturnsSameVaultTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\BackupServices.Tests.VaultTests\ListVaultsByResourceGroupReturnsVaultsinResourceGroup.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\BackupServices.Tests.VaultTests\ListVaultsReturnsVaultsInSubscriptionTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\BackupServices.Tests.VaultTests\UpdateStorageTypeReturnsValidCodeTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\BackupServices.Tests.VaultTests\UploadCertReturnsValidResponseTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
@@ -55,7 +71,11 @@
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\Microsoft.WindowsAzure.Management.Common.dll" />
-    <Content Include="Resources\Security.Cryptography.dll" />
+    <Content Include="Resources\Microsoft.WindowsAzure.Management.Common.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Security.Cryptography.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 </Project>
