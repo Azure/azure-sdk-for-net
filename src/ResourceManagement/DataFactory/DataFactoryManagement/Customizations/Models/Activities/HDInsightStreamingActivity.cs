@@ -20,6 +20,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     /// <summary>
     /// HDInsight streaming activity.
     /// </summary>
+    [AdfTypeName("HDInsightStreaming")]
     public class HDInsightStreamingActivity : HDInsightActivityBase
     {
         /// <summary>

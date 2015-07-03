@@ -18,7 +18,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
 {
     public class PipelineJsonSamples
     {
-        [JsonSample]
+        [JsonSample(JsonSampleType.Unregistered)]
         public const string ActivityTypePipeline = @"
 {
     name: ""activityType pipeline name"",
@@ -68,7 +68,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
             {
                 name: ""TestActivity"",
                 description: ""Test activity description"", 
-                type: ""HDInsightHiveActivity"",
+                type: ""HDInsightHive"",
                 typeProperties:
                 {
                     script: ""SELECT 1"",
@@ -109,7 +109,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
             {
                 name: ""TestActivity"",
                 description: ""Test activity description"", 
-                type: ""HDInsightHiveActivity"",
+                type: ""HDInsightHive"",
                 typeProperties:
                 {
                     scriptPath: ""scripts/script.hql"",
@@ -145,7 +145,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
             {
                 name: ""MapReduceActivity"",
                 description: ""Test activity description"", 
-                type: ""HDInsightMapReduceActivity"",
+                type: ""HDInsightMapReduce"",
                 typeProperties:
                 {
                     className : ""MYClass"",
@@ -193,7 +193,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
         activities:
         [
             {
-                type: ""CopyActivity"",
+                type: ""Copy"",
                 name: ""TestActivity"",
                 description: ""Test activity description"", 
                 typeProperties:
@@ -251,7 +251,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
         activities:
         [
             {
-                type: ""CopyActivity"",
+                type: ""Copy"",
                 name: ""MyActivityName"",
                 typeProperties:
                 {
@@ -305,7 +305,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
         activities:
         [
             {
-                type: ""CopyActivity"",
+                type: ""Copy"",
                 name: ""MyActivityName"",
                 typeProperties:
                 {
@@ -359,7 +359,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
             {
                 name: ""TestActivity"",
                 description: ""Test activity description"", 
-                type: ""HDInsightHiveActivity"",
+                type: ""HDInsightHive"",
                 typeProperties:
                 {
                     scriptPath: ""scripts/script.hql"",
@@ -443,7 +443,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
             {
                 name: ""MLActivity"",
                 description: ""Test activity description"", 
-                type: ""AzureMLBatchScoringActivity"",
+                type: ""AzureMLBatchScoring"",
                 typeProperties: { },
                 inputs: 
                 [ 
@@ -489,7 +489,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
             {
                 name: ""MLActivity2"",
                 description: ""Test activity description"", 
-                type: ""AzureMLBatchScoringActivity"",
+                type: ""AzureMLBatchScoring"",
                 inputs: 
                 [ 
                     {
@@ -586,7 +586,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
            {
 				name: ""HadoopStreamingActivity"",
 				description: ""HadoopStreamingActivity"",
-				type: ""HDInsightStreamingActivity"",
+				type: ""HDInsightStreaming"",
 				outputs: [ {""name"": ""OutputTable""} ],
 				linkedServiceName: ""HDInsightLinkedService"",
 				typeProperties:
@@ -628,7 +628,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
         activities:
         [
             {
-                type: ""StoredProcedureActivity"",
+                type: ""SqlServerStoredProcedure"",
                 name: ""MyProcActivity"",
                 typeProperties:
                 {

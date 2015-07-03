@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     /// <summary>
     /// Linked Service for Sybase data source.
     /// </summary>
+    [AdfTypeName("OnPremisesSybase")]
     public class OnPremisesSybaseLinkedService : LinkedServiceTypeProperties
     {
         /// <summary>

@@ -15,6 +15,7 @@
 
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
+    [AdfTypeName("AzureBatch")]
     public class AzureBatchLinkedService : LinkedServiceTypeProperties
     {
         /// <summary>

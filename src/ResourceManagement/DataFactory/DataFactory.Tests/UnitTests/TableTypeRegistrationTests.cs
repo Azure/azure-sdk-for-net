@@ -47,7 +47,7 @@ namespace DataFactory.Tests.UnitTests
         {
             InvalidOperationException ex =
                 Assert.Throws<InvalidOperationException>(
-                    () => this.Client.RegisterType<AzureSqlTableLocation>());
+                    () => this.Client.RegisterType<AzureSqlTableDataset>());
 
             Assert.True(ex.Message.Contains("cannot be locally registered because it has the same name"));
         }

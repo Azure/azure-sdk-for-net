@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     /// <summary>
     /// Linked Service for DB2 data source.
     /// </summary>
+    [AdfTypeName("OnPremisesDb2")]
     public class OnPremisesDb2LinkedService : LinkedServiceTypeProperties
     {
         /// <summary>

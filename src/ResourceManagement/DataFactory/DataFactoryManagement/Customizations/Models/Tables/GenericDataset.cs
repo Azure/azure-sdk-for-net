@@ -18,19 +18,16 @@ using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
-    /// <summary>
-    /// Custom location.
-    /// </summary>
-    public sealed class CustomLocation : TableTypeProperties, IGenericTypeProperties
+    public sealed class GenericDataset : TableTypeProperties, IGenericTypeProperties
     {
         public IDictionary<string, JToken> ServiceExtraProperties { get; set; } 
 
-        public CustomLocation()
+        public GenericDataset()
         {
             this.ServiceExtraProperties = new Dictionary<string, JToken>();
         }
 
-        public CustomLocation(IDictionary<string, JToken> serviceExtraProperties)
+        public GenericDataset(IDictionary<string, JToken> serviceExtraProperties)
         {
             this.ServiceExtraProperties = serviceExtraProperties;
         }

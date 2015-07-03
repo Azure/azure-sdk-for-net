@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     /// <summary>
     /// Linked Service for PostgreSql data source.
     /// </summary>
+    [AdfTypeName("OnPremisesPostgreSql")]
     public class OnPremisesPostgreSqlLinkedService : LinkedServiceTypeProperties
     {
         /// <summary>

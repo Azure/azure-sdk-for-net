@@ -20,6 +20,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     /// <summary>
     /// SQL Stored Procedure activity.
     /// </summary>
+    [AdfTypeName("SqlServerStoredProcedure")]
     public class StoredProcedureActivity : ActivityTypeProperties
     {
         /// <summary>

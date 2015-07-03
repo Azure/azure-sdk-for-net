@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     /// <summary>
     /// AzureML Web Service linked service.
     /// </summary>
+    [AdfTypeName("AzureML")]
     public class AzureMLLinkedService : LinkedServiceTypeProperties
     {
         /// <summary>

@@ -15,13 +15,13 @@
 
 using System;
 using System.Collections.Generic;
-using Hyak.Common;
 
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
     /// The properties for the HDInsight linkedService.
     /// </summary>
+    [AdfTypeName("HDInsightOnDemand")]
     public class HDInsightOnDemandLinkedService : LinkedServiceTypeProperties
     {
         /// <summary>

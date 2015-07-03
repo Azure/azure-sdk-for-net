@@ -16,21 +16,22 @@
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
-    /// The on-premises Oracle database.
+    /// The Azure table storage.
     /// </summary>
-    public class OnPremisesOracleTableLocation : TableTypeProperties
+    [AdfTypeName("AzureTable")]
+    public class AzureTableDataset : TableTypeProperties
     {
         /// <summary>
-        /// The table name of the on-premises Oracle database.
+        /// The table name of the Azure table storage.
         /// </summary>
         [AdfRequired]
         public string TableName { get; set; }
 
-        public OnPremisesOracleTableLocation()
+        public AzureTableDataset()
         {
         }
 
-        public OnPremisesOracleTableLocation(string tableName)
+        public AzureTableDataset(string tableName)
             : this()
         {
             Ensure.IsNotNullOrEmpty(tableName, "tableName");

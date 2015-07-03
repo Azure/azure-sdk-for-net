@@ -20,6 +20,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     /// <summary>
     /// MapReduce activity which runs on HDInsight.
     /// </summary>
+    [AdfTypeName("HDInsightMapReduce")]
     public class HDInsightMapReduceActivity : HDInsightActivityBase
     {
         /// <summary>

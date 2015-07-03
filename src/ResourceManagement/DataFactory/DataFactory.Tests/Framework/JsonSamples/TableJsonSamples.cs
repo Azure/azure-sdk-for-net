@@ -24,7 +24,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
     name: ""CustomTable"",
     properties:
     {
-        type: ""CustomLocation"",
+        type: ""CustomDataSet"",
         linkedServiceName: ""MyCustomServiceName"",
         typeProperties:
         {   
@@ -48,7 +48,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
     name: ""TestOut"",
     properties:
     {
-        type: ""OnPremisesSqlServerTableLocation"",
+        type: ""SqlServerTable"",
         linkedServiceName: ""MyLinkedServiceName"",
         typeProperties:
         {            
@@ -71,7 +71,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
     name: ""TestOut"",
     properties:
     {
-        type: ""OnPremisesOracleTableLocation"",
+        type: ""OracleTable"",
         linkedServiceName: ""MyLinkedServiceName"",
         typeProperties:
         {            
@@ -94,7 +94,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
     name: ""TestOut"",
     properties:
     {
-        type: ""AzureSqlTableLocation"",
+        type: ""AzureSqlTable"",
         linkedServiceName: ""MyLinkedServiceName"",
         published: ""True"",
         structure:  
@@ -120,7 +120,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
     name: ""TestOut"",
     properties:
     {
-        type: ""AzureSqlTableLocation"",
+        type: ""AzureSqlTable"",
         linkedServiceName: ""MyLinkedServiceName"",
         published: ""False"",
         structure:  
@@ -146,7 +146,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
     name: ""MyDemoBlob"",
     properties:
     {
-        type: ""AzureBlobLocation"",
+        type: ""AzureBlob"",
         linkedServiceName: ""MyLinkedServiceName"",
         structure:
         [
@@ -196,7 +196,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
     name: ""External"",
     properties:
     {
-        type: ""AzureBlobLocation"",
+        type: ""AzureBlob"",
         linkedServiceName: ""MyLinkedServiceName"",
         typeProperties:
         {            
@@ -233,7 +233,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
     name: ""External"",
     properties:
     {
-        type: ""AzureBlobLocation"",
+        type: ""AzureBlob"",
         linkedServiceName: ""MyLinkedServiceName"",
         typeProperties:
         {                
@@ -266,7 +266,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
     name: ""TableWithValidation"",
     properties:
     {
-        type: ""AzureTableLocation"",
+        type: ""AzureTable"",
         linkedServiceName: ""MyLinkedServiceName"",
         typeProperties:
         {            
@@ -295,7 +295,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
     name: ""TableWithLatency"",
     properties:
     {
-        type: ""AzureTableLocation"",
+        type: ""AzureTable"",
         linkedServiceName: ""MyLinkedServiceName"",
         typeProperties:
         {            
@@ -328,7 +328,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
     name: ""TableWithStyle"",
     properties:
     {
-        type: ""AzureTableLocation"",
+        type: ""AzureTable"",
         linkedServiceName: ""MyLinkedServiceName"",
         typeProperties:
         {            
@@ -358,7 +358,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
     name: ""DA_PartitionTest"",
     properties:
     {
-        type: ""AzureBlobLocation"",
+        type: ""AzureBlob"",
         linkedServiceName: ""LinkedService-CuratedWikiData"",
         structure:  
         [ 
@@ -392,7 +392,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
     name: ""DA_PartitionTest"",
     properties:
     {
-        type: ""AzureBlobLocation"",
+        type: ""AzureBlob"",
         linkedServiceName: ""LinkedService-CuratedWikiData"",
         typeProperties:
         {            

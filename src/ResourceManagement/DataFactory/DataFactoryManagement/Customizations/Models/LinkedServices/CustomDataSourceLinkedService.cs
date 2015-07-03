@@ -13,28 +13,27 @@
 // limitations under the License.
 //
 
+using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
+
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
-    /// Relational Table location.
+    /// Custom linked service.
     /// </summary>
-    [AdfTypeName("RelationalTable")]
-    public class RelationalTableDataset : TableTypeProperties
+    [AdfTypeName("CustomDataSource")]
+    public sealed class CustomDataSourceLinkedService : LinkedServiceTypeProperties, IGenericTypeProperties
     {
-        /// <summary>
-        /// The table name.
-        /// </summary>
-        public string TableName { get; set; }
+        public IDictionary<string, JToken> ServiceExtraProperties { get; set; }
 
-        public RelationalTableDataset()
-        {
+        public CustomDataSourceLinkedService()
+        {   
+            this.ServiceExtraProperties = new Dictionary<string, JToken>();
         }
 
-        public RelationalTableDataset(string tableName)
-            : this()
+        public CustomDataSourceLinkedService(IDictionary<string, JToken> serviceExtraProperties)
         {
-            Ensure.IsNotNullOrEmpty(tableName, "tableName");
-            this.TableName = tableName;
+            this.ServiceExtraProperties = serviceExtraProperties;
         }
     }
 }

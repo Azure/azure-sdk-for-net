@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     /// <summary>
     /// The storage account linkedService.
     /// </summary>
+    [AdfTypeName("AzureStorage")]
     public class AzureStorageLinkedService : LinkedServiceTypeProperties
     {
         /// <summary>
