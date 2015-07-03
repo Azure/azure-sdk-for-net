@@ -143,4 +143,10 @@ namespace BackupServices.Tests.Helpers
         GeoRedundant = 1,
         LocallyRedundant,
     }
+
+    public enum AzureBackupVaultStorageTypeState
+    {
+        Locked = 1,
+        Unlocked,
+    }
 }

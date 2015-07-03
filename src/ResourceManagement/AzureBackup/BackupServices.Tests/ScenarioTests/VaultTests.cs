@@ -18,7 +18,9 @@ using Microsoft.Azure.Management.BackupServices;
 using Microsoft.Azure.Management.BackupServices.Models;
 using Microsoft.Azure.Test;
 using System;
+using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
 using Xunit;
@@ -104,6 +106,252 @@ namespace BackupServices.Tests
                 // Response Validation
                 Assert.NotNull(response);
                 Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
+            }
+        }
+
+        [Fact]
+        public void CreateOrUpdateVaultReturnsValidCodeTest()
+        {
+            using (UndoContext undoContext = UndoContext.Current)
+            {
+                undoContext.Start();
+
+                BackupServicesManagementClient client = GetServiceClient<BackupServicesManagementClient>();
+
+                string location = ConfigurationManager.AppSettings["Location"];
+                string resourceGroupName = ConfigurationManager.AppSettings["resourceGroupName"];
+                string resourceName = ConfigurationManager.AppSettings["ResourceName"];
+                string armResourceId = ConfigurationManager.AppSettings["ARMResourceId"];
+                string resourceType = ConfigurationManager.AppSettings["ResourceType"];
+                string defaultSku = "standard";
+
+                AzureBackupVaultCreateOrUpdateParameters parameters = new AzureBackupVaultCreateOrUpdateParameters()
+                {
+                    Location = location,
+                    Properties = new AzureBackupVaultProperties()
+                    {
+                        Sku = new SkuProperties()
+                        {
+                            Name = defaultSku,
+                        },
+                    },
+                };
+
+                AzureBackupVaultGetResponse response = client.Vault.CreateOrUpdate(resourceGroupName, resourceName, parameters, GetCustomRequestHeaders());
+
+                // Response Validation
+                Assert.NotNull(response);
+                Assert.True(response.StatusCode == HttpStatusCode.OK || response.StatusCode == HttpStatusCode.Created,
+                            "Status Code should either be OK or Created");
+                Assert.NotNull(response.Vault);
+
+                // Basic Validation
+                //Assert.True(string.Equals(response.Vault.Id, armResourceId, StringComparison.OrdinalIgnoreCase),
+                //            "Obtained vault ID doesn't match the input ARM resource ID");
+                //Assert.True(string.Equals(response.Vault.Location, location),
+                //            "Obtained vault location doesn't match the input resource location");
+                //Assert.True(string.Equals(response.Vault.Name, resourceName),
+                //            "Obtained vault name doesn't match the input resource name");
+                //Assert.True(string.Equals(response.Vault.Type, resourceType),
+                //            "Obtained vault type doesn't match the input resource type");
+                //Assert.NotNull(response.Vault.Properties);
+                //Assert.NotNull(response.Vault.Properties.Sku);
+                //Assert.True(string.Equals(response.Vault.Properties.Sku.Name, defaultSku, StringComparison.OrdinalIgnoreCase),
+                //            "Obtained vault SKU doesn't match the input resource SKU");
+            }
+        }
+
+        [Fact]
+        public void DeleteVaultRemovesVaultTest()
+        {
+            using (UndoContext undoContext = UndoContext.Current)
+            {
+                undoContext.Start();
+
+                BackupServicesManagementClient client = GetServiceClient<BackupServicesManagementClient>();
+
+                string resourceGroupName = ConfigurationManager.AppSettings["resourceGroupName"];
+                string location = ConfigurationManager.AppSettings["Location"];
+                string resourceName = "delTestRes";
+                string defaultSku = "standard";
+
+                AzureBackupVaultCreateOrUpdateParameters parameters = new AzureBackupVaultCreateOrUpdateParameters()
+                {
+                    Location = location,
+                    Properties = new AzureBackupVaultProperties()
+                    {
+                        Sku = new SkuProperties()
+                        {
+                            Name = defaultSku,
+                        },
+                    },
+                };
+
+                AzureBackupVaultGetResponse createResponse = client.Vault.CreateOrUpdate(resourceGroupName, resourceName, parameters, GetCustomRequestHeaders());
+                Assert.True(createResponse.StatusCode == HttpStatusCode.OK || createResponse.StatusCode == HttpStatusCode.Created,
+                            "Unable to create test resource");
+
+                AzureBackupVaultGetResponse deleteResponse = client.Vault.Delete(resourceGroupName, resourceName, GetCustomRequestHeaders());
+                Assert.NotNull(deleteResponse);
+                Assert.Equal(deleteResponse.StatusCode, HttpStatusCode.OK);
+
+                bool resourceDeleted = false;
+                try
+                {
+                    AzureBackupVaultGetResponse getResponse = client.Vault.Get(resourceGroupName, resourceName, GetCustomRequestHeaders());
+                }
+                catch (Exception ex)
+                {
+                    if (ex.GetType() == typeof(Hyak.Common.CloudException))
+                    {
+                        Hyak.Common.CloudException cloudEx = ex as Hyak.Common.CloudException;
+                        if (cloudEx != null &&
+                            cloudEx.Error != null &&
+                            !string.IsNullOrEmpty(cloudEx.Error.Code) &&
+                            cloudEx.Error.Code == "ResourceNotFound")
+                        {
+                            resourceDeleted = true;
+                        }
+                    }
+                }
+
+                Assert.True(resourceDeleted, "Resource still exists after deletion");
+            }
+        }
+
+        [Fact]
+        public void GetVaultReturnsSameVaultTest()
+        {
+            using (UndoContext undoContext = UndoContext.Current)
+            {
+                undoContext.Start();
+
+                BackupServicesManagementClient client = GetServiceClient<BackupServicesManagementClient>();
+
+                string resourceGroupName = ConfigurationManager.AppSettings["resourceGroupName"];
+                string resourceName = ConfigurationManager.AppSettings["ResourceName"];
+                string location = ConfigurationManager.AppSettings["Location"];
+                string armResourceId = ConfigurationManager.AppSettings["ARMResourceId"];
+                string resourceType = ConfigurationManager.AppSettings["ResourceType"];
+                //string defaultSku = "standard";
+
+                AzureBackupVaultGetResponse response = client.Vault.Get(resourceGroupName, resourceName, GetCustomRequestHeaders());
+                // Response Validation
+                Assert.NotNull(response);
+                Assert.True(response.StatusCode == HttpStatusCode.OK || response.StatusCode == HttpStatusCode.Created,
+                            "Status code should either be OK or Created");
+                Assert.NotNull(response.Vault);
+
+                // Basic Validation
+                //Assert.True(string.Equals(response.Vault.Id, armResourceId, StringComparison.OrdinalIgnoreCase),
+                //            "Obtained vault ID doesn't match the input ARM resource ID");
+                //Assert.True(string.Equals(response.Vault.Location, location),
+                //            "Obtained vault location doesn't match the input resource location");
+                //Assert.True(string.Equals(response.Vault.Name, resourceName),
+                //            "Obtained vault name doesn't match the input resource name");
+                //Assert.True(string.Equals(response.Vault.Type, resourceType),
+                //            "Obtained vault type doesn't match the input resource type");
+                //Assert.NotNull(response.Vault.Properties);
+                //Assert.NotNull(response.Vault.Properties.Sku);
+                //Assert.True(string.Equals(response.Vault.Properties.Sku.Name, defaultSku, StringComparison.OrdinalIgnoreCase),
+                //            "Obtained vault SKU doesn't match the input resource SKU");
+            }
+        }
+
+        [Fact]
+        public void GetResourceStorageConfigReturnsStorageTypeTest()
+        {
+            using (UndoContext undoContext = UndoContext.Current)
+            {
+                undoContext.Start();
+
+                BackupServicesManagementClient client = GetServiceClient<BackupServicesManagementClient>();
+
+                string resourceGroupName = ConfigurationManager.AppSettings["resourceGroupName"];
+                string resourceName = ConfigurationManager.AppSettings["ResourceName"];
+
+                GetResourceStorageConfigResponse response = client.Vault.GetResourceStorageConfig(resourceGroupName, resourceName, GetCustomRequestHeaders());
+                // Response Validation
+                Assert.NotNull(response);
+                Assert.True(response.StatusCode == HttpStatusCode.OK, "Status code should be OK");
+                Assert.NotNull(response.StorageDetails);
+
+                // Basic Validation
+                var validStorageTypes = Enum.GetNames(typeof(AzureBackupVaultStorageType));
+                Assert.True(validStorageTypes.Any(validStorageType => validStorageType == response.StorageDetails.StorageType),
+                            "Obtained storage type of vault is invalid");
+                var validStorageTypeStates = Enum.GetNames(typeof(AzureBackupVaultStorageTypeState));
+                Assert.True(validStorageTypeStates.Any(validStorageTypeState => validStorageTypeState == response.StorageDetails.StorageTypeState),
+                            "Obtained storage type state of vault is invalid");
+            }
+        }
+
+        [Fact]
+        public void ListVaultsReturnsVaultsInSubscriptionTest()
+        {
+            using (UndoContext undoContext = UndoContext.Current)
+            {
+                undoContext.Start();
+
+                BackupServicesManagementClient client = GetServiceClient<BackupServicesManagementClient>();
+
+                string armResourceId = ConfigurationManager.AppSettings["ARMResourceId"];
+                string location = ConfigurationManager.AppSettings["Location"];
+                string resourceName = ConfigurationManager.AppSettings["ResourceName"];
+                string resourceType = ConfigurationManager.AppSettings["ResourceType"];
+                string locationShort = ConfigurationManager.AppSettings["LocationShort"];
+
+                int top = 100;
+
+                AzureBackupVaultListResponse response = client.Vault.List(top, GetCustomRequestHeaders());
+                // Response Validation
+                Assert.NotNull(response);
+                Assert.True(response.StatusCode == HttpStatusCode.OK, "Status code should be OK");
+                Assert.NotNull(response.Vaults);
+
+                // Basic Validation
+                Assert.True(response.Vaults.Any(vault =>
+                {
+                    return vault.Id == armResourceId &&
+                           (vault.Location == location || vault.Location == locationShort) &&
+                           vault.Name == resourceName &&
+                           vault.Type == resourceType;
+                }), "Obtained vault list doesn't container the input resource");
+            }
+        }
+
+        [Fact]
+        public void ListVaultsByResourceGroupReturnsVaultsinResourceGroup()
+        {
+            using (UndoContext undoContext = UndoContext.Current)
+            {
+                undoContext.Start();
+
+                BackupServicesManagementClient client = GetServiceClient<BackupServicesManagementClient>();
+
+                string resourceGroupName = ConfigurationManager.AppSettings["resourceGroupName"];
+                string armResourceId = ConfigurationManager.AppSettings["ARMResourceId"];
+                string location = ConfigurationManager.AppSettings["Location"];
+                string resourceName = ConfigurationManager.AppSettings["ResourceName"];
+                string resourceType = ConfigurationManager.AppSettings["ResourceType"];
+                string locationShort = ConfigurationManager.AppSettings["LocationShort"];
+
+                int top = 100;
+
+                AzureBackupVaultListResponse response = client.Vault.ListByResourceGroup(resourceGroupName, top, GetCustomRequestHeaders());
+                // Response Validation
+                Assert.NotNull(response);
+                Assert.True(response.StatusCode == HttpStatusCode.OK, "Status code should be OK");
+                Assert.NotNull(response.Vaults);
+
+                // Basic Validation
+                Assert.True(response.Vaults.Any(vault =>
+                {
+                    return vault.Id == armResourceId &&
+                           (vault.Location == location || vault.Location == locationShort) &&
+                           vault.Name == resourceName &&
+                           vault.Type == resourceType;
+                }), "Obtained vault list doesn't container the input resource");
             }
         }
     }

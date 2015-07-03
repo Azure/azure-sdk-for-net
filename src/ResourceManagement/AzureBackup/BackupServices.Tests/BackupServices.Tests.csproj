@@ -39,6 +39,12 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="SessionRecords\BackupServices.Tests.VaultTests\CreateOrUpdateVaultReturnsValidCodeTest.json" />
+    <None Include="SessionRecords\BackupServices.Tests.VaultTests\DeleteVaultRemovesVaultTest.json" />
+    <None Include="SessionRecords\BackupServices.Tests.VaultTests\GetResourceStorageConfigReturnsStorageTypeTest.json" />
+    <None Include="SessionRecords\BackupServices.Tests.VaultTests\GetVaultReturnsSameVaultTest.json" />
+    <None Include="SessionRecords\BackupServices.Tests.VaultTests\ListVaultsByResourceGroupReturnsVaultsinResourceGroup.json" />
+    <None Include="SessionRecords\BackupServices.Tests.VaultTests\ListVaultsReturnsVaultsInSubscriptionTest.json" />
     <None Include="SessionRecords\BackupServices.Tests.VaultTests\UpdateStorageTypeReturnsValidCodeTest.json" />
     <None Include="SessionRecords\BackupServices.Tests.VaultTests\UploadCertReturnsValidResponseTest.json" />
   </ItemGroup>

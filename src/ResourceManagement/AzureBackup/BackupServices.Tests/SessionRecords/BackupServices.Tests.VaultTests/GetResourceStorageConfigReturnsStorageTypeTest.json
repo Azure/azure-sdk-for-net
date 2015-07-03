@@ -3,32 +3,26 @@
     {
       "RequestUri": "/Subscriptions/f5303a0b-fae4-4cdb-b44d-0e4c032dde26/resourceGroups/backuprg/providers/Microsoft.Backup/BackupVault/backuprn/storageconfig/vaultstorageconfig?api-version=2015-03-15",
       "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvZjUzMDNhMGItZmFlNC00Y2RiLWI0NGQtMGU0YzAzMmRkZTI2L3Jlc291cmNlR3JvdXBzL2JhY2t1cHJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuQmFja3VwL0JhY2t1cFZhdWx0L2JhY2t1cHJuL3N0b3JhZ2Vjb25maWcvdmF1bHRzdG9yYWdlY29uZmlnP2FwaS12ZXJzaW9uPTIwMTUtMDMtMTU=",
-      "RequestMethod": "PATCH",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"storageModelType\": \"LocallyRedundant\"\r\n  }\r\n}",
+      "RequestMethod": "GET",
+      "RequestBody": "",
       "RequestHeaders": {
-        "Content-Type": [
-          "application/json"
-        ],
-        "Content-Length": [
-          "72"
-        ],
         "Accept-Language": [
           "en-us"
         ],
         "x-ms-client-request-id": [
-          "bfbeb480-5d10-40f4-8248-21a1c324f630"
-        ],
-        "x-ms-version": [
-          "2013-03-01"
+          "52cecd4e-d97d-4d67-90b6-307234e6ba21"
         ],
         "User-Agent": [
           "Microsoft.Azure.Management.BackupServices.BackupServicesManagementClient/0.0.0.0"
         ]
       },
-      "ResponseBody": "",
+      "ResponseBody": "{\r\n  \"resourceId\": 5089188015289137043,\r\n  \"properties\": {\r\n    \"storageType\": \"LocallyRedundant\",\r\n    \"storageTypeState\": \"Unlocked\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "0"
+          "112"
+        ],
+        "Content-Type": [
+          "application/json"
         ],
         "Expires": [
           "-1"
@@ -37,32 +31,35 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "1c9c0c58-8ab5-4992-b115-de82224f906f"
+          "6236de6c-e7fb-4fef-ac0b-45ef5ff83d53"
         ],
         "x-ms-client-request-id": [
-          "bfbeb480-5d10-40f4-8248-21a1c324f630",
-          "bfbeb480-5d10-40f4-8248-21a1c324f630"
+          "52cecd4e-d97d-4d67-90b6-307234e6ba21",
+          "52cecd4e-d97d-4d67-90b6-307234e6ba21"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1193"
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14994"
         ],
         "x-ms-correlation-request-id": [
-          "1c9c0c58-8ab5-4992-b115-de82224f906f"
+          "6236de6c-e7fb-4fef-ac0b-45ef5ff83d53"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20150703T071446Z:1c9c0c58-8ab5-4992-b115-de82224f906f"
+          "CENTRALUS:20150703T071456Z:6236de6c-e7fb-4fef-ac0b-45ef5ff83d53"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Fri, 03 Jul 2015 07:14:46 GMT"
+          "Fri, 03 Jul 2015 07:14:55 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
         ]
       },
-      "StatusCode": 204
+      "StatusCode": 200
     }
   ],
   "Names": {},
