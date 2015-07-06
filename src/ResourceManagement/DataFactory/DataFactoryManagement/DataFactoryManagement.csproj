@@ -13,6 +13,7 @@
   </PropertyGroup>
   <Import Project="..\..\..\..\tools\Library.Settings.targets" />
   <ItemGroup>
+    <Compile Include="Customizations\Models\Activities\HDInsightActivityDebugInfoOption.cs" />
     <Compile Include="Customizations\Conversion\GenericRegisteredTypeConverter.cs" />
     <Compile Include="Customizations\Models\IRegisteredType.cs" />
     <Compile Include="Customizations\Models\LinkedServices\HDInsightSchemaGenerationProperties.cs" />

@@ -146,6 +146,23 @@ namespace DataFactory.Tests.UnitTests
             Assert.IsType<GenericActivity>(pipeline.Properties.Activities[0].TypeProperties);
         }
 
+        [Fact]
+        [Trait(TraitName.TestType, TestType.Unit)]
+        [Trait(TraitName.Function, TestType.Conversion)]
+        public void PipelineGetDebugInfoTest()
+        {
+            // If an activity type has not been locally registered, 
+            // typeProperties should be deserialized to a CustomActivity
+            string pipelineJson = PipelineJsonSamples.HDInsightPipeline;
+            Assert.Contains("getDebugInfo", pipelineJson);
+            Pipeline pipeline = this.ConvertToWrapper(PipelineJsonSamples.HDInsightPipeline);
+
+            HDInsightHiveActivity hiveActivity = pipeline.Properties.Activities[0].TypeProperties as HDInsightHiveActivity;
+
+            Assert.NotNull(hiveActivity);
+            Assert.True(hiveActivity.GetDebugInfo == "Failure");
+        }
+
         private void TestPipelineJsonSamples(IEnumerable<JsonSampleInfo> samples)
         {
             Action<JsonSampleInfo> testSample = sampleInfo => this.TestPipelineJson(sampleInfo.Json);
