@@ -267,11 +267,18 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                         dataSliceInstance.End = endInstance;
                                     }
                                     
-                                    JToken statusValue = valueValue["status"];
-                                    if (statusValue != null && statusValue.Type != JTokenType.Null)
+                                    JToken stateValue = valueValue["state"];
+                                    if (stateValue != null && stateValue.Type != JTokenType.Null)
                                     {
-                                        string statusInstance = ((string)statusValue);
-                                        dataSliceInstance.Status = statusInstance;
+                                        string stateInstance = ((string)stateValue);
+                                        dataSliceInstance.State = stateInstance;
+                                    }
+                                    
+                                    JToken substateValue = valueValue["substate"];
+                                    if (substateValue != null && substateValue.Type != JTokenType.Null)
+                                    {
+                                        string substateInstance = ((string)substateValue);
+                                        dataSliceInstance.Substate = substateInstance;
                                     }
                                     
                                     JToken latencyStatusValue = valueValue["latencyStatus"];
@@ -451,11 +458,18 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                         dataSliceInstance.End = endInstance;
                                     }
                                     
-                                    JToken statusValue = valueValue["status"];
-                                    if (statusValue != null && statusValue.Type != JTokenType.Null)
+                                    JToken stateValue = valueValue["state"];
+                                    if (stateValue != null && stateValue.Type != JTokenType.Null)
                                     {
-                                        string statusInstance = ((string)statusValue);
-                                        dataSliceInstance.Status = statusInstance;
+                                        string stateInstance = ((string)stateValue);
+                                        dataSliceInstance.State = stateInstance;
+                                    }
+                                    
+                                    JToken substateValue = valueValue["substate"];
+                                    if (substateValue != null && substateValue.Type != JTokenType.Null)
+                                    {
+                                        string substateInstance = ((string)substateValue);
+                                        dataSliceInstance.Substate = substateInstance;
                                     }
                                     
                                     JToken latencyStatusValue = valueValue["latencyStatus"];
@@ -662,9 +676,9 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                 JObject dataSliceSetStatusParametersValue = new JObject();
                 requestDoc = dataSliceSetStatusParametersValue;
                 
-                if (parameters.SliceStatus != null)
+                if (parameters.SliceState != null)
                 {
-                    dataSliceSetStatusParametersValue["SliceStatus"] = parameters.SliceStatus;
+                    dataSliceSetStatusParametersValue["SliceState"] = parameters.SliceState;
                 }
                 
                 if (parameters.UpdateType != null)
