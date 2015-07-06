@@ -52,6 +52,17 @@ namespace Microsoft.Azure.Management.DataFactories.Common.Models
             set { this._validation = value; }
         }
         
+        private WaitOnExternal _waitOnExternal;
+        
+        /// <summary>
+        /// Optional. Wait on external.
+        /// </summary>
+        public WaitOnExternal WaitOnExternal
+        {
+            get { return this._waitOnExternal; }
+            set { this._waitOnExternal = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the Policy class.
         /// </summary>

@@ -21,7 +21,6 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.DataFactories.Common.Models;
 
 namespace Microsoft.Azure.Management.DataFactories.Common.Models
 {
@@ -84,17 +83,6 @@ namespace Microsoft.Azure.Management.DataFactories.Common.Models
         {
             get { return this._style; }
             set { this._style = value; }
-        }
-        
-        private WaitOnExternal _waitOnExternal;
-        
-        /// <summary>
-        /// Optional. Wait on external.
-        /// </summary>
-        public WaitOnExternal WaitOnExternal
-        {
-            get { return this._waitOnExternal; }
-            set { this._waitOnExternal = value; }
         }
         
         /// <summary>
