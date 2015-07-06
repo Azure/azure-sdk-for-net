@@ -38,11 +38,8 @@ namespace Microsoft.Azure.Management.DataFactories
         /// <param name='tableName'>
         /// A unique table instance name.
         /// </param>
-        /// <param name='dataSliceRangeStartTime'>
-        /// The data slice range start time in round-trip ISO 8601 format.
-        /// </param>
-        /// <param name='dataSliceRangeEndTime'>
-        /// The data slice range end time in round-trip ISO 8601 format.
+        /// <param name='parameters'>
+        /// Parameters specifying how to list data slices of the table.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -54,8 +51,7 @@ namespace Microsoft.Azure.Management.DataFactories
             string resourceGroupName,
             string dataFactoryName,
             string tableName,
-            string dataSliceRangeStartTime,
-            string dataSliceRangeEndTime,
+            DataSliceListParameters parameters,
             CancellationToken cancellationToken);
 
         /// <summary>

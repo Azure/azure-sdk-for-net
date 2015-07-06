@@ -97,21 +97,6 @@ namespace Microsoft.Azure.Management.DataFactories.Common.Models
             set { this._retry = value; }
         }
         
-        private string _style;
-        
-        /// <summary>
-        /// Optional. The scheduler style for executing activity. For a slice
-        /// to be generated,  StartOfInterval style requires that current time
-        /// has to be later than the start time of the slice, while
-        /// EndOfInterval style requires that current time has to be later
-        /// than the end time of the slice.
-        /// </summary>
-        public string Style
-        {
-            get { return this._style; }
-            set { this._style = value; }
-        }
-        
         private System.TimeSpan? _timeout;
         
         /// <summary>

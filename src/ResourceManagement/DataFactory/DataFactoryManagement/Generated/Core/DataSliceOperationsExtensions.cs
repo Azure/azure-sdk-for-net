@@ -48,22 +48,18 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         /// <param name='tableName'>
         /// Required. A unique table instance name.
         /// </param>
-        /// <param name='dataSliceRangeStartTime'>
-        /// Required. The data slice range start time in round-trip ISO 8601
-        /// format.
-        /// </param>
-        /// <param name='dataSliceRangeEndTime'>
-        /// Required. The data slice range end time in round-trip ISO 8601
-        /// format.
+        /// <param name='parameters'>
+        /// Required. Parameters specifying how to list data slices of the
+        /// table.
         /// </param>
         /// <returns>
         /// The List data slices operation response.
         /// </returns>
-        public static DataSliceListResponse List(this IDataSliceOperations operations, string resourceGroupName, string dataFactoryName, string tableName, string dataSliceRangeStartTime, string dataSliceRangeEndTime)
+        public static DataSliceListResponse List(this IDataSliceOperations operations, string resourceGroupName, string dataFactoryName, string tableName, DataSliceListParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IDataSliceOperations)s).ListAsync(resourceGroupName, dataFactoryName, tableName, dataSliceRangeStartTime, dataSliceRangeEndTime);
+                return ((IDataSliceOperations)s).ListAsync(resourceGroupName, dataFactoryName, tableName, parameters);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -85,20 +81,16 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         /// <param name='tableName'>
         /// Required. A unique table instance name.
         /// </param>
-        /// <param name='dataSliceRangeStartTime'>
-        /// Required. The data slice range start time in round-trip ISO 8601
-        /// format.
-        /// </param>
-        /// <param name='dataSliceRangeEndTime'>
-        /// Required. The data slice range end time in round-trip ISO 8601
-        /// format.
+        /// <param name='parameters'>
+        /// Required. Parameters specifying how to list data slices of the
+        /// table.
         /// </param>
         /// <returns>
         /// The List data slices operation response.
         /// </returns>
-        public static Task<DataSliceListResponse> ListAsync(this IDataSliceOperations operations, string resourceGroupName, string dataFactoryName, string tableName, string dataSliceRangeStartTime, string dataSliceRangeEndTime)
+        public static Task<DataSliceListResponse> ListAsync(this IDataSliceOperations operations, string resourceGroupName, string dataFactoryName, string tableName, DataSliceListParameters parameters)
         {
-            return operations.ListAsync(resourceGroupName, dataFactoryName, tableName, dataSliceRangeStartTime, dataSliceRangeEndTime, CancellationToken.None);
+            return operations.ListAsync(resourceGroupName, dataFactoryName, tableName, parameters, CancellationToken.None);
         }
         
         /// <summary>
