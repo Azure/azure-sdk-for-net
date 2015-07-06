@@ -46,11 +46,8 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         /// <param name='tableName'>
         /// A unique table instance name.
         /// </param>
-        /// <param name='dataSliceRangeStartTime'>
-        /// The data slice range start time in round-trip ISO 8601 format.
-        /// </param>
-        /// <param name='dataSliceRangeEndTime'>
-        /// The data slice range end time in round-trip ISO 8601 format.
+        /// <param name='parameters'>
+        /// Parameters specifying how to list data slices of the table.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -58,7 +55,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         /// <returns>
         /// The List data slices operation response.
         /// </returns>
-        Task<DataSliceListResponse> ListAsync(string resourceGroupName, string dataFactoryName, string tableName, string dataSliceRangeStartTime, string dataSliceRangeEndTime, CancellationToken cancellationToken);
+        Task<DataSliceListResponse> ListAsync(string resourceGroupName, string dataFactoryName, string tableName, DataSliceListParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Gets the next page of data slice instances with the link to the
