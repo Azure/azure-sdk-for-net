@@ -13,34 +13,26 @@
 // limitations under the License.
 //
 
-using System.Collections.Generic;
-
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
-    /// HDInsight activity.
+    /// All available options on how to get the YARN logs for HDInsight activities
     /// </summary>
-    public abstract class HDInsightActivityBase : ActivityTypeProperties
+    public static class HDInsightActivityDebugInfoOption
     {
         /// <summary>
-        /// Storage linked services.
+        /// Don't bring YARN logs
         /// </summary>
-        public IList<string> StorageLinkedServices { get; set; }
+        public const string None = "None";
 
         /// <summary>
-        /// User specified arguments to HDInsightActivity.
+        /// Always bring YARN logs
         /// </summary>
-        public IList<string> Arguments { get; set; }
+        public const string Always = "Always";
 
         /// <summary>
-        /// The <see cref="HDInsightActivityDebugInfoOption"/> settings to use.
+        /// Bring logs only on execution failure
         /// </summary>
-        public string GetDebugInfo { get; set; }
-
-        protected HDInsightActivityBase()
-        {
-            this.Arguments = new List<string>();
-            this.StorageLinkedServices = new List<string>();
-        }
+        public const string Failure = "Failure";
     }
 }
