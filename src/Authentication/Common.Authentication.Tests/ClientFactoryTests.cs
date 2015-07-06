@@ -13,11 +13,14 @@
 // ----------------------------------------------------------------------------------
 
 using Microsoft.Azure.Common.Authentication;
+using Microsoft.Azure.Common.Authentication.Factories;
 using Microsoft.Azure.Common.Authentication.Models;
 using Microsoft.WindowsAzure.Management.Storage;
 using System;
 using System.Collections.Generic;
+using System.Net.Http.Headers;
 using System.Security;
+using System.Linq;
 using Xunit;
 
 namespace Common.Authentication.Test
@@ -102,5 +105,24 @@ namespace Common.Authentication.Test
                 Assert.NotNull(storageAccount);
             }
         }
+
+        [Fact]
+        public void VerifyProductInfoHeaderValueEquality()
+        {
+            ClientFactory factory = new ClientFactory();
+            factory.AddUserAgent("test1", "123");
+            factory.AddUserAgent("test2", "123");
+            factory.AddUserAgent("test1", "123");
+            factory.AddUserAgent("test1", "456");
+            factory.AddUserAgent("test3");
+            factory.AddUserAgent("tesT3");
+            
+            Assert.Equal(4, factory.UserAgents.Count);
+            Assert.True(factory.UserAgents.Any(u => u.Product.Name == "test1" && u.Product.Version == "123"));
+            Assert.True(factory.UserAgents.Any(u => u.Product.Name == "test2" && u.Product.Version == "123"));
+            Assert.True(factory.UserAgents.Any(u => u.Product.Name == "test1" && u.Product.Version == "456"));
+            Assert.True(factory.UserAgents.Any(u => u.Product.Name == "test3" && u.Product.Version == null));
+        }
     }
 }
+;

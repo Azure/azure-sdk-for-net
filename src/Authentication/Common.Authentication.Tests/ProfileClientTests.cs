@@ -61,23 +61,6 @@ namespace Common.Authentication.Test
         }
 
         [Fact]
-        public void VerifyProductInfoHeaderValueEquality()
-        {
-            HashSet<ProductInfoHeaderValue> test = new HashSet<ProductInfoHeaderValue>();
-            ProductInfoHeaderValue v1 = new ProductInfoHeaderValue("test1", "123");
-            ProductInfoHeaderValue v2 = new ProductInfoHeaderValue("test2", "123");
-            ProductInfoHeaderValue v3 = new ProductInfoHeaderValue("test1", "123");
-            ProductInfoHeaderValue v4 = new ProductInfoHeaderValue("test3", "");
-            ProductInfoHeaderValue v5 = new ProductInfoHeaderValue("tesT3", "");
-            test.Add(v1);
-            test.Add(v2);
-            test.Add(v3);
-            test.Add(v4);
-            test.Add(v5);
-            Assert.Equal(3, test.Count);
-        }
-
-        [Fact]
         public void ProfileMigratesOldData()
         {
             MemoryDataStore dataStore = new MemoryDataStore();
