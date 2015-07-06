@@ -37,16 +37,14 @@ namespace Microsoft.Azure.Management.DataFactories
             string resourceGroupName,
             string dataFactoryName,
             string tableName,
-            string dataSliceRangeStartTime,
-            string dataSliceRangeEndTime,
+            DataSliceListParameters parameters,
             CancellationToken cancellationToken)
         {
             return await this.Client.InternalClient.DataSlices.ListAsync(
                     resourceGroupName,
                     dataFactoryName,
                     tableName,
-                    dataSliceRangeStartTime,
-                    dataSliceRangeEndTime,
+                    parameters,
                     cancellationToken);
         }
 
