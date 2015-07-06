@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Management.DataFactories
         /// A unique table instance name.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters specifying how to list data slice runs of the table.
+        /// Parameters for specifying the filters to list data slice runs of the table.
         /// format.
         /// </param>
         /// <returns>

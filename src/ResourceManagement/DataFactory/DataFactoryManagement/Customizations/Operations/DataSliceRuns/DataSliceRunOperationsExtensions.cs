@@ -156,7 +156,7 @@ namespace Microsoft.Azure.Management.DataFactories
         /// Required. A unique table instance name.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters specifying how to list data slice runs of the table.
+        /// Required. Parameters for specifying the filters to list data slice runs of the table.
         /// </param>
         /// <returns>
         /// The List data slice runs operation response.
@@ -197,9 +197,8 @@ namespace Microsoft.Azure.Management.DataFactories
         /// <param name='tableName'>
         /// Required. A unique table instance name.
         /// </param>
-        /// <param name='dataSliceStartTime'>
-        /// Required. The start time of the data slice queried in round-trip
-        /// ISO 8601 format.
+        /// <param name='parameters'>
+        /// Required. Parameters for specifying the filters to list data slice runs of the table.
         /// </param>
         /// <returns>
         /// The List data slice runs operation response.
