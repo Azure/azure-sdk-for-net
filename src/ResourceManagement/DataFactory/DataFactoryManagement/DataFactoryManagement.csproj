@@ -99,7 +99,7 @@
     <Compile Include="Customizations\Models\Activities\HDInsightMapReduceActivity.cs" />
     <Compile Include="Customizations\Models\Activities\HDInsightPigActivity.cs" />
     <Compile Include="Customizations\Models\Activities\HDInsightStreamingActivity.cs" />
-    <Compile Include="Customizations\Models\Activities\StoredProcedureActivity.cs" />
+    <Compile Include="Customizations\Models\Activities\SqlServerStoredProcedureActivity.cs" />
     <Compile Include="Customizations\Models\AdfRequiredAttribute.cs" />
     <Compile Include="Customizations\Models\LinkedServices\AzureBatchLinkedService.cs" />
     <Compile Include="Customizations\Models\LinkedServices\AzureMLLinkedService.cs" />
