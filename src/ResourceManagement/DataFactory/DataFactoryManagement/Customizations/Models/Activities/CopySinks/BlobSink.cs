@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
 
         /// <summary>
         /// Optional. The type of copy behavior for copy sink.
-        /// <see cref="CopyBehaviorTypes"/>
+        /// <see cref="CopyBehaviorType"/>
         /// </summary>
         public string CopyBehavior { get; set; }
 

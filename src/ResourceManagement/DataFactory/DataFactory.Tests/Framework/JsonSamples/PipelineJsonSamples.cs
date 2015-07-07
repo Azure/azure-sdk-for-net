@@ -669,7 +669,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
         activities:
         [
             {
-                type: ""CopyActivity"",
+                type: ""Copy"",
                 name: ""TestActivity"",
                 description: ""Test activity description"", 
                 typeProperties:
@@ -732,7 +732,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
         activities:
         [
             {
-                type: ""CopyActivity"",
+                type: ""Copy"",
                 name: ""MyActivityName"",
                 typeProperties:
                 {
