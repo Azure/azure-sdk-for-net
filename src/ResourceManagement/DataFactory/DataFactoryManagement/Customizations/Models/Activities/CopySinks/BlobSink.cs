@@ -62,6 +62,12 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// </summary>
         public bool? BlobWriterAddHeader { get; set; }
 
+        /// <summary>
+        /// Optional. The type of copy behavior for copy sink.
+        /// <see cref="CopyBehaviorTypes"/>
+        /// </summary>
+        public string CopyBehavior { get; set; }
+
         public BlobSink()
         {
         }

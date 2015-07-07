@@ -657,5 +657,118 @@ namespace DataFactory.Tests.Framework.JsonSamples
     }
 }
 ";
+        [JsonSample]
+        public const string CopySqlToBlobWithCopyBehaviorProperty = @"
+{
+    name: ""MyPipelineName"",
+    properties: 
+    {
+        description : ""Copy from SQL to Blob with CopyBehavior property"",
+        hubName: ""MyHDIHub"",
+        activities:
+        [
+            {
+                type: ""CopyActivity"",
+                name: ""TestActivity"",
+                description: ""Test activity description"", 
+                typeProperties:
+                {
+                    source:
+                    {
+                        type: ""SqlSource"",
+                        sourceRetryCount: ""2"",
+                        sourceRetryWait: ""00:00:01"",
+                        sqlReaderQuery: ""$EncryptedString$MyEncryptedQuery""
+                    },
+                    sink:
+                    {
+                        type: ""BlobSink"",
+                        blobWriterAddHeader: true,
+                        writeBatchSize: 1000000,
+                        writeBatchTimeout: ""01:00:00"",
+                        copyBehavior: ""PreserveHierarchy""
+                    },
+                    translator:
+                    {
+                        type: ""DataInsightTranslator"",
+                        bufferTableFormat: ""Test""
+                    }
+                },
+                inputs: 
+                [ 
+                    {
+                        name: ""InputSqlDA""
+                    }
+                ],
+                outputs: 
+                [ 
+                    {
+                        name: ""OutputBlobDA""
+                    }
+                ],
+                linkedServiceName: ""MyLinkedServiceName"",
+                policy:
+                {
+                    concurrency: 3,
+                    executionPriorityOrder: ""NewestFirst"",
+                    retry: 3,
+                    timeout: ""00:00:05"",
+                    delay: ""00:00:01""
+                }
+            }
+        ]
+    }
+}
+";
+        [JsonSample]
+        public const string CopyBlobToFileSystemSink = @"
+{
+    name: ""MyPipelineName"",
+    properties:
+    {
+        description : ""Copy from Blob to File"",
+        hubName: ""MyHDIHub"",
+        activities:
+        [
+            {
+                type: ""CopyActivity"",
+                name: ""MyActivityName"",
+                typeProperties:
+                {
+                    source: 
+                    {
+                        type: ""BlobSource"",
+                        sourceRetryCount: ""2"",
+                        sourceRetryWait: ""00:00:01"",
+                        blobColumnSeparators: ""My column separators"",
+                        treatEmptyAsNull: ""False"",
+                        nullValues: ""My null values""
+                    },
+                    sink: 
+                    {
+                        type: ""FileSystemSink"",
+                        writeBatchSize: 1000000,
+                        writeBatchTimeout: ""01:00:00"",
+                        copyBehavior: ""FlattenHierarchy""                                                
+                    }
+                },
+                inputs: 
+                [ 
+                    {
+                        name: ""RawBlob""
+                    }
+                ],
+                outputs: 
+                [ 
+                    {
+                        name: ""ProcessedFileSink""
+                    }
+                ],
+                linkedServiceName: ""MyLinkedServiceName""
+            }
+        ]
+    }
+}
+";
     }
 }
