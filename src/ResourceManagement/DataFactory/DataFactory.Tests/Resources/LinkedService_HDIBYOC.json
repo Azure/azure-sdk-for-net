@@ -1,7 +1,7 @@
 {
   "name": "HDILinkedService",
   "properties": {
-    "type": "HDInsightBYOCLinkedService",
+    "type": "HDInsight",
     "typeProperties": {
       "clusterUri": "https://testhdi.azurehdinsight.net/",
       "userName": "testaccount",

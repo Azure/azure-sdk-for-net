@@ -24,7 +24,7 @@
         "minimumRows": 8
       }
     },
-    "type": "AzureSqlTableLocation",
+    "type": "AzureSqlTable",
     "linkedServiceName": "LinkedService-WikiAggregatedData",
     "typeProperties": {
       "tableName": "wikiaggregateddata"

@@ -1,7 +1,7 @@
 {
   "name": "LinkedService-WikiAggregatedData",
   "properties": {
-    "type": "AzureSqlLinkedService",
+    "type": "AzureSqlDatabase",
     "typeProperties": {
       "connectionString": "Server=tcp:mytestsql.database.windows.net,1433;Database=mdpwikisamplev2;User ID=test@test.net;Password=fakepassword;Trusted_Connection=False;Encrypt=True;Connection Timeout=30"
     }
