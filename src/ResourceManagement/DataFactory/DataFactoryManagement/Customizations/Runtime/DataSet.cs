@@ -14,12 +14,14 @@
 //
 
 using Microsoft.Azure.Management.DataFactories.Models;
+using Newtonsoft.Json;
 
 namespace Microsoft.Azure.Management.DataFactories.Runtime
 {
     /// <summary>
     /// Represents a set of resolved <see cref="Microsoft.Azure.Management.DataFactories.Models.Table"/> and <see cref="Microsoft.Azure.Management.DataFactories.Models.LinkedService"/> values.
     /// </summary>
+    [JsonConverter(typeof(DataSetConverter))]
     public class DataSet
     {
         /// <summary>

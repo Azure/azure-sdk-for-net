@@ -17,7 +17,6 @@ using Microsoft.Azure.Management.DataFactories.Conversion;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Runtime.Serialization.Formatters;
 
 namespace Microsoft.Azure.Management.DataFactories.Runtime
 {
@@ -46,12 +45,12 @@ namespace Microsoft.Azure.Management.DataFactories.Runtime
 
             if (includeTableConverter)
             {
-                converters.Add(PipelineConverter);
+                converters.Add(TableConverter);
             }
 
-            if (includeTableConverter)
+            if (includePipelineConverter)
             {
-                converters.Add(TableConverter);
+                converters.Add(PipelineConverter);
             }
 
             return converters.ToArray();
@@ -74,15 +73,8 @@ namespace Microsoft.Azure.Management.DataFactories.Runtime
 
         public static ActivityConfiguration GetActivityConfiguration(string configuration)
         {
-            JsonSerializerSettings settings = new JsonSerializerSettings()
-            {
-                MissingMemberHandling = MissingMemberHandling.Ignore,
-                Formatting = Formatting.Indented,
-                TypeNameAssemblyFormat = FormatterAssemblyStyle.Simple,
-                TypeNameHandling = TypeNameHandling.Objects,
-                DateParseHandling = DateParseHandling.None,
-            };
-
+            JsonSerializerSettings settings = ConversionCommon.DefaultSerializerSettings;
+            settings.MissingMemberHandling = MissingMemberHandling.Ignore;
 
             foreach (JsonConverter jsonConverter in Utils.GetConverters(true, true))
             {
