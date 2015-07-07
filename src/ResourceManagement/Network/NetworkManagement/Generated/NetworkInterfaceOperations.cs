@@ -334,6 +334,16 @@ namespace Microsoft.Azure.Management.Network
                             dnsSettingsValue["appliedDnsServers"] = appliedDnsServersArray;
                         }
                     }
+                    
+                    if (parameters.DnsSettings.InternalDnsNameLabel != null)
+                    {
+                        dnsSettingsValue["internalDnsNameLabel"] = parameters.DnsSettings.InternalDnsNameLabel;
+                    }
+                    
+                    if (parameters.DnsSettings.InternalFqdn != null)
+                    {
+                        dnsSettingsValue["internalFqdn"] = parameters.DnsSettings.InternalFqdn;
+                    }
                 }
                 
                 if (parameters.MacAddress != null)
@@ -586,7 +596,7 @@ namespace Microsoft.Azure.Management.Network
                                 JToken dnsSettingsValue2 = propertiesValue3["dnsSettings"];
                                 if (dnsSettingsValue2 != null && dnsSettingsValue2.Type != JTokenType.Null)
                                 {
-                                    DnsSettings dnsSettingsInstance = new DnsSettings();
+                                    NetworkInterfaceDnsSettings dnsSettingsInstance = new NetworkInterfaceDnsSettings();
                                     networkInterfaceInstance.DnsSettings = dnsSettingsInstance;
                                     
                                     JToken dnsServersArray2 = dnsSettingsValue2["dnsServers"];
@@ -605,6 +615,20 @@ namespace Microsoft.Azure.Management.Network
                                         {
                                             dnsSettingsInstance.AppliedDnsServers.Add(((string)appliedDnsServersValue));
                                         }
+                                    }
+                                    
+                                    JToken internalDnsNameLabelValue = dnsSettingsValue2["internalDnsNameLabel"];
+                                    if (internalDnsNameLabelValue != null && internalDnsNameLabelValue.Type != JTokenType.Null)
+                                    {
+                                        string internalDnsNameLabelInstance = ((string)internalDnsNameLabelValue);
+                                        dnsSettingsInstance.InternalDnsNameLabel = internalDnsNameLabelInstance;
+                                    }
+                                    
+                                    JToken internalFqdnValue = dnsSettingsValue2["internalFqdn"];
+                                    if (internalFqdnValue != null && internalFqdnValue.Type != JTokenType.Null)
+                                    {
+                                        string internalFqdnInstance = ((string)internalFqdnValue);
+                                        dnsSettingsInstance.InternalFqdn = internalFqdnInstance;
                                     }
                                 }
                                 
@@ -1363,7 +1387,7 @@ namespace Microsoft.Azure.Management.Network
                                 JToken dnsSettingsValue = propertiesValue["dnsSettings"];
                                 if (dnsSettingsValue != null && dnsSettingsValue.Type != JTokenType.Null)
                                 {
-                                    DnsSettings dnsSettingsInstance = new DnsSettings();
+                                    NetworkInterfaceDnsSettings dnsSettingsInstance = new NetworkInterfaceDnsSettings();
                                     networkInterfaceInstance.DnsSettings = dnsSettingsInstance;
                                     
                                     JToken dnsServersArray = dnsSettingsValue["dnsServers"];
@@ -1382,6 +1406,20 @@ namespace Microsoft.Azure.Management.Network
                                         {
                                             dnsSettingsInstance.AppliedDnsServers.Add(((string)appliedDnsServersValue));
                                         }
+                                    }
+                                    
+                                    JToken internalDnsNameLabelValue = dnsSettingsValue["internalDnsNameLabel"];
+                                    if (internalDnsNameLabelValue != null && internalDnsNameLabelValue.Type != JTokenType.Null)
+                                    {
+                                        string internalDnsNameLabelInstance = ((string)internalDnsNameLabelValue);
+                                        dnsSettingsInstance.InternalDnsNameLabel = internalDnsNameLabelInstance;
+                                    }
+                                    
+                                    JToken internalFqdnValue = dnsSettingsValue["internalFqdn"];
+                                    if (internalFqdnValue != null && internalFqdnValue.Type != JTokenType.Null)
+                                    {
+                                        string internalFqdnInstance = ((string)internalFqdnValue);
+                                        dnsSettingsInstance.InternalFqdn = internalFqdnInstance;
                                     }
                                 }
                                 
@@ -1763,7 +1801,7 @@ namespace Microsoft.Azure.Management.Network
                                         JToken dnsSettingsValue = propertiesValue["dnsSettings"];
                                         if (dnsSettingsValue != null && dnsSettingsValue.Type != JTokenType.Null)
                                         {
-                                            DnsSettings dnsSettingsInstance = new DnsSettings();
+                                            NetworkInterfaceDnsSettings dnsSettingsInstance = new NetworkInterfaceDnsSettings();
                                             networkInterfaceJsonFormatInstance.DnsSettings = dnsSettingsInstance;
                                             
                                             JToken dnsServersArray = dnsSettingsValue["dnsServers"];
@@ -1782,6 +1820,20 @@ namespace Microsoft.Azure.Management.Network
                                                 {
                                                     dnsSettingsInstance.AppliedDnsServers.Add(((string)appliedDnsServersValue));
                                                 }
+                                            }
+                                            
+                                            JToken internalDnsNameLabelValue = dnsSettingsValue["internalDnsNameLabel"];
+                                            if (internalDnsNameLabelValue != null && internalDnsNameLabelValue.Type != JTokenType.Null)
+                                            {
+                                                string internalDnsNameLabelInstance = ((string)internalDnsNameLabelValue);
+                                                dnsSettingsInstance.InternalDnsNameLabel = internalDnsNameLabelInstance;
+                                            }
+                                            
+                                            JToken internalFqdnValue = dnsSettingsValue["internalFqdn"];
+                                            if (internalFqdnValue != null && internalFqdnValue.Type != JTokenType.Null)
+                                            {
+                                                string internalFqdnInstance = ((string)internalFqdnValue);
+                                                dnsSettingsInstance.InternalFqdn = internalFqdnInstance;
                                             }
                                         }
                                         
@@ -2162,7 +2214,7 @@ namespace Microsoft.Azure.Management.Network
                                         JToken dnsSettingsValue = propertiesValue["dnsSettings"];
                                         if (dnsSettingsValue != null && dnsSettingsValue.Type != JTokenType.Null)
                                         {
-                                            DnsSettings dnsSettingsInstance = new DnsSettings();
+                                            NetworkInterfaceDnsSettings dnsSettingsInstance = new NetworkInterfaceDnsSettings();
                                             networkInterfaceJsonFormatInstance.DnsSettings = dnsSettingsInstance;
                                             
                                             JToken dnsServersArray = dnsSettingsValue["dnsServers"];
@@ -2181,6 +2233,20 @@ namespace Microsoft.Azure.Management.Network
                                                 {
                                                     dnsSettingsInstance.AppliedDnsServers.Add(((string)appliedDnsServersValue));
                                                 }
+                                            }
+                                            
+                                            JToken internalDnsNameLabelValue = dnsSettingsValue["internalDnsNameLabel"];
+                                            if (internalDnsNameLabelValue != null && internalDnsNameLabelValue.Type != JTokenType.Null)
+                                            {
+                                                string internalDnsNameLabelInstance = ((string)internalDnsNameLabelValue);
+                                                dnsSettingsInstance.InternalDnsNameLabel = internalDnsNameLabelInstance;
+                                            }
+                                            
+                                            JToken internalFqdnValue = dnsSettingsValue["internalFqdn"];
+                                            if (internalFqdnValue != null && internalFqdnValue.Type != JTokenType.Null)
+                                            {
+                                                string internalFqdnInstance = ((string)internalFqdnValue);
+                                                dnsSettingsInstance.InternalFqdn = internalFqdnInstance;
                                             }
                                         }
                                         

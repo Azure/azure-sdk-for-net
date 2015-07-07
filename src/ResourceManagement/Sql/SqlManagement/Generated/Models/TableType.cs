@@ -21,44 +21,22 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure;
 
-namespace Microsoft.WindowsAzure.Management.Network.Models
+namespace Microsoft.Azure.Management.Sql.Models
 {
     /// <summary>
-    /// The Network Security Group associated with a subnet.
+    /// Defines the valid table types of Azure SQL Database.
     /// </summary>
-    public partial class NetworkSecurityGroupGetForSubnetResponse : AzureOperationResponse
+    public static partial class TableType
     {
-        private string _name;
+        /// <summary>
+        /// Standard SQL table.
+        /// </summary>
+        public const string BaseTable = "BaseTable";
         
         /// <summary>
-        /// Optional. Gets or sets name of the Network Security Group
-        /// associated with this subnet from this subscription.
+        /// SQL View
         /// </summary>
-        public string Name
-        {
-            get { return this._name; }
-            set { this._name = value; }
-        }
-        
-        private string _state;
-        
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public string State
-        {
-            get { return this._state; }
-            set { this._state = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the
-        /// NetworkSecurityGroupGetForSubnetResponse class.
-        /// </summary>
-        public NetworkSecurityGroupGetForSubnetResponse()
-        {
-        }
+        public const string View = "View";
     }
 }

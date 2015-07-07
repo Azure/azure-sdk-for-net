@@ -5,7 +5,7 @@
     Microsoft.Azure.Management.Batch
     -->
     <SdkNuGetPackage Include="Microsoft.Azure.Management.Batch">
-      <PackageVersion>1.3.2-preview</PackageVersion>
+      <PackageVersion>1.4.0</PackageVersion>
       <Folder>$(MSBuildThisFileDirectory)</Folder>
     </SdkNuGetPackage>
   </ItemGroup>

@@ -157,7 +157,7 @@ namespace Microsoft.Azure.Management.Batch
             url = url + "/";
             url = url + Uri.EscapeDataString(accountName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-05-01-privatepreview");
+            queryParameters.Add("api-version=2015-07-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -466,7 +466,7 @@ namespace Microsoft.Azure.Management.Batch
             url = url + "/";
             url = url + Uri.EscapeDataString(accountName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-05-01-privatepreview");
+            queryParameters.Add("api-version=2015-07-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -802,7 +802,7 @@ namespace Microsoft.Azure.Management.Batch
             url = url + "/";
             url = url + Uri.EscapeDataString(accountName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-05-01-privatepreview");
+            queryParameters.Add("api-version=2015-07-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -829,7 +829,7 @@ namespace Microsoft.Azure.Management.Batch
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-05-01-privatepreview");
+                httpRequest.Headers.Add("x-ms-version", "2015-07-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1019,7 +1019,7 @@ namespace Microsoft.Azure.Management.Batch
             url = url + "/";
             url = url + "batchAccounts";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-05-01-privatepreview");
+            queryParameters.Add("api-version=2015-07-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1046,7 +1046,7 @@ namespace Microsoft.Azure.Management.Batch
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-05-01-privatepreview");
+                httpRequest.Headers.Add("x-ms-version", "2015-07-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1237,7 +1237,7 @@ namespace Microsoft.Azure.Management.Batch
             url = url + "Microsoft.Batch";
             url = url + "/actions";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-05-01-privatepreview");
+            queryParameters.Add("api-version=2015-07-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1264,7 +1264,7 @@ namespace Microsoft.Azure.Management.Batch
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-05-01-privatepreview");
+                httpRequest.Headers.Add("x-ms-version", "2015-07-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1455,7 +1455,7 @@ namespace Microsoft.Azure.Management.Batch
             url = url + Uri.EscapeDataString(accountName);
             url = url + "/listKeys";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-05-01-privatepreview");
+            queryParameters.Add("api-version=2015-07-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1482,7 +1482,7 @@ namespace Microsoft.Azure.Management.Batch
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-05-01-privatepreview");
+                httpRequest.Headers.Add("x-ms-version", "2015-07-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1859,7 +1859,7 @@ namespace Microsoft.Azure.Management.Batch
             url = url + Uri.EscapeDataString(accountName);
             url = url + "/regenerateKeys";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-05-01-privatepreview");
+            queryParameters.Add("api-version=2015-07-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1886,7 +1886,7 @@ namespace Microsoft.Azure.Management.Batch
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-05-01-privatepreview");
+                httpRequest.Headers.Add("x-ms-version", "2015-07-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2073,7 +2073,7 @@ namespace Microsoft.Azure.Management.Batch
             url = url + "/";
             url = url + Uri.EscapeDataString(accountName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-05-01-privatepreview");
+            queryParameters.Add("api-version=2015-07-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2100,7 +2100,7 @@ namespace Microsoft.Azure.Management.Batch
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-05-01-privatepreview");
+                httpRequest.Headers.Add("x-ms-version", "2015-07-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
