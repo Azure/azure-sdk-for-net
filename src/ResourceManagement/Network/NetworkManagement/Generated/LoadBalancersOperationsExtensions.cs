@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task DeleteAsync( this ILoadBalancersOperations operations, string resourceGroupName, string loadBalancerName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.DeleteWithOperationResponseAsync(resourceGroupName, loadBalancerName, cancellationToken).ConfigureAwait(false);
+                await operations.DeleteWithHttpMessagesAsync(resourceGroupName, loadBalancerName, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task BeginDeleteAsync( this ILoadBalancersOperations operations, string resourceGroupName, string loadBalancerName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.BeginDeleteWithOperationResponseAsync(resourceGroupName, loadBalancerName, cancellationToken).ConfigureAwait(false);
+                await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, loadBalancerName, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -121,7 +121,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task<LoadBalancer> GetAsync( this ILoadBalancersOperations operations, string resourceGroupName, string loadBalancerName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<LoadBalancer> result = await operations.GetWithOperationResponseAsync(resourceGroupName, loadBalancerName, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<LoadBalancer> result = await operations.GetWithHttpMessagesAsync(resourceGroupName, loadBalancerName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -165,7 +165,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task<LoadBalancer> CreateOrUpdateAsync( this ILoadBalancersOperations operations, string resourceGroupName, string loadBalancerName, LoadBalancer parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<LoadBalancer> result = await operations.CreateOrUpdateWithOperationResponseAsync(resourceGroupName, loadBalancerName, parameters, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<LoadBalancer> result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, loadBalancerName, parameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -209,7 +209,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task<LoadBalancer> BeginCreateOrUpdateAsync( this ILoadBalancersOperations operations, string resourceGroupName, string loadBalancerName, LoadBalancer parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<LoadBalancer> result = await operations.BeginCreateOrUpdateWithOperationResponseAsync(resourceGroupName, loadBalancerName, parameters, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<LoadBalancer> result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, loadBalancerName, parameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -237,7 +237,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task<LoadBalancerListResult> ListAllAsync( this ILoadBalancersOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<LoadBalancerListResult> result = await operations.ListAllWithOperationResponseAsync(cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<LoadBalancerListResult> result = await operations.ListAllWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -271,7 +271,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task<LoadBalancerListResult> ListAsync( this ILoadBalancersOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<LoadBalancerListResult> result = await operations.ListWithOperationResponseAsync(resourceGroupName, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<LoadBalancerListResult> result = await operations.ListWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -305,7 +305,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task<LoadBalancerListResult> ListAllNextAsync( this ILoadBalancersOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<LoadBalancerListResult> result = await operations.ListAllNextWithOperationResponseAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<LoadBalancerListResult> result = await operations.ListAllNextWithHttpMessagesAsync(nextLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -339,7 +339,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task<LoadBalancerListResult> ListNextAsync( this ILoadBalancersOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<LoadBalancerListResult> result = await operations.ListNextWithOperationResponseAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<LoadBalancerListResult> result = await operations.ListNextWithHttpMessagesAsync(nextLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

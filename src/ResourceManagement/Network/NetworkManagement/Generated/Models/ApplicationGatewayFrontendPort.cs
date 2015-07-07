@@ -28,15 +28,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets or sets the frontend port
         /// </summary>
-        [JsonProperty(PropertyName = "port")]
+        [JsonProperty(PropertyName = "properties.port")]
         public int? Port { get; set; }
 
-        /// <summary>
-        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
-        /// </summary>
-        public override void Validate()
-        {
-            base.Validate();
-        }
     }
 }

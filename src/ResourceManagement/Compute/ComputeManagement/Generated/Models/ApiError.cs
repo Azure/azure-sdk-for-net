@@ -46,20 +46,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         public virtual void Validate()
         {
-            if (this.Details != null)
-            {
-                foreach ( var element in this.Details)
-            {
-                if (element != null)
-            {
-                element.Validate();
-            }
-            }
-            }
-            if (this.Innererror != null)
-            {
-                this.Innererror.Validate();
-            }
         }
     }
 }

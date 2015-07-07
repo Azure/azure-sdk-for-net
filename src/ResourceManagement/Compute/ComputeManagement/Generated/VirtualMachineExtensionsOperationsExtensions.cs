@@ -6,6 +6,7 @@ namespace Microsoft.Azure.Management.Compute
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Rest;
+    using System.Linq.Expressions;
     using Microsoft.Azure;
     using Models;
 
@@ -59,7 +60,7 @@ namespace Microsoft.Azure.Management.Compute
             /// </param>
             public static async Task<VirtualMachineExtension> CreateOrUpdateAsync( this IVirtualMachineExtensionsOperations operations, string resourceGroupName, string vmName, string vmExtensionName, VirtualMachineExtension extensionParameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<VirtualMachineExtension> result = await operations.CreateOrUpdateWithOperationResponseAsync(resourceGroupName, vmName, vmExtensionName, extensionParameters, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<VirtualMachineExtension> result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, vmName, vmExtensionName, extensionParameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -111,7 +112,7 @@ namespace Microsoft.Azure.Management.Compute
             /// </param>
             public static async Task<VirtualMachineExtension> BeginCreateOrUpdateAsync( this IVirtualMachineExtensionsOperations operations, string resourceGroupName, string vmName, string vmExtensionName, VirtualMachineExtension extensionParameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<VirtualMachineExtension> result = await operations.BeginCreateOrUpdateWithOperationResponseAsync(resourceGroupName, vmName, vmExtensionName, extensionParameters, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<VirtualMachineExtension> result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, vmName, vmExtensionName, extensionParameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -155,7 +156,7 @@ namespace Microsoft.Azure.Management.Compute
             /// </param>
             public static async Task DeleteAsync( this IVirtualMachineExtensionsOperations operations, string resourceGroupName, string vmName, string vmExtensionName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.DeleteWithOperationResponseAsync(resourceGroupName, vmName, vmExtensionName, cancellationToken).ConfigureAwait(false);
+                await operations.DeleteWithHttpMessagesAsync(resourceGroupName, vmName, vmExtensionName, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -198,7 +199,7 @@ namespace Microsoft.Azure.Management.Compute
             /// </param>
             public static async Task BeginDeleteAsync( this IVirtualMachineExtensionsOperations operations, string resourceGroupName, string vmName, string vmExtensionName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.BeginDeleteWithOperationResponseAsync(resourceGroupName, vmName, vmExtensionName, cancellationToken).ConfigureAwait(false);
+                await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, vmName, vmExtensionName, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -247,7 +248,7 @@ namespace Microsoft.Azure.Management.Compute
             /// </param>
             public static async Task<VirtualMachineExtension> GetAsync( this IVirtualMachineExtensionsOperations operations, string resourceGroupName, string vmName, string vmExtensionName, string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<VirtualMachineExtension> result = await operations.GetWithOperationResponseAsync(resourceGroupName, vmName, vmExtensionName, expand, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<VirtualMachineExtension> result = await operations.GetWithHttpMessagesAsync(resourceGroupName, vmName, vmExtensionName, expand, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

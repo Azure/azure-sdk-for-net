@@ -28,10 +28,6 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         public virtual void Validate()
         {
-            if (this.Error != null)
-            {
-                this.Error.Validate();
-            }
         }
     }
 }

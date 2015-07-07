@@ -93,7 +93,7 @@ namespace Compute.Tests
                     "MicrosoftWindowsServer",
                     "WindowsServer",
                     "2012-R2-Datacenter",
-                    "$top=0");
+                    top: 1);
                 Assert.True(vmimages.Resources.Count == 0);
 
                 // Filter: top - Positive Test
@@ -102,7 +102,7 @@ namespace Compute.Tests
                     "MicrosoftWindowsServer",
                     "WindowsServer",
                     "2012-R2-Datacenter",
-                    "$top=1");
+                    top: 1);
                 Assert.True(vmimages.Resources.Count == 1);
 
                 // Filter: top - Positive Test
@@ -111,7 +111,7 @@ namespace Compute.Tests
                     "MicrosoftWindowsServer",
                     "WindowsServer",
                     "2012-R2-Datacenter",
-                    "$top=2");
+                    top: 2);
                 Assert.True(vmimages.Resources.Count == 2);
                 Assert.True(vmimages.Resources.Count(vmi => vmi.Name == AvailableWindowsServerImageVersions[1]) != 0);
 
@@ -121,7 +121,7 @@ namespace Compute.Tests
                     "MicrosoftWindowsServer",
                     "WindowsServer",
                     "2012-R2-Datacenter",
-                    "$orderby=name desc");
+                    orderby:"name desc");
                 Assert.Equal(AvailableWindowsServerImageVersions.Length, vmimages.Resources.Count);
                 for (int i = 0; i < AvailableWindowsServerImageVersions.Length; i++)
                 {
@@ -134,7 +134,8 @@ namespace Compute.Tests
                     "MicrosoftWindowsServer",
                     "WindowsServer",
                     "2012-R2-Datacenter",
-                    "$top=2&$orderby=name asc");
+                    top: 2,
+                    orderby: "name asc");
                 Assert.True(vmimages.Resources.Count == 2);
                 Assert.True(vmimages.Resources[0].Name == AvailableWindowsServerImageVersions.Last());
                 Assert.True(vmimages.Resources[1].Name == AvailableWindowsServerImageVersions.Reverse().Skip(1).First());
@@ -145,7 +146,8 @@ namespace Compute.Tests
                     "MicrosoftWindowsServer",
                     "WindowsServer",
                     "2012-R2-Datacenter",
-                    "$top=1&$orderby=name desc");
+                    top: 1,
+                    orderby: "name desc");
                 Assert.True(vmimages.Resources.Count == 1);
                 Assert.True(vmimages.Resources[0].Name == AvailableWindowsServerImageVersions[0]);
 
@@ -155,7 +157,8 @@ namespace Compute.Tests
                     "MicrosoftWindowsServer",
                     "WindowsServer",
                     "2012-R2-Datacenter",
-                    "$top=1&$orderby=name asc");
+                    top: 1, 
+                    orderby: "name asc");
                 Assert.True(vmimages.Resources.Count == 1);
                 Assert.True(vmimages.Resources[0].Name == AvailableWindowsServerImageVersions.Last());
             }

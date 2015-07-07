@@ -45,15 +45,18 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='securityRuleName'>
         /// The name of the security rule.
         /// </param>    
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> DeleteWithOperationResponseAsync(string resourceGroupName, string networkSecurityGroupName, string securityRuleName, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string networkSecurityGroupName, string securityRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse response = await BeginDeleteWithOperationResponseAsync(
-                resourceGroupName, networkSecurityGroupName, securityRuleName, cancellationToken);
-            return await this.Client.GetPostOrDeleteOperationResultAsync(response, cancellationToken);
+            AzureOperationResponse response = await BeginDeleteWithHttpMessagesAsync(
+                resourceGroupName, networkSecurityGroupName, securityRuleName, customHeaders, cancellationToken);
+            return await this.Client.GetPostOrDeleteOperationResultAsync(response, customHeaders, cancellationToken);
         }
 
         /// <summary>
@@ -69,22 +72,25 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='securityRuleName'>
         /// The name of the security rule.
         /// </param>    
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> BeginDeleteWithOperationResponseAsync(string resourceGroupName, string networkSecurityGroupName, string securityRuleName, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string networkSecurityGroupName, string securityRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
-                throw new ArgumentNullException("resourceGroupName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
             if (networkSecurityGroupName == null)
             {
-                throw new ArgumentNullException("networkSecurityGroupName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "networkSecurityGroupName");
             }
             if (securityRuleName == null)
             {
-                throw new ArgumentNullException("securityRuleName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "securityRuleName");
             }
             // Tracing
             bool shouldTrace = ServiceClientTracing.IsEnabled;
@@ -123,6 +129,14 @@ namespace Microsoft.Azure.Management.Network
             httpRequest.Method = new HttpMethod("DELETE");
             httpRequest.RequestUri = new Uri(url);
             // Set Headers
+            if (customHeaders != null)
+            {
+                foreach(var header in customHeaders)
+                {
+                    httpRequest.Headers.Add(header.Key, header.Value);
+                }
+            }
+
             // Set Credentials
             cancellationToken.ThrowIfCancellationRequested();
             await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
@@ -175,22 +189,25 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='securityRuleName'>
         /// The name of the security rule.
         /// </param>    
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<SecurityRule>> GetWithOperationResponseAsync(string resourceGroupName, string networkSecurityGroupName, string securityRuleName, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SecurityRule>> GetWithHttpMessagesAsync(string resourceGroupName, string networkSecurityGroupName, string securityRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
-                throw new ArgumentNullException("resourceGroupName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
             if (networkSecurityGroupName == null)
             {
-                throw new ArgumentNullException("networkSecurityGroupName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "networkSecurityGroupName");
             }
             if (securityRuleName == null)
             {
-                throw new ArgumentNullException("securityRuleName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "securityRuleName");
             }
             // Tracing
             bool shouldTrace = ServiceClientTracing.IsEnabled;
@@ -229,6 +246,14 @@ namespace Microsoft.Azure.Management.Network
             httpRequest.Method = new HttpMethod("GET");
             httpRequest.RequestUri = new Uri(url);
             // Set Headers
+            if (customHeaders != null)
+            {
+                foreach(var header in customHeaders)
+                {
+                    httpRequest.Headers.Add(header.Key, header.Value);
+                }
+            }
+
             // Set Credentials
             cancellationToken.ThrowIfCancellationRequested();
             await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
@@ -295,16 +320,20 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='securityRuleParameters'>
         /// Parameters supplied to the create/update network security rule operation
         /// </param>    
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>    
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<SecurityRule>> CreateOrUpdateWithOperationResponseAsync(string resourceGroupName, string networkSecurityGroupName, string securityRuleName, SecurityRule securityRuleParameters, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SecurityRule>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string networkSecurityGroupName, string securityRuleName, SecurityRule securityRuleParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<SecurityRule> response = await BeginCreateOrUpdateWithOperationResponseAsync(
-                resourceGroupName, networkSecurityGroupName, securityRuleName, securityRuleParameters, cancellationToken);
+            AzureOperationResponse<SecurityRule> response = await BeginCreateOrUpdateWithHttpMessagesAsync(
+                resourceGroupName, networkSecurityGroupName, securityRuleName, securityRuleParameters, customHeaders, cancellationToken);
             return await this.Client.GetPutOperationResultAsync<SecurityRule>(response, 
-                () => GetWithOperationResponseAsync(resourceGroupName, networkSecurityGroupName, securityRuleName, cancellationToken),
+                () => GetWithHttpMessagesAsync(resourceGroupName: resourceGroupName, networkSecurityGroupName: networkSecurityGroupName, securityRuleName: securityRuleName, customHeaders: customHeaders, cancellationToken: cancellationToken),
+                customHeaders, 
                 cancellationToken);
         }
 
@@ -324,26 +353,29 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='securityRuleParameters'>
         /// Parameters supplied to the create/update network security rule operation
         /// </param>    
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<SecurityRule>> BeginCreateOrUpdateWithOperationResponseAsync(string resourceGroupName, string networkSecurityGroupName, string securityRuleName, SecurityRule securityRuleParameters, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SecurityRule>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string networkSecurityGroupName, string securityRuleName, SecurityRule securityRuleParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
-                throw new ArgumentNullException("resourceGroupName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
             if (networkSecurityGroupName == null)
             {
-                throw new ArgumentNullException("networkSecurityGroupName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "networkSecurityGroupName");
             }
             if (securityRuleName == null)
             {
-                throw new ArgumentNullException("securityRuleName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "securityRuleName");
             }
             if (securityRuleParameters == null)
             {
-                throw new ArgumentNullException("securityRuleParameters");
+                throw new ValidationException(ValidationRules.CannotBeNull, "securityRuleParameters");
             }
             if (securityRuleParameters != null)
             {
@@ -387,6 +419,14 @@ namespace Microsoft.Azure.Management.Network
             httpRequest.Method = new HttpMethod("PUT");
             httpRequest.RequestUri = new Uri(url);
             // Set Headers
+            if (customHeaders != null)
+            {
+                foreach(var header in customHeaders)
+                {
+                    httpRequest.Headers.Add(header.Key, header.Value);
+                }
+            }
+
             // Set Credentials
             cancellationToken.ThrowIfCancellationRequested();
             await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
@@ -456,18 +496,21 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='networkSecurityGroupName'>
         /// The name of the network security group.
         /// </param>    
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<SecurityRuleListResult>> ListWithOperationResponseAsync(string resourceGroupName, string networkSecurityGroupName, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SecurityRuleListResult>> ListWithHttpMessagesAsync(string resourceGroupName, string networkSecurityGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
-                throw new ArgumentNullException("resourceGroupName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
             if (networkSecurityGroupName == null)
             {
-                throw new ArgumentNullException("networkSecurityGroupName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "networkSecurityGroupName");
             }
             // Tracing
             bool shouldTrace = ServiceClientTracing.IsEnabled;
@@ -504,6 +547,14 @@ namespace Microsoft.Azure.Management.Network
             httpRequest.Method = new HttpMethod("GET");
             httpRequest.RequestUri = new Uri(url);
             // Set Headers
+            if (customHeaders != null)
+            {
+                foreach(var header in customHeaders)
+                {
+                    httpRequest.Headers.Add(header.Key, header.Value);
+                }
+            }
+
             // Set Credentials
             cancellationToken.ThrowIfCancellationRequested();
             await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
@@ -561,14 +612,17 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='nextLink'>
         /// NextLink from the previous successful call to List operation.
         /// </param>    
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<SecurityRuleListResult>> ListNextWithOperationResponseAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SecurityRuleListResult>> ListNextWithHttpMessagesAsync(string nextLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextLink == null)
             {
-                throw new ArgumentNullException("nextLink");
+                throw new ValidationException(ValidationRules.CannotBeNull, "nextLink");
             }
             // Tracing
             bool shouldTrace = ServiceClientTracing.IsEnabled;
@@ -596,6 +650,14 @@ namespace Microsoft.Azure.Management.Network
             httpRequest.Method = new HttpMethod("GET");
             httpRequest.RequestUri = new Uri(url);
             // Set Headers
+            if (customHeaders != null)
+            {
+                foreach(var header in customHeaders)
+                {
+                    httpRequest.Headers.Add(header.Key, header.Value);
+                }
+            }
+
             // Set Credentials
             cancellationToken.ThrowIfCancellationRequested();
             await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);

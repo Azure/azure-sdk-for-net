@@ -167,6 +167,7 @@ namespace Microsoft.Azure.Management.Storage
                 resourceGroupName, accountName, parameters, cancellationToken);
             return await this.Client.GetPutOperationResultAsync<StorageAccount>(response, 
                 () => GetPropertiesWithOperationResponseAsync(resourceGroupName, accountName, cancellationToken),
+                null,
                 cancellationToken);
         }
 

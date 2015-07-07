@@ -60,39 +60,31 @@ namespace Compute.Tests
                     // Create Storage Account, so that both the VMs can share it
                     var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
 
-                    var deleteVMResponse = m_CrpClient.VirtualMachines.Delete(rgName, "VMDoesNotExist");
-                    Assert.True(deleteVMResponse.Status == OperationStatus.Succeeded);
+                    m_CrpClient.VirtualMachines.Delete(rgName, "VMDoesNotExist");
 
-                    var deleteASResponse = m_CrpClient.AvailabilitySets.Delete(rgName, "ASDoesNotExist");
-                    Assert.True(deleteASResponse.StatusCode == HttpStatusCode.NoContent);
+                    m_CrpClient.AvailabilitySets.Delete(rgName, "ASDoesNotExist");
 
                     var vm1 = CreateVM_NoAsyncTracking(rgName, asName, storageAccountOutput, imageRef, out inputVM);
 
-                    var getVMWithInstanceViewResponse = m_CrpClient.VirtualMachines.GetWithInstanceView(rgName, inputVM.Name);
-                    Assert.True(getVMWithInstanceViewResponse.StatusCode == HttpStatusCode.OK);
-                    Assert.True(getVMWithInstanceViewResponse.VirtualMachine != null, "VM in Get");
-                    ValidateVMInstanceView(inputVM, getVMWithInstanceViewResponse.VirtualMachine);
+                    var getVMWithInstanceViewResponse = m_CrpClient.VirtualMachines.Get(rgName, inputVM.Name, "instanceView");
+                    Assert.True(getVMWithInstanceViewResponse != null, "VM in Get");
+                    ValidateVMInstanceView(inputVM, getVMWithInstanceViewResponse);
 
                     var listResponse = m_CrpClient.VirtualMachines.List(rgName);
-                    Assert.True(listResponse.StatusCode == HttpStatusCode.OK);
-                    ValidateVM(inputVM, listResponse.VirtualMachines.FirstOrDefault(x => x.Name == inputVM.Name),
+                    ValidateVM(inputVM, listResponse.Value.FirstOrDefault(x => x.Name == inputVM.Name),
                         Helpers.GetVMReferenceId(m_subId, rgName, inputVM.Name));
 
                     var listVMSizesResponse = m_CrpClient.VirtualMachines.ListAvailableSizes(rgName, inputVM.Name);
-                    Assert.True(listVMSizesResponse.StatusCode == HttpStatusCode.OK);
-                    Helpers.ValidateVirtualMachineSizeListResponse(listVMSizesResponse);
+                    Helpers.ValidateVirtualMachineSizeListResponse(listVMSizesResponse.Value);
 
                     listVMSizesResponse = m_CrpClient.AvailabilitySets.ListAvailableSizes(rgName, asName);
-                    Assert.True(listVMSizesResponse.StatusCode == HttpStatusCode.OK);
-                    Helpers.ValidateVirtualMachineSizeListResponse(listVMSizesResponse);
+                    Helpers.ValidateVirtualMachineSizeListResponse(listVMSizesResponse.Value);
 
-                    var lroResponse = m_CrpClient.VirtualMachines.Delete(rgName, inputVM.Name);
-                    Assert.True(lroResponse.Status != OperationStatus.Failed);
+                    m_CrpClient.VirtualMachines.Delete(rgName, inputVM.Name);
                 }
                 finally
                 {
-                    var deleteResourceGroupResponse = m_ResourcesClient.ResourceGroups.Delete(rgName);
-                    Assert.True(deleteResourceGroupResponse.StatusCode == HttpStatusCode.OK);
+                    m_ResourcesClient.ResourceGroups.Delete(rgName);
                 }
             }
         }

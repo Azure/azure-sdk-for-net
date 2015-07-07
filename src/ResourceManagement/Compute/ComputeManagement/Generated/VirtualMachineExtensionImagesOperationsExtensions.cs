@@ -6,6 +6,7 @@ namespace Microsoft.Azure.Management.Compute
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Rest;
+    using System.Linq.Expressions;
     using Microsoft.Azure;
     using Models;
 
@@ -49,7 +50,7 @@ namespace Microsoft.Azure.Management.Compute
             /// </param>
             public static async Task<VirtualMachineExtensionImage> GetAsync( this IVirtualMachineExtensionImagesOperations operations, string location, string publisherName, string type, string version, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<VirtualMachineExtensionImage> result = await operations.GetWithOperationResponseAsync(location, publisherName, type, version, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<VirtualMachineExtensionImage> result = await operations.GetWithHttpMessagesAsync(location, publisherName, type, version, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -65,11 +66,16 @@ namespace Microsoft.Azure.Management.Compute
             /// </param>
             /// <param name='type'>
             /// </param>
-            /// <param name='parametersFilterExpressionunencoded'>
+            /// <param name='filter'>
+            /// The filter to apply on the operation.
             /// </param>
-            public static VirtualMachineImageResourceList ListVersions(this IVirtualMachineExtensionImagesOperations operations, string location, string publisherName, string type, string parametersFilterExpressionunencoded = default(string))
+            /// <param name='top'>
+            /// </param>
+            /// <param name='orderby'>
+            /// </param>
+            public static VirtualMachineImageResourceList ListVersions(this IVirtualMachineExtensionImagesOperations operations, string location, string publisherName, string type, Expression<Func<Resource, bool>> filter = default(Expression<Func<Resource, bool>>), int? top = default(int?), string orderby = default(string))
             {
-                return Task.Factory.StartNew(s => ((IVirtualMachineExtensionImagesOperations)s).ListVersionsAsync(location, publisherName, type, parametersFilterExpressionunencoded), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IVirtualMachineExtensionImagesOperations)s).ListVersionsAsync(location, publisherName, type, filter, top, orderby), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -84,14 +90,19 @@ namespace Microsoft.Azure.Management.Compute
             /// </param>
             /// <param name='type'>
             /// </param>
-            /// <param name='parametersFilterExpressionunencoded'>
+            /// <param name='filter'>
+            /// The filter to apply on the operation.
+            /// </param>
+            /// <param name='top'>
+            /// </param>
+            /// <param name='orderby'>
             /// </param>
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<VirtualMachineImageResourceList> ListVersionsAsync( this IVirtualMachineExtensionImagesOperations operations, string location, string publisherName, string type, string parametersFilterExpressionunencoded = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VirtualMachineImageResourceList> ListVersionsAsync( this IVirtualMachineExtensionImagesOperations operations, string location, string publisherName, string type, Expression<Func<Resource, bool>> filter = default(Expression<Func<Resource, bool>>), int? top = default(int?), string orderby = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<VirtualMachineImageResourceList> result = await operations.ListVersionsWithOperationResponseAsync(location, publisherName, type, parametersFilterExpressionunencoded, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<VirtualMachineImageResourceList> result = await operations.ListVersionsWithHttpMessagesAsync(location, publisherName, type, filter, top, orderby, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -125,7 +136,7 @@ namespace Microsoft.Azure.Management.Compute
             /// </param>
             public static async Task<VirtualMachineImageResourceList> ListTypesAsync( this IVirtualMachineExtensionImagesOperations operations, string location, string publisherName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<VirtualMachineImageResourceList> result = await operations.ListTypesWithOperationResponseAsync(location, publisherName, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<VirtualMachineImageResourceList> result = await operations.ListTypesWithHttpMessagesAsync(location, publisherName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

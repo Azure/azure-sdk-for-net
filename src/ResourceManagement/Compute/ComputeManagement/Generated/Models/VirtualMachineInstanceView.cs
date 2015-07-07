@@ -58,40 +58,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         public virtual void Validate()
         {
-            if (this.VmAgent != null)
-            {
-                this.VmAgent.Validate();
-            }
-            if (this.Disks != null)
-            {
-                foreach ( var element in this.Disks)
-            {
-                if (element != null)
-            {
-                element.Validate();
-            }
-            }
-            }
-            if (this.Extensions != null)
-            {
-                foreach ( var element1 in this.Extensions)
-            {
-                if (element1 != null)
-            {
-                element1.Validate();
-            }
-            }
-            }
-            if (this.Statuses != null)
-            {
-                foreach ( var element2 in this.Statuses)
-            {
-                if (element2 != null)
-            {
-                element2.Validate();
-            }
-            }
-            }
         }
     }
 }

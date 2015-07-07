@@ -20,17 +20,17 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "virtualNetworkGateway1")]
+        [JsonProperty(PropertyName = "properties.virtualNetworkGateway1")]
         public VirtualNetworkGateway VirtualNetworkGateway1 { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "virtualNetworkGateway2")]
+        [JsonProperty(PropertyName = "properties.virtualNetworkGateway2")]
         public VirtualNetworkGateway VirtualNetworkGateway2 { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "localNetworkGateway2")]
+        [JsonProperty(PropertyName = "properties.localNetworkGateway2")]
         public LocalNetworkGateway LocalNetworkGateway2 { get; set; }
 
         /// <summary>
@@ -38,19 +38,19 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Possible values for this property include: 'IPsec', 'Vnet2Vnet',
         /// 'ExpressRoute', 'VPNClient'
         /// </summary>
-        [JsonProperty(PropertyName = "connectionType")]
+        [JsonProperty(PropertyName = "properties.connectionType")]
         public VirtualNetworkGatewayConnectionType? ConnectionType { get; set; }
 
         /// <summary>
         /// The Routing weight.
         /// </summary>
-        [JsonProperty(PropertyName = "routingWeight")]
+        [JsonProperty(PropertyName = "properties.routingWeight")]
         public int? RoutingWeight { get; set; }
 
         /// <summary>
         /// The Ipsec share key.
         /// </summary>
-        [JsonProperty(PropertyName = "sharedKey")]
+        [JsonProperty(PropertyName = "properties.sharedKey")]
         public string SharedKey { get; set; }
 
         /// <summary>

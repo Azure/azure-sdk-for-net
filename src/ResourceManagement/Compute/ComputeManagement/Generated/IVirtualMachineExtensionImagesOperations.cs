@@ -6,6 +6,8 @@ namespace Microsoft.Azure.Management.Compute
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Rest;
+    using Microsoft.Azure.OData;
+    using System.Linq.Expressions;
     using Microsoft.Azure;
     using Models;
 
@@ -24,10 +26,13 @@ namespace Microsoft.Azure.Management.Compute
         /// </param>
         /// <param name='version'>
         /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        Task<AzureOperationResponse<VirtualMachineExtensionImage>> GetWithOperationResponseAsync(string location, string publisherName, string type, string version, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<VirtualMachineExtensionImage>> GetWithHttpMessagesAsync(string location, string publisherName, string type, string version, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets a list of virtual machine extension image versions.
         /// </summary>
@@ -37,12 +42,20 @@ namespace Microsoft.Azure.Management.Compute
         /// </param>
         /// <param name='type'>
         /// </param>
-        /// <param name='parametersFilterExpressionunencoded'>
+        /// <param name='filter'>
+        /// The filter to apply on the operation.
+        /// </param>
+        /// <param name='top'>
+        /// </param>
+        /// <param name='orderby'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        Task<AzureOperationResponse<VirtualMachineImageResourceList>> ListVersionsWithOperationResponseAsync(string location, string publisherName, string type, string parametersFilterExpressionunencoded = default(string), CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<VirtualMachineImageResourceList>> ListVersionsWithHttpMessagesAsync(string location, string publisherName, string type, Expression<Func<Resource, bool>> filter = default(Expression<Func<Resource, bool>>), int? top = default(int?), string orderby = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets a list of virtual machine extension image types.
         /// </summary>
@@ -50,9 +63,12 @@ namespace Microsoft.Azure.Management.Compute
         /// </param>
         /// <param name='publisherName'>
         /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        Task<AzureOperationResponse<VirtualMachineImageResourceList>> ListTypesWithOperationResponseAsync(string location, string publisherName, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<VirtualMachineImageResourceList>> ListTypesWithHttpMessagesAsync(string location, string publisherName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

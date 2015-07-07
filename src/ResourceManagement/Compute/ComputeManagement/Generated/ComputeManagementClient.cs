@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.Compute
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using Microsoft.Azure.OData;
+    using System.Linq.Expressions;
     using Microsoft.Azure;
     using Models;
 

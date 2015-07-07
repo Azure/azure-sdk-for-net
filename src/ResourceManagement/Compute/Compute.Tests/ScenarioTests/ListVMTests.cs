@@ -50,14 +50,13 @@ namespace Compute.Tests
                     var vm1 = CreateVM_NoAsyncTracking(rg1Name, asName, storageAccountOutput, imageRef, out inputVM1);
                     var vm2 = CreateVM_NoAsyncTracking(rg2Name, asName, storageAccountOutput, imageRef, out inputVM2);
 
-                    var listResponse = m_CrpClient.VirtualMachines.ListAll(new ListParameters());
-                    Assert.True(listResponse.StatusCode == HttpStatusCode.OK);
-                    Assert.True(listResponse.VirtualMachines.Count >= 2);
+                    var listResponse = m_CrpClient.VirtualMachines.ListAll();
+                    Assert.True(listResponse.Value.Count >= 2);
                     Assert.Null(listResponse.NextLink);
 
                     int vmsValidatedCount = 0;
 
-                    foreach (var vm in listResponse.VirtualMachines)
+                    foreach (var vm in listResponse.Value )
                     {
                         if (vm.Name == vm1.Name)
                         {
@@ -79,13 +78,11 @@ namespace Compute.Tests
                     // storage account, which is in rg1.
                     try
                     {
-                        var deleteRg2Response = m_ResourcesClient.ResourceGroups.Delete(rg2Name);
-                        Assert.True(deleteRg2Response.StatusCode == HttpStatusCode.OK);
+                        m_ResourcesClient.ResourceGroups.Delete(rg2Name);
                     }
                     finally
                     {
-                        var deleteRg1Response = m_ResourcesClient.ResourceGroups.Delete(rg1Name);
-                        Assert.True(deleteRg1Response.StatusCode == HttpStatusCode.OK);
+                        m_ResourcesClient.ResourceGroups.Delete(rg1Name);
                     }
                 }
             }

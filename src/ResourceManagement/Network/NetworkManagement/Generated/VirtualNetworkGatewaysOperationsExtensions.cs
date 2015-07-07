@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task<VirtualNetworkGateway> CreateOrUpdateAsync( this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, VirtualNetworkGateway parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<VirtualNetworkGateway> result = await operations.CreateOrUpdateWithOperationResponseAsync(resourceGroupName, virtualNetworkGatewayName, parameters, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<VirtualNetworkGateway> result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, virtualNetworkGatewayName, parameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -103,7 +103,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task<VirtualNetworkGateway> BeginCreateOrUpdateAsync( this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, VirtualNetworkGateway parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<VirtualNetworkGateway> result = await operations.BeginCreateOrUpdateWithOperationResponseAsync(resourceGroupName, virtualNetworkGatewayName, parameters, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<VirtualNetworkGateway> result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, virtualNetworkGatewayName, parameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -143,7 +143,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task<VirtualNetworkGateway> GetAsync( this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<VirtualNetworkGateway> result = await operations.GetWithOperationResponseAsync(resourceGroupName, virtualNetworkGatewayName, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<VirtualNetworkGateway> result = await operations.GetWithHttpMessagesAsync(resourceGroupName, virtualNetworkGatewayName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -183,7 +183,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task DeleteAsync( this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.DeleteWithOperationResponseAsync(resourceGroupName, virtualNetworkGatewayName, cancellationToken).ConfigureAwait(false);
+                await operations.DeleteWithHttpMessagesAsync(resourceGroupName, virtualNetworkGatewayName, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -222,7 +222,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task BeginDeleteAsync( this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.BeginDeleteWithOperationResponseAsync(resourceGroupName, virtualNetworkGatewayName, cancellationToken).ConfigureAwait(false);
+                await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, virtualNetworkGatewayName, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -255,7 +255,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task<VirtualNetworkGatewayListResult> ListAsync( this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<VirtualNetworkGatewayListResult> result = await operations.ListWithOperationResponseAsync(resourceGroupName, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<VirtualNetworkGatewayListResult> result = await operations.ListWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -305,7 +305,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task<VirtualNetworkGateway> ResetAsync( this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, VirtualNetworkGateway parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<VirtualNetworkGateway> result = await operations.ResetWithOperationResponseAsync(resourceGroupName, virtualNetworkGatewayName, parameters, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<VirtualNetworkGateway> result = await operations.ResetWithHttpMessagesAsync(resourceGroupName, virtualNetworkGatewayName, parameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -355,7 +355,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task<VirtualNetworkGateway> BeginResetAsync( this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, VirtualNetworkGateway parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<VirtualNetworkGateway> result = await operations.BeginResetWithOperationResponseAsync(resourceGroupName, virtualNetworkGatewayName, parameters, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<VirtualNetworkGateway> result = await operations.BeginResetWithHttpMessagesAsync(resourceGroupName, virtualNetworkGatewayName, parameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -389,7 +389,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task<VirtualNetworkGatewayListResult> ListNextAsync( this IVirtualNetworkGatewaysOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<VirtualNetworkGatewayListResult> result = await operations.ListNextWithOperationResponseAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<VirtualNetworkGatewayListResult> result = await operations.ListNextWithHttpMessagesAsync(nextLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

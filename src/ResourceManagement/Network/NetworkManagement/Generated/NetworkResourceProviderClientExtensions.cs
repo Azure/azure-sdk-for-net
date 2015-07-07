@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task<DnsNameAvailabilityResult> CheckDnsNameAvailabilityAsync( this INetworkResourceProviderClient operations, string location, string domainNameLabel = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<DnsNameAvailabilityResult> result = await operations.CheckDnsNameAvailabilityWithOperationResponseAsync(location, domainNameLabel, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<DnsNameAvailabilityResult> result = await operations.CheckDnsNameAvailabilityWithHttpMessagesAsync(location, domainNameLabel, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

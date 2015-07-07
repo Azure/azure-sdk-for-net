@@ -52,10 +52,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         public virtual void Validate()
         {
-            if (this.Properties != null)
-            {
-                this.Properties.Validate();
-            }
             if (this.Error != null)
             {
                 this.Error.Validate();

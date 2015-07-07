@@ -6,6 +6,7 @@ namespace Microsoft.Azure.Management.Compute
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Rest;
+    using System.Linq.Expressions;
     using Microsoft.Azure;
     using Models;
 
@@ -53,7 +54,7 @@ namespace Microsoft.Azure.Management.Compute
             /// </param>
             public static async Task<VirtualMachineImage> GetAsync( this IVirtualMachineImagesOperations operations, string location, string publisherName, string offer, string skus, string version, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<VirtualMachineImage> result = await operations.GetWithOperationResponseAsync(location, publisherName, offer, skus, version, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<VirtualMachineImage> result = await operations.GetWithHttpMessagesAsync(location, publisherName, offer, skus, version, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -87,7 +88,7 @@ namespace Microsoft.Azure.Management.Compute
             /// </param>
             public static async Task<VirtualMachineImageResourceList> ListOffersAsync( this IVirtualMachineImagesOperations operations, string location, string publisherName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<VirtualMachineImageResourceList> result = await operations.ListOffersWithOperationResponseAsync(location, publisherName, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<VirtualMachineImageResourceList> result = await operations.ListOffersWithHttpMessagesAsync(location, publisherName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -117,7 +118,7 @@ namespace Microsoft.Azure.Management.Compute
             /// </param>
             public static async Task<VirtualMachineImageResourceList> ListPublishersAsync( this IVirtualMachineImagesOperations operations, string location, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<VirtualMachineImageResourceList> result = await operations.ListPublishersWithOperationResponseAsync(location, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<VirtualMachineImageResourceList> result = await operations.ListPublishersWithHttpMessagesAsync(location, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -155,7 +156,7 @@ namespace Microsoft.Azure.Management.Compute
             /// </param>
             public static async Task<VirtualMachineImageResourceList> ListSkusAsync( this IVirtualMachineImagesOperations operations, string location, string publisherName, string offer, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<VirtualMachineImageResourceList> result = await operations.ListSkusWithOperationResponseAsync(location, publisherName, offer, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<VirtualMachineImageResourceList> result = await operations.ListSkusWithHttpMessagesAsync(location, publisherName, offer, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -173,11 +174,16 @@ namespace Microsoft.Azure.Management.Compute
             /// </param>
             /// <param name='skus'>
             /// </param>
-            /// <param name='parametersFilterExpressionunencoded'>
+            /// <param name='filter'>
+            /// The filter to apply on the operation.
             /// </param>
-            public static VirtualMachineImageResourceList List(this IVirtualMachineImagesOperations operations, string location, string publisherName, string offer, string skus, string parametersFilterExpressionunencoded = default(string))
+            /// <param name='top'>
+            /// </param>
+            /// <param name='orderby'>
+            /// </param>
+            public static VirtualMachineImageResourceList List(this IVirtualMachineImagesOperations operations, string location, string publisherName, string offer, string skus, Expression<Func<Resource, bool>> filter = default(Expression<Func<Resource, bool>>), int? top = default(int?), string orderby = default(string))
             {
-                return Task.Factory.StartNew(s => ((IVirtualMachineImagesOperations)s).ListAsync(location, publisherName, offer, skus, parametersFilterExpressionunencoded), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IVirtualMachineImagesOperations)s).ListAsync(location, publisherName, offer, skus, filter, top, orderby), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -194,14 +200,19 @@ namespace Microsoft.Azure.Management.Compute
             /// </param>
             /// <param name='skus'>
             /// </param>
-            /// <param name='parametersFilterExpressionunencoded'>
+            /// <param name='filter'>
+            /// The filter to apply on the operation.
+            /// </param>
+            /// <param name='top'>
+            /// </param>
+            /// <param name='orderby'>
             /// </param>
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<VirtualMachineImageResourceList> ListAsync( this IVirtualMachineImagesOperations operations, string location, string publisherName, string offer, string skus, string parametersFilterExpressionunencoded = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VirtualMachineImageResourceList> ListAsync( this IVirtualMachineImagesOperations operations, string location, string publisherName, string offer, string skus, Expression<Func<Resource, bool>> filter = default(Expression<Func<Resource, bool>>), int? top = default(int?), string orderby = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<VirtualMachineImageResourceList> result = await operations.ListWithOperationResponseAsync(location, publisherName, offer, skus, parametersFilterExpressionunencoded, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<VirtualMachineImageResourceList> result = await operations.ListWithHttpMessagesAsync(location, publisherName, offer, skus, filter, top, orderby, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

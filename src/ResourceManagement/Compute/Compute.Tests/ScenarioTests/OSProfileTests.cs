@@ -71,7 +71,7 @@ namespace Compute.Tests
 
         private void EnableWinRMCustomDataAndUnattendContent(string rgName, string keyVaultName, string winRMCertificateUrl, string autoLogonContent, VirtualMachine inputVM)
         {
-            OSProfile osProfile = inputVM.OsProfile;
+            var osProfile = inputVM.OsProfile;
             osProfile.CustomData = CustomData;
             osProfile.WindowsConfiguration = new WindowsConfiguration
             {
@@ -122,9 +122,9 @@ namespace Compute.Tests
                 };
         }
 
-        private void ValidateWinRMCustomDataAndUnattendContent(string rgName, string keyVaultName, Uri winRMCertificateUrl, string autoLogonContent, VirtualMachine outputVM)
+        private void ValidateWinRMCustomDataAndUnattendContent(string winRMCertificateUrl, string autoLogonContent, VirtualMachine outputVM)
         {
-            OSProfile osProfile = outputVM.OsProfile;
+            var osProfile = outputVM.OsProfile;
             // CustomData:
             Assert.Equal(osProfile.CustomData, CustomData);
 
@@ -148,11 +148,11 @@ namespace Compute.Tests
                 Assert.Null(listeners[0].CertificateUrl);
 
                 Assert.True(listeners[1].Protocol == ProtocolTypes.Https);
-                Assert.True(listeners[1].CertificateUrl.Equals(winRMCertificateUrl.AbsoluteUri, StringComparison.OrdinalIgnoreCase));
+                Assert.True(listeners[1].CertificateUrl.Equals(winRMCertificateUrl, StringComparison.OrdinalIgnoreCase));
             }
             else if (listeners[0].Protocol == ProtocolTypes.Https)
             {
-                Assert.True(listeners[0].CertificateUrl.Equals(winRMCertificateUrl.AbsoluteUri, StringComparison.OrdinalIgnoreCase));
+                Assert.True(listeners[0].CertificateUrl.Equals(winRMCertificateUrl, StringComparison.OrdinalIgnoreCase));
 
                 Assert.True(listeners[1].Protocol == ProtocolTypes.Http);
                 Assert.Null(listeners[1].CertificateUrl);
@@ -201,7 +201,7 @@ namespace Compute.Tests
                     };
 
                 Action<VirtualMachine> validateWinRMCustomDataAndUnattendContent = 
-                    outputVM => ValidateWinRMCustomDataAndUnattendContent(rgName, keyVaultName, winRMCertificateUrl, autoLogonContent, outputVM);
+                    outputVM => ValidateWinRMCustomDataAndUnattendContent(winRMCertificateUrl, autoLogonContent, outputVM);
 
                 SecretVaultHelper.CreateKeyVault(m_subId, rgName, keyVaultName).Wait();
                 
@@ -228,13 +228,13 @@ namespace Compute.Tests
 
                 Action<VirtualMachine> enableSSHAndCustomData = customizedVM =>
                 {
-                    OSProfile osProfile = customizedVM.OSProfile;
+                    var osProfile = customizedVM.OsProfile;
                     sshPath = "/home/" + osProfile.AdminUsername + "/.ssh/authorized_keys";
                     osProfile.CustomData = CustomData;
                     osProfile.LinuxConfiguration = new LinuxConfiguration
                     {
                         DisablePasswordAuthentication = false,
-                        SshConfiguration = new SshConfiguration
+                        Ssh = new SshConfiguration
                         {
                             PublicKeys = new List<SshPublicKey>
                         {
@@ -250,15 +250,15 @@ namespace Compute.Tests
 
                 Action<VirtualMachine> validateWinRMCustomDataAndUnattendContent = outputVM =>
                 {
-                    OSProfile osProfile = outputVM.OSProfile;
+                    var osProfile = outputVM.OsProfile;
                     Assert.Equal<string>(CustomData, osProfile.CustomData);
 
                     Assert.Null(osProfile.WindowsConfiguration);
 
                     Assert.NotNull(osProfile.LinuxConfiguration);
-                    Assert.NotNull(osProfile.LinuxConfiguration.SshConfiguration);
-                    var publicKeys = osProfile.LinuxConfiguration.SshConfiguration.PublicKeys;
-                    Assert.NotNull(osProfile.LinuxConfiguration.SshConfiguration.PublicKeys);
+                    Assert.NotNull(osProfile.LinuxConfiguration.Ssh);
+                    var publicKeys = osProfile.LinuxConfiguration.Ssh.PublicKeys;
+                    Assert.NotNull(osProfile.LinuxConfiguration.Ssh.PublicKeys);
 
                     Assert.True(osProfile.LinuxConfiguration.DisablePasswordAuthentication != null && !osProfile.LinuxConfiguration.DisablePasswordAuthentication.Value);
 
@@ -293,11 +293,10 @@ namespace Compute.Tests
 
                 VirtualMachine vm = CreateVM_NoAsyncTracking(rgName, asName, storageAccountOutput, imageRef, out inputVM, vmCustomizer);
 
-                VirtualMachineGetResponse getVMWithInstanceViewResponse = m_CrpClient.VirtualMachines.GetWithInstanceView(rgName, inputVM.Name);
-                Assert.True(getVMWithInstanceViewResponse.StatusCode == HttpStatusCode.OK);
-                ValidateVMInstanceView(inputVM, getVMWithInstanceViewResponse.VirtualMachine);
+                var getVMWithInstanceViewResponse = m_CrpClient.VirtualMachines.Get(rgName, inputVM.Name, "instanceView");
+                ValidateVMInstanceView(inputVM, getVMWithInstanceViewResponse);
 
-                var lroResponse = m_CrpClient.VirtualMachines.CreateOrUpdate(rgName, vm);
+                var lroResponse = m_CrpClient.VirtualMachines.CreateOrUpdate(rgName, vm.Name, vm);
                 Assert.True(lroResponse.ProvisioningState == "Succeeded");
                 if (vmValidator != null)
                 {

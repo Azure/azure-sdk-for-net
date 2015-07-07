@@ -34,10 +34,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         public virtual void Validate()
         {
-            if (this.ImageReference != null)
-            {
-                this.ImageReference.Validate();
-            }
             if (this.OsDisk != null)
             {
                 this.OsDisk.Validate();

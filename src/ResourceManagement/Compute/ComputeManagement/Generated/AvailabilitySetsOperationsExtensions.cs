@@ -6,6 +6,7 @@ namespace Microsoft.Azure.Management.Compute
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Rest;
+    using System.Linq.Expressions;
     using Microsoft.Azure;
     using Models;
 
@@ -45,7 +46,7 @@ namespace Microsoft.Azure.Management.Compute
             /// </param>
             public static async Task DeleteAsync( this IAvailabilitySetsOperations operations, string resourceGroupName, string availabilitySetName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.DeleteWithOperationResponseAsync(resourceGroupName, availabilitySetName, cancellationToken).ConfigureAwait(false);
+                await operations.DeleteWithHttpMessagesAsync(resourceGroupName, availabilitySetName, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -82,7 +83,7 @@ namespace Microsoft.Azure.Management.Compute
             /// </param>
             public static async Task<AvailabilitySet> GetAsync( this IAvailabilitySetsOperations operations, string resourceGroupName, string availabilitySetName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<AvailabilitySet> result = await operations.GetWithOperationResponseAsync(resourceGroupName, availabilitySetName, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<AvailabilitySet> result = await operations.GetWithHttpMessagesAsync(resourceGroupName, availabilitySetName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -114,7 +115,7 @@ namespace Microsoft.Azure.Management.Compute
             /// </param>
             public static async Task<AvailabilitySetListResult> ListAsync( this IAvailabilitySetsOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<AvailabilitySetListResult> result = await operations.ListWithOperationResponseAsync(resourceGroupName, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<AvailabilitySetListResult> result = await operations.ListWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -152,7 +153,7 @@ namespace Microsoft.Azure.Management.Compute
             /// </param>
             public static async Task<VirtualMachineSizeListResult> ListAvailableSizesAsync( this IAvailabilitySetsOperations operations, string resourceGroupName, string availabilitySetName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<VirtualMachineSizeListResult> result = await operations.ListAvailableSizesWithOperationResponseAsync(resourceGroupName, availabilitySetName, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<VirtualMachineSizeListResult> result = await operations.ListAvailableSizesWithHttpMessagesAsync(resourceGroupName, availabilitySetName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -196,7 +197,7 @@ namespace Microsoft.Azure.Management.Compute
             /// </param>
             public static async Task<AvailabilitySet> CreateOrUpdateAsync( this IAvailabilitySetsOperations operations, string resourceGroupName, string name, AvailabilitySet parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<AvailabilitySet> result = await operations.CreateOrUpdateWithOperationResponseAsync(resourceGroupName, name, parameters, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<AvailabilitySet> result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

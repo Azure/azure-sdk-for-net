@@ -17,12 +17,5 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "keyLength")]
         public long? KeyLength { get; set; }
 
-        /// <summary>
-        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
-        /// </summary>
-        public virtual void Validate()
-        {
-            //Nothing to validate
-        }
     }
 }

@@ -49,7 +49,7 @@ namespace Compute.Tests
             {
                 rgOps.Delete(rgName);
             }
-            catch (CloudException ex)
+            catch (CloudException)
             {
                 // Ignore
             }

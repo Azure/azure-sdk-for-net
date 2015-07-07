@@ -58,14 +58,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         public virtual void Validate()
         {
-            if (this.Vhd != null)
-            {
-                this.Vhd.Validate();
-            }
-            if (this.Image != null)
-            {
-                this.Image.Validate();
-            }
         }
     }
 }

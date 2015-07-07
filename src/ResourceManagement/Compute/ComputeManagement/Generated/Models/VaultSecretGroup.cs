@@ -34,16 +34,6 @@ namespace Microsoft.Azure.Management.Compute.Models
             {
                 this.SourceVault.Validate();
             }
-            if (this.VaultCertificates != null)
-            {
-                foreach ( var element in this.VaultCertificates)
-            {
-                if (element != null)
-            {
-                element.Validate();
-            }
-            }
-            }
         }
     }
 }

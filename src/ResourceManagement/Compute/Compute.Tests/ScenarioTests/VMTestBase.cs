@@ -74,8 +74,8 @@ namespace Compute.Tests
         {
             VirtualMachineImageResourceList images = m_CrpClient.VirtualMachineImages.List(
                 location: m_location, publisherName: publisher, offer: offer, skus: sku,
-                parametersFilterExpressionunencoded: "$top=1");
-            VirtualMachineImageResource image = images.Resources.First();
+                top: 1);
+            var image = images.Resources.First();
             return new ImageReference
             {
                 Publisher = publisher, Offer = offer, Sku = sku, Version = image.Name
@@ -181,35 +181,26 @@ namespace Compute.Tests
 
                 var createOrUpdateResponse = m_CrpClient.VirtualMachines.CreateOrUpdate(rgName, inputVM.Name, inputVM);
 
-                Assert.True(createOrUpdateResponse.StatusCode == HttpStatusCode.Created);
-
-                Assert.True(createOrUpdateResponse.VirtualMachine.Name == inputVM.Name);
-                Assert.True(createOrUpdateResponse.VirtualMachine.Location == inputVM.Location.ToLower().Replace(" ", "") || createOrUpdateResponse.VirtualMachine.Location.ToLower() == inputVM.Location.ToLower());
+                Assert.True(createOrUpdateResponse.Name == inputVM.Name);
+                Assert.True(createOrUpdateResponse.Location == inputVM.Location.ToLower().Replace(" ", "") || 
+                    createOrUpdateResponse.Location.ToLower() == inputVM.Location.ToLower());
 
                 Assert.True(
-                    createOrUpdateResponse.VirtualMachine.AvailabilitySetReference.ReferenceUri
+                    createOrUpdateResponse.AvailabilitySet.Id
                         .ToLowerInvariant() == asetId.ToLowerInvariant());
-                ValidateVM(inputVM, createOrUpdateResponse.VirtualMachine, expectedVMReferenceId);
-
-                var operationUri = new Uri(createOrUpdateResponse.AzureAsyncOperation);
-                string operationId = operationUri.Segments.LastOrDefault();
-                var lroResponse =
-                    m_CrpClient.GetLongRunningOperationStatus(createOrUpdateResponse.AzureAsyncOperation.ToString());
-                ValidateLROResponse(lroResponse, operationId);
+                ValidateVM(inputVM, createOrUpdateResponse, expectedVMReferenceId);
 
                 // CONSIDER dropping this Get and ValidateVM call. Nothing changes in the VM model after it's accepted.
                 // There might have been intent to track the async operation to completion and then check the VM is
                 // still this and okay, but that's not what the code above does and still doesn't make much sense.
                 var getResponse = m_CrpClient.VirtualMachines.Get(rgName, inputVM.Name);
-                Assert.True(getResponse.StatusCode == HttpStatusCode.OK);
-                ValidateVM(inputVM, getResponse.VirtualMachine, expectedVMReferenceId);
+                ValidateVM(inputVM, getResponse, expectedVMReferenceId);
 
-                return getResponse.VirtualMachine;
+                return getResponse;
             }
             catch
             {
-                var deleteRg1Response = m_ResourcesClient.ResourceGroups.Delete(rgName);
-                Assert.True(deleteRg1Response.StatusCode == HttpStatusCode.OK);
+                m_ResourcesClient.ResourceGroups.Delete(rgName);
                 throw;
             }
         }
@@ -304,7 +295,7 @@ namespace Compute.Tests
 
             if (publicIPaddress != null)
             {
-                nicParameters.IpConfigurations[0].PublicIPAddress = new SubResource { Id = publicIPaddress.Id };
+                nicParameters.IpConfigurations[0].PublicIPAddress = new SubResource { Id = publicIPaddress };
             }
 
             var putNicResponse = m_NrpClient.NetworkInterfaces.CreateOrUpdate(rgName, nicname, nicParameters);
@@ -347,7 +338,7 @@ namespace Compute.Tests
             {
                 Location = m_location,
                 Tags = new Dictionary<string, string>() { { "RG", "rg" }, { "testTag", "1" } },
-                AvailabilitySet = new AvailabilitySetReference { Id = asetId },
+                AvailabilitySet = new SubResource() { Id = asetId },
                 HardwareProfile = new HardwareProfile
                 {
                     VmSize = VirtualMachineSizeTypes.StandardA0
@@ -389,35 +380,26 @@ namespace Compute.Tests
             typeof(VirtualMachine).GetProperty("Type").SetValue(vm, TestUtilities.GenerateName("Microsoft.Compute/virtualMachines"));
             return vm;
         }
-        
-        protected void ValidateLROResponse(ComputeLongRunningOperationResponse lroResponse, string operationId)
-        {
-            Assert.NotNull(lroResponse);
-            Assert.NotNull(lroResponse.Status);
-            Assert.Equal(operationId, lroResponse.TrackingOperationId);
-            Assert.NotNull(lroResponse.StartTime);
-            //Assert.NotNull(lroResponse.EndTime); // TODO: it's null somtimes.
-        }
 
         protected void ValidateVM(VirtualMachine vm, VirtualMachine vmOut, string expectedVMReferenceId)
         {
             Assert.True(!string.IsNullOrEmpty(vmOut.ProvisioningState));
 
-            Assert.True(vmOut.HardwareProfile.VirtualMachineSize
-                     == vm.HardwareProfile.VirtualMachineSize);
+            Assert.True(vmOut.HardwareProfile.VmSize
+                     == vm.HardwareProfile.VmSize);
 
-            Assert.NotNull(vmOut.StorageProfile.OSDisk);
+            Assert.NotNull(vmOut.StorageProfile.OsDisk);
 
-            if (vm.StorageProfile.OSDisk != null)
+            if (vm.StorageProfile.OsDisk != null)
             {
-                Assert.True(vmOut.StorageProfile.OSDisk.Name
-                         == vm.StorageProfile.OSDisk.Name);
+                Assert.True(vmOut.StorageProfile.OsDisk.Name
+                         == vm.StorageProfile.OsDisk.Name);
 
-                Assert.True(vmOut.StorageProfile.OSDisk.VirtualHardDisk.Uri
-                == vm.StorageProfile.OSDisk.VirtualHardDisk.Uri);
+                Assert.True(vmOut.StorageProfile.OsDisk.Vhd.Uri
+                == vm.StorageProfile.OsDisk.Vhd.Uri);
 
-                Assert.True(vmOut.StorageProfile.OSDisk.Caching
-                         == vm.StorageProfile.OSDisk.Caching);
+                Assert.True(vmOut.StorageProfile.OsDisk.Caching
+                         == vm.StorageProfile.OsDisk.Caching);
             }
 
             if (vm.StorageProfile.DataDisks != null &&
@@ -432,26 +414,26 @@ namespace Compute.Tests
                     // Disabling resharper null-ref check as it doesn't seem to understand the not-null assert above.
                     // ReSharper disable PossibleNullReferenceException
 
-                    Assert.NotNull(dataDiskOut.VirtualHardDisk);
-                    Assert.NotNull(dataDiskOut.VirtualHardDisk.Uri);
+                    Assert.NotNull(dataDiskOut.Vhd);
+                    Assert.NotNull(dataDiskOut.Vhd.Uri);
 
-                    if (dataDisk.SourceImage != null && dataDisk.SourceImage.Uri != null)
+                    if (dataDisk.Image != null && dataDisk.Image.Uri != null)
                     {
-                        Assert.NotNull(dataDiskOut.SourceImage);
-                        Assert.Equal(dataDisk.SourceImage.Uri, dataDiskOut.SourceImage.Uri);
+                        Assert.NotNull(dataDiskOut.Image);
+                        Assert.Equal(dataDisk.Image.Uri, dataDiskOut.Image.Uri);
                     }
                     // ReSharper enable PossibleNullReferenceException
                 }
             }
 
-            if(vm.OSProfile != null &&
-               vm.OSProfile.Secrets != null &&
-               vm.OSProfile.Secrets.Any())
+            if(vm.OsProfile != null &&
+               vm.OsProfile.Secrets != null &&
+               vm.OsProfile.Secrets.Any())
             {
-                foreach (var secret in vm.OSProfile.Secrets)
+                foreach (var secret in vm.OsProfile.Secrets)
                 {
                     Assert.NotNull(secret.VaultCertificates);
-                    var secretOut = vmOut.OSProfile.Secrets.FirstOrDefault( s => string.Equals(secret.SourceVault.ReferenceUri, s.SourceVault.ReferenceUri));
+                    var secretOut = vmOut.OsProfile.Secrets.FirstOrDefault(s => string.Equals(secret.SourceVault.Id, s.SourceVault.Id));
                     Assert.NotNull(secretOut);
 
                     // Disabling resharper null-ref check as it doesn't seem to understand the not-null assert above.
@@ -465,8 +447,8 @@ namespace Compute.Tests
                 }
             }
 
-            Assert.NotNull(vmOut.AvailabilitySetReference);
-            Assert.True(vm.AvailabilitySetReference.ReferenceUri.ToLowerInvariant() == vmOut.AvailabilitySetReference.ReferenceUri.ToLowerInvariant());
+            Assert.NotNull(vmOut.AvailabilitySet);
+            Assert.True(vm.AvailabilitySet.Id.ToLowerInvariant() == vmOut.AvailabilitySet.Id.ToLowerInvariant());
             ValidatePlan(vm.Plan, vmOut.Plan);
             // TODO: it's null somtimes.
             //Assert.NotNull(vmOut.Properties.Id);
@@ -482,9 +464,9 @@ namespace Compute.Tests
             Assert.NotNull(instanceView.Disks);
             Assert.True(instanceView.Disks.Any());
 
-            if (vmIn.StorageProfile.OSDisk != null)
+            if (vmIn.StorageProfile.OsDisk != null)
             {
-                Assert.True(instanceView.Disks.Any(x => x.Name == vmIn.StorageProfile.OSDisk.Name));
+                Assert.True(instanceView.Disks.Any(x => x.Name == vmIn.StorageProfile.OsDisk.Name));
             }
 
             DiskInstanceView diskInstanceView = instanceView.Disks.First();

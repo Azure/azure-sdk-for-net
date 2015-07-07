@@ -27,38 +27,38 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets the hardware profile.
         /// </summary>
-        [JsonProperty(PropertyName = "hardwareProfile")]
+        [JsonProperty(PropertyName = "properties.hardwareProfile")]
         public HardwareProfile HardwareProfile { get; set; }
 
         /// <summary>
         /// Gets or sets the storage profile.
         /// </summary>
-        [JsonProperty(PropertyName = "storageProfile")]
+        [JsonProperty(PropertyName = "properties.storageProfile")]
         public StorageProfile StorageProfile { get; set; }
 
         /// <summary>
         /// Gets or sets the OS profile.
         /// </summary>
-        [JsonProperty(PropertyName = "osProfile")]
+        [JsonProperty(PropertyName = "properties.osProfile")]
         public OSProfile OsProfile { get; set; }
 
         /// <summary>
         /// Gets or sets the network profile.
         /// </summary>
-        [JsonProperty(PropertyName = "networkProfile")]
+        [JsonProperty(PropertyName = "properties.networkProfile")]
         public NetworkProfile NetworkProfile { get; set; }
 
         /// <summary>
         /// Gets or sets the reference Id of the availailbity set to which
         /// this virtual machine belongs.
         /// </summary>
-        [JsonProperty(PropertyName = "availabilitySet")]
+        [JsonProperty(PropertyName = "properties.availabilitySet")]
         public SubResource AvailabilitySet { get; set; }
 
         /// <summary>
         /// Gets the virtual machine instance view.
         /// </summary>
-        [JsonProperty(PropertyName = "instanceView")]
+        [JsonProperty(PropertyName = "properties.instanceView")]
         public VirtualMachineInstanceView InstanceView { get; set; }
 
         /// <summary>
@@ -67,10 +67,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         public override void Validate()
         {
             base.Validate();
-            if (this.Plan != null)
-            {
-                this.Plan.Validate();
-            }
             if (this.Resources != null)
             {
                 foreach ( var element in this.Resources)
@@ -81,10 +77,6 @@ namespace Microsoft.Azure.Management.Compute.Models
             }
             }
             }
-            if (this.HardwareProfile != null)
-            {
-                this.HardwareProfile.Validate();
-            }
             if (this.StorageProfile != null)
             {
                 this.StorageProfile.Validate();
@@ -92,10 +84,6 @@ namespace Microsoft.Azure.Management.Compute.Models
             if (this.OsProfile != null)
             {
                 this.OsProfile.Validate();
-            }
-            if (this.NetworkProfile != null)
-            {
-                this.NetworkProfile.Validate();
             }
             if (this.AvailabilitySet != null)
             {

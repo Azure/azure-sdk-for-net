@@ -18,11 +18,5 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "addressPrefixes")]
         public IList<string> AddressPrefixes { get; set; }
 
-        /// <summary>
-        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
-        /// </summary>
-        public virtual void Validate()
-        {
-        }
     }
 }

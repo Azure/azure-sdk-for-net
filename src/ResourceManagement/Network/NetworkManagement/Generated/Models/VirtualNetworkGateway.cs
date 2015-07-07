@@ -21,45 +21,28 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// IpConfigurations for Virtual network gateway.
         /// </summary>
-        [JsonProperty(PropertyName = "ipConfigurations")]
+        [JsonProperty(PropertyName = "properties.ipConfigurations")]
         public IList<VirtualNetworkGatewayIpConfiguration> IpConfigurations { get; set; }
 
         /// <summary>
         /// The type of this virtual network gateway. Possible values for this
         /// property include: 'Vpn'
         /// </summary>
-        [JsonProperty(PropertyName = "gatewayType")]
+        [JsonProperty(PropertyName = "properties.gatewayType")]
         public VirtualNetworkGatewayType? GatewayType { get; set; }
 
         /// <summary>
         /// The type of this virtual network gateway. Possible values for this
         /// property include: 'PolicyBased', 'RouteBased'
         /// </summary>
-        [JsonProperty(PropertyName = "vpnType")]
+        [JsonProperty(PropertyName = "properties.vpnType")]
         public VpnType? VpnType { get; set; }
 
         /// <summary>
         /// EnableBgp Flag
         /// </summary>
-        [JsonProperty(PropertyName = "enableBgp")]
+        [JsonProperty(PropertyName = "properties.enableBgp")]
         public bool? EnableBgp { get; set; }
 
-        /// <summary>
-        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
-        /// </summary>
-        public override void Validate()
-        {
-            base.Validate();
-            if (this.IpConfigurations != null)
-            {
-                foreach ( var element in this.IpConfigurations)
-            {
-                if (element != null)
-            {
-                element.Validate();
-            }
-            }
-            }
-        }
     }
 }

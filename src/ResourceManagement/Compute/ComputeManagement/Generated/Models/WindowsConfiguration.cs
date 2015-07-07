@@ -49,20 +49,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         public virtual void Validate()
         {
-            if (this.AdditionalUnattendContent != null)
-            {
-                foreach ( var element in this.AdditionalUnattendContent)
-            {
-                if (element != null)
-            {
-                element.Validate();
-            }
-            }
-            }
-            if (this.WinRM != null)
-            {
-                this.WinRM.Validate();
-            }
         }
     }
 }

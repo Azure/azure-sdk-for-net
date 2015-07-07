@@ -32,9 +32,8 @@ namespace Compute.Tests
                 var computeClient = ComputeManagementTestUtilities.GetComputeManagementClient();
                 string location = ComputeManagementTestUtilities.DefaultLocation.Replace(" ", "");
 
-                VirtualMachineSizeListResponse virtualMachineSizeListResponse = computeClient.VirtualMachineSizes.List(location);
-                Assert.True(virtualMachineSizeListResponse.StatusCode == HttpStatusCode.OK);
-                Helpers.ValidateVirtualMachineSizeListResponse(virtualMachineSizeListResponse);
+                var virtualMachineSizeListResponse = computeClient.VirtualMachineSizes.List(location);
+                Helpers.ValidateVirtualMachineSizeListResponse(virtualMachineSizeListResponse.Value);
             }
         }
     }

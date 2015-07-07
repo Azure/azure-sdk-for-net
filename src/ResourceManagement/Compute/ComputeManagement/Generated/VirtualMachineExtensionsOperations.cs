@@ -11,6 +11,8 @@ namespace Microsoft.Azure.Management.Compute
     using System.Threading.Tasks;
     using Microsoft.Rest;
     using Newtonsoft.Json;
+    using Microsoft.Azure.OData;
+    using System.Linq.Expressions;
     using Microsoft.Azure;
     using Models;
 
@@ -48,16 +50,20 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='extensionParameters'>
         /// Parameters supplied to the Create Virtual Machine Extension operation.
         /// </param>    
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>    
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<VirtualMachineExtension>> CreateOrUpdateWithOperationResponseAsync(string resourceGroupName, string vmName, string vmExtensionName, VirtualMachineExtension extensionParameters, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<VirtualMachineExtension>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string vmName, string vmExtensionName, VirtualMachineExtension extensionParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<VirtualMachineExtension> response = await BeginCreateOrUpdateWithOperationResponseAsync(
-                resourceGroupName, vmName, vmExtensionName, extensionParameters, cancellationToken);
+            AzureOperationResponse<VirtualMachineExtension> response = await BeginCreateOrUpdateWithHttpMessagesAsync(
+                resourceGroupName, vmName, vmExtensionName, extensionParameters, customHeaders, cancellationToken);
             return await this.Client.GetPutOperationResultAsync<VirtualMachineExtension>(response, 
-                () => GetWithOperationResponseAsync(resourceGroupName: resourceGroupName, vmName: vmName, vmExtensionName: vmExtensionName, cancellationToken: cancellationToken),
+                () => GetWithHttpMessagesAsync(resourceGroupName: resourceGroupName, vmName: vmName, vmExtensionName: vmExtensionName, customHeaders: customHeaders, cancellationToken: cancellationToken),
+                customHeaders, 
                 cancellationToken);
         }
 
@@ -77,26 +83,29 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='extensionParameters'>
         /// Parameters supplied to the Create Virtual Machine Extension operation.
         /// </param>    
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<VirtualMachineExtension>> BeginCreateOrUpdateWithOperationResponseAsync(string resourceGroupName, string vmName, string vmExtensionName, VirtualMachineExtension extensionParameters, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<VirtualMachineExtension>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string vmName, string vmExtensionName, VirtualMachineExtension extensionParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
-                throw new ArgumentNullException("resourceGroupName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
             if (vmName == null)
             {
-                throw new ArgumentNullException("vmName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "vmName");
             }
             if (vmExtensionName == null)
             {
-                throw new ArgumentNullException("vmExtensionName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "vmExtensionName");
             }
             if (extensionParameters == null)
             {
-                throw new ArgumentNullException("extensionParameters");
+                throw new ValidationException(ValidationRules.CannotBeNull, "extensionParameters");
             }
             if (extensionParameters != null)
             {
@@ -140,6 +149,14 @@ namespace Microsoft.Azure.Management.Compute
             httpRequest.Method = new HttpMethod("PUT");
             httpRequest.RequestUri = new Uri(url);
             // Set Headers
+            if (customHeaders != null)
+            {
+                foreach(var header in customHeaders)
+                {
+                    httpRequest.Headers.Add(header.Key, header.Value);
+                }
+            }
+
             // Set Credentials
             cancellationToken.ThrowIfCancellationRequested();
             await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
@@ -211,15 +228,18 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='vmExtensionName'>
         /// The name of the virtual machine extension.
         /// </param>    
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> DeleteWithOperationResponseAsync(string resourceGroupName, string vmName, string vmExtensionName, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string vmName, string vmExtensionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse response = await BeginDeleteWithOperationResponseAsync(
-                resourceGroupName, vmName, vmExtensionName, cancellationToken);
-            return await this.Client.GetPostOrDeleteOperationResultAsync(response, cancellationToken);
+            AzureOperationResponse response = await BeginDeleteWithHttpMessagesAsync(
+                resourceGroupName, vmName, vmExtensionName, customHeaders, cancellationToken);
+            return await this.Client.GetPostOrDeleteOperationResultAsync(response, customHeaders, cancellationToken);
         }
 
         /// <summary>
@@ -234,22 +254,25 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='vmExtensionName'>
         /// The name of the virtual machine extension.
         /// </param>    
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> BeginDeleteWithOperationResponseAsync(string resourceGroupName, string vmName, string vmExtensionName, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string vmName, string vmExtensionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
-                throw new ArgumentNullException("resourceGroupName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
             if (vmName == null)
             {
-                throw new ArgumentNullException("vmName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "vmName");
             }
             if (vmExtensionName == null)
             {
-                throw new ArgumentNullException("vmExtensionName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "vmExtensionName");
             }
             // Tracing
             bool shouldTrace = ServiceClientTracing.IsEnabled;
@@ -288,6 +311,14 @@ namespace Microsoft.Azure.Management.Compute
             httpRequest.Method = new HttpMethod("DELETE");
             httpRequest.RequestUri = new Uri(url);
             // Set Headers
+            if (customHeaders != null)
+            {
+                foreach(var header in customHeaders)
+                {
+                    httpRequest.Headers.Add(header.Key, header.Value);
+                }
+            }
+
             // Set Credentials
             cancellationToken.ThrowIfCancellationRequested();
             await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
@@ -305,7 +336,7 @@ namespace Microsoft.Azure.Management.Compute
             HttpStatusCode statusCode = httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-            if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "NoContent") || statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "Accepted") || statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK")))
+            if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "NoContent") || statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK") || statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "Accepted")))
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
                 ex.Request = httpRequest;
@@ -342,22 +373,25 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='expand'>
         /// Name of the property to expand. Allowed value is null or 'instanceView'.
         /// </param>    
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<VirtualMachineExtension>> GetWithOperationResponseAsync(string resourceGroupName, string vmName, string vmExtensionName, string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<VirtualMachineExtension>> GetWithHttpMessagesAsync(string resourceGroupName, string vmName, string vmExtensionName, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
-                throw new ArgumentNullException("resourceGroupName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
             if (vmName == null)
             {
-                throw new ArgumentNullException("vmName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "vmName");
             }
             if (vmExtensionName == null)
             {
-                throw new ArgumentNullException("vmExtensionName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "vmExtensionName");
             }
             // Tracing
             bool shouldTrace = ServiceClientTracing.IsEnabled;
@@ -401,6 +435,14 @@ namespace Microsoft.Azure.Management.Compute
             httpRequest.Method = new HttpMethod("GET");
             httpRequest.RequestUri = new Uri(url);
             // Set Headers
+            if (customHeaders != null)
+            {
+                foreach(var header in customHeaders)
+                {
+                    httpRequest.Headers.Add(header.Key, header.Value);
+                }
+            }
+
             // Set Credentials
             cancellationToken.ThrowIfCancellationRequested();
             await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);

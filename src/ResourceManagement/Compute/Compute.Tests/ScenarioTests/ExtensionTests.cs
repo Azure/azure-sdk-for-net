@@ -32,17 +32,17 @@ namespace Compute.Tests
         {
             var vmExtension = new VirtualMachineExtension
             {
-                Name = "vmext01",
                 Location = ComputeManagementTestUtilities.DefaultLocation,
                 Tags = new Dictionary<string, string>() { { "extensionTag1", "1" }, { "extensionTag2", "2" } },
-                Type = "Microsoft.Compute/virtualMachines/extensions",
                 Publisher = "Microsoft.Compute",
-                ExtensionType = "VMAccessAgent",
+                VirtualMachineExtensionType = "VMAccessAgent",
                 TypeHandlerVersion = "2.0",
                 AutoUpgradeMinorVersion = true,
                 Settings = "{}",
                 ProtectedSettings = "{}"
             };
+            typeof(VirtualMachineExtension).GetProperty("Name").SetValue(vmExtension, "vmext01");
+            typeof(VirtualMachineExtension).GetProperty("Type").SetValue(vmExtension, "Microsoft.Compute/virtualMachines/extensions");
 
             return vmExtension;
         }
@@ -75,38 +75,31 @@ namespace Compute.Tests
                     var vmExtension = GetTestVMExtension();
                     //var lroResponse = m_CrpClient.VirtualMachineExtensions.CreateOrUpdate(rgName, vm.Name, vmExtension);
                     //Assert.True(lroResponse.Status != ComputeOperationStatus.InProgress);
-                    var response = m_CrpClient.VirtualMachineExtensions.CreateOrUpdate(rgName, vm.Name, vmExtension);
-                    Assert.True(response.StatusCode == HttpStatusCode.Created);
-                    ValidateVMExtension(vmExtension, response.VirtualMachineExtension);
+                    var response = m_CrpClient.VirtualMachineExtensions.CreateOrUpdate(rgName, vm.Name, vmExtension.Name, vmExtension);
+                    ValidateVMExtension(vmExtension, response);
 
                     // Perform a Get operation on the extension
                     var getVMExtResponse = m_CrpClient.VirtualMachineExtensions.Get(rgName, vm.Name, vmExtension.Name);
-                    Assert.True(getVMExtResponse.StatusCode == HttpStatusCode.OK);
-                    ValidateVMExtension(vmExtension, getVMExtResponse.VirtualMachineExtension);
+                    ValidateVMExtension(vmExtension, getVMExtResponse);
 
                     // Validate Get InstanceView for the extension
-                    var getVMExtInstanceViewResponse = m_CrpClient.VirtualMachineExtensions.GetWithInstanceView(rgName, vm.Name, vmExtension.Name);
-                    Assert.True(getVMExtInstanceViewResponse.StatusCode == HttpStatusCode.OK);
-                    ValidateVMExtensionInstanceView(getVMExtInstanceViewResponse.VirtualMachineExtension.InstanceView);
+                    var getVMExtInstanceViewResponse = m_CrpClient.VirtualMachineExtensions.Get(rgName, vm.Name, vmExtension.Name, "instanceView");
+                    ValidateVMExtensionInstanceView(getVMExtInstanceViewResponse.InstanceView);
 
                     // Validate the extension in the VM info
                     var getVMResponse = m_CrpClient.VirtualMachines.Get(rgName, vm.Name);
-                    Assert.True(getVMResponse.StatusCode == HttpStatusCode.OK);
-                    ValidateVMExtension(vmExtension, getVMResponse.VirtualMachine.Extensions.FirstOrDefault());
+                    ValidateVMExtension(vmExtension, getVMResponse.Resources.FirstOrDefault());
 
                     // Validate the extension instance view in the VM instance-view
-                    var getVMWithInstanceViewResponse = m_CrpClient.VirtualMachines.GetWithInstanceView(rgName, vm.Name);
-                    Assert.True(getVMWithInstanceViewResponse.StatusCode == HttpStatusCode.OK);
-                    ValidateVMExtensionInstanceView(getVMWithInstanceViewResponse.VirtualMachine.InstanceView.Extensions.FirstOrDefault());
+                    var getVMWithInstanceViewResponse = m_CrpClient.VirtualMachines.Get(rgName, vm.Name, "instanceView");
+                    ValidateVMExtensionInstanceView(getVMWithInstanceViewResponse.InstanceView.Extensions.FirstOrDefault());
 
                     // Validate the extension delete API
-                    deleteResponse = m_CrpClient.VirtualMachineExtensions.BeginDeleting(rgName, vm.Name, vmExtension.Name);
-                    Assert.True(deleteResponse.StatusCode == HttpStatusCode.Accepted);
+                    m_CrpClient.VirtualMachineExtensions.Delete(rgName, vm.Name, vmExtension.Name);
                 }
                 finally
                 {
-                    var deleteResourceGroupResponse = m_ResourcesClient.ResourceGroups.BeginDeleting(rgName);
-                    Assert.True(deleteResourceGroupResponse.StatusCode == HttpStatusCode.Accepted);
+                    m_ResourcesClient.ResourceGroups.Delete(rgName);
                 }
             }
         }
@@ -117,7 +110,7 @@ namespace Compute.Tests
             Assert.True(!string.IsNullOrEmpty(vmExtReturned.ProvisioningState));
 
             Assert.True(vmExtExpected.Publisher == vmExtReturned.Publisher);
-            Assert.True(vmExtExpected.ExtensionType == vmExtReturned.ExtensionType);
+            Assert.True(vmExtExpected.VirtualMachineExtensionType == vmExtReturned.VirtualMachineExtensionType);
             Assert.True(vmExtExpected.AutoUpgradeMinorVersion == vmExtReturned.AutoUpgradeMinorVersion);
             Assert.True(vmExtExpected.TypeHandlerVersion == vmExtReturned.TypeHandlerVersion);
             Assert.True(vmExtExpected.Settings == vmExtReturned.Settings);

@@ -21,10 +21,6 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         public virtual void Validate()
         {
-            if (this.Properties != null)
-            {
-                this.Properties.Validate();
-            }
         }
     }
 }

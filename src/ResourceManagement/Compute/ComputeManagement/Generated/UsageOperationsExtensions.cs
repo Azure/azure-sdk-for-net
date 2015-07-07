@@ -6,6 +6,7 @@ namespace Microsoft.Azure.Management.Compute
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Rest;
+    using System.Linq.Expressions;
     using Microsoft.Azure;
     using Models;
 
@@ -39,7 +40,7 @@ namespace Microsoft.Azure.Management.Compute
             /// </param>
             public static async Task<ListUsagesResult> ListAsync( this IUsageOperations operations, string location, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<ListUsagesResult> result = await operations.ListWithOperationResponseAsync(location, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<ListUsagesResult> result = await operations.ListWithHttpMessagesAsync(location, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task DeleteAsync( this ISubnetsOperations operations, string resourceGroupName, string virtualNetworkName, string subnetName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.DeleteWithOperationResponseAsync(resourceGroupName, virtualNetworkName, subnetName, cancellationToken).ConfigureAwait(false);
+                await operations.DeleteWithHttpMessagesAsync(resourceGroupName, virtualNetworkName, subnetName, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -94,7 +94,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task BeginDeleteAsync( this ISubnetsOperations operations, string resourceGroupName, string virtualNetworkName, string subnetName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.BeginDeleteWithOperationResponseAsync(resourceGroupName, virtualNetworkName, subnetName, cancellationToken).ConfigureAwait(false);
+                await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, virtualNetworkName, subnetName, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -137,7 +137,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task<Subnet> GetAsync( this ISubnetsOperations operations, string resourceGroupName, string virtualNetworkName, string subnetName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<Subnet> result = await operations.GetWithOperationResponseAsync(resourceGroupName, virtualNetworkName, subnetName, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<Subnet> result = await operations.GetWithHttpMessagesAsync(resourceGroupName, virtualNetworkName, subnetName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -189,7 +189,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task<Subnet> CreateOrUpdateAsync( this ISubnetsOperations operations, string resourceGroupName, string virtualNetworkName, string subnetName, Subnet subnetParameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<Subnet> result = await operations.CreateOrUpdateWithOperationResponseAsync(resourceGroupName, virtualNetworkName, subnetName, subnetParameters, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<Subnet> result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, virtualNetworkName, subnetName, subnetParameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -241,7 +241,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task<Subnet> BeginCreateOrUpdateAsync( this ISubnetsOperations operations, string resourceGroupName, string virtualNetworkName, string subnetName, Subnet subnetParameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<Subnet> result = await operations.BeginCreateOrUpdateWithOperationResponseAsync(resourceGroupName, virtualNetworkName, subnetName, subnetParameters, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<Subnet> result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, virtualNetworkName, subnetName, subnetParameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -279,7 +279,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task<SubnetListResult> ListAsync( this ISubnetsOperations operations, string resourceGroupName, string virtualNetworkName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<SubnetListResult> result = await operations.ListWithOperationResponseAsync(resourceGroupName, virtualNetworkName, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<SubnetListResult> result = await operations.ListWithHttpMessagesAsync(resourceGroupName, virtualNetworkName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -311,7 +311,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task<SubnetListResult> ListNextAsync( this ISubnetsOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<SubnetListResult> result = await operations.ListNextWithOperationResponseAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<SubnetListResult> result = await operations.ListNextWithHttpMessagesAsync(nextLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

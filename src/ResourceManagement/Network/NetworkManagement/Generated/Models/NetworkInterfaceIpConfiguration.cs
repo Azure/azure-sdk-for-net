@@ -29,39 +29,39 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Gets or sets the privateIPAddress of the Network Interface IP
         /// Configuration
         /// </summary>
-        [JsonProperty(PropertyName = "privateIPAddress")]
+        [JsonProperty(PropertyName = "properties.privateIPAddress")]
         public string PrivateIPAddress { get; set; }
 
         /// <summary>
         /// Gets or sets PrivateIP allocation method (Static/Dynamic).
         /// Possible values for this property include: 'Static', 'Dynamic'
         /// </summary>
-        [JsonProperty(PropertyName = "privateIPAllocationMethod")]
+        [JsonProperty(PropertyName = "properties.privateIPAllocationMethod")]
         public IpAllocationMethod? PrivateIPAllocationMethod { get; set; }
 
         /// <summary>
         /// Gets or sets the reference of the subnet resource
         /// </summary>
-        [JsonProperty(PropertyName = "subnet")]
+        [JsonProperty(PropertyName = "properties.subnet")]
         public SubResource Subnet { get; set; }
 
         /// <summary>
         /// Gets or sets the reference of the PublicIP resource
         /// </summary>
-        [JsonProperty(PropertyName = "publicIPAddress")]
+        [JsonProperty(PropertyName = "properties.publicIPAddress")]
         public SubResource PublicIPAddress { get; set; }
 
         /// <summary>
         /// Gets or sets the reference of LoadBalancerBackendAddressPool
         /// resource
         /// </summary>
-        [JsonProperty(PropertyName = "loadBalancerBackendAddressPools")]
+        [JsonProperty(PropertyName = "properties.loadBalancerBackendAddressPools")]
         public IList<SubResource> LoadBalancerBackendAddressPools { get; set; }
 
         /// <summary>
         /// Gets or sets list of references of LoadBalancerInboundNatRules
         /// </summary>
-        [JsonProperty(PropertyName = "loadBalancerInboundNatRules")]
+        [JsonProperty(PropertyName = "properties.loadBalancerInboundNatRules")]
         public IList<SubResource> LoadBalancerInboundNatRules { get; set; }
 
         /// <summary>

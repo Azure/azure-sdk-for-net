@@ -56,7 +56,7 @@ namespace Compute.Tests
                         var vhdContainer = "https://" + storageAccountName + ".blob.core.windows.net/" + containerName;
                         var vhduri = vhdContainer + string.Format("/{0}.vhd", TestUtilities.GenerateName(TestPrefix));
 
-                        vm.HardwareProfile.VirtualMachineSize = VirtualMachineSizeTypes.StandardA4;
+                        vm.HardwareProfile.VmSize = VirtualMachineSizeTypes.StandardA4;
                         vm.StorageProfile.DataDisks = new List<DataDisk>();
                         foreach (int index in new int[] {1, 2})
                         {
@@ -65,12 +65,12 @@ namespace Compute.Tests
                             var dd = new DataDisk
                             {
                                 Caching = CachingTypes.None,
-                                SourceImage = null,
+                                Image = null,
                                 DiskSizeGB = 10,
                                 CreateOption = DiskCreateOptionTypes.Empty,
                                 Lun = 1 + index,
                                 Name = diskName,
-                                VirtualHardDisk = new VirtualHardDisk
+                                Vhd = new VirtualHardDisk
                                 {
                                     Uri = ddUri
                                 }
@@ -90,7 +90,7 @@ namespace Compute.Tests
                         vm.InstanceView = new VirtualMachineInstanceView
                         {
                             Statuses = testStatusList,
-                            VMAgent = new VirtualMachineAgentInstanceView
+                            VmAgent = new VirtualMachineAgentInstanceView
                             {
                                 Statuses = testStatusList,
                                 ExtensionHandlers = new List<VirtualMachineExtensionHandlerInstanceView>
@@ -102,7 +102,7 @@ namespace Compute.Tests
                                         TypeHandlerVersion = "test"
                                     }
                                 },
-                                VMAgentVersion = "test"
+                                VmAgentVersion = "test"
                             },
                             Disks = new List<DiskInstanceView>
                             {
@@ -124,24 +124,20 @@ namespace Compute.Tests
 
                     var vm1 = CreateVM_NoAsyncTracking(rgName, asName, storageAccountOutput, imgageRef, out inputVM, addDataDiskToVM);
 
-                    var getVMWithInstanceViewResponse = m_CrpClient.VirtualMachines.GetWithInstanceView(rgName, inputVM.Name);
-                    Assert.True(getVMWithInstanceViewResponse.StatusCode == HttpStatusCode.OK);
-                    Assert.True(getVMWithInstanceViewResponse.VirtualMachine != null, "VM in Get");
-                    ValidateVMInstanceView(inputVM, getVMWithInstanceViewResponse.VirtualMachine);
+                    var getVMWithInstanceViewResponse = m_CrpClient.VirtualMachines.Get(rgName, inputVM.Name, "instanceView");
+                    Assert.True(getVMWithInstanceViewResponse != null, "VM in Get");
+                    ValidateVMInstanceView(inputVM, getVMWithInstanceViewResponse);
 
-                    var vm2 = getVMWithInstanceViewResponse.VirtualMachine;
-                    var vmReCreateResponse = m_CrpClient.VirtualMachines.CreateOrUpdate(rgName, getVMWithInstanceViewResponse.VirtualMachine);
-                    Assert.True(vmReCreateResponse.Status != ComputeOperationStatus.Failed);
+                    var vm2 = getVMWithInstanceViewResponse;
+                    var vmReCreateResponse = m_CrpClient.VirtualMachines.CreateOrUpdate(rgName, getVMWithInstanceViewResponse.Name, getVMWithInstanceViewResponse);
 
-                    var lroResponse = m_CrpClient.VirtualMachines.Delete(rgName, inputVM.Name);
-                    Assert.True(lroResponse.Status != OperationStatus.Failed);
+                    m_CrpClient.VirtualMachines.Delete(rgName, inputVM.Name);
 
                     passed = true;
                 }
                 finally
                 {
-                    var deleteResourceGroupResponse = m_ResourcesClient.ResourceGroups.Delete(rgName);
-                    Assert.True(deleteResourceGroupResponse.StatusCode == HttpStatusCode.OK);
+                    m_ResourcesClient.ResourceGroups.Delete(rgName);
                     Assert.True(passed);
                 }
             }

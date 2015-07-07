@@ -377,7 +377,7 @@ namespace Microsoft.Azure.Management.Resources
             // Send request
             AzureOperationResponse response = await BeginDeleteWithOperationResponseAsync(
                 resourceGroupName, cancellationToken);
-            return await this.Client.GetPostOrDeleteOperationResultAsync(response, cancellationToken);
+            return await this.Client.GetPostOrDeleteOperationResultAsync(response, null, cancellationToken);
         }
 
         /// <summary>

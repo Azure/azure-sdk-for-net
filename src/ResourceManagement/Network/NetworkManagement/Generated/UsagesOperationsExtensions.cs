@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task<UsagesListResult> ListAsync( this IUsagesOperations operations, string location, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<UsagesListResult> result = await operations.ListWithOperationResponseAsync(location, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<UsagesListResult> result = await operations.ListWithHttpMessagesAsync(location, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

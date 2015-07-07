@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets or sets a reference to frontend IP Addresses
         /// </summary>
-        [JsonProperty(PropertyName = "frontendIPConfiguration")]
+        [JsonProperty(PropertyName = "properties.frontendIPConfiguration")]
         public SubResource FrontendIPConfiguration { get; set; }
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// NetworkInterface of a VM. Traffic sent to frontendPort of each of
         /// the frontendIPConfigurations is forwarded to the backed IP
         /// </summary>
-        [JsonProperty(PropertyName = "backendIPConfiguration")]
+        [JsonProperty(PropertyName = "properties.backendIPConfiguration")]
         public SubResource BackendIPConfiguration { get; set; }
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Possible values are Udp or Tcp. Possible values for this property
         /// include: 'Udp', 'Tcp'
         /// </summary>
-        [JsonProperty(PropertyName = "protocol")]
+        [JsonProperty(PropertyName = "properties.protocol")]
         public TransportProtocol? Protocol { get; set; }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// each role in the service must be unique. Possible values range
         /// between 1 and 65535, inclusive
         /// </summary>
-        [JsonProperty(PropertyName = "frontendPort")]
+        [JsonProperty(PropertyName = "properties.frontendPort")]
         public int? FrontendPort { get; set; }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// assign an unallocated port that is discoverable using the runtime
         /// API
         /// </summary>
-        [JsonProperty(PropertyName = "backendPort")]
+        [JsonProperty(PropertyName = "properties.backendPort")]
         public int? BackendPort { get; set; }
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// minutes. This emlement is only used when the protocol is set to
         /// Tcp
         /// </summary>
-        [JsonProperty(PropertyName = "idleTimeoutInMinutes")]
+        [JsonProperty(PropertyName = "properties.idleTimeoutInMinutes")]
         public int? IdleTimeoutInMinutes { get; set; }
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// availability Groups in SQL server. This setting can't be changed
         /// after you create the endpoint
         /// </summary>
-        [JsonProperty(PropertyName = "enableFloatingIP")]
+        [JsonProperty(PropertyName = "properties.enableFloatingIP")]
         public bool? EnableFloatingIP { get; set; }
 
         /// <summary>

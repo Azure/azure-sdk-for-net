@@ -11,6 +11,8 @@ namespace Microsoft.Azure.Management.Compute
     using System.Threading.Tasks;
     using Microsoft.Rest;
     using Newtonsoft.Json;
+    using Microsoft.Azure.OData;
+    using System.Linq.Expressions;
     using Microsoft.Azure;
     using Models;
 
@@ -43,26 +45,29 @@ namespace Microsoft.Azure.Management.Compute
         /// </param>    
         /// <param name='version'>
         /// </param>    
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<VirtualMachineExtensionImage>> GetWithOperationResponseAsync(string location, string publisherName, string type, string version, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<VirtualMachineExtensionImage>> GetWithHttpMessagesAsync(string location, string publisherName, string type, string version, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (location == null)
             {
-                throw new ArgumentNullException("location");
+                throw new ValidationException(ValidationRules.CannotBeNull, "location");
             }
             if (publisherName == null)
             {
-                throw new ArgumentNullException("publisherName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "publisherName");
             }
             if (type == null)
             {
-                throw new ArgumentNullException("type");
+                throw new ValidationException(ValidationRules.CannotBeNull, "type");
             }
             if (version == null)
             {
-                throw new ArgumentNullException("version");
+                throw new ValidationException(ValidationRules.CannotBeNull, "version");
             }
             // Tracing
             bool shouldTrace = ServiceClientTracing.IsEnabled;
@@ -103,6 +108,14 @@ namespace Microsoft.Azure.Management.Compute
             httpRequest.Method = new HttpMethod("GET");
             httpRequest.RequestUri = new Uri(url);
             // Set Headers
+            if (customHeaders != null)
+            {
+                foreach(var header in customHeaders)
+                {
+                    httpRequest.Headers.Add(header.Key, header.Value);
+                }
+            }
+
             // Set Credentials
             cancellationToken.ThrowIfCancellationRequested();
             await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
@@ -162,24 +175,32 @@ namespace Microsoft.Azure.Management.Compute
         /// </param>    
         /// <param name='type'>
         /// </param>    
-        /// <param name='parametersFilterExpressionunencoded'>
+        /// <param name='filter'>
+        /// The filter to apply on the operation.
         /// </param>    
+        /// <param name='top'>
+        /// </param>    
+        /// <param name='orderby'>
+        /// </param>    
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<VirtualMachineImageResourceList>> ListVersionsWithOperationResponseAsync(string location, string publisherName, string type, string parametersFilterExpressionunencoded = default(string), CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<VirtualMachineImageResourceList>> ListVersionsWithHttpMessagesAsync(string location, string publisherName, string type, Expression<Func<Resource, bool>> filter = default(Expression<Func<Resource, bool>>), int? top = default(int?), string orderby = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (location == null)
             {
-                throw new ArgumentNullException("location");
+                throw new ValidationException(ValidationRules.CannotBeNull, "location");
             }
             if (publisherName == null)
             {
-                throw new ArgumentNullException("publisherName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "publisherName");
             }
             if (type == null)
             {
-                throw new ArgumentNullException("type");
+                throw new ValidationException(ValidationRules.CannotBeNull, "type");
             }
             // Tracing
             bool shouldTrace = ServiceClientTracing.IsEnabled;
@@ -191,7 +212,9 @@ namespace Microsoft.Azure.Management.Compute
                 tracingParameters.Add("location", location);
                 tracingParameters.Add("publisherName", publisherName);
                 tracingParameters.Add("type", type);
-                tracingParameters.Add("parametersFilterExpressionunencoded", parametersFilterExpressionunencoded);
+                tracingParameters.Add("filter", filter);
+                tracingParameters.Add("top", top);
+                tracingParameters.Add("orderby", orderby);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(invocationId, this, "ListVersions", tracingParameters);
             }
@@ -207,9 +230,17 @@ namespace Microsoft.Azure.Management.Compute
             url = url.Replace("{publisherName}", Uri.EscapeDataString(publisherName));
             url = url.Replace("{type}", Uri.EscapeDataString(type));
             List<string> queryParameters = new List<string>();
-            if (parametersFilterExpressionunencoded != null)
+            if (filter != null)
             {
-                queryParameters.Add(string.Format("{parameters.FilterExpression:unencoded}={0}", parametersFilterExpressionunencoded));
+                queryParameters.Add(string.Format("$filter={0}", FilterString.Generate(filter)));
+            }
+            if (top != null)
+            {
+                queryParameters.Add(string.Format("$top={0}", Uri.EscapeDataString(JsonConvert.SerializeObject(top, this.Client.SerializationSettings).Trim('"'))));
+            }
+            if (orderby != null)
+            {
+                queryParameters.Add(string.Format("$orderby={0}", Uri.EscapeDataString(orderby)));
             }
             queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
             if (queryParameters.Count > 0)
@@ -223,6 +254,14 @@ namespace Microsoft.Azure.Management.Compute
             httpRequest.Method = new HttpMethod("GET");
             httpRequest.RequestUri = new Uri(url);
             // Set Headers
+            if (customHeaders != null)
+            {
+                foreach(var header in customHeaders)
+                {
+                    httpRequest.Headers.Add(header.Key, header.Value);
+                }
+            }
+
             // Set Credentials
             cancellationToken.ThrowIfCancellationRequested();
             await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
@@ -280,18 +319,21 @@ namespace Microsoft.Azure.Management.Compute
         /// </param>    
         /// <param name='publisherName'>
         /// </param>    
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<VirtualMachineImageResourceList>> ListTypesWithOperationResponseAsync(string location, string publisherName, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<VirtualMachineImageResourceList>> ListTypesWithHttpMessagesAsync(string location, string publisherName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (location == null)
             {
-                throw new ArgumentNullException("location");
+                throw new ValidationException(ValidationRules.CannotBeNull, "location");
             }
             if (publisherName == null)
             {
-                throw new ArgumentNullException("publisherName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "publisherName");
             }
             // Tracing
             bool shouldTrace = ServiceClientTracing.IsEnabled;
@@ -328,6 +370,14 @@ namespace Microsoft.Azure.Management.Compute
             httpRequest.Method = new HttpMethod("GET");
             httpRequest.RequestUri = new Uri(url);
             // Set Headers
+            if (customHeaders != null)
+            {
+                foreach(var header in customHeaders)
+                {
+                    httpRequest.Headers.Add(header.Key, header.Value);
+                }
+            }
+
             // Set Credentials
             cancellationToken.ThrowIfCancellationRequested();
             await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);

@@ -37,13 +37,7 @@ namespace Compute.Tests
         {
             ImageReference imageRef = FindVMImage(vmmPublisherName, vmmOfferName, vmmSku);
             // Query the image directly in order to get all the properties, including PurchasePlan
-            var parameters = new VirtualMachineImageGetParameters
-            {
-                Location = m_location,
-                PublisherName = vmmPublisherName, Offer = vmmOfferName, Skus = vmmSku,
-                Version = imageRef.Version
-            };
-            return m_CrpClient.VirtualMachineImages.Get(parameters).VirtualMachineImage;
+            return m_CrpClient.VirtualMachineImages.Get(m_location, vmmPublisherName, vmmOfferName, vmmSku, imageRef.Version);
         }
 
         [Fact]
@@ -80,10 +74,10 @@ namespace Compute.Tests
 
                         vm.Plan = new Plan
                         {
-                            Name = img.PurchasePlan.Name,
-                            Product = img.PurchasePlan.Product,
+                            Name = img.Plan.Name,
+                            Product = img.Plan.Product,
                             PromotionCode = null,
-                            Publisher = img.PurchasePlan.Publisher
+                            Publisher = img.Plan.Publisher
                         }; 
                     };
 
@@ -92,16 +86,13 @@ namespace Compute.Tests
                     // Validate the VMM Plan field
                     ValidateMarketplaceVMPlanField(vm1, img);
 
-                    var lroResponse = m_CrpClient.VirtualMachines.Delete(rgName, inputVM.Name);
-                    Assert.Equal(OperationStatus.Succeeded, lroResponse.Status);
+                    m_CrpClient.VirtualMachines.Delete(rgName, inputVM.Name);
                 }
                 finally
                 {
                     // Don't wait for RG deletion since it's too slow, and there is nothing interesting expected with 
                     // the resources from this test.
-                    var deleteResourceGroupResponse = m_ResourcesClient.ResourceGroups.BeginDeleting(rgName);
-                    Assert.True(deleteResourceGroupResponse.StatusCode == HttpStatusCode.Accepted ||
-                        deleteResourceGroupResponse.StatusCode == HttpStatusCode.NotFound);
+                    m_ResourcesClient.ResourceGroups.Delete(rgName);
                 }
             }
         }
@@ -109,9 +100,9 @@ namespace Compute.Tests
         private void ValidateMarketplaceVMPlanField(VirtualMachine vm, VirtualMachineImage img)
         {
             Assert.NotNull(vm.Plan);
-            Assert.Equal(img.PurchasePlan.Publisher, vm.Plan.Publisher);
-            Assert.Equal(img.PurchasePlan.Product, vm.Plan.Product);
-            Assert.Equal(img.PurchasePlan.Name, vm.Plan.Name);
+            Assert.Equal(img.Plan.Publisher, vm.Plan.Publisher);
+            Assert.Equal(img.Plan.Product, vm.Plan.Product);
+            Assert.Equal(img.Plan.Name, vm.Plan.Name);
         }
     }
 }

@@ -14,21 +14,21 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets the operating system this extension supports.
         /// </summary>
-        [JsonProperty(PropertyName = "operatingSystem")]
+        [JsonProperty(PropertyName = "properties.operatingSystem")]
         public string OperatingSystem { get; set; }
 
         /// <summary>
         /// Gets or sets the type of role (IaaS or PaaS) this extension
         /// supports.
         /// </summary>
-        [JsonProperty(PropertyName = "computeRole")]
+        [JsonProperty(PropertyName = "properties.computeRole")]
         public string ComputeRole { get; set; }
 
         /// <summary>
         /// Gets or sets the schema defined by publisher, where extension
         /// consumers should provide settings in a matching schema.
         /// </summary>
-        [JsonProperty(PropertyName = "handlerSchema")]
+        [JsonProperty(PropertyName = "properties.handlerSchema")]
         public string HandlerSchema { get; set; }
 
         /// <summary>
@@ -38,21 +38,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// explicitly indicate the extension is only enabled for CRP VMs but
         /// not VMSS.
         /// </summary>
-        [JsonProperty(PropertyName = "vmScaleSetEnabled")]
+        [JsonProperty(PropertyName = "properties.vmScaleSetEnabled")]
         public bool? VmScaleSetEnabled { get; set; }
 
         /// <summary>
         /// Gets or sets whether the handler can support multiple extensions.
         /// </summary>
-        [JsonProperty(PropertyName = "supportsMultipleExtensions")]
+        [JsonProperty(PropertyName = "properties.supportsMultipleExtensions")]
         public bool? SupportsMultipleExtensions { get; set; }
 
-        /// <summary>
-        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
-        /// </summary>
-        public override void Validate()
-        {
-            base.Validate();
-        }
     }
 }

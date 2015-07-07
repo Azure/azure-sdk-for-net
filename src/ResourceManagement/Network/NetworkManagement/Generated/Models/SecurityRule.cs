@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets or sets a description for this rule. Restricted to 140 chars.
         /// </summary>
-        [JsonProperty(PropertyName = "description")]
+        [JsonProperty(PropertyName = "properties.description")]
         public string Description { get; set; }
 
         /// <summary>
@@ -36,21 +36,21 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Udp or All(*). Possible values for this property include: 'Tcp',
         /// 'Udp', '*'
         /// </summary>
-        [JsonProperty(PropertyName = "protocol")]
+        [JsonProperty(PropertyName = "properties.protocol")]
         public SecurityRuleProtocol? Protocol { get; set; }
 
         /// <summary>
         /// Gets or sets Source Port or Range. Integer or range between 0 and
         /// 65535. Asterix â€œ*â€ can also be used to match all ports.
         /// </summary>
-        [JsonProperty(PropertyName = "sourcePortRange")]
+        [JsonProperty(PropertyName = "properties.sourcePortRange")]
         public string SourcePortRange { get; set; }
 
         /// <summary>
         /// Gets or sets Destination Port or Range. Integer or range between 0
         /// and 65535. Asterix â€œ*â€ can also be used to match all ports.
         /// </summary>
-        [JsonProperty(PropertyName = "destinationPortRange")]
+        [JsonProperty(PropertyName = "properties.destinationPortRange")]
         public string DestinationPortRange { get; set; }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// â€˜Internetâ€™ can also be used. If this is an ingress rule,
         /// specifies where network traffic originates from.
         /// </summary>
-        [JsonProperty(PropertyName = "sourceAddressPrefix")]
+        [JsonProperty(PropertyName = "properties.sourceAddressPrefix")]
         public string SourceAddressPrefix { get; set; }
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// tags such as â€˜VirtualNetworkâ€™, â€˜AzureLoadBalancerâ€™ and
         /// â€˜Internetâ€™ can also be used.
         /// </summary>
-        [JsonProperty(PropertyName = "destinationAddressPrefix")]
+        [JsonProperty(PropertyName = "properties.destinationAddressPrefix")]
         public string DestinationAddressPrefix { get; set; }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// are â€œAllowâ€ and â€œDenyâ€. Possible values for this property
         /// include: 'Allow', 'Deny'
         /// </summary>
-        [JsonProperty(PropertyName = "access")]
+        [JsonProperty(PropertyName = "properties.access")]
         public SecurityRuleAccess? Access { get; set; }
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// the collection. The lower the priority number, the higher the
         /// priority of the rule.
         /// </summary>
-        [JsonProperty(PropertyName = "priority")]
+        [JsonProperty(PropertyName = "properties.priority")]
         public int? Priority { get; set; }
 
         /// <summary>
@@ -95,15 +95,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// outcoming traffic. Possible values for this property include:
         /// 'Inbound', 'Outbound'
         /// </summary>
-        [JsonProperty(PropertyName = "direction")]
+        [JsonProperty(PropertyName = "properties.direction")]
         public SecurityRuleDirection? Direction { get; set; }
 
-        /// <summary>
-        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
-        /// </summary>
-        public override void Validate()
-        {
-            base.Validate();
-        }
     }
 }

@@ -14,15 +14,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets whether this is a primary NIC on a virtual machine
         /// </summary>
-        [JsonProperty(PropertyName = "primary")]
+        [JsonProperty(PropertyName = "properties.primary")]
         public bool? Primary { get; set; }
 
-        /// <summary>
-        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
-        /// </summary>
-        public override void Validate()
-        {
-            base.Validate();
-        }
     }
 }
