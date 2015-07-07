@@ -47,6 +47,11 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         public Policy Policy { get; set; }
 
         /// <summary>
+        /// Optional. If set to true, the table is an external data set.
+        /// </summary>
+        public bool? External { get; set; }
+
+        /// <summary>
         /// Table is published to Enterprise Data Directory.
         /// </summary>
         public bool? Published { get; set; }
@@ -90,7 +95,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
             this.Availability = availability;
             this.LinkedServiceName = linkedServiceName;
         }
-
+        
         internal TableProperties(
             TableTypeProperties typeProperties,
             Availability availability,
@@ -117,6 +122,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
             Availability availability,
             string linkedServiceName,
             DateTime? createTime,
+            bool? external,
             string provisioningState,
             string errorMessage)
             : this(typeProperties, availability, linkedServiceName)
@@ -124,6 +130,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
             this.CreateTime = createTime;
             this.ProvisioningState = provisioningState;
             this.ErrorMessage = errorMessage;
+            this.External = external;
         }
     }
 }

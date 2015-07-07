@@ -76,6 +76,17 @@ namespace Microsoft.Azure.Management.DataFactories.Core.Models
             set { this._errorMessage = value; }
         }
         
+        private bool? _external;
+        
+        /// <summary>
+        /// Optional. If set to true, the table is an external data set.
+        /// </summary>
+        public bool? External
+        {
+            get { return this._external; }
+            set { this._external = value; }
+        }
+        
         private string _linkedServiceName;
         
         /// <summary>

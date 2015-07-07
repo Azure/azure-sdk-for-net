@@ -47,7 +47,8 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
                                      LinkedServiceName = table.Properties.LinkedServiceName, 
                                      Policy = table.Properties.Policy, 
                                      Published = table.Properties.Published, 
-                                     Structure = table.Properties.Structure
+                                     Structure = table.Properties.Structure,
+                                     External = table.Properties.External
                                  }
             };
 
@@ -85,7 +86,8 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
                          Policy = internalTable.Properties.Policy,
                          ProvisioningState = internalTable.Properties.ProvisioningState,
                          Published = internalTable.Properties.Published,
-                         Structure = internalTable.Properties.Structure
+                         Structure = internalTable.Properties.Structure,
+                         External = internalTable.Properties.External
                      };
 
             return new Table() { Name = internalTable.Name, Properties = properties };

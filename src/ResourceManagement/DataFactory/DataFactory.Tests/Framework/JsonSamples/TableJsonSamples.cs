@@ -216,7 +216,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
             {
                 minimumSizeMB: 10.0,
             },
-            waitOnExternal:
+            externalData:
             {
                 dataDelay: ""00:10:00"",
                 retryInterval: ""00:01:00"",
@@ -247,14 +247,12 @@ namespace DataFactory.Tests.Framework.JsonSamples
             anchorDateTime: ""2014-02-27T12:00:00"",
             frequency: ""Hour""
         },
+        external: true,
         policy:
         {
             validation:
             {
                 minimumSizeMB: 10.0,
-            },
-            waitOnExternal:
-            {
             }
         }
     }
