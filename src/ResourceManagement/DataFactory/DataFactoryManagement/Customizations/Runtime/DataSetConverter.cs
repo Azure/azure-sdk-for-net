@@ -22,6 +22,9 @@ namespace Microsoft.Azure.Management.DataFactories.Runtime
 {
     internal sealed class DataSetConverter : JsonConverter
     {
+        private const string TableToken = "table";
+        private const string LinkedServiceToken = "linkedService";
+
         private TableConverter tableConverter;
         private LinkedServiceConverter linkedServiceConverter;
 
@@ -44,13 +47,13 @@ namespace Microsoft.Azure.Management.DataFactories.Runtime
             JToken tableJToken;
             JToken linkedServiceJToken;
 
-            if (jObject.TryGetValue("table", StringComparison.OrdinalIgnoreCase, out tableJToken))
+            if (jObject.TryGetValue(TableToken, StringComparison.OrdinalIgnoreCase, out tableJToken))
             {
                 Core.Models.Table internalTable = Core.DataFactoryManagementClient.DeserializeInternalTableJson(tableJToken.ToString());
                 dataSet.Table = tableConverter.ToWrapperType(internalTable);
             }
 
-            if (jObject.TryGetValue("linkedService", StringComparison.OrdinalIgnoreCase, out linkedServiceJToken))
+            if (jObject.TryGetValue(LinkedServiceToken, StringComparison.OrdinalIgnoreCase, out linkedServiceJToken))
             {
                 Core.Models.LinkedService internalLinkedService = Core.DataFactoryManagementClient.DeserializeInternalLinkedServiceJson(linkedServiceJToken.ToString());
                 dataSet.LinkedService = linkedServiceConverter.ToWrapperType(internalLinkedService);

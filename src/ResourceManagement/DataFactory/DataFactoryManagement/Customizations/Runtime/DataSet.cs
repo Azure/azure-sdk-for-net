@@ -19,11 +19,19 @@ using Newtonsoft.Json;
 namespace Microsoft.Azure.Management.DataFactories.Runtime
 {
     /// <summary>
-    /// Represents a set of resolved <see cref="Microsoft.Azure.Management.DataFactories.Models.Table"/> and <see cref="Microsoft.Azure.Management.DataFactories.Models.LinkedService"/> values.
+    /// Represents a set of resolved <see cref="Microsoft.Azure.Management.DataFactories.Models.Table"/> and 
+    /// <see cref="Microsoft.Azure.Management.DataFactories.Models.LinkedService"/> values.
     /// </summary>
     [JsonConverter(typeof(DataSetConverter))]
     public class DataSet
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Microsoft.Azure.Management.DataFactories.Runtime.DataSet"/> class.
+        /// </summary>
+        public DataSet()
+        {
+        }
+
         /// <summary>
         /// The <see cref="Microsoft.Azure.Management.DataFactories.Models.Table"/> value.
         /// </summary>
