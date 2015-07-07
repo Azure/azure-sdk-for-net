@@ -688,11 +688,6 @@ namespace DataFactory.Tests.Framework.JsonSamples
                         writeBatchSize: 1000000,
                         writeBatchTimeout: ""01:00:00"",
                         copyBehavior: ""PreserveHierarchy""
-                    },
-                    translator:
-                    {
-                        type: ""DataInsightTranslator"",
-                        bufferTableFormat: ""Test""
                     }
                 },
                 inputs: 
