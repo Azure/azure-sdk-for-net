@@ -22,6 +22,8 @@ using Xunit;
 
 namespace Microsoft.Azure.Management.TrafficManager.Testing.ScenarioTests
 {
+    using System;
+
     public class ProfileScenarioTests
     {
         public ProfileScenarioTests()
@@ -32,12 +34,19 @@ namespace Microsoft.Azure.Management.TrafficManager.Testing.ScenarioTests
                 context.Start();
                 TrafficManagerManagementClient trafficManagerClient = TrafficManagerHelper.GetTrafficManagerClient();
 
-                ProfileListResponse listResponse = trafficManagerClient.Profiles.ListAll();
-
-                foreach (Profile profile in listResponse.Profiles)
+                try
                 {
-                    string resourceGroup = TrafficManagerHelper.ExtractResourceGroupFromId(profile.Id);
-                    trafficManagerClient.Profiles.Delete(resourceGroup, profile.Name);
+                    ProfileListResponse listResponse = trafficManagerClient.Profiles.ListAll();
+
+                    foreach (Profile profile in listResponse.Profiles)
+                    {
+                        string resourceGroup = TrafficManagerHelper.ExtractResourceGroupFromId(profile.Id);
+                        trafficManagerClient.Profiles.Delete(resourceGroup, profile.Name);
+                    }
+                }
+                catch (Exception)
+                {
+                    // TODO: (alguerra) Remove after we fix bug on list operation
                 }
             }
         }
