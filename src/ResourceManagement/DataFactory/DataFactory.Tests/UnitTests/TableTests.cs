@@ -69,7 +69,7 @@ namespace DataFactory.Tests.UnitTests
     name: ""Test-BYOC-HDInsight-Table"",
     properties:
     {
-        type: ""AzureSqlTableLocation"",
+        type: ""AzureSqlTable"",
         typeProperties: { }
     }
 }";
@@ -86,7 +86,7 @@ namespace DataFactory.Tests.UnitTests
         {
             IEnumerable<JsonSampleInfo> samples =
                 JsonSampleCommon.GetJsonSamplesFromType<TableJsonSamples>()
-                    .Where(s => s.Version != null && s.Version.Equals("ExtraProperties"));
+                    .Where(s => s.Version != null && s.Version.Equals(JsonSampleType.ExtraProperties));
 
             this.TestTableJsonSamples(samples);
         }
@@ -113,13 +113,12 @@ namespace DataFactory.Tests.UnitTests
             // If a table type has not been locally registered, 
             // typeProperties should be deserialized to a GenericTableInstance
             Table table = this.ConvertToWrapper(unregisteredTypeJson);
-            Assert.IsType<GenericTable>(table.Properties.TypeProperties);
+            Assert.IsType<GenericDataset>(table.Properties.TypeProperties);
         }
 
         private void TestTableJsonSamples(IEnumerable<JsonSampleInfo> samples)
         {
-            Action<JsonSampleInfo> testSample = sampleInfo => this.TestTableJson(sampleInfo.Json);
-            JsonSampleCommon.TestJsonSamples(samples, testSample);
+            JsonSampleCommon.TestJsonSamples(samples, this.TestTableJson);
         }
 
         private void TestTableValidateSamples(IEnumerable<JsonSampleInfo> samples)
@@ -128,13 +127,20 @@ namespace DataFactory.Tests.UnitTests
             JsonSampleCommon.TestJsonSamples(samples, testSample);
         }
 
-        private void TestTableJson(string json)
+        private void TestTableJson(JsonSampleInfo info)
         {
+            string json = info.Json;
             Table table = this.ConvertToWrapper(json);
             CoreModel.Table actual = this.Operations.Converter.ToCoreType(table);
             string actualJson = Core.DataFactoryManagementClient.SerializeInternalTableToJson(actual);
-
+            
             JsonComparer.ValidateAreSame(json, actualJson, ignoreDefaultValues: true);
+
+            if (info.Version == null
+                || !info.Version.Equals(JsonSampleType.Unregistered, StringComparison.OrdinalIgnoreCase))
+            {
+                Assert.IsNotType<GenericDataset>(table.Properties.TypeProperties);
+            }
         }
 
         private void TestTableValidation(string json)

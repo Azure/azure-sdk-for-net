@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
                 internalLinkedService.Properties.Type,
                 internalLinkedService.Properties.TypeProperties, out type);
 
-            string typeName = type == typeof(GenericLinkedService) ? internalLinkedService.Properties.Type : type.Name;
+            string typeName = GetTypeName(type, internalLinkedService.Properties.Type);
             LinkedServiceProperties properties = new LinkedServiceProperties(typeProperties, typeName)
                          {
                              Description = internalLinkedService.Properties.Description,

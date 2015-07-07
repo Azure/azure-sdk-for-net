@@ -27,7 +27,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
     name: ""Test-BYOC-HDInsight-linkedService"",
     properties:
     {
-        type: ""HDInsightBYOCLinkedService"",
+        type: ""HDInsight"",
         hubName: ""testHub"",
         typeProperties:
         {
@@ -46,7 +46,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
     name: ""Test-on-demand-HDInsight-linkedService"",
     properties:
     {
-        type: ""HDInsightOnDemandLinkedService"",
+        type: ""HDInsightOnDemand"",
         hubName: ""hubName"",
         typeProperties:
         {
@@ -65,7 +65,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
     name: ""Test-Windows-Azure-storage-account-linkedService"",
     properties:
     {
-        type: ""AzureStorageLinkedService"",
+        type: ""AzureStorage"",
         hubName: ""testHub"",
         typeProperties:
         {
@@ -80,7 +80,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
     name: ""Test-HDIS-LinkedService"",
     properties:
     {
-        type: ""OnPremisesSqlLinkedService"",
+        type: ""OnPremisesSqlServer"",
         hubName: ""testHub"",
         typeProperties:
         {
@@ -98,7 +98,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
     name: ""Test-Windows-Azure-SQL-LinkedService"",
     properties:
     {
-        type: ""AzureSqlLinkedService"",
+        type: ""AzureSqlDatabase"",
         hubName: ""testHub"",
         typeProperties:
         {
@@ -113,7 +113,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
     name: ""Test-ML-LinkedService"",
     properties:
     {
-        type: ""AzureMLLinkedService"",
+        type: ""AzureML"",
         hubName: ""testHub"",
         typeProperties:
         {
@@ -129,7 +129,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
     name: ""Test-BYOC-HDInsight-linkedService"",
     properties:
     {
-        type: ""HDInsightBYOCLinkedService"",
+        type: ""HDInsight"",
         typeProperties:
         {
             clusterUri: ""https://MyCluster.azurehdinsight.net/"",
@@ -167,7 +167,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
     name: ""Test-BYOC-HDInsight-linkedService"",
     properties:
     {
-        type: ""HDInsightBYOCLinkedService"",
+        type: ""HDInsight"",
         hubName: ""testHub"",
         typeProperties: 
         {
@@ -193,7 +193,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
     name: ""Test-AzureBatch-Pool-linkedService"",
     properties:
     {
-        type: ""AzureBatchLinkedService"",
+        type: ""AzureBatch"",
         hubName: ""hubName"",
         typeProperties: {
             accountName: ""MyAzureBatchAccount"",
@@ -210,7 +210,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
     name: ""LinkedService-OnPremisesSQLDB"",
     properties:
     {
-        type: ""OnPremisesSqlLinkedService"",
+        type: ""OnPremisesSqlServer"",
         typeProperties: {
             connectionString: ""MyConnectionString"",
             gatewayName: ""CherryAgent-01"",
@@ -226,7 +226,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
     name: ""LinkedService-OnPremisesOracleDB"",
     properties:
     {
-        type: ""OnPremisesOracleLinkedService"",
+        type: ""OnPremisesOracle"",
         typeProperties: {
             connectionString: ""MyConnectionString"",
             gatewayName: ""CherryAgent-01"",
@@ -242,7 +242,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
     name: ""LinkedService-OnPremisesFileSystem"",
     properties:
     {
-        type: ""OnPremisesFileSystemLinkedService"",
+        type: ""OnPremisesFileServer"",
         typeProperties: {
             host: ""Myhost"",
             gatewayName: ""CherryAgent-01"",
@@ -259,7 +259,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
     name: ""LinkedService-DocDb"",
     properties:
     {
-        type: ""DocumentDbLinkedService"",
+        type: ""DocumentDb"",
         typeProperties: {
             connectionString: ""MyConnectionString""
         }

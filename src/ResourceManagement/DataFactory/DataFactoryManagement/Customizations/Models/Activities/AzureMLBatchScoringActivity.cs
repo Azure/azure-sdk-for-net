@@ -20,6 +20,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     /// <summary>
     /// AzureML Web Service batch scoring activity.
     /// </summary>
+    [AdfTypeName("AzureMLBatchScoring")]
     public class AzureMLBatchScoringActivity : ActivityTypeProperties
     {
         /// <summary>

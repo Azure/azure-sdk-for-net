@@ -20,6 +20,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     /// <summary>
     /// Pig activity which runs on HDInsight.
     /// </summary>
+    [AdfTypeName("HDInsightPig")]
     public class HDInsightPigActivity : HDInsightActivityBase
     {
         /// <summary>

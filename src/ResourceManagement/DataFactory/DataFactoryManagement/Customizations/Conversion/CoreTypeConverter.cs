@@ -90,6 +90,13 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
             return typeProperties;
         }
 
+        protected static string GetTypeName(Type type, string actualTypeName)
+        {
+            return type == typeof(TGenericTypeProperties)
+                       ? actualTypeName
+                       : DataFactoryUtilities.GetResourceTypeName(type);
+        }
+
         protected virtual void ValidateTypeProperties(TExtensibleTypeProperties properties, Type type)
         {
             Ensure.IsNotNullNoStackTrace(properties, "properties");

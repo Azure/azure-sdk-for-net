@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     /// <summary>
     /// Linked Service for Teradata data source.
     /// </summary>
+    [AdfTypeName("OnPremisesTeradata")]
     public class OnPremisesTeradataLinkedService : LinkedServiceTypeProperties
     {
         /// <summary>

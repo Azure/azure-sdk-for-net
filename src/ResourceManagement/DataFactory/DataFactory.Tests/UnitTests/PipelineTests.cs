@@ -73,7 +73,7 @@ namespace DataFactory.Tests.UnitTests
             {
                 name: ""TestActivity"",
                 description: ""Test activity description"", 
-                type: ""CopyActivity"",
+                type: ""Copy"",
                 typeProperties: { },
                 linkedServiceName: ""MyLinkedServiceName""
             }
@@ -165,8 +165,7 @@ namespace DataFactory.Tests.UnitTests
 
         private void TestPipelineJsonSamples(IEnumerable<JsonSampleInfo> samples)
         {
-            Action<JsonSampleInfo> testSample = sampleInfo => this.TestPipelineJson(sampleInfo.Json);
-            JsonSampleCommon.TestJsonSamples(samples, testSample);
+            JsonSampleCommon.TestJsonSamples(samples, this.TestPipelineJson);
         }
 
         private void TestPipelineValidateSamples(IEnumerable<JsonSampleInfo> samples)
@@ -175,8 +174,9 @@ namespace DataFactory.Tests.UnitTests
             JsonSampleCommon.TestJsonSamples(samples, testSample);
         }
 
-        private void TestPipelineJson(string json)
+        private void TestPipelineJson(JsonSampleInfo sampleInfo)
         {
+            string json = sampleInfo.Json;
             Pipeline pipeline = this.ConvertToWrapper(json);
             CoreModel.Pipeline actual = this.Operations.Converter.ToCoreType(pipeline);
 
@@ -184,6 +184,14 @@ namespace DataFactory.Tests.UnitTests
 
             JsonComparer.ValidateAreSame(json, actualJson, ignoreDefaultValues: true);
             Assert.DoesNotContain("ServiceExtraProperties", actualJson);
+
+            if (sampleInfo.Version == null)
+            {
+                foreach (Activity activity in pipeline.Properties.Activities)
+                {
+                    Assert.IsNotType<GenericActivity>(activity.TypeProperties);
+                }
+            }
         }
 
         private void TestPipelineValidation(string json)

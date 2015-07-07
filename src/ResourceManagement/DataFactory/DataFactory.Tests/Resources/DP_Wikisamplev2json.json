@@ -16,7 +16,7 @@
           }
         ],
         "linkedServiceName": "HDILinkedService",
-        "type": "HDInsightHiveActivity",
+        "type": "HDInsightHive",
         "policy": {
           "concurrency": 1,
           "executionPriorityOrder": "NewestFirst",
@@ -40,7 +40,7 @@
           }
         ],
         "linkedServiceName": "HDILinkedService",
-        "type": "CopyActivity",
+        "type": "Copy",
         "policy": {
           "concurrency": 1,
           "executionPriorityOrder": "NewestFirst",

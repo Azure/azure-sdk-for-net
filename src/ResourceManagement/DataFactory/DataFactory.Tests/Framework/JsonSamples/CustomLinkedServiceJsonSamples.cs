@@ -43,7 +43,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
     name: ""My-Linked-Service"",
     properties:
     {
-        type: ""CustomLinkedService"",
+        type: ""CustomDataSource"",
         typeProperties:
         {
             type: ""MyCustomLinkedServiceType"",
@@ -63,7 +63,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
     name: ""My-Linked-Service"",
     properties:
     {
-        type: ""CustomLinkedService"",
+        type: ""CustomDataSource"",
         typeProperties:
         {
             clusterUri: ""https://MyCluster.azurehdinsight.net/"",

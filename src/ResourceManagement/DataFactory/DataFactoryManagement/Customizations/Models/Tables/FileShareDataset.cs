@@ -18,22 +18,18 @@ using System.Collections.Generic;
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
-    /// The Azure blob storage.
+    /// An on-premises file system.
     /// </summary>
-    public class AzureBlobLocation : TableTypeProperties
+    [AdfTypeName("FileShare")]
+    public class FileShareDataset : TableTypeProperties
     {
         /// <summary>
-        /// The path of the Azure blob storage.
+        /// The name of the file folder.
         /// </summary>
         public string FolderPath { get; set; }
 
         /// <summary>
-        /// The root of blob path.
-        /// </summary>
-        public string TableRootLocation { get; set; }
-
-        /// <summary>
-        /// The name of the Azure blob.
+        /// The name of the file.
         /// </summary>
         public string FileName { get; set; }
 
@@ -43,12 +39,17 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         public IList<Partition> PartitionedBy { get; set; }
 
         /// <summary>
-        /// The format of the Azure blob storage.
+        /// The format of the file.
         /// </summary>
         public StorageFormat Format { get; set; }
 
         /// <summary>
-        /// The data compression method used for the blob storage.
+        /// Files sets filter by wildcard.
+        /// </summary>
+        public string FileFilter { get; set; }
+
+        /// <summary>
+        /// The data compression method used on files.
         /// </summary>
         public Compression Compression { get; set; }
     }

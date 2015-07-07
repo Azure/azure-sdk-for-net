@@ -160,7 +160,7 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
                 internalActivity.TypeProperties, 
                 out type);
 
-            string typeName = type == typeof(GenericActivity) ? internalActivity.Type : type.Name;
+            string typeName = GetTypeName(type, internalActivity.Type);
             return new Activity(typeProperties, typeName)
                        {
                            Name = internalActivity.Name,

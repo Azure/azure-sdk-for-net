@@ -19,7 +19,7 @@
       "frequency": "Hour",
       "interval": 1
     },
-    "type": "AzureBlobLocation",
+    "type": "AzureBlob",
     "linkedServiceName": "LinkedService-CuratedWikiData",
     "typeProperties": {
       "folderPath": "wikidatagateway/wikisampledataout/runtime={Slice}",

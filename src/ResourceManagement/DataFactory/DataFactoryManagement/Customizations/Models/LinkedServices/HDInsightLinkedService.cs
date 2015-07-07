@@ -18,7 +18,8 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     /// <summary>
     /// The properties for the HDInsight linkedService.
     /// </summary>
-    public class HDInsightBYOCLinkedService : LinkedServiceTypeProperties
+    [AdfTypeName("HDInsight")]
+    public class HDInsightLinkedService : LinkedServiceTypeProperties
     {
         /// <summary>
         /// Required. HDInsight cluster URI.
@@ -56,7 +57,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// <summary>
         /// Initializes a new instance of the HDInsightBYOCLinkedService class.
         /// </summary>
-        public HDInsightBYOCLinkedService()
+        public HDInsightLinkedService()
         {
         }
 
@@ -64,7 +65,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// Initializes a new instance of the HDInsightBYOCLinkedService class
         /// with required arguments.
         /// </summary>
-        public HDInsightBYOCLinkedService(string clusterUri, string userName, string password)
+        public HDInsightLinkedService(string clusterUri, string userName, string password)
             : this()
         {
             Ensure.IsNotNullOrEmpty(clusterUri, "clusterUri");

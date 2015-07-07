@@ -16,25 +16,14 @@
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
-    /// The Azure table storage.
+    /// Document Database Collection location.
     /// </summary>
-    public class AzureTableLocation : TableTypeProperties
+    [AdfTypeName("DocumentDbCollection")]
+    public class DocumentDbCollectionDataset : TableTypeProperties
     {
         /// <summary>
-        /// The table name of the Azure table storage.
+        /// Document Database collection name.
         /// </summary>
-        [AdfRequired]
-        public string TableName { get; set; }
-
-        public AzureTableLocation()
-        {
-        }
-
-        public AzureTableLocation(string tableName)
-            : this()
-        {
-            Ensure.IsNotNullOrEmpty(tableName, "tableName");
-            this.TableName = tableName;
-        }
+        public string CollectionName { get; set; }
     }
 }
