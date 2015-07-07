@@ -32,12 +32,12 @@ namespace Microsoft.Azure.Management.Redis.Models
     /// </summary>
     public partial class RedisProperties
     {
-        private bool _enableNonSslPort;
+        private bool? _enableNonSslPort;
         
         /// <summary>
-        /// Required. Non-ssl redis server port (6379) is enabled or not.
+        /// Optional. Non-ssl redis server port (6379) is enabled or not.
         /// </summary>
-        public bool EnableNonSslPort
+        public bool? EnableNonSslPort
         {
             get { return this._enableNonSslPort; }
             set { this._enableNonSslPort = value; }
@@ -90,7 +90,7 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// Initializes a new instance of the RedisProperties class with
         /// required arguments.
         /// </summary>
-        public RedisProperties(string redisVersion, Sku sku, bool enableNonSslPort)
+        public RedisProperties(string redisVersion, Sku sku)
             : this()
         {
             if (redisVersion == null)
@@ -103,7 +103,6 @@ namespace Microsoft.Azure.Management.Redis.Models
             }
             this.RedisVersion = redisVersion;
             this.Sku = sku;
-            this.EnableNonSslPort = enableNonSslPort;
         }
     }
 }

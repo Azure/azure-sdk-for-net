@@ -157,6 +157,16 @@ namespace Microsoft.Azure.Management.Sql
         }
         
         /// <summary>
+        /// Represents all the operations for managing recommended indexes on
+        /// Azure SQL Databases. Contains operations to retrieve recommended
+        /// index and update state.
+        /// </summary>
+        IRecommendedIndexOperations RecommendedIndexes
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Represents all the operations for managing Azure SQL Database
         /// secure connection.  Contains operations to: Create, Retrieve and
         /// Update secure connection policy .

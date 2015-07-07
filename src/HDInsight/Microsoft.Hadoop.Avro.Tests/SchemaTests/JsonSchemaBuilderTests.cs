@@ -634,6 +634,30 @@ namespace Microsoft.Hadoop.Avro.Tests
             Assert.AreEqual(schema1.ToString(), schema2.ToString());
         }
 
+        // Test for https://github.com/Azure/azure-sdk-for-net/issues/1206
+        [TestMethod]
+        [TestCategory("CheckIn")]
+        public void JsonSchemaBuilder_FixedTypeReferences()
+        {
+            var guidSchemaJson = "{ \"type\": \"fixed\", \"name\": \"System.Guid\", \"size\": 16 }";
+
+            var schemaWithFixedType = @"{
+                ""type"":""record"",
+                ""name"":""Config"",
+                ""fields"":
+                [
+                    {
+                        ""name"":""ID1"",
+                        ""type"": " + guidSchemaJson + @"
+                    },
+                    {
+                        ""name"":""ID2"",
+                        ""type"":""System.Guid""
+                    }
+                ]}";
+            var schema = this.builder.BuildSchema(schemaWithFixedType);
+        }
+
         [TestInitialize]
         public void TestSetup()
         {

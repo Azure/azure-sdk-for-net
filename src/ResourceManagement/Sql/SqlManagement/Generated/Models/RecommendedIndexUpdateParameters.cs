@@ -21,48 +21,46 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure.Management.Sql.Models;
 
-namespace Microsoft.WindowsAzure.Management.Network.Models
+namespace Microsoft.Azure.Management.Sql.Models
 {
     /// <summary>
-    /// Parameters supplied to the Add Network Security Group to subnet
-    /// operation.
+    /// Update Sql Azure Database recommended index state.
     /// </summary>
-    public partial class NetworkSecurityGroupAddToSubnetParameters
+    public partial class RecommendedIndexUpdateParameters
     {
-        private string _name;
+        private RecommendedIndexUpdateProperties _properties;
         
         /// <summary>
-        /// Required. Gets or sets name for a Network Security Group from this
-        /// subscription.
+        /// Required. Gets or sets the properties of the request.
         /// </summary>
-        public string Name
+        public RecommendedIndexUpdateProperties Properties
         {
-            get { return this._name; }
-            set { this._name = value; }
+            get { return this._properties; }
+            set { this._properties = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the
-        /// NetworkSecurityGroupAddToSubnetParameters class.
+        /// Initializes a new instance of the RecommendedIndexUpdateParameters
+        /// class.
         /// </summary>
-        public NetworkSecurityGroupAddToSubnetParameters()
+        public RecommendedIndexUpdateParameters()
         {
         }
         
         /// <summary>
-        /// Initializes a new instance of the
-        /// NetworkSecurityGroupAddToSubnetParameters class with required
-        /// arguments.
+        /// Initializes a new instance of the RecommendedIndexUpdateParameters
+        /// class with required arguments.
         /// </summary>
-        public NetworkSecurityGroupAddToSubnetParameters(string name)
+        public RecommendedIndexUpdateParameters(RecommendedIndexUpdateProperties properties)
             : this()
         {
-            if (name == null)
+            if (properties == null)
             {
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException("properties");
             }
-            this.Name = name;
+            this.Properties = properties;
         }
     }
 }
