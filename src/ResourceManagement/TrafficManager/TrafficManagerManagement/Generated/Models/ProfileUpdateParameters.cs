@@ -21,21 +21,20 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure;
 using Microsoft.Azure.Management.TrafficManager.Models;
 
 namespace Microsoft.Azure.Management.TrafficManager.Models
 {
     /// <summary>
-    /// The response to a Traffic Manager profile 'CreateOrUpdate' operation.
+    /// Parameters supplied to update a Traffic Manager profile.
     /// </summary>
-    public partial class ProfileCreateOrUpdateResponse : AzureOperationResponse
+    public partial class ProfileUpdateParameters
     {
         private Profile _profile;
         
         /// <summary>
-        /// Optional. Gets or sets information about the profile in the
-        /// response to the 'CreateOrUpdate' operation.
+        /// Required. Gets or sets parameters for the Traffic Manager profile
+        /// being updated.
         /// </summary>
         public Profile Profile
         {
@@ -44,11 +43,24 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
         }
         
         /// <summary>
-        /// Initializes a new instance of the ProfileCreateOrUpdateResponse
-        /// class.
+        /// Initializes a new instance of the ProfileUpdateParameters class.
         /// </summary>
-        public ProfileCreateOrUpdateResponse()
+        public ProfileUpdateParameters()
         {
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the ProfileUpdateParameters class
+        /// with required arguments.
+        /// </summary>
+        public ProfileUpdateParameters(Profile profile)
+            : this()
+        {
+            if (profile == null)
+            {
+                throw new ArgumentNullException("profile");
+            }
+            this.Profile = profile;
         }
     }
 }

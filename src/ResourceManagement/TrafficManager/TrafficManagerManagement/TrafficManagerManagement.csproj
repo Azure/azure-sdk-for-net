@@ -14,7 +14,35 @@
   </PropertyGroup>
   <Import Project="..\..\..\..\tools\Library.Settings.targets" />
   <ItemGroup>
-    <Compile Include="Generated\**\*.cs" />
+    <Compile Include="Generated\IProfileOperations.cs" />
+    <Compile Include="Generated\ITrafficManagerManagementClient.cs" />
+    <Compile Include="Generated\Models\CheckTrafficManagerRelativeDnsNameAvailabilityParameters.cs" />
+    <Compile Include="Generated\Models\CheckTrafficManagerRelativeDnsNameAvailabilityResponse.cs" />
+    <Compile Include="Generated\Models\DnsConfig.cs" />
+    <Compile Include="Generated\Models\Endpoint.cs" />
+    <Compile Include="Generated\Models\EndpointProperties.cs" />
+    <Compile Include="Generated\Models\MonitorConfig.cs" />
+    <Compile Include="Generated\Models\Profile.cs" />
+    <Compile Include="Generated\Models\ProfileCreateOrUpdateParameters.cs" />
+    <Compile Include="Generated\Models\ProfileCreateOrUpdateResponse.cs" />
+    <Compile Include="Generated\Models\ProfileGetResponse.cs" />
+    <Compile Include="Generated\Models\ProfileListResponse.cs" />
+    <Compile Include="Generated\Models\ProfileProperties.cs" />
+    <Compile Include="Generated\Models\Reason.cs" />
+    <Compile Include="Generated\ProfileOperations.cs" />
+    <Compile Include="Generated\ProfileOperationsExtensions.cs" />
+    <Compile Include="Generated\TrafficManagerManagementClient.cs" />
+    <Compile Include="Generated\TrafficManagerManagementClientExtensions.cs" />
+    <Compile Include="Generated\Models\ProfileUpdateParameters.cs" />
+    <Compile Include="Generated\Models\ProfileUpdateResponse.cs" />
+    <Compile Include="Generated\Models\EndpointCreateOrUpdateParameters.cs" />
+    <Compile Include="Generated\Models\EndpointCreateOrUpdateResponse.cs" />
+    <Compile Include="Generated\Models\EndpointGetResponse.cs" />
+    <Compile Include="Generated\Models\EndpointUpdateParameters.cs" />
+    <Compile Include="Generated\Models\EndpointUpdateResponse.cs" />
+    <Compile Include="Generated\EndpointOperations.cs" />
+    <Compile Include="Generated\EndpointOperationsExtensions.cs" />
+    <Compile Include="Generated\IEndpointOperations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
