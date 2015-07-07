@@ -30,16 +30,16 @@ namespace Microsoft.Azure.Management.Network.Models
     /// </summary>
     public partial class ApplicationGatewayHttpListener : ChildResource
     {
-        private ResourceId _frontendIpConfiguration;
+        private ResourceId _frontendIPConfiguration;
         
         /// <summary>
         /// Optional. Gets or sets frontend IP configuration resource of
         /// application gateway
         /// </summary>
-        public ResourceId FrontendIpConfiguration
+        public ResourceId FrontendIPConfiguration
         {
-            get { return this._frontendIpConfiguration; }
-            set { this._frontendIpConfiguration = value; }
+            get { return this._frontendIPConfiguration; }
+            set { this._frontendIPConfiguration = value; }
         }
         
         private ResourceId _frontendPort;
