@@ -185,7 +185,8 @@ namespace DataFactory.Tests.ScenarioTests
                 }
 
                 // verify slice
-                var sliceResponse = client.DataSlices.List(resourceGroupName, factoryName, TableNameAggregatedData, startTime, endTime);
+                var sliceResponse = client.DataSlices.List(resourceGroupName, factoryName, TableNameAggregatedData,
+                    new DataSliceListParameters(startTime, endTime));
                 Assert.True(sliceResponse.StatusCode == HttpStatusCode.OK);
                 Assert.True(sliceResponse.DataSlices.Count == 2);
 
@@ -193,7 +194,7 @@ namespace DataFactory.Tests.ScenarioTests
                 foreach (var slice in sliceResponse.DataSlices)
                 {
                     var listSliceRunResponse = client.DataSliceRuns.List(resourceGroupName, factoryName,
-                        TableNameAggregatedData, slice.Start.ConvertToISO8601DateTimeString());
+                        TableNameAggregatedData, new DataSliceRunListParameters(slice.Start.ConvertToISO8601DateTimeString()));
                     Assert.True(listSliceRunResponse.StatusCode == HttpStatusCode.OK);
 
                     foreach (var dataSliceRun in listSliceRunResponse.DataSliceRuns)

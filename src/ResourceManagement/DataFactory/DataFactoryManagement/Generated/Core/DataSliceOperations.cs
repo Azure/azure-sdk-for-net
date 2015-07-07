@@ -77,13 +77,9 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         /// <param name='tableName'>
         /// Required. A unique table instance name.
         /// </param>
-        /// <param name='dataSliceRangeStartTime'>
-        /// Required. The data slice range start time in round-trip ISO 8601
-        /// format.
-        /// </param>
-        /// <param name='dataSliceRangeEndTime'>
-        /// Required. The data slice range end time in round-trip ISO 8601
-        /// format.
+        /// <param name='parameters'>
+        /// Required. Parameters specifying how to list data slices of the
+        /// table.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -91,7 +87,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         /// <returns>
         /// The List data slices operation response.
         /// </returns>
-        public async Task<DataSliceListResponse> ListAsync(string resourceGroupName, string dataFactoryName, string tableName, string dataSliceRangeStartTime, string dataSliceRangeEndTime, CancellationToken cancellationToken)
+        public async Task<DataSliceListResponse> ListAsync(string resourceGroupName, string dataFactoryName, string tableName, DataSliceListParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -130,13 +126,17 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             {
                 throw new ArgumentOutOfRangeException("tableName");
             }
-            if (dataSliceRangeStartTime == null)
+            if (parameters == null)
             {
-                throw new ArgumentNullException("dataSliceRangeStartTime");
+                throw new ArgumentNullException("parameters");
             }
-            if (dataSliceRangeEndTime == null)
+            if (parameters.DataSliceRangeEndTime == null)
             {
-                throw new ArgumentNullException("dataSliceRangeEndTime");
+                throw new ArgumentNullException("parameters.DataSliceRangeEndTime");
+            }
+            if (parameters.DataSliceRangeStartTime == null)
+            {
+                throw new ArgumentNullException("parameters.DataSliceRangeStartTime");
             }
             
             // Tracing
@@ -149,8 +149,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("dataFactoryName", dataFactoryName);
                 tracingParameters.Add("tableName", tableName);
-                tracingParameters.Add("dataSliceRangeStartTime", dataSliceRangeStartTime);
-                tracingParameters.Add("dataSliceRangeEndTime", dataSliceRangeEndTime);
+                tracingParameters.Add("parameters", parameters);
                 TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
             }
             
@@ -169,8 +168,8 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + Uri.EscapeDataString(tableName);
             url = url + "/slices";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("start=" + Uri.EscapeDataString(dataSliceRangeStartTime));
-            queryParameters.Add("end=" + Uri.EscapeDataString(dataSliceRangeEndTime));
+            queryParameters.Add("start=" + Uri.EscapeDataString(parameters.DataSliceRangeStartTime));
+            queryParameters.Add("end=" + Uri.EscapeDataString(parameters.DataSliceRangeEndTime));
             queryParameters.Add("api-version=2015-07-01-preview");
             if (queryParameters.Count > 0)
             {
@@ -268,11 +267,18 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                         dataSliceInstance.End = endInstance;
                                     }
                                     
-                                    JToken statusValue = valueValue["status"];
-                                    if (statusValue != null && statusValue.Type != JTokenType.Null)
+                                    JToken stateValue = valueValue["state"];
+                                    if (stateValue != null && stateValue.Type != JTokenType.Null)
                                     {
-                                        string statusInstance = ((string)statusValue);
-                                        dataSliceInstance.Status = statusInstance;
+                                        string stateInstance = ((string)stateValue);
+                                        dataSliceInstance.State = stateInstance;
+                                    }
+                                    
+                                    JToken substateValue = valueValue["substate"];
+                                    if (substateValue != null && substateValue.Type != JTokenType.Null)
+                                    {
+                                        string substateInstance = ((string)substateValue);
+                                        dataSliceInstance.Substate = substateInstance;
                                     }
                                     
                                     JToken latencyStatusValue = valueValue["latencyStatus"];
@@ -298,11 +304,11 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                 }
                             }
                             
-                            JToken odatanextLinkValue = responseDoc["@odata.nextLink"];
-                            if (odatanextLinkValue != null && odatanextLinkValue.Type != JTokenType.Null)
+                            JToken nextLinkValue = responseDoc["nextLink"];
+                            if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
                             {
-                                string odatanextLinkInstance = ((string)odatanextLinkValue);
-                                result.NextLink = odatanextLinkInstance;
+                                string nextLinkInstance = ((string)nextLinkValue);
+                                result.NextLink = nextLinkInstance;
                             }
                         }
                         
@@ -452,11 +458,18 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                         dataSliceInstance.End = endInstance;
                                     }
                                     
-                                    JToken statusValue = valueValue["status"];
-                                    if (statusValue != null && statusValue.Type != JTokenType.Null)
+                                    JToken stateValue = valueValue["state"];
+                                    if (stateValue != null && stateValue.Type != JTokenType.Null)
                                     {
-                                        string statusInstance = ((string)statusValue);
-                                        dataSliceInstance.Status = statusInstance;
+                                        string stateInstance = ((string)stateValue);
+                                        dataSliceInstance.State = stateInstance;
+                                    }
+                                    
+                                    JToken substateValue = valueValue["substate"];
+                                    if (substateValue != null && substateValue.Type != JTokenType.Null)
+                                    {
+                                        string substateInstance = ((string)substateValue);
+                                        dataSliceInstance.Substate = substateInstance;
                                     }
                                     
                                     JToken latencyStatusValue = valueValue["latencyStatus"];
@@ -482,11 +495,11 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                 }
                             }
                             
-                            JToken odatanextLinkValue = responseDoc["@odata.nextLink"];
-                            if (odatanextLinkValue != null && odatanextLinkValue.Type != JTokenType.Null)
+                            JToken nextLinkValue = responseDoc["nextLink"];
+                            if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
                             {
-                                string odatanextLinkInstance = ((string)odatanextLinkValue);
-                                result.NextLink = odatanextLinkInstance;
+                                string nextLinkInstance = ((string)nextLinkValue);
+                                result.NextLink = nextLinkInstance;
                             }
                         }
                         
@@ -663,9 +676,9 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                 JObject dataSliceSetStatusParametersValue = new JObject();
                 requestDoc = dataSliceSetStatusParametersValue;
                 
-                if (parameters.SliceStatus != null)
+                if (parameters.SliceState != null)
                 {
-                    dataSliceSetStatusParametersValue["SliceStatus"] = parameters.SliceStatus;
+                    dataSliceSetStatusParametersValue["SliceState"] = parameters.SliceState;
                 }
                 
                 if (parameters.UpdateType != null)

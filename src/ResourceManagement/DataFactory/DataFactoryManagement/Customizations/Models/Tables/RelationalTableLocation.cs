@@ -18,18 +18,19 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     /// <summary>
     /// Relational Table location.
     /// </summary>
-    public class RelationalTableLocation : TableTypeProperties
+    [AdfTypeName("RelationalTable")]
+    public class RelationalTableDataset : TableTypeProperties
     {
         /// <summary>
         /// The table name.
         /// </summary>
         public string TableName { get; set; }
 
-        public RelationalTableLocation()
+        public RelationalTableDataset()
         {
         }
 
-        public RelationalTableLocation(string tableName)
+        public RelationalTableDataset(string tableName)
             : this()
         {
             Ensure.IsNotNullOrEmpty(tableName, "tableName");

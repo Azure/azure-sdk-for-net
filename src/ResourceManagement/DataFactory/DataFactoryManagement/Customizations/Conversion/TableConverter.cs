@@ -18,7 +18,7 @@ using Microsoft.Azure.Management.DataFactories.Models;
 
 namespace Microsoft.Azure.Management.DataFactories.Conversion
 {
-    internal class TableConverter : CoreTypeConverter<Core.Models.Table, Table, TableTypeProperties, GenericTable>
+    internal class TableConverter : CoreTypeConverter<Core.Models.Table, Table, TableTypeProperties, GenericDataset>
     {
         /// <summary> 
         /// Convert <paramref name="table"/> to an <see cref="Core.Models.Table"/> instance.
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
                 internalTable.Properties.TypeProperties,
                 out type);
 
-            string typeName = type == typeof(GenericTable) ? internalTable.Properties.Type : type.Name;
+            string typeName = GetTypeName(type, internalTable.Properties.Type);
             TableProperties properties = new TableProperties(
                 typeProperties,
                 internalTable.Properties.Availability,

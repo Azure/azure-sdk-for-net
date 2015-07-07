@@ -19,7 +19,7 @@ using Microsoft.Azure.Management.DataFactories.Common.Models;
 
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
-    public class TableProperties : AdfResourceProperties<TableTypeProperties, GenericTable>
+    public class TableProperties : AdfResourceProperties<TableTypeProperties, GenericDataset>
     {
         /// <summary>
         /// Required. The referenced data linkedService name.
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         }
 
         public TableProperties(
-            GenericTable typeProperties,
+            GenericDataset typeProperties,
             Availability availability,
             string linkedServiceName,
             string typeName)

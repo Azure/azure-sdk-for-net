@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     /// <summary>
     /// Linked Service for MySQL data source.
     /// </summary>
+    [AdfTypeName("OnPremisesMySql")]
     public class OnPremisesMySqlLinkedService : LinkedServiceTypeProperties
     {
         /// <summary>

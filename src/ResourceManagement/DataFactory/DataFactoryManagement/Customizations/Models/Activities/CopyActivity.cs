@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     /// <summary>
     /// Copy activity.
     /// </summary>
+    [AdfTypeName("Copy")]
     public class CopyActivity : ActivityTypeProperties
     {
         /// <summary>

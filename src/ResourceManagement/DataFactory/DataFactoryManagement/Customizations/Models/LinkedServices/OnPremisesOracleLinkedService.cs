@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     /// <summary>
     /// An on-premises Oracle database.
     /// </summary>
+    [AdfTypeName("OnPremisesOracle")]
     public class OnPremisesOracleLinkedService : LinkedServiceTypeProperties
     {
         /// <summary>

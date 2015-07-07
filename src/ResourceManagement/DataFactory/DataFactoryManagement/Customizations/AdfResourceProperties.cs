@@ -15,6 +15,7 @@
 
 using System;
 using System.Globalization;
+using System.Reflection;
 
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
@@ -81,8 +82,19 @@ namespace Microsoft.Azure.Management.DataFactories.Models
             }
             else
             {
-                this.Type = type.Name;
+                this.Type = GetTypeName(type, typeName);
             }
+        }
+
+        private static string GetTypeName(Type type, string actualTypeName)
+        {
+            if (type == typeof(TGenericTypeProperties))
+            {
+                Ensure.IsNotNullOrEmpty(actualTypeName, "actualTypeName");
+                return actualTypeName;
+            }
+
+            return DataFactoryUtilities.GetResourceTypeName(type);
         }
     }
 }

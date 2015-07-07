@@ -16,25 +16,23 @@
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
-    /// The on-premises Oracle database.
+    /// All available options on how to get the YARN logs for HDInsight activities
     /// </summary>
-    public class OnPremisesOracleTableLocation : TableTypeProperties
+    public static class HDInsightActivityDebugInfoOption
     {
         /// <summary>
-        /// The table name of the on-premises Oracle database.
+        /// Don't bring YARN logs
         /// </summary>
-        [AdfRequired]
-        public string TableName { get; set; }
+        public const string None = "None";
 
-        public OnPremisesOracleTableLocation()
-        {
-        }
+        /// <summary>
+        /// Always bring YARN logs
+        /// </summary>
+        public const string Always = "Always";
 
-        public OnPremisesOracleTableLocation(string tableName)
-            : this()
-        {
-            Ensure.IsNotNullOrEmpty(tableName, "tableName");
-            this.TableName = tableName;
-        }
+        /// <summary>
+        /// Bring logs only on execution failure
+        /// </summary>
+        public const string Failure = "Failure";
     }
 }

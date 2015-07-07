@@ -13,23 +13,29 @@
 // limitations under the License.
 //
 
-using System.Collections.Generic;
-using Newtonsoft.Json.Linq;
-
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
-    public sealed class GenericTable : TableTypeProperties, IGenericTypeProperties
+    /// <summary>
+    /// The Azure SQL Server database.
+    /// </summary>
+    [AdfTypeName("AzureSqlTable")]
+    public class AzureSqlTableDataset : TableTypeProperties
     {
-        public IDictionary<string, JToken> ServiceExtraProperties { get; set; } 
+        /// <summary>
+        /// The table name of the Azure SQL database.
+        /// </summary>
+        [AdfRequired]
+        public string TableName { get; set; }
 
-        public GenericTable()
+        public AzureSqlTableDataset()
         {
-            this.ServiceExtraProperties = new Dictionary<string, JToken>();
         }
 
-        public GenericTable(IDictionary<string, JToken> serviceExtraProperties)
+        public AzureSqlTableDataset(string tableName)
+            : this()
         {
-            this.ServiceExtraProperties = serviceExtraProperties;
+            Ensure.IsNotNullOrEmpty(tableName, "tableName");
+            this.TableName = tableName;
         }
     }
 }

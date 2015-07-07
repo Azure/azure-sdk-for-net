@@ -39,13 +39,8 @@ namespace Microsoft.Azure.Management.DataFactories
         /// <param name='tableName'>
         /// Required. A unique table instance name.
         /// </param>
-        /// <param name='dataSliceRangeStartTime'>
-        /// Required. The data slice range start time in round-trip ISO 8601
-        /// format.
-        /// </param>
-        /// <param name='dataSliceRangeEndTime'>
-        /// Required. The data slice range end time in round-trip ISO 8601
-        /// format.
+        /// <param name='parameters'>
+        /// Required. Parameters specifying how to list data slices of the table.
         /// </param>
         /// <returns>
         /// The List data slices operation response.
@@ -55,16 +50,14 @@ namespace Microsoft.Azure.Management.DataFactories
             string resourceGroupName,
             string dataFactoryName,
             string tableName,
-            string dataSliceRangeStartTime,
-            string dataSliceRangeEndTime)
+            DataSliceListParameters parameters)
         {
             return Task.Factory.StartNew(
                 s => ((IDataSliceOperations)s).ListAsync(
                     resourceGroupName,
                     dataFactoryName,
                     tableName,
-                    dataSliceRangeStartTime,
-                    dataSliceRangeEndTime),
+                    parameters),
                 operations,
                 CancellationToken.None,
                 TaskCreationOptions.None,
@@ -88,13 +81,8 @@ namespace Microsoft.Azure.Management.DataFactories
         /// <param name='tableName'>
         /// Required. A unique table instance name.
         /// </param>
-        /// <param name='dataSliceRangeStartTime'>
-        /// Required. The data slice range start time in round-trip ISO 8601
-        /// format.
-        /// </param>
-        /// <param name='dataSliceRangeEndTime'>
-        /// Required. The data slice range end time in round-trip ISO 8601
-        /// format.
+        /// <param name='parameters'>
+        /// Required. Parameters specifying how to list data slices of the table.
         /// </param>
         /// <returns>
         /// The List data slices operation response.
@@ -104,15 +92,13 @@ namespace Microsoft.Azure.Management.DataFactories
             string resourceGroupName,
             string dataFactoryName,
             string tableName,
-            string dataSliceRangeStartTime,
-            string dataSliceRangeEndTime)
+            DataSliceListParameters parameters)
         {
             return operations.ListAsync(
                 resourceGroupName,
                 dataFactoryName,
                 tableName,
-                dataSliceRangeStartTime,
-                dataSliceRangeEndTime,
+                parameters,
                 CancellationToken.None);
         }
 

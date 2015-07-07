@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
             this.EnsureIsAssignableRegisteredType<T>();
 
             Type type = typeof(T);
-            string typeName = type.Name;
+            string typeName = DataFactoryUtilities.GetResourceTypeName(type);
             string wrapperTypeName = wrapperType != null ? wrapperType.Name : typeof(TRegistered).Name;
 
             if (ReservedTypes.ContainsKey(typeName))

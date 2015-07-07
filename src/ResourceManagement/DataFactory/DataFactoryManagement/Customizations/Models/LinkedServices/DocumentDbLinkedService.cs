@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     /// <summary>
     /// Windows Azure Document Database.
     /// </summary>
+    [AdfTypeName("DocumentDb")]
     public class DocumentDbLinkedService : LinkedServiceTypeProperties
     {
         /// <summary>

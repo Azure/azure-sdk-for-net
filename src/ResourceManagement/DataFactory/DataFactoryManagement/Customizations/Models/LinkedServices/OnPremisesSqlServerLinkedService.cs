@@ -16,15 +16,16 @@
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
-    /// An on-premises file system Linked Service.
+    /// An on-premises SQL server database.
     /// </summary>
-    public class OnPremisesFileSystemLinkedService : LinkedServiceTypeProperties
+    [AdfTypeName("OnPremisesSqlServer")]
+    public class OnPremisesSqlServerLinkedService : LinkedServiceTypeProperties
     {
         /// <summary>
-        /// Optional. Encrypted credential which contains host, userId and
-        /// password.
+        /// Required. The connection string.
         /// </summary>
-        public string EncryptedCredential { get; set; }
+        [AdfRequired]
+        public string ConnectionString { get; set; }
 
         /// <summary>
         /// Required. The on-premises gateway name.
@@ -33,40 +34,33 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         public string GatewayName { get; set; }
 
         /// <summary>
-        /// Required. Host name of the server.
-        /// </summary>
-        [AdfRequired]
-        public string Host { get; set; }
-
-        /// <summary>
-        /// Optional. Password to logon the server.
+        /// Optional. The on-premises Windows authentication password.
         /// </summary>
         public string Password { get; set; }
 
         /// <summary>
-        /// Optional. UserID to logon the server.
+        /// Optional. The on-premises Windows authentication user name.
         /// </summary>
-        public string UserId { get; set; }
+        public string UserName { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the OnPremisesFileSystemLinkedService
-        /// class.
+        /// Initializes a new instance of the OnPremisesSqlLinkedService class.
         /// </summary>
-        public OnPremisesFileSystemLinkedService()
+        public OnPremisesSqlServerLinkedService()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the OnPremisesFileSystemLinkedService
-        /// class with required arguments.
+        /// Initializes a new instance of the OnPremisesSqlLinkedService class
+        /// with required arguments.
         /// </summary>
-        public OnPremisesFileSystemLinkedService(string host, string gatewayName)
+        public OnPremisesSqlServerLinkedService(string connectionString, string gatewayName)
             : this()
         {
-            Ensure.IsNotNullOrEmpty(host, "host");
+            Ensure.IsNotNullOrEmpty(connectionString, "connectionString");
             Ensure.IsNotNullOrEmpty(gatewayName, "gatewayName");
 
-            this.Host = host;
+            this.ConnectionString = connectionString;
             this.GatewayName = gatewayName;
         }
     }

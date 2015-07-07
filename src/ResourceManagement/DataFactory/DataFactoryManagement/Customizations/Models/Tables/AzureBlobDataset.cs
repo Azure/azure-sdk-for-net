@@ -18,29 +18,39 @@ using System.Collections.Generic;
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
-    /// HDInsight activity.
+    /// The Azure blob storage.
     /// </summary>
-    public abstract class HDInsightActivityBase : ActivityTypeProperties
+    [AdfTypeName("AzureBlob")]
+    public class AzureBlobDataset : TableTypeProperties
     {
         /// <summary>
-        /// Storage linked services.
+        /// The path of the Azure blob storage.
         /// </summary>
-        public IList<string> StorageLinkedServices { get; set; }
+        public string FolderPath { get; set; }
 
         /// <summary>
-        /// User specified arguments to HDInsightActivity.
+        /// The root of blob path.
         /// </summary>
-        public IList<string> Arguments { get; set; }
+        public string TableRootLocation { get; set; }
 
         /// <summary>
-        /// The <see cref="HDInsightActivityDebugInfoOption"/> settings to use.
+        /// The name of the Azure blob.
         /// </summary>
-        public string GetDebugInfo { get; set; }
+        public string FileName { get; set; }
 
-        protected HDInsightActivityBase()
-        {
-            this.Arguments = new List<string>();
-            this.StorageLinkedServices = new List<string>();
-        }
+        /// <summary>
+        /// The partitions to be used by the path.
+        /// </summary>
+        public IList<Partition> PartitionedBy { get; set; }
+
+        /// <summary>
+        /// The format of the Azure blob storage.
+        /// </summary>
+        public StorageFormat Format { get; set; }
+
+        /// <summary>
+        /// The data compression method used for the blob storage.
+        /// </summary>
+        public Compression Compression { get; set; }
     }
 }

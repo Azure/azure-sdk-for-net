@@ -25,14 +25,14 @@ using System.Linq;
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
-    /// Parameters specifying data slice status for set status operation.
+    /// Parameters specifying the filters for the list data slices operation.
     /// </summary>
-    public partial class DataSliceSetStatusParameters
+    public partial class DataSliceListParameters
     {
         private string _dataSliceRangeEndTime;
         
         /// <summary>
-        /// Optional. The data slice range end time in round-trip ISO 8601
+        /// Required. The data slice range end time in round-trip ISO 8601
         /// format.
         /// </summary>
         public string DataSliceRangeEndTime
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         private string _dataSliceRangeStartTime;
         
         /// <summary>
-        /// Optional. The data slice range start time in round-trip ISO 8601
+        /// Required. The data slice range start time in round-trip ISO 8601
         /// format.
         /// </summary>
         public string DataSliceRangeStartTime
@@ -53,34 +53,30 @@ namespace Microsoft.Azure.Management.DataFactories.Models
             set { this._dataSliceRangeStartTime = value; }
         }
         
-        private string _sliceState;
-        
         /// <summary>
-        /// Optional. The data slice new status.
+        /// Initializes a new instance of the DataSliceListParameters class.
         /// </summary>
-        public string SliceState
+        public DataSliceListParameters()
         {
-            get { return this._sliceState; }
-            set { this._sliceState = value; }
-        }
-        
-        private string _updateType;
-        
-        /// <summary>
-        /// Optional. The data slice set status update type.
-        /// </summary>
-        public string UpdateType
-        {
-            get { return this._updateType; }
-            set { this._updateType = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the DataSliceSetStatusParameters
-        /// class.
+        /// Initializes a new instance of the DataSliceListParameters class
+        /// with required arguments.
         /// </summary>
-        public DataSliceSetStatusParameters()
+        public DataSliceListParameters(string dataSliceRangeStartTime, string dataSliceRangeEndTime)
+            : this()
         {
+            if (dataSliceRangeStartTime == null)
+            {
+                throw new ArgumentNullException("dataSliceRangeStartTime");
+            }
+            if (dataSliceRangeEndTime == null)
+            {
+                throw new ArgumentNullException("dataSliceRangeEndTime");
+            }
+            this.DataSliceRangeStartTime = dataSliceRangeStartTime;
+            this.DataSliceRangeEndTime = dataSliceRangeEndTime;
         }
     }
 }
