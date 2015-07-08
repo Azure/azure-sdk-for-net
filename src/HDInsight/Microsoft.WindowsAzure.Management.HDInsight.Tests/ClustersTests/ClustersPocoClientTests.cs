@@ -812,5 +812,35 @@ Parameter name: clusterCreateParameters");
         {
             await UriEndpointValidator.ValidateAndResolveHttpScriptActionEndpointUri(new Uri("http://www.thisurishouldnotexist.mytest"));
         }
+
+        [TestMethod]
+        [TestCategory("CheckIn")]
+        public async Task CanCreateIaasClusterWithD12Headnode()
+        {
+            var restClient = ServiceLocator.Instance.Locate<IRdfeClustersResourceRestClientFactory>()
+                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, SchemaVersionUtils.GetSchemaVersion(Capabilities));
+            var clustersPocoClient = new PaasClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient);
+            var clusterCreateParameters = new HDInsight.ClusterCreateParametersV2
+            {
+                Name = "D12HeadnodeCreationTest",
+                DefaultStorageAccountKey = IntegrationTestBase.TestCredentials.Environments[0].DefaultStorageAccount.Key,
+                DefaultStorageAccountName = IntegrationTestBase.TestCredentials.Environments[0].DefaultStorageAccount.Name,
+                DefaultStorageContainer = "D12HeadnodeCreationTest",
+                ClusterSizeInNodes = 2,
+                Location = "East US",
+                UserName = "admin",
+                Password = "Password1!",
+                OSType = OSType.Linux,
+                Version = "3.2",
+                ClusterType = ClusterProvisioning.Data.ClusterType.Hadoop,
+                HeadNodeSize = "Standard_D12"
+            };
+
+            await clustersPocoClient.CreateContainer(clusterCreateParameters);
+
+            var containersList = clustersPocoClient.ListContainers().Result;
+            Assert.AreEqual(containersList.Count, 1);
+            Assert.IsNotNull(containersList.SingleOrDefault(cluster => cluster.Name.Equals("D12HeadnodeCreationTest")));
+        }
     }
 }

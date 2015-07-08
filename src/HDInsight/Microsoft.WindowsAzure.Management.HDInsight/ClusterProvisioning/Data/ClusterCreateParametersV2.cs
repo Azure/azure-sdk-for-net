@@ -333,13 +333,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
                 throw new InvalidOperationException("For SSH connectivity, either a password or a public key is required. If a password is specified, the public key will be ignored.");
             }
 
-            // Allowable values for HeadNodeSize are { Large, ExtraLarge }
-            var allowedValuesForHeadNodeSize = new String[] { NodeVMSize.Large.ToString(), NodeVMSize.ExtraLarge.ToString() };
-            if (!allowedValuesForHeadNodeSize.Contains(HeadNodeSize))
-            {
-                throw new InvalidOperationException(String.Format("Allowed values for Head Node Size are: {0}", String.Join(",", allowedValuesForHeadNodeSize)));
-            }
-
             // If OSType == Linux, Zookeeper node size must not be set
             if (this.OSType == HDInsight.OSType.Linux && !String.IsNullOrEmpty(ZookeeperNodeSize))
             {
