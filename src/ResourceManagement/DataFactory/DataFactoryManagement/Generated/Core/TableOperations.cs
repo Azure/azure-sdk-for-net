@@ -292,32 +292,6 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                         availabilityValue["offset"] = parameters.Table.Properties.Availability.Offset.Value.ToString();
                     }
                     
-                    if (parameters.Table.Properties.Availability.WaitOnExternal != null)
-                    {
-                        JObject waitOnExternalValue = new JObject();
-                        availabilityValue["waitOnExternal"] = waitOnExternalValue;
-                        
-                        if (parameters.Table.Properties.Availability.WaitOnExternal.DataDelay != null)
-                        {
-                            waitOnExternalValue["dataDelay"] = parameters.Table.Properties.Availability.WaitOnExternal.DataDelay.Value.ToString();
-                        }
-                        
-                        if (parameters.Table.Properties.Availability.WaitOnExternal.RetryInterval != null)
-                        {
-                            waitOnExternalValue["retryInterval"] = parameters.Table.Properties.Availability.WaitOnExternal.RetryInterval.Value.ToString();
-                        }
-                        
-                        if (parameters.Table.Properties.Availability.WaitOnExternal.RetryTimeout != null)
-                        {
-                            waitOnExternalValue["retryTimeout"] = parameters.Table.Properties.Availability.WaitOnExternal.RetryTimeout.Value.ToString();
-                        }
-                        
-                        if (parameters.Table.Properties.Availability.WaitOnExternal.MaximumRetry != null)
-                        {
-                            waitOnExternalValue["maximumRetry"] = parameters.Table.Properties.Availability.WaitOnExternal.MaximumRetry.Value;
-                        }
-                    }
-                    
                     if (parameters.Table.Properties.Availability.Style != null)
                     {
                         availabilityValue["style"] = parameters.Table.Properties.Availability.Style;
@@ -359,6 +333,37 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                 latencyValue["latencyLength"] = parameters.Table.Properties.Policy.Latency.LatencyLength.Value.ToString();
                             }
                         }
+                        
+                        if (parameters.Table.Properties.Policy.ExternalData != null)
+                        {
+                            JObject externalDataValue = new JObject();
+                            policyValue["externalData"] = externalDataValue;
+                            
+                            if (parameters.Table.Properties.Policy.ExternalData.DataDelay != null)
+                            {
+                                externalDataValue["dataDelay"] = parameters.Table.Properties.Policy.ExternalData.DataDelay.Value.ToString();
+                            }
+                            
+                            if (parameters.Table.Properties.Policy.ExternalData.RetryInterval != null)
+                            {
+                                externalDataValue["retryInterval"] = parameters.Table.Properties.Policy.ExternalData.RetryInterval.Value.ToString();
+                            }
+                            
+                            if (parameters.Table.Properties.Policy.ExternalData.RetryTimeout != null)
+                            {
+                                externalDataValue["retryTimeout"] = parameters.Table.Properties.Policy.ExternalData.RetryTimeout.Value.ToString();
+                            }
+                            
+                            if (parameters.Table.Properties.Policy.ExternalData.MaximumRetry != null)
+                            {
+                                externalDataValue["maximumRetry"] = parameters.Table.Properties.Policy.ExternalData.MaximumRetry.Value;
+                            }
+                        }
+                    }
+                    
+                    if (parameters.Table.Properties.External != null)
+                    {
+                        propertiesValue["external"] = parameters.Table.Properties.External.Value;
                     }
                     
                     if (parameters.Table.Properties.Published != null)
@@ -544,41 +549,6 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                         availabilityInstance.Offset = offsetInstance;
                                     }
                                     
-                                    JToken waitOnExternalValue2 = availabilityValue2["waitOnExternal"];
-                                    if (waitOnExternalValue2 != null && waitOnExternalValue2.Type != JTokenType.Null)
-                                    {
-                                        WaitOnExternal waitOnExternalInstance = new WaitOnExternal();
-                                        availabilityInstance.WaitOnExternal = waitOnExternalInstance;
-                                        
-                                        JToken dataDelayValue = waitOnExternalValue2["dataDelay"];
-                                        if (dataDelayValue != null && dataDelayValue.Type != JTokenType.Null)
-                                        {
-                                            TimeSpan dataDelayInstance = TimeSpan.Parse(((string)dataDelayValue), CultureInfo.InvariantCulture);
-                                            waitOnExternalInstance.DataDelay = dataDelayInstance;
-                                        }
-                                        
-                                        JToken retryIntervalValue = waitOnExternalValue2["retryInterval"];
-                                        if (retryIntervalValue != null && retryIntervalValue.Type != JTokenType.Null)
-                                        {
-                                            TimeSpan retryIntervalInstance = TimeSpan.Parse(((string)retryIntervalValue), CultureInfo.InvariantCulture);
-                                            waitOnExternalInstance.RetryInterval = retryIntervalInstance;
-                                        }
-                                        
-                                        JToken retryTimeoutValue = waitOnExternalValue2["retryTimeout"];
-                                        if (retryTimeoutValue != null && retryTimeoutValue.Type != JTokenType.Null)
-                                        {
-                                            TimeSpan retryTimeoutInstance = TimeSpan.Parse(((string)retryTimeoutValue), CultureInfo.InvariantCulture);
-                                            waitOnExternalInstance.RetryTimeout = retryTimeoutInstance;
-                                        }
-                                        
-                                        JToken maximumRetryValue = waitOnExternalValue2["maximumRetry"];
-                                        if (maximumRetryValue != null && maximumRetryValue.Type != JTokenType.Null)
-                                        {
-                                            int maximumRetryInstance = ((int)maximumRetryValue);
-                                            waitOnExternalInstance.MaximumRetry = maximumRetryInstance;
-                                        }
-                                    }
-                                    
                                     JToken styleValue = availabilityValue2["style"];
                                     if (styleValue != null && styleValue.Type != JTokenType.Null)
                                     {
@@ -634,6 +604,48 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                             latencyInstance.LatencyLength = latencyLengthInstance;
                                         }
                                     }
+                                    
+                                    JToken externalDataValue2 = policyValue2["externalData"];
+                                    if (externalDataValue2 != null && externalDataValue2.Type != JTokenType.Null)
+                                    {
+                                        ExternalDataPolicy externalDataInstance = new ExternalDataPolicy();
+                                        policyInstance.ExternalData = externalDataInstance;
+                                        
+                                        JToken dataDelayValue = externalDataValue2["dataDelay"];
+                                        if (dataDelayValue != null && dataDelayValue.Type != JTokenType.Null)
+                                        {
+                                            TimeSpan dataDelayInstance = TimeSpan.Parse(((string)dataDelayValue), CultureInfo.InvariantCulture);
+                                            externalDataInstance.DataDelay = dataDelayInstance;
+                                        }
+                                        
+                                        JToken retryIntervalValue = externalDataValue2["retryInterval"];
+                                        if (retryIntervalValue != null && retryIntervalValue.Type != JTokenType.Null)
+                                        {
+                                            TimeSpan retryIntervalInstance = TimeSpan.Parse(((string)retryIntervalValue), CultureInfo.InvariantCulture);
+                                            externalDataInstance.RetryInterval = retryIntervalInstance;
+                                        }
+                                        
+                                        JToken retryTimeoutValue = externalDataValue2["retryTimeout"];
+                                        if (retryTimeoutValue != null && retryTimeoutValue.Type != JTokenType.Null)
+                                        {
+                                            TimeSpan retryTimeoutInstance = TimeSpan.Parse(((string)retryTimeoutValue), CultureInfo.InvariantCulture);
+                                            externalDataInstance.RetryTimeout = retryTimeoutInstance;
+                                        }
+                                        
+                                        JToken maximumRetryValue = externalDataValue2["maximumRetry"];
+                                        if (maximumRetryValue != null && maximumRetryValue.Type != JTokenType.Null)
+                                        {
+                                            int maximumRetryInstance = ((int)maximumRetryValue);
+                                            externalDataInstance.MaximumRetry = maximumRetryInstance;
+                                        }
+                                    }
+                                }
+                                
+                                JToken externalValue = propertiesValue2["external"];
+                                if (externalValue != null && externalValue.Type != JTokenType.Null)
+                                {
+                                    bool externalInstance = ((bool)externalValue);
+                                    propertiesInstance.External = externalInstance;
                                 }
                                 
                                 JToken publishedValue = propertiesValue2["published"];
@@ -991,41 +1003,6 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                         availabilityInstance.Offset = offsetInstance;
                                     }
                                     
-                                    JToken waitOnExternalValue = availabilityValue["waitOnExternal"];
-                                    if (waitOnExternalValue != null && waitOnExternalValue.Type != JTokenType.Null)
-                                    {
-                                        WaitOnExternal waitOnExternalInstance = new WaitOnExternal();
-                                        availabilityInstance.WaitOnExternal = waitOnExternalInstance;
-                                        
-                                        JToken dataDelayValue = waitOnExternalValue["dataDelay"];
-                                        if (dataDelayValue != null && dataDelayValue.Type != JTokenType.Null)
-                                        {
-                                            TimeSpan dataDelayInstance = TimeSpan.Parse(((string)dataDelayValue), CultureInfo.InvariantCulture);
-                                            waitOnExternalInstance.DataDelay = dataDelayInstance;
-                                        }
-                                        
-                                        JToken retryIntervalValue = waitOnExternalValue["retryInterval"];
-                                        if (retryIntervalValue != null && retryIntervalValue.Type != JTokenType.Null)
-                                        {
-                                            TimeSpan retryIntervalInstance = TimeSpan.Parse(((string)retryIntervalValue), CultureInfo.InvariantCulture);
-                                            waitOnExternalInstance.RetryInterval = retryIntervalInstance;
-                                        }
-                                        
-                                        JToken retryTimeoutValue = waitOnExternalValue["retryTimeout"];
-                                        if (retryTimeoutValue != null && retryTimeoutValue.Type != JTokenType.Null)
-                                        {
-                                            TimeSpan retryTimeoutInstance = TimeSpan.Parse(((string)retryTimeoutValue), CultureInfo.InvariantCulture);
-                                            waitOnExternalInstance.RetryTimeout = retryTimeoutInstance;
-                                        }
-                                        
-                                        JToken maximumRetryValue = waitOnExternalValue["maximumRetry"];
-                                        if (maximumRetryValue != null && maximumRetryValue.Type != JTokenType.Null)
-                                        {
-                                            int maximumRetryInstance = ((int)maximumRetryValue);
-                                            waitOnExternalInstance.MaximumRetry = maximumRetryInstance;
-                                        }
-                                    }
-                                    
                                     JToken styleValue = availabilityValue["style"];
                                     if (styleValue != null && styleValue.Type != JTokenType.Null)
                                     {
@@ -1081,6 +1058,48 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                             latencyInstance.LatencyLength = latencyLengthInstance;
                                         }
                                     }
+                                    
+                                    JToken externalDataValue = policyValue["externalData"];
+                                    if (externalDataValue != null && externalDataValue.Type != JTokenType.Null)
+                                    {
+                                        ExternalDataPolicy externalDataInstance = new ExternalDataPolicy();
+                                        policyInstance.ExternalData = externalDataInstance;
+                                        
+                                        JToken dataDelayValue = externalDataValue["dataDelay"];
+                                        if (dataDelayValue != null && dataDelayValue.Type != JTokenType.Null)
+                                        {
+                                            TimeSpan dataDelayInstance = TimeSpan.Parse(((string)dataDelayValue), CultureInfo.InvariantCulture);
+                                            externalDataInstance.DataDelay = dataDelayInstance;
+                                        }
+                                        
+                                        JToken retryIntervalValue = externalDataValue["retryInterval"];
+                                        if (retryIntervalValue != null && retryIntervalValue.Type != JTokenType.Null)
+                                        {
+                                            TimeSpan retryIntervalInstance = TimeSpan.Parse(((string)retryIntervalValue), CultureInfo.InvariantCulture);
+                                            externalDataInstance.RetryInterval = retryIntervalInstance;
+                                        }
+                                        
+                                        JToken retryTimeoutValue = externalDataValue["retryTimeout"];
+                                        if (retryTimeoutValue != null && retryTimeoutValue.Type != JTokenType.Null)
+                                        {
+                                            TimeSpan retryTimeoutInstance = TimeSpan.Parse(((string)retryTimeoutValue), CultureInfo.InvariantCulture);
+                                            externalDataInstance.RetryTimeout = retryTimeoutInstance;
+                                        }
+                                        
+                                        JToken maximumRetryValue = externalDataValue["maximumRetry"];
+                                        if (maximumRetryValue != null && maximumRetryValue.Type != JTokenType.Null)
+                                        {
+                                            int maximumRetryInstance = ((int)maximumRetryValue);
+                                            externalDataInstance.MaximumRetry = maximumRetryInstance;
+                                        }
+                                    }
+                                }
+                                
+                                JToken externalValue = propertiesValue["external"];
+                                if (externalValue != null && externalValue.Type != JTokenType.Null)
+                                {
+                                    bool externalInstance = ((bool)externalValue);
+                                    propertiesInstance.External = externalInstance;
                                 }
                                 
                                 JToken publishedValue = propertiesValue["published"];
@@ -1831,41 +1850,6 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                         availabilityInstance.Offset = offsetInstance;
                                     }
                                     
-                                    JToken waitOnExternalValue = availabilityValue["waitOnExternal"];
-                                    if (waitOnExternalValue != null && waitOnExternalValue.Type != JTokenType.Null)
-                                    {
-                                        WaitOnExternal waitOnExternalInstance = new WaitOnExternal();
-                                        availabilityInstance.WaitOnExternal = waitOnExternalInstance;
-                                        
-                                        JToken dataDelayValue = waitOnExternalValue["dataDelay"];
-                                        if (dataDelayValue != null && dataDelayValue.Type != JTokenType.Null)
-                                        {
-                                            TimeSpan dataDelayInstance = TimeSpan.Parse(((string)dataDelayValue), CultureInfo.InvariantCulture);
-                                            waitOnExternalInstance.DataDelay = dataDelayInstance;
-                                        }
-                                        
-                                        JToken retryIntervalValue = waitOnExternalValue["retryInterval"];
-                                        if (retryIntervalValue != null && retryIntervalValue.Type != JTokenType.Null)
-                                        {
-                                            TimeSpan retryIntervalInstance = TimeSpan.Parse(((string)retryIntervalValue), CultureInfo.InvariantCulture);
-                                            waitOnExternalInstance.RetryInterval = retryIntervalInstance;
-                                        }
-                                        
-                                        JToken retryTimeoutValue = waitOnExternalValue["retryTimeout"];
-                                        if (retryTimeoutValue != null && retryTimeoutValue.Type != JTokenType.Null)
-                                        {
-                                            TimeSpan retryTimeoutInstance = TimeSpan.Parse(((string)retryTimeoutValue), CultureInfo.InvariantCulture);
-                                            waitOnExternalInstance.RetryTimeout = retryTimeoutInstance;
-                                        }
-                                        
-                                        JToken maximumRetryValue = waitOnExternalValue["maximumRetry"];
-                                        if (maximumRetryValue != null && maximumRetryValue.Type != JTokenType.Null)
-                                        {
-                                            int maximumRetryInstance = ((int)maximumRetryValue);
-                                            waitOnExternalInstance.MaximumRetry = maximumRetryInstance;
-                                        }
-                                    }
-                                    
                                     JToken styleValue = availabilityValue["style"];
                                     if (styleValue != null && styleValue.Type != JTokenType.Null)
                                     {
@@ -1921,6 +1905,48 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                             latencyInstance.LatencyLength = latencyLengthInstance;
                                         }
                                     }
+                                    
+                                    JToken externalDataValue = policyValue["externalData"];
+                                    if (externalDataValue != null && externalDataValue.Type != JTokenType.Null)
+                                    {
+                                        ExternalDataPolicy externalDataInstance = new ExternalDataPolicy();
+                                        policyInstance.ExternalData = externalDataInstance;
+                                        
+                                        JToken dataDelayValue = externalDataValue["dataDelay"];
+                                        if (dataDelayValue != null && dataDelayValue.Type != JTokenType.Null)
+                                        {
+                                            TimeSpan dataDelayInstance = TimeSpan.Parse(((string)dataDelayValue), CultureInfo.InvariantCulture);
+                                            externalDataInstance.DataDelay = dataDelayInstance;
+                                        }
+                                        
+                                        JToken retryIntervalValue = externalDataValue["retryInterval"];
+                                        if (retryIntervalValue != null && retryIntervalValue.Type != JTokenType.Null)
+                                        {
+                                            TimeSpan retryIntervalInstance = TimeSpan.Parse(((string)retryIntervalValue), CultureInfo.InvariantCulture);
+                                            externalDataInstance.RetryInterval = retryIntervalInstance;
+                                        }
+                                        
+                                        JToken retryTimeoutValue = externalDataValue["retryTimeout"];
+                                        if (retryTimeoutValue != null && retryTimeoutValue.Type != JTokenType.Null)
+                                        {
+                                            TimeSpan retryTimeoutInstance = TimeSpan.Parse(((string)retryTimeoutValue), CultureInfo.InvariantCulture);
+                                            externalDataInstance.RetryTimeout = retryTimeoutInstance;
+                                        }
+                                        
+                                        JToken maximumRetryValue = externalDataValue["maximumRetry"];
+                                        if (maximumRetryValue != null && maximumRetryValue.Type != JTokenType.Null)
+                                        {
+                                            int maximumRetryInstance = ((int)maximumRetryValue);
+                                            externalDataInstance.MaximumRetry = maximumRetryInstance;
+                                        }
+                                    }
+                                }
+                                
+                                JToken externalValue = propertiesValue["external"];
+                                if (externalValue != null && externalValue.Type != JTokenType.Null)
+                                {
+                                    bool externalInstance = ((bool)externalValue);
+                                    propertiesInstance.External = externalInstance;
                                 }
                                 
                                 JToken publishedValue = propertiesValue["published"];
@@ -2190,41 +2216,6 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                         availabilityInstance.Offset = offsetInstance;
                                     }
                                     
-                                    JToken waitOnExternalValue = availabilityValue["waitOnExternal"];
-                                    if (waitOnExternalValue != null && waitOnExternalValue.Type != JTokenType.Null)
-                                    {
-                                        WaitOnExternal waitOnExternalInstance = new WaitOnExternal();
-                                        availabilityInstance.WaitOnExternal = waitOnExternalInstance;
-                                        
-                                        JToken dataDelayValue = waitOnExternalValue["dataDelay"];
-                                        if (dataDelayValue != null && dataDelayValue.Type != JTokenType.Null)
-                                        {
-                                            TimeSpan dataDelayInstance = TimeSpan.Parse(((string)dataDelayValue), CultureInfo.InvariantCulture);
-                                            waitOnExternalInstance.DataDelay = dataDelayInstance;
-                                        }
-                                        
-                                        JToken retryIntervalValue = waitOnExternalValue["retryInterval"];
-                                        if (retryIntervalValue != null && retryIntervalValue.Type != JTokenType.Null)
-                                        {
-                                            TimeSpan retryIntervalInstance = TimeSpan.Parse(((string)retryIntervalValue), CultureInfo.InvariantCulture);
-                                            waitOnExternalInstance.RetryInterval = retryIntervalInstance;
-                                        }
-                                        
-                                        JToken retryTimeoutValue = waitOnExternalValue["retryTimeout"];
-                                        if (retryTimeoutValue != null && retryTimeoutValue.Type != JTokenType.Null)
-                                        {
-                                            TimeSpan retryTimeoutInstance = TimeSpan.Parse(((string)retryTimeoutValue), CultureInfo.InvariantCulture);
-                                            waitOnExternalInstance.RetryTimeout = retryTimeoutInstance;
-                                        }
-                                        
-                                        JToken maximumRetryValue = waitOnExternalValue["maximumRetry"];
-                                        if (maximumRetryValue != null && maximumRetryValue.Type != JTokenType.Null)
-                                        {
-                                            int maximumRetryInstance = ((int)maximumRetryValue);
-                                            waitOnExternalInstance.MaximumRetry = maximumRetryInstance;
-                                        }
-                                    }
-                                    
                                     JToken styleValue = availabilityValue["style"];
                                     if (styleValue != null && styleValue.Type != JTokenType.Null)
                                     {
@@ -2280,6 +2271,48 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                             latencyInstance.LatencyLength = latencyLengthInstance;
                                         }
                                     }
+                                    
+                                    JToken externalDataValue = policyValue["externalData"];
+                                    if (externalDataValue != null && externalDataValue.Type != JTokenType.Null)
+                                    {
+                                        ExternalDataPolicy externalDataInstance = new ExternalDataPolicy();
+                                        policyInstance.ExternalData = externalDataInstance;
+                                        
+                                        JToken dataDelayValue = externalDataValue["dataDelay"];
+                                        if (dataDelayValue != null && dataDelayValue.Type != JTokenType.Null)
+                                        {
+                                            TimeSpan dataDelayInstance = TimeSpan.Parse(((string)dataDelayValue), CultureInfo.InvariantCulture);
+                                            externalDataInstance.DataDelay = dataDelayInstance;
+                                        }
+                                        
+                                        JToken retryIntervalValue = externalDataValue["retryInterval"];
+                                        if (retryIntervalValue != null && retryIntervalValue.Type != JTokenType.Null)
+                                        {
+                                            TimeSpan retryIntervalInstance = TimeSpan.Parse(((string)retryIntervalValue), CultureInfo.InvariantCulture);
+                                            externalDataInstance.RetryInterval = retryIntervalInstance;
+                                        }
+                                        
+                                        JToken retryTimeoutValue = externalDataValue["retryTimeout"];
+                                        if (retryTimeoutValue != null && retryTimeoutValue.Type != JTokenType.Null)
+                                        {
+                                            TimeSpan retryTimeoutInstance = TimeSpan.Parse(((string)retryTimeoutValue), CultureInfo.InvariantCulture);
+                                            externalDataInstance.RetryTimeout = retryTimeoutInstance;
+                                        }
+                                        
+                                        JToken maximumRetryValue = externalDataValue["maximumRetry"];
+                                        if (maximumRetryValue != null && maximumRetryValue.Type != JTokenType.Null)
+                                        {
+                                            int maximumRetryInstance = ((int)maximumRetryValue);
+                                            externalDataInstance.MaximumRetry = maximumRetryInstance;
+                                        }
+                                    }
+                                }
+                                
+                                JToken externalValue = propertiesValue["external"];
+                                if (externalValue != null && externalValue.Type != JTokenType.Null)
+                                {
+                                    bool externalInstance = ((bool)externalValue);
+                                    propertiesInstance.External = externalInstance;
                                 }
                                 
                                 JToken publishedValue = propertiesValue["published"];
@@ -2616,41 +2649,6 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                                 availabilityInstance.Offset = offsetInstance;
                                             }
                                             
-                                            JToken waitOnExternalValue = availabilityValue["waitOnExternal"];
-                                            if (waitOnExternalValue != null && waitOnExternalValue.Type != JTokenType.Null)
-                                            {
-                                                WaitOnExternal waitOnExternalInstance = new WaitOnExternal();
-                                                availabilityInstance.WaitOnExternal = waitOnExternalInstance;
-                                                
-                                                JToken dataDelayValue = waitOnExternalValue["dataDelay"];
-                                                if (dataDelayValue != null && dataDelayValue.Type != JTokenType.Null)
-                                                {
-                                                    TimeSpan dataDelayInstance = TimeSpan.Parse(((string)dataDelayValue), CultureInfo.InvariantCulture);
-                                                    waitOnExternalInstance.DataDelay = dataDelayInstance;
-                                                }
-                                                
-                                                JToken retryIntervalValue = waitOnExternalValue["retryInterval"];
-                                                if (retryIntervalValue != null && retryIntervalValue.Type != JTokenType.Null)
-                                                {
-                                                    TimeSpan retryIntervalInstance = TimeSpan.Parse(((string)retryIntervalValue), CultureInfo.InvariantCulture);
-                                                    waitOnExternalInstance.RetryInterval = retryIntervalInstance;
-                                                }
-                                                
-                                                JToken retryTimeoutValue = waitOnExternalValue["retryTimeout"];
-                                                if (retryTimeoutValue != null && retryTimeoutValue.Type != JTokenType.Null)
-                                                {
-                                                    TimeSpan retryTimeoutInstance = TimeSpan.Parse(((string)retryTimeoutValue), CultureInfo.InvariantCulture);
-                                                    waitOnExternalInstance.RetryTimeout = retryTimeoutInstance;
-                                                }
-                                                
-                                                JToken maximumRetryValue = waitOnExternalValue["maximumRetry"];
-                                                if (maximumRetryValue != null && maximumRetryValue.Type != JTokenType.Null)
-                                                {
-                                                    int maximumRetryInstance = ((int)maximumRetryValue);
-                                                    waitOnExternalInstance.MaximumRetry = maximumRetryInstance;
-                                                }
-                                            }
-                                            
                                             JToken styleValue = availabilityValue["style"];
                                             if (styleValue != null && styleValue.Type != JTokenType.Null)
                                             {
@@ -2706,6 +2704,48 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                                     latencyInstance.LatencyLength = latencyLengthInstance;
                                                 }
                                             }
+                                            
+                                            JToken externalDataValue = policyValue["externalData"];
+                                            if (externalDataValue != null && externalDataValue.Type != JTokenType.Null)
+                                            {
+                                                ExternalDataPolicy externalDataInstance = new ExternalDataPolicy();
+                                                policyInstance.ExternalData = externalDataInstance;
+                                                
+                                                JToken dataDelayValue = externalDataValue["dataDelay"];
+                                                if (dataDelayValue != null && dataDelayValue.Type != JTokenType.Null)
+                                                {
+                                                    TimeSpan dataDelayInstance = TimeSpan.Parse(((string)dataDelayValue), CultureInfo.InvariantCulture);
+                                                    externalDataInstance.DataDelay = dataDelayInstance;
+                                                }
+                                                
+                                                JToken retryIntervalValue = externalDataValue["retryInterval"];
+                                                if (retryIntervalValue != null && retryIntervalValue.Type != JTokenType.Null)
+                                                {
+                                                    TimeSpan retryIntervalInstance = TimeSpan.Parse(((string)retryIntervalValue), CultureInfo.InvariantCulture);
+                                                    externalDataInstance.RetryInterval = retryIntervalInstance;
+                                                }
+                                                
+                                                JToken retryTimeoutValue = externalDataValue["retryTimeout"];
+                                                if (retryTimeoutValue != null && retryTimeoutValue.Type != JTokenType.Null)
+                                                {
+                                                    TimeSpan retryTimeoutInstance = TimeSpan.Parse(((string)retryTimeoutValue), CultureInfo.InvariantCulture);
+                                                    externalDataInstance.RetryTimeout = retryTimeoutInstance;
+                                                }
+                                                
+                                                JToken maximumRetryValue = externalDataValue["maximumRetry"];
+                                                if (maximumRetryValue != null && maximumRetryValue.Type != JTokenType.Null)
+                                                {
+                                                    int maximumRetryInstance = ((int)maximumRetryValue);
+                                                    externalDataInstance.MaximumRetry = maximumRetryInstance;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken externalValue = propertiesValue["external"];
+                                        if (externalValue != null && externalValue.Type != JTokenType.Null)
+                                        {
+                                            bool externalInstance = ((bool)externalValue);
+                                            propertiesInstance.External = externalInstance;
                                         }
                                         
                                         JToken publishedValue = propertiesValue["published"];
@@ -2992,41 +3032,6 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                                 availabilityInstance.Offset = offsetInstance;
                                             }
                                             
-                                            JToken waitOnExternalValue = availabilityValue["waitOnExternal"];
-                                            if (waitOnExternalValue != null && waitOnExternalValue.Type != JTokenType.Null)
-                                            {
-                                                WaitOnExternal waitOnExternalInstance = new WaitOnExternal();
-                                                availabilityInstance.WaitOnExternal = waitOnExternalInstance;
-                                                
-                                                JToken dataDelayValue = waitOnExternalValue["dataDelay"];
-                                                if (dataDelayValue != null && dataDelayValue.Type != JTokenType.Null)
-                                                {
-                                                    TimeSpan dataDelayInstance = TimeSpan.Parse(((string)dataDelayValue), CultureInfo.InvariantCulture);
-                                                    waitOnExternalInstance.DataDelay = dataDelayInstance;
-                                                }
-                                                
-                                                JToken retryIntervalValue = waitOnExternalValue["retryInterval"];
-                                                if (retryIntervalValue != null && retryIntervalValue.Type != JTokenType.Null)
-                                                {
-                                                    TimeSpan retryIntervalInstance = TimeSpan.Parse(((string)retryIntervalValue), CultureInfo.InvariantCulture);
-                                                    waitOnExternalInstance.RetryInterval = retryIntervalInstance;
-                                                }
-                                                
-                                                JToken retryTimeoutValue = waitOnExternalValue["retryTimeout"];
-                                                if (retryTimeoutValue != null && retryTimeoutValue.Type != JTokenType.Null)
-                                                {
-                                                    TimeSpan retryTimeoutInstance = TimeSpan.Parse(((string)retryTimeoutValue), CultureInfo.InvariantCulture);
-                                                    waitOnExternalInstance.RetryTimeout = retryTimeoutInstance;
-                                                }
-                                                
-                                                JToken maximumRetryValue = waitOnExternalValue["maximumRetry"];
-                                                if (maximumRetryValue != null && maximumRetryValue.Type != JTokenType.Null)
-                                                {
-                                                    int maximumRetryInstance = ((int)maximumRetryValue);
-                                                    waitOnExternalInstance.MaximumRetry = maximumRetryInstance;
-                                                }
-                                            }
-                                            
                                             JToken styleValue = availabilityValue["style"];
                                             if (styleValue != null && styleValue.Type != JTokenType.Null)
                                             {
@@ -3082,6 +3087,48 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                                     latencyInstance.LatencyLength = latencyLengthInstance;
                                                 }
                                             }
+                                            
+                                            JToken externalDataValue = policyValue["externalData"];
+                                            if (externalDataValue != null && externalDataValue.Type != JTokenType.Null)
+                                            {
+                                                ExternalDataPolicy externalDataInstance = new ExternalDataPolicy();
+                                                policyInstance.ExternalData = externalDataInstance;
+                                                
+                                                JToken dataDelayValue = externalDataValue["dataDelay"];
+                                                if (dataDelayValue != null && dataDelayValue.Type != JTokenType.Null)
+                                                {
+                                                    TimeSpan dataDelayInstance = TimeSpan.Parse(((string)dataDelayValue), CultureInfo.InvariantCulture);
+                                                    externalDataInstance.DataDelay = dataDelayInstance;
+                                                }
+                                                
+                                                JToken retryIntervalValue = externalDataValue["retryInterval"];
+                                                if (retryIntervalValue != null && retryIntervalValue.Type != JTokenType.Null)
+                                                {
+                                                    TimeSpan retryIntervalInstance = TimeSpan.Parse(((string)retryIntervalValue), CultureInfo.InvariantCulture);
+                                                    externalDataInstance.RetryInterval = retryIntervalInstance;
+                                                }
+                                                
+                                                JToken retryTimeoutValue = externalDataValue["retryTimeout"];
+                                                if (retryTimeoutValue != null && retryTimeoutValue.Type != JTokenType.Null)
+                                                {
+                                                    TimeSpan retryTimeoutInstance = TimeSpan.Parse(((string)retryTimeoutValue), CultureInfo.InvariantCulture);
+                                                    externalDataInstance.RetryTimeout = retryTimeoutInstance;
+                                                }
+                                                
+                                                JToken maximumRetryValue = externalDataValue["maximumRetry"];
+                                                if (maximumRetryValue != null && maximumRetryValue.Type != JTokenType.Null)
+                                                {
+                                                    int maximumRetryInstance = ((int)maximumRetryValue);
+                                                    externalDataInstance.MaximumRetry = maximumRetryInstance;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken externalValue = propertiesValue["external"];
+                                        if (externalValue != null && externalValue.Type != JTokenType.Null)
+                                        {
+                                            bool externalInstance = ((bool)externalValue);
+                                            propertiesInstance.External = externalInstance;
                                         }
                                         
                                         JToken publishedValue = propertiesValue["published"];

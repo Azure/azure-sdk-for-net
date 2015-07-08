@@ -208,20 +208,20 @@ namespace DataFactory.Tests.Framework.JsonSamples
             offset: ""01:00:00"",
             interval: 1,
             anchorDateTime: ""2014-02-27T12:00:00"",
-            frequency: ""Hour"",
-            waitOnExternal:
-            {
-                dataDelay: ""00:10:00"",
-                retryInterval: ""00:01:00"",
-                retryTimeout: ""00:10:00"",
-                maximumRetry: 3
-            },
+            frequency: ""Hour""
         },
         policy:
         {
             validation:
             {
                 minimumSizeMB: 10.0,
+            },
+            externalData:
+            {
+                dataDelay: ""00:10:00"",
+                retryInterval: ""00:01:00"",
+                retryTimeout: ""00:10:00"",
+                maximumRetry: 3
             }
         }
     }
@@ -245,11 +245,9 @@ namespace DataFactory.Tests.Framework.JsonSamples
             offset: ""01:00:00"",
             interval: 1,
             anchorDateTime: ""2014-02-27T12:00:00"",
-            frequency: ""Hour"",
-            waitOnExternal:
-            {
-            },
+            frequency: ""Hour""
         },
+        external: true,
         policy:
         {
             validation:

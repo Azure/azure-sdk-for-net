@@ -3,10 +3,10 @@
   "properties": {
     "type": "HDInsight",
     "typeProperties": {
-      "clusterUri": "https://testhdi.azurehdinsight.net/",
-      "userName": "testaccount",
-      "password": "fakepassword",
-      "linkedServiceName": "LinkedService-CuratedWikiData"
+      "ClusterUri": "https://testhdi.azurehdinsight.net/",
+      "UserName": "testaccount",
+      "Password": "fakepassword",
+      "LinkedServiceName": "LinkedService-CuratedWikiData"
     }
   }
 }

@@ -25,9 +25,9 @@ using System.Linq;
 namespace Microsoft.Azure.Management.DataFactories.Common.Models
 {
     /// <summary>
-    /// Wait on external.
+    /// External data validation and retry policy.
     /// </summary>
-    public partial class WaitOnExternal
+    public partial class ExternalDataPolicy
     {
         private System.TimeSpan? _dataDelay;
         
@@ -76,9 +76,9 @@ namespace Microsoft.Azure.Management.DataFactories.Common.Models
         }
         
         /// <summary>
-        /// Initializes a new instance of the WaitOnExternal class.
+        /// Initializes a new instance of the ExternalDataPolicy class.
         /// </summary>
-        public WaitOnExternal()
+        public ExternalDataPolicy()
         {
         }
     }

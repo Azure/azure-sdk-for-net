@@ -30,6 +30,17 @@ namespace Microsoft.Azure.Management.DataFactories.Common.Models
     /// </summary>
     public partial class Policy
     {
+        private ExternalDataPolicy _externalData;
+        
+        /// <summary>
+        /// Optional. External data validation and retry policy.
+        /// </summary>
+        public ExternalDataPolicy ExternalData
+        {
+            get { return this._externalData; }
+            set { this._externalData = value; }
+        }
+        
         private LatencyPolicy _latency;
         
         /// <summary>
