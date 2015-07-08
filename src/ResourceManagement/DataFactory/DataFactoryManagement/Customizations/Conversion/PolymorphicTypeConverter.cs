@@ -96,7 +96,9 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
         private static Dictionary<string, Type> GetReservedTypes()
         {
             Type rootType = typeof(T);
-            return rootType.Assembly.GetTypes().Where(rootType.IsAssignableFrom).ToDictionary(GetTypeName);
+            return rootType.Assembly.GetTypes()
+                .Where(rootType.IsAssignableFrom)
+                .ToDictionary(GetTypeName, StringComparer.OrdinalIgnoreCase);
         }
 
         /// <summary>

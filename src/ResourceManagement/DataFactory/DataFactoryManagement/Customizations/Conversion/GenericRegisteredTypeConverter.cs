@@ -29,7 +29,9 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
         where TRegistered : IRegisteredType
     {
         private static readonly object RegistrationLock = new object();
-        private static readonly IDictionary<string, Type> TypeMap = new Dictionary<string, Type>();
+
+        private static readonly IDictionary<string, Type> TypeMap =
+            new Dictionary<string, Type>(StringComparer.OrdinalIgnoreCase);
 
         /// <summary>
         /// Registers a type for conversion inside the TypeProperties of an ADF resource.

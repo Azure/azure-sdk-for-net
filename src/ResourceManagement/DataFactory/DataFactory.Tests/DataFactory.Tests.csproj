@@ -42,9 +42,11 @@
     <Compile Include="UnitTests\TableTypeRegistrationTests.cs" />
     <Compile Include="UnitTests\TestClasses\MyActivityType.cs" />
     <Compile Include="UnitTests\TestClasses\MyLinkedServiceType.cs" />
+    <Compile Include="UnitTests\TestClasses\MyLinkedServiceType2.cs" />
     <Compile Include="UnitTests\TestClasses\MyLinkedServiceTypeWithDictionaryProperty.cs" />
     <Compile Include="UnitTests\TestClasses\MyLinkedServiceTypeWithListProperty.cs" />
     <Compile Include="UnitTests\TestClasses\MyTableType.cs" />
+    <Compile Include="UnitTests\RegistrationTestUtilities.cs" />
     <Compile Include="UnitTests\UnitTestBase.cs" />
   </ItemGroup>
   <ItemGroup>

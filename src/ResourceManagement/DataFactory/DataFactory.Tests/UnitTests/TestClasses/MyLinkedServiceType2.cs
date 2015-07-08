@@ -16,8 +16,8 @@ using Microsoft.Azure.Management.DataFactories.Models;
 
 namespace DataFactory.Tests.UnitTests.TestClasses
 {
-    [AdfTypeName("MyLinkedServiceType")]
-    public class MyLinkedServiceType : LinkedServiceTypeProperties
+    [AdfTypeName("mylinkedservicetype")]
+    public class MyLinkedServiceType2 : LinkedServiceTypeProperties
     {
         public string UserName { get; set; }
 
