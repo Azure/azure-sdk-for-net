@@ -13,26 +13,29 @@
 // limitations under the License.
 //
 
-using System.Collections.Generic;
-using Newtonsoft.Json.Linq;
-
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
-    /// Custom linked service.
+    /// The on-premises SQL Server database.
     /// </summary>
-    public sealed class CustomLinkedService : LinkedServiceTypeProperties, IGenericTypeProperties
+    [AdfTypeName("SqlServerTable")]
+    public class SqlServerTableDataset : TableTypeProperties
     {
-        public IDictionary<string, JToken> ServiceExtraProperties { get; set; }
+        /// <summary>
+        /// The table name of the on-premises SQL database.
+        /// </summary>
+        [AdfRequired]
+        public string TableName { get; set; }
 
-        public CustomLinkedService()
-        {   
-            this.ServiceExtraProperties = new Dictionary<string, JToken>();
+        public SqlServerTableDataset()
+        {
         }
 
-        public CustomLinkedService(IDictionary<string, JToken> serviceExtraProperties)
+        public SqlServerTableDataset(string tableName)
+            : this()
         {
-            this.ServiceExtraProperties = serviceExtraProperties;
+            Ensure.IsNotNullOrEmpty(tableName, "tableName");
+            this.TableName = tableName;
         }
     }
 }

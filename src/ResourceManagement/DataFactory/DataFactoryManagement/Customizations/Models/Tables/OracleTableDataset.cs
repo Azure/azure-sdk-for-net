@@ -16,13 +16,26 @@
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
-    /// Document Database Collection location.
+    /// The on-premises Oracle database.
     /// </summary>
-    public class DocumentDbCollectionLocation : TableTypeProperties
+    [AdfTypeName("OracleTable")]
+    public class OracleTableDataset : TableTypeProperties
     {
         /// <summary>
-        /// Document Database collection name.
+        /// The table name of the on-premises Oracle database.
         /// </summary>
-        public string CollectionName { get; set; }
+        [AdfRequired]
+        public string TableName { get; set; }
+
+        public OracleTableDataset()
+        {
+        }
+
+        public OracleTableDataset(string tableName)
+            : this()
+        {
+            Ensure.IsNotNullOrEmpty(tableName, "tableName");
+            this.TableName = tableName;
+        }
     }
 }

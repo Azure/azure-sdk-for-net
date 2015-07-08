@@ -14,33 +14,26 @@
 //
 
 using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
-    /// HDInsight activity.
+    /// Custom linked service.
     /// </summary>
-    public abstract class HDInsightActivityBase : ActivityTypeProperties
+    [AdfTypeName("CustomDataSource")]
+    public sealed class CustomDataSourceLinkedService : LinkedServiceTypeProperties, IGenericTypeProperties
     {
-        /// <summary>
-        /// Storage linked services.
-        /// </summary>
-        public IList<string> StorageLinkedServices { get; set; }
+        public IDictionary<string, JToken> ServiceExtraProperties { get; set; }
 
-        /// <summary>
-        /// User specified arguments to HDInsightActivity.
-        /// </summary>
-        public IList<string> Arguments { get; set; }
+        public CustomDataSourceLinkedService()
+        {   
+            this.ServiceExtraProperties = new Dictionary<string, JToken>();
+        }
 
-        /// <summary>
-        /// The <see cref="HDInsightActivityDebugInfoOption"/> settings to use.
-        /// </summary>
-        public string GetDebugInfo { get; set; }
-
-        protected HDInsightActivityBase()
+        public CustomDataSourceLinkedService(IDictionary<string, JToken> serviceExtraProperties)
         {
-            this.Arguments = new List<string>();
-            this.StorageLinkedServices = new List<string>();
+            this.ServiceExtraProperties = serviceExtraProperties;
         }
     }
 }

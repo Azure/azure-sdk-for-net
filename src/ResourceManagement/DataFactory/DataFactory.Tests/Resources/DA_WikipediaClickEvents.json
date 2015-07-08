@@ -15,7 +15,7 @@
         "minimumSizeMB": 1.0
       }
     },
-    "type": "AzureBlobLocation",
+    "type": "AzureBlob",
     "linkedServiceName": "LinkedService-WikipediaClickEvents",
     "typeProperties": {
       "folderPath": "wikidatagateway/wikisampledatain/"

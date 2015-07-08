@@ -22,7 +22,6 @@ using DataFactory.Tests.Framework.JsonSamples;
 using DataFactory.Tests.UnitTests.TestClasses;
 using Microsoft.Azure.Management.DataFactories;
 using Microsoft.Azure.Management.DataFactories.Models;
-using Microsoft.Azure.Management.DataFactories.Registration.Models;
 using Xunit;
 using Core = Microsoft.Azure.Management.DataFactories.Core;
 using CoreModel = Microsoft.Azure.Management.DataFactories.Core.Models;
@@ -79,7 +78,7 @@ namespace DataFactory.Tests.UnitTests
     name: ""Test-BYOC-HDInsight-linkedService"",
     properties:
     {
-        type: ""HDInsightBYOCLinkedService"",
+        type: ""HDInsight"",
         typeProperties:
         {
             linkedServiceName: ""MyStorageAssetName""
@@ -270,9 +269,7 @@ namespace DataFactory.Tests.UnitTests
         private LinkedService ConvertAndTestJson(string json)
         {
             LinkedService linkedService = this.ConvertToWrapper(json);
-
             CoreModel.LinkedService actual = this.Operations.Converter.ToCoreType(linkedService);
-
             string actualJson = Core.DataFactoryManagementClient.SerializeInternalLinkedServiceToJson(actual);
 
             JsonComparer.ValidateAreSame(json, actualJson, ignoreDefaultValues: true);

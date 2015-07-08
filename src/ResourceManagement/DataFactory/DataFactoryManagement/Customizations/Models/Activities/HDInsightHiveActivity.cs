@@ -20,6 +20,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     /// <summary>
     /// Hive activity which runs on HDInsight.
     /// </summary>
+    [AdfTypeName("HDInsightHive")]
     public class HDInsightHiveActivity : HDInsightActivityBase
     {
         /// <summary>

@@ -15,6 +15,7 @@
     <Compile Include="Framework\JsonSampleAttribute.cs" />
     <Compile Include="Framework\JsonSampleCommon.cs" />
     <Compile Include="Framework\JsonSampleInfo.cs" />
+    <Compile Include="Framework\JsonSamples\JsonSampleType.cs" />
     <Compile Include="Framework\JsonSamples\PipelineJsonSamples.cs" />
     <Compile Include="Framework\JsonSamples\CustomLinkedServiceJsonSamples.cs" />
     <Compile Include="Framework\JsonSamples\HubJsonSamples.cs" />

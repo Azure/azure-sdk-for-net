@@ -16,32 +16,26 @@
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
-    /// Windows Azure SQL database.
+    /// The Azure table storage.
     /// </summary>
-    public class AzureSqlLinkedService : LinkedServiceTypeProperties
+    [AdfTypeName("AzureTable")]
+    public class AzureTableDataset : TableTypeProperties
     {
         /// <summary>
-        /// Required. The connection string.
+        /// The table name of the Azure table storage.
         /// </summary>
         [AdfRequired]
-        public string ConnectionString { get; set; }
+        public string TableName { get; set; }
 
-        /// <summary>
-        /// Initializes a new instance of the AzureSqlLinkedService class.
-        /// </summary>
-        public AzureSqlLinkedService()
+        public AzureTableDataset()
         {
         }
 
-        /// <summary>
-        /// Initializes a new instance of the AzureSqlLinkedService class with
-        /// required arguments.
-        /// </summary>
-        public AzureSqlLinkedService(string connectionString)
+        public AzureTableDataset(string tableName)
             : this()
         {
-            Ensure.IsNotNullOrEmpty(connectionString, "connectionString");
-            this.ConnectionString = connectionString;
+            Ensure.IsNotNullOrEmpty(tableName, "tableName");
+            this.TableName = tableName;
         }
     }
 }

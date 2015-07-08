@@ -13,6 +13,11 @@
 // limitations under the License.
 //
 
+using System;
+using System.Linq;
+using System.Reflection;
+using Microsoft.Azure.Management.DataFactories.Models;
+
 namespace Microsoft.Azure.Management.DataFactories
 {
     internal static class DataFactoryUtilities
@@ -33,6 +38,17 @@ namespace Microsoft.Azure.Management.DataFactories
         {
             target.RequestId = source.RequestId;
             target.StatusCode = source.StatusCode;
+        }
+
+        public static string GetResourceTypeName(Type type)
+        {
+#if NET45
+            AdfTypeNameAttribute typeNameAttribute = type.GetCustomAttribute<AdfTypeNameAttribute>(true);
+#else
+            AdfTypeNameAttribute typeNameAttribute =
+                type.GetCustomAttributes(typeof(AdfTypeNameAttribute), true).FirstOrDefault() as AdfTypeNameAttribute;
+#endif
+            return typeNameAttribute == null ? type.Name : typeNameAttribute.TypeName;
         }
     }
 }

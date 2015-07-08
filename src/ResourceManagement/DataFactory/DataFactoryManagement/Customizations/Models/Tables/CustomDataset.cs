@@ -13,28 +13,27 @@
 // limitations under the License.
 //
 
+using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
+
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
-    /// The on-premises SQL Server database.
+    /// Custom location.
     /// </summary>
-    public class OnPremisesSqlServerTableLocation : TableTypeProperties
+    [AdfTypeName("CustomDataSet")]
+    public sealed class CustomDataset : TableTypeProperties, IGenericTypeProperties
     {
-        /// <summary>
-        /// The table name of the on-premises SQL database.
-        /// </summary>
-        [AdfRequired]
-        public string TableName { get; set; }
+        public IDictionary<string, JToken> ServiceExtraProperties { get; set; } 
 
-        public OnPremisesSqlServerTableLocation()
+        public CustomDataset()
         {
+            this.ServiceExtraProperties = new Dictionary<string, JToken>();
         }
 
-        public OnPremisesSqlServerTableLocation(string tableName)
-            : this()
+        public CustomDataset(IDictionary<string, JToken> serviceExtraProperties)
         {
-            Ensure.IsNotNullOrEmpty(tableName, "tableName");
-            this.TableName = tableName;
+            this.ServiceExtraProperties = serviceExtraProperties;
         }
     }
 }
