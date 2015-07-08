@@ -29,7 +29,7 @@ namespace Networks.Tests.Helpers
         /// <returns>A location where this resource type is supported for the current subscription</returns>
         public static string GetResourceLocation(ResourceManagementClient client, string resourceType)
         {
-            var supportedLocations = new HashSet<string>(new[] { "Central US" }, StringComparer.OrdinalIgnoreCase);
+            var supportedLocations = new HashSet<string>(new[] { "East US", "West US", "Central US", "West Europe" }, StringComparer.OrdinalIgnoreCase);
             
             string[] parts = resourceType.Split('/');
             string providerName = parts[0];
