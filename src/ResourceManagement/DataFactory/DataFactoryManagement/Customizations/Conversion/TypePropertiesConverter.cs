@@ -92,6 +92,11 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
             }
 
             writer.WriteToken(obj.CreateReader());
+
+            if (genericTypeProperties != null)
+            {
+                genericTypeProperties.ServiceExtraProperties = propertyBag;
+            }
         }
     }
 }

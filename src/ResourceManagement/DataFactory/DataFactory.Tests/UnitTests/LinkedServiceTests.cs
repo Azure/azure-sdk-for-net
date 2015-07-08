@@ -266,15 +266,25 @@ namespace DataFactory.Tests.UnitTests
             JsonSampleCommon.TestJsonSamples(samples, testSample);
         }
 
-        private LinkedService ConvertAndTestJson(string json)
+        private LinkedService ConvertAndTestJson(string json, bool customTest = false)
         {
             LinkedService linkedService = this.ConvertToWrapper(json);
             CoreModel.LinkedService actual = this.Operations.Converter.ToCoreType(linkedService);
+
+            // after converting to intermediate object, ensure that ServiceExtraProperties is still set
+            if (customTest)
+            {
+                IGenericTypeProperties typeProperties =
+                    linkedService.Properties.TypeProperties as IGenericTypeProperties;
+
+                Assert.NotNull(typeProperties);
+            }
+
             string actualJson = Core.DataFactoryManagementClient.SerializeInternalLinkedServiceToJson(actual);
 
             JsonComparer.ValidateAreSame(json, actualJson, ignoreDefaultValues: true);
             Assert.DoesNotContain("ServiceExtraProperties", actualJson);
-
+            
             return linkedService;
         }
 
@@ -286,7 +296,7 @@ namespace DataFactory.Tests.UnitTests
 
         private void TestLinkedServiceCustomJson(string json)
         {
-            this.ConvertAndTestJson(json);
+            this.ConvertAndTestJson(json, true); 
         }
 
         private void TestLinkedServiceValidation(string json)
