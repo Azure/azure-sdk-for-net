@@ -16,9 +16,9 @@
   </PropertyGroup>
   <Import Project="..\..\..\..\tools\Library.Settings.targets" />
   <ItemGroup>
-    <Compile Include="Generated\BackupServicesManagementClient.cs" />
-    <Compile Include="Generated\BackupServicesManagementClientExtensions.cs" />
-    <Compile Include="Generated\IBackupServicesManagementClient.cs" />
+    <Compile Include="Generated\BackupVaultServicesManagementClient.cs" />
+    <Compile Include="Generated\BackupVaultServicesManagementClientExtensions.cs" />
+    <Compile Include="Generated\IBackupVaultServicesManagementClient.cs" />
     <Compile Include="Generated\IVaultOperations.cs" />
     <Compile Include="Generated\Models\AzureBackupVault.cs" />
     <Compile Include="Generated\Models\AzureBackupVaultCreateOrUpdateParameters.cs" />

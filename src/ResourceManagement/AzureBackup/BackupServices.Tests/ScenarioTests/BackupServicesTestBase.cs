@@ -36,13 +36,13 @@ namespace BackupServices.Tests
             var testEnvironment = factory.GetTestEnvironment();
             ServicePointManager.ServerCertificateValidationCallback = IgnoreCertificateErrorHandler;
 
-            BackupServicesManagementClient client;
+            BackupVaultServicesManagementClient client;
 
             string resourceName = ConfigurationManager.AppSettings["ResourceName"];
             string resourceGroupName = ConfigurationManager.AppSettings["ResourceGroupName"];
             if (testEnvironment.UsesCustomUri())
             {
-                client = new BackupServicesManagementClient(
+                client = new BackupVaultServicesManagementClient(
                     resourceName,
                     resourceGroupName,
                     testEnvironment.Credentials as SubscriptionCloudCredentials,
@@ -50,7 +50,7 @@ namespace BackupServices.Tests
             }
             else
             {
-                client = new BackupServicesManagementClient(
+                client = new BackupVaultServicesManagementClient(
                     resourceName,
                     resourceGroupName,
                     testEnvironment.Credentials as SubscriptionCloudCredentials);
@@ -60,7 +60,7 @@ namespace BackupServices.Tests
         }
 
 
-        public static T GetServiceClient<T>(TestEnvironmentFactory factory, BackupServicesManagementClient client) where T : class
+        public static T GetServiceClient<T>(TestEnvironmentFactory factory, BackupVaultServicesManagementClient client) where T : class
         {
             TestEnvironment testEnvironment = factory.GetTestEnvironment();
 

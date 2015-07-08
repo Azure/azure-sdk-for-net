@@ -26,7 +26,7 @@ using Microsoft.Azure.Management.BackupServices;
 
 namespace Microsoft.Azure.Management.BackupServices
 {
-    public partial interface IBackupServicesManagementClient : IDisposable
+    public partial interface IBackupVaultServicesManagementClient : IDisposable
     {
         /// <summary>
         /// Gets the API version.

@@ -24,7 +24,7 @@ using System.Linq;
 
 namespace Microsoft.Azure.Management.BackupServices
 {
-    public static partial class BackupServicesManagementClientExtensions
+    public static partial class BackupVaultServicesManagementClientExtensions
     {
     }
 }
