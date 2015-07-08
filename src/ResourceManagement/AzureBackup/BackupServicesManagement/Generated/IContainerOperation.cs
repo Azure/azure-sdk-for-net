@@ -47,27 +47,9 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The definition of a ListContainerResponse.
-        /// </returns>
-        Task<ListContainerResponse> ListAsync(string queryFilterString, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Get the list of all container based on the given query filter
-        /// string.
-        /// </summary>
-        /// <param name='queryFilterString'>
-        /// Job query parameter string.
-        /// </param>
-        /// <param name='customRequestHeaders'>
-        /// Request header parameters.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
         /// The definition of a CSMContainerListOperationResponse.
         /// </returns>
-        Task<CSMContainerListOperationResponse> ListCSMAsync(string queryFilterString, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<CSMContainerListOperationResponse> ListAsync(string queryFilterString, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
         /// Trigger the Discovery.

@@ -45,9 +45,9 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The definition of a ListContainerResponse.
+        /// The definition of a CSMContainerListOperationResponse.
         /// </returns>
-        public static ListContainerResponse List(this IContainerOperation operations, string queryFilterString, CustomRequestHeaders customRequestHeaders)
+        public static CSMContainerListOperationResponse List(this IContainerOperation operations, string queryFilterString, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -71,59 +71,11 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The definition of a ListContainerResponse.
+        /// The definition of a CSMContainerListOperationResponse.
         /// </returns>
-        public static Task<ListContainerResponse> ListAsync(this IContainerOperation operations, string queryFilterString, CustomRequestHeaders customRequestHeaders)
+        public static Task<CSMContainerListOperationResponse> ListAsync(this IContainerOperation operations, string queryFilterString, CustomRequestHeaders customRequestHeaders)
         {
             return operations.ListAsync(queryFilterString, customRequestHeaders, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// Get the list of all container based on the given query filter
-        /// string.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.BackupServices.IContainerOperation.
-        /// </param>
-        /// <param name='queryFilterString'>
-        /// Optional. Job query parameter string.
-        /// </param>
-        /// <param name='customRequestHeaders'>
-        /// Optional. Request header parameters.
-        /// </param>
-        /// <returns>
-        /// The definition of a CSMContainerListOperationResponse.
-        /// </returns>
-        public static CSMContainerListOperationResponse ListCSM(this IContainerOperation operations, string queryFilterString, CustomRequestHeaders customRequestHeaders)
-        {
-            return Task.Factory.StartNew((object s) => 
-            {
-                return ((IContainerOperation)s).ListCSMAsync(queryFilterString, customRequestHeaders);
-            }
-            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-        }
-        
-        /// <summary>
-        /// Get the list of all container based on the given query filter
-        /// string.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.BackupServices.IContainerOperation.
-        /// </param>
-        /// <param name='queryFilterString'>
-        /// Optional. Job query parameter string.
-        /// </param>
-        /// <param name='customRequestHeaders'>
-        /// Optional. Request header parameters.
-        /// </param>
-        /// <returns>
-        /// The definition of a CSMContainerListOperationResponse.
-        /// </returns>
-        public static Task<CSMContainerListOperationResponse> ListCSMAsync(this IContainerOperation operations, string queryFilterString, CustomRequestHeaders customRequestHeaders)
-        {
-            return operations.ListCSMAsync(queryFilterString, customRequestHeaders, CancellationToken.None);
         }
         
         /// <summary>

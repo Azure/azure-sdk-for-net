@@ -45,7 +45,6 @@
     <Compile Include="Generated\Models\AzureBackupVaultListResponse.cs" />
     <Compile Include="Generated\Models\AzureBackupVaultProperties.cs" />
     <Compile Include="Generated\Models\BackupSchedule.cs" />
-    <Compile Include="Generated\Models\ContainerInfo.cs" />
     <Compile Include="Generated\Models\CSMBaseObject.cs" />
     <Compile Include="Generated\Models\CSMBaseResponse.cs" />
     <Compile Include="Generated\Models\CSMContainerListOperationResponse.cs" />
@@ -66,7 +65,6 @@
     <Compile Include="Generated\Models\JobProperties.cs" />
     <Compile Include="Generated\Models\JobSupportedAction.cs" />
     <Compile Include="Generated\Models\JobTaskDetails.cs" />
-    <Compile Include="Generated\Models\ListContainerResponse.cs" />
     <Compile Include="Generated\Models\ManagementBaseObject.cs" />
     <Compile Include="Generated\Models\ManagementResponseObject.cs" />
     <Compile Include="Generated\Models\POQueryParameter.cs" />
