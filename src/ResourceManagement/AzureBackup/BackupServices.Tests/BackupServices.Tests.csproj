@@ -9,7 +9,13 @@
   <Import Project="$(LibraryToolsFolder)\Test.Dependencies.target" />
   <ItemGroup>
     <Compile Include="Helpers\VaultTestHelper.cs" />
+    <Compile Include="ScenarioTests\AzureBackupItemTests.cs" />
     <Compile Include="ScenarioTests\BackupServicesTestBase.cs" />
+    <Compile Include="ScenarioTests\BackUpTests.cs" />
+    <Compile Include="ScenarioTests\ContainerTests.cs" />
+    <Compile Include="ScenarioTests\JobsTests.cs" />
+    <Compile Include="ScenarioTests\ProtectionPolicyTests.cs" />
+    <Compile Include="ScenarioTests\RecoveryPointTests.cs" />
     <Compile Include="ScenarioTests\VaultTests.cs" />
   </ItemGroup>
   <ItemGroup>
