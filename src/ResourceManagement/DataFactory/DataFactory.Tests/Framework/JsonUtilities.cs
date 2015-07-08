@@ -67,7 +67,6 @@ namespace DataFactory.Tests.Framework
         public const string PropertyNameName = "Name";
         public const string PropertyNameId = "Id";
         public const string PropertyNameDescription = "Description";
-        public const string PropertyNameWaitOnExternal = "WaitOnExternal";
 
         public const string EncryptedStringSentinel = "$EncryptedString$";
 
