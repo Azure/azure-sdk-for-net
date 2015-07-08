@@ -16,8 +16,10 @@
 
 using System;
 using System.Globalization;
+using System.Reflection;
 using DataFactory.Tests.Framework;
 using DataFactory.Tests.UnitTests.TestClasses;
+using Microsoft.Azure.Management.DataFactories;
 using Microsoft.Azure.Management.DataFactories.Models;
 using Xunit;
 
@@ -25,6 +27,14 @@ namespace DataFactory.Tests.UnitTests
 {
     public class PipelineTypeRegistrationTests : UnitTestBase
     {
+        private PipelineOperations Operations
+        {
+            get
+            {
+                return (PipelineOperations)this.Client.Pipelines;
+            }
+        }
+
         [Fact]
         [Trait(TraitName.TestType, TestType.Unit)]
         [Trait(TraitName.Function, TestType.Registration)]
@@ -65,6 +75,28 @@ namespace DataFactory.Tests.UnitTests
             {
                 Assert.True(ex.Message.Contains("is already registered"));
             }
+        }
+
+        [Fact]
+        [Trait(TraitName.TestType, TestType.Unit)]
+        [Trait(TraitName.Function, TestType.Registration)]
+        public void CanGetRegisteredActivityCaseInsensitive()
+        {
+            AdfTypeNameAttribute att = typeof(CopyActivity).GetCustomAttribute<AdfTypeNameAttribute>(true);
+            Assert.NotNull(att);
+
+            // Get the type named used for de/ser
+            string typeName = att.TypeName;
+            Assert.NotNull(typeName);
+            Assert.NotEmpty(typeName);
+
+            // Ensure that the type name is not already all lowercase
+            string typeNameLower = typeName.ToLowerInvariant();
+            Assert.NotEqual(typeName, typeNameLower, StringComparer.Ordinal);
+
+            Type type;
+            Assert.True(this.Operations.Converter.TryGetRegisteredType(typeNameLower, out type));
+            Assert.Equal(typeof(CopyActivity), type);
         }
     }
 }
