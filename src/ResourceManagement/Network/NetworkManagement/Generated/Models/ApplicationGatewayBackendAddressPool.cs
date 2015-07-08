@@ -43,16 +43,16 @@ namespace Microsoft.Azure.Management.Network.Models
             set { this._backendAddresses = value; }
         }
         
-        private IList<ResourceId> _backendIpConfigurations;
+        private IList<ResourceId> _backendIPConfigurations;
         
         /// <summary>
-        /// Optional. Gets or sets backendIpConfiguration of application
+        /// Optional. Gets or sets backendIPConfiguration of application
         /// gateway
         /// </summary>
-        public IList<ResourceId> BackendIpConfigurations
+        public IList<ResourceId> BackendIPConfigurations
         {
-            get { return this._backendIpConfigurations; }
-            set { this._backendIpConfigurations = value; }
+            get { return this._backendIPConfigurations; }
+            set { this._backendIPConfigurations = value; }
         }
         
         private string _provisioningState;
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public ApplicationGatewayBackendAddressPool()
         {
             this.BackendAddresses = new LazyList<ApplicationGatewayBackendAddress>();
-            this.BackendIpConfigurations = new LazyList<ResourceId>();
+            this.BackendIPConfigurations = new LazyList<ResourceId>();
         }
     }
 }
