@@ -21,34 +21,47 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure;
 using Microsoft.Azure.Management.TrafficManager.Models;
 
 namespace Microsoft.Azure.Management.TrafficManager.Models
 {
     /// <summary>
-    /// The response to a Traffic Manager profile 'CreateOrUpdate' operation.
+    /// Parameters supplied to create or update a Traffic Manager endpoint.
     /// </summary>
-    public partial class ProfileCreateOrUpdateResponse : AzureOperationResponse
+    public partial class EndpointCreateOrUpdateParameters
     {
-        private Profile _profile;
+        private Endpoint _endpoint;
         
         /// <summary>
-        /// Optional. Gets or sets information about the profile in the
-        /// response to the 'CreateOrUpdate' operation.
+        /// Required. Gets or sets parameters for the Traffic Manager endpoint
+        /// being created or updated.
         /// </summary>
-        public Profile Profile
+        public Endpoint Endpoint
         {
-            get { return this._profile; }
-            set { this._profile = value; }
+            get { return this._endpoint; }
+            set { this._endpoint = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ProfileCreateOrUpdateResponse
+        /// Initializes a new instance of the EndpointCreateOrUpdateParameters
         /// class.
         /// </summary>
-        public ProfileCreateOrUpdateResponse()
+        public EndpointCreateOrUpdateParameters()
         {
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the EndpointCreateOrUpdateParameters
+        /// class with required arguments.
+        /// </summary>
+        public EndpointCreateOrUpdateParameters(Endpoint endpoint)
+            : this()
+        {
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException("endpoint");
+            }
+            this.Endpoint = endpoint;
         }
     }
 }

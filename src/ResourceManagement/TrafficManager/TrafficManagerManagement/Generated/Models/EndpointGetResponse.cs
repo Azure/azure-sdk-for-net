@@ -27,27 +27,26 @@ using Microsoft.Azure.Management.TrafficManager.Models;
 namespace Microsoft.Azure.Management.TrafficManager.Models
 {
     /// <summary>
-    /// The response to a Traffic Manager profile 'CreateOrUpdate' operation.
+    /// The response to a Traffic Manager endpoint 'Get' operation.
     /// </summary>
-    public partial class ProfileCreateOrUpdateResponse : AzureOperationResponse
+    public partial class EndpointGetResponse : AzureOperationResponse
     {
-        private Profile _profile;
+        private Endpoint _endpoint;
         
         /// <summary>
-        /// Optional. Gets or sets information about the profile in the
-        /// response to the 'CreateOrUpdate' operation.
+        /// Optional. Gets or sets information about the endpoint in the
+        /// response to the 'Get' operation.
         /// </summary>
-        public Profile Profile
+        public Endpoint Endpoint
         {
-            get { return this._profile; }
-            set { this._profile = value; }
+            get { return this._endpoint; }
+            set { this._endpoint = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ProfileCreateOrUpdateResponse
-        /// class.
+        /// Initializes a new instance of the EndpointGetResponse class.
         /// </summary>
-        public ProfileCreateOrUpdateResponse()
+        public EndpointGetResponse()
         {
         }
     }

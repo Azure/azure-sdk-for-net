@@ -21,34 +21,21 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure;
-using Microsoft.Azure.Management.TrafficManager.Models;
 
 namespace Microsoft.Azure.Management.TrafficManager.Models
 {
-    /// <summary>
-    /// The response to a Traffic Manager profile 'CreateOrUpdate' operation.
-    /// </summary>
-    public partial class ProfileCreateOrUpdateResponse : AzureOperationResponse
+    public enum Reason
     {
-        private Profile _profile;
+        /// <summary>
+        /// This indicates that the name has syntactic errors (invalid
+        /// characters, string length, etc.)
+        /// </summary>
+        AccountNameInvalid = 0,
         
         /// <summary>
-        /// Optional. Gets or sets information about the profile in the
-        /// response to the 'CreateOrUpdate' operation.
+        /// This indicates that the name has already been taken by an existing
+        /// storage account.
         /// </summary>
-        public Profile Profile
-        {
-            get { return this._profile; }
-            set { this._profile = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the ProfileCreateOrUpdateResponse
-        /// class.
-        /// </summary>
-        public ProfileCreateOrUpdateResponse()
-        {
-        }
+        AlreadyExists = 1,
     }
 }
