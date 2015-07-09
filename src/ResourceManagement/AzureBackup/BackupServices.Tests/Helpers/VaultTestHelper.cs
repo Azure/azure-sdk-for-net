@@ -17,6 +17,9 @@ using System;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using Microsoft.WindowsAzure.Management;
+using Microsoft.WindowsAzure.Management.EventSources;
+using Security.Cryptography;
+using Security.Cryptography.X509Certificates;
 
 namespace BackupServices.Tests.Helpers
 {
@@ -30,72 +33,72 @@ namespace BackupServices.Tests.Helpers
         public const string OIDClientAuthFriendlyName = "Client Authentication";
         public const int KeySize2048 = 2048;
 
-        ///// <summary>
-        ///// Windows Azure Service Management API requires 2048bit RSA keys.
-        ///// The private key needs to be exportable so we can save it to .pfx for sharing with team members.
-        ///// </summary>
-        ///// <returns>A 2048 bit RSA key</returns>
-        ////private static CngKey Create2048RsaKey()
-        //{
-        //    var keyCreationParameters = new CngKeyCreationParameters
-        //    {
-        //        ExportPolicy = CngExportPolicies.AllowExport,
-        //        KeyCreationOptions = CngKeyCreationOptions.None,
-        //        KeyUsage = CngKeyUsages.AllUsages,
-        //        Provider = new CngProvider(MsEnhancedProv)
-        //    };
+        /// <summary>
+        /// Windows Azure Service Management API requires 2048bit RSA keys.
+        /// The private key needs to be exportable so we can save it to .pfx for sharing with team members.
+        /// </summary>
+        /// <returns>A 2048 bit RSA key</returns>
+        private static CngKey Create2048RsaKey()
+        {
+            var keyCreationParameters = new CngKeyCreationParameters
+            {
+                ExportPolicy = CngExportPolicies.AllowExport,
+                KeyCreationOptions = CngKeyCreationOptions.None,
+                KeyUsage = CngKeyUsages.AllUsages,
+                Provider = new CngProvider(MsEnhancedProv)
+            };
 
-        //    keyCreationParameters.Parameters.Add(new CngProperty("Length", BitConverter.GetBytes(KeySize2048), CngPropertyOptions.None));
+            keyCreationParameters.Parameters.Add(new CngProperty("Length", BitConverter.GetBytes(KeySize2048), CngPropertyOptions.None));
 
-        //    return CngKey.Create(CngAlgorithm2.Rsa, null, keyCreationParameters);
-        //}
+            return CngKey.Create(CngAlgorithm2.Rsa, null, keyCreationParameters);
+        }
 
-        ///// <summary>
-        ///// Creates a new self-signed X509 certificate
-        ///// </summary>
-        ///// <param name="issuer">The certificate issuer</param>
-        ///// <param name="friendlyName">Human readable name</param>
-        ///// <param name="password">The certificate's password</param>
-        ///// <param name="startTime">Certificate creation date & time</param>
-        ///// <param name="endTime">Certificate expiry date & time</param>
-        ///// <returns>An X509Certificate2</returns>
-        //public static X509Certificate2 CreateSelfSignedCert(string issuer, string friendlyName, string password, DateTime startTime, DateTime endTime)
-        //{
-        //    string distinguishedNameString = issuer;
-        //    var key = Create2048RsaKey();
+        /// <summary>
+        /// Creates a new self-signed X509 certificate
+        /// </summary>
+        /// <param name="issuer">The certificate issuer</param>
+        /// <param name="friendlyName">Human readable name</param>
+        /// <param name="password">The certificate's password</param>
+        /// <param name="startTime">Certificate creation date & time</param>
+        /// <param name="endTime">Certificate expiry date & time</param>
+        /// <returns>An X509Certificate2</returns>
+        public static X509Certificate2 CreateSelfSignedCert(string issuer, string friendlyName, string password, DateTime startTime, DateTime endTime)
+        {
+            string distinguishedNameString = issuer;
+            var key = Create2048RsaKey();
 
-        //    var creationParams = new X509CertificateCreationParameters(new X500DistinguishedName(distinguishedNameString))
-        //    {
-        //        TakeOwnershipOfKey = true,
-        //        StartTime = startTime,
-        //        EndTime = endTime
-        //    };
+            var creationParams = new X509CertificateCreationParameters(new X500DistinguishedName(distinguishedNameString))
+            {
+                TakeOwnershipOfKey = true,
+                StartTime = startTime,
+                EndTime = endTime
+            };
 
-        //    // adding client authentication, -eku = 1.3.6.1.5.5.7.3.2, 
-        //    // This is mandatory for the upload to be successful
-        //    OidCollection oidCollection = new OidCollection();
-        //    oidCollection.Add(new Oid(OIDClientAuthValue, OIDClientAuthFriendlyName));
-        //    creationParams.Extensions.Add(new X509EnhancedKeyUsageExtension(oidCollection, false));
+            // adding client authentication, -eku = 1.3.6.1.5.5.7.3.2, 
+            // This is mandatory for the upload to be successful
+            OidCollection oidCollection = new OidCollection();
+            oidCollection.Add(new Oid(OIDClientAuthValue, OIDClientAuthFriendlyName));
+            creationParams.Extensions.Add(new X509EnhancedKeyUsageExtension(oidCollection, false));
 
-        //    // Documentation of CreateSelfSignedCertificate states:
-        //    // If creationParameters have TakeOwnershipOfKey set to true, the certificate
-        //    // generated will own the key and the input CngKey will be disposed to ensure
-        //    // that the caller doesn't accidentally use it beyond its lifetime (which is
-        //    // now controlled by the certificate object).
-        //    // We don't dispose it ourselves in this case.
-        //    var cert = key.CreateSelfSignedCertificate(creationParams);
-        //    key = null;
-        //    cert.FriendlyName = friendlyName;
+            // Documentation of CreateSelfSignedCertificate states:
+            // If creationParameters have TakeOwnershipOfKey set to true, the certificate
+            // generated will own the key and the input CngKey will be disposed to ensure
+            // that the caller doesn't accidentally use it beyond its lifetime (which is
+            // now controlled by the certificate object).
+            // We don't dispose it ourselves in this case.
+            var cert = key.CreateSelfSignedCertificate(creationParams);
+            key = null;
+            cert.FriendlyName = friendlyName;
 
-        //    // X509 certificate needs PersistKeySet flag set.  
-        //    // Reload a new X509Certificate2 instance from exported bytes in order to set the PersistKeySet flag.
-        //    var bytes = cert.Export(X509ContentType.Pfx, password);
+            // X509 certificate needs PersistKeySet flag set.  
+            // Reload a new X509Certificate2 instance from exported bytes in order to set the PersistKeySet flag.
+            var bytes = cert.Export(X509ContentType.Pfx, password);
 
-        //    // NOTE: PfxValidation is not done here because these are newly created certs and assumed valid.
+            // NOTE: PfxValidation is not done here because these are newly created certs and assumed valid.
 
-        //    ICommonEventSource evtSource = null;
-        //    return X509Certificate2Helper.NewX509Certificate2(bytes, password, X509KeyStorageFlags.PersistKeySet | X509KeyStorageFlags.Exportable, evtSource, doPfxValidation: false);
-        //}
+            ICommonEventSource evtSource = null;
+            return X509Certificate2Helper.NewX509Certificate2(bytes, password, X509KeyStorageFlags.PersistKeySet | X509KeyStorageFlags.Exportable, evtSource, doPfxValidation: false);
+        }
 
         /// <summary>
         /// Returns serialized certificate - Base64 encoded based on the content type
