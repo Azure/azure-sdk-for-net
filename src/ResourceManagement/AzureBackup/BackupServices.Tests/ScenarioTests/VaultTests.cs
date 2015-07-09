@@ -29,60 +29,60 @@ namespace BackupServices.Tests
 {
     public class VaultTests : BackupServicesTestsBase
     {
-        //[Fact]
-        //public void UploadCertReturnsValidResponseTest()
-        //{
-        //    using (UndoContext undoContext = UndoContext.Current)
-        //    {
-        //        undoContext.Start();
+        [Fact]
+        public void UploadCertReturnsValidResponseTest()
+        {
+            using (UndoContext undoContext = UndoContext.Current)
+            {
+                undoContext.Start();
 
-        //        BackupVaultServicesManagementClient client = GetServiceClient<BackupVaultServicesManagementClient>();
+                BackupVaultServicesManagementClient client = GetServiceClient<BackupVaultServicesManagementClient>();
 
-        //        string subscriptionId = ConfigurationManager.AppSettings["SubscriptionId"];
-        //        string resourceName = ConfigurationManager.AppSettings["ResourceName"];
-        //        string resourceId = ConfigurationManager.AppSettings["ResourceId"];
+                string subscriptionId = ConfigurationManager.AppSettings["SubscriptionId"];
+                string resourceName = ConfigurationManager.AppSettings["ResourceName"];
+                string resourceId = ConfigurationManager.AppSettings["ResourceId"];
 
-        //        string certFriendlyName = VaultTestHelper.GenerateCertFriendlyName(subscriptionId, resourceName);
+                string certFriendlyName = VaultTestHelper.GenerateCertFriendlyName(subscriptionId, resourceName);
 
-        //        X509Certificate2 cert =
-        //            VaultTestHelper.CreateSelfSignedCert(VaultTestHelper.DefaultIssuer,
-        //                                                 certFriendlyName,
-        //                                                 VaultTestHelper.DefaultPassword,
-        //                                                 DateTime.UtcNow.AddMinutes(-10),
-        //                                                 DateTime.UtcNow.AddHours(VaultTestHelper.GetCertificateExpiryInHours()));
+                X509Certificate2 cert =
+                    VaultTestHelper.CreateSelfSignedCert(VaultTestHelper.DefaultIssuer,
+                                                         certFriendlyName,
+                                                         VaultTestHelper.DefaultPassword,
+                                                         DateTime.UtcNow.AddMinutes(-10),
+                                                         DateTime.UtcNow.AddHours(VaultTestHelper.GetCertificateExpiryInHours()));
 
-        //        string rawCertDataString = Convert.ToBase64String(cert.RawData);
-        //        VaultCredUploadCertRequest vaultCredUploadCertRequest = new VaultCredUploadCertRequest()
-        //        {
-        //            RawCertificateData = new RawCertificateData()
-        //            {
-        //                Certificate = rawCertDataString,
-        //            },
-        //        };
+                string rawCertDataString = Convert.ToBase64String(cert.RawData);
+                VaultCredUploadCertRequest vaultCredUploadCertRequest = new VaultCredUploadCertRequest()
+                {
+                    RawCertificateData = new RawCertificateData()
+                    {
+                        Certificate = rawCertDataString,
+                    },
+                };
 
-        //        VaultCredUploadCertResponse response =
-        //            client.Vault.UploadCertificate("IdMgmtInternalCert", vaultCredUploadCertRequest, GetCustomRequestHeaders());
+                VaultCredUploadCertResponse response =
+                    client.Vault.UploadCertificate("IdMgmtInternalCert", vaultCredUploadCertRequest, GetCustomRequestHeaders());
 
-        //        // Response Validation
-        //        Assert.NotNull(response);
-        //        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-        //        Assert.NotNull(response.ResourceCertificateAndACSDetails);
+                // Response Validation
+                Assert.NotNull(response);
+                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+                Assert.NotNull(response.ResourceCertificateAndACSDetails);
 
-        //        // Basic Validation                
-        //        Assert.False(string.IsNullOrEmpty(response.ResourceCertificateAndACSDetails.GlobalAcsHostName),
-        //                     "Returned Global ACS Host Name shouldn't be null or empty");
-        //        Assert.False(string.IsNullOrEmpty(response.ResourceCertificateAndACSDetails.GlobalAcsNamespace),
-        //                     "Returned Global ACS Namespace shouldn't be null or empty");
-        //        Assert.False(string.IsNullOrEmpty(response.ResourceCertificateAndACSDetails.GlobalAcsRPRealm),
-        //                     "Returned Global ACS RP Realm shouldn't be null or empty");
+                // Basic Validation                
+                Assert.False(string.IsNullOrEmpty(response.ResourceCertificateAndACSDetails.GlobalAcsHostName),
+                             "Returned Global ACS Host Name shouldn't be null or empty");
+                Assert.False(string.IsNullOrEmpty(response.ResourceCertificateAndACSDetails.GlobalAcsNamespace),
+                             "Returned Global ACS Namespace shouldn't be null or empty");
+                Assert.False(string.IsNullOrEmpty(response.ResourceCertificateAndACSDetails.GlobalAcsRPRealm),
+                             "Returned Global ACS RP Realm shouldn't be null or empty");
 
-        //        // Extra Validation
-        //        Assert.True(string.Equals(VaultTestHelper.DefaultIssuer, response.ResourceCertificateAndACSDetails.Issuer),
-        //                    "Downloaded and uploaded cert Issuers don't match");
-        //        Assert.True(string.Equals(resourceId, response.ResourceCertificateAndACSDetails.ResourceId.ToString()),
-        //                    "Downloaded and uploaded resource IDs don't match");
-        //    }
-        //}
+                // Extra Validation
+                Assert.True(string.Equals(VaultTestHelper.DefaultIssuer, response.ResourceCertificateAndACSDetails.Issuer),
+                            "Downloaded and uploaded cert Issuers don't match");
+                Assert.True(string.Equals(resourceId, response.ResourceCertificateAndACSDetails.ResourceId.ToString()),
+                            "Downloaded and uploaded resource IDs don't match");
+            }
+        }
 
         [Fact]
         public void UpdateStorageTypeReturnsValidCodeTest()
