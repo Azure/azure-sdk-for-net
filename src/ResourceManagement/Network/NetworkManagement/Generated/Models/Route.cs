@@ -20,22 +20,21 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
 using Microsoft.Azure.Management.Network.Models;
 
 namespace Microsoft.Azure.Management.Network.Models
 {
     /// <summary>
-    /// Subnet in a VirtualNework resource
+    /// Route resource
     /// </summary>
-    public partial class Subnet : ChildResource
+    public partial class Route : ChildResource
     {
         private string _addressPrefix;
         
         /// <summary>
-        /// Required. Gets or sets Address prefix for the subnet.
+        /// Optional. Gets or sets the destination CIDR to which the route
+        /// applies.
         /// </summary>
         public string AddressPrefix
         {
@@ -43,34 +42,35 @@ namespace Microsoft.Azure.Management.Network.Models
             set { this._addressPrefix = value; }
         }
         
-        private IList<ResourceId> _ipConfigurations;
+        private string _nextHopIpAddress;
         
         /// <summary>
-        /// Optional. Gets array of references to the network interface IP
-        /// configurations using subnet
+        /// Optional. Gets or sets the IP address packets should be forwarded
+        /// to. Next hop values are only allowed in routes where the next hop
+        /// type is VirtualAppliance.
         /// </summary>
-        public IList<ResourceId> IpConfigurations
+        public string NextHopIpAddress
         {
-            get { return this._ipConfigurations; }
-            set { this._ipConfigurations = value; }
+            get { return this._nextHopIpAddress; }
+            set { this._nextHopIpAddress = value; }
         }
         
-        private ResourceId _networkSecurityGroup;
+        private string _nextHopType;
         
         /// <summary>
-        /// Optional. Gets or sets the reference of the NetworkSecurityGroup
-        /// resource
+        /// Required. Gets or sets the type of Azure hop the packet should be
+        /// sent to.
         /// </summary>
-        public ResourceId NetworkSecurityGroup
+        public string NextHopType
         {
-            get { return this._networkSecurityGroup; }
-            set { this._networkSecurityGroup = value; }
+            get { return this._nextHopType; }
+            set { this._nextHopType = value; }
         }
         
         private string _provisioningState;
         
         /// <summary>
-        /// Optional. Gets or sets Provisioning state of the PublicIP resource
+        /// Optional. Gets or sets Provisioning state of the resource
         /// Updating/Deleting/Failed
         /// </summary>
         public string ProvisioningState
@@ -79,37 +79,25 @@ namespace Microsoft.Azure.Management.Network.Models
             set { this._provisioningState = value; }
         }
         
-        private ResourceId _routeTable;
-        
         /// <summary>
-        /// Optional. Gets or sets the reference of the RouteTable resource
+        /// Initializes a new instance of the Route class.
         /// </summary>
-        public ResourceId RouteTable
+        public Route()
         {
-            get { return this._routeTable; }
-            set { this._routeTable = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the Subnet class.
-        /// </summary>
-        public Subnet()
-        {
-            this.IpConfigurations = new LazyList<ResourceId>();
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the Subnet class with required
+        /// Initializes a new instance of the Route class with required
         /// arguments.
         /// </summary>
-        public Subnet(string addressPrefix)
+        public Route(string nextHopType)
             : this()
         {
-            if (addressPrefix == null)
+            if (nextHopType == null)
             {
-                throw new ArgumentNullException("addressPrefix");
+                throw new ArgumentNullException("nextHopType");
             }
-            this.AddressPrefix = addressPrefix;
+            this.NextHopType = nextHopType;
         }
     }
 }

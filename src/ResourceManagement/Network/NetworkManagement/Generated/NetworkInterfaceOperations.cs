@@ -356,6 +356,8 @@ namespace Microsoft.Azure.Management.Network
                     propertiesValue["primary"] = parameters.Primary.Value;
                 }
                 
+                propertiesValue["enableIPForwarding"] = parameters.EnableIPForwarding;
+                
                 if (parameters.ProvisioningState != null)
                 {
                     propertiesValue["provisioningState"] = parameters.ProvisioningState;
@@ -644,6 +646,13 @@ namespace Microsoft.Azure.Management.Network
                                 {
                                     bool primaryInstance = ((bool)primaryValue);
                                     networkInterfaceInstance.Primary = primaryInstance;
+                                }
+                                
+                                JToken enableIPForwardingValue = propertiesValue3["enableIPForwarding"];
+                                if (enableIPForwardingValue != null && enableIPForwardingValue.Type != JTokenType.Null)
+                                {
+                                    bool enableIPForwardingInstance = ((bool)enableIPForwardingValue);
+                                    networkInterfaceInstance.EnableIPForwarding = enableIPForwardingInstance;
                                 }
                                 
                                 JToken provisioningStateValue2 = propertiesValue3["provisioningState"];
@@ -1437,6 +1446,13 @@ namespace Microsoft.Azure.Management.Network
                                     networkInterfaceInstance.Primary = primaryInstance;
                                 }
                                 
+                                JToken enableIPForwardingValue = propertiesValue["enableIPForwarding"];
+                                if (enableIPForwardingValue != null && enableIPForwardingValue.Type != JTokenType.Null)
+                                {
+                                    bool enableIPForwardingInstance = ((bool)enableIPForwardingValue);
+                                    networkInterfaceInstance.EnableIPForwarding = enableIPForwardingInstance;
+                                }
+                                
                                 JToken provisioningStateValue2 = propertiesValue["provisioningState"];
                                 if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
                                 {
@@ -1851,6 +1867,13 @@ namespace Microsoft.Azure.Management.Network
                                             networkInterfaceJsonFormatInstance.Primary = primaryInstance;
                                         }
                                         
+                                        JToken enableIPForwardingValue = propertiesValue["enableIPForwarding"];
+                                        if (enableIPForwardingValue != null && enableIPForwardingValue.Type != JTokenType.Null)
+                                        {
+                                            bool enableIPForwardingInstance = ((bool)enableIPForwardingValue);
+                                            networkInterfaceJsonFormatInstance.EnableIPForwarding = enableIPForwardingInstance;
+                                        }
+                                        
                                         JToken provisioningStateValue2 = propertiesValue["provisioningState"];
                                         if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
                                         {
@@ -2262,6 +2285,13 @@ namespace Microsoft.Azure.Management.Network
                                         {
                                             bool primaryInstance = ((bool)primaryValue);
                                             networkInterfaceJsonFormatInstance.Primary = primaryInstance;
+                                        }
+                                        
+                                        JToken enableIPForwardingValue = propertiesValue["enableIPForwarding"];
+                                        if (enableIPForwardingValue != null && enableIPForwardingValue.Type != JTokenType.Null)
+                                        {
+                                            bool enableIPForwardingInstance = ((bool)enableIPForwardingValue);
+                                            networkInterfaceJsonFormatInstance.EnableIPForwarding = enableIPForwardingInstance;
                                         }
                                         
                                         JToken provisioningStateValue2 = propertiesValue["provisioningState"];
