@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{38A6741C-77A3-42A8-A846-83373BE57C7F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Microsoft.Azure.Management.BackupServicesManagement</RootNamespace>
+    <AssemblyName>Microsoft.Azure.Management.BackupServicesManagement</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <NuGetPackageImportStamp>e42a5965</NuGetPackageImportStamp>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <Import Project="..\..\..\..\tools\Library.Settings.targets" />
+  <ItemGroup>
+    <Compile Include="Generated\BackupVaultServicesManagementClient.cs" />
+    <Compile Include="Generated\BackupVaultServicesManagementClientExtensions.cs" />
+    <Compile Include="Generated\IBackupVaultServicesManagementClient.cs" />
+    <Compile Include="Generated\IVaultOperations.cs" />
+    <Compile Include="Generated\Models\AzureBackupVault.cs" />
+    <Compile Include="Generated\Models\AzureBackupVaultCreateOrUpdateParameters.cs" />
+    <Compile Include="Generated\Models\AzureBackupVaultGetResponse.cs" />
+    <Compile Include="Generated\Models\AzureBackupVaultListResponse.cs" />
+    <Compile Include="Generated\Models\AzureBackupVaultProperties.cs" />
+    <Compile Include="Generated\Models\CustomRequestHeaders.cs" />
+    <Compile Include="Generated\Models\GetResourceStorageConfigResponse.cs" />
+    <Compile Include="Generated\Models\RawCertificateData.cs" />
+    <Compile Include="Generated\Models\ResourceCertificateAndACSDetails.cs" />
+    <Compile Include="Generated\Models\SkuProperties.cs" />
+    <Compile Include="Generated\Models\StorageDetails.cs" />
+    <Compile Include="Generated\Models\StorageTypeProperties.cs" />
+    <Compile Include="Generated\Models\UpdateVaultStorageTypeRequest.cs" />
+    <Compile Include="Generated\Models\VaultCredUploadCertRequest.cs" />
+    <Compile Include="Generated\Models\VaultCredUploadCertResponse.cs" />
+    <Compile Include="Generated\OperationResponse.cs" />
+    <Compile Include="Generated\VaultOperations.cs" />
+    <Compile Include="Generated\VaultOperationsExtensions.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Microsoft.Azure.Management.BackupServices.nuget.proj">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Microsoft.Azure.Management.BackupServices.nuspec">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Hyak.Common">
+      <HintPath>$(LibraryNugetPackageFolder)\Hyak.Common.1.0.2\lib\portable-net403+win+wpa81\Hyak.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Azure.Common">
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Azure.Common.2.1.0\lib\portable-net45+wp8+wpa81+win\Microsoft.Azure.Common.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(LibraryFxTarget)' == 'portable' " />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(LibraryFxTarget)' != 'portable' " />
+  <Import Project="$(LibraryNugetPackageFolder)\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('$(LibraryNugetPackageFolder)\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
+</Project>
