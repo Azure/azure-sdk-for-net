@@ -40,17 +40,17 @@ namespace Microsoft.Azure.Management.Network
 {
     /// <summary>
     /// The Network Resource Provider API includes operations for managing the
-    /// Virtual Networks for your subscription.
+    /// RouteTables for your subscription.
     /// </summary>
-    internal partial class VirtualNetworkOperations : IServiceOperations<NetworkResourceProviderClient>, IVirtualNetworkOperations
+    internal partial class RouteTableOperations : IServiceOperations<NetworkResourceProviderClient>, IRouteTableOperations
     {
         /// <summary>
-        /// Initializes a new instance of the VirtualNetworkOperations class.
+        /// Initializes a new instance of the RouteTableOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal VirtualNetworkOperations(NetworkResourceProviderClient client)
+        internal RouteTableOperations(NetworkResourceProviderClient client)
         {
             this._client = client;
         }
@@ -67,35 +67,35 @@ namespace Microsoft.Azure.Management.Network
         }
         
         /// <summary>
-        /// The Put VirtualNetwork operation creates/updates a virtual network
-        /// in the specified resource group.
+        /// The Put RouteTable operation creates/updates a route tablein the
+        /// specified resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. The name of the resource group.
         /// </param>
-        /// <param name='virtualNetworkName'>
-        /// Required. The name of the virtual network.
+        /// <param name='routeTableName'>
+        /// Required. The name of the route table.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the create/update Virtual Network
+        /// Required. Parameters supplied to the create/update Route Table
         /// operation
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Response for PutVirtualNetworks API service calls.
+        /// Response for PUT RouteTables Api servive call
         /// </returns>
-        public async Task<VirtualNetworkPutResponse> BeginCreateOrUpdatingAsync(string resourceGroupName, string virtualNetworkName, VirtualNetwork parameters, CancellationToken cancellationToken)
+        public async Task<RouteTablePutResponse> BeginCreateOrUpdatingAsync(string resourceGroupName, string routeTableName, RouteTable parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException("resourceGroupName");
             }
-            if (virtualNetworkName == null)
+            if (routeTableName == null)
             {
-                throw new ArgumentNullException("virtualNetworkName");
+                throw new ArgumentNullException("routeTableName");
             }
             if (parameters == null)
             {
@@ -105,13 +105,13 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ArgumentNullException("parameters.Location");
             }
-            if (parameters.Subnets != null)
+            if (parameters.Routes != null)
             {
-                foreach (Subnet subnetsParameterItem in parameters.Subnets)
+                foreach (Route routesParameterItem in parameters.Routes)
                 {
-                    if (subnetsParameterItem.AddressPrefix == null)
+                    if (routesParameterItem.NextHopType == null)
                     {
-                        throw new ArgumentNullException("parameters.Subnets.AddressPrefix");
+                        throw new ArgumentNullException("parameters.Routes.NextHopType");
                     }
                 }
             }
@@ -124,7 +124,7 @@ namespace Microsoft.Azure.Management.Network
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("virtualNetworkName", virtualNetworkName);
+                tracingParameters.Add("routeTableName", routeTableName);
                 tracingParameters.Add("parameters", parameters);
                 TracingAdapter.Enter(invocationId, this, "BeginCreateOrUpdatingAsync", tracingParameters);
             }
@@ -140,8 +140,8 @@ namespace Microsoft.Azure.Management.Network
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
             url = url + "Microsoft.Network";
-            url = url + "/virtualnetworks/";
-            url = url + Uri.EscapeDataString(virtualNetworkName);
+            url = url + "/routeTables/";
+            url = url + Uri.EscapeDataString(routeTableName);
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-05-01-preview");
             if (queryParameters.Count > 0)
@@ -179,47 +179,58 @@ namespace Microsoft.Azure.Management.Network
                 string requestContent = null;
                 JToken requestDoc = null;
                 
-                JObject virtualNetworkJsonFormatValue = new JObject();
-                requestDoc = virtualNetworkJsonFormatValue;
+                JObject routeTableJsonFormatValue = new JObject();
+                requestDoc = routeTableJsonFormatValue;
                 
                 JObject propertiesValue = new JObject();
-                virtualNetworkJsonFormatValue["properties"] = propertiesValue;
+                routeTableJsonFormatValue["properties"] = propertiesValue;
                 
-                if (parameters.AddressSpace != null)
+                if (parameters.Routes != null)
                 {
-                    JObject addressSpaceValue = new JObject();
-                    propertiesValue["addressSpace"] = addressSpaceValue;
-                    
-                    if (parameters.AddressSpace.AddressPrefixes != null)
+                    if (parameters.Routes is ILazyCollection == false || ((ILazyCollection)parameters.Routes).IsInitialized)
                     {
-                        if (parameters.AddressSpace.AddressPrefixes is ILazyCollection == false || ((ILazyCollection)parameters.AddressSpace.AddressPrefixes).IsInitialized)
+                        JArray routesArray = new JArray();
+                        foreach (Route routesItem in parameters.Routes)
                         {
-                            JArray addressPrefixesArray = new JArray();
-                            foreach (string addressPrefixesItem in parameters.AddressSpace.AddressPrefixes)
+                            JObject routeJsonFormatValue = new JObject();
+                            routesArray.Add(routeJsonFormatValue);
+                            
+                            JObject propertiesValue2 = new JObject();
+                            routeJsonFormatValue["properties"] = propertiesValue2;
+                            
+                            if (routesItem.AddressPrefix != null)
                             {
-                                addressPrefixesArray.Add(addressPrefixesItem);
+                                propertiesValue2["addressPrefix"] = routesItem.AddressPrefix;
                             }
-                            addressSpaceValue["addressPrefixes"] = addressPrefixesArray;
-                        }
-                    }
-                }
-                
-                if (parameters.DhcpOptions != null)
-                {
-                    JObject dhcpOptionsValue = new JObject();
-                    propertiesValue["dhcpOptions"] = dhcpOptionsValue;
-                    
-                    if (parameters.DhcpOptions.DnsServers != null)
-                    {
-                        if (parameters.DhcpOptions.DnsServers is ILazyCollection == false || ((ILazyCollection)parameters.DhcpOptions.DnsServers).IsInitialized)
-                        {
-                            JArray dnsServersArray = new JArray();
-                            foreach (string dnsServersItem in parameters.DhcpOptions.DnsServers)
+                            
+                            propertiesValue2["nextHopType"] = routesItem.NextHopType;
+                            
+                            if (routesItem.NextHopIpAddress != null)
                             {
-                                dnsServersArray.Add(dnsServersItem);
+                                propertiesValue2["nextHopIpAddress"] = routesItem.NextHopIpAddress;
                             }
-                            dhcpOptionsValue["dnsServers"] = dnsServersArray;
+                            
+                            if (routesItem.ProvisioningState != null)
+                            {
+                                propertiesValue2["provisioningState"] = routesItem.ProvisioningState;
+                            }
+                            
+                            if (routesItem.Name != null)
+                            {
+                                routeJsonFormatValue["name"] = routesItem.Name;
+                            }
+                            
+                            if (routesItem.Etag != null)
+                            {
+                                routeJsonFormatValue["etag"] = routesItem.Etag;
+                            }
+                            
+                            if (routesItem.Id != null)
+                            {
+                                routeJsonFormatValue["id"] = routesItem.Id;
+                            }
                         }
+                        propertiesValue["routes"] = routesArray;
                     }
                 }
                 
@@ -228,75 +239,14 @@ namespace Microsoft.Azure.Management.Network
                     if (parameters.Subnets is ILazyCollection == false || ((ILazyCollection)parameters.Subnets).IsInitialized)
                     {
                         JArray subnetsArray = new JArray();
-                        foreach (Subnet subnetsItem in parameters.Subnets)
+                        foreach (ResourceId subnetsItem in parameters.Subnets)
                         {
-                            JObject subnetJsonFormatValue = new JObject();
-                            subnetsArray.Add(subnetJsonFormatValue);
-                            
-                            JObject propertiesValue2 = new JObject();
-                            subnetJsonFormatValue["properties"] = propertiesValue2;
-                            
-                            propertiesValue2["addressPrefix"] = subnetsItem.AddressPrefix;
-                            
-                            if (subnetsItem.NetworkSecurityGroup != null)
-                            {
-                                JObject networkSecurityGroupValue = new JObject();
-                                propertiesValue2["networkSecurityGroup"] = networkSecurityGroupValue;
-                                
-                                if (subnetsItem.NetworkSecurityGroup.Id != null)
-                                {
-                                    networkSecurityGroupValue["id"] = subnetsItem.NetworkSecurityGroup.Id;
-                                }
-                            }
-                            
-                            if (subnetsItem.RouteTable != null)
-                            {
-                                JObject routeTableValue = new JObject();
-                                propertiesValue2["routeTable"] = routeTableValue;
-                                
-                                if (subnetsItem.RouteTable.Id != null)
-                                {
-                                    routeTableValue["id"] = subnetsItem.RouteTable.Id;
-                                }
-                            }
-                            
-                            if (subnetsItem.IpConfigurations != null)
-                            {
-                                if (subnetsItem.IpConfigurations is ILazyCollection == false || ((ILazyCollection)subnetsItem.IpConfigurations).IsInitialized)
-                                {
-                                    JArray ipConfigurationsArray = new JArray();
-                                    foreach (ResourceId ipConfigurationsItem in subnetsItem.IpConfigurations)
-                                    {
-                                        JObject resourceIdValue = new JObject();
-                                        ipConfigurationsArray.Add(resourceIdValue);
-                                        
-                                        if (ipConfigurationsItem.Id != null)
-                                        {
-                                            resourceIdValue["id"] = ipConfigurationsItem.Id;
-                                        }
-                                    }
-                                    propertiesValue2["ipConfigurations"] = ipConfigurationsArray;
-                                }
-                            }
-                            
-                            if (subnetsItem.ProvisioningState != null)
-                            {
-                                propertiesValue2["provisioningState"] = subnetsItem.ProvisioningState;
-                            }
-                            
-                            if (subnetsItem.Name != null)
-                            {
-                                subnetJsonFormatValue["name"] = subnetsItem.Name;
-                            }
-                            
-                            if (subnetsItem.Etag != null)
-                            {
-                                subnetJsonFormatValue["etag"] = subnetsItem.Etag;
-                            }
+                            JObject resourceIdValue = new JObject();
+                            subnetsArray.Add(resourceIdValue);
                             
                             if (subnetsItem.Id != null)
                             {
-                                subnetJsonFormatValue["id"] = subnetsItem.Id;
+                                resourceIdValue["id"] = subnetsItem.Id;
                             }
                         }
                         propertiesValue["subnets"] = subnetsArray;
@@ -310,25 +260,25 @@ namespace Microsoft.Azure.Management.Network
                 
                 if (parameters.Etag != null)
                 {
-                    virtualNetworkJsonFormatValue["etag"] = parameters.Etag;
+                    routeTableJsonFormatValue["etag"] = parameters.Etag;
                 }
                 
                 if (parameters.Id != null)
                 {
-                    virtualNetworkJsonFormatValue["id"] = parameters.Id;
+                    routeTableJsonFormatValue["id"] = parameters.Id;
                 }
                 
                 if (parameters.Name != null)
                 {
-                    virtualNetworkJsonFormatValue["name"] = parameters.Name;
+                    routeTableJsonFormatValue["name"] = parameters.Name;
                 }
                 
                 if (parameters.Type != null)
                 {
-                    virtualNetworkJsonFormatValue["type"] = parameters.Type;
+                    routeTableJsonFormatValue["type"] = parameters.Type;
                 }
                 
-                virtualNetworkJsonFormatValue["location"] = parameters.Location;
+                routeTableJsonFormatValue["location"] = parameters.Location;
                 
                 if (parameters.Tags != null)
                 {
@@ -339,7 +289,7 @@ namespace Microsoft.Azure.Management.Network
                         string tagsValue = pair.Value;
                         tagsDictionary[tagsKey] = tagsValue;
                     }
-                    virtualNetworkJsonFormatValue["tags"] = tagsDictionary;
+                    routeTableJsonFormatValue["tags"] = tagsDictionary;
                 }
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
@@ -373,13 +323,13 @@ namespace Microsoft.Azure.Management.Network
                     }
                     
                     // Create Result
-                    VirtualNetworkPutResponse result = null;
+                    RouteTablePutResponse result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Created)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new VirtualNetworkPutResponse();
+                        result = new RouteTablePutResponse();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -388,40 +338,71 @@ namespace Microsoft.Azure.Management.Network
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            VirtualNetwork virtualNetworkInstance = new VirtualNetwork();
-                            result.VirtualNetwork = virtualNetworkInstance;
+                            RouteTable routeTableInstance = new RouteTable();
+                            result.RouteTable = routeTableInstance;
                             
                             JToken propertiesValue3 = responseDoc["properties"];
                             if (propertiesValue3 != null && propertiesValue3.Type != JTokenType.Null)
                             {
-                                JToken addressSpaceValue2 = propertiesValue3["addressSpace"];
-                                if (addressSpaceValue2 != null && addressSpaceValue2.Type != JTokenType.Null)
+                                JToken routesArray2 = propertiesValue3["routes"];
+                                if (routesArray2 != null && routesArray2.Type != JTokenType.Null)
                                 {
-                                    AddressSpace addressSpaceInstance = new AddressSpace();
-                                    virtualNetworkInstance.AddressSpace = addressSpaceInstance;
-                                    
-                                    JToken addressPrefixesArray2 = addressSpaceValue2["addressPrefixes"];
-                                    if (addressPrefixesArray2 != null && addressPrefixesArray2.Type != JTokenType.Null)
+                                    foreach (JToken routesValue in ((JArray)routesArray2))
                                     {
-                                        foreach (JToken addressPrefixesValue in ((JArray)addressPrefixesArray2))
+                                        Route routeJsonFormatInstance = new Route();
+                                        routeTableInstance.Routes.Add(routeJsonFormatInstance);
+                                        
+                                        JToken propertiesValue4 = routesValue["properties"];
+                                        if (propertiesValue4 != null && propertiesValue4.Type != JTokenType.Null)
                                         {
-                                            addressSpaceInstance.AddressPrefixes.Add(((string)addressPrefixesValue));
+                                            JToken addressPrefixValue = propertiesValue4["addressPrefix"];
+                                            if (addressPrefixValue != null && addressPrefixValue.Type != JTokenType.Null)
+                                            {
+                                                string addressPrefixInstance = ((string)addressPrefixValue);
+                                                routeJsonFormatInstance.AddressPrefix = addressPrefixInstance;
+                                            }
+                                            
+                                            JToken nextHopTypeValue = propertiesValue4["nextHopType"];
+                                            if (nextHopTypeValue != null && nextHopTypeValue.Type != JTokenType.Null)
+                                            {
+                                                string nextHopTypeInstance = ((string)nextHopTypeValue);
+                                                routeJsonFormatInstance.NextHopType = nextHopTypeInstance;
+                                            }
+                                            
+                                            JToken nextHopIpAddressValue = propertiesValue4["nextHopIpAddress"];
+                                            if (nextHopIpAddressValue != null && nextHopIpAddressValue.Type != JTokenType.Null)
+                                            {
+                                                string nextHopIpAddressInstance = ((string)nextHopIpAddressValue);
+                                                routeJsonFormatInstance.NextHopIpAddress = nextHopIpAddressInstance;
+                                            }
+                                            
+                                            JToken provisioningStateValue = propertiesValue4["provisioningState"];
+                                            if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
+                                            {
+                                                string provisioningStateInstance = ((string)provisioningStateValue);
+                                                routeJsonFormatInstance.ProvisioningState = provisioningStateInstance;
+                                            }
                                         }
-                                    }
-                                }
-                                
-                                JToken dhcpOptionsValue2 = propertiesValue3["dhcpOptions"];
-                                if (dhcpOptionsValue2 != null && dhcpOptionsValue2.Type != JTokenType.Null)
-                                {
-                                    DhcpOptions dhcpOptionsInstance = new DhcpOptions();
-                                    virtualNetworkInstance.DhcpOptions = dhcpOptionsInstance;
-                                    
-                                    JToken dnsServersArray2 = dhcpOptionsValue2["dnsServers"];
-                                    if (dnsServersArray2 != null && dnsServersArray2.Type != JTokenType.Null)
-                                    {
-                                        foreach (JToken dnsServersValue in ((JArray)dnsServersArray2))
+                                        
+                                        JToken nameValue = routesValue["name"];
+                                        if (nameValue != null && nameValue.Type != JTokenType.Null)
                                         {
-                                            dhcpOptionsInstance.DnsServers.Add(((string)dnsServersValue));
+                                            string nameInstance = ((string)nameValue);
+                                            routeJsonFormatInstance.Name = nameInstance;
+                                        }
+                                        
+                                        JToken etagValue = routesValue["etag"];
+                                        if (etagValue != null && etagValue.Type != JTokenType.Null)
+                                        {
+                                            string etagInstance = ((string)etagValue);
+                                            routeJsonFormatInstance.Etag = etagInstance;
+                                        }
+                                        
+                                        JToken idValue = routesValue["id"];
+                                        if (idValue != null && idValue.Type != JTokenType.Null)
+                                        {
+                                            string idInstance = ((string)idValue);
+                                            routeJsonFormatInstance.Id = idInstance;
                                         }
                                     }
                                 }
@@ -431,91 +412,14 @@ namespace Microsoft.Azure.Management.Network
                                 {
                                     foreach (JToken subnetsValue in ((JArray)subnetsArray2))
                                     {
-                                        Subnet subnetJsonFormatInstance = new Subnet();
-                                        virtualNetworkInstance.Subnets.Add(subnetJsonFormatInstance);
+                                        ResourceId resourceIdInstance = new ResourceId();
+                                        routeTableInstance.Subnets.Add(resourceIdInstance);
                                         
-                                        JToken propertiesValue4 = subnetsValue["properties"];
-                                        if (propertiesValue4 != null && propertiesValue4.Type != JTokenType.Null)
+                                        JToken idValue2 = subnetsValue["id"];
+                                        if (idValue2 != null && idValue2.Type != JTokenType.Null)
                                         {
-                                            JToken addressPrefixValue = propertiesValue4["addressPrefix"];
-                                            if (addressPrefixValue != null && addressPrefixValue.Type != JTokenType.Null)
-                                            {
-                                                string addressPrefixInstance = ((string)addressPrefixValue);
-                                                subnetJsonFormatInstance.AddressPrefix = addressPrefixInstance;
-                                            }
-                                            
-                                            JToken networkSecurityGroupValue2 = propertiesValue4["networkSecurityGroup"];
-                                            if (networkSecurityGroupValue2 != null && networkSecurityGroupValue2.Type != JTokenType.Null)
-                                            {
-                                                ResourceId networkSecurityGroupInstance = new ResourceId();
-                                                subnetJsonFormatInstance.NetworkSecurityGroup = networkSecurityGroupInstance;
-                                                
-                                                JToken idValue = networkSecurityGroupValue2["id"];
-                                                if (idValue != null && idValue.Type != JTokenType.Null)
-                                                {
-                                                    string idInstance = ((string)idValue);
-                                                    networkSecurityGroupInstance.Id = idInstance;
-                                                }
-                                            }
-                                            
-                                            JToken routeTableValue2 = propertiesValue4["routeTable"];
-                                            if (routeTableValue2 != null && routeTableValue2.Type != JTokenType.Null)
-                                            {
-                                                ResourceId routeTableInstance = new ResourceId();
-                                                subnetJsonFormatInstance.RouteTable = routeTableInstance;
-                                                
-                                                JToken idValue2 = routeTableValue2["id"];
-                                                if (idValue2 != null && idValue2.Type != JTokenType.Null)
-                                                {
-                                                    string idInstance2 = ((string)idValue2);
-                                                    routeTableInstance.Id = idInstance2;
-                                                }
-                                            }
-                                            
-                                            JToken ipConfigurationsArray2 = propertiesValue4["ipConfigurations"];
-                                            if (ipConfigurationsArray2 != null && ipConfigurationsArray2.Type != JTokenType.Null)
-                                            {
-                                                foreach (JToken ipConfigurationsValue in ((JArray)ipConfigurationsArray2))
-                                                {
-                                                    ResourceId resourceIdInstance = new ResourceId();
-                                                    subnetJsonFormatInstance.IpConfigurations.Add(resourceIdInstance);
-                                                    
-                                                    JToken idValue3 = ipConfigurationsValue["id"];
-                                                    if (idValue3 != null && idValue3.Type != JTokenType.Null)
-                                                    {
-                                                        string idInstance3 = ((string)idValue3);
-                                                        resourceIdInstance.Id = idInstance3;
-                                                    }
-                                                }
-                                            }
-                                            
-                                            JToken provisioningStateValue = propertiesValue4["provisioningState"];
-                                            if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
-                                            {
-                                                string provisioningStateInstance = ((string)provisioningStateValue);
-                                                subnetJsonFormatInstance.ProvisioningState = provisioningStateInstance;
-                                            }
-                                        }
-                                        
-                                        JToken nameValue = subnetsValue["name"];
-                                        if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                        {
-                                            string nameInstance = ((string)nameValue);
-                                            subnetJsonFormatInstance.Name = nameInstance;
-                                        }
-                                        
-                                        JToken etagValue = subnetsValue["etag"];
-                                        if (etagValue != null && etagValue.Type != JTokenType.Null)
-                                        {
-                                            string etagInstance = ((string)etagValue);
-                                            subnetJsonFormatInstance.Etag = etagInstance;
-                                        }
-                                        
-                                        JToken idValue4 = subnetsValue["id"];
-                                        if (idValue4 != null && idValue4.Type != JTokenType.Null)
-                                        {
-                                            string idInstance4 = ((string)idValue4);
-                                            subnetJsonFormatInstance.Id = idInstance4;
+                                            string idInstance2 = ((string)idValue2);
+                                            resourceIdInstance.Id = idInstance2;
                                         }
                                     }
                                 }
@@ -524,7 +428,7 @@ namespace Microsoft.Azure.Management.Network
                                 if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
                                 {
                                     string provisioningStateInstance2 = ((string)provisioningStateValue2);
-                                    virtualNetworkInstance.ProvisioningState = provisioningStateInstance2;
+                                    routeTableInstance.ProvisioningState = provisioningStateInstance2;
                                 }
                             }
                             
@@ -532,35 +436,35 @@ namespace Microsoft.Azure.Management.Network
                             if (etagValue2 != null && etagValue2.Type != JTokenType.Null)
                             {
                                 string etagInstance2 = ((string)etagValue2);
-                                virtualNetworkInstance.Etag = etagInstance2;
+                                routeTableInstance.Etag = etagInstance2;
                             }
                             
-                            JToken idValue5 = responseDoc["id"];
-                            if (idValue5 != null && idValue5.Type != JTokenType.Null)
+                            JToken idValue3 = responseDoc["id"];
+                            if (idValue3 != null && idValue3.Type != JTokenType.Null)
                             {
-                                string idInstance5 = ((string)idValue5);
-                                virtualNetworkInstance.Id = idInstance5;
+                                string idInstance3 = ((string)idValue3);
+                                routeTableInstance.Id = idInstance3;
                             }
                             
                             JToken nameValue2 = responseDoc["name"];
                             if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
                             {
                                 string nameInstance2 = ((string)nameValue2);
-                                virtualNetworkInstance.Name = nameInstance2;
+                                routeTableInstance.Name = nameInstance2;
                             }
                             
                             JToken typeValue = responseDoc["type"];
                             if (typeValue != null && typeValue.Type != JTokenType.Null)
                             {
                                 string typeInstance = ((string)typeValue);
-                                virtualNetworkInstance.Type = typeInstance;
+                                routeTableInstance.Type = typeInstance;
                             }
                             
                             JToken locationValue = responseDoc["location"];
                             if (locationValue != null && locationValue.Type != JTokenType.Null)
                             {
                                 string locationInstance = ((string)locationValue);
-                                virtualNetworkInstance.Location = locationInstance;
+                                routeTableInstance.Location = locationInstance;
                             }
                             
                             JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
@@ -570,7 +474,7 @@ namespace Microsoft.Azure.Management.Network
                                 {
                                     string tagsKey2 = ((string)property.Name);
                                     string tagsValue2 = ((string)property.Value);
-                                    virtualNetworkInstance.Tags.Add(tagsKey2, tagsValue2);
+                                    routeTableInstance.Tags.Add(tagsKey2, tagsValue2);
                                 }
                             }
                             
@@ -680,14 +584,13 @@ namespace Microsoft.Azure.Management.Network
         }
         
         /// <summary>
-        /// The Delete VirtualNetwork operation deletes the specifed virtual
-        /// network
+        /// The Delete RouteTable operation deletes the specifed Route Table
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. The name of the resource group.
         /// </param>
-        /// <param name='virtualNetworkName'>
-        /// Required. The name of the virtual network.
+        /// <param name='routeTableName'>
+        /// Required. The name of the route table.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -699,16 +602,16 @@ namespace Microsoft.Azure.Management.Network
         /// Accept-Language header specified in the original request such
         /// thatit could be directly be exposed to users
         /// </returns>
-        public async Task<UpdateOperationResponse> BeginDeletingAsync(string resourceGroupName, string virtualNetworkName, CancellationToken cancellationToken)
+        public async Task<UpdateOperationResponse> BeginDeletingAsync(string resourceGroupName, string routeTableName, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException("resourceGroupName");
             }
-            if (virtualNetworkName == null)
+            if (routeTableName == null)
             {
-                throw new ArgumentNullException("virtualNetworkName");
+                throw new ArgumentNullException("routeTableName");
             }
             
             // Tracing
@@ -719,7 +622,7 @@ namespace Microsoft.Azure.Management.Network
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("virtualNetworkName", virtualNetworkName);
+                tracingParameters.Add("routeTableName", routeTableName);
                 TracingAdapter.Enter(invocationId, this, "BeginDeletingAsync", tracingParameters);
             }
             
@@ -734,8 +637,8 @@ namespace Microsoft.Azure.Management.Network
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
             url = url + "Microsoft.Network";
-            url = url + "/virtualnetworks/";
-            url = url + Uri.EscapeDataString(virtualNetworkName);
+            url = url + "/routeTables/";
+            url = url + Uri.EscapeDataString(routeTableName);
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-05-01-preview");
             if (queryParameters.Count > 0)
@@ -837,17 +740,17 @@ namespace Microsoft.Azure.Management.Network
         }
         
         /// <summary>
-        /// The Put VirtualNetwork operation creates/updates a virtual
-        /// networkin the specified resource group.
+        /// The Put RouteTable operation creates/updates a route tablein the
+        /// specified resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. The name of the resource group.
         /// </param>
-        /// <param name='virtualNetworkName'>
-        /// Required. The name of the virtual network.
+        /// <param name='routeTableName'>
+        /// Required. The name of the route table.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the create/update Virtual Network
+        /// Required. Parameters supplied to the create/update Route Table
         /// operation
         /// </param>
         /// <param name='cancellationToken'>
@@ -864,7 +767,7 @@ namespace Microsoft.Azure.Management.Network
         /// status code for the failed request and error information regarding
         /// the failure.
         /// </returns>
-        public async Task<AzureAsyncOperationResponse> CreateOrUpdateAsync(string resourceGroupName, string virtualNetworkName, VirtualNetwork parameters, CancellationToken cancellationToken)
+        public async Task<AzureAsyncOperationResponse> CreateOrUpdateAsync(string resourceGroupName, string routeTableName, RouteTable parameters, CancellationToken cancellationToken)
         {
             NetworkResourceProviderClient client = this.Client;
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -874,13 +777,13 @@ namespace Microsoft.Azure.Management.Network
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("virtualNetworkName", virtualNetworkName);
+                tracingParameters.Add("routeTableName", routeTableName);
                 tracingParameters.Add("parameters", parameters);
                 TracingAdapter.Enter(invocationId, this, "CreateOrUpdateAsync", tracingParameters);
             }
             
             cancellationToken.ThrowIfCancellationRequested();
-            VirtualNetworkPutResponse response = await client.VirtualNetworks.BeginCreateOrUpdatingAsync(resourceGroupName, virtualNetworkName, parameters, cancellationToken).ConfigureAwait(false);
+            RouteTablePutResponse response = await client.RouteTables.BeginCreateOrUpdatingAsync(resourceGroupName, routeTableName, parameters, cancellationToken).ConfigureAwait(false);
             cancellationToken.ThrowIfCancellationRequested();
             AzureAsyncOperationResponse result = await client.GetLongRunningOperationStatusAsync(response.AzureAsyncOperation, cancellationToken).ConfigureAwait(false);
             int delayInSeconds = response.RetryAfter;
@@ -918,14 +821,13 @@ namespace Microsoft.Azure.Management.Network
         }
         
         /// <summary>
-        /// The Delete VirtualNetwork operation deletes the specifed virtual
-        /// network
+        /// The Delete RouteTable operation deletes the specifed Route Table
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. The name of the resource group.
         /// </param>
-        /// <param name='virtualNetworkName'>
-        /// Required. The name of the virtual network.
+        /// <param name='routeTableName'>
+        /// Required. The name of the route table.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -934,7 +836,7 @@ namespace Microsoft.Azure.Management.Network
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<AzureOperationResponse> DeleteAsync(string resourceGroupName, string virtualNetworkName, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> DeleteAsync(string resourceGroupName, string routeTableName, CancellationToken cancellationToken)
         {
             NetworkResourceProviderClient client = this.Client;
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -944,12 +846,12 @@ namespace Microsoft.Azure.Management.Network
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("virtualNetworkName", virtualNetworkName);
+                tracingParameters.Add("routeTableName", routeTableName);
                 TracingAdapter.Enter(invocationId, this, "DeleteAsync", tracingParameters);
             }
             
             cancellationToken.ThrowIfCancellationRequested();
-            UpdateOperationResponse response = await client.VirtualNetworks.BeginDeletingAsync(resourceGroupName, virtualNetworkName, cancellationToken).ConfigureAwait(false);
+            UpdateOperationResponse response = await client.RouteTables.BeginDeletingAsync(resourceGroupName, routeTableName, cancellationToken).ConfigureAwait(false);
             cancellationToken.ThrowIfCancellationRequested();
             AzureAsyncOperationResponse result = await client.GetLongRunningOperationStatusAsync(response.AzureAsyncOperation, cancellationToken).ConfigureAwait(false);
             int delayInSeconds = response.RetryAfter;
@@ -987,31 +889,31 @@ namespace Microsoft.Azure.Management.Network
         }
         
         /// <summary>
-        /// The Get VirtualNetwork operation retrieves information about the
-        /// specified virtual network.
+        /// The Get RouteTables operation retrieves information about the
+        /// specified route table.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. The name of the resource group.
         /// </param>
-        /// <param name='virtualNetworkName'>
-        /// Required. The name of the virtual network.
+        /// <param name='routeTableName'>
+        /// Required. The name of the route table.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Response for GetVirtualNetworks API service calls.
+        /// Response for GetRouteTable Api service call
         /// </returns>
-        public async Task<VirtualNetworkGetResponse> GetAsync(string resourceGroupName, string virtualNetworkName, CancellationToken cancellationToken)
+        public async Task<RouteTableGetResponse> GetAsync(string resourceGroupName, string routeTableName, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException("resourceGroupName");
             }
-            if (virtualNetworkName == null)
+            if (routeTableName == null)
             {
-                throw new ArgumentNullException("virtualNetworkName");
+                throw new ArgumentNullException("routeTableName");
             }
             
             // Tracing
@@ -1022,7 +924,7 @@ namespace Microsoft.Azure.Management.Network
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("virtualNetworkName", virtualNetworkName);
+                tracingParameters.Add("routeTableName", routeTableName);
                 TracingAdapter.Enter(invocationId, this, "GetAsync", tracingParameters);
             }
             
@@ -1037,8 +939,8 @@ namespace Microsoft.Azure.Management.Network
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
             url = url + "Microsoft.Network";
-            url = url + "/virtualnetworks/";
-            url = url + Uri.EscapeDataString(virtualNetworkName);
+            url = url + "/routeTables/";
+            url = url + Uri.EscapeDataString(routeTableName);
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-05-01-preview");
             if (queryParameters.Count > 0)
@@ -1099,13 +1001,13 @@ namespace Microsoft.Azure.Management.Network
                     }
                     
                     // Create Result
-                    VirtualNetworkGetResponse result = null;
+                    RouteTableGetResponse result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new VirtualNetworkGetResponse();
+                        result = new RouteTableGetResponse();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -1114,40 +1016,71 @@ namespace Microsoft.Azure.Management.Network
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            VirtualNetwork virtualNetworkInstance = new VirtualNetwork();
-                            result.VirtualNetwork = virtualNetworkInstance;
+                            RouteTable routeTableInstance = new RouteTable();
+                            result.RouteTable = routeTableInstance;
                             
                             JToken propertiesValue = responseDoc["properties"];
                             if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                             {
-                                JToken addressSpaceValue = propertiesValue["addressSpace"];
-                                if (addressSpaceValue != null && addressSpaceValue.Type != JTokenType.Null)
+                                JToken routesArray = propertiesValue["routes"];
+                                if (routesArray != null && routesArray.Type != JTokenType.Null)
                                 {
-                                    AddressSpace addressSpaceInstance = new AddressSpace();
-                                    virtualNetworkInstance.AddressSpace = addressSpaceInstance;
-                                    
-                                    JToken addressPrefixesArray = addressSpaceValue["addressPrefixes"];
-                                    if (addressPrefixesArray != null && addressPrefixesArray.Type != JTokenType.Null)
+                                    foreach (JToken routesValue in ((JArray)routesArray))
                                     {
-                                        foreach (JToken addressPrefixesValue in ((JArray)addressPrefixesArray))
+                                        Route routeJsonFormatInstance = new Route();
+                                        routeTableInstance.Routes.Add(routeJsonFormatInstance);
+                                        
+                                        JToken propertiesValue2 = routesValue["properties"];
+                                        if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
                                         {
-                                            addressSpaceInstance.AddressPrefixes.Add(((string)addressPrefixesValue));
+                                            JToken addressPrefixValue = propertiesValue2["addressPrefix"];
+                                            if (addressPrefixValue != null && addressPrefixValue.Type != JTokenType.Null)
+                                            {
+                                                string addressPrefixInstance = ((string)addressPrefixValue);
+                                                routeJsonFormatInstance.AddressPrefix = addressPrefixInstance;
+                                            }
+                                            
+                                            JToken nextHopTypeValue = propertiesValue2["nextHopType"];
+                                            if (nextHopTypeValue != null && nextHopTypeValue.Type != JTokenType.Null)
+                                            {
+                                                string nextHopTypeInstance = ((string)nextHopTypeValue);
+                                                routeJsonFormatInstance.NextHopType = nextHopTypeInstance;
+                                            }
+                                            
+                                            JToken nextHopIpAddressValue = propertiesValue2["nextHopIpAddress"];
+                                            if (nextHopIpAddressValue != null && nextHopIpAddressValue.Type != JTokenType.Null)
+                                            {
+                                                string nextHopIpAddressInstance = ((string)nextHopIpAddressValue);
+                                                routeJsonFormatInstance.NextHopIpAddress = nextHopIpAddressInstance;
+                                            }
+                                            
+                                            JToken provisioningStateValue = propertiesValue2["provisioningState"];
+                                            if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
+                                            {
+                                                string provisioningStateInstance = ((string)provisioningStateValue);
+                                                routeJsonFormatInstance.ProvisioningState = provisioningStateInstance;
+                                            }
                                         }
-                                    }
-                                }
-                                
-                                JToken dhcpOptionsValue = propertiesValue["dhcpOptions"];
-                                if (dhcpOptionsValue != null && dhcpOptionsValue.Type != JTokenType.Null)
-                                {
-                                    DhcpOptions dhcpOptionsInstance = new DhcpOptions();
-                                    virtualNetworkInstance.DhcpOptions = dhcpOptionsInstance;
-                                    
-                                    JToken dnsServersArray = dhcpOptionsValue["dnsServers"];
-                                    if (dnsServersArray != null && dnsServersArray.Type != JTokenType.Null)
-                                    {
-                                        foreach (JToken dnsServersValue in ((JArray)dnsServersArray))
+                                        
+                                        JToken nameValue = routesValue["name"];
+                                        if (nameValue != null && nameValue.Type != JTokenType.Null)
                                         {
-                                            dhcpOptionsInstance.DnsServers.Add(((string)dnsServersValue));
+                                            string nameInstance = ((string)nameValue);
+                                            routeJsonFormatInstance.Name = nameInstance;
+                                        }
+                                        
+                                        JToken etagValue = routesValue["etag"];
+                                        if (etagValue != null && etagValue.Type != JTokenType.Null)
+                                        {
+                                            string etagInstance = ((string)etagValue);
+                                            routeJsonFormatInstance.Etag = etagInstance;
+                                        }
+                                        
+                                        JToken idValue = routesValue["id"];
+                                        if (idValue != null && idValue.Type != JTokenType.Null)
+                                        {
+                                            string idInstance = ((string)idValue);
+                                            routeJsonFormatInstance.Id = idInstance;
                                         }
                                     }
                                 }
@@ -1157,91 +1090,14 @@ namespace Microsoft.Azure.Management.Network
                                 {
                                     foreach (JToken subnetsValue in ((JArray)subnetsArray))
                                     {
-                                        Subnet subnetJsonFormatInstance = new Subnet();
-                                        virtualNetworkInstance.Subnets.Add(subnetJsonFormatInstance);
+                                        ResourceId resourceIdInstance = new ResourceId();
+                                        routeTableInstance.Subnets.Add(resourceIdInstance);
                                         
-                                        JToken propertiesValue2 = subnetsValue["properties"];
-                                        if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
+                                        JToken idValue2 = subnetsValue["id"];
+                                        if (idValue2 != null && idValue2.Type != JTokenType.Null)
                                         {
-                                            JToken addressPrefixValue = propertiesValue2["addressPrefix"];
-                                            if (addressPrefixValue != null && addressPrefixValue.Type != JTokenType.Null)
-                                            {
-                                                string addressPrefixInstance = ((string)addressPrefixValue);
-                                                subnetJsonFormatInstance.AddressPrefix = addressPrefixInstance;
-                                            }
-                                            
-                                            JToken networkSecurityGroupValue = propertiesValue2["networkSecurityGroup"];
-                                            if (networkSecurityGroupValue != null && networkSecurityGroupValue.Type != JTokenType.Null)
-                                            {
-                                                ResourceId networkSecurityGroupInstance = new ResourceId();
-                                                subnetJsonFormatInstance.NetworkSecurityGroup = networkSecurityGroupInstance;
-                                                
-                                                JToken idValue = networkSecurityGroupValue["id"];
-                                                if (idValue != null && idValue.Type != JTokenType.Null)
-                                                {
-                                                    string idInstance = ((string)idValue);
-                                                    networkSecurityGroupInstance.Id = idInstance;
-                                                }
-                                            }
-                                            
-                                            JToken routeTableValue = propertiesValue2["routeTable"];
-                                            if (routeTableValue != null && routeTableValue.Type != JTokenType.Null)
-                                            {
-                                                ResourceId routeTableInstance = new ResourceId();
-                                                subnetJsonFormatInstance.RouteTable = routeTableInstance;
-                                                
-                                                JToken idValue2 = routeTableValue["id"];
-                                                if (idValue2 != null && idValue2.Type != JTokenType.Null)
-                                                {
-                                                    string idInstance2 = ((string)idValue2);
-                                                    routeTableInstance.Id = idInstance2;
-                                                }
-                                            }
-                                            
-                                            JToken ipConfigurationsArray = propertiesValue2["ipConfigurations"];
-                                            if (ipConfigurationsArray != null && ipConfigurationsArray.Type != JTokenType.Null)
-                                            {
-                                                foreach (JToken ipConfigurationsValue in ((JArray)ipConfigurationsArray))
-                                                {
-                                                    ResourceId resourceIdInstance = new ResourceId();
-                                                    subnetJsonFormatInstance.IpConfigurations.Add(resourceIdInstance);
-                                                    
-                                                    JToken idValue3 = ipConfigurationsValue["id"];
-                                                    if (idValue3 != null && idValue3.Type != JTokenType.Null)
-                                                    {
-                                                        string idInstance3 = ((string)idValue3);
-                                                        resourceIdInstance.Id = idInstance3;
-                                                    }
-                                                }
-                                            }
-                                            
-                                            JToken provisioningStateValue = propertiesValue2["provisioningState"];
-                                            if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
-                                            {
-                                                string provisioningStateInstance = ((string)provisioningStateValue);
-                                                subnetJsonFormatInstance.ProvisioningState = provisioningStateInstance;
-                                            }
-                                        }
-                                        
-                                        JToken nameValue = subnetsValue["name"];
-                                        if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                        {
-                                            string nameInstance = ((string)nameValue);
-                                            subnetJsonFormatInstance.Name = nameInstance;
-                                        }
-                                        
-                                        JToken etagValue = subnetsValue["etag"];
-                                        if (etagValue != null && etagValue.Type != JTokenType.Null)
-                                        {
-                                            string etagInstance = ((string)etagValue);
-                                            subnetJsonFormatInstance.Etag = etagInstance;
-                                        }
-                                        
-                                        JToken idValue4 = subnetsValue["id"];
-                                        if (idValue4 != null && idValue4.Type != JTokenType.Null)
-                                        {
-                                            string idInstance4 = ((string)idValue4);
-                                            subnetJsonFormatInstance.Id = idInstance4;
+                                            string idInstance2 = ((string)idValue2);
+                                            resourceIdInstance.Id = idInstance2;
                                         }
                                     }
                                 }
@@ -1250,7 +1106,7 @@ namespace Microsoft.Azure.Management.Network
                                 if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
                                 {
                                     string provisioningStateInstance2 = ((string)provisioningStateValue2);
-                                    virtualNetworkInstance.ProvisioningState = provisioningStateInstance2;
+                                    routeTableInstance.ProvisioningState = provisioningStateInstance2;
                                 }
                             }
                             
@@ -1258,35 +1114,35 @@ namespace Microsoft.Azure.Management.Network
                             if (etagValue2 != null && etagValue2.Type != JTokenType.Null)
                             {
                                 string etagInstance2 = ((string)etagValue2);
-                                virtualNetworkInstance.Etag = etagInstance2;
+                                routeTableInstance.Etag = etagInstance2;
                             }
                             
-                            JToken idValue5 = responseDoc["id"];
-                            if (idValue5 != null && idValue5.Type != JTokenType.Null)
+                            JToken idValue3 = responseDoc["id"];
+                            if (idValue3 != null && idValue3.Type != JTokenType.Null)
                             {
-                                string idInstance5 = ((string)idValue5);
-                                virtualNetworkInstance.Id = idInstance5;
+                                string idInstance3 = ((string)idValue3);
+                                routeTableInstance.Id = idInstance3;
                             }
                             
                             JToken nameValue2 = responseDoc["name"];
                             if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
                             {
                                 string nameInstance2 = ((string)nameValue2);
-                                virtualNetworkInstance.Name = nameInstance2;
+                                routeTableInstance.Name = nameInstance2;
                             }
                             
                             JToken typeValue = responseDoc["type"];
                             if (typeValue != null && typeValue.Type != JTokenType.Null)
                             {
                                 string typeInstance = ((string)typeValue);
-                                virtualNetworkInstance.Type = typeInstance;
+                                routeTableInstance.Type = typeInstance;
                             }
                             
                             JToken locationValue = responseDoc["location"];
                             if (locationValue != null && locationValue.Type != JTokenType.Null)
                             {
                                 string locationInstance = ((string)locationValue);
-                                virtualNetworkInstance.Location = locationInstance;
+                                routeTableInstance.Location = locationInstance;
                             }
                             
                             JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
@@ -1296,7 +1152,7 @@ namespace Microsoft.Azure.Management.Network
                                 {
                                     string tagsKey = ((string)property.Name);
                                     string tagsValue = ((string)property.Value);
-                                    virtualNetworkInstance.Tags.Add(tagsKey, tagsValue);
+                                    routeTableInstance.Tags.Add(tagsKey, tagsValue);
                                 }
                             }
                         }
@@ -1332,8 +1188,7 @@ namespace Microsoft.Azure.Management.Network
         }
         
         /// <summary>
-        /// The list VirtualNetwork returns all Virtual Networks in a resource
-        /// group
+        /// The list RouteTables returns all route tables in a resource group
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. The name of the resource group.
@@ -1342,9 +1197,9 @@ namespace Microsoft.Azure.Management.Network
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Response for ListVirtualNetworks Api servive call
+        /// Response for ListRouteTable Api servive call
         /// </returns>
-        public async Task<VirtualNetworkListResponse> ListAsync(string resourceGroupName, CancellationToken cancellationToken)
+        public async Task<RouteTableListResponse> ListAsync(string resourceGroupName, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -1374,7 +1229,7 @@ namespace Microsoft.Azure.Management.Network
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
             url = url + "Microsoft.Network";
-            url = url + "/virtualnetworks";
+            url = url + "/routeTables";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-05-01-preview");
             if (queryParameters.Count > 0)
@@ -1435,13 +1290,13 @@ namespace Microsoft.Azure.Management.Network
                     }
                     
                     // Create Result
-                    VirtualNetworkListResponse result = null;
+                    RouteTableListResponse result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new VirtualNetworkListResponse();
+                        result = new RouteTableListResponse();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -1455,40 +1310,71 @@ namespace Microsoft.Azure.Management.Network
                             {
                                 foreach (JToken valueValue in ((JArray)valueArray))
                                 {
-                                    VirtualNetwork virtualNetworkJsonFormatInstance = new VirtualNetwork();
-                                    result.VirtualNetworks.Add(virtualNetworkJsonFormatInstance);
+                                    RouteTable routeTableJsonFormatInstance = new RouteTable();
+                                    result.RouteTables.Add(routeTableJsonFormatInstance);
                                     
                                     JToken propertiesValue = valueValue["properties"];
                                     if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                     {
-                                        JToken addressSpaceValue = propertiesValue["addressSpace"];
-                                        if (addressSpaceValue != null && addressSpaceValue.Type != JTokenType.Null)
+                                        JToken routesArray = propertiesValue["routes"];
+                                        if (routesArray != null && routesArray.Type != JTokenType.Null)
                                         {
-                                            AddressSpace addressSpaceInstance = new AddressSpace();
-                                            virtualNetworkJsonFormatInstance.AddressSpace = addressSpaceInstance;
-                                            
-                                            JToken addressPrefixesArray = addressSpaceValue["addressPrefixes"];
-                                            if (addressPrefixesArray != null && addressPrefixesArray.Type != JTokenType.Null)
+                                            foreach (JToken routesValue in ((JArray)routesArray))
                                             {
-                                                foreach (JToken addressPrefixesValue in ((JArray)addressPrefixesArray))
+                                                Route routeJsonFormatInstance = new Route();
+                                                routeTableJsonFormatInstance.Routes.Add(routeJsonFormatInstance);
+                                                
+                                                JToken propertiesValue2 = routesValue["properties"];
+                                                if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
                                                 {
-                                                    addressSpaceInstance.AddressPrefixes.Add(((string)addressPrefixesValue));
+                                                    JToken addressPrefixValue = propertiesValue2["addressPrefix"];
+                                                    if (addressPrefixValue != null && addressPrefixValue.Type != JTokenType.Null)
+                                                    {
+                                                        string addressPrefixInstance = ((string)addressPrefixValue);
+                                                        routeJsonFormatInstance.AddressPrefix = addressPrefixInstance;
+                                                    }
+                                                    
+                                                    JToken nextHopTypeValue = propertiesValue2["nextHopType"];
+                                                    if (nextHopTypeValue != null && nextHopTypeValue.Type != JTokenType.Null)
+                                                    {
+                                                        string nextHopTypeInstance = ((string)nextHopTypeValue);
+                                                        routeJsonFormatInstance.NextHopType = nextHopTypeInstance;
+                                                    }
+                                                    
+                                                    JToken nextHopIpAddressValue = propertiesValue2["nextHopIpAddress"];
+                                                    if (nextHopIpAddressValue != null && nextHopIpAddressValue.Type != JTokenType.Null)
+                                                    {
+                                                        string nextHopIpAddressInstance = ((string)nextHopIpAddressValue);
+                                                        routeJsonFormatInstance.NextHopIpAddress = nextHopIpAddressInstance;
+                                                    }
+                                                    
+                                                    JToken provisioningStateValue = propertiesValue2["provisioningState"];
+                                                    if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
+                                                    {
+                                                        string provisioningStateInstance = ((string)provisioningStateValue);
+                                                        routeJsonFormatInstance.ProvisioningState = provisioningStateInstance;
+                                                    }
                                                 }
-                                            }
-                                        }
-                                        
-                                        JToken dhcpOptionsValue = propertiesValue["dhcpOptions"];
-                                        if (dhcpOptionsValue != null && dhcpOptionsValue.Type != JTokenType.Null)
-                                        {
-                                            DhcpOptions dhcpOptionsInstance = new DhcpOptions();
-                                            virtualNetworkJsonFormatInstance.DhcpOptions = dhcpOptionsInstance;
-                                            
-                                            JToken dnsServersArray = dhcpOptionsValue["dnsServers"];
-                                            if (dnsServersArray != null && dnsServersArray.Type != JTokenType.Null)
-                                            {
-                                                foreach (JToken dnsServersValue in ((JArray)dnsServersArray))
+                                                
+                                                JToken nameValue = routesValue["name"];
+                                                if (nameValue != null && nameValue.Type != JTokenType.Null)
                                                 {
-                                                    dhcpOptionsInstance.DnsServers.Add(((string)dnsServersValue));
+                                                    string nameInstance = ((string)nameValue);
+                                                    routeJsonFormatInstance.Name = nameInstance;
+                                                }
+                                                
+                                                JToken etagValue = routesValue["etag"];
+                                                if (etagValue != null && etagValue.Type != JTokenType.Null)
+                                                {
+                                                    string etagInstance = ((string)etagValue);
+                                                    routeJsonFormatInstance.Etag = etagInstance;
+                                                }
+                                                
+                                                JToken idValue = routesValue["id"];
+                                                if (idValue != null && idValue.Type != JTokenType.Null)
+                                                {
+                                                    string idInstance = ((string)idValue);
+                                                    routeJsonFormatInstance.Id = idInstance;
                                                 }
                                             }
                                         }
@@ -1498,91 +1384,14 @@ namespace Microsoft.Azure.Management.Network
                                         {
                                             foreach (JToken subnetsValue in ((JArray)subnetsArray))
                                             {
-                                                Subnet subnetJsonFormatInstance = new Subnet();
-                                                virtualNetworkJsonFormatInstance.Subnets.Add(subnetJsonFormatInstance);
+                                                ResourceId resourceIdInstance = new ResourceId();
+                                                routeTableJsonFormatInstance.Subnets.Add(resourceIdInstance);
                                                 
-                                                JToken propertiesValue2 = subnetsValue["properties"];
-                                                if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
+                                                JToken idValue2 = subnetsValue["id"];
+                                                if (idValue2 != null && idValue2.Type != JTokenType.Null)
                                                 {
-                                                    JToken addressPrefixValue = propertiesValue2["addressPrefix"];
-                                                    if (addressPrefixValue != null && addressPrefixValue.Type != JTokenType.Null)
-                                                    {
-                                                        string addressPrefixInstance = ((string)addressPrefixValue);
-                                                        subnetJsonFormatInstance.AddressPrefix = addressPrefixInstance;
-                                                    }
-                                                    
-                                                    JToken networkSecurityGroupValue = propertiesValue2["networkSecurityGroup"];
-                                                    if (networkSecurityGroupValue != null && networkSecurityGroupValue.Type != JTokenType.Null)
-                                                    {
-                                                        ResourceId networkSecurityGroupInstance = new ResourceId();
-                                                        subnetJsonFormatInstance.NetworkSecurityGroup = networkSecurityGroupInstance;
-                                                        
-                                                        JToken idValue = networkSecurityGroupValue["id"];
-                                                        if (idValue != null && idValue.Type != JTokenType.Null)
-                                                        {
-                                                            string idInstance = ((string)idValue);
-                                                            networkSecurityGroupInstance.Id = idInstance;
-                                                        }
-                                                    }
-                                                    
-                                                    JToken routeTableValue = propertiesValue2["routeTable"];
-                                                    if (routeTableValue != null && routeTableValue.Type != JTokenType.Null)
-                                                    {
-                                                        ResourceId routeTableInstance = new ResourceId();
-                                                        subnetJsonFormatInstance.RouteTable = routeTableInstance;
-                                                        
-                                                        JToken idValue2 = routeTableValue["id"];
-                                                        if (idValue2 != null && idValue2.Type != JTokenType.Null)
-                                                        {
-                                                            string idInstance2 = ((string)idValue2);
-                                                            routeTableInstance.Id = idInstance2;
-                                                        }
-                                                    }
-                                                    
-                                                    JToken ipConfigurationsArray = propertiesValue2["ipConfigurations"];
-                                                    if (ipConfigurationsArray != null && ipConfigurationsArray.Type != JTokenType.Null)
-                                                    {
-                                                        foreach (JToken ipConfigurationsValue in ((JArray)ipConfigurationsArray))
-                                                        {
-                                                            ResourceId resourceIdInstance = new ResourceId();
-                                                            subnetJsonFormatInstance.IpConfigurations.Add(resourceIdInstance);
-                                                            
-                                                            JToken idValue3 = ipConfigurationsValue["id"];
-                                                            if (idValue3 != null && idValue3.Type != JTokenType.Null)
-                                                            {
-                                                                string idInstance3 = ((string)idValue3);
-                                                                resourceIdInstance.Id = idInstance3;
-                                                            }
-                                                        }
-                                                    }
-                                                    
-                                                    JToken provisioningStateValue = propertiesValue2["provisioningState"];
-                                                    if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
-                                                    {
-                                                        string provisioningStateInstance = ((string)provisioningStateValue);
-                                                        subnetJsonFormatInstance.ProvisioningState = provisioningStateInstance;
-                                                    }
-                                                }
-                                                
-                                                JToken nameValue = subnetsValue["name"];
-                                                if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                                {
-                                                    string nameInstance = ((string)nameValue);
-                                                    subnetJsonFormatInstance.Name = nameInstance;
-                                                }
-                                                
-                                                JToken etagValue = subnetsValue["etag"];
-                                                if (etagValue != null && etagValue.Type != JTokenType.Null)
-                                                {
-                                                    string etagInstance = ((string)etagValue);
-                                                    subnetJsonFormatInstance.Etag = etagInstance;
-                                                }
-                                                
-                                                JToken idValue4 = subnetsValue["id"];
-                                                if (idValue4 != null && idValue4.Type != JTokenType.Null)
-                                                {
-                                                    string idInstance4 = ((string)idValue4);
-                                                    subnetJsonFormatInstance.Id = idInstance4;
+                                                    string idInstance2 = ((string)idValue2);
+                                                    resourceIdInstance.Id = idInstance2;
                                                 }
                                             }
                                         }
@@ -1591,7 +1400,7 @@ namespace Microsoft.Azure.Management.Network
                                         if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
                                         {
                                             string provisioningStateInstance2 = ((string)provisioningStateValue2);
-                                            virtualNetworkJsonFormatInstance.ProvisioningState = provisioningStateInstance2;
+                                            routeTableJsonFormatInstance.ProvisioningState = provisioningStateInstance2;
                                         }
                                     }
                                     
@@ -1599,35 +1408,35 @@ namespace Microsoft.Azure.Management.Network
                                     if (etagValue2 != null && etagValue2.Type != JTokenType.Null)
                                     {
                                         string etagInstance2 = ((string)etagValue2);
-                                        virtualNetworkJsonFormatInstance.Etag = etagInstance2;
+                                        routeTableJsonFormatInstance.Etag = etagInstance2;
                                     }
                                     
-                                    JToken idValue5 = valueValue["id"];
-                                    if (idValue5 != null && idValue5.Type != JTokenType.Null)
+                                    JToken idValue3 = valueValue["id"];
+                                    if (idValue3 != null && idValue3.Type != JTokenType.Null)
                                     {
-                                        string idInstance5 = ((string)idValue5);
-                                        virtualNetworkJsonFormatInstance.Id = idInstance5;
+                                        string idInstance3 = ((string)idValue3);
+                                        routeTableJsonFormatInstance.Id = idInstance3;
                                     }
                                     
                                     JToken nameValue2 = valueValue["name"];
                                     if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
                                     {
                                         string nameInstance2 = ((string)nameValue2);
-                                        virtualNetworkJsonFormatInstance.Name = nameInstance2;
+                                        routeTableJsonFormatInstance.Name = nameInstance2;
                                     }
                                     
                                     JToken typeValue = valueValue["type"];
                                     if (typeValue != null && typeValue.Type != JTokenType.Null)
                                     {
                                         string typeInstance = ((string)typeValue);
-                                        virtualNetworkJsonFormatInstance.Type = typeInstance;
+                                        routeTableJsonFormatInstance.Type = typeInstance;
                                     }
                                     
                                     JToken locationValue = valueValue["location"];
                                     if (locationValue != null && locationValue.Type != JTokenType.Null)
                                     {
                                         string locationInstance = ((string)locationValue);
-                                        virtualNetworkJsonFormatInstance.Location = locationInstance;
+                                        routeTableJsonFormatInstance.Location = locationInstance;
                                     }
                                     
                                     JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
@@ -1637,7 +1446,7 @@ namespace Microsoft.Azure.Management.Network
                                         {
                                             string tagsKey = ((string)property.Name);
                                             string tagsValue = ((string)property.Value);
-                                            virtualNetworkJsonFormatInstance.Tags.Add(tagsKey, tagsValue);
+                                            routeTableJsonFormatInstance.Tags.Add(tagsKey, tagsValue);
                                         }
                                     }
                                 }
@@ -1682,16 +1491,15 @@ namespace Microsoft.Azure.Management.Network
         }
         
         /// <summary>
-        /// The list VirtualNetwork returns all Virtual Networks in a
-        /// subscription
+        /// The list RouteTables returns all route tables in a subscription
         /// </summary>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Response for ListVirtualNetworks Api servive call
+        /// Response for ListRouteTable Api servive call
         /// </returns>
-        public async Task<VirtualNetworkListResponse> ListAllAsync(CancellationToken cancellationToken)
+        public async Task<RouteTableListResponse> ListAllAsync(CancellationToken cancellationToken)
         {
             // Validate
             
@@ -1714,7 +1522,7 @@ namespace Microsoft.Azure.Management.Network
             }
             url = url + "/providers/";
             url = url + "Microsoft.Network";
-            url = url + "/virtualnetworks";
+            url = url + "/routeTables";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-05-01-preview");
             if (queryParameters.Count > 0)
@@ -1775,13 +1583,13 @@ namespace Microsoft.Azure.Management.Network
                     }
                     
                     // Create Result
-                    VirtualNetworkListResponse result = null;
+                    RouteTableListResponse result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new VirtualNetworkListResponse();
+                        result = new RouteTableListResponse();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -1795,40 +1603,71 @@ namespace Microsoft.Azure.Management.Network
                             {
                                 foreach (JToken valueValue in ((JArray)valueArray))
                                 {
-                                    VirtualNetwork virtualNetworkJsonFormatInstance = new VirtualNetwork();
-                                    result.VirtualNetworks.Add(virtualNetworkJsonFormatInstance);
+                                    RouteTable routeTableJsonFormatInstance = new RouteTable();
+                                    result.RouteTables.Add(routeTableJsonFormatInstance);
                                     
                                     JToken propertiesValue = valueValue["properties"];
                                     if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                     {
-                                        JToken addressSpaceValue = propertiesValue["addressSpace"];
-                                        if (addressSpaceValue != null && addressSpaceValue.Type != JTokenType.Null)
+                                        JToken routesArray = propertiesValue["routes"];
+                                        if (routesArray != null && routesArray.Type != JTokenType.Null)
                                         {
-                                            AddressSpace addressSpaceInstance = new AddressSpace();
-                                            virtualNetworkJsonFormatInstance.AddressSpace = addressSpaceInstance;
-                                            
-                                            JToken addressPrefixesArray = addressSpaceValue["addressPrefixes"];
-                                            if (addressPrefixesArray != null && addressPrefixesArray.Type != JTokenType.Null)
+                                            foreach (JToken routesValue in ((JArray)routesArray))
                                             {
-                                                foreach (JToken addressPrefixesValue in ((JArray)addressPrefixesArray))
+                                                Route routeJsonFormatInstance = new Route();
+                                                routeTableJsonFormatInstance.Routes.Add(routeJsonFormatInstance);
+                                                
+                                                JToken propertiesValue2 = routesValue["properties"];
+                                                if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
                                                 {
-                                                    addressSpaceInstance.AddressPrefixes.Add(((string)addressPrefixesValue));
+                                                    JToken addressPrefixValue = propertiesValue2["addressPrefix"];
+                                                    if (addressPrefixValue != null && addressPrefixValue.Type != JTokenType.Null)
+                                                    {
+                                                        string addressPrefixInstance = ((string)addressPrefixValue);
+                                                        routeJsonFormatInstance.AddressPrefix = addressPrefixInstance;
+                                                    }
+                                                    
+                                                    JToken nextHopTypeValue = propertiesValue2["nextHopType"];
+                                                    if (nextHopTypeValue != null && nextHopTypeValue.Type != JTokenType.Null)
+                                                    {
+                                                        string nextHopTypeInstance = ((string)nextHopTypeValue);
+                                                        routeJsonFormatInstance.NextHopType = nextHopTypeInstance;
+                                                    }
+                                                    
+                                                    JToken nextHopIpAddressValue = propertiesValue2["nextHopIpAddress"];
+                                                    if (nextHopIpAddressValue != null && nextHopIpAddressValue.Type != JTokenType.Null)
+                                                    {
+                                                        string nextHopIpAddressInstance = ((string)nextHopIpAddressValue);
+                                                        routeJsonFormatInstance.NextHopIpAddress = nextHopIpAddressInstance;
+                                                    }
+                                                    
+                                                    JToken provisioningStateValue = propertiesValue2["provisioningState"];
+                                                    if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
+                                                    {
+                                                        string provisioningStateInstance = ((string)provisioningStateValue);
+                                                        routeJsonFormatInstance.ProvisioningState = provisioningStateInstance;
+                                                    }
                                                 }
-                                            }
-                                        }
-                                        
-                                        JToken dhcpOptionsValue = propertiesValue["dhcpOptions"];
-                                        if (dhcpOptionsValue != null && dhcpOptionsValue.Type != JTokenType.Null)
-                                        {
-                                            DhcpOptions dhcpOptionsInstance = new DhcpOptions();
-                                            virtualNetworkJsonFormatInstance.DhcpOptions = dhcpOptionsInstance;
-                                            
-                                            JToken dnsServersArray = dhcpOptionsValue["dnsServers"];
-                                            if (dnsServersArray != null && dnsServersArray.Type != JTokenType.Null)
-                                            {
-                                                foreach (JToken dnsServersValue in ((JArray)dnsServersArray))
+                                                
+                                                JToken nameValue = routesValue["name"];
+                                                if (nameValue != null && nameValue.Type != JTokenType.Null)
                                                 {
-                                                    dhcpOptionsInstance.DnsServers.Add(((string)dnsServersValue));
+                                                    string nameInstance = ((string)nameValue);
+                                                    routeJsonFormatInstance.Name = nameInstance;
+                                                }
+                                                
+                                                JToken etagValue = routesValue["etag"];
+                                                if (etagValue != null && etagValue.Type != JTokenType.Null)
+                                                {
+                                                    string etagInstance = ((string)etagValue);
+                                                    routeJsonFormatInstance.Etag = etagInstance;
+                                                }
+                                                
+                                                JToken idValue = routesValue["id"];
+                                                if (idValue != null && idValue.Type != JTokenType.Null)
+                                                {
+                                                    string idInstance = ((string)idValue);
+                                                    routeJsonFormatInstance.Id = idInstance;
                                                 }
                                             }
                                         }
@@ -1838,91 +1677,14 @@ namespace Microsoft.Azure.Management.Network
                                         {
                                             foreach (JToken subnetsValue in ((JArray)subnetsArray))
                                             {
-                                                Subnet subnetJsonFormatInstance = new Subnet();
-                                                virtualNetworkJsonFormatInstance.Subnets.Add(subnetJsonFormatInstance);
+                                                ResourceId resourceIdInstance = new ResourceId();
+                                                routeTableJsonFormatInstance.Subnets.Add(resourceIdInstance);
                                                 
-                                                JToken propertiesValue2 = subnetsValue["properties"];
-                                                if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
+                                                JToken idValue2 = subnetsValue["id"];
+                                                if (idValue2 != null && idValue2.Type != JTokenType.Null)
                                                 {
-                                                    JToken addressPrefixValue = propertiesValue2["addressPrefix"];
-                                                    if (addressPrefixValue != null && addressPrefixValue.Type != JTokenType.Null)
-                                                    {
-                                                        string addressPrefixInstance = ((string)addressPrefixValue);
-                                                        subnetJsonFormatInstance.AddressPrefix = addressPrefixInstance;
-                                                    }
-                                                    
-                                                    JToken networkSecurityGroupValue = propertiesValue2["networkSecurityGroup"];
-                                                    if (networkSecurityGroupValue != null && networkSecurityGroupValue.Type != JTokenType.Null)
-                                                    {
-                                                        ResourceId networkSecurityGroupInstance = new ResourceId();
-                                                        subnetJsonFormatInstance.NetworkSecurityGroup = networkSecurityGroupInstance;
-                                                        
-                                                        JToken idValue = networkSecurityGroupValue["id"];
-                                                        if (idValue != null && idValue.Type != JTokenType.Null)
-                                                        {
-                                                            string idInstance = ((string)idValue);
-                                                            networkSecurityGroupInstance.Id = idInstance;
-                                                        }
-                                                    }
-                                                    
-                                                    JToken routeTableValue = propertiesValue2["routeTable"];
-                                                    if (routeTableValue != null && routeTableValue.Type != JTokenType.Null)
-                                                    {
-                                                        ResourceId routeTableInstance = new ResourceId();
-                                                        subnetJsonFormatInstance.RouteTable = routeTableInstance;
-                                                        
-                                                        JToken idValue2 = routeTableValue["id"];
-                                                        if (idValue2 != null && idValue2.Type != JTokenType.Null)
-                                                        {
-                                                            string idInstance2 = ((string)idValue2);
-                                                            routeTableInstance.Id = idInstance2;
-                                                        }
-                                                    }
-                                                    
-                                                    JToken ipConfigurationsArray = propertiesValue2["ipConfigurations"];
-                                                    if (ipConfigurationsArray != null && ipConfigurationsArray.Type != JTokenType.Null)
-                                                    {
-                                                        foreach (JToken ipConfigurationsValue in ((JArray)ipConfigurationsArray))
-                                                        {
-                                                            ResourceId resourceIdInstance = new ResourceId();
-                                                            subnetJsonFormatInstance.IpConfigurations.Add(resourceIdInstance);
-                                                            
-                                                            JToken idValue3 = ipConfigurationsValue["id"];
-                                                            if (idValue3 != null && idValue3.Type != JTokenType.Null)
-                                                            {
-                                                                string idInstance3 = ((string)idValue3);
-                                                                resourceIdInstance.Id = idInstance3;
-                                                            }
-                                                        }
-                                                    }
-                                                    
-                                                    JToken provisioningStateValue = propertiesValue2["provisioningState"];
-                                                    if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
-                                                    {
-                                                        string provisioningStateInstance = ((string)provisioningStateValue);
-                                                        subnetJsonFormatInstance.ProvisioningState = provisioningStateInstance;
-                                                    }
-                                                }
-                                                
-                                                JToken nameValue = subnetsValue["name"];
-                                                if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                                {
-                                                    string nameInstance = ((string)nameValue);
-                                                    subnetJsonFormatInstance.Name = nameInstance;
-                                                }
-                                                
-                                                JToken etagValue = subnetsValue["etag"];
-                                                if (etagValue != null && etagValue.Type != JTokenType.Null)
-                                                {
-                                                    string etagInstance = ((string)etagValue);
-                                                    subnetJsonFormatInstance.Etag = etagInstance;
-                                                }
-                                                
-                                                JToken idValue4 = subnetsValue["id"];
-                                                if (idValue4 != null && idValue4.Type != JTokenType.Null)
-                                                {
-                                                    string idInstance4 = ((string)idValue4);
-                                                    subnetJsonFormatInstance.Id = idInstance4;
+                                                    string idInstance2 = ((string)idValue2);
+                                                    resourceIdInstance.Id = idInstance2;
                                                 }
                                             }
                                         }
@@ -1931,7 +1693,7 @@ namespace Microsoft.Azure.Management.Network
                                         if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
                                         {
                                             string provisioningStateInstance2 = ((string)provisioningStateValue2);
-                                            virtualNetworkJsonFormatInstance.ProvisioningState = provisioningStateInstance2;
+                                            routeTableJsonFormatInstance.ProvisioningState = provisioningStateInstance2;
                                         }
                                     }
                                     
@@ -1939,35 +1701,35 @@ namespace Microsoft.Azure.Management.Network
                                     if (etagValue2 != null && etagValue2.Type != JTokenType.Null)
                                     {
                                         string etagInstance2 = ((string)etagValue2);
-                                        virtualNetworkJsonFormatInstance.Etag = etagInstance2;
+                                        routeTableJsonFormatInstance.Etag = etagInstance2;
                                     }
                                     
-                                    JToken idValue5 = valueValue["id"];
-                                    if (idValue5 != null && idValue5.Type != JTokenType.Null)
+                                    JToken idValue3 = valueValue["id"];
+                                    if (idValue3 != null && idValue3.Type != JTokenType.Null)
                                     {
-                                        string idInstance5 = ((string)idValue5);
-                                        virtualNetworkJsonFormatInstance.Id = idInstance5;
+                                        string idInstance3 = ((string)idValue3);
+                                        routeTableJsonFormatInstance.Id = idInstance3;
                                     }
                                     
                                     JToken nameValue2 = valueValue["name"];
                                     if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
                                     {
                                         string nameInstance2 = ((string)nameValue2);
-                                        virtualNetworkJsonFormatInstance.Name = nameInstance2;
+                                        routeTableJsonFormatInstance.Name = nameInstance2;
                                     }
                                     
                                     JToken typeValue = valueValue["type"];
                                     if (typeValue != null && typeValue.Type != JTokenType.Null)
                                     {
                                         string typeInstance = ((string)typeValue);
-                                        virtualNetworkJsonFormatInstance.Type = typeInstance;
+                                        routeTableJsonFormatInstance.Type = typeInstance;
                                     }
                                     
                                     JToken locationValue = valueValue["location"];
                                     if (locationValue != null && locationValue.Type != JTokenType.Null)
                                     {
                                         string locationInstance = ((string)locationValue);
-                                        virtualNetworkJsonFormatInstance.Location = locationInstance;
+                                        routeTableJsonFormatInstance.Location = locationInstance;
                                     }
                                     
                                     JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
@@ -1977,7 +1739,7 @@ namespace Microsoft.Azure.Management.Network
                                         {
                                             string tagsKey = ((string)property.Name);
                                             string tagsValue = ((string)property.Value);
-                                            virtualNetworkJsonFormatInstance.Tags.Add(tagsKey, tagsValue);
+                                            routeTableJsonFormatInstance.Tags.Add(tagsKey, tagsValue);
                                         }
                                     }
                                 }
