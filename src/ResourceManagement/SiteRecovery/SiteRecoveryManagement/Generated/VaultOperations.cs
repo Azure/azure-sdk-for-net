@@ -121,7 +121,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.SiteRecoveryINTD2";
+            url = url + "Microsoft.SiteRecovery";
             url = url + "/";
             url = url + "SiteRecoveryVault";
             url = url + "/";
@@ -320,7 +320,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.SiteRecoveryINTD2";
+            url = url + "Microsoft.SiteRecovery";
             url = url + "/";
             url = url + "SiteRecoveryVault";
             url = url + "/";
@@ -654,7 +654,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.SiteRecoveryINTD2";
+            url = url + "Microsoft.SiteRecovery";
             url = url + "/SiteRecoveryVault";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-03-15");

@@ -26,14 +26,26 @@ using Microsoft.Azure.Management.SiteRecovery.Models;
 namespace Microsoft.Azure.Management.SiteRecovery.Models
 {
     /// <summary>
-    /// The definition of a Vm object.
+    /// The Azure protection entity provider settings.
     /// </summary>
-    public partial class VirtualMachine : ProtectionEntity
+    public partial class OnPremProtectionEntityProviderSettings : ProtectionEntityProviderSettings
     {
+        private AzureVmDiskDetails _vMDiskDetails;
+        
         /// <summary>
-        /// Initializes a new instance of the VirtualMachine class.
+        /// Optional.
         /// </summary>
-        public VirtualMachine()
+        public AzureVmDiskDetails VMDiskDetails
+        {
+            get { return this._vMDiskDetails; }
+            set { this._vMDiskDetails = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the
+        /// OnPremProtectionEntityProviderSettings class.
+        /// </summary>
+        public OnPremProtectionEntityProviderSettings()
         {
         }
     }

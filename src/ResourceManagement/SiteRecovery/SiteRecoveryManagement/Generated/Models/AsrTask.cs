@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         private string _extendedDetails;
         
         /// <summary>
-        /// Required. Extended details of the task.
+        /// Optional. Extended details of the task.
         /// </summary>
         public string ExtendedDetails
         {

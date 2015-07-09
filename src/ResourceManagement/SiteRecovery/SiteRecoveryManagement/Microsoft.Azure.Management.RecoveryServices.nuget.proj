@@ -5,7 +5,7 @@
     Microsoft.Azure.Management.RecoveryServices
     -->
     <SdkNuGetPackage Include="Microsoft.Azure.Management.RecoveryServices">
-      <PackageVersion>0.6.949-preview</PackageVersion>
+      <PackageVersion>0.6.953-preview</PackageVersion>
       <Folder>$(MSBuildThisFileDirectory)</Folder>
     </SdkNuGetPackage>
   </ItemGroup>

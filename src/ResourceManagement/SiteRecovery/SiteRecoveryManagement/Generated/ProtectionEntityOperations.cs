@@ -120,7 +120,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(this.Client.ResourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.SiteRecoveryINTD2";
+            url = url + "Microsoft.SiteRecovery";
             url = url + "/";
             url = url + "SiteRecoveryVault";
             url = url + "/";
@@ -331,84 +331,93 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 {
                                     foreach (JToken tasksValue in ((JArray)tasksArray))
                                     {
-                                        AsrTask taskInstance = new AsrTask();
-                                        propertiesInstance.Tasks.Add(taskInstance);
+                                        AsrTask asrTaskInstance = new AsrTask();
+                                        propertiesInstance.Tasks.Add(asrTaskInstance);
                                         
                                         JToken startTimeValue2 = tasksValue["startTime"];
                                         if (startTimeValue2 != null && startTimeValue2.Type != JTokenType.Null)
                                         {
                                             DateTime startTimeInstance2 = ((DateTime)startTimeValue2);
-                                            taskInstance.StartTime = startTimeInstance2;
+                                            asrTaskInstance.StartTime = startTimeInstance2;
                                         }
                                         
                                         JToken endTimeValue2 = tasksValue["endTime"];
                                         if (endTimeValue2 != null && endTimeValue2.Type != JTokenType.Null)
                                         {
                                             DateTime endTimeInstance2 = ((DateTime)endTimeValue2);
-                                            taskInstance.EndTime = endTimeInstance2;
+                                            asrTaskInstance.EndTime = endTimeInstance2;
+                                        }
+                                        
+                                        JToken actionsArray = tasksValue["actions"];
+                                        if (actionsArray != null && actionsArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken actionsValue in ((JArray)actionsArray))
+                                            {
+                                                asrTaskInstance.Actions.Add(((string)actionsValue));
+                                            }
                                         }
                                         
                                         JToken taskTypeValue = tasksValue["taskType"];
                                         if (taskTypeValue != null && taskTypeValue.Type != JTokenType.Null)
                                         {
                                             string taskTypeInstance = ((string)taskTypeValue);
-                                            taskInstance.TaskType = taskTypeInstance;
+                                            asrTaskInstance.TaskType = taskTypeInstance;
                                         }
                                         
                                         JToken taskNameValue = tasksValue["taskName"];
                                         if (taskNameValue != null && taskNameValue.Type != JTokenType.Null)
                                         {
                                             string taskNameInstance = ((string)taskNameValue);
-                                            taskInstance.TaskName = taskNameInstance;
+                                            asrTaskInstance.TaskName = taskNameInstance;
                                         }
                                         
                                         JToken stateValue2 = tasksValue["state"];
                                         if (stateValue2 != null && stateValue2.Type != JTokenType.Null)
                                         {
                                             string stateInstance2 = ((string)stateValue2);
-                                            taskInstance.State = stateInstance2;
+                                            asrTaskInstance.State = stateInstance2;
                                         }
                                         
                                         JToken stateDescriptionValue2 = tasksValue["stateDescription"];
                                         if (stateDescriptionValue2 != null && stateDescriptionValue2.Type != JTokenType.Null)
                                         {
                                             string stateDescriptionInstance2 = ((string)stateDescriptionValue2);
-                                            taskInstance.StateDescription = stateDescriptionInstance2;
+                                            asrTaskInstance.StateDescription = stateDescriptionInstance2;
                                         }
                                         
                                         JToken extendedDetailsValue = tasksValue["extendedDetails"];
                                         if (extendedDetailsValue != null && extendedDetailsValue.Type != JTokenType.Null)
                                         {
                                             string extendedDetailsInstance = ((string)extendedDetailsValue);
-                                            taskInstance.ExtendedDetails = extendedDetailsInstance;
+                                            asrTaskInstance.ExtendedDetails = extendedDetailsInstance;
                                         }
                                         
                                         JToken idValue = tasksValue["id"];
                                         if (idValue != null && idValue.Type != JTokenType.Null)
                                         {
                                             string idInstance = ((string)idValue);
-                                            taskInstance.Id = idInstance;
+                                            asrTaskInstance.Id = idInstance;
                                         }
                                         
                                         JToken nameValue = tasksValue["name"];
                                         if (nameValue != null && nameValue.Type != JTokenType.Null)
                                         {
                                             string nameInstance = ((string)nameValue);
-                                            taskInstance.Name = nameInstance;
+                                            asrTaskInstance.Name = nameInstance;
                                         }
                                         
                                         JToken typeValue = tasksValue["type"];
                                         if (typeValue != null && typeValue.Type != JTokenType.Null)
                                         {
                                             string typeInstance = ((string)typeValue);
-                                            taskInstance.Type = typeInstance;
+                                            asrTaskInstance.Type = typeInstance;
                                         }
                                         
                                         JToken locationValue = tasksValue["location"];
                                         if (locationValue != null && locationValue.Type != JTokenType.Null)
                                         {
                                             string locationInstance = ((string)locationValue);
-                                            taskInstance.Location = locationInstance;
+                                            asrTaskInstance.Location = locationInstance;
                                         }
                                         
                                         JToken tagsSequenceElement = ((JToken)tasksValue["tags"]);
@@ -418,7 +427,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             {
                                                 string tagsKey = ((string)property.Name);
                                                 string tagsValue = ((string)property.Value);
-                                                taskInstance.Tags.Add(tagsKey, tagsValue);
+                                                asrTaskInstance.Tags.Add(tagsKey, tagsValue);
                                             }
                                         }
                                     }
@@ -432,7 +441,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         ErrorDetails errorDetailsInstance = new ErrorDetails();
                                         propertiesInstance.Errors.Add(errorDetailsInstance);
                                         
-                                        JToken serviceErrorDetailsValue = errorsValue["ServiceErrorDetails"];
+                                        JToken serviceErrorDetailsValue = errorsValue["serviceErrorDetails"];
                                         if (serviceErrorDetailsValue != null && serviceErrorDetailsValue.Type != JTokenType.Null)
                                         {
                                             ServiceError serviceErrorDetailsInstance = new ServiceError();
@@ -474,56 +483,67 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             }
                                         }
                                         
-                                        JToken providerErrorDetailsValue = errorsValue["ProviderErrorDetails"];
+                                        JToken providerErrorDetailsValue = errorsValue["providerErrorDetails"];
                                         if (providerErrorDetailsValue != null && providerErrorDetailsValue.Type != JTokenType.Null)
                                         {
                                             ProviderError providerErrorDetailsInstance = new ProviderError();
                                             errorDetailsInstance.ProviderErrorDetails = providerErrorDetailsInstance;
                                             
-                                            JToken errorCodeValue = providerErrorDetailsValue["ErrorCode"];
+                                            JToken errorCodeValue = providerErrorDetailsValue["errorCode"];
                                             if (errorCodeValue != null && errorCodeValue.Type != JTokenType.Null)
                                             {
                                                 int errorCodeInstance = ((int)errorCodeValue);
                                                 providerErrorDetailsInstance.ErrorCode = errorCodeInstance;
                                             }
                                             
-                                            JToken errorMessageValue = providerErrorDetailsValue["ErrorMessage"];
+                                            JToken errorMessageValue = providerErrorDetailsValue["errorMessage"];
                                             if (errorMessageValue != null && errorMessageValue.Type != JTokenType.Null)
                                             {
                                                 string errorMessageInstance = ((string)errorMessageValue);
                                                 providerErrorDetailsInstance.ErrorMessage = errorMessageInstance;
                                             }
                                             
-                                            JToken errorIdValue = providerErrorDetailsValue["ErrorId"];
+                                            JToken errorIdValue = providerErrorDetailsValue["errorId"];
                                             if (errorIdValue != null && errorIdValue.Type != JTokenType.Null)
                                             {
                                                 string errorIdInstance = ((string)errorIdValue);
                                                 providerErrorDetailsInstance.ErrorId = errorIdInstance;
                                             }
                                             
-                                            JToken workflowIdValue = providerErrorDetailsValue["WorkflowId"];
+                                            JToken workflowIdValue = providerErrorDetailsValue["workflowId"];
                                             if (workflowIdValue != null && workflowIdValue.Type != JTokenType.Null)
                                             {
                                                 string workflowIdInstance = ((string)workflowIdValue);
                                                 providerErrorDetailsInstance.WorkflowId = workflowIdInstance;
                                             }
                                             
-                                            JToken creationTimeUtcValue = providerErrorDetailsValue["CreationTimeUtc"];
+                                            JToken creationTimeUtcValue = providerErrorDetailsValue["creationTimeUtc"];
                                             if (creationTimeUtcValue != null && creationTimeUtcValue.Type != JTokenType.Null)
                                             {
                                                 DateTime creationTimeUtcInstance = ((DateTime)creationTimeUtcValue);
                                                 providerErrorDetailsInstance.CreationTimeUtc = creationTimeUtcInstance;
                                             }
                                             
-                                            JToken errorLevelValue = providerErrorDetailsValue["ErrorLevel"];
+                                            JToken errorLevelValue = providerErrorDetailsValue["errorLevel"];
                                             if (errorLevelValue != null && errorLevelValue.Type != JTokenType.Null)
                                             {
                                                 string errorLevelInstance = ((string)errorLevelValue);
                                                 providerErrorDetailsInstance.ErrorLevel = errorLevelInstance;
                                             }
+                                            
+                                            JToken affectedObjectsSequenceElement = ((JToken)providerErrorDetailsValue["affectedObjects"]);
+                                            if (affectedObjectsSequenceElement != null && affectedObjectsSequenceElement.Type != JTokenType.Null)
+                                            {
+                                                foreach (JProperty property2 in affectedObjectsSequenceElement)
+                                                {
+                                                    string affectedObjectsKey = ((string)property2.Name);
+                                                    string affectedObjectsValue = ((string)property2.Value);
+                                                    providerErrorDetailsInstance.AffectedObjects.Add(affectedObjectsKey, affectedObjectsValue);
+                                                }
+                                            }
                                         }
                                         
-                                        JToken taskIdValue = errorsValue["TaskId"];
+                                        JToken taskIdValue = errorsValue["taskId"];
                                         if (taskIdValue != null && taskIdValue.Type != JTokenType.Null)
                                         {
                                             string taskIdInstance = ((string)taskIdValue);
@@ -563,10 +583,10 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 JToken tagsSequenceElement2 = ((JToken)propertiesValue["tags"]);
                                 if (tagsSequenceElement2 != null && tagsSequenceElement2.Type != JTokenType.Null)
                                 {
-                                    foreach (JProperty property2 in tagsSequenceElement2)
+                                    foreach (JProperty property3 in tagsSequenceElement2)
                                     {
-                                        string tagsKey2 = ((string)property2.Name);
-                                        string tagsValue2 = ((string)property2.Value);
+                                        string tagsKey2 = ((string)property3.Name);
+                                        string tagsValue2 = ((string)property3.Value);
                                         propertiesInstance.Tags.Add(tagsKey2, tagsValue2);
                                     }
                                 }
@@ -603,10 +623,10 @@ namespace Microsoft.Azure.Management.SiteRecovery
                             JToken tagsSequenceElement3 = ((JToken)responseDoc["tags"]);
                             if (tagsSequenceElement3 != null && tagsSequenceElement3.Type != JTokenType.Null)
                             {
-                                foreach (JProperty property3 in tagsSequenceElement3)
+                                foreach (JProperty property4 in tagsSequenceElement3)
                                 {
-                                    string tagsKey3 = ((string)property3.Name);
-                                    string tagsValue3 = ((string)property3.Value);
+                                    string tagsKey3 = ((string)property4.Name);
+                                    string tagsValue3 = ((string)property4.Value);
                                     jobInstance.Tags.Add(tagsKey3, tagsValue3);
                                 }
                             }
@@ -699,7 +719,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(this.Client.ResourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.SiteRecoveryINTD2";
+            url = url + "Microsoft.SiteRecovery";
             url = url + "/";
             url = url + "SiteRecoveryVault";
             url = url + "/";
@@ -955,84 +975,93 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 {
                                     foreach (JToken tasksValue in ((JArray)tasksArray))
                                     {
-                                        AsrTask taskInstance = new AsrTask();
-                                        propertiesInstance.Tasks.Add(taskInstance);
+                                        AsrTask asrTaskInstance = new AsrTask();
+                                        propertiesInstance.Tasks.Add(asrTaskInstance);
                                         
                                         JToken startTimeValue2 = tasksValue["startTime"];
                                         if (startTimeValue2 != null && startTimeValue2.Type != JTokenType.Null)
                                         {
                                             DateTime startTimeInstance2 = ((DateTime)startTimeValue2);
-                                            taskInstance.StartTime = startTimeInstance2;
+                                            asrTaskInstance.StartTime = startTimeInstance2;
                                         }
                                         
                                         JToken endTimeValue2 = tasksValue["endTime"];
                                         if (endTimeValue2 != null && endTimeValue2.Type != JTokenType.Null)
                                         {
                                             DateTime endTimeInstance2 = ((DateTime)endTimeValue2);
-                                            taskInstance.EndTime = endTimeInstance2;
+                                            asrTaskInstance.EndTime = endTimeInstance2;
+                                        }
+                                        
+                                        JToken actionsArray = tasksValue["actions"];
+                                        if (actionsArray != null && actionsArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken actionsValue in ((JArray)actionsArray))
+                                            {
+                                                asrTaskInstance.Actions.Add(((string)actionsValue));
+                                            }
                                         }
                                         
                                         JToken taskTypeValue = tasksValue["taskType"];
                                         if (taskTypeValue != null && taskTypeValue.Type != JTokenType.Null)
                                         {
                                             string taskTypeInstance = ((string)taskTypeValue);
-                                            taskInstance.TaskType = taskTypeInstance;
+                                            asrTaskInstance.TaskType = taskTypeInstance;
                                         }
                                         
                                         JToken taskNameValue = tasksValue["taskName"];
                                         if (taskNameValue != null && taskNameValue.Type != JTokenType.Null)
                                         {
                                             string taskNameInstance = ((string)taskNameValue);
-                                            taskInstance.TaskName = taskNameInstance;
+                                            asrTaskInstance.TaskName = taskNameInstance;
                                         }
                                         
                                         JToken stateValue2 = tasksValue["state"];
                                         if (stateValue2 != null && stateValue2.Type != JTokenType.Null)
                                         {
                                             string stateInstance2 = ((string)stateValue2);
-                                            taskInstance.State = stateInstance2;
+                                            asrTaskInstance.State = stateInstance2;
                                         }
                                         
                                         JToken stateDescriptionValue2 = tasksValue["stateDescription"];
                                         if (stateDescriptionValue2 != null && stateDescriptionValue2.Type != JTokenType.Null)
                                         {
                                             string stateDescriptionInstance2 = ((string)stateDescriptionValue2);
-                                            taskInstance.StateDescription = stateDescriptionInstance2;
+                                            asrTaskInstance.StateDescription = stateDescriptionInstance2;
                                         }
                                         
                                         JToken extendedDetailsValue = tasksValue["extendedDetails"];
                                         if (extendedDetailsValue != null && extendedDetailsValue.Type != JTokenType.Null)
                                         {
                                             string extendedDetailsInstance = ((string)extendedDetailsValue);
-                                            taskInstance.ExtendedDetails = extendedDetailsInstance;
+                                            asrTaskInstance.ExtendedDetails = extendedDetailsInstance;
                                         }
                                         
                                         JToken idValue = tasksValue["id"];
                                         if (idValue != null && idValue.Type != JTokenType.Null)
                                         {
                                             string idInstance = ((string)idValue);
-                                            taskInstance.Id = idInstance;
+                                            asrTaskInstance.Id = idInstance;
                                         }
                                         
                                         JToken nameValue = tasksValue["name"];
                                         if (nameValue != null && nameValue.Type != JTokenType.Null)
                                         {
                                             string nameInstance = ((string)nameValue);
-                                            taskInstance.Name = nameInstance;
+                                            asrTaskInstance.Name = nameInstance;
                                         }
                                         
                                         JToken typeValue = tasksValue["type"];
                                         if (typeValue != null && typeValue.Type != JTokenType.Null)
                                         {
                                             string typeInstance = ((string)typeValue);
-                                            taskInstance.Type = typeInstance;
+                                            asrTaskInstance.Type = typeInstance;
                                         }
                                         
                                         JToken locationValue = tasksValue["location"];
                                         if (locationValue != null && locationValue.Type != JTokenType.Null)
                                         {
                                             string locationInstance = ((string)locationValue);
-                                            taskInstance.Location = locationInstance;
+                                            asrTaskInstance.Location = locationInstance;
                                         }
                                         
                                         JToken tagsSequenceElement = ((JToken)tasksValue["tags"]);
@@ -1042,7 +1071,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             {
                                                 string tagsKey = ((string)property.Name);
                                                 string tagsValue = ((string)property.Value);
-                                                taskInstance.Tags.Add(tagsKey, tagsValue);
+                                                asrTaskInstance.Tags.Add(tagsKey, tagsValue);
                                             }
                                         }
                                     }
@@ -1056,7 +1085,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         ErrorDetails errorDetailsInstance = new ErrorDetails();
                                         propertiesInstance.Errors.Add(errorDetailsInstance);
                                         
-                                        JToken serviceErrorDetailsValue = errorsValue["ServiceErrorDetails"];
+                                        JToken serviceErrorDetailsValue = errorsValue["serviceErrorDetails"];
                                         if (serviceErrorDetailsValue != null && serviceErrorDetailsValue.Type != JTokenType.Null)
                                         {
                                             ServiceError serviceErrorDetailsInstance = new ServiceError();
@@ -1098,56 +1127,67 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             }
                                         }
                                         
-                                        JToken providerErrorDetailsValue = errorsValue["ProviderErrorDetails"];
+                                        JToken providerErrorDetailsValue = errorsValue["providerErrorDetails"];
                                         if (providerErrorDetailsValue != null && providerErrorDetailsValue.Type != JTokenType.Null)
                                         {
                                             ProviderError providerErrorDetailsInstance = new ProviderError();
                                             errorDetailsInstance.ProviderErrorDetails = providerErrorDetailsInstance;
                                             
-                                            JToken errorCodeValue = providerErrorDetailsValue["ErrorCode"];
+                                            JToken errorCodeValue = providerErrorDetailsValue["errorCode"];
                                             if (errorCodeValue != null && errorCodeValue.Type != JTokenType.Null)
                                             {
                                                 int errorCodeInstance = ((int)errorCodeValue);
                                                 providerErrorDetailsInstance.ErrorCode = errorCodeInstance;
                                             }
                                             
-                                            JToken errorMessageValue = providerErrorDetailsValue["ErrorMessage"];
+                                            JToken errorMessageValue = providerErrorDetailsValue["errorMessage"];
                                             if (errorMessageValue != null && errorMessageValue.Type != JTokenType.Null)
                                             {
                                                 string errorMessageInstance = ((string)errorMessageValue);
                                                 providerErrorDetailsInstance.ErrorMessage = errorMessageInstance;
                                             }
                                             
-                                            JToken errorIdValue = providerErrorDetailsValue["ErrorId"];
+                                            JToken errorIdValue = providerErrorDetailsValue["errorId"];
                                             if (errorIdValue != null && errorIdValue.Type != JTokenType.Null)
                                             {
                                                 string errorIdInstance = ((string)errorIdValue);
                                                 providerErrorDetailsInstance.ErrorId = errorIdInstance;
                                             }
                                             
-                                            JToken workflowIdValue = providerErrorDetailsValue["WorkflowId"];
+                                            JToken workflowIdValue = providerErrorDetailsValue["workflowId"];
                                             if (workflowIdValue != null && workflowIdValue.Type != JTokenType.Null)
                                             {
                                                 string workflowIdInstance = ((string)workflowIdValue);
                                                 providerErrorDetailsInstance.WorkflowId = workflowIdInstance;
                                             }
                                             
-                                            JToken creationTimeUtcValue = providerErrorDetailsValue["CreationTimeUtc"];
+                                            JToken creationTimeUtcValue = providerErrorDetailsValue["creationTimeUtc"];
                                             if (creationTimeUtcValue != null && creationTimeUtcValue.Type != JTokenType.Null)
                                             {
                                                 DateTime creationTimeUtcInstance = ((DateTime)creationTimeUtcValue);
                                                 providerErrorDetailsInstance.CreationTimeUtc = creationTimeUtcInstance;
                                             }
                                             
-                                            JToken errorLevelValue = providerErrorDetailsValue["ErrorLevel"];
+                                            JToken errorLevelValue = providerErrorDetailsValue["errorLevel"];
                                             if (errorLevelValue != null && errorLevelValue.Type != JTokenType.Null)
                                             {
                                                 string errorLevelInstance = ((string)errorLevelValue);
                                                 providerErrorDetailsInstance.ErrorLevel = errorLevelInstance;
                                             }
+                                            
+                                            JToken affectedObjectsSequenceElement = ((JToken)providerErrorDetailsValue["affectedObjects"]);
+                                            if (affectedObjectsSequenceElement != null && affectedObjectsSequenceElement.Type != JTokenType.Null)
+                                            {
+                                                foreach (JProperty property2 in affectedObjectsSequenceElement)
+                                                {
+                                                    string affectedObjectsKey = ((string)property2.Name);
+                                                    string affectedObjectsValue = ((string)property2.Value);
+                                                    providerErrorDetailsInstance.AffectedObjects.Add(affectedObjectsKey, affectedObjectsValue);
+                                                }
+                                            }
                                         }
                                         
-                                        JToken taskIdValue = errorsValue["TaskId"];
+                                        JToken taskIdValue = errorsValue["taskId"];
                                         if (taskIdValue != null && taskIdValue.Type != JTokenType.Null)
                                         {
                                             string taskIdInstance = ((string)taskIdValue);
@@ -1187,10 +1227,10 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 JToken tagsSequenceElement2 = ((JToken)propertiesValue["tags"]);
                                 if (tagsSequenceElement2 != null && tagsSequenceElement2.Type != JTokenType.Null)
                                 {
-                                    foreach (JProperty property2 in tagsSequenceElement2)
+                                    foreach (JProperty property3 in tagsSequenceElement2)
                                     {
-                                        string tagsKey2 = ((string)property2.Name);
-                                        string tagsValue2 = ((string)property2.Value);
+                                        string tagsKey2 = ((string)property3.Name);
+                                        string tagsValue2 = ((string)property3.Value);
                                         propertiesInstance.Tags.Add(tagsKey2, tagsValue2);
                                     }
                                 }
@@ -1227,10 +1267,10 @@ namespace Microsoft.Azure.Management.SiteRecovery
                             JToken tagsSequenceElement3 = ((JToken)responseDoc["tags"]);
                             if (tagsSequenceElement3 != null && tagsSequenceElement3.Type != JTokenType.Null)
                             {
-                                foreach (JProperty property3 in tagsSequenceElement3)
+                                foreach (JProperty property4 in tagsSequenceElement3)
                                 {
-                                    string tagsKey3 = ((string)property3.Name);
-                                    string tagsValue3 = ((string)property3.Value);
+                                    string tagsKey3 = ((string)property4.Name);
+                                    string tagsValue3 = ((string)property4.Value);
                                     jobInstance.Tags.Add(tagsKey3, tagsValue3);
                                 }
                             }
@@ -1319,7 +1359,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(this.Client.ResourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.SiteRecoveryINTD2";
+            url = url + "Microsoft.SiteRecovery";
             url = url + "/";
             url = url + "SiteRecoveryVault";
             url = url + "/";
@@ -1418,8 +1458,215 @@ namespace Microsoft.Azure.Management.SiteRecovery
                             JToken replicationProviderSettingsValue = responseDoc["replicationProviderSettings"];
                             if (replicationProviderSettingsValue != null && replicationProviderSettingsValue.Type != JTokenType.Null)
                             {
-                                string replicationProviderSettingsInstance = ((string)replicationProviderSettingsValue);
-                                protectionEntityInstance.ReplicationProviderSettings = replicationProviderSettingsInstance;
+                                string typeName = ((string)replicationProviderSettingsValue["__type"]);
+                                if (typeName == "OnPremProtectionEntityProviderSettings")
+                                {
+                                    OnPremProtectionEntityProviderSettings onPremProtectionEntityProviderSettingsInstance = new OnPremProtectionEntityProviderSettings();
+                                    
+                                    JToken vmDiskDetailsValue = replicationProviderSettingsValue["vmDiskDetails"];
+                                    if (vmDiskDetailsValue != null && vmDiskDetailsValue.Type != JTokenType.Null)
+                                    {
+                                        AzureVmDiskDetails vmDiskDetailsInstance = new AzureVmDiskDetails();
+                                        onPremProtectionEntityProviderSettingsInstance.VMDiskDetails = vmDiskDetailsInstance;
+                                        
+                                        JToken osTypeValue = vmDiskDetailsValue["osType"];
+                                        if (osTypeValue != null && osTypeValue.Type != JTokenType.Null)
+                                        {
+                                            string osTypeInstance = ((string)osTypeValue);
+                                            vmDiskDetailsInstance.OsType = osTypeInstance;
+                                        }
+                                        
+                                        JToken disksArray = vmDiskDetailsValue;
+                                        if (disksArray != null && disksArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken disksValue in ((JArray)disksArray))
+                                            {
+                                                VirtualHardDisk virtualHardDiskInstance = new VirtualHardDisk();
+                                                vmDiskDetailsInstance.Disks.Add(virtualHardDiskInstance);
+                                                
+                                                JToken idValue = disksValue["id"];
+                                                if (idValue != null && idValue.Type != JTokenType.Null)
+                                                {
+                                                    string idInstance = ((string)idValue);
+                                                    virtualHardDiskInstance.Id = idInstance;
+                                                }
+                                                
+                                                JToken nameValue = disksValue["name"];
+                                                if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                                {
+                                                    string nameInstance = ((string)nameValue);
+                                                    virtualHardDiskInstance.Name = nameInstance;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken osDiskValue = vmDiskDetailsValue["osDisk"];
+                                        if (osDiskValue != null && osDiskValue.Type != JTokenType.Null)
+                                        {
+                                            string osDiskInstance = ((string)osDiskValue);
+                                            vmDiskDetailsInstance.OsDisk = osDiskInstance;
+                                        }
+                                        
+                                        JToken vHDIdValue = vmDiskDetailsValue["vHDId"];
+                                        if (vHDIdValue != null && vHDIdValue.Type != JTokenType.Null)
+                                        {
+                                            string vHDIdInstance = ((string)vHDIdValue);
+                                            vmDiskDetailsInstance.VHDId = vHDIdInstance;
+                                        }
+                                        
+                                        JToken maxSizeMBValue = vmDiskDetailsValue["maxSizeMB"];
+                                        if (maxSizeMBValue != null && maxSizeMBValue.Type != JTokenType.Null)
+                                        {
+                                            ulong maxSizeMBInstance = ((ulong)maxSizeMBValue);
+                                            vmDiskDetailsInstance.MaxSizeMB = maxSizeMBInstance;
+                                        }
+                                    }
+                                    protectionEntityInstance.ReplicationProviderSettings = onPremProtectionEntityProviderSettingsInstance;
+                                }
+                                if (typeName == "AzureProtectionEntityProviderSettings")
+                                {
+                                    AzureProtectionEntityProviderSettings azureProtectionEntityProviderSettingsInstance = new AzureProtectionEntityProviderSettings();
+                                    
+                                    JToken vmDiskDetailsValue2 = replicationProviderSettingsValue["vmDiskDetails"];
+                                    if (vmDiskDetailsValue2 != null && vmDiskDetailsValue2.Type != JTokenType.Null)
+                                    {
+                                        AzureVmDiskDetails vmDiskDetailsInstance2 = new AzureVmDiskDetails();
+                                        azureProtectionEntityProviderSettingsInstance.VMDiskDetails = vmDiskDetailsInstance2;
+                                        
+                                        JToken osTypeValue2 = vmDiskDetailsValue2["osType"];
+                                        if (osTypeValue2 != null && osTypeValue2.Type != JTokenType.Null)
+                                        {
+                                            string osTypeInstance2 = ((string)osTypeValue2);
+                                            vmDiskDetailsInstance2.OsType = osTypeInstance2;
+                                        }
+                                        
+                                        JToken disksArray2 = vmDiskDetailsValue2;
+                                        if (disksArray2 != null && disksArray2.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken disksValue2 in ((JArray)disksArray2))
+                                            {
+                                                VirtualHardDisk virtualHardDiskInstance2 = new VirtualHardDisk();
+                                                vmDiskDetailsInstance2.Disks.Add(virtualHardDiskInstance2);
+                                                
+                                                JToken idValue2 = disksValue2["id"];
+                                                if (idValue2 != null && idValue2.Type != JTokenType.Null)
+                                                {
+                                                    string idInstance2 = ((string)idValue2);
+                                                    virtualHardDiskInstance2.Id = idInstance2;
+                                                }
+                                                
+                                                JToken nameValue2 = disksValue2["name"];
+                                                if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string nameInstance2 = ((string)nameValue2);
+                                                    virtualHardDiskInstance2.Name = nameInstance2;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken osDiskValue2 = vmDiskDetailsValue2["osDisk"];
+                                        if (osDiskValue2 != null && osDiskValue2.Type != JTokenType.Null)
+                                        {
+                                            string osDiskInstance2 = ((string)osDiskValue2);
+                                            vmDiskDetailsInstance2.OsDisk = osDiskInstance2;
+                                        }
+                                        
+                                        JToken vHDIdValue2 = vmDiskDetailsValue2["vHDId"];
+                                        if (vHDIdValue2 != null && vHDIdValue2.Type != JTokenType.Null)
+                                        {
+                                            string vHDIdInstance2 = ((string)vHDIdValue2);
+                                            vmDiskDetailsInstance2.VHDId = vHDIdInstance2;
+                                        }
+                                        
+                                        JToken maxSizeMBValue2 = vmDiskDetailsValue2["maxSizeMB"];
+                                        if (maxSizeMBValue2 != null && maxSizeMBValue2.Type != JTokenType.Null)
+                                        {
+                                            ulong maxSizeMBInstance2 = ((ulong)maxSizeMBValue2);
+                                            vmDiskDetailsInstance2.MaxSizeMB = maxSizeMBInstance2;
+                                        }
+                                    }
+                                    
+                                    JToken vmPropertiesValue = replicationProviderSettingsValue["vmProperties"];
+                                    if (vmPropertiesValue != null && vmPropertiesValue.Type != JTokenType.Null)
+                                    {
+                                        VMProperties vmPropertiesInstance = new VMProperties();
+                                        azureProtectionEntityProviderSettingsInstance.VMProperties = vmPropertiesInstance;
+                                        
+                                        JToken recoveryAzureVMNameValue = vmPropertiesValue["recoveryAzureVMName"];
+                                        if (recoveryAzureVMNameValue != null && recoveryAzureVMNameValue.Type != JTokenType.Null)
+                                        {
+                                            string recoveryAzureVMNameInstance = ((string)recoveryAzureVMNameValue);
+                                            vmPropertiesInstance.RecoveryAzureVMName = recoveryAzureVMNameInstance;
+                                        }
+                                        
+                                        JToken recoveryAzureVMSizeValue = vmPropertiesValue["recoveryAzureVMSize"];
+                                        if (recoveryAzureVMSizeValue != null && recoveryAzureVMSizeValue.Type != JTokenType.Null)
+                                        {
+                                            string recoveryAzureVMSizeInstance = ((string)recoveryAzureVMSizeValue);
+                                            vmPropertiesInstance.RecoveryAzureVMSize = recoveryAzureVMSizeInstance;
+                                        }
+                                        
+                                        JToken selectedRecoveryAzureNetworkIdValue = vmPropertiesValue["selectedRecoveryAzureNetworkId"];
+                                        if (selectedRecoveryAzureNetworkIdValue != null && selectedRecoveryAzureNetworkIdValue.Type != JTokenType.Null)
+                                        {
+                                            string selectedRecoveryAzureNetworkIdInstance = ((string)selectedRecoveryAzureNetworkIdValue);
+                                            vmPropertiesInstance.SelectedRecoveryAzureNetworkId = selectedRecoveryAzureNetworkIdInstance;
+                                        }
+                                        
+                                        JToken vmNicsArray = vmPropertiesValue;
+                                        if (vmNicsArray != null && vmNicsArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken vmNicsValue in ((JArray)vmNicsArray))
+                                            {
+                                                VMNicDetails vMNicDetailsInstance = new VMNicDetails();
+                                                vmPropertiesInstance.VMNics.Add(vMNicDetailsInstance);
+                                                
+                                                JToken nicIdValue = vmNicsValue["NicId"];
+                                                if (nicIdValue != null && nicIdValue.Type != JTokenType.Null)
+                                                {
+                                                    string nicIdInstance = ((string)nicIdValue);
+                                                    vMNicDetailsInstance.NicId = nicIdInstance;
+                                                }
+                                                
+                                                JToken vMSubnetNameValue = vmNicsValue["VMSubnetName"];
+                                                if (vMSubnetNameValue != null && vMSubnetNameValue.Type != JTokenType.Null)
+                                                {
+                                                    string vMSubnetNameInstance = ((string)vMSubnetNameValue);
+                                                    vMNicDetailsInstance.VMSubnetName = vMSubnetNameInstance;
+                                                }
+                                                
+                                                JToken vMNetworkNameValue = vmNicsValue["VMNetworkName"];
+                                                if (vMNetworkNameValue != null && vMNetworkNameValue.Type != JTokenType.Null)
+                                                {
+                                                    string vMNetworkNameInstance = ((string)vMNetworkNameValue);
+                                                    vMNicDetailsInstance.VMNetworkName = vMNetworkNameInstance;
+                                                }
+                                                
+                                                JToken recoveryVMNetworkIdValue = vmNicsValue["RecoveryVMNetworkId"];
+                                                if (recoveryVMNetworkIdValue != null && recoveryVMNetworkIdValue.Type != JTokenType.Null)
+                                                {
+                                                    string recoveryVMNetworkIdInstance = ((string)recoveryVMNetworkIdValue);
+                                                    vMNicDetailsInstance.RecoveryVMNetworkId = recoveryVMNetworkIdInstance;
+                                                }
+                                                
+                                                JToken recoveryVMSubnetNameValue = vmNicsValue["RecoveryVMSubnetName"];
+                                                if (recoveryVMSubnetNameValue != null && recoveryVMSubnetNameValue.Type != JTokenType.Null)
+                                                {
+                                                    string recoveryVMSubnetNameInstance = ((string)recoveryVMSubnetNameValue);
+                                                    vMNicDetailsInstance.RecoveryVMSubnetName = recoveryVMSubnetNameInstance;
+                                                }
+                                                
+                                                JToken replicaNicStaticIPAddressValue = vmNicsValue["ReplicaNicStaticIPAddress"];
+                                                if (replicaNicStaticIPAddressValue != null && replicaNicStaticIPAddressValue.Type != JTokenType.Null)
+                                                {
+                                                    string replicaNicStaticIPAddressInstance = ((string)replicaNicStaticIPAddressValue);
+                                                    vMNicDetailsInstance.ReplicaNicStaticIPAddress = replicaNicStaticIPAddressInstance;
+                                                }
+                                            }
+                                        }
+                                    }
+                                    protectionEntityInstance.ReplicationProviderSettings = azureProtectionEntityProviderSettingsInstance;
+                                }
                             }
                             
                             JToken fabricObjectIdValue = responseDoc["fabricObjectId"];
@@ -1585,18 +1832,18 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     }
                                 }
                                 
-                                JToken idValue = protectionProfileValue["id"];
-                                if (idValue != null && idValue.Type != JTokenType.Null)
+                                JToken idValue3 = protectionProfileValue["id"];
+                                if (idValue3 != null && idValue3.Type != JTokenType.Null)
                                 {
-                                    string idInstance = ((string)idValue);
-                                    protectionProfileInstance.Id = idInstance;
+                                    string idInstance3 = ((string)idValue3);
+                                    protectionProfileInstance.Id = idInstance3;
                                 }
                                 
-                                JToken nameValue = protectionProfileValue["name"];
-                                if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                JToken nameValue3 = protectionProfileValue["name"];
+                                if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
                                 {
-                                    string nameInstance = ((string)nameValue);
-                                    protectionProfileInstance.Name = nameInstance;
+                                    string nameInstance3 = ((string)nameValue3);
+                                    protectionProfileInstance.Name = nameInstance3;
                                 }
                                 
                                 JToken typeValue = protectionProfileValue["type"];
@@ -1625,18 +1872,18 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 }
                             }
                             
-                            JToken idValue2 = responseDoc["id"];
-                            if (idValue2 != null && idValue2.Type != JTokenType.Null)
+                            JToken idValue4 = responseDoc["id"];
+                            if (idValue4 != null && idValue4.Type != JTokenType.Null)
                             {
-                                string idInstance2 = ((string)idValue2);
-                                protectionEntityInstance.Id = idInstance2;
+                                string idInstance4 = ((string)idValue4);
+                                protectionEntityInstance.Id = idInstance4;
                             }
                             
-                            JToken nameValue2 = responseDoc["name"];
-                            if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                            JToken nameValue4 = responseDoc["name"];
+                            if (nameValue4 != null && nameValue4.Type != JTokenType.Null)
                             {
-                                string nameInstance2 = ((string)nameValue2);
-                                protectionEntityInstance.Name = nameInstance2;
+                                string nameInstance4 = ((string)nameValue4);
+                                protectionEntityInstance.Name = nameInstance4;
                             }
                             
                             JToken typeValue2 = responseDoc["type"];
@@ -1740,7 +1987,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(this.Client.ResourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.SiteRecoveryINTD2";
+            url = url + "Microsoft.SiteRecovery";
             url = url + "/";
             url = url + "SiteRecoveryVault";
             url = url + "/";
@@ -1843,8 +2090,215 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     JToken replicationProviderSettingsValue = valueValue["replicationProviderSettings"];
                                     if (replicationProviderSettingsValue != null && replicationProviderSettingsValue.Type != JTokenType.Null)
                                     {
-                                        string replicationProviderSettingsInstance = ((string)replicationProviderSettingsValue);
-                                        protectionEntityInstance.ReplicationProviderSettings = replicationProviderSettingsInstance;
+                                        string typeName = ((string)replicationProviderSettingsValue["__type"]);
+                                        if (typeName == "OnPremProtectionEntityProviderSettings")
+                                        {
+                                            OnPremProtectionEntityProviderSettings onPremProtectionEntityProviderSettingsInstance = new OnPremProtectionEntityProviderSettings();
+                                            
+                                            JToken vmDiskDetailsValue = replicationProviderSettingsValue["vmDiskDetails"];
+                                            if (vmDiskDetailsValue != null && vmDiskDetailsValue.Type != JTokenType.Null)
+                                            {
+                                                AzureVmDiskDetails vmDiskDetailsInstance = new AzureVmDiskDetails();
+                                                onPremProtectionEntityProviderSettingsInstance.VMDiskDetails = vmDiskDetailsInstance;
+                                                
+                                                JToken osTypeValue = vmDiskDetailsValue["osType"];
+                                                if (osTypeValue != null && osTypeValue.Type != JTokenType.Null)
+                                                {
+                                                    string osTypeInstance = ((string)osTypeValue);
+                                                    vmDiskDetailsInstance.OsType = osTypeInstance;
+                                                }
+                                                
+                                                JToken disksArray = vmDiskDetailsValue;
+                                                if (disksArray != null && disksArray.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken disksValue in ((JArray)disksArray))
+                                                    {
+                                                        VirtualHardDisk virtualHardDiskInstance = new VirtualHardDisk();
+                                                        vmDiskDetailsInstance.Disks.Add(virtualHardDiskInstance);
+                                                        
+                                                        JToken idValue = disksValue["id"];
+                                                        if (idValue != null && idValue.Type != JTokenType.Null)
+                                                        {
+                                                            string idInstance = ((string)idValue);
+                                                            virtualHardDiskInstance.Id = idInstance;
+                                                        }
+                                                        
+                                                        JToken nameValue = disksValue["name"];
+                                                        if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                                        {
+                                                            string nameInstance = ((string)nameValue);
+                                                            virtualHardDiskInstance.Name = nameInstance;
+                                                        }
+                                                    }
+                                                }
+                                                
+                                                JToken osDiskValue = vmDiskDetailsValue["osDisk"];
+                                                if (osDiskValue != null && osDiskValue.Type != JTokenType.Null)
+                                                {
+                                                    string osDiskInstance = ((string)osDiskValue);
+                                                    vmDiskDetailsInstance.OsDisk = osDiskInstance;
+                                                }
+                                                
+                                                JToken vHDIdValue = vmDiskDetailsValue["vHDId"];
+                                                if (vHDIdValue != null && vHDIdValue.Type != JTokenType.Null)
+                                                {
+                                                    string vHDIdInstance = ((string)vHDIdValue);
+                                                    vmDiskDetailsInstance.VHDId = vHDIdInstance;
+                                                }
+                                                
+                                                JToken maxSizeMBValue = vmDiskDetailsValue["maxSizeMB"];
+                                                if (maxSizeMBValue != null && maxSizeMBValue.Type != JTokenType.Null)
+                                                {
+                                                    ulong maxSizeMBInstance = ((ulong)maxSizeMBValue);
+                                                    vmDiskDetailsInstance.MaxSizeMB = maxSizeMBInstance;
+                                                }
+                                            }
+                                            protectionEntityInstance.ReplicationProviderSettings = onPremProtectionEntityProviderSettingsInstance;
+                                        }
+                                        if (typeName == "AzureProtectionEntityProviderSettings")
+                                        {
+                                            AzureProtectionEntityProviderSettings azureProtectionEntityProviderSettingsInstance = new AzureProtectionEntityProviderSettings();
+                                            
+                                            JToken vmDiskDetailsValue2 = replicationProviderSettingsValue["vmDiskDetails"];
+                                            if (vmDiskDetailsValue2 != null && vmDiskDetailsValue2.Type != JTokenType.Null)
+                                            {
+                                                AzureVmDiskDetails vmDiskDetailsInstance2 = new AzureVmDiskDetails();
+                                                azureProtectionEntityProviderSettingsInstance.VMDiskDetails = vmDiskDetailsInstance2;
+                                                
+                                                JToken osTypeValue2 = vmDiskDetailsValue2["osType"];
+                                                if (osTypeValue2 != null && osTypeValue2.Type != JTokenType.Null)
+                                                {
+                                                    string osTypeInstance2 = ((string)osTypeValue2);
+                                                    vmDiskDetailsInstance2.OsType = osTypeInstance2;
+                                                }
+                                                
+                                                JToken disksArray2 = vmDiskDetailsValue2;
+                                                if (disksArray2 != null && disksArray2.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken disksValue2 in ((JArray)disksArray2))
+                                                    {
+                                                        VirtualHardDisk virtualHardDiskInstance2 = new VirtualHardDisk();
+                                                        vmDiskDetailsInstance2.Disks.Add(virtualHardDiskInstance2);
+                                                        
+                                                        JToken idValue2 = disksValue2["id"];
+                                                        if (idValue2 != null && idValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string idInstance2 = ((string)idValue2);
+                                                            virtualHardDiskInstance2.Id = idInstance2;
+                                                        }
+                                                        
+                                                        JToken nameValue2 = disksValue2["name"];
+                                                        if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string nameInstance2 = ((string)nameValue2);
+                                                            virtualHardDiskInstance2.Name = nameInstance2;
+                                                        }
+                                                    }
+                                                }
+                                                
+                                                JToken osDiskValue2 = vmDiskDetailsValue2["osDisk"];
+                                                if (osDiskValue2 != null && osDiskValue2.Type != JTokenType.Null)
+                                                {
+                                                    string osDiskInstance2 = ((string)osDiskValue2);
+                                                    vmDiskDetailsInstance2.OsDisk = osDiskInstance2;
+                                                }
+                                                
+                                                JToken vHDIdValue2 = vmDiskDetailsValue2["vHDId"];
+                                                if (vHDIdValue2 != null && vHDIdValue2.Type != JTokenType.Null)
+                                                {
+                                                    string vHDIdInstance2 = ((string)vHDIdValue2);
+                                                    vmDiskDetailsInstance2.VHDId = vHDIdInstance2;
+                                                }
+                                                
+                                                JToken maxSizeMBValue2 = vmDiskDetailsValue2["maxSizeMB"];
+                                                if (maxSizeMBValue2 != null && maxSizeMBValue2.Type != JTokenType.Null)
+                                                {
+                                                    ulong maxSizeMBInstance2 = ((ulong)maxSizeMBValue2);
+                                                    vmDiskDetailsInstance2.MaxSizeMB = maxSizeMBInstance2;
+                                                }
+                                            }
+                                            
+                                            JToken vmPropertiesValue = replicationProviderSettingsValue["vmProperties"];
+                                            if (vmPropertiesValue != null && vmPropertiesValue.Type != JTokenType.Null)
+                                            {
+                                                VMProperties vmPropertiesInstance = new VMProperties();
+                                                azureProtectionEntityProviderSettingsInstance.VMProperties = vmPropertiesInstance;
+                                                
+                                                JToken recoveryAzureVMNameValue = vmPropertiesValue["recoveryAzureVMName"];
+                                                if (recoveryAzureVMNameValue != null && recoveryAzureVMNameValue.Type != JTokenType.Null)
+                                                {
+                                                    string recoveryAzureVMNameInstance = ((string)recoveryAzureVMNameValue);
+                                                    vmPropertiesInstance.RecoveryAzureVMName = recoveryAzureVMNameInstance;
+                                                }
+                                                
+                                                JToken recoveryAzureVMSizeValue = vmPropertiesValue["recoveryAzureVMSize"];
+                                                if (recoveryAzureVMSizeValue != null && recoveryAzureVMSizeValue.Type != JTokenType.Null)
+                                                {
+                                                    string recoveryAzureVMSizeInstance = ((string)recoveryAzureVMSizeValue);
+                                                    vmPropertiesInstance.RecoveryAzureVMSize = recoveryAzureVMSizeInstance;
+                                                }
+                                                
+                                                JToken selectedRecoveryAzureNetworkIdValue = vmPropertiesValue["selectedRecoveryAzureNetworkId"];
+                                                if (selectedRecoveryAzureNetworkIdValue != null && selectedRecoveryAzureNetworkIdValue.Type != JTokenType.Null)
+                                                {
+                                                    string selectedRecoveryAzureNetworkIdInstance = ((string)selectedRecoveryAzureNetworkIdValue);
+                                                    vmPropertiesInstance.SelectedRecoveryAzureNetworkId = selectedRecoveryAzureNetworkIdInstance;
+                                                }
+                                                
+                                                JToken vmNicsArray = vmPropertiesValue;
+                                                if (vmNicsArray != null && vmNicsArray.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken vmNicsValue in ((JArray)vmNicsArray))
+                                                    {
+                                                        VMNicDetails vMNicDetailsInstance = new VMNicDetails();
+                                                        vmPropertiesInstance.VMNics.Add(vMNicDetailsInstance);
+                                                        
+                                                        JToken nicIdValue = vmNicsValue["NicId"];
+                                                        if (nicIdValue != null && nicIdValue.Type != JTokenType.Null)
+                                                        {
+                                                            string nicIdInstance = ((string)nicIdValue);
+                                                            vMNicDetailsInstance.NicId = nicIdInstance;
+                                                        }
+                                                        
+                                                        JToken vMSubnetNameValue = vmNicsValue["VMSubnetName"];
+                                                        if (vMSubnetNameValue != null && vMSubnetNameValue.Type != JTokenType.Null)
+                                                        {
+                                                            string vMSubnetNameInstance = ((string)vMSubnetNameValue);
+                                                            vMNicDetailsInstance.VMSubnetName = vMSubnetNameInstance;
+                                                        }
+                                                        
+                                                        JToken vMNetworkNameValue = vmNicsValue["VMNetworkName"];
+                                                        if (vMNetworkNameValue != null && vMNetworkNameValue.Type != JTokenType.Null)
+                                                        {
+                                                            string vMNetworkNameInstance = ((string)vMNetworkNameValue);
+                                                            vMNicDetailsInstance.VMNetworkName = vMNetworkNameInstance;
+                                                        }
+                                                        
+                                                        JToken recoveryVMNetworkIdValue = vmNicsValue["RecoveryVMNetworkId"];
+                                                        if (recoveryVMNetworkIdValue != null && recoveryVMNetworkIdValue.Type != JTokenType.Null)
+                                                        {
+                                                            string recoveryVMNetworkIdInstance = ((string)recoveryVMNetworkIdValue);
+                                                            vMNicDetailsInstance.RecoveryVMNetworkId = recoveryVMNetworkIdInstance;
+                                                        }
+                                                        
+                                                        JToken recoveryVMSubnetNameValue = vmNicsValue["RecoveryVMSubnetName"];
+                                                        if (recoveryVMSubnetNameValue != null && recoveryVMSubnetNameValue.Type != JTokenType.Null)
+                                                        {
+                                                            string recoveryVMSubnetNameInstance = ((string)recoveryVMSubnetNameValue);
+                                                            vMNicDetailsInstance.RecoveryVMSubnetName = recoveryVMSubnetNameInstance;
+                                                        }
+                                                        
+                                                        JToken replicaNicStaticIPAddressValue = vmNicsValue["ReplicaNicStaticIPAddress"];
+                                                        if (replicaNicStaticIPAddressValue != null && replicaNicStaticIPAddressValue.Type != JTokenType.Null)
+                                                        {
+                                                            string replicaNicStaticIPAddressInstance = ((string)replicaNicStaticIPAddressValue);
+                                                            vMNicDetailsInstance.ReplicaNicStaticIPAddress = replicaNicStaticIPAddressInstance;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            protectionEntityInstance.ReplicationProviderSettings = azureProtectionEntityProviderSettingsInstance;
+                                        }
                                     }
                                     
                                     JToken fabricObjectIdValue = valueValue["fabricObjectId"];
@@ -2010,18 +2464,18 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             }
                                         }
                                         
-                                        JToken idValue = protectionProfileValue["id"];
-                                        if (idValue != null && idValue.Type != JTokenType.Null)
+                                        JToken idValue3 = protectionProfileValue["id"];
+                                        if (idValue3 != null && idValue3.Type != JTokenType.Null)
                                         {
-                                            string idInstance = ((string)idValue);
-                                            protectionProfileInstance.Id = idInstance;
+                                            string idInstance3 = ((string)idValue3);
+                                            protectionProfileInstance.Id = idInstance3;
                                         }
                                         
-                                        JToken nameValue = protectionProfileValue["name"];
-                                        if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                        JToken nameValue3 = protectionProfileValue["name"];
+                                        if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
                                         {
-                                            string nameInstance = ((string)nameValue);
-                                            protectionProfileInstance.Name = nameInstance;
+                                            string nameInstance3 = ((string)nameValue3);
+                                            protectionProfileInstance.Name = nameInstance3;
                                         }
                                         
                                         JToken typeValue = protectionProfileValue["type"];
@@ -2050,18 +2504,18 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         }
                                     }
                                     
-                                    JToken idValue2 = valueValue["id"];
-                                    if (idValue2 != null && idValue2.Type != JTokenType.Null)
+                                    JToken idValue4 = valueValue["id"];
+                                    if (idValue4 != null && idValue4.Type != JTokenType.Null)
                                     {
-                                        string idInstance2 = ((string)idValue2);
-                                        protectionEntityInstance.Id = idInstance2;
+                                        string idInstance4 = ((string)idValue4);
+                                        protectionEntityInstance.Id = idInstance4;
                                     }
                                     
-                                    JToken nameValue2 = valueValue["name"];
-                                    if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                    JToken nameValue4 = valueValue["name"];
+                                    if (nameValue4 != null && nameValue4.Type != JTokenType.Null)
                                     {
-                                        string nameInstance2 = ((string)nameValue2);
-                                        protectionEntityInstance.Name = nameInstance2;
+                                        string nameInstance4 = ((string)nameValue4);
+                                        protectionEntityInstance.Name = nameInstance4;
                                     }
                                     
                                     JToken typeValue2 = valueValue["type"];
@@ -2195,11 +2649,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
             {
                 url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
             }
-            url = url + "/cloudservices/";
-            url = url + Uri.EscapeDataString(this.Client.CloudServiceName);
-            url = url + "/resources/";
-            url = url + "Microsoft.SiteRecoveryINTD2";
-            url = url + "/~/";
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(this.Client.ResourceGroupName);
+            url = url + "/providers/";
+            url = url + "Microsoft.SiteRecovery";
+            url = url + "/";
             url = url + "SiteRecoveryVault";
             url = url + "/";
             url = url + Uri.EscapeDataString(this.Client.ResourceName);
@@ -2373,84 +2827,93 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 {
                                     foreach (JToken tasksValue in ((JArray)tasksArray))
                                     {
-                                        AsrTask taskInstance = new AsrTask();
-                                        propertiesInstance.Tasks.Add(taskInstance);
+                                        AsrTask asrTaskInstance = new AsrTask();
+                                        propertiesInstance.Tasks.Add(asrTaskInstance);
                                         
                                         JToken startTimeValue2 = tasksValue["startTime"];
                                         if (startTimeValue2 != null && startTimeValue2.Type != JTokenType.Null)
                                         {
                                             DateTime startTimeInstance2 = ((DateTime)startTimeValue2);
-                                            taskInstance.StartTime = startTimeInstance2;
+                                            asrTaskInstance.StartTime = startTimeInstance2;
                                         }
                                         
                                         JToken endTimeValue2 = tasksValue["endTime"];
                                         if (endTimeValue2 != null && endTimeValue2.Type != JTokenType.Null)
                                         {
                                             DateTime endTimeInstance2 = ((DateTime)endTimeValue2);
-                                            taskInstance.EndTime = endTimeInstance2;
+                                            asrTaskInstance.EndTime = endTimeInstance2;
+                                        }
+                                        
+                                        JToken actionsArray = tasksValue["actions"];
+                                        if (actionsArray != null && actionsArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken actionsValue in ((JArray)actionsArray))
+                                            {
+                                                asrTaskInstance.Actions.Add(((string)actionsValue));
+                                            }
                                         }
                                         
                                         JToken taskTypeValue = tasksValue["taskType"];
                                         if (taskTypeValue != null && taskTypeValue.Type != JTokenType.Null)
                                         {
                                             string taskTypeInstance = ((string)taskTypeValue);
-                                            taskInstance.TaskType = taskTypeInstance;
+                                            asrTaskInstance.TaskType = taskTypeInstance;
                                         }
                                         
                                         JToken taskNameValue = tasksValue["taskName"];
                                         if (taskNameValue != null && taskNameValue.Type != JTokenType.Null)
                                         {
                                             string taskNameInstance = ((string)taskNameValue);
-                                            taskInstance.TaskName = taskNameInstance;
+                                            asrTaskInstance.TaskName = taskNameInstance;
                                         }
                                         
                                         JToken stateValue2 = tasksValue["state"];
                                         if (stateValue2 != null && stateValue2.Type != JTokenType.Null)
                                         {
                                             string stateInstance2 = ((string)stateValue2);
-                                            taskInstance.State = stateInstance2;
+                                            asrTaskInstance.State = stateInstance2;
                                         }
                                         
                                         JToken stateDescriptionValue2 = tasksValue["stateDescription"];
                                         if (stateDescriptionValue2 != null && stateDescriptionValue2.Type != JTokenType.Null)
                                         {
                                             string stateDescriptionInstance2 = ((string)stateDescriptionValue2);
-                                            taskInstance.StateDescription = stateDescriptionInstance2;
+                                            asrTaskInstance.StateDescription = stateDescriptionInstance2;
                                         }
                                         
                                         JToken extendedDetailsValue = tasksValue["extendedDetails"];
                                         if (extendedDetailsValue != null && extendedDetailsValue.Type != JTokenType.Null)
                                         {
                                             string extendedDetailsInstance = ((string)extendedDetailsValue);
-                                            taskInstance.ExtendedDetails = extendedDetailsInstance;
+                                            asrTaskInstance.ExtendedDetails = extendedDetailsInstance;
                                         }
                                         
                                         JToken idValue = tasksValue["id"];
                                         if (idValue != null && idValue.Type != JTokenType.Null)
                                         {
                                             string idInstance = ((string)idValue);
-                                            taskInstance.Id = idInstance;
+                                            asrTaskInstance.Id = idInstance;
                                         }
                                         
                                         JToken nameValue = tasksValue["name"];
                                         if (nameValue != null && nameValue.Type != JTokenType.Null)
                                         {
                                             string nameInstance = ((string)nameValue);
-                                            taskInstance.Name = nameInstance;
+                                            asrTaskInstance.Name = nameInstance;
                                         }
                                         
                                         JToken typeValue = tasksValue["type"];
                                         if (typeValue != null && typeValue.Type != JTokenType.Null)
                                         {
                                             string typeInstance = ((string)typeValue);
-                                            taskInstance.Type = typeInstance;
+                                            asrTaskInstance.Type = typeInstance;
                                         }
                                         
                                         JToken locationValue = tasksValue["location"];
                                         if (locationValue != null && locationValue.Type != JTokenType.Null)
                                         {
                                             string locationInstance = ((string)locationValue);
-                                            taskInstance.Location = locationInstance;
+                                            asrTaskInstance.Location = locationInstance;
                                         }
                                         
                                         JToken tagsSequenceElement = ((JToken)tasksValue["tags"]);
@@ -2460,7 +2923,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             {
                                                 string tagsKey = ((string)property.Name);
                                                 string tagsValue = ((string)property.Value);
-                                                taskInstance.Tags.Add(tagsKey, tagsValue);
+                                                asrTaskInstance.Tags.Add(tagsKey, tagsValue);
                                             }
                                         }
                                     }
@@ -2474,7 +2937,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         ErrorDetails errorDetailsInstance = new ErrorDetails();
                                         propertiesInstance.Errors.Add(errorDetailsInstance);
                                         
-                                        JToken serviceErrorDetailsValue = errorsValue["ServiceErrorDetails"];
+                                        JToken serviceErrorDetailsValue = errorsValue["serviceErrorDetails"];
                                         if (serviceErrorDetailsValue != null && serviceErrorDetailsValue.Type != JTokenType.Null)
                                         {
                                             ServiceError serviceErrorDetailsInstance = new ServiceError();
@@ -2516,56 +2979,67 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             }
                                         }
                                         
-                                        JToken providerErrorDetailsValue = errorsValue["ProviderErrorDetails"];
+                                        JToken providerErrorDetailsValue = errorsValue["providerErrorDetails"];
                                         if (providerErrorDetailsValue != null && providerErrorDetailsValue.Type != JTokenType.Null)
                                         {
                                             ProviderError providerErrorDetailsInstance = new ProviderError();
                                             errorDetailsInstance.ProviderErrorDetails = providerErrorDetailsInstance;
                                             
-                                            JToken errorCodeValue = providerErrorDetailsValue["ErrorCode"];
+                                            JToken errorCodeValue = providerErrorDetailsValue["errorCode"];
                                             if (errorCodeValue != null && errorCodeValue.Type != JTokenType.Null)
                                             {
                                                 int errorCodeInstance = ((int)errorCodeValue);
                                                 providerErrorDetailsInstance.ErrorCode = errorCodeInstance;
                                             }
                                             
-                                            JToken errorMessageValue = providerErrorDetailsValue["ErrorMessage"];
+                                            JToken errorMessageValue = providerErrorDetailsValue["errorMessage"];
                                             if (errorMessageValue != null && errorMessageValue.Type != JTokenType.Null)
                                             {
                                                 string errorMessageInstance = ((string)errorMessageValue);
                                                 providerErrorDetailsInstance.ErrorMessage = errorMessageInstance;
                                             }
                                             
-                                            JToken errorIdValue = providerErrorDetailsValue["ErrorId"];
+                                            JToken errorIdValue = providerErrorDetailsValue["errorId"];
                                             if (errorIdValue != null && errorIdValue.Type != JTokenType.Null)
                                             {
                                                 string errorIdInstance = ((string)errorIdValue);
                                                 providerErrorDetailsInstance.ErrorId = errorIdInstance;
                                             }
                                             
-                                            JToken workflowIdValue = providerErrorDetailsValue["WorkflowId"];
+                                            JToken workflowIdValue = providerErrorDetailsValue["workflowId"];
                                             if (workflowIdValue != null && workflowIdValue.Type != JTokenType.Null)
                                             {
                                                 string workflowIdInstance = ((string)workflowIdValue);
                                                 providerErrorDetailsInstance.WorkflowId = workflowIdInstance;
                                             }
                                             
-                                            JToken creationTimeUtcValue = providerErrorDetailsValue["CreationTimeUtc"];
+                                            JToken creationTimeUtcValue = providerErrorDetailsValue["creationTimeUtc"];
                                             if (creationTimeUtcValue != null && creationTimeUtcValue.Type != JTokenType.Null)
                                             {
                                                 DateTime creationTimeUtcInstance = ((DateTime)creationTimeUtcValue);
                                                 providerErrorDetailsInstance.CreationTimeUtc = creationTimeUtcInstance;
                                             }
                                             
-                                            JToken errorLevelValue = providerErrorDetailsValue["ErrorLevel"];
+                                            JToken errorLevelValue = providerErrorDetailsValue["errorLevel"];
                                             if (errorLevelValue != null && errorLevelValue.Type != JTokenType.Null)
                                             {
                                                 string errorLevelInstance = ((string)errorLevelValue);
                                                 providerErrorDetailsInstance.ErrorLevel = errorLevelInstance;
                                             }
+                                            
+                                            JToken affectedObjectsSequenceElement = ((JToken)providerErrorDetailsValue["affectedObjects"]);
+                                            if (affectedObjectsSequenceElement != null && affectedObjectsSequenceElement.Type != JTokenType.Null)
+                                            {
+                                                foreach (JProperty property2 in affectedObjectsSequenceElement)
+                                                {
+                                                    string affectedObjectsKey = ((string)property2.Name);
+                                                    string affectedObjectsValue = ((string)property2.Value);
+                                                    providerErrorDetailsInstance.AffectedObjects.Add(affectedObjectsKey, affectedObjectsValue);
+                                                }
+                                            }
                                         }
                                         
-                                        JToken taskIdValue = errorsValue["TaskId"];
+                                        JToken taskIdValue = errorsValue["taskId"];
                                         if (taskIdValue != null && taskIdValue.Type != JTokenType.Null)
                                         {
                                             string taskIdInstance = ((string)taskIdValue);
@@ -2605,10 +3079,10 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 JToken tagsSequenceElement2 = ((JToken)propertiesValue["tags"]);
                                 if (tagsSequenceElement2 != null && tagsSequenceElement2.Type != JTokenType.Null)
                                 {
-                                    foreach (JProperty property2 in tagsSequenceElement2)
+                                    foreach (JProperty property3 in tagsSequenceElement2)
                                     {
-                                        string tagsKey2 = ((string)property2.Name);
-                                        string tagsValue2 = ((string)property2.Value);
+                                        string tagsKey2 = ((string)property3.Name);
+                                        string tagsValue2 = ((string)property3.Value);
                                         propertiesInstance.Tags.Add(tagsKey2, tagsValue2);
                                     }
                                 }
@@ -2645,10 +3119,10 @@ namespace Microsoft.Azure.Management.SiteRecovery
                             JToken tagsSequenceElement3 = ((JToken)responseDoc["tags"]);
                             if (tagsSequenceElement3 != null && tagsSequenceElement3.Type != JTokenType.Null)
                             {
-                                foreach (JProperty property3 in tagsSequenceElement3)
+                                foreach (JProperty property4 in tagsSequenceElement3)
                                 {
-                                    string tagsKey3 = ((string)property3.Name);
-                                    string tagsValue3 = ((string)property3.Value);
+                                    string tagsKey3 = ((string)property4.Name);
+                                    string tagsValue3 = ((string)property4.Value);
                                     jobInstance.Tags.Add(tagsKey3, tagsValue3);
                                 }
                             }

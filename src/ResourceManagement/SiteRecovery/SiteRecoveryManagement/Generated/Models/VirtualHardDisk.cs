@@ -21,19 +21,40 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.SiteRecovery.Models;
 
 namespace Microsoft.Azure.Management.SiteRecovery.Models
 {
     /// <summary>
-    /// The definition of a Vm object.
+    /// Virtual hard disk details.
     /// </summary>
-    public partial class VirtualMachine : ProtectionEntity
+    public partial class VirtualHardDisk
     {
+        private string _id;
+        
         /// <summary>
-        /// Initializes a new instance of the VirtualMachine class.
+        /// Optional.
         /// </summary>
-        public VirtualMachine()
+        public string Id
+        {
+            get { return this._id; }
+            set { this._id = value; }
+        }
+        
+        private string _name;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string Name
+        {
+            get { return this._name; }
+            set { this._name = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the VirtualHardDisk class.
+        /// </summary>
+        public VirtualHardDisk()
         {
         }
     }

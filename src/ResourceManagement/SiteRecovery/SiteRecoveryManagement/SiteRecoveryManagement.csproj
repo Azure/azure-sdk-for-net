@@ -30,9 +30,15 @@
     <Compile Include="Generated\IVaultOperations.cs" />
     <Compile Include="Generated\JobOperations.cs" />
     <Compile Include="Generated\JobOperationsExtensions.cs" />
+    <Compile Include="Generated\Models\AzureProtectionEntityProviderSettings.cs" />
+    <Compile Include="Generated\Models\AzureVmDiskDetails.cs" />
     <Compile Include="Generated\Models\CertificateArgs.cs" />
     <Compile Include="Generated\Models\CertificateProperties.cs" />
     <Compile Include="Generated\Models\CustomRequestHeaders.cs" />
+    <Compile Include="Generated\Models\JobListResponse.cs" />
+    <Compile Include="Generated\Models\JobQueryParameter.cs" />
+    <Compile Include="Generated\Models\OnPremProtectionEntityProviderSettings.cs" />
+    <Compile Include="Generated\Models\ProtectionEntityProviderSettings.cs" />
     <Compile Include="Generated\Models\ResourceExtendedInformation.cs" />
     <Compile Include="Generated\Models\ResourceExtendedInformationArgs.cs" />
     <Compile Include="Generated\Models\ResourceExtendedInformationResponse.cs" />
@@ -93,6 +99,10 @@
     <Compile Include="Generated\Models\VaultListResponse.cs" />
     <Compile Include="Generated\Models\VaultProperties.cs" />
     <Compile Include="Generated\Models\VaultSku.cs" />
+    <Compile Include="Generated\Models\VirtualHardDisk.cs" />
+    <Compile Include="Generated\Models\VirtualMachine.cs" />
+    <Compile Include="Generated\Models\VMNicDetails.cs" />
+    <Compile Include="Generated\Models\VMProperties.cs" />
     <Compile Include="Generated\ProtectionContainerOperations.cs" />
     <Compile Include="Generated\ProtectionContainerOperationsExtensions.cs" />
     <Compile Include="Generated\ProtectionEntityOperations.cs" />
