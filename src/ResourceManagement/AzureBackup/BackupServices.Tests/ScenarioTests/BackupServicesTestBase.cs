@@ -13,17 +13,17 @@
 // limitations under the License.
 //
 
-using Microsoft.Azure;
-using Microsoft.Azure.Management.BackupServices;
-using Microsoft.Azure.Management.BackupServices.Models;
-using Microsoft.Azure.Test;
-using Microsoft.Azure.Test.HttpRecorder;
 using System;
 using System.Configuration;
 using System.Net;
 using System.Net.Http;
 using System.Net.Security;
 using System.Reflection;
+using Microsoft.Azure;
+using Microsoft.Azure.Management.BackupServices;
+using Microsoft.Azure.Management.BackupServices.Models;
+using Microsoft.Azure.Test;
+using Microsoft.Azure.Test.HttpRecorder;
 
 namespace BackupServices.Tests
 {
