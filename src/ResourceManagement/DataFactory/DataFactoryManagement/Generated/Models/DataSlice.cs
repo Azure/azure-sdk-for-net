@@ -84,15 +84,26 @@ namespace Microsoft.Azure.Management.DataFactories.Models
             set { this._start = value; }
         }
         
-        private string _status;
+        private string _state;
         
         /// <summary>
-        /// Optional. Data slice status.
+        /// Optional. Data slice state.
         /// </summary>
-        public string Status
+        public string State
         {
-            get { return this._status; }
-            set { this._status = value; }
+            get { return this._state; }
+            set { this._state = value; }
+        }
+        
+        private string _substate;
+        
+        /// <summary>
+        /// Optional. Data slice substate.
+        /// </summary>
+        public string Substate
+        {
+            get { return this._substate; }
+            set { this._substate = value; }
         }
         
         /// <summary>
