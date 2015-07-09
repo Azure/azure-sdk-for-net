@@ -1,25 +1,27 @@
-﻿// ----------------------------------------------------------------------------------
-//
-// Copyright Microsoft Corporation
+﻿// 
+// Copyright (c) Microsoft and contributors.  All rights reserved.
+// 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// http://www.apache.org/licenses/LICENSE-2.0
+//   http://www.apache.org/licenses/LICENSE-2.0
+// 
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// 
 // See the License for the specific language governing permissions and
 // limitations under the License.
-// ----------------------------------------------------------------------------------
+// 
 
-using Microsoft.Azure.Management.DataFactories;
-using Microsoft.Azure.Management.Resources;
-using Microsoft.WindowsAzure.Management;
-using Microsoft.Azure.Test;
 using System.Linq;
 using System.Net.Http;
+using Microsoft.Azure.Management.DataFactories.Core;
+using Microsoft.Azure.Management.Resources;
+using Microsoft.Azure.Test;
+using Microsoft.WindowsAzure.Management;
 
-namespace DataFactories.DataPipeline.Test.ScenarioTests
+namespace DataFactory.Tests.ScenarioTests
 {
     class TestHelper
     {
@@ -33,22 +35,16 @@ namespace DataFactories.DataPipeline.Test.ScenarioTests
             return TestBase.GetServiceClient<ResourceManagementClient>(factory).WithHandler(handler);
         }
 
-        public static DataPipelineManagementClient GetDataPipelineManagementClient(DelegatingHandler handler)
+        public static DataFactoryManagementClient GetDataFactoryManagementClient(DelegatingHandler handler)
         {
             CSMTestEnvironmentFactory factory = new CSMTestEnvironmentFactory();
-            return TestBase.GetServiceClient<DataPipelineManagementClient>(factory).WithHandler(handler); 
+            return TestBase.GetServiceClient<DataFactoryManagementClient>(factory).WithHandler(handler); 
         }
 
         public static string GetDefaultLocation()
         {
-            ManagementClient managementClient = TestBase.GetServiceClient<ManagementClient>();
-
-            var serviceLocations = managementClient.Locations.ListAsync()
-                    .Result.ToList();
-
-            return serviceLocations.Any(l => l.Name.Equals("West US"))
-                ? "West US"
-                : serviceLocations.FirstOrDefault().Name;
+            // ADF will always use the below region for http mock test in Dogfood
+            return "Brazil South";
         }
     }
 }

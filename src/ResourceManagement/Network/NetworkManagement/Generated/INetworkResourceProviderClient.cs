@@ -136,6 +136,24 @@ namespace Microsoft.Azure.Management.Network
         
         /// <summary>
         /// The Network Resource Provider API includes operations for managing
+        /// the Routes for your subscription.
+        /// </summary>
+        IRouteOperations Routes
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// The Network Resource Provider API includes operations for managing
+        /// the RouteTables for your subscription.
+        /// </summary>
+        IRouteTableOperations RouteTables
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// The Network Resource Provider API includes operations for managing
         /// the SecurityRules for your subscription.
         /// </summary>
         ISecurityRuleOperations SecurityRules

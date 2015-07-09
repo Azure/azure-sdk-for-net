@@ -29,6 +29,17 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     /// </summary>
     public partial class DataFactoryProperties
     {
+        private string _dataFactoryId;
+        
+        /// <summary>
+        /// Optional. Internal data factory id.
+        /// </summary>
+        public string DataFactoryId
+        {
+            get { return this._dataFactoryId; }
+            set { this._dataFactoryId = value; }
+        }
+        
         private string _errorMessage;
         
         /// <summary>

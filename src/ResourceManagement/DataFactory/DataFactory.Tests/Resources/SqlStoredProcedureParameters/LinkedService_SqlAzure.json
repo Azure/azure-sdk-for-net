@@ -1,8 +1,0 @@
-{
-    "name": "LinkedService-AzureSql",
-    "properties":
-    {
-        "type": "AzureSqlLinkedService",
-        "connectionString": "SqlConnectionString338952CE-1B9C-4C3C-89E4-9B9F69A20657"
-    }
-}

@@ -43,6 +43,17 @@ namespace Microsoft.Azure.Management.Network.Models
             set { this._dnsSettings = value; }
         }
         
+        private bool _enableIPForwarding;
+        
+        /// <summary>
+        /// Optional. Gets or sets whether IPForwarding is enabled on the NIC
+        /// </summary>
+        public bool EnableIPForwarding
+        {
+            get { return this._enableIPForwarding; }
+            set { this._enableIPForwarding = value; }
+        }
+        
         private IList<NetworkInterfaceIpConfiguration> _ipConfigurations;
         
         /// <summary>
