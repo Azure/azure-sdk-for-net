@@ -1,23 +1,38 @@
 {
-    name: "DA_CuratedWikiData",
-    properties:
-    {
-        structure:  
-        [ 
-            { name: "slicetimestamp", position: 0, type: "String"},
-            { name: "projectname", position: 1, type: "String"},
-            { name: "pageviews", position: 2, type: "Decimal"}
-        ],
-        location: 
+  "name": "DA_CuratedWikiData",
+  "properties": {
+    "structure": [
+      {
+        "name": "slicetimestamp",
+        "type": "String"
+      },
+      {
+        "name": "projectname",
+        "type": "String"
+      },
+      {
+        "name": "pageviews",
+        "type": "Decimal"
+      }
+    ],
+    "availability": {
+      "frequency": "Hour",
+      "interval": 1
+    },
+    "type": "AzureBlob",
+    "linkedServiceName": "LinkedService-CuratedWikiData",
+    "typeProperties": {
+      "folderPath": "wikidatagateway/wikisampledataout/runtime={Slice}",
+      "partitionedBy": [
         {
-            type: "AzureBlobLocation",
-            blobPath: "$$Text.Format('wikidatagateway/wikisampledataout/{0:yyyyMMddHH}', SliceStart)",
-            linkedServiceName: "LinkedService-CuratedWikiData"
-        },
-        availability: 
-        {
-            frequency: "Hour",
-            interval: 1
+          "name": "Slice",
+          "value": {
+            "type": "DateTime",
+            "date": "SliceStart",
+            "format": "yyyyMMddHH"
+          }
         }
+      ]
     }
+  }
 }
