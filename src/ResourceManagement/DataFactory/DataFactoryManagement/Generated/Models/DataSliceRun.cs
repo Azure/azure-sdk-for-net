@@ -54,17 +54,6 @@ namespace Microsoft.Azure.Management.DataFactories.Models
             set { this._activityName = value; }
         }
         
-        private string _activityRunId;
-        
-        /// <summary>
-        /// Optional. Run ID for the Activity.
-        /// </summary>
-        public string ActivityRunId
-        {
-            get { return this._activityRunId; }
-            set { this._activityRunId = value; }
-        }
-        
         private DateTime _batchTime;
         
         /// <summary>
