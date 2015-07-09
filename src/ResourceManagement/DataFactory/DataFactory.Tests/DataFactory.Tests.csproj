@@ -34,6 +34,7 @@
     <Compile Include="ScenarioTests\TestHelper.cs" />
     <Compile Include="UnitTests\ActivityTypeTests.cs" />
     <Compile Include="UnitTests\ComputeTypeTests.cs" />
+    <Compile Include="UnitTests\DataSetTests.cs" />
     <Compile Include="UnitTests\LinkedServiceTests.cs" />
     <Compile Include="UnitTests\LinkedServiceTypeRegistrationTests.cs" />
     <Compile Include="UnitTests\PipelineTests.cs" />

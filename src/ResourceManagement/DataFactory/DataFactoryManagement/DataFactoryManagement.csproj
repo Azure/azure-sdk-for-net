@@ -46,6 +46,15 @@
     <Compile Include="Customizations\Operations\DataFactories\DataFactoryOperationsExtensions.cs" />
     <Compile Include="Customizations\Operations\DataFactories\IDataFactoryOperations.cs" />
     <Compile Include="Customizations\Operations\DataSlices\IDataSliceOperations.cs" />
+    <Compile Include="Customizations\Runtime\ActivityExecutor.cs" />
+    <Compile Include="Customizations\Runtime\ActivityConfiguration.cs" />
+    <Compile Include="Customizations\Runtime\ActivityLogger.cs" />
+    <Compile Include="Customizations\Runtime\DataSetConverter.cs" />
+    <Compile Include="Customizations\Runtime\DotNetActivityApiVersionAttribute.cs" />
+    <Compile Include="Customizations\Runtime\IActivityLogger.cs" />
+    <Compile Include="Customizations\Runtime\IDotNetActivity.cs" />
+    <Compile Include="Customizations\Runtime\DataSet.cs" />
+    <Compile Include="Customizations\Runtime\Utils.cs" />
     <Compile Include="Customizations\DataFactoryManagementClient.Registration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Customizations\AdfResourceProperties.cs" />
