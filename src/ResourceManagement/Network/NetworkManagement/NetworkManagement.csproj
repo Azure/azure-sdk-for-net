@@ -49,11 +49,11 @@
     <Compile Include="Generated\Models\ApplicationGatewayBackendAddressPool.cs" />
     <Compile Include="Generated\Models\ApplicationGatewayBackendHttpSettings.cs" />
     <Compile Include="Generated\Models\ApplicationGatewayCookieBasedAffinity.cs" />
-    <Compile Include="Generated\Models\ApplicationGatewayFrontendIpConfiguration.cs" />
+    <Compile Include="Generated\Models\ApplicationGatewayFrontendIPConfiguration.cs" />
     <Compile Include="Generated\Models\ApplicationGatewayFrontendPort.cs" />
     <Compile Include="Generated\Models\ApplicationGatewayGetResponse.cs" />
     <Compile Include="Generated\Models\ApplicationGatewayHttpListener.cs" />
-    <Compile Include="Generated\Models\ApplicationGatewayIpConfiguration.cs" />
+    <Compile Include="Generated\Models\ApplicationGatewayIPConfiguration.cs" />
     <Compile Include="Generated\Models\ApplicationGatewayListResponse.cs" />
     <Compile Include="Generated\Models\ApplicationGatewayOperationalState.cs" />
     <Compile Include="Generated\Models\ApplicationGatewayProtocol.cs" />
@@ -169,7 +169,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Microsoft.Azure.Management.Network.nuspec" />
+    <None Include="Microsoft.Azure.Management.Network.nuspec">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Microsoft.Azure.Management.Network.nuget.proj" />
     <None Include="packages.config" />
   </ItemGroup>

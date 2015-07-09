@@ -56,16 +56,16 @@ namespace Microsoft.Azure.Management.Network.Models
             set { this._backendHttpSettingsCollection = value; }
         }
         
-        private IList<ApplicationGatewayFrontendIpConfiguration> _frontendIpConfigurations;
+        private IList<ApplicationGatewayFrontendIPConfiguration> _frontendIPConfigurations;
         
         /// <summary>
         /// Optional. Gets or sets frontend IP addresses of application gateway
         /// resource
         /// </summary>
-        public IList<ApplicationGatewayFrontendIpConfiguration> FrontendIpConfigurations
+        public IList<ApplicationGatewayFrontendIPConfiguration> FrontendIPConfigurations
         {
-            get { return this._frontendIpConfigurations; }
-            set { this._frontendIpConfigurations = value; }
+            get { return this._frontendIPConfigurations; }
+            set { this._frontendIPConfigurations = value; }
         }
         
         private IList<ApplicationGatewayFrontendPort> _frontendPorts;
@@ -80,15 +80,15 @@ namespace Microsoft.Azure.Management.Network.Models
             set { this._frontendPorts = value; }
         }
         
-        private IList<ApplicationGatewayIpConfiguration> _gatewayIpConfigurations;
+        private IList<ApplicationGatewayIPConfiguration> _gatewayIPConfigurations;
         
         /// <summary>
         /// Optional. Gets or sets subnets of application gateway resource
         /// </summary>
-        public IList<ApplicationGatewayIpConfiguration> GatewayIpConfigurations
+        public IList<ApplicationGatewayIPConfiguration> GatewayIPConfigurations
         {
-            get { return this._gatewayIpConfigurations; }
-            set { this._gatewayIpConfigurations = value; }
+            get { return this._gatewayIPConfigurations; }
+            set { this._gatewayIPConfigurations = value; }
         }
         
         private IList<ApplicationGatewayHttpListener> _httpListeners;
@@ -168,9 +168,9 @@ namespace Microsoft.Azure.Management.Network.Models
         {
             this.BackendAddressPools = new LazyList<ApplicationGatewayBackendAddressPool>();
             this.BackendHttpSettingsCollection = new LazyList<ApplicationGatewayBackendHttpSettings>();
-            this.FrontendIpConfigurations = new LazyList<ApplicationGatewayFrontendIpConfiguration>();
+            this.FrontendIPConfigurations = new LazyList<ApplicationGatewayFrontendIPConfiguration>();
             this.FrontendPorts = new LazyList<ApplicationGatewayFrontendPort>();
-            this.GatewayIpConfigurations = new LazyList<ApplicationGatewayIpConfiguration>();
+            this.GatewayIPConfigurations = new LazyList<ApplicationGatewayIPConfiguration>();
             this.HttpListeners = new LazyList<ApplicationGatewayHttpListener>();
             this.RequestRoutingRules = new LazyList<ApplicationGatewayRequestRoutingRule>();
             this.SslCertificates = new LazyList<ApplicationGatewaySslCertificate>();
