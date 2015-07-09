@@ -38,6 +38,7 @@
     <Compile Include="Generated\OperationResponse.cs" />
     <Compile Include="Generated\VaultOperations.cs" />
     <Compile Include="Generated\VaultOperationsExtensions.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Microsoft.Azure.Management.BackupServices.nuget.proj">
