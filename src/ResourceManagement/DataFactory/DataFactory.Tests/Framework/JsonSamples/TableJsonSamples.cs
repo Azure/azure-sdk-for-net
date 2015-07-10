@@ -99,7 +99,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
         published: ""True"",
         structure:  
         [ 
-            { name: ""somecol"", position: 0, type: ""String"" }
+            { name: ""somecol"", type: ""String"" }
         ],
         typeProperties: 
         {            
@@ -125,7 +125,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
         published: ""False"",
         structure:  
         [ 
-            { name: ""somecol"", position: 0, type: ""String"" }
+            { name: ""somecol"", type: ""String"" }
         ],
         typeProperties:
         {            
@@ -150,10 +150,10 @@ namespace DataFactory.Tests.Framework.JsonSamples
         linkedServiceName: ""MyLinkedServiceName"",
         structure:
         [
-            { name: ""PartitionKey"", position: 1, type: ""Guid"" },
-            { name: ""RowKey"", position: 2, type: ""String"" }, 
-            { name: ""Timestamp"", position: 3, type: ""String"" },
-            { name: ""game_id "", position: 7, type: ""String"" },
+            { name: ""PartitionKey"", type: ""Guid"" },
+            { name: ""RowKey"", type: ""String"" }, 
+            { name: ""Timestamp"", type: ""String"" },
+            { name: ""game_id "", type: ""String"" },
         ],
         typeProperties:
         {        
@@ -360,9 +360,9 @@ namespace DataFactory.Tests.Framework.JsonSamples
         linkedServiceName: ""LinkedService-CuratedWikiData"",
         structure:  
         [ 
-            { name: ""slicetimestamp"", position: 0, type: ""String""},
-            { name: ""projectname"", position: 1, type: ""String""},
-            { name: ""pageviews"", position: 2, type: ""Decimal""}
+            { name: ""slicetimestamp"", type: ""String""},
+            { name: ""projectname"", type: ""String""},
+            { name: ""pageviews"", type: ""Decimal""}
         ],
         typeProperties:
         {            
@@ -399,9 +399,9 @@ namespace DataFactory.Tests.Framework.JsonSamples
         },
         structure:  
         [ 
-            { name: ""slicetimestamp"", position: 0, type: ""String""},
-            { name: ""projectname"", position: 1, type: ""String""},
-            { name: ""pageviews"", position: 2, type: ""Decimal""}
+            { name: ""slicetimestamp"", type: ""String""},
+            { name: ""projectname"", type: ""String""},
+            { name: ""pageviews"", type: ""Decimal""}
         ],
         availability: 
         {
