@@ -37,7 +37,6 @@
     <CodeAnalysisRuleSet Condition="'$(CodeAnalysisRuleSet)' == ''">AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   
-  <!-- For test project, we will never codesign them-->
   <PropertyGroup>
     <SignAssembly>$(CodeSign)</SignAssembly>
     <DelaySign>$(CodeSign)</DelaySign>
