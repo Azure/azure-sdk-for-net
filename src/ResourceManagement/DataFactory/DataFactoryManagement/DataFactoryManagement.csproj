@@ -38,9 +38,6 @@
     <Compile Include="Customizations\Operations\Hubs\HubOperations.cs" />
     <Compile Include="Customizations\Operations\Hubs\HubOperationsExtensions.cs" />
     <Compile Include="Customizations\Operations\Hubs\IHubOperations.cs" />
-    <Compile Include="Customizations\Operations\PipelineRuns\IPipelineRunOperations.cs" />
-    <Compile Include="Customizations\Operations\PipelineRuns\PipelineRunOperations.cs" />
-    <Compile Include="Customizations\Operations\PipelineRuns\PipelineRunOperationsExtensions.cs" />
     <Compile Include="Customizations\Operations\DataFactories\DataFactoryOperations.cs" />
     <Compile Include="Customizations\Operations\DataFactories\DataFactoryOperationsExtensions.cs" />
     <Compile Include="Customizations\Operations\DataFactories\IDataFactoryOperations.cs" />
