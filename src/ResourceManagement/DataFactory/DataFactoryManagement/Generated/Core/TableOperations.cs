@@ -264,8 +264,6 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                     dataElementValue["description"] = structureItem.Description;
                                 }
                                 
-                                dataElementValue["position"] = structureItem.Position;
-                                
                                 if (structureItem.Type != null)
                                 {
                                     dataElementValue["type"] = structureItem.Type;
@@ -497,13 +495,6 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                         {
                                             string descriptionInstance2 = ((string)descriptionValue2);
                                             dataElementInstance.Description = descriptionInstance2;
-                                        }
-                                        
-                                        JToken positionValue = structureValue["position"];
-                                        if (positionValue != null && positionValue.Type != JTokenType.Null)
-                                        {
-                                            uint positionInstance = ((uint)positionValue);
-                                            dataElementInstance.Position = positionInstance;
                                         }
                                         
                                         JToken typeValue2 = structureValue["type"];
@@ -951,13 +942,6 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                         {
                                             string descriptionInstance2 = ((string)descriptionValue2);
                                             dataElementInstance.Description = descriptionInstance2;
-                                        }
-                                        
-                                        JToken positionValue = structureValue["position"];
-                                        if (positionValue != null && positionValue.Type != JTokenType.Null)
-                                        {
-                                            uint positionInstance = ((uint)positionValue);
-                                            dataElementInstance.Position = positionInstance;
                                         }
                                         
                                         JToken typeValue2 = structureValue["type"];
@@ -1800,13 +1784,6 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                             dataElementInstance.Description = descriptionInstance2;
                                         }
                                         
-                                        JToken positionValue = structureValue["position"];
-                                        if (positionValue != null && positionValue.Type != JTokenType.Null)
-                                        {
-                                            uint positionInstance = ((uint)positionValue);
-                                            dataElementInstance.Position = positionInstance;
-                                        }
-                                        
                                         JToken typeValue2 = structureValue["type"];
                                         if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
                                         {
@@ -2164,13 +2141,6 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                         {
                                             string descriptionInstance2 = ((string)descriptionValue2);
                                             dataElementInstance.Description = descriptionInstance2;
-                                        }
-                                        
-                                        JToken positionValue = structureValue["position"];
-                                        if (positionValue != null && positionValue.Type != JTokenType.Null)
-                                        {
-                                            uint positionInstance = ((uint)positionValue);
-                                            dataElementInstance.Position = positionInstance;
                                         }
                                         
                                         JToken typeValue2 = structureValue["type"];
@@ -2599,13 +2569,6 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                                     dataElementInstance.Description = descriptionInstance2;
                                                 }
                                                 
-                                                JToken positionValue = structureValue["position"];
-                                                if (positionValue != null && positionValue.Type != JTokenType.Null)
-                                                {
-                                                    uint positionInstance = ((uint)positionValue);
-                                                    dataElementInstance.Position = positionInstance;
-                                                }
-                                                
                                                 JToken typeValue2 = structureValue["type"];
                                                 if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
                                                 {
@@ -2980,13 +2943,6 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                                 {
                                                     string descriptionInstance2 = ((string)descriptionValue2);
                                                     dataElementInstance.Description = descriptionInstance2;
-                                                }
-                                                
-                                                JToken positionValue = structureValue["position"];
-                                                if (positionValue != null && positionValue.Type != JTokenType.Null)
-                                                {
-                                                    uint positionInstance = ((uint)positionValue);
-                                                    dataElementInstance.Position = positionInstance;
                                                 }
                                                 
                                                 JToken typeValue2 = structureValue["type"];

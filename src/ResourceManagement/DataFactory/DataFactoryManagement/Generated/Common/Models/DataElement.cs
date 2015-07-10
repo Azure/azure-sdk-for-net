@@ -51,17 +51,6 @@ namespace Microsoft.Azure.Management.DataFactories.Common.Models
             set { this._name = value; }
         }
         
-        private uint _position;
-        
-        /// <summary>
-        /// Optional. Column position of the data element.
-        /// </summary>
-        public uint Position
-        {
-            get { return this._position; }
-            set { this._position = value; }
-        }
-        
         private string _type;
         
         /// <summary>
