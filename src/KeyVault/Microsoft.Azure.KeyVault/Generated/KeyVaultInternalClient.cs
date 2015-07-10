@@ -110,7 +110,7 @@ namespace Microsoft.Azure.KeyVault.Internal
         {
             this._keys = new KeyOperations(this);
             this._secrets = new SecretOperations(this);
-            this._apiVersion = "2015-02-01-preview";
+            this._apiVersion = "2015-06-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
@@ -173,7 +173,7 @@ namespace Microsoft.Azure.KeyVault.Internal
         {
             this._keys = new KeyOperations(this);
             this._secrets = new SecretOperations(this);
-            this._apiVersion = "2015-02-01-preview";
+            this._apiVersion = "2015-06-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);

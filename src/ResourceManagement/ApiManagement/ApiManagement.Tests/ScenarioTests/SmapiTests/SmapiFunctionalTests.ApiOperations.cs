@@ -71,12 +71,12 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.SmapiTest
                 Assert.Equal(3, listResponse.Result.Values.Count);
                 Assert.NotNull(listResponse.Result.NextLink);
 
-                //// list next page
-                //listResponse = ApiManagementClient.ApiOperations.ListNext(listResponse.Result.NextLink);
-                //Assert.NotNull(listResponse);
-                //Assert.NotNull(listResponse.Result.Values);
-                //Assert.Equal(6, listResponse.Result.TotalCount);
-                //Assert.Equal(3, listResponse.Result.Values.Count);
+                // list next page
+                listResponse = ApiManagementClient.ApiOperations.ListNext(listResponse.Result.NextLink);
+                Assert.NotNull(listResponse);
+                Assert.NotNull(listResponse.Result.Values);
+                Assert.Equal(6, listResponse.Result.TotalCount);
+                Assert.Equal(3, listResponse.Result.Values.Count);
 
                 // get first operation
                 var firstOperation = listResponse.Result.Values.First();
