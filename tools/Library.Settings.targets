@@ -37,6 +37,7 @@
     <CodeAnalysisRuleSet Condition="'$(CodeAnalysisRuleSet)' == ''">AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   
+  <!-- For test project, we will never codesign them-->
   <PropertyGroup>
     <SignAssembly>$(CodeSign)</SignAssembly>
     <DelaySign>$(CodeSign)</DelaySign>
@@ -140,5 +141,13 @@
 
     <!-- Update all explicit references to dependent versions. -->
     <Exec Command="$(PowerShellExe) -NonInteractive -ExecutionPolicy bypass -Command &quot;&amp; { &amp;&apos;$(NuSpecSyncScript)&apos; &apos;$(MSBuildProjectDirectory)&apos; }&quot;" />
+  </Target>
+
+  <!--Use by test projects referencing 3rd party unsigned assembly, so can't build under code sign-->
+  <Target Name="TurnOffCodeSign">
+    <PropertyGroup>
+      <SignAssembly>false</SignAssembly>
+      <DelaySign>false</DelaySign>
+    </PropertyGroup>
   </Target>
 </Project>
