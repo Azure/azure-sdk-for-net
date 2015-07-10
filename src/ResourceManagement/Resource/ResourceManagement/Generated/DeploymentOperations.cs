@@ -2044,7 +2044,7 @@ namespace Microsoft.Azure.Management.Resources
             }
             url = url + "/resourcegroups/";
             url = url + Uri.EscapeDataString(resourceGroupName);
-            url = url + "/deployments/";
+            url = url + "/providers/microsoft.resources/deployments/";
             url = url + Uri.EscapeDataString(deploymentName);
             url = url + "/validate";
             List<string> queryParameters = new List<string>();

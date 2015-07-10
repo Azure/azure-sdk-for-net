@@ -102,6 +102,29 @@ namespace Microsoft.Azure.Management.Sql
             get { return this._auditingPolicy; }
         }
         
+        private IDatabaseActivationOperations _databaseActivation;
+        
+        /// <summary>
+        /// Represents all the operations for operating pertaining to
+        /// activation on Azure SQL Data Warehouse databases. Contains
+        /// operations to: Pause and Resume databases
+        /// </summary>
+        public virtual IDatabaseActivationOperations DatabaseActivation
+        {
+            get { return this._databaseActivation; }
+        }
+        
+        private IDatabaseBackupOperations _databaseBackup;
+        
+        /// <summary>
+        /// Represents all the operations for operating on Azure SQL Database
+        /// restore points. Contains operations to: List restore points.
+        /// </summary>
+        public virtual IDatabaseBackupOperations DatabaseBackup
+        {
+            get { return this._databaseBackup; }
+        }
+        
         private IDatabaseOperations _databases;
         
         /// <summary>
@@ -161,6 +184,18 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IRecommendedElasticPoolOperations RecommendedElasticPools
         {
             get { return this._recommendedElasticPools; }
+        }
+        
+        private IRecommendedIndexOperations _recommendedIndexes;
+        
+        /// <summary>
+        /// Represents all the operations for managing recommended indexes on
+        /// Azure SQL Databases. Contains operations to retrieve recommended
+        /// index and update state.
+        /// </summary>
+        public virtual IRecommendedIndexOperations RecommendedIndexes
+        {
+            get { return this._recommendedIndexes; }
         }
         
         private ISecureConnectionPolicyOperations _secureConnection;
@@ -239,11 +274,14 @@ namespace Microsoft.Azure.Management.Sql
             : base()
         {
             this._auditingPolicy = new AuditingPolicyOperations(this);
+            this._databaseActivation = new DatabaseActivationOperations(this);
+            this._databaseBackup = new DatabaseBackupOperations(this);
             this._databases = new DatabaseOperations(this);
             this._dataMasking = new DataMaskingOperations(this);
             this._elasticPools = new ElasticPoolOperations(this);
             this._firewallRules = new FirewallRuleOperations(this);
             this._recommendedElasticPools = new RecommendedElasticPoolOperations(this);
+            this._recommendedIndexes = new RecommendedIndexOperations(this);
             this._secureConnection = new SecureConnectionPolicyOperations(this);
             this._servers = new ServerOperations(this);
             this._serverUpgrades = new ServerUpgradeOperations(this);
@@ -316,11 +354,14 @@ namespace Microsoft.Azure.Management.Sql
             : base(httpClient)
         {
             this._auditingPolicy = new AuditingPolicyOperations(this);
+            this._databaseActivation = new DatabaseActivationOperations(this);
+            this._databaseBackup = new DatabaseBackupOperations(this);
             this._databases = new DatabaseOperations(this);
             this._dataMasking = new DataMaskingOperations(this);
             this._elasticPools = new ElasticPoolOperations(this);
             this._firewallRules = new FirewallRuleOperations(this);
             this._recommendedElasticPools = new RecommendedElasticPoolOperations(this);
+            this._recommendedIndexes = new RecommendedIndexOperations(this);
             this._secureConnection = new SecureConnectionPolicyOperations(this);
             this._servers = new ServerOperations(this);
             this._serverUpgrades = new ServerUpgradeOperations(this);

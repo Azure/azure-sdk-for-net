@@ -712,44 +712,432 @@ namespace Microsoft.Azure.Management.Sql
                                         }
                                     }
                                 }
-                            }
-                            
-                            JToken idValue4 = responseDoc["id"];
-                            if (idValue4 != null && idValue4.Type != JTokenType.Null)
-                            {
-                                string idInstance4 = ((string)idValue4);
-                                databaseInstance.Id = idInstance4;
-                            }
-                            
-                            JToken nameValue4 = responseDoc["name"];
-                            if (nameValue4 != null && nameValue4.Type != JTokenType.Null)
-                            {
-                                string nameInstance4 = ((string)nameValue4);
-                                databaseInstance.Name = nameInstance4;
-                            }
-                            
-                            JToken typeValue4 = responseDoc["type"];
-                            if (typeValue4 != null && typeValue4.Type != JTokenType.Null)
-                            {
-                                string typeInstance4 = ((string)typeValue4);
-                                databaseInstance.Type = typeInstance4;
-                            }
-                            
-                            JToken locationValue4 = responseDoc["location"];
-                            if (locationValue4 != null && locationValue4.Type != JTokenType.Null)
-                            {
-                                string locationInstance4 = ((string)locationValue4);
-                                databaseInstance.Location = locationInstance4;
-                            }
-                            
-                            JToken tagsSequenceElement4 = ((JToken)responseDoc["tags"]);
-                            if (tagsSequenceElement4 != null && tagsSequenceElement4.Type != JTokenType.Null)
-                            {
-                                foreach (JProperty property4 in tagsSequenceElement4)
+                                
+                                JToken schemasArray = propertiesValue2["schemas"];
+                                if (schemasArray != null && schemasArray.Type != JTokenType.Null)
                                 {
-                                    string tagsKey5 = ((string)property4.Name);
-                                    string tagsValue5 = ((string)property4.Value);
-                                    databaseInstance.Tags.Add(tagsKey5, tagsValue5);
+                                    foreach (JToken schemasValue in ((JArray)schemasArray))
+                                    {
+                                        Schema schemaInstance = new Schema();
+                                        propertiesInstance.Schemas.Add(schemaInstance);
+                                        
+                                        JToken propertiesValue4 = schemasValue["properties"];
+                                        if (propertiesValue4 != null && propertiesValue4.Type != JTokenType.Null)
+                                        {
+                                            SchemaProperties propertiesInstance3 = new SchemaProperties();
+                                            schemaInstance.Properties = propertiesInstance3;
+                                            
+                                            JToken tablesArray = propertiesValue4["tables"];
+                                            if (tablesArray != null && tablesArray.Type != JTokenType.Null)
+                                            {
+                                                foreach (JToken tablesValue in ((JArray)tablesArray))
+                                                {
+                                                    Table tableInstance = new Table();
+                                                    propertiesInstance3.Tables.Add(tableInstance);
+                                                    
+                                                    JToken propertiesValue5 = tablesValue["properties"];
+                                                    if (propertiesValue5 != null && propertiesValue5.Type != JTokenType.Null)
+                                                    {
+                                                        TableProperties propertiesInstance4 = new TableProperties();
+                                                        tableInstance.Properties = propertiesInstance4;
+                                                        
+                                                        JToken tableTypeValue = propertiesValue5["tableType"];
+                                                        if (tableTypeValue != null && tableTypeValue.Type != JTokenType.Null)
+                                                        {
+                                                            string tableTypeInstance = ((string)tableTypeValue);
+                                                            propertiesInstance4.TableType = tableTypeInstance;
+                                                        }
+                                                        
+                                                        JToken columnsArray = propertiesValue5["columns"];
+                                                        if (columnsArray != null && columnsArray.Type != JTokenType.Null)
+                                                        {
+                                                            foreach (JToken columnsValue in ((JArray)columnsArray))
+                                                            {
+                                                                Column columnInstance = new Column();
+                                                                propertiesInstance4.Columns.Add(columnInstance);
+                                                                
+                                                                JToken propertiesValue6 = columnsValue["properties"];
+                                                                if (propertiesValue6 != null && propertiesValue6.Type != JTokenType.Null)
+                                                                {
+                                                                    ColumnProperties propertiesInstance5 = new ColumnProperties();
+                                                                    columnInstance.Properties = propertiesInstance5;
+                                                                    
+                                                                    JToken columnTypeValue = propertiesValue6["columnType"];
+                                                                    if (columnTypeValue != null && columnTypeValue.Type != JTokenType.Null)
+                                                                    {
+                                                                        string columnTypeInstance = ((string)columnTypeValue);
+                                                                        propertiesInstance5.ColumnType = columnTypeInstance;
+                                                                    }
+                                                                }
+                                                                
+                                                                JToken idValue4 = columnsValue["id"];
+                                                                if (idValue4 != null && idValue4.Type != JTokenType.Null)
+                                                                {
+                                                                    string idInstance4 = ((string)idValue4);
+                                                                    columnInstance.Id = idInstance4;
+                                                                }
+                                                                
+                                                                JToken nameValue4 = columnsValue["name"];
+                                                                if (nameValue4 != null && nameValue4.Type != JTokenType.Null)
+                                                                {
+                                                                    string nameInstance4 = ((string)nameValue4);
+                                                                    columnInstance.Name = nameInstance4;
+                                                                }
+                                                                
+                                                                JToken typeValue4 = columnsValue["type"];
+                                                                if (typeValue4 != null && typeValue4.Type != JTokenType.Null)
+                                                                {
+                                                                    string typeInstance4 = ((string)typeValue4);
+                                                                    columnInstance.Type = typeInstance4;
+                                                                }
+                                                                
+                                                                JToken locationValue4 = columnsValue["location"];
+                                                                if (locationValue4 != null && locationValue4.Type != JTokenType.Null)
+                                                                {
+                                                                    string locationInstance4 = ((string)locationValue4);
+                                                                    columnInstance.Location = locationInstance4;
+                                                                }
+                                                                
+                                                                JToken tagsSequenceElement4 = ((JToken)columnsValue["tags"]);
+                                                                if (tagsSequenceElement4 != null && tagsSequenceElement4.Type != JTokenType.Null)
+                                                                {
+                                                                    foreach (JProperty property4 in tagsSequenceElement4)
+                                                                    {
+                                                                        string tagsKey5 = ((string)property4.Name);
+                                                                        string tagsValue5 = ((string)property4.Value);
+                                                                        columnInstance.Tags.Add(tagsKey5, tagsValue5);
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                        
+                                                        JToken recommendedIndexesArray = propertiesValue5["recommendedIndexes"];
+                                                        if (recommendedIndexesArray != null && recommendedIndexesArray.Type != JTokenType.Null)
+                                                        {
+                                                            foreach (JToken recommendedIndexesValue in ((JArray)recommendedIndexesArray))
+                                                            {
+                                                                RecommendedIndex recommendedIndexInstance = new RecommendedIndex();
+                                                                propertiesInstance4.RecommendedIndexes.Add(recommendedIndexInstance);
+                                                                
+                                                                JToken propertiesValue7 = recommendedIndexesValue["properties"];
+                                                                if (propertiesValue7 != null && propertiesValue7.Type != JTokenType.Null)
+                                                                {
+                                                                    RecommendedIndexProperties propertiesInstance6 = new RecommendedIndexProperties();
+                                                                    recommendedIndexInstance.Properties = propertiesInstance6;
+                                                                    
+                                                                    JToken actionValue = propertiesValue7["action"];
+                                                                    if (actionValue != null && actionValue.Type != JTokenType.Null)
+                                                                    {
+                                                                        string actionInstance = ((string)actionValue);
+                                                                        propertiesInstance6.Action = actionInstance;
+                                                                    }
+                                                                    
+                                                                    JToken stateValue = propertiesValue7["state"];
+                                                                    if (stateValue != null && stateValue.Type != JTokenType.Null)
+                                                                    {
+                                                                        string stateInstance = ((string)stateValue);
+                                                                        propertiesInstance6.State = stateInstance;
+                                                                    }
+                                                                    
+                                                                    JToken createdValue = propertiesValue7["created"];
+                                                                    if (createdValue != null && createdValue.Type != JTokenType.Null)
+                                                                    {
+                                                                        DateTime createdInstance = ((DateTime)createdValue);
+                                                                        propertiesInstance6.Created = createdInstance;
+                                                                    }
+                                                                    
+                                                                    JToken lastModifiedValue = propertiesValue7["lastModified"];
+                                                                    if (lastModifiedValue != null && lastModifiedValue.Type != JTokenType.Null)
+                                                                    {
+                                                                        DateTime lastModifiedInstance = ((DateTime)lastModifiedValue);
+                                                                        propertiesInstance6.LastModified = lastModifiedInstance;
+                                                                    }
+                                                                    
+                                                                    JToken indexTypeValue = propertiesValue7["indexType"];
+                                                                    if (indexTypeValue != null && indexTypeValue.Type != JTokenType.Null)
+                                                                    {
+                                                                        string indexTypeInstance = ((string)indexTypeValue);
+                                                                        propertiesInstance6.IndexType = indexTypeInstance;
+                                                                    }
+                                                                    
+                                                                    JToken schemaValue = propertiesValue7["schema"];
+                                                                    if (schemaValue != null && schemaValue.Type != JTokenType.Null)
+                                                                    {
+                                                                        string schemaInstance2 = ((string)schemaValue);
+                                                                        propertiesInstance6.Schema = schemaInstance2;
+                                                                    }
+                                                                    
+                                                                    JToken tableValue = propertiesValue7["table"];
+                                                                    if (tableValue != null && tableValue.Type != JTokenType.Null)
+                                                                    {
+                                                                        string tableInstance2 = ((string)tableValue);
+                                                                        propertiesInstance6.Table = tableInstance2;
+                                                                    }
+                                                                    
+                                                                    JToken columnsArray2 = propertiesValue7["columns"];
+                                                                    if (columnsArray2 != null && columnsArray2.Type != JTokenType.Null)
+                                                                    {
+                                                                        foreach (JToken columnsValue2 in ((JArray)columnsArray2))
+                                                                        {
+                                                                            propertiesInstance6.Columns.Add(((string)columnsValue2));
+                                                                        }
+                                                                    }
+                                                                    
+                                                                    JToken includedColumnsArray = propertiesValue7["includedColumns"];
+                                                                    if (includedColumnsArray != null && includedColumnsArray.Type != JTokenType.Null)
+                                                                    {
+                                                                        foreach (JToken includedColumnsValue in ((JArray)includedColumnsArray))
+                                                                        {
+                                                                            propertiesInstance6.IncludedColumns.Add(((string)includedColumnsValue));
+                                                                        }
+                                                                    }
+                                                                    
+                                                                    JToken indexScriptValue = propertiesValue7["indexScript"];
+                                                                    if (indexScriptValue != null && indexScriptValue.Type != JTokenType.Null)
+                                                                    {
+                                                                        string indexScriptInstance = ((string)indexScriptValue);
+                                                                        propertiesInstance6.IndexScript = indexScriptInstance;
+                                                                    }
+                                                                    
+                                                                    JToken estimatedImpactArray = propertiesValue7["estimatedImpact"];
+                                                                    if (estimatedImpactArray != null && estimatedImpactArray.Type != JTokenType.Null)
+                                                                    {
+                                                                        foreach (JToken estimatedImpactValue in ((JArray)estimatedImpactArray))
+                                                                        {
+                                                                            OperationImpact operationImpactInstance = new OperationImpact();
+                                                                            propertiesInstance6.EstimatedImpact.Add(operationImpactInstance);
+                                                                            
+                                                                            JToken nameValue5 = estimatedImpactValue["name"];
+                                                                            if (nameValue5 != null && nameValue5.Type != JTokenType.Null)
+                                                                            {
+                                                                                string nameInstance5 = ((string)nameValue5);
+                                                                                operationImpactInstance.Name = nameInstance5;
+                                                                            }
+                                                                            
+                                                                            JToken unitValue = estimatedImpactValue["unit"];
+                                                                            if (unitValue != null && unitValue.Type != JTokenType.Null)
+                                                                            {
+                                                                                string unitInstance = ((string)unitValue);
+                                                                                operationImpactInstance.Unit = unitInstance;
+                                                                            }
+                                                                            
+                                                                            JToken changeValueAbsoluteValue = estimatedImpactValue["changeValueAbsolute"];
+                                                                            if (changeValueAbsoluteValue != null && changeValueAbsoluteValue.Type != JTokenType.Null)
+                                                                            {
+                                                                                double changeValueAbsoluteInstance = ((double)changeValueAbsoluteValue);
+                                                                                operationImpactInstance.ChangeValueAbsolute = changeValueAbsoluteInstance;
+                                                                            }
+                                                                            
+                                                                            JToken changeValueRelativeValue = estimatedImpactValue["changeValueRelative"];
+                                                                            if (changeValueRelativeValue != null && changeValueRelativeValue.Type != JTokenType.Null)
+                                                                            {
+                                                                                double changeValueRelativeInstance = ((double)changeValueRelativeValue);
+                                                                                operationImpactInstance.ChangeValueRelative = changeValueRelativeInstance;
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                    
+                                                                    JToken reportedImpactArray = propertiesValue7["reportedImpact"];
+                                                                    if (reportedImpactArray != null && reportedImpactArray.Type != JTokenType.Null)
+                                                                    {
+                                                                        foreach (JToken reportedImpactValue in ((JArray)reportedImpactArray))
+                                                                        {
+                                                                            OperationImpact operationImpactInstance2 = new OperationImpact();
+                                                                            propertiesInstance6.ReportedImpact.Add(operationImpactInstance2);
+                                                                            
+                                                                            JToken nameValue6 = reportedImpactValue["name"];
+                                                                            if (nameValue6 != null && nameValue6.Type != JTokenType.Null)
+                                                                            {
+                                                                                string nameInstance6 = ((string)nameValue6);
+                                                                                operationImpactInstance2.Name = nameInstance6;
+                                                                            }
+                                                                            
+                                                                            JToken unitValue2 = reportedImpactValue["unit"];
+                                                                            if (unitValue2 != null && unitValue2.Type != JTokenType.Null)
+                                                                            {
+                                                                                string unitInstance2 = ((string)unitValue2);
+                                                                                operationImpactInstance2.Unit = unitInstance2;
+                                                                            }
+                                                                            
+                                                                            JToken changeValueAbsoluteValue2 = reportedImpactValue["changeValueAbsolute"];
+                                                                            if (changeValueAbsoluteValue2 != null && changeValueAbsoluteValue2.Type != JTokenType.Null)
+                                                                            {
+                                                                                double changeValueAbsoluteInstance2 = ((double)changeValueAbsoluteValue2);
+                                                                                operationImpactInstance2.ChangeValueAbsolute = changeValueAbsoluteInstance2;
+                                                                            }
+                                                                            
+                                                                            JToken changeValueRelativeValue2 = reportedImpactValue["changeValueRelative"];
+                                                                            if (changeValueRelativeValue2 != null && changeValueRelativeValue2.Type != JTokenType.Null)
+                                                                            {
+                                                                                double changeValueRelativeInstance2 = ((double)changeValueRelativeValue2);
+                                                                                operationImpactInstance2.ChangeValueRelative = changeValueRelativeInstance2;
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                                
+                                                                JToken idValue5 = recommendedIndexesValue["id"];
+                                                                if (idValue5 != null && idValue5.Type != JTokenType.Null)
+                                                                {
+                                                                    string idInstance5 = ((string)idValue5);
+                                                                    recommendedIndexInstance.Id = idInstance5;
+                                                                }
+                                                                
+                                                                JToken nameValue7 = recommendedIndexesValue["name"];
+                                                                if (nameValue7 != null && nameValue7.Type != JTokenType.Null)
+                                                                {
+                                                                    string nameInstance7 = ((string)nameValue7);
+                                                                    recommendedIndexInstance.Name = nameInstance7;
+                                                                }
+                                                                
+                                                                JToken typeValue5 = recommendedIndexesValue["type"];
+                                                                if (typeValue5 != null && typeValue5.Type != JTokenType.Null)
+                                                                {
+                                                                    string typeInstance5 = ((string)typeValue5);
+                                                                    recommendedIndexInstance.Type = typeInstance5;
+                                                                }
+                                                                
+                                                                JToken locationValue5 = recommendedIndexesValue["location"];
+                                                                if (locationValue5 != null && locationValue5.Type != JTokenType.Null)
+                                                                {
+                                                                    string locationInstance5 = ((string)locationValue5);
+                                                                    recommendedIndexInstance.Location = locationInstance5;
+                                                                }
+                                                                
+                                                                JToken tagsSequenceElement5 = ((JToken)recommendedIndexesValue["tags"]);
+                                                                if (tagsSequenceElement5 != null && tagsSequenceElement5.Type != JTokenType.Null)
+                                                                {
+                                                                    foreach (JProperty property5 in tagsSequenceElement5)
+                                                                    {
+                                                                        string tagsKey6 = ((string)property5.Name);
+                                                                        string tagsValue6 = ((string)property5.Value);
+                                                                        recommendedIndexInstance.Tags.Add(tagsKey6, tagsValue6);
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                    
+                                                    JToken idValue6 = tablesValue["id"];
+                                                    if (idValue6 != null && idValue6.Type != JTokenType.Null)
+                                                    {
+                                                        string idInstance6 = ((string)idValue6);
+                                                        tableInstance.Id = idInstance6;
+                                                    }
+                                                    
+                                                    JToken nameValue8 = tablesValue["name"];
+                                                    if (nameValue8 != null && nameValue8.Type != JTokenType.Null)
+                                                    {
+                                                        string nameInstance8 = ((string)nameValue8);
+                                                        tableInstance.Name = nameInstance8;
+                                                    }
+                                                    
+                                                    JToken typeValue6 = tablesValue["type"];
+                                                    if (typeValue6 != null && typeValue6.Type != JTokenType.Null)
+                                                    {
+                                                        string typeInstance6 = ((string)typeValue6);
+                                                        tableInstance.Type = typeInstance6;
+                                                    }
+                                                    
+                                                    JToken locationValue6 = tablesValue["location"];
+                                                    if (locationValue6 != null && locationValue6.Type != JTokenType.Null)
+                                                    {
+                                                        string locationInstance6 = ((string)locationValue6);
+                                                        tableInstance.Location = locationInstance6;
+                                                    }
+                                                    
+                                                    JToken tagsSequenceElement6 = ((JToken)tablesValue["tags"]);
+                                                    if (tagsSequenceElement6 != null && tagsSequenceElement6.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JProperty property6 in tagsSequenceElement6)
+                                                        {
+                                                            string tagsKey7 = ((string)property6.Name);
+                                                            string tagsValue7 = ((string)property6.Value);
+                                                            tableInstance.Tags.Add(tagsKey7, tagsValue7);
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken idValue7 = schemasValue["id"];
+                                        if (idValue7 != null && idValue7.Type != JTokenType.Null)
+                                        {
+                                            string idInstance7 = ((string)idValue7);
+                                            schemaInstance.Id = idInstance7;
+                                        }
+                                        
+                                        JToken nameValue9 = schemasValue["name"];
+                                        if (nameValue9 != null && nameValue9.Type != JTokenType.Null)
+                                        {
+                                            string nameInstance9 = ((string)nameValue9);
+                                            schemaInstance.Name = nameInstance9;
+                                        }
+                                        
+                                        JToken typeValue7 = schemasValue["type"];
+                                        if (typeValue7 != null && typeValue7.Type != JTokenType.Null)
+                                        {
+                                            string typeInstance7 = ((string)typeValue7);
+                                            schemaInstance.Type = typeInstance7;
+                                        }
+                                        
+                                        JToken locationValue7 = schemasValue["location"];
+                                        if (locationValue7 != null && locationValue7.Type != JTokenType.Null)
+                                        {
+                                            string locationInstance7 = ((string)locationValue7);
+                                            schemaInstance.Location = locationInstance7;
+                                        }
+                                        
+                                        JToken tagsSequenceElement7 = ((JToken)schemasValue["tags"]);
+                                        if (tagsSequenceElement7 != null && tagsSequenceElement7.Type != JTokenType.Null)
+                                        {
+                                            foreach (JProperty property7 in tagsSequenceElement7)
+                                            {
+                                                string tagsKey8 = ((string)property7.Name);
+                                                string tagsValue8 = ((string)property7.Value);
+                                                schemaInstance.Tags.Add(tagsKey8, tagsValue8);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            
+                            JToken idValue8 = responseDoc["id"];
+                            if (idValue8 != null && idValue8.Type != JTokenType.Null)
+                            {
+                                string idInstance8 = ((string)idValue8);
+                                databaseInstance.Id = idInstance8;
+                            }
+                            
+                            JToken nameValue10 = responseDoc["name"];
+                            if (nameValue10 != null && nameValue10.Type != JTokenType.Null)
+                            {
+                                string nameInstance10 = ((string)nameValue10);
+                                databaseInstance.Name = nameInstance10;
+                            }
+                            
+                            JToken typeValue8 = responseDoc["type"];
+                            if (typeValue8 != null && typeValue8.Type != JTokenType.Null)
+                            {
+                                string typeInstance8 = ((string)typeValue8);
+                                databaseInstance.Type = typeInstance8;
+                            }
+                            
+                            JToken locationValue8 = responseDoc["location"];
+                            if (locationValue8 != null && locationValue8.Type != JTokenType.Null)
+                            {
+                                string locationInstance8 = ((string)locationValue8);
+                                databaseInstance.Location = locationInstance8;
+                            }
+                            
+                            JToken tagsSequenceElement8 = ((JToken)responseDoc["tags"]);
+                            if (tagsSequenceElement8 != null && tagsSequenceElement8.Type != JTokenType.Null)
+                            {
+                                foreach (JProperty property8 in tagsSequenceElement8)
+                                {
+                                    string tagsKey9 = ((string)property8.Name);
+                                    string tagsValue9 = ((string)property8.Value);
+                                    databaseInstance.Tags.Add(tagsKey9, tagsValue9);
                                 }
                             }
                         }
@@ -1584,44 +1972,432 @@ namespace Microsoft.Azure.Management.Sql
                                         }
                                     }
                                 }
-                            }
-                            
-                            JToken idValue4 = responseDoc["id"];
-                            if (idValue4 != null && idValue4.Type != JTokenType.Null)
-                            {
-                                string idInstance4 = ((string)idValue4);
-                                databaseInstance.Id = idInstance4;
-                            }
-                            
-                            JToken nameValue4 = responseDoc["name"];
-                            if (nameValue4 != null && nameValue4.Type != JTokenType.Null)
-                            {
-                                string nameInstance4 = ((string)nameValue4);
-                                databaseInstance.Name = nameInstance4;
-                            }
-                            
-                            JToken typeValue4 = responseDoc["type"];
-                            if (typeValue4 != null && typeValue4.Type != JTokenType.Null)
-                            {
-                                string typeInstance4 = ((string)typeValue4);
-                                databaseInstance.Type = typeInstance4;
-                            }
-                            
-                            JToken locationValue4 = responseDoc["location"];
-                            if (locationValue4 != null && locationValue4.Type != JTokenType.Null)
-                            {
-                                string locationInstance4 = ((string)locationValue4);
-                                databaseInstance.Location = locationInstance4;
-                            }
-                            
-                            JToken tagsSequenceElement4 = ((JToken)responseDoc["tags"]);
-                            if (tagsSequenceElement4 != null && tagsSequenceElement4.Type != JTokenType.Null)
-                            {
-                                foreach (JProperty property4 in tagsSequenceElement4)
+                                
+                                JToken schemasArray = propertiesValue["schemas"];
+                                if (schemasArray != null && schemasArray.Type != JTokenType.Null)
                                 {
-                                    string tagsKey4 = ((string)property4.Name);
-                                    string tagsValue4 = ((string)property4.Value);
-                                    databaseInstance.Tags.Add(tagsKey4, tagsValue4);
+                                    foreach (JToken schemasValue in ((JArray)schemasArray))
+                                    {
+                                        Schema schemaInstance = new Schema();
+                                        propertiesInstance.Schemas.Add(schemaInstance);
+                                        
+                                        JToken propertiesValue3 = schemasValue["properties"];
+                                        if (propertiesValue3 != null && propertiesValue3.Type != JTokenType.Null)
+                                        {
+                                            SchemaProperties propertiesInstance3 = new SchemaProperties();
+                                            schemaInstance.Properties = propertiesInstance3;
+                                            
+                                            JToken tablesArray = propertiesValue3["tables"];
+                                            if (tablesArray != null && tablesArray.Type != JTokenType.Null)
+                                            {
+                                                foreach (JToken tablesValue in ((JArray)tablesArray))
+                                                {
+                                                    Table tableInstance = new Table();
+                                                    propertiesInstance3.Tables.Add(tableInstance);
+                                                    
+                                                    JToken propertiesValue4 = tablesValue["properties"];
+                                                    if (propertiesValue4 != null && propertiesValue4.Type != JTokenType.Null)
+                                                    {
+                                                        TableProperties propertiesInstance4 = new TableProperties();
+                                                        tableInstance.Properties = propertiesInstance4;
+                                                        
+                                                        JToken tableTypeValue = propertiesValue4["tableType"];
+                                                        if (tableTypeValue != null && tableTypeValue.Type != JTokenType.Null)
+                                                        {
+                                                            string tableTypeInstance = ((string)tableTypeValue);
+                                                            propertiesInstance4.TableType = tableTypeInstance;
+                                                        }
+                                                        
+                                                        JToken columnsArray = propertiesValue4["columns"];
+                                                        if (columnsArray != null && columnsArray.Type != JTokenType.Null)
+                                                        {
+                                                            foreach (JToken columnsValue in ((JArray)columnsArray))
+                                                            {
+                                                                Column columnInstance = new Column();
+                                                                propertiesInstance4.Columns.Add(columnInstance);
+                                                                
+                                                                JToken propertiesValue5 = columnsValue["properties"];
+                                                                if (propertiesValue5 != null && propertiesValue5.Type != JTokenType.Null)
+                                                                {
+                                                                    ColumnProperties propertiesInstance5 = new ColumnProperties();
+                                                                    columnInstance.Properties = propertiesInstance5;
+                                                                    
+                                                                    JToken columnTypeValue = propertiesValue5["columnType"];
+                                                                    if (columnTypeValue != null && columnTypeValue.Type != JTokenType.Null)
+                                                                    {
+                                                                        string columnTypeInstance = ((string)columnTypeValue);
+                                                                        propertiesInstance5.ColumnType = columnTypeInstance;
+                                                                    }
+                                                                }
+                                                                
+                                                                JToken idValue4 = columnsValue["id"];
+                                                                if (idValue4 != null && idValue4.Type != JTokenType.Null)
+                                                                {
+                                                                    string idInstance4 = ((string)idValue4);
+                                                                    columnInstance.Id = idInstance4;
+                                                                }
+                                                                
+                                                                JToken nameValue4 = columnsValue["name"];
+                                                                if (nameValue4 != null && nameValue4.Type != JTokenType.Null)
+                                                                {
+                                                                    string nameInstance4 = ((string)nameValue4);
+                                                                    columnInstance.Name = nameInstance4;
+                                                                }
+                                                                
+                                                                JToken typeValue4 = columnsValue["type"];
+                                                                if (typeValue4 != null && typeValue4.Type != JTokenType.Null)
+                                                                {
+                                                                    string typeInstance4 = ((string)typeValue4);
+                                                                    columnInstance.Type = typeInstance4;
+                                                                }
+                                                                
+                                                                JToken locationValue4 = columnsValue["location"];
+                                                                if (locationValue4 != null && locationValue4.Type != JTokenType.Null)
+                                                                {
+                                                                    string locationInstance4 = ((string)locationValue4);
+                                                                    columnInstance.Location = locationInstance4;
+                                                                }
+                                                                
+                                                                JToken tagsSequenceElement4 = ((JToken)columnsValue["tags"]);
+                                                                if (tagsSequenceElement4 != null && tagsSequenceElement4.Type != JTokenType.Null)
+                                                                {
+                                                                    foreach (JProperty property4 in tagsSequenceElement4)
+                                                                    {
+                                                                        string tagsKey4 = ((string)property4.Name);
+                                                                        string tagsValue4 = ((string)property4.Value);
+                                                                        columnInstance.Tags.Add(tagsKey4, tagsValue4);
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                        
+                                                        JToken recommendedIndexesArray = propertiesValue4["recommendedIndexes"];
+                                                        if (recommendedIndexesArray != null && recommendedIndexesArray.Type != JTokenType.Null)
+                                                        {
+                                                            foreach (JToken recommendedIndexesValue in ((JArray)recommendedIndexesArray))
+                                                            {
+                                                                RecommendedIndex recommendedIndexInstance = new RecommendedIndex();
+                                                                propertiesInstance4.RecommendedIndexes.Add(recommendedIndexInstance);
+                                                                
+                                                                JToken propertiesValue6 = recommendedIndexesValue["properties"];
+                                                                if (propertiesValue6 != null && propertiesValue6.Type != JTokenType.Null)
+                                                                {
+                                                                    RecommendedIndexProperties propertiesInstance6 = new RecommendedIndexProperties();
+                                                                    recommendedIndexInstance.Properties = propertiesInstance6;
+                                                                    
+                                                                    JToken actionValue = propertiesValue6["action"];
+                                                                    if (actionValue != null && actionValue.Type != JTokenType.Null)
+                                                                    {
+                                                                        string actionInstance = ((string)actionValue);
+                                                                        propertiesInstance6.Action = actionInstance;
+                                                                    }
+                                                                    
+                                                                    JToken stateValue = propertiesValue6["state"];
+                                                                    if (stateValue != null && stateValue.Type != JTokenType.Null)
+                                                                    {
+                                                                        string stateInstance = ((string)stateValue);
+                                                                        propertiesInstance6.State = stateInstance;
+                                                                    }
+                                                                    
+                                                                    JToken createdValue = propertiesValue6["created"];
+                                                                    if (createdValue != null && createdValue.Type != JTokenType.Null)
+                                                                    {
+                                                                        DateTime createdInstance = ((DateTime)createdValue);
+                                                                        propertiesInstance6.Created = createdInstance;
+                                                                    }
+                                                                    
+                                                                    JToken lastModifiedValue = propertiesValue6["lastModified"];
+                                                                    if (lastModifiedValue != null && lastModifiedValue.Type != JTokenType.Null)
+                                                                    {
+                                                                        DateTime lastModifiedInstance = ((DateTime)lastModifiedValue);
+                                                                        propertiesInstance6.LastModified = lastModifiedInstance;
+                                                                    }
+                                                                    
+                                                                    JToken indexTypeValue = propertiesValue6["indexType"];
+                                                                    if (indexTypeValue != null && indexTypeValue.Type != JTokenType.Null)
+                                                                    {
+                                                                        string indexTypeInstance = ((string)indexTypeValue);
+                                                                        propertiesInstance6.IndexType = indexTypeInstance;
+                                                                    }
+                                                                    
+                                                                    JToken schemaValue = propertiesValue6["schema"];
+                                                                    if (schemaValue != null && schemaValue.Type != JTokenType.Null)
+                                                                    {
+                                                                        string schemaInstance2 = ((string)schemaValue);
+                                                                        propertiesInstance6.Schema = schemaInstance2;
+                                                                    }
+                                                                    
+                                                                    JToken tableValue = propertiesValue6["table"];
+                                                                    if (tableValue != null && tableValue.Type != JTokenType.Null)
+                                                                    {
+                                                                        string tableInstance2 = ((string)tableValue);
+                                                                        propertiesInstance6.Table = tableInstance2;
+                                                                    }
+                                                                    
+                                                                    JToken columnsArray2 = propertiesValue6["columns"];
+                                                                    if (columnsArray2 != null && columnsArray2.Type != JTokenType.Null)
+                                                                    {
+                                                                        foreach (JToken columnsValue2 in ((JArray)columnsArray2))
+                                                                        {
+                                                                            propertiesInstance6.Columns.Add(((string)columnsValue2));
+                                                                        }
+                                                                    }
+                                                                    
+                                                                    JToken includedColumnsArray = propertiesValue6["includedColumns"];
+                                                                    if (includedColumnsArray != null && includedColumnsArray.Type != JTokenType.Null)
+                                                                    {
+                                                                        foreach (JToken includedColumnsValue in ((JArray)includedColumnsArray))
+                                                                        {
+                                                                            propertiesInstance6.IncludedColumns.Add(((string)includedColumnsValue));
+                                                                        }
+                                                                    }
+                                                                    
+                                                                    JToken indexScriptValue = propertiesValue6["indexScript"];
+                                                                    if (indexScriptValue != null && indexScriptValue.Type != JTokenType.Null)
+                                                                    {
+                                                                        string indexScriptInstance = ((string)indexScriptValue);
+                                                                        propertiesInstance6.IndexScript = indexScriptInstance;
+                                                                    }
+                                                                    
+                                                                    JToken estimatedImpactArray = propertiesValue6["estimatedImpact"];
+                                                                    if (estimatedImpactArray != null && estimatedImpactArray.Type != JTokenType.Null)
+                                                                    {
+                                                                        foreach (JToken estimatedImpactValue in ((JArray)estimatedImpactArray))
+                                                                        {
+                                                                            OperationImpact operationImpactInstance = new OperationImpact();
+                                                                            propertiesInstance6.EstimatedImpact.Add(operationImpactInstance);
+                                                                            
+                                                                            JToken nameValue5 = estimatedImpactValue["name"];
+                                                                            if (nameValue5 != null && nameValue5.Type != JTokenType.Null)
+                                                                            {
+                                                                                string nameInstance5 = ((string)nameValue5);
+                                                                                operationImpactInstance.Name = nameInstance5;
+                                                                            }
+                                                                            
+                                                                            JToken unitValue = estimatedImpactValue["unit"];
+                                                                            if (unitValue != null && unitValue.Type != JTokenType.Null)
+                                                                            {
+                                                                                string unitInstance = ((string)unitValue);
+                                                                                operationImpactInstance.Unit = unitInstance;
+                                                                            }
+                                                                            
+                                                                            JToken changeValueAbsoluteValue = estimatedImpactValue["changeValueAbsolute"];
+                                                                            if (changeValueAbsoluteValue != null && changeValueAbsoluteValue.Type != JTokenType.Null)
+                                                                            {
+                                                                                double changeValueAbsoluteInstance = ((double)changeValueAbsoluteValue);
+                                                                                operationImpactInstance.ChangeValueAbsolute = changeValueAbsoluteInstance;
+                                                                            }
+                                                                            
+                                                                            JToken changeValueRelativeValue = estimatedImpactValue["changeValueRelative"];
+                                                                            if (changeValueRelativeValue != null && changeValueRelativeValue.Type != JTokenType.Null)
+                                                                            {
+                                                                                double changeValueRelativeInstance = ((double)changeValueRelativeValue);
+                                                                                operationImpactInstance.ChangeValueRelative = changeValueRelativeInstance;
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                    
+                                                                    JToken reportedImpactArray = propertiesValue6["reportedImpact"];
+                                                                    if (reportedImpactArray != null && reportedImpactArray.Type != JTokenType.Null)
+                                                                    {
+                                                                        foreach (JToken reportedImpactValue in ((JArray)reportedImpactArray))
+                                                                        {
+                                                                            OperationImpact operationImpactInstance2 = new OperationImpact();
+                                                                            propertiesInstance6.ReportedImpact.Add(operationImpactInstance2);
+                                                                            
+                                                                            JToken nameValue6 = reportedImpactValue["name"];
+                                                                            if (nameValue6 != null && nameValue6.Type != JTokenType.Null)
+                                                                            {
+                                                                                string nameInstance6 = ((string)nameValue6);
+                                                                                operationImpactInstance2.Name = nameInstance6;
+                                                                            }
+                                                                            
+                                                                            JToken unitValue2 = reportedImpactValue["unit"];
+                                                                            if (unitValue2 != null && unitValue2.Type != JTokenType.Null)
+                                                                            {
+                                                                                string unitInstance2 = ((string)unitValue2);
+                                                                                operationImpactInstance2.Unit = unitInstance2;
+                                                                            }
+                                                                            
+                                                                            JToken changeValueAbsoluteValue2 = reportedImpactValue["changeValueAbsolute"];
+                                                                            if (changeValueAbsoluteValue2 != null && changeValueAbsoluteValue2.Type != JTokenType.Null)
+                                                                            {
+                                                                                double changeValueAbsoluteInstance2 = ((double)changeValueAbsoluteValue2);
+                                                                                operationImpactInstance2.ChangeValueAbsolute = changeValueAbsoluteInstance2;
+                                                                            }
+                                                                            
+                                                                            JToken changeValueRelativeValue2 = reportedImpactValue["changeValueRelative"];
+                                                                            if (changeValueRelativeValue2 != null && changeValueRelativeValue2.Type != JTokenType.Null)
+                                                                            {
+                                                                                double changeValueRelativeInstance2 = ((double)changeValueRelativeValue2);
+                                                                                operationImpactInstance2.ChangeValueRelative = changeValueRelativeInstance2;
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                                
+                                                                JToken idValue5 = recommendedIndexesValue["id"];
+                                                                if (idValue5 != null && idValue5.Type != JTokenType.Null)
+                                                                {
+                                                                    string idInstance5 = ((string)idValue5);
+                                                                    recommendedIndexInstance.Id = idInstance5;
+                                                                }
+                                                                
+                                                                JToken nameValue7 = recommendedIndexesValue["name"];
+                                                                if (nameValue7 != null && nameValue7.Type != JTokenType.Null)
+                                                                {
+                                                                    string nameInstance7 = ((string)nameValue7);
+                                                                    recommendedIndexInstance.Name = nameInstance7;
+                                                                }
+                                                                
+                                                                JToken typeValue5 = recommendedIndexesValue["type"];
+                                                                if (typeValue5 != null && typeValue5.Type != JTokenType.Null)
+                                                                {
+                                                                    string typeInstance5 = ((string)typeValue5);
+                                                                    recommendedIndexInstance.Type = typeInstance5;
+                                                                }
+                                                                
+                                                                JToken locationValue5 = recommendedIndexesValue["location"];
+                                                                if (locationValue5 != null && locationValue5.Type != JTokenType.Null)
+                                                                {
+                                                                    string locationInstance5 = ((string)locationValue5);
+                                                                    recommendedIndexInstance.Location = locationInstance5;
+                                                                }
+                                                                
+                                                                JToken tagsSequenceElement5 = ((JToken)recommendedIndexesValue["tags"]);
+                                                                if (tagsSequenceElement5 != null && tagsSequenceElement5.Type != JTokenType.Null)
+                                                                {
+                                                                    foreach (JProperty property5 in tagsSequenceElement5)
+                                                                    {
+                                                                        string tagsKey5 = ((string)property5.Name);
+                                                                        string tagsValue5 = ((string)property5.Value);
+                                                                        recommendedIndexInstance.Tags.Add(tagsKey5, tagsValue5);
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                    
+                                                    JToken idValue6 = tablesValue["id"];
+                                                    if (idValue6 != null && idValue6.Type != JTokenType.Null)
+                                                    {
+                                                        string idInstance6 = ((string)idValue6);
+                                                        tableInstance.Id = idInstance6;
+                                                    }
+                                                    
+                                                    JToken nameValue8 = tablesValue["name"];
+                                                    if (nameValue8 != null && nameValue8.Type != JTokenType.Null)
+                                                    {
+                                                        string nameInstance8 = ((string)nameValue8);
+                                                        tableInstance.Name = nameInstance8;
+                                                    }
+                                                    
+                                                    JToken typeValue6 = tablesValue["type"];
+                                                    if (typeValue6 != null && typeValue6.Type != JTokenType.Null)
+                                                    {
+                                                        string typeInstance6 = ((string)typeValue6);
+                                                        tableInstance.Type = typeInstance6;
+                                                    }
+                                                    
+                                                    JToken locationValue6 = tablesValue["location"];
+                                                    if (locationValue6 != null && locationValue6.Type != JTokenType.Null)
+                                                    {
+                                                        string locationInstance6 = ((string)locationValue6);
+                                                        tableInstance.Location = locationInstance6;
+                                                    }
+                                                    
+                                                    JToken tagsSequenceElement6 = ((JToken)tablesValue["tags"]);
+                                                    if (tagsSequenceElement6 != null && tagsSequenceElement6.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JProperty property6 in tagsSequenceElement6)
+                                                        {
+                                                            string tagsKey6 = ((string)property6.Name);
+                                                            string tagsValue6 = ((string)property6.Value);
+                                                            tableInstance.Tags.Add(tagsKey6, tagsValue6);
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken idValue7 = schemasValue["id"];
+                                        if (idValue7 != null && idValue7.Type != JTokenType.Null)
+                                        {
+                                            string idInstance7 = ((string)idValue7);
+                                            schemaInstance.Id = idInstance7;
+                                        }
+                                        
+                                        JToken nameValue9 = schemasValue["name"];
+                                        if (nameValue9 != null && nameValue9.Type != JTokenType.Null)
+                                        {
+                                            string nameInstance9 = ((string)nameValue9);
+                                            schemaInstance.Name = nameInstance9;
+                                        }
+                                        
+                                        JToken typeValue7 = schemasValue["type"];
+                                        if (typeValue7 != null && typeValue7.Type != JTokenType.Null)
+                                        {
+                                            string typeInstance7 = ((string)typeValue7);
+                                            schemaInstance.Type = typeInstance7;
+                                        }
+                                        
+                                        JToken locationValue7 = schemasValue["location"];
+                                        if (locationValue7 != null && locationValue7.Type != JTokenType.Null)
+                                        {
+                                            string locationInstance7 = ((string)locationValue7);
+                                            schemaInstance.Location = locationInstance7;
+                                        }
+                                        
+                                        JToken tagsSequenceElement7 = ((JToken)schemasValue["tags"]);
+                                        if (tagsSequenceElement7 != null && tagsSequenceElement7.Type != JTokenType.Null)
+                                        {
+                                            foreach (JProperty property7 in tagsSequenceElement7)
+                                            {
+                                                string tagsKey7 = ((string)property7.Name);
+                                                string tagsValue7 = ((string)property7.Value);
+                                                schemaInstance.Tags.Add(tagsKey7, tagsValue7);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            
+                            JToken idValue8 = responseDoc["id"];
+                            if (idValue8 != null && idValue8.Type != JTokenType.Null)
+                            {
+                                string idInstance8 = ((string)idValue8);
+                                databaseInstance.Id = idInstance8;
+                            }
+                            
+                            JToken nameValue10 = responseDoc["name"];
+                            if (nameValue10 != null && nameValue10.Type != JTokenType.Null)
+                            {
+                                string nameInstance10 = ((string)nameValue10);
+                                databaseInstance.Name = nameInstance10;
+                            }
+                            
+                            JToken typeValue8 = responseDoc["type"];
+                            if (typeValue8 != null && typeValue8.Type != JTokenType.Null)
+                            {
+                                string typeInstance8 = ((string)typeValue8);
+                                databaseInstance.Type = typeInstance8;
+                            }
+                            
+                            JToken locationValue8 = responseDoc["location"];
+                            if (locationValue8 != null && locationValue8.Type != JTokenType.Null)
+                            {
+                                string locationInstance8 = ((string)locationValue8);
+                                databaseInstance.Location = locationInstance8;
+                            }
+                            
+                            JToken tagsSequenceElement8 = ((JToken)responseDoc["tags"]);
+                            if (tagsSequenceElement8 != null && tagsSequenceElement8.Type != JTokenType.Null)
+                            {
+                                foreach (JProperty property8 in tagsSequenceElement8)
+                                {
+                                    string tagsKey8 = ((string)property8.Name);
+                                    string tagsValue8 = ((string)property8.Value);
+                                    databaseInstance.Tags.Add(tagsKey8, tagsValue8);
                                 }
                             }
                         }
@@ -2209,44 +2985,432 @@ namespace Microsoft.Azure.Management.Sql
                                                 }
                                             }
                                         }
-                                    }
-                                    
-                                    JToken idValue4 = valueValue["id"];
-                                    if (idValue4 != null && idValue4.Type != JTokenType.Null)
-                                    {
-                                        string idInstance4 = ((string)idValue4);
-                                        databaseInstance.Id = idInstance4;
-                                    }
-                                    
-                                    JToken nameValue4 = valueValue["name"];
-                                    if (nameValue4 != null && nameValue4.Type != JTokenType.Null)
-                                    {
-                                        string nameInstance4 = ((string)nameValue4);
-                                        databaseInstance.Name = nameInstance4;
-                                    }
-                                    
-                                    JToken typeValue4 = valueValue["type"];
-                                    if (typeValue4 != null && typeValue4.Type != JTokenType.Null)
-                                    {
-                                        string typeInstance4 = ((string)typeValue4);
-                                        databaseInstance.Type = typeInstance4;
-                                    }
-                                    
-                                    JToken locationValue4 = valueValue["location"];
-                                    if (locationValue4 != null && locationValue4.Type != JTokenType.Null)
-                                    {
-                                        string locationInstance4 = ((string)locationValue4);
-                                        databaseInstance.Location = locationInstance4;
-                                    }
-                                    
-                                    JToken tagsSequenceElement4 = ((JToken)valueValue["tags"]);
-                                    if (tagsSequenceElement4 != null && tagsSequenceElement4.Type != JTokenType.Null)
-                                    {
-                                        foreach (JProperty property4 in tagsSequenceElement4)
+                                        
+                                        JToken schemasArray = propertiesValue["schemas"];
+                                        if (schemasArray != null && schemasArray.Type != JTokenType.Null)
                                         {
-                                            string tagsKey4 = ((string)property4.Name);
-                                            string tagsValue4 = ((string)property4.Value);
-                                            databaseInstance.Tags.Add(tagsKey4, tagsValue4);
+                                            foreach (JToken schemasValue in ((JArray)schemasArray))
+                                            {
+                                                Schema schemaInstance = new Schema();
+                                                propertiesInstance.Schemas.Add(schemaInstance);
+                                                
+                                                JToken propertiesValue3 = schemasValue["properties"];
+                                                if (propertiesValue3 != null && propertiesValue3.Type != JTokenType.Null)
+                                                {
+                                                    SchemaProperties propertiesInstance3 = new SchemaProperties();
+                                                    schemaInstance.Properties = propertiesInstance3;
+                                                    
+                                                    JToken tablesArray = propertiesValue3["tables"];
+                                                    if (tablesArray != null && tablesArray.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken tablesValue in ((JArray)tablesArray))
+                                                        {
+                                                            Table tableInstance = new Table();
+                                                            propertiesInstance3.Tables.Add(tableInstance);
+                                                            
+                                                            JToken propertiesValue4 = tablesValue["properties"];
+                                                            if (propertiesValue4 != null && propertiesValue4.Type != JTokenType.Null)
+                                                            {
+                                                                TableProperties propertiesInstance4 = new TableProperties();
+                                                                tableInstance.Properties = propertiesInstance4;
+                                                                
+                                                                JToken tableTypeValue = propertiesValue4["tableType"];
+                                                                if (tableTypeValue != null && tableTypeValue.Type != JTokenType.Null)
+                                                                {
+                                                                    string tableTypeInstance = ((string)tableTypeValue);
+                                                                    propertiesInstance4.TableType = tableTypeInstance;
+                                                                }
+                                                                
+                                                                JToken columnsArray = propertiesValue4["columns"];
+                                                                if (columnsArray != null && columnsArray.Type != JTokenType.Null)
+                                                                {
+                                                                    foreach (JToken columnsValue in ((JArray)columnsArray))
+                                                                    {
+                                                                        Column columnInstance = new Column();
+                                                                        propertiesInstance4.Columns.Add(columnInstance);
+                                                                        
+                                                                        JToken propertiesValue5 = columnsValue["properties"];
+                                                                        if (propertiesValue5 != null && propertiesValue5.Type != JTokenType.Null)
+                                                                        {
+                                                                            ColumnProperties propertiesInstance5 = new ColumnProperties();
+                                                                            columnInstance.Properties = propertiesInstance5;
+                                                                            
+                                                                            JToken columnTypeValue = propertiesValue5["columnType"];
+                                                                            if (columnTypeValue != null && columnTypeValue.Type != JTokenType.Null)
+                                                                            {
+                                                                                string columnTypeInstance = ((string)columnTypeValue);
+                                                                                propertiesInstance5.ColumnType = columnTypeInstance;
+                                                                            }
+                                                                        }
+                                                                        
+                                                                        JToken idValue4 = columnsValue["id"];
+                                                                        if (idValue4 != null && idValue4.Type != JTokenType.Null)
+                                                                        {
+                                                                            string idInstance4 = ((string)idValue4);
+                                                                            columnInstance.Id = idInstance4;
+                                                                        }
+                                                                        
+                                                                        JToken nameValue4 = columnsValue["name"];
+                                                                        if (nameValue4 != null && nameValue4.Type != JTokenType.Null)
+                                                                        {
+                                                                            string nameInstance4 = ((string)nameValue4);
+                                                                            columnInstance.Name = nameInstance4;
+                                                                        }
+                                                                        
+                                                                        JToken typeValue4 = columnsValue["type"];
+                                                                        if (typeValue4 != null && typeValue4.Type != JTokenType.Null)
+                                                                        {
+                                                                            string typeInstance4 = ((string)typeValue4);
+                                                                            columnInstance.Type = typeInstance4;
+                                                                        }
+                                                                        
+                                                                        JToken locationValue4 = columnsValue["location"];
+                                                                        if (locationValue4 != null && locationValue4.Type != JTokenType.Null)
+                                                                        {
+                                                                            string locationInstance4 = ((string)locationValue4);
+                                                                            columnInstance.Location = locationInstance4;
+                                                                        }
+                                                                        
+                                                                        JToken tagsSequenceElement4 = ((JToken)columnsValue["tags"]);
+                                                                        if (tagsSequenceElement4 != null && tagsSequenceElement4.Type != JTokenType.Null)
+                                                                        {
+                                                                            foreach (JProperty property4 in tagsSequenceElement4)
+                                                                            {
+                                                                                string tagsKey4 = ((string)property4.Name);
+                                                                                string tagsValue4 = ((string)property4.Value);
+                                                                                columnInstance.Tags.Add(tagsKey4, tagsValue4);
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                                
+                                                                JToken recommendedIndexesArray = propertiesValue4["recommendedIndexes"];
+                                                                if (recommendedIndexesArray != null && recommendedIndexesArray.Type != JTokenType.Null)
+                                                                {
+                                                                    foreach (JToken recommendedIndexesValue in ((JArray)recommendedIndexesArray))
+                                                                    {
+                                                                        RecommendedIndex recommendedIndexInstance = new RecommendedIndex();
+                                                                        propertiesInstance4.RecommendedIndexes.Add(recommendedIndexInstance);
+                                                                        
+                                                                        JToken propertiesValue6 = recommendedIndexesValue["properties"];
+                                                                        if (propertiesValue6 != null && propertiesValue6.Type != JTokenType.Null)
+                                                                        {
+                                                                            RecommendedIndexProperties propertiesInstance6 = new RecommendedIndexProperties();
+                                                                            recommendedIndexInstance.Properties = propertiesInstance6;
+                                                                            
+                                                                            JToken actionValue = propertiesValue6["action"];
+                                                                            if (actionValue != null && actionValue.Type != JTokenType.Null)
+                                                                            {
+                                                                                string actionInstance = ((string)actionValue);
+                                                                                propertiesInstance6.Action = actionInstance;
+                                                                            }
+                                                                            
+                                                                            JToken stateValue = propertiesValue6["state"];
+                                                                            if (stateValue != null && stateValue.Type != JTokenType.Null)
+                                                                            {
+                                                                                string stateInstance = ((string)stateValue);
+                                                                                propertiesInstance6.State = stateInstance;
+                                                                            }
+                                                                            
+                                                                            JToken createdValue = propertiesValue6["created"];
+                                                                            if (createdValue != null && createdValue.Type != JTokenType.Null)
+                                                                            {
+                                                                                DateTime createdInstance = ((DateTime)createdValue);
+                                                                                propertiesInstance6.Created = createdInstance;
+                                                                            }
+                                                                            
+                                                                            JToken lastModifiedValue = propertiesValue6["lastModified"];
+                                                                            if (lastModifiedValue != null && lastModifiedValue.Type != JTokenType.Null)
+                                                                            {
+                                                                                DateTime lastModifiedInstance = ((DateTime)lastModifiedValue);
+                                                                                propertiesInstance6.LastModified = lastModifiedInstance;
+                                                                            }
+                                                                            
+                                                                            JToken indexTypeValue = propertiesValue6["indexType"];
+                                                                            if (indexTypeValue != null && indexTypeValue.Type != JTokenType.Null)
+                                                                            {
+                                                                                string indexTypeInstance = ((string)indexTypeValue);
+                                                                                propertiesInstance6.IndexType = indexTypeInstance;
+                                                                            }
+                                                                            
+                                                                            JToken schemaValue = propertiesValue6["schema"];
+                                                                            if (schemaValue != null && schemaValue.Type != JTokenType.Null)
+                                                                            {
+                                                                                string schemaInstance2 = ((string)schemaValue);
+                                                                                propertiesInstance6.Schema = schemaInstance2;
+                                                                            }
+                                                                            
+                                                                            JToken tableValue = propertiesValue6["table"];
+                                                                            if (tableValue != null && tableValue.Type != JTokenType.Null)
+                                                                            {
+                                                                                string tableInstance2 = ((string)tableValue);
+                                                                                propertiesInstance6.Table = tableInstance2;
+                                                                            }
+                                                                            
+                                                                            JToken columnsArray2 = propertiesValue6["columns"];
+                                                                            if (columnsArray2 != null && columnsArray2.Type != JTokenType.Null)
+                                                                            {
+                                                                                foreach (JToken columnsValue2 in ((JArray)columnsArray2))
+                                                                                {
+                                                                                    propertiesInstance6.Columns.Add(((string)columnsValue2));
+                                                                                }
+                                                                            }
+                                                                            
+                                                                            JToken includedColumnsArray = propertiesValue6["includedColumns"];
+                                                                            if (includedColumnsArray != null && includedColumnsArray.Type != JTokenType.Null)
+                                                                            {
+                                                                                foreach (JToken includedColumnsValue in ((JArray)includedColumnsArray))
+                                                                                {
+                                                                                    propertiesInstance6.IncludedColumns.Add(((string)includedColumnsValue));
+                                                                                }
+                                                                            }
+                                                                            
+                                                                            JToken indexScriptValue = propertiesValue6["indexScript"];
+                                                                            if (indexScriptValue != null && indexScriptValue.Type != JTokenType.Null)
+                                                                            {
+                                                                                string indexScriptInstance = ((string)indexScriptValue);
+                                                                                propertiesInstance6.IndexScript = indexScriptInstance;
+                                                                            }
+                                                                            
+                                                                            JToken estimatedImpactArray = propertiesValue6["estimatedImpact"];
+                                                                            if (estimatedImpactArray != null && estimatedImpactArray.Type != JTokenType.Null)
+                                                                            {
+                                                                                foreach (JToken estimatedImpactValue in ((JArray)estimatedImpactArray))
+                                                                                {
+                                                                                    OperationImpact operationImpactInstance = new OperationImpact();
+                                                                                    propertiesInstance6.EstimatedImpact.Add(operationImpactInstance);
+                                                                                    
+                                                                                    JToken nameValue5 = estimatedImpactValue["name"];
+                                                                                    if (nameValue5 != null && nameValue5.Type != JTokenType.Null)
+                                                                                    {
+                                                                                        string nameInstance5 = ((string)nameValue5);
+                                                                                        operationImpactInstance.Name = nameInstance5;
+                                                                                    }
+                                                                                    
+                                                                                    JToken unitValue = estimatedImpactValue["unit"];
+                                                                                    if (unitValue != null && unitValue.Type != JTokenType.Null)
+                                                                                    {
+                                                                                        string unitInstance = ((string)unitValue);
+                                                                                        operationImpactInstance.Unit = unitInstance;
+                                                                                    }
+                                                                                    
+                                                                                    JToken changeValueAbsoluteValue = estimatedImpactValue["changeValueAbsolute"];
+                                                                                    if (changeValueAbsoluteValue != null && changeValueAbsoluteValue.Type != JTokenType.Null)
+                                                                                    {
+                                                                                        double changeValueAbsoluteInstance = ((double)changeValueAbsoluteValue);
+                                                                                        operationImpactInstance.ChangeValueAbsolute = changeValueAbsoluteInstance;
+                                                                                    }
+                                                                                    
+                                                                                    JToken changeValueRelativeValue = estimatedImpactValue["changeValueRelative"];
+                                                                                    if (changeValueRelativeValue != null && changeValueRelativeValue.Type != JTokenType.Null)
+                                                                                    {
+                                                                                        double changeValueRelativeInstance = ((double)changeValueRelativeValue);
+                                                                                        operationImpactInstance.ChangeValueRelative = changeValueRelativeInstance;
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                            
+                                                                            JToken reportedImpactArray = propertiesValue6["reportedImpact"];
+                                                                            if (reportedImpactArray != null && reportedImpactArray.Type != JTokenType.Null)
+                                                                            {
+                                                                                foreach (JToken reportedImpactValue in ((JArray)reportedImpactArray))
+                                                                                {
+                                                                                    OperationImpact operationImpactInstance2 = new OperationImpact();
+                                                                                    propertiesInstance6.ReportedImpact.Add(operationImpactInstance2);
+                                                                                    
+                                                                                    JToken nameValue6 = reportedImpactValue["name"];
+                                                                                    if (nameValue6 != null && nameValue6.Type != JTokenType.Null)
+                                                                                    {
+                                                                                        string nameInstance6 = ((string)nameValue6);
+                                                                                        operationImpactInstance2.Name = nameInstance6;
+                                                                                    }
+                                                                                    
+                                                                                    JToken unitValue2 = reportedImpactValue["unit"];
+                                                                                    if (unitValue2 != null && unitValue2.Type != JTokenType.Null)
+                                                                                    {
+                                                                                        string unitInstance2 = ((string)unitValue2);
+                                                                                        operationImpactInstance2.Unit = unitInstance2;
+                                                                                    }
+                                                                                    
+                                                                                    JToken changeValueAbsoluteValue2 = reportedImpactValue["changeValueAbsolute"];
+                                                                                    if (changeValueAbsoluteValue2 != null && changeValueAbsoluteValue2.Type != JTokenType.Null)
+                                                                                    {
+                                                                                        double changeValueAbsoluteInstance2 = ((double)changeValueAbsoluteValue2);
+                                                                                        operationImpactInstance2.ChangeValueAbsolute = changeValueAbsoluteInstance2;
+                                                                                    }
+                                                                                    
+                                                                                    JToken changeValueRelativeValue2 = reportedImpactValue["changeValueRelative"];
+                                                                                    if (changeValueRelativeValue2 != null && changeValueRelativeValue2.Type != JTokenType.Null)
+                                                                                    {
+                                                                                        double changeValueRelativeInstance2 = ((double)changeValueRelativeValue2);
+                                                                                        operationImpactInstance2.ChangeValueRelative = changeValueRelativeInstance2;
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                        
+                                                                        JToken idValue5 = recommendedIndexesValue["id"];
+                                                                        if (idValue5 != null && idValue5.Type != JTokenType.Null)
+                                                                        {
+                                                                            string idInstance5 = ((string)idValue5);
+                                                                            recommendedIndexInstance.Id = idInstance5;
+                                                                        }
+                                                                        
+                                                                        JToken nameValue7 = recommendedIndexesValue["name"];
+                                                                        if (nameValue7 != null && nameValue7.Type != JTokenType.Null)
+                                                                        {
+                                                                            string nameInstance7 = ((string)nameValue7);
+                                                                            recommendedIndexInstance.Name = nameInstance7;
+                                                                        }
+                                                                        
+                                                                        JToken typeValue5 = recommendedIndexesValue["type"];
+                                                                        if (typeValue5 != null && typeValue5.Type != JTokenType.Null)
+                                                                        {
+                                                                            string typeInstance5 = ((string)typeValue5);
+                                                                            recommendedIndexInstance.Type = typeInstance5;
+                                                                        }
+                                                                        
+                                                                        JToken locationValue5 = recommendedIndexesValue["location"];
+                                                                        if (locationValue5 != null && locationValue5.Type != JTokenType.Null)
+                                                                        {
+                                                                            string locationInstance5 = ((string)locationValue5);
+                                                                            recommendedIndexInstance.Location = locationInstance5;
+                                                                        }
+                                                                        
+                                                                        JToken tagsSequenceElement5 = ((JToken)recommendedIndexesValue["tags"]);
+                                                                        if (tagsSequenceElement5 != null && tagsSequenceElement5.Type != JTokenType.Null)
+                                                                        {
+                                                                            foreach (JProperty property5 in tagsSequenceElement5)
+                                                                            {
+                                                                                string tagsKey5 = ((string)property5.Name);
+                                                                                string tagsValue5 = ((string)property5.Value);
+                                                                                recommendedIndexInstance.Tags.Add(tagsKey5, tagsValue5);
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                            
+                                                            JToken idValue6 = tablesValue["id"];
+                                                            if (idValue6 != null && idValue6.Type != JTokenType.Null)
+                                                            {
+                                                                string idInstance6 = ((string)idValue6);
+                                                                tableInstance.Id = idInstance6;
+                                                            }
+                                                            
+                                                            JToken nameValue8 = tablesValue["name"];
+                                                            if (nameValue8 != null && nameValue8.Type != JTokenType.Null)
+                                                            {
+                                                                string nameInstance8 = ((string)nameValue8);
+                                                                tableInstance.Name = nameInstance8;
+                                                            }
+                                                            
+                                                            JToken typeValue6 = tablesValue["type"];
+                                                            if (typeValue6 != null && typeValue6.Type != JTokenType.Null)
+                                                            {
+                                                                string typeInstance6 = ((string)typeValue6);
+                                                                tableInstance.Type = typeInstance6;
+                                                            }
+                                                            
+                                                            JToken locationValue6 = tablesValue["location"];
+                                                            if (locationValue6 != null && locationValue6.Type != JTokenType.Null)
+                                                            {
+                                                                string locationInstance6 = ((string)locationValue6);
+                                                                tableInstance.Location = locationInstance6;
+                                                            }
+                                                            
+                                                            JToken tagsSequenceElement6 = ((JToken)tablesValue["tags"]);
+                                                            if (tagsSequenceElement6 != null && tagsSequenceElement6.Type != JTokenType.Null)
+                                                            {
+                                                                foreach (JProperty property6 in tagsSequenceElement6)
+                                                                {
+                                                                    string tagsKey6 = ((string)property6.Name);
+                                                                    string tagsValue6 = ((string)property6.Value);
+                                                                    tableInstance.Tags.Add(tagsKey6, tagsValue6);
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                
+                                                JToken idValue7 = schemasValue["id"];
+                                                if (idValue7 != null && idValue7.Type != JTokenType.Null)
+                                                {
+                                                    string idInstance7 = ((string)idValue7);
+                                                    schemaInstance.Id = idInstance7;
+                                                }
+                                                
+                                                JToken nameValue9 = schemasValue["name"];
+                                                if (nameValue9 != null && nameValue9.Type != JTokenType.Null)
+                                                {
+                                                    string nameInstance9 = ((string)nameValue9);
+                                                    schemaInstance.Name = nameInstance9;
+                                                }
+                                                
+                                                JToken typeValue7 = schemasValue["type"];
+                                                if (typeValue7 != null && typeValue7.Type != JTokenType.Null)
+                                                {
+                                                    string typeInstance7 = ((string)typeValue7);
+                                                    schemaInstance.Type = typeInstance7;
+                                                }
+                                                
+                                                JToken locationValue7 = schemasValue["location"];
+                                                if (locationValue7 != null && locationValue7.Type != JTokenType.Null)
+                                                {
+                                                    string locationInstance7 = ((string)locationValue7);
+                                                    schemaInstance.Location = locationInstance7;
+                                                }
+                                                
+                                                JToken tagsSequenceElement7 = ((JToken)schemasValue["tags"]);
+                                                if (tagsSequenceElement7 != null && tagsSequenceElement7.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JProperty property7 in tagsSequenceElement7)
+                                                    {
+                                                        string tagsKey7 = ((string)property7.Name);
+                                                        string tagsValue7 = ((string)property7.Value);
+                                                        schemaInstance.Tags.Add(tagsKey7, tagsValue7);
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                    
+                                    JToken idValue8 = valueValue["id"];
+                                    if (idValue8 != null && idValue8.Type != JTokenType.Null)
+                                    {
+                                        string idInstance8 = ((string)idValue8);
+                                        databaseInstance.Id = idInstance8;
+                                    }
+                                    
+                                    JToken nameValue10 = valueValue["name"];
+                                    if (nameValue10 != null && nameValue10.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance10 = ((string)nameValue10);
+                                        databaseInstance.Name = nameInstance10;
+                                    }
+                                    
+                                    JToken typeValue8 = valueValue["type"];
+                                    if (typeValue8 != null && typeValue8.Type != JTokenType.Null)
+                                    {
+                                        string typeInstance8 = ((string)typeValue8);
+                                        databaseInstance.Type = typeInstance8;
+                                    }
+                                    
+                                    JToken locationValue8 = valueValue["location"];
+                                    if (locationValue8 != null && locationValue8.Type != JTokenType.Null)
+                                    {
+                                        string locationInstance8 = ((string)locationValue8);
+                                        databaseInstance.Location = locationInstance8;
+                                    }
+                                    
+                                    JToken tagsSequenceElement8 = ((JToken)valueValue["tags"]);
+                                    if (tagsSequenceElement8 != null && tagsSequenceElement8.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property8 in tagsSequenceElement8)
+                                        {
+                                            string tagsKey8 = ((string)property8.Name);
+                                            string tagsValue8 = ((string)property8.Value);
+                                            databaseInstance.Tags.Add(tagsKey8, tagsValue8);
                                         }
                                     }
                                 }
@@ -2803,44 +3967,432 @@ namespace Microsoft.Azure.Management.Sql
                                         }
                                     }
                                 }
-                            }
-                            
-                            JToken idValue4 = responseDoc["id"];
-                            if (idValue4 != null && idValue4.Type != JTokenType.Null)
-                            {
-                                string idInstance4 = ((string)idValue4);
-                                databaseInstance.Id = idInstance4;
-                            }
-                            
-                            JToken nameValue4 = responseDoc["name"];
-                            if (nameValue4 != null && nameValue4.Type != JTokenType.Null)
-                            {
-                                string nameInstance4 = ((string)nameValue4);
-                                databaseInstance.Name = nameInstance4;
-                            }
-                            
-                            JToken typeValue4 = responseDoc["type"];
-                            if (typeValue4 != null && typeValue4.Type != JTokenType.Null)
-                            {
-                                string typeInstance4 = ((string)typeValue4);
-                                databaseInstance.Type = typeInstance4;
-                            }
-                            
-                            JToken locationValue4 = responseDoc["location"];
-                            if (locationValue4 != null && locationValue4.Type != JTokenType.Null)
-                            {
-                                string locationInstance4 = ((string)locationValue4);
-                                databaseInstance.Location = locationInstance4;
-                            }
-                            
-                            JToken tagsSequenceElement4 = ((JToken)responseDoc["tags"]);
-                            if (tagsSequenceElement4 != null && tagsSequenceElement4.Type != JTokenType.Null)
-                            {
-                                foreach (JProperty property4 in tagsSequenceElement4)
+                                
+                                JToken schemasArray = propertiesValue["schemas"];
+                                if (schemasArray != null && schemasArray.Type != JTokenType.Null)
                                 {
-                                    string tagsKey4 = ((string)property4.Name);
-                                    string tagsValue4 = ((string)property4.Value);
-                                    databaseInstance.Tags.Add(tagsKey4, tagsValue4);
+                                    foreach (JToken schemasValue in ((JArray)schemasArray))
+                                    {
+                                        Schema schemaInstance = new Schema();
+                                        propertiesInstance.Schemas.Add(schemaInstance);
+                                        
+                                        JToken propertiesValue3 = schemasValue["properties"];
+                                        if (propertiesValue3 != null && propertiesValue3.Type != JTokenType.Null)
+                                        {
+                                            SchemaProperties propertiesInstance3 = new SchemaProperties();
+                                            schemaInstance.Properties = propertiesInstance3;
+                                            
+                                            JToken tablesArray = propertiesValue3["tables"];
+                                            if (tablesArray != null && tablesArray.Type != JTokenType.Null)
+                                            {
+                                                foreach (JToken tablesValue in ((JArray)tablesArray))
+                                                {
+                                                    Table tableInstance = new Table();
+                                                    propertiesInstance3.Tables.Add(tableInstance);
+                                                    
+                                                    JToken propertiesValue4 = tablesValue["properties"];
+                                                    if (propertiesValue4 != null && propertiesValue4.Type != JTokenType.Null)
+                                                    {
+                                                        TableProperties propertiesInstance4 = new TableProperties();
+                                                        tableInstance.Properties = propertiesInstance4;
+                                                        
+                                                        JToken tableTypeValue = propertiesValue4["tableType"];
+                                                        if (tableTypeValue != null && tableTypeValue.Type != JTokenType.Null)
+                                                        {
+                                                            string tableTypeInstance = ((string)tableTypeValue);
+                                                            propertiesInstance4.TableType = tableTypeInstance;
+                                                        }
+                                                        
+                                                        JToken columnsArray = propertiesValue4["columns"];
+                                                        if (columnsArray != null && columnsArray.Type != JTokenType.Null)
+                                                        {
+                                                            foreach (JToken columnsValue in ((JArray)columnsArray))
+                                                            {
+                                                                Column columnInstance = new Column();
+                                                                propertiesInstance4.Columns.Add(columnInstance);
+                                                                
+                                                                JToken propertiesValue5 = columnsValue["properties"];
+                                                                if (propertiesValue5 != null && propertiesValue5.Type != JTokenType.Null)
+                                                                {
+                                                                    ColumnProperties propertiesInstance5 = new ColumnProperties();
+                                                                    columnInstance.Properties = propertiesInstance5;
+                                                                    
+                                                                    JToken columnTypeValue = propertiesValue5["columnType"];
+                                                                    if (columnTypeValue != null && columnTypeValue.Type != JTokenType.Null)
+                                                                    {
+                                                                        string columnTypeInstance = ((string)columnTypeValue);
+                                                                        propertiesInstance5.ColumnType = columnTypeInstance;
+                                                                    }
+                                                                }
+                                                                
+                                                                JToken idValue4 = columnsValue["id"];
+                                                                if (idValue4 != null && idValue4.Type != JTokenType.Null)
+                                                                {
+                                                                    string idInstance4 = ((string)idValue4);
+                                                                    columnInstance.Id = idInstance4;
+                                                                }
+                                                                
+                                                                JToken nameValue4 = columnsValue["name"];
+                                                                if (nameValue4 != null && nameValue4.Type != JTokenType.Null)
+                                                                {
+                                                                    string nameInstance4 = ((string)nameValue4);
+                                                                    columnInstance.Name = nameInstance4;
+                                                                }
+                                                                
+                                                                JToken typeValue4 = columnsValue["type"];
+                                                                if (typeValue4 != null && typeValue4.Type != JTokenType.Null)
+                                                                {
+                                                                    string typeInstance4 = ((string)typeValue4);
+                                                                    columnInstance.Type = typeInstance4;
+                                                                }
+                                                                
+                                                                JToken locationValue4 = columnsValue["location"];
+                                                                if (locationValue4 != null && locationValue4.Type != JTokenType.Null)
+                                                                {
+                                                                    string locationInstance4 = ((string)locationValue4);
+                                                                    columnInstance.Location = locationInstance4;
+                                                                }
+                                                                
+                                                                JToken tagsSequenceElement4 = ((JToken)columnsValue["tags"]);
+                                                                if (tagsSequenceElement4 != null && tagsSequenceElement4.Type != JTokenType.Null)
+                                                                {
+                                                                    foreach (JProperty property4 in tagsSequenceElement4)
+                                                                    {
+                                                                        string tagsKey4 = ((string)property4.Name);
+                                                                        string tagsValue4 = ((string)property4.Value);
+                                                                        columnInstance.Tags.Add(tagsKey4, tagsValue4);
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                        
+                                                        JToken recommendedIndexesArray = propertiesValue4["recommendedIndexes"];
+                                                        if (recommendedIndexesArray != null && recommendedIndexesArray.Type != JTokenType.Null)
+                                                        {
+                                                            foreach (JToken recommendedIndexesValue in ((JArray)recommendedIndexesArray))
+                                                            {
+                                                                RecommendedIndex recommendedIndexInstance = new RecommendedIndex();
+                                                                propertiesInstance4.RecommendedIndexes.Add(recommendedIndexInstance);
+                                                                
+                                                                JToken propertiesValue6 = recommendedIndexesValue["properties"];
+                                                                if (propertiesValue6 != null && propertiesValue6.Type != JTokenType.Null)
+                                                                {
+                                                                    RecommendedIndexProperties propertiesInstance6 = new RecommendedIndexProperties();
+                                                                    recommendedIndexInstance.Properties = propertiesInstance6;
+                                                                    
+                                                                    JToken actionValue = propertiesValue6["action"];
+                                                                    if (actionValue != null && actionValue.Type != JTokenType.Null)
+                                                                    {
+                                                                        string actionInstance = ((string)actionValue);
+                                                                        propertiesInstance6.Action = actionInstance;
+                                                                    }
+                                                                    
+                                                                    JToken stateValue = propertiesValue6["state"];
+                                                                    if (stateValue != null && stateValue.Type != JTokenType.Null)
+                                                                    {
+                                                                        string stateInstance = ((string)stateValue);
+                                                                        propertiesInstance6.State = stateInstance;
+                                                                    }
+                                                                    
+                                                                    JToken createdValue = propertiesValue6["created"];
+                                                                    if (createdValue != null && createdValue.Type != JTokenType.Null)
+                                                                    {
+                                                                        DateTime createdInstance = ((DateTime)createdValue);
+                                                                        propertiesInstance6.Created = createdInstance;
+                                                                    }
+                                                                    
+                                                                    JToken lastModifiedValue = propertiesValue6["lastModified"];
+                                                                    if (lastModifiedValue != null && lastModifiedValue.Type != JTokenType.Null)
+                                                                    {
+                                                                        DateTime lastModifiedInstance = ((DateTime)lastModifiedValue);
+                                                                        propertiesInstance6.LastModified = lastModifiedInstance;
+                                                                    }
+                                                                    
+                                                                    JToken indexTypeValue = propertiesValue6["indexType"];
+                                                                    if (indexTypeValue != null && indexTypeValue.Type != JTokenType.Null)
+                                                                    {
+                                                                        string indexTypeInstance = ((string)indexTypeValue);
+                                                                        propertiesInstance6.IndexType = indexTypeInstance;
+                                                                    }
+                                                                    
+                                                                    JToken schemaValue = propertiesValue6["schema"];
+                                                                    if (schemaValue != null && schemaValue.Type != JTokenType.Null)
+                                                                    {
+                                                                        string schemaInstance2 = ((string)schemaValue);
+                                                                        propertiesInstance6.Schema = schemaInstance2;
+                                                                    }
+                                                                    
+                                                                    JToken tableValue = propertiesValue6["table"];
+                                                                    if (tableValue != null && tableValue.Type != JTokenType.Null)
+                                                                    {
+                                                                        string tableInstance2 = ((string)tableValue);
+                                                                        propertiesInstance6.Table = tableInstance2;
+                                                                    }
+                                                                    
+                                                                    JToken columnsArray2 = propertiesValue6["columns"];
+                                                                    if (columnsArray2 != null && columnsArray2.Type != JTokenType.Null)
+                                                                    {
+                                                                        foreach (JToken columnsValue2 in ((JArray)columnsArray2))
+                                                                        {
+                                                                            propertiesInstance6.Columns.Add(((string)columnsValue2));
+                                                                        }
+                                                                    }
+                                                                    
+                                                                    JToken includedColumnsArray = propertiesValue6["includedColumns"];
+                                                                    if (includedColumnsArray != null && includedColumnsArray.Type != JTokenType.Null)
+                                                                    {
+                                                                        foreach (JToken includedColumnsValue in ((JArray)includedColumnsArray))
+                                                                        {
+                                                                            propertiesInstance6.IncludedColumns.Add(((string)includedColumnsValue));
+                                                                        }
+                                                                    }
+                                                                    
+                                                                    JToken indexScriptValue = propertiesValue6["indexScript"];
+                                                                    if (indexScriptValue != null && indexScriptValue.Type != JTokenType.Null)
+                                                                    {
+                                                                        string indexScriptInstance = ((string)indexScriptValue);
+                                                                        propertiesInstance6.IndexScript = indexScriptInstance;
+                                                                    }
+                                                                    
+                                                                    JToken estimatedImpactArray = propertiesValue6["estimatedImpact"];
+                                                                    if (estimatedImpactArray != null && estimatedImpactArray.Type != JTokenType.Null)
+                                                                    {
+                                                                        foreach (JToken estimatedImpactValue in ((JArray)estimatedImpactArray))
+                                                                        {
+                                                                            OperationImpact operationImpactInstance = new OperationImpact();
+                                                                            propertiesInstance6.EstimatedImpact.Add(operationImpactInstance);
+                                                                            
+                                                                            JToken nameValue5 = estimatedImpactValue["name"];
+                                                                            if (nameValue5 != null && nameValue5.Type != JTokenType.Null)
+                                                                            {
+                                                                                string nameInstance5 = ((string)nameValue5);
+                                                                                operationImpactInstance.Name = nameInstance5;
+                                                                            }
+                                                                            
+                                                                            JToken unitValue = estimatedImpactValue["unit"];
+                                                                            if (unitValue != null && unitValue.Type != JTokenType.Null)
+                                                                            {
+                                                                                string unitInstance = ((string)unitValue);
+                                                                                operationImpactInstance.Unit = unitInstance;
+                                                                            }
+                                                                            
+                                                                            JToken changeValueAbsoluteValue = estimatedImpactValue["changeValueAbsolute"];
+                                                                            if (changeValueAbsoluteValue != null && changeValueAbsoluteValue.Type != JTokenType.Null)
+                                                                            {
+                                                                                double changeValueAbsoluteInstance = ((double)changeValueAbsoluteValue);
+                                                                                operationImpactInstance.ChangeValueAbsolute = changeValueAbsoluteInstance;
+                                                                            }
+                                                                            
+                                                                            JToken changeValueRelativeValue = estimatedImpactValue["changeValueRelative"];
+                                                                            if (changeValueRelativeValue != null && changeValueRelativeValue.Type != JTokenType.Null)
+                                                                            {
+                                                                                double changeValueRelativeInstance = ((double)changeValueRelativeValue);
+                                                                                operationImpactInstance.ChangeValueRelative = changeValueRelativeInstance;
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                    
+                                                                    JToken reportedImpactArray = propertiesValue6["reportedImpact"];
+                                                                    if (reportedImpactArray != null && reportedImpactArray.Type != JTokenType.Null)
+                                                                    {
+                                                                        foreach (JToken reportedImpactValue in ((JArray)reportedImpactArray))
+                                                                        {
+                                                                            OperationImpact operationImpactInstance2 = new OperationImpact();
+                                                                            propertiesInstance6.ReportedImpact.Add(operationImpactInstance2);
+                                                                            
+                                                                            JToken nameValue6 = reportedImpactValue["name"];
+                                                                            if (nameValue6 != null && nameValue6.Type != JTokenType.Null)
+                                                                            {
+                                                                                string nameInstance6 = ((string)nameValue6);
+                                                                                operationImpactInstance2.Name = nameInstance6;
+                                                                            }
+                                                                            
+                                                                            JToken unitValue2 = reportedImpactValue["unit"];
+                                                                            if (unitValue2 != null && unitValue2.Type != JTokenType.Null)
+                                                                            {
+                                                                                string unitInstance2 = ((string)unitValue2);
+                                                                                operationImpactInstance2.Unit = unitInstance2;
+                                                                            }
+                                                                            
+                                                                            JToken changeValueAbsoluteValue2 = reportedImpactValue["changeValueAbsolute"];
+                                                                            if (changeValueAbsoluteValue2 != null && changeValueAbsoluteValue2.Type != JTokenType.Null)
+                                                                            {
+                                                                                double changeValueAbsoluteInstance2 = ((double)changeValueAbsoluteValue2);
+                                                                                operationImpactInstance2.ChangeValueAbsolute = changeValueAbsoluteInstance2;
+                                                                            }
+                                                                            
+                                                                            JToken changeValueRelativeValue2 = reportedImpactValue["changeValueRelative"];
+                                                                            if (changeValueRelativeValue2 != null && changeValueRelativeValue2.Type != JTokenType.Null)
+                                                                            {
+                                                                                double changeValueRelativeInstance2 = ((double)changeValueRelativeValue2);
+                                                                                operationImpactInstance2.ChangeValueRelative = changeValueRelativeInstance2;
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                                
+                                                                JToken idValue5 = recommendedIndexesValue["id"];
+                                                                if (idValue5 != null && idValue5.Type != JTokenType.Null)
+                                                                {
+                                                                    string idInstance5 = ((string)idValue5);
+                                                                    recommendedIndexInstance.Id = idInstance5;
+                                                                }
+                                                                
+                                                                JToken nameValue7 = recommendedIndexesValue["name"];
+                                                                if (nameValue7 != null && nameValue7.Type != JTokenType.Null)
+                                                                {
+                                                                    string nameInstance7 = ((string)nameValue7);
+                                                                    recommendedIndexInstance.Name = nameInstance7;
+                                                                }
+                                                                
+                                                                JToken typeValue5 = recommendedIndexesValue["type"];
+                                                                if (typeValue5 != null && typeValue5.Type != JTokenType.Null)
+                                                                {
+                                                                    string typeInstance5 = ((string)typeValue5);
+                                                                    recommendedIndexInstance.Type = typeInstance5;
+                                                                }
+                                                                
+                                                                JToken locationValue5 = recommendedIndexesValue["location"];
+                                                                if (locationValue5 != null && locationValue5.Type != JTokenType.Null)
+                                                                {
+                                                                    string locationInstance5 = ((string)locationValue5);
+                                                                    recommendedIndexInstance.Location = locationInstance5;
+                                                                }
+                                                                
+                                                                JToken tagsSequenceElement5 = ((JToken)recommendedIndexesValue["tags"]);
+                                                                if (tagsSequenceElement5 != null && tagsSequenceElement5.Type != JTokenType.Null)
+                                                                {
+                                                                    foreach (JProperty property5 in tagsSequenceElement5)
+                                                                    {
+                                                                        string tagsKey5 = ((string)property5.Name);
+                                                                        string tagsValue5 = ((string)property5.Value);
+                                                                        recommendedIndexInstance.Tags.Add(tagsKey5, tagsValue5);
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                    
+                                                    JToken idValue6 = tablesValue["id"];
+                                                    if (idValue6 != null && idValue6.Type != JTokenType.Null)
+                                                    {
+                                                        string idInstance6 = ((string)idValue6);
+                                                        tableInstance.Id = idInstance6;
+                                                    }
+                                                    
+                                                    JToken nameValue8 = tablesValue["name"];
+                                                    if (nameValue8 != null && nameValue8.Type != JTokenType.Null)
+                                                    {
+                                                        string nameInstance8 = ((string)nameValue8);
+                                                        tableInstance.Name = nameInstance8;
+                                                    }
+                                                    
+                                                    JToken typeValue6 = tablesValue["type"];
+                                                    if (typeValue6 != null && typeValue6.Type != JTokenType.Null)
+                                                    {
+                                                        string typeInstance6 = ((string)typeValue6);
+                                                        tableInstance.Type = typeInstance6;
+                                                    }
+                                                    
+                                                    JToken locationValue6 = tablesValue["location"];
+                                                    if (locationValue6 != null && locationValue6.Type != JTokenType.Null)
+                                                    {
+                                                        string locationInstance6 = ((string)locationValue6);
+                                                        tableInstance.Location = locationInstance6;
+                                                    }
+                                                    
+                                                    JToken tagsSequenceElement6 = ((JToken)tablesValue["tags"]);
+                                                    if (tagsSequenceElement6 != null && tagsSequenceElement6.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JProperty property6 in tagsSequenceElement6)
+                                                        {
+                                                            string tagsKey6 = ((string)property6.Name);
+                                                            string tagsValue6 = ((string)property6.Value);
+                                                            tableInstance.Tags.Add(tagsKey6, tagsValue6);
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken idValue7 = schemasValue["id"];
+                                        if (idValue7 != null && idValue7.Type != JTokenType.Null)
+                                        {
+                                            string idInstance7 = ((string)idValue7);
+                                            schemaInstance.Id = idInstance7;
+                                        }
+                                        
+                                        JToken nameValue9 = schemasValue["name"];
+                                        if (nameValue9 != null && nameValue9.Type != JTokenType.Null)
+                                        {
+                                            string nameInstance9 = ((string)nameValue9);
+                                            schemaInstance.Name = nameInstance9;
+                                        }
+                                        
+                                        JToken typeValue7 = schemasValue["type"];
+                                        if (typeValue7 != null && typeValue7.Type != JTokenType.Null)
+                                        {
+                                            string typeInstance7 = ((string)typeValue7);
+                                            schemaInstance.Type = typeInstance7;
+                                        }
+                                        
+                                        JToken locationValue7 = schemasValue["location"];
+                                        if (locationValue7 != null && locationValue7.Type != JTokenType.Null)
+                                        {
+                                            string locationInstance7 = ((string)locationValue7);
+                                            schemaInstance.Location = locationInstance7;
+                                        }
+                                        
+                                        JToken tagsSequenceElement7 = ((JToken)schemasValue["tags"]);
+                                        if (tagsSequenceElement7 != null && tagsSequenceElement7.Type != JTokenType.Null)
+                                        {
+                                            foreach (JProperty property7 in tagsSequenceElement7)
+                                            {
+                                                string tagsKey7 = ((string)property7.Name);
+                                                string tagsValue7 = ((string)property7.Value);
+                                                schemaInstance.Tags.Add(tagsKey7, tagsValue7);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            
+                            JToken idValue8 = responseDoc["id"];
+                            if (idValue8 != null && idValue8.Type != JTokenType.Null)
+                            {
+                                string idInstance8 = ((string)idValue8);
+                                databaseInstance.Id = idInstance8;
+                            }
+                            
+                            JToken nameValue10 = responseDoc["name"];
+                            if (nameValue10 != null && nameValue10.Type != JTokenType.Null)
+                            {
+                                string nameInstance10 = ((string)nameValue10);
+                                databaseInstance.Name = nameInstance10;
+                            }
+                            
+                            JToken typeValue8 = responseDoc["type"];
+                            if (typeValue8 != null && typeValue8.Type != JTokenType.Null)
+                            {
+                                string typeInstance8 = ((string)typeValue8);
+                                databaseInstance.Type = typeInstance8;
+                            }
+                            
+                            JToken locationValue8 = responseDoc["location"];
+                            if (locationValue8 != null && locationValue8.Type != JTokenType.Null)
+                            {
+                                string locationInstance8 = ((string)locationValue8);
+                                databaseInstance.Location = locationInstance8;
+                            }
+                            
+                            JToken tagsSequenceElement8 = ((JToken)responseDoc["tags"]);
+                            if (tagsSequenceElement8 != null && tagsSequenceElement8.Type != JTokenType.Null)
+                            {
+                                foreach (JProperty property8 in tagsSequenceElement8)
+                                {
+                                    string tagsKey8 = ((string)property8.Name);
+                                    string tagsValue8 = ((string)property8.Value);
+                                    databaseInstance.Tags.Add(tagsKey8, tagsValue8);
                                 }
                             }
                         }
@@ -2851,11 +4403,11 @@ namespace Microsoft.Azure.Management.Sql
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
-                    if (statusCode == HttpStatusCode.OK)
+                    if (statusCode == HttpStatusCode.Created)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
-                    if (statusCode == HttpStatusCode.Created)
+                    if (statusCode == HttpStatusCode.OK)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
@@ -3436,44 +4988,432 @@ namespace Microsoft.Azure.Management.Sql
                                         }
                                     }
                                 }
-                            }
-                            
-                            JToken idValue4 = responseDoc["id"];
-                            if (idValue4 != null && idValue4.Type != JTokenType.Null)
-                            {
-                                string idInstance4 = ((string)idValue4);
-                                databaseInstance.Id = idInstance4;
-                            }
-                            
-                            JToken nameValue4 = responseDoc["name"];
-                            if (nameValue4 != null && nameValue4.Type != JTokenType.Null)
-                            {
-                                string nameInstance4 = ((string)nameValue4);
-                                databaseInstance.Name = nameInstance4;
-                            }
-                            
-                            JToken typeValue4 = responseDoc["type"];
-                            if (typeValue4 != null && typeValue4.Type != JTokenType.Null)
-                            {
-                                string typeInstance4 = ((string)typeValue4);
-                                databaseInstance.Type = typeInstance4;
-                            }
-                            
-                            JToken locationValue4 = responseDoc["location"];
-                            if (locationValue4 != null && locationValue4.Type != JTokenType.Null)
-                            {
-                                string locationInstance4 = ((string)locationValue4);
-                                databaseInstance.Location = locationInstance4;
-                            }
-                            
-                            JToken tagsSequenceElement4 = ((JToken)responseDoc["tags"]);
-                            if (tagsSequenceElement4 != null && tagsSequenceElement4.Type != JTokenType.Null)
-                            {
-                                foreach (JProperty property4 in tagsSequenceElement4)
+                                
+                                JToken schemasArray = propertiesValue["schemas"];
+                                if (schemasArray != null && schemasArray.Type != JTokenType.Null)
                                 {
-                                    string tagsKey4 = ((string)property4.Name);
-                                    string tagsValue4 = ((string)property4.Value);
-                                    databaseInstance.Tags.Add(tagsKey4, tagsValue4);
+                                    foreach (JToken schemasValue in ((JArray)schemasArray))
+                                    {
+                                        Schema schemaInstance = new Schema();
+                                        propertiesInstance.Schemas.Add(schemaInstance);
+                                        
+                                        JToken propertiesValue3 = schemasValue["properties"];
+                                        if (propertiesValue3 != null && propertiesValue3.Type != JTokenType.Null)
+                                        {
+                                            SchemaProperties propertiesInstance3 = new SchemaProperties();
+                                            schemaInstance.Properties = propertiesInstance3;
+                                            
+                                            JToken tablesArray = propertiesValue3["tables"];
+                                            if (tablesArray != null && tablesArray.Type != JTokenType.Null)
+                                            {
+                                                foreach (JToken tablesValue in ((JArray)tablesArray))
+                                                {
+                                                    Table tableInstance = new Table();
+                                                    propertiesInstance3.Tables.Add(tableInstance);
+                                                    
+                                                    JToken propertiesValue4 = tablesValue["properties"];
+                                                    if (propertiesValue4 != null && propertiesValue4.Type != JTokenType.Null)
+                                                    {
+                                                        TableProperties propertiesInstance4 = new TableProperties();
+                                                        tableInstance.Properties = propertiesInstance4;
+                                                        
+                                                        JToken tableTypeValue = propertiesValue4["tableType"];
+                                                        if (tableTypeValue != null && tableTypeValue.Type != JTokenType.Null)
+                                                        {
+                                                            string tableTypeInstance = ((string)tableTypeValue);
+                                                            propertiesInstance4.TableType = tableTypeInstance;
+                                                        }
+                                                        
+                                                        JToken columnsArray = propertiesValue4["columns"];
+                                                        if (columnsArray != null && columnsArray.Type != JTokenType.Null)
+                                                        {
+                                                            foreach (JToken columnsValue in ((JArray)columnsArray))
+                                                            {
+                                                                Column columnInstance = new Column();
+                                                                propertiesInstance4.Columns.Add(columnInstance);
+                                                                
+                                                                JToken propertiesValue5 = columnsValue["properties"];
+                                                                if (propertiesValue5 != null && propertiesValue5.Type != JTokenType.Null)
+                                                                {
+                                                                    ColumnProperties propertiesInstance5 = new ColumnProperties();
+                                                                    columnInstance.Properties = propertiesInstance5;
+                                                                    
+                                                                    JToken columnTypeValue = propertiesValue5["columnType"];
+                                                                    if (columnTypeValue != null && columnTypeValue.Type != JTokenType.Null)
+                                                                    {
+                                                                        string columnTypeInstance = ((string)columnTypeValue);
+                                                                        propertiesInstance5.ColumnType = columnTypeInstance;
+                                                                    }
+                                                                }
+                                                                
+                                                                JToken idValue4 = columnsValue["id"];
+                                                                if (idValue4 != null && idValue4.Type != JTokenType.Null)
+                                                                {
+                                                                    string idInstance4 = ((string)idValue4);
+                                                                    columnInstance.Id = idInstance4;
+                                                                }
+                                                                
+                                                                JToken nameValue4 = columnsValue["name"];
+                                                                if (nameValue4 != null && nameValue4.Type != JTokenType.Null)
+                                                                {
+                                                                    string nameInstance4 = ((string)nameValue4);
+                                                                    columnInstance.Name = nameInstance4;
+                                                                }
+                                                                
+                                                                JToken typeValue4 = columnsValue["type"];
+                                                                if (typeValue4 != null && typeValue4.Type != JTokenType.Null)
+                                                                {
+                                                                    string typeInstance4 = ((string)typeValue4);
+                                                                    columnInstance.Type = typeInstance4;
+                                                                }
+                                                                
+                                                                JToken locationValue4 = columnsValue["location"];
+                                                                if (locationValue4 != null && locationValue4.Type != JTokenType.Null)
+                                                                {
+                                                                    string locationInstance4 = ((string)locationValue4);
+                                                                    columnInstance.Location = locationInstance4;
+                                                                }
+                                                                
+                                                                JToken tagsSequenceElement4 = ((JToken)columnsValue["tags"]);
+                                                                if (tagsSequenceElement4 != null && tagsSequenceElement4.Type != JTokenType.Null)
+                                                                {
+                                                                    foreach (JProperty property4 in tagsSequenceElement4)
+                                                                    {
+                                                                        string tagsKey4 = ((string)property4.Name);
+                                                                        string tagsValue4 = ((string)property4.Value);
+                                                                        columnInstance.Tags.Add(tagsKey4, tagsValue4);
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                        
+                                                        JToken recommendedIndexesArray = propertiesValue4["recommendedIndexes"];
+                                                        if (recommendedIndexesArray != null && recommendedIndexesArray.Type != JTokenType.Null)
+                                                        {
+                                                            foreach (JToken recommendedIndexesValue in ((JArray)recommendedIndexesArray))
+                                                            {
+                                                                RecommendedIndex recommendedIndexInstance = new RecommendedIndex();
+                                                                propertiesInstance4.RecommendedIndexes.Add(recommendedIndexInstance);
+                                                                
+                                                                JToken propertiesValue6 = recommendedIndexesValue["properties"];
+                                                                if (propertiesValue6 != null && propertiesValue6.Type != JTokenType.Null)
+                                                                {
+                                                                    RecommendedIndexProperties propertiesInstance6 = new RecommendedIndexProperties();
+                                                                    recommendedIndexInstance.Properties = propertiesInstance6;
+                                                                    
+                                                                    JToken actionValue = propertiesValue6["action"];
+                                                                    if (actionValue != null && actionValue.Type != JTokenType.Null)
+                                                                    {
+                                                                        string actionInstance = ((string)actionValue);
+                                                                        propertiesInstance6.Action = actionInstance;
+                                                                    }
+                                                                    
+                                                                    JToken stateValue = propertiesValue6["state"];
+                                                                    if (stateValue != null && stateValue.Type != JTokenType.Null)
+                                                                    {
+                                                                        string stateInstance = ((string)stateValue);
+                                                                        propertiesInstance6.State = stateInstance;
+                                                                    }
+                                                                    
+                                                                    JToken createdValue = propertiesValue6["created"];
+                                                                    if (createdValue != null && createdValue.Type != JTokenType.Null)
+                                                                    {
+                                                                        DateTime createdInstance = ((DateTime)createdValue);
+                                                                        propertiesInstance6.Created = createdInstance;
+                                                                    }
+                                                                    
+                                                                    JToken lastModifiedValue = propertiesValue6["lastModified"];
+                                                                    if (lastModifiedValue != null && lastModifiedValue.Type != JTokenType.Null)
+                                                                    {
+                                                                        DateTime lastModifiedInstance = ((DateTime)lastModifiedValue);
+                                                                        propertiesInstance6.LastModified = lastModifiedInstance;
+                                                                    }
+                                                                    
+                                                                    JToken indexTypeValue = propertiesValue6["indexType"];
+                                                                    if (indexTypeValue != null && indexTypeValue.Type != JTokenType.Null)
+                                                                    {
+                                                                        string indexTypeInstance = ((string)indexTypeValue);
+                                                                        propertiesInstance6.IndexType = indexTypeInstance;
+                                                                    }
+                                                                    
+                                                                    JToken schemaValue = propertiesValue6["schema"];
+                                                                    if (schemaValue != null && schemaValue.Type != JTokenType.Null)
+                                                                    {
+                                                                        string schemaInstance2 = ((string)schemaValue);
+                                                                        propertiesInstance6.Schema = schemaInstance2;
+                                                                    }
+                                                                    
+                                                                    JToken tableValue = propertiesValue6["table"];
+                                                                    if (tableValue != null && tableValue.Type != JTokenType.Null)
+                                                                    {
+                                                                        string tableInstance2 = ((string)tableValue);
+                                                                        propertiesInstance6.Table = tableInstance2;
+                                                                    }
+                                                                    
+                                                                    JToken columnsArray2 = propertiesValue6["columns"];
+                                                                    if (columnsArray2 != null && columnsArray2.Type != JTokenType.Null)
+                                                                    {
+                                                                        foreach (JToken columnsValue2 in ((JArray)columnsArray2))
+                                                                        {
+                                                                            propertiesInstance6.Columns.Add(((string)columnsValue2));
+                                                                        }
+                                                                    }
+                                                                    
+                                                                    JToken includedColumnsArray = propertiesValue6["includedColumns"];
+                                                                    if (includedColumnsArray != null && includedColumnsArray.Type != JTokenType.Null)
+                                                                    {
+                                                                        foreach (JToken includedColumnsValue in ((JArray)includedColumnsArray))
+                                                                        {
+                                                                            propertiesInstance6.IncludedColumns.Add(((string)includedColumnsValue));
+                                                                        }
+                                                                    }
+                                                                    
+                                                                    JToken indexScriptValue = propertiesValue6["indexScript"];
+                                                                    if (indexScriptValue != null && indexScriptValue.Type != JTokenType.Null)
+                                                                    {
+                                                                        string indexScriptInstance = ((string)indexScriptValue);
+                                                                        propertiesInstance6.IndexScript = indexScriptInstance;
+                                                                    }
+                                                                    
+                                                                    JToken estimatedImpactArray = propertiesValue6["estimatedImpact"];
+                                                                    if (estimatedImpactArray != null && estimatedImpactArray.Type != JTokenType.Null)
+                                                                    {
+                                                                        foreach (JToken estimatedImpactValue in ((JArray)estimatedImpactArray))
+                                                                        {
+                                                                            OperationImpact operationImpactInstance = new OperationImpact();
+                                                                            propertiesInstance6.EstimatedImpact.Add(operationImpactInstance);
+                                                                            
+                                                                            JToken nameValue5 = estimatedImpactValue["name"];
+                                                                            if (nameValue5 != null && nameValue5.Type != JTokenType.Null)
+                                                                            {
+                                                                                string nameInstance5 = ((string)nameValue5);
+                                                                                operationImpactInstance.Name = nameInstance5;
+                                                                            }
+                                                                            
+                                                                            JToken unitValue = estimatedImpactValue["unit"];
+                                                                            if (unitValue != null && unitValue.Type != JTokenType.Null)
+                                                                            {
+                                                                                string unitInstance = ((string)unitValue);
+                                                                                operationImpactInstance.Unit = unitInstance;
+                                                                            }
+                                                                            
+                                                                            JToken changeValueAbsoluteValue = estimatedImpactValue["changeValueAbsolute"];
+                                                                            if (changeValueAbsoluteValue != null && changeValueAbsoluteValue.Type != JTokenType.Null)
+                                                                            {
+                                                                                double changeValueAbsoluteInstance = ((double)changeValueAbsoluteValue);
+                                                                                operationImpactInstance.ChangeValueAbsolute = changeValueAbsoluteInstance;
+                                                                            }
+                                                                            
+                                                                            JToken changeValueRelativeValue = estimatedImpactValue["changeValueRelative"];
+                                                                            if (changeValueRelativeValue != null && changeValueRelativeValue.Type != JTokenType.Null)
+                                                                            {
+                                                                                double changeValueRelativeInstance = ((double)changeValueRelativeValue);
+                                                                                operationImpactInstance.ChangeValueRelative = changeValueRelativeInstance;
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                    
+                                                                    JToken reportedImpactArray = propertiesValue6["reportedImpact"];
+                                                                    if (reportedImpactArray != null && reportedImpactArray.Type != JTokenType.Null)
+                                                                    {
+                                                                        foreach (JToken reportedImpactValue in ((JArray)reportedImpactArray))
+                                                                        {
+                                                                            OperationImpact operationImpactInstance2 = new OperationImpact();
+                                                                            propertiesInstance6.ReportedImpact.Add(operationImpactInstance2);
+                                                                            
+                                                                            JToken nameValue6 = reportedImpactValue["name"];
+                                                                            if (nameValue6 != null && nameValue6.Type != JTokenType.Null)
+                                                                            {
+                                                                                string nameInstance6 = ((string)nameValue6);
+                                                                                operationImpactInstance2.Name = nameInstance6;
+                                                                            }
+                                                                            
+                                                                            JToken unitValue2 = reportedImpactValue["unit"];
+                                                                            if (unitValue2 != null && unitValue2.Type != JTokenType.Null)
+                                                                            {
+                                                                                string unitInstance2 = ((string)unitValue2);
+                                                                                operationImpactInstance2.Unit = unitInstance2;
+                                                                            }
+                                                                            
+                                                                            JToken changeValueAbsoluteValue2 = reportedImpactValue["changeValueAbsolute"];
+                                                                            if (changeValueAbsoluteValue2 != null && changeValueAbsoluteValue2.Type != JTokenType.Null)
+                                                                            {
+                                                                                double changeValueAbsoluteInstance2 = ((double)changeValueAbsoluteValue2);
+                                                                                operationImpactInstance2.ChangeValueAbsolute = changeValueAbsoluteInstance2;
+                                                                            }
+                                                                            
+                                                                            JToken changeValueRelativeValue2 = reportedImpactValue["changeValueRelative"];
+                                                                            if (changeValueRelativeValue2 != null && changeValueRelativeValue2.Type != JTokenType.Null)
+                                                                            {
+                                                                                double changeValueRelativeInstance2 = ((double)changeValueRelativeValue2);
+                                                                                operationImpactInstance2.ChangeValueRelative = changeValueRelativeInstance2;
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                                
+                                                                JToken idValue5 = recommendedIndexesValue["id"];
+                                                                if (idValue5 != null && idValue5.Type != JTokenType.Null)
+                                                                {
+                                                                    string idInstance5 = ((string)idValue5);
+                                                                    recommendedIndexInstance.Id = idInstance5;
+                                                                }
+                                                                
+                                                                JToken nameValue7 = recommendedIndexesValue["name"];
+                                                                if (nameValue7 != null && nameValue7.Type != JTokenType.Null)
+                                                                {
+                                                                    string nameInstance7 = ((string)nameValue7);
+                                                                    recommendedIndexInstance.Name = nameInstance7;
+                                                                }
+                                                                
+                                                                JToken typeValue5 = recommendedIndexesValue["type"];
+                                                                if (typeValue5 != null && typeValue5.Type != JTokenType.Null)
+                                                                {
+                                                                    string typeInstance5 = ((string)typeValue5);
+                                                                    recommendedIndexInstance.Type = typeInstance5;
+                                                                }
+                                                                
+                                                                JToken locationValue5 = recommendedIndexesValue["location"];
+                                                                if (locationValue5 != null && locationValue5.Type != JTokenType.Null)
+                                                                {
+                                                                    string locationInstance5 = ((string)locationValue5);
+                                                                    recommendedIndexInstance.Location = locationInstance5;
+                                                                }
+                                                                
+                                                                JToken tagsSequenceElement5 = ((JToken)recommendedIndexesValue["tags"]);
+                                                                if (tagsSequenceElement5 != null && tagsSequenceElement5.Type != JTokenType.Null)
+                                                                {
+                                                                    foreach (JProperty property5 in tagsSequenceElement5)
+                                                                    {
+                                                                        string tagsKey5 = ((string)property5.Name);
+                                                                        string tagsValue5 = ((string)property5.Value);
+                                                                        recommendedIndexInstance.Tags.Add(tagsKey5, tagsValue5);
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                    
+                                                    JToken idValue6 = tablesValue["id"];
+                                                    if (idValue6 != null && idValue6.Type != JTokenType.Null)
+                                                    {
+                                                        string idInstance6 = ((string)idValue6);
+                                                        tableInstance.Id = idInstance6;
+                                                    }
+                                                    
+                                                    JToken nameValue8 = tablesValue["name"];
+                                                    if (nameValue8 != null && nameValue8.Type != JTokenType.Null)
+                                                    {
+                                                        string nameInstance8 = ((string)nameValue8);
+                                                        tableInstance.Name = nameInstance8;
+                                                    }
+                                                    
+                                                    JToken typeValue6 = tablesValue["type"];
+                                                    if (typeValue6 != null && typeValue6.Type != JTokenType.Null)
+                                                    {
+                                                        string typeInstance6 = ((string)typeValue6);
+                                                        tableInstance.Type = typeInstance6;
+                                                    }
+                                                    
+                                                    JToken locationValue6 = tablesValue["location"];
+                                                    if (locationValue6 != null && locationValue6.Type != JTokenType.Null)
+                                                    {
+                                                        string locationInstance6 = ((string)locationValue6);
+                                                        tableInstance.Location = locationInstance6;
+                                                    }
+                                                    
+                                                    JToken tagsSequenceElement6 = ((JToken)tablesValue["tags"]);
+                                                    if (tagsSequenceElement6 != null && tagsSequenceElement6.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JProperty property6 in tagsSequenceElement6)
+                                                        {
+                                                            string tagsKey6 = ((string)property6.Name);
+                                                            string tagsValue6 = ((string)property6.Value);
+                                                            tableInstance.Tags.Add(tagsKey6, tagsValue6);
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken idValue7 = schemasValue["id"];
+                                        if (idValue7 != null && idValue7.Type != JTokenType.Null)
+                                        {
+                                            string idInstance7 = ((string)idValue7);
+                                            schemaInstance.Id = idInstance7;
+                                        }
+                                        
+                                        JToken nameValue9 = schemasValue["name"];
+                                        if (nameValue9 != null && nameValue9.Type != JTokenType.Null)
+                                        {
+                                            string nameInstance9 = ((string)nameValue9);
+                                            schemaInstance.Name = nameInstance9;
+                                        }
+                                        
+                                        JToken typeValue7 = schemasValue["type"];
+                                        if (typeValue7 != null && typeValue7.Type != JTokenType.Null)
+                                        {
+                                            string typeInstance7 = ((string)typeValue7);
+                                            schemaInstance.Type = typeInstance7;
+                                        }
+                                        
+                                        JToken locationValue7 = schemasValue["location"];
+                                        if (locationValue7 != null && locationValue7.Type != JTokenType.Null)
+                                        {
+                                            string locationInstance7 = ((string)locationValue7);
+                                            schemaInstance.Location = locationInstance7;
+                                        }
+                                        
+                                        JToken tagsSequenceElement7 = ((JToken)schemasValue["tags"]);
+                                        if (tagsSequenceElement7 != null && tagsSequenceElement7.Type != JTokenType.Null)
+                                        {
+                                            foreach (JProperty property7 in tagsSequenceElement7)
+                                            {
+                                                string tagsKey7 = ((string)property7.Name);
+                                                string tagsValue7 = ((string)property7.Value);
+                                                schemaInstance.Tags.Add(tagsKey7, tagsValue7);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            
+                            JToken idValue8 = responseDoc["id"];
+                            if (idValue8 != null && idValue8.Type != JTokenType.Null)
+                            {
+                                string idInstance8 = ((string)idValue8);
+                                databaseInstance.Id = idInstance8;
+                            }
+                            
+                            JToken nameValue10 = responseDoc["name"];
+                            if (nameValue10 != null && nameValue10.Type != JTokenType.Null)
+                            {
+                                string nameInstance10 = ((string)nameValue10);
+                                databaseInstance.Name = nameInstance10;
+                            }
+                            
+                            JToken typeValue8 = responseDoc["type"];
+                            if (typeValue8 != null && typeValue8.Type != JTokenType.Null)
+                            {
+                                string typeInstance8 = ((string)typeValue8);
+                                databaseInstance.Type = typeInstance8;
+                            }
+                            
+                            JToken locationValue8 = responseDoc["location"];
+                            if (locationValue8 != null && locationValue8.Type != JTokenType.Null)
+                            {
+                                string locationInstance8 = ((string)locationValue8);
+                                databaseInstance.Location = locationInstance8;
+                            }
+                            
+                            JToken tagsSequenceElement8 = ((JToken)responseDoc["tags"]);
+                            if (tagsSequenceElement8 != null && tagsSequenceElement8.Type != JTokenType.Null)
+                            {
+                                foreach (JProperty property8 in tagsSequenceElement8)
+                                {
+                                    string tagsKey8 = ((string)property8.Name);
+                                    string tagsValue8 = ((string)property8.Value);
+                                    databaseInstance.Tags.Add(tagsKey8, tagsValue8);
                                 }
                             }
                         }
@@ -4047,44 +5987,432 @@ namespace Microsoft.Azure.Management.Sql
                                                 }
                                             }
                                         }
-                                    }
-                                    
-                                    JToken idValue4 = valueValue["id"];
-                                    if (idValue4 != null && idValue4.Type != JTokenType.Null)
-                                    {
-                                        string idInstance4 = ((string)idValue4);
-                                        databaseInstance.Id = idInstance4;
-                                    }
-                                    
-                                    JToken nameValue4 = valueValue["name"];
-                                    if (nameValue4 != null && nameValue4.Type != JTokenType.Null)
-                                    {
-                                        string nameInstance4 = ((string)nameValue4);
-                                        databaseInstance.Name = nameInstance4;
-                                    }
-                                    
-                                    JToken typeValue4 = valueValue["type"];
-                                    if (typeValue4 != null && typeValue4.Type != JTokenType.Null)
-                                    {
-                                        string typeInstance4 = ((string)typeValue4);
-                                        databaseInstance.Type = typeInstance4;
-                                    }
-                                    
-                                    JToken locationValue4 = valueValue["location"];
-                                    if (locationValue4 != null && locationValue4.Type != JTokenType.Null)
-                                    {
-                                        string locationInstance4 = ((string)locationValue4);
-                                        databaseInstance.Location = locationInstance4;
-                                    }
-                                    
-                                    JToken tagsSequenceElement4 = ((JToken)valueValue["tags"]);
-                                    if (tagsSequenceElement4 != null && tagsSequenceElement4.Type != JTokenType.Null)
-                                    {
-                                        foreach (JProperty property4 in tagsSequenceElement4)
+                                        
+                                        JToken schemasArray = propertiesValue["schemas"];
+                                        if (schemasArray != null && schemasArray.Type != JTokenType.Null)
                                         {
-                                            string tagsKey4 = ((string)property4.Name);
-                                            string tagsValue4 = ((string)property4.Value);
-                                            databaseInstance.Tags.Add(tagsKey4, tagsValue4);
+                                            foreach (JToken schemasValue in ((JArray)schemasArray))
+                                            {
+                                                Schema schemaInstance = new Schema();
+                                                propertiesInstance.Schemas.Add(schemaInstance);
+                                                
+                                                JToken propertiesValue3 = schemasValue["properties"];
+                                                if (propertiesValue3 != null && propertiesValue3.Type != JTokenType.Null)
+                                                {
+                                                    SchemaProperties propertiesInstance3 = new SchemaProperties();
+                                                    schemaInstance.Properties = propertiesInstance3;
+                                                    
+                                                    JToken tablesArray = propertiesValue3["tables"];
+                                                    if (tablesArray != null && tablesArray.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken tablesValue in ((JArray)tablesArray))
+                                                        {
+                                                            Table tableInstance = new Table();
+                                                            propertiesInstance3.Tables.Add(tableInstance);
+                                                            
+                                                            JToken propertiesValue4 = tablesValue["properties"];
+                                                            if (propertiesValue4 != null && propertiesValue4.Type != JTokenType.Null)
+                                                            {
+                                                                TableProperties propertiesInstance4 = new TableProperties();
+                                                                tableInstance.Properties = propertiesInstance4;
+                                                                
+                                                                JToken tableTypeValue = propertiesValue4["tableType"];
+                                                                if (tableTypeValue != null && tableTypeValue.Type != JTokenType.Null)
+                                                                {
+                                                                    string tableTypeInstance = ((string)tableTypeValue);
+                                                                    propertiesInstance4.TableType = tableTypeInstance;
+                                                                }
+                                                                
+                                                                JToken columnsArray = propertiesValue4["columns"];
+                                                                if (columnsArray != null && columnsArray.Type != JTokenType.Null)
+                                                                {
+                                                                    foreach (JToken columnsValue in ((JArray)columnsArray))
+                                                                    {
+                                                                        Column columnInstance = new Column();
+                                                                        propertiesInstance4.Columns.Add(columnInstance);
+                                                                        
+                                                                        JToken propertiesValue5 = columnsValue["properties"];
+                                                                        if (propertiesValue5 != null && propertiesValue5.Type != JTokenType.Null)
+                                                                        {
+                                                                            ColumnProperties propertiesInstance5 = new ColumnProperties();
+                                                                            columnInstance.Properties = propertiesInstance5;
+                                                                            
+                                                                            JToken columnTypeValue = propertiesValue5["columnType"];
+                                                                            if (columnTypeValue != null && columnTypeValue.Type != JTokenType.Null)
+                                                                            {
+                                                                                string columnTypeInstance = ((string)columnTypeValue);
+                                                                                propertiesInstance5.ColumnType = columnTypeInstance;
+                                                                            }
+                                                                        }
+                                                                        
+                                                                        JToken idValue4 = columnsValue["id"];
+                                                                        if (idValue4 != null && idValue4.Type != JTokenType.Null)
+                                                                        {
+                                                                            string idInstance4 = ((string)idValue4);
+                                                                            columnInstance.Id = idInstance4;
+                                                                        }
+                                                                        
+                                                                        JToken nameValue4 = columnsValue["name"];
+                                                                        if (nameValue4 != null && nameValue4.Type != JTokenType.Null)
+                                                                        {
+                                                                            string nameInstance4 = ((string)nameValue4);
+                                                                            columnInstance.Name = nameInstance4;
+                                                                        }
+                                                                        
+                                                                        JToken typeValue4 = columnsValue["type"];
+                                                                        if (typeValue4 != null && typeValue4.Type != JTokenType.Null)
+                                                                        {
+                                                                            string typeInstance4 = ((string)typeValue4);
+                                                                            columnInstance.Type = typeInstance4;
+                                                                        }
+                                                                        
+                                                                        JToken locationValue4 = columnsValue["location"];
+                                                                        if (locationValue4 != null && locationValue4.Type != JTokenType.Null)
+                                                                        {
+                                                                            string locationInstance4 = ((string)locationValue4);
+                                                                            columnInstance.Location = locationInstance4;
+                                                                        }
+                                                                        
+                                                                        JToken tagsSequenceElement4 = ((JToken)columnsValue["tags"]);
+                                                                        if (tagsSequenceElement4 != null && tagsSequenceElement4.Type != JTokenType.Null)
+                                                                        {
+                                                                            foreach (JProperty property4 in tagsSequenceElement4)
+                                                                            {
+                                                                                string tagsKey4 = ((string)property4.Name);
+                                                                                string tagsValue4 = ((string)property4.Value);
+                                                                                columnInstance.Tags.Add(tagsKey4, tagsValue4);
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                                
+                                                                JToken recommendedIndexesArray = propertiesValue4["recommendedIndexes"];
+                                                                if (recommendedIndexesArray != null && recommendedIndexesArray.Type != JTokenType.Null)
+                                                                {
+                                                                    foreach (JToken recommendedIndexesValue in ((JArray)recommendedIndexesArray))
+                                                                    {
+                                                                        RecommendedIndex recommendedIndexInstance = new RecommendedIndex();
+                                                                        propertiesInstance4.RecommendedIndexes.Add(recommendedIndexInstance);
+                                                                        
+                                                                        JToken propertiesValue6 = recommendedIndexesValue["properties"];
+                                                                        if (propertiesValue6 != null && propertiesValue6.Type != JTokenType.Null)
+                                                                        {
+                                                                            RecommendedIndexProperties propertiesInstance6 = new RecommendedIndexProperties();
+                                                                            recommendedIndexInstance.Properties = propertiesInstance6;
+                                                                            
+                                                                            JToken actionValue = propertiesValue6["action"];
+                                                                            if (actionValue != null && actionValue.Type != JTokenType.Null)
+                                                                            {
+                                                                                string actionInstance = ((string)actionValue);
+                                                                                propertiesInstance6.Action = actionInstance;
+                                                                            }
+                                                                            
+                                                                            JToken stateValue = propertiesValue6["state"];
+                                                                            if (stateValue != null && stateValue.Type != JTokenType.Null)
+                                                                            {
+                                                                                string stateInstance = ((string)stateValue);
+                                                                                propertiesInstance6.State = stateInstance;
+                                                                            }
+                                                                            
+                                                                            JToken createdValue = propertiesValue6["created"];
+                                                                            if (createdValue != null && createdValue.Type != JTokenType.Null)
+                                                                            {
+                                                                                DateTime createdInstance = ((DateTime)createdValue);
+                                                                                propertiesInstance6.Created = createdInstance;
+                                                                            }
+                                                                            
+                                                                            JToken lastModifiedValue = propertiesValue6["lastModified"];
+                                                                            if (lastModifiedValue != null && lastModifiedValue.Type != JTokenType.Null)
+                                                                            {
+                                                                                DateTime lastModifiedInstance = ((DateTime)lastModifiedValue);
+                                                                                propertiesInstance6.LastModified = lastModifiedInstance;
+                                                                            }
+                                                                            
+                                                                            JToken indexTypeValue = propertiesValue6["indexType"];
+                                                                            if (indexTypeValue != null && indexTypeValue.Type != JTokenType.Null)
+                                                                            {
+                                                                                string indexTypeInstance = ((string)indexTypeValue);
+                                                                                propertiesInstance6.IndexType = indexTypeInstance;
+                                                                            }
+                                                                            
+                                                                            JToken schemaValue = propertiesValue6["schema"];
+                                                                            if (schemaValue != null && schemaValue.Type != JTokenType.Null)
+                                                                            {
+                                                                                string schemaInstance2 = ((string)schemaValue);
+                                                                                propertiesInstance6.Schema = schemaInstance2;
+                                                                            }
+                                                                            
+                                                                            JToken tableValue = propertiesValue6["table"];
+                                                                            if (tableValue != null && tableValue.Type != JTokenType.Null)
+                                                                            {
+                                                                                string tableInstance2 = ((string)tableValue);
+                                                                                propertiesInstance6.Table = tableInstance2;
+                                                                            }
+                                                                            
+                                                                            JToken columnsArray2 = propertiesValue6["columns"];
+                                                                            if (columnsArray2 != null && columnsArray2.Type != JTokenType.Null)
+                                                                            {
+                                                                                foreach (JToken columnsValue2 in ((JArray)columnsArray2))
+                                                                                {
+                                                                                    propertiesInstance6.Columns.Add(((string)columnsValue2));
+                                                                                }
+                                                                            }
+                                                                            
+                                                                            JToken includedColumnsArray = propertiesValue6["includedColumns"];
+                                                                            if (includedColumnsArray != null && includedColumnsArray.Type != JTokenType.Null)
+                                                                            {
+                                                                                foreach (JToken includedColumnsValue in ((JArray)includedColumnsArray))
+                                                                                {
+                                                                                    propertiesInstance6.IncludedColumns.Add(((string)includedColumnsValue));
+                                                                                }
+                                                                            }
+                                                                            
+                                                                            JToken indexScriptValue = propertiesValue6["indexScript"];
+                                                                            if (indexScriptValue != null && indexScriptValue.Type != JTokenType.Null)
+                                                                            {
+                                                                                string indexScriptInstance = ((string)indexScriptValue);
+                                                                                propertiesInstance6.IndexScript = indexScriptInstance;
+                                                                            }
+                                                                            
+                                                                            JToken estimatedImpactArray = propertiesValue6["estimatedImpact"];
+                                                                            if (estimatedImpactArray != null && estimatedImpactArray.Type != JTokenType.Null)
+                                                                            {
+                                                                                foreach (JToken estimatedImpactValue in ((JArray)estimatedImpactArray))
+                                                                                {
+                                                                                    OperationImpact operationImpactInstance = new OperationImpact();
+                                                                                    propertiesInstance6.EstimatedImpact.Add(operationImpactInstance);
+                                                                                    
+                                                                                    JToken nameValue5 = estimatedImpactValue["name"];
+                                                                                    if (nameValue5 != null && nameValue5.Type != JTokenType.Null)
+                                                                                    {
+                                                                                        string nameInstance5 = ((string)nameValue5);
+                                                                                        operationImpactInstance.Name = nameInstance5;
+                                                                                    }
+                                                                                    
+                                                                                    JToken unitValue = estimatedImpactValue["unit"];
+                                                                                    if (unitValue != null && unitValue.Type != JTokenType.Null)
+                                                                                    {
+                                                                                        string unitInstance = ((string)unitValue);
+                                                                                        operationImpactInstance.Unit = unitInstance;
+                                                                                    }
+                                                                                    
+                                                                                    JToken changeValueAbsoluteValue = estimatedImpactValue["changeValueAbsolute"];
+                                                                                    if (changeValueAbsoluteValue != null && changeValueAbsoluteValue.Type != JTokenType.Null)
+                                                                                    {
+                                                                                        double changeValueAbsoluteInstance = ((double)changeValueAbsoluteValue);
+                                                                                        operationImpactInstance.ChangeValueAbsolute = changeValueAbsoluteInstance;
+                                                                                    }
+                                                                                    
+                                                                                    JToken changeValueRelativeValue = estimatedImpactValue["changeValueRelative"];
+                                                                                    if (changeValueRelativeValue != null && changeValueRelativeValue.Type != JTokenType.Null)
+                                                                                    {
+                                                                                        double changeValueRelativeInstance = ((double)changeValueRelativeValue);
+                                                                                        operationImpactInstance.ChangeValueRelative = changeValueRelativeInstance;
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                            
+                                                                            JToken reportedImpactArray = propertiesValue6["reportedImpact"];
+                                                                            if (reportedImpactArray != null && reportedImpactArray.Type != JTokenType.Null)
+                                                                            {
+                                                                                foreach (JToken reportedImpactValue in ((JArray)reportedImpactArray))
+                                                                                {
+                                                                                    OperationImpact operationImpactInstance2 = new OperationImpact();
+                                                                                    propertiesInstance6.ReportedImpact.Add(operationImpactInstance2);
+                                                                                    
+                                                                                    JToken nameValue6 = reportedImpactValue["name"];
+                                                                                    if (nameValue6 != null && nameValue6.Type != JTokenType.Null)
+                                                                                    {
+                                                                                        string nameInstance6 = ((string)nameValue6);
+                                                                                        operationImpactInstance2.Name = nameInstance6;
+                                                                                    }
+                                                                                    
+                                                                                    JToken unitValue2 = reportedImpactValue["unit"];
+                                                                                    if (unitValue2 != null && unitValue2.Type != JTokenType.Null)
+                                                                                    {
+                                                                                        string unitInstance2 = ((string)unitValue2);
+                                                                                        operationImpactInstance2.Unit = unitInstance2;
+                                                                                    }
+                                                                                    
+                                                                                    JToken changeValueAbsoluteValue2 = reportedImpactValue["changeValueAbsolute"];
+                                                                                    if (changeValueAbsoluteValue2 != null && changeValueAbsoluteValue2.Type != JTokenType.Null)
+                                                                                    {
+                                                                                        double changeValueAbsoluteInstance2 = ((double)changeValueAbsoluteValue2);
+                                                                                        operationImpactInstance2.ChangeValueAbsolute = changeValueAbsoluteInstance2;
+                                                                                    }
+                                                                                    
+                                                                                    JToken changeValueRelativeValue2 = reportedImpactValue["changeValueRelative"];
+                                                                                    if (changeValueRelativeValue2 != null && changeValueRelativeValue2.Type != JTokenType.Null)
+                                                                                    {
+                                                                                        double changeValueRelativeInstance2 = ((double)changeValueRelativeValue2);
+                                                                                        operationImpactInstance2.ChangeValueRelative = changeValueRelativeInstance2;
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                        
+                                                                        JToken idValue5 = recommendedIndexesValue["id"];
+                                                                        if (idValue5 != null && idValue5.Type != JTokenType.Null)
+                                                                        {
+                                                                            string idInstance5 = ((string)idValue5);
+                                                                            recommendedIndexInstance.Id = idInstance5;
+                                                                        }
+                                                                        
+                                                                        JToken nameValue7 = recommendedIndexesValue["name"];
+                                                                        if (nameValue7 != null && nameValue7.Type != JTokenType.Null)
+                                                                        {
+                                                                            string nameInstance7 = ((string)nameValue7);
+                                                                            recommendedIndexInstance.Name = nameInstance7;
+                                                                        }
+                                                                        
+                                                                        JToken typeValue5 = recommendedIndexesValue["type"];
+                                                                        if (typeValue5 != null && typeValue5.Type != JTokenType.Null)
+                                                                        {
+                                                                            string typeInstance5 = ((string)typeValue5);
+                                                                            recommendedIndexInstance.Type = typeInstance5;
+                                                                        }
+                                                                        
+                                                                        JToken locationValue5 = recommendedIndexesValue["location"];
+                                                                        if (locationValue5 != null && locationValue5.Type != JTokenType.Null)
+                                                                        {
+                                                                            string locationInstance5 = ((string)locationValue5);
+                                                                            recommendedIndexInstance.Location = locationInstance5;
+                                                                        }
+                                                                        
+                                                                        JToken tagsSequenceElement5 = ((JToken)recommendedIndexesValue["tags"]);
+                                                                        if (tagsSequenceElement5 != null && tagsSequenceElement5.Type != JTokenType.Null)
+                                                                        {
+                                                                            foreach (JProperty property5 in tagsSequenceElement5)
+                                                                            {
+                                                                                string tagsKey5 = ((string)property5.Name);
+                                                                                string tagsValue5 = ((string)property5.Value);
+                                                                                recommendedIndexInstance.Tags.Add(tagsKey5, tagsValue5);
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                            
+                                                            JToken idValue6 = tablesValue["id"];
+                                                            if (idValue6 != null && idValue6.Type != JTokenType.Null)
+                                                            {
+                                                                string idInstance6 = ((string)idValue6);
+                                                                tableInstance.Id = idInstance6;
+                                                            }
+                                                            
+                                                            JToken nameValue8 = tablesValue["name"];
+                                                            if (nameValue8 != null && nameValue8.Type != JTokenType.Null)
+                                                            {
+                                                                string nameInstance8 = ((string)nameValue8);
+                                                                tableInstance.Name = nameInstance8;
+                                                            }
+                                                            
+                                                            JToken typeValue6 = tablesValue["type"];
+                                                            if (typeValue6 != null && typeValue6.Type != JTokenType.Null)
+                                                            {
+                                                                string typeInstance6 = ((string)typeValue6);
+                                                                tableInstance.Type = typeInstance6;
+                                                            }
+                                                            
+                                                            JToken locationValue6 = tablesValue["location"];
+                                                            if (locationValue6 != null && locationValue6.Type != JTokenType.Null)
+                                                            {
+                                                                string locationInstance6 = ((string)locationValue6);
+                                                                tableInstance.Location = locationInstance6;
+                                                            }
+                                                            
+                                                            JToken tagsSequenceElement6 = ((JToken)tablesValue["tags"]);
+                                                            if (tagsSequenceElement6 != null && tagsSequenceElement6.Type != JTokenType.Null)
+                                                            {
+                                                                foreach (JProperty property6 in tagsSequenceElement6)
+                                                                {
+                                                                    string tagsKey6 = ((string)property6.Name);
+                                                                    string tagsValue6 = ((string)property6.Value);
+                                                                    tableInstance.Tags.Add(tagsKey6, tagsValue6);
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                
+                                                JToken idValue7 = schemasValue["id"];
+                                                if (idValue7 != null && idValue7.Type != JTokenType.Null)
+                                                {
+                                                    string idInstance7 = ((string)idValue7);
+                                                    schemaInstance.Id = idInstance7;
+                                                }
+                                                
+                                                JToken nameValue9 = schemasValue["name"];
+                                                if (nameValue9 != null && nameValue9.Type != JTokenType.Null)
+                                                {
+                                                    string nameInstance9 = ((string)nameValue9);
+                                                    schemaInstance.Name = nameInstance9;
+                                                }
+                                                
+                                                JToken typeValue7 = schemasValue["type"];
+                                                if (typeValue7 != null && typeValue7.Type != JTokenType.Null)
+                                                {
+                                                    string typeInstance7 = ((string)typeValue7);
+                                                    schemaInstance.Type = typeInstance7;
+                                                }
+                                                
+                                                JToken locationValue7 = schemasValue["location"];
+                                                if (locationValue7 != null && locationValue7.Type != JTokenType.Null)
+                                                {
+                                                    string locationInstance7 = ((string)locationValue7);
+                                                    schemaInstance.Location = locationInstance7;
+                                                }
+                                                
+                                                JToken tagsSequenceElement7 = ((JToken)schemasValue["tags"]);
+                                                if (tagsSequenceElement7 != null && tagsSequenceElement7.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JProperty property7 in tagsSequenceElement7)
+                                                    {
+                                                        string tagsKey7 = ((string)property7.Name);
+                                                        string tagsValue7 = ((string)property7.Value);
+                                                        schemaInstance.Tags.Add(tagsKey7, tagsValue7);
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                    
+                                    JToken idValue8 = valueValue["id"];
+                                    if (idValue8 != null && idValue8.Type != JTokenType.Null)
+                                    {
+                                        string idInstance8 = ((string)idValue8);
+                                        databaseInstance.Id = idInstance8;
+                                    }
+                                    
+                                    JToken nameValue10 = valueValue["name"];
+                                    if (nameValue10 != null && nameValue10.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance10 = ((string)nameValue10);
+                                        databaseInstance.Name = nameInstance10;
+                                    }
+                                    
+                                    JToken typeValue8 = valueValue["type"];
+                                    if (typeValue8 != null && typeValue8.Type != JTokenType.Null)
+                                    {
+                                        string typeInstance8 = ((string)typeValue8);
+                                        databaseInstance.Type = typeInstance8;
+                                    }
+                                    
+                                    JToken locationValue8 = valueValue["location"];
+                                    if (locationValue8 != null && locationValue8.Type != JTokenType.Null)
+                                    {
+                                        string locationInstance8 = ((string)locationValue8);
+                                        databaseInstance.Location = locationInstance8;
+                                    }
+                                    
+                                    JToken tagsSequenceElement8 = ((JToken)valueValue["tags"]);
+                                    if (tagsSequenceElement8 != null && tagsSequenceElement8.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property8 in tagsSequenceElement8)
+                                        {
+                                            string tagsKey8 = ((string)property8.Name);
+                                            string tagsValue8 = ((string)property8.Value);
+                                            databaseInstance.Tags.Add(tagsKey8, tagsValue8);
                                         }
                                     }
                                 }
@@ -4670,44 +6998,432 @@ namespace Microsoft.Azure.Management.Sql
                                                 }
                                             }
                                         }
-                                    }
-                                    
-                                    JToken idValue4 = valueValue["id"];
-                                    if (idValue4 != null && idValue4.Type != JTokenType.Null)
-                                    {
-                                        string idInstance4 = ((string)idValue4);
-                                        databaseInstance.Id = idInstance4;
-                                    }
-                                    
-                                    JToken nameValue4 = valueValue["name"];
-                                    if (nameValue4 != null && nameValue4.Type != JTokenType.Null)
-                                    {
-                                        string nameInstance4 = ((string)nameValue4);
-                                        databaseInstance.Name = nameInstance4;
-                                    }
-                                    
-                                    JToken typeValue4 = valueValue["type"];
-                                    if (typeValue4 != null && typeValue4.Type != JTokenType.Null)
-                                    {
-                                        string typeInstance4 = ((string)typeValue4);
-                                        databaseInstance.Type = typeInstance4;
-                                    }
-                                    
-                                    JToken locationValue4 = valueValue["location"];
-                                    if (locationValue4 != null && locationValue4.Type != JTokenType.Null)
-                                    {
-                                        string locationInstance4 = ((string)locationValue4);
-                                        databaseInstance.Location = locationInstance4;
-                                    }
-                                    
-                                    JToken tagsSequenceElement4 = ((JToken)valueValue["tags"]);
-                                    if (tagsSequenceElement4 != null && tagsSequenceElement4.Type != JTokenType.Null)
-                                    {
-                                        foreach (JProperty property4 in tagsSequenceElement4)
+                                        
+                                        JToken schemasArray = propertiesValue["schemas"];
+                                        if (schemasArray != null && schemasArray.Type != JTokenType.Null)
                                         {
-                                            string tagsKey4 = ((string)property4.Name);
-                                            string tagsValue4 = ((string)property4.Value);
-                                            databaseInstance.Tags.Add(tagsKey4, tagsValue4);
+                                            foreach (JToken schemasValue in ((JArray)schemasArray))
+                                            {
+                                                Schema schemaInstance = new Schema();
+                                                propertiesInstance.Schemas.Add(schemaInstance);
+                                                
+                                                JToken propertiesValue3 = schemasValue["properties"];
+                                                if (propertiesValue3 != null && propertiesValue3.Type != JTokenType.Null)
+                                                {
+                                                    SchemaProperties propertiesInstance3 = new SchemaProperties();
+                                                    schemaInstance.Properties = propertiesInstance3;
+                                                    
+                                                    JToken tablesArray = propertiesValue3["tables"];
+                                                    if (tablesArray != null && tablesArray.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken tablesValue in ((JArray)tablesArray))
+                                                        {
+                                                            Table tableInstance = new Table();
+                                                            propertiesInstance3.Tables.Add(tableInstance);
+                                                            
+                                                            JToken propertiesValue4 = tablesValue["properties"];
+                                                            if (propertiesValue4 != null && propertiesValue4.Type != JTokenType.Null)
+                                                            {
+                                                                TableProperties propertiesInstance4 = new TableProperties();
+                                                                tableInstance.Properties = propertiesInstance4;
+                                                                
+                                                                JToken tableTypeValue = propertiesValue4["tableType"];
+                                                                if (tableTypeValue != null && tableTypeValue.Type != JTokenType.Null)
+                                                                {
+                                                                    string tableTypeInstance = ((string)tableTypeValue);
+                                                                    propertiesInstance4.TableType = tableTypeInstance;
+                                                                }
+                                                                
+                                                                JToken columnsArray = propertiesValue4["columns"];
+                                                                if (columnsArray != null && columnsArray.Type != JTokenType.Null)
+                                                                {
+                                                                    foreach (JToken columnsValue in ((JArray)columnsArray))
+                                                                    {
+                                                                        Column columnInstance = new Column();
+                                                                        propertiesInstance4.Columns.Add(columnInstance);
+                                                                        
+                                                                        JToken propertiesValue5 = columnsValue["properties"];
+                                                                        if (propertiesValue5 != null && propertiesValue5.Type != JTokenType.Null)
+                                                                        {
+                                                                            ColumnProperties propertiesInstance5 = new ColumnProperties();
+                                                                            columnInstance.Properties = propertiesInstance5;
+                                                                            
+                                                                            JToken columnTypeValue = propertiesValue5["columnType"];
+                                                                            if (columnTypeValue != null && columnTypeValue.Type != JTokenType.Null)
+                                                                            {
+                                                                                string columnTypeInstance = ((string)columnTypeValue);
+                                                                                propertiesInstance5.ColumnType = columnTypeInstance;
+                                                                            }
+                                                                        }
+                                                                        
+                                                                        JToken idValue4 = columnsValue["id"];
+                                                                        if (idValue4 != null && idValue4.Type != JTokenType.Null)
+                                                                        {
+                                                                            string idInstance4 = ((string)idValue4);
+                                                                            columnInstance.Id = idInstance4;
+                                                                        }
+                                                                        
+                                                                        JToken nameValue4 = columnsValue["name"];
+                                                                        if (nameValue4 != null && nameValue4.Type != JTokenType.Null)
+                                                                        {
+                                                                            string nameInstance4 = ((string)nameValue4);
+                                                                            columnInstance.Name = nameInstance4;
+                                                                        }
+                                                                        
+                                                                        JToken typeValue4 = columnsValue["type"];
+                                                                        if (typeValue4 != null && typeValue4.Type != JTokenType.Null)
+                                                                        {
+                                                                            string typeInstance4 = ((string)typeValue4);
+                                                                            columnInstance.Type = typeInstance4;
+                                                                        }
+                                                                        
+                                                                        JToken locationValue4 = columnsValue["location"];
+                                                                        if (locationValue4 != null && locationValue4.Type != JTokenType.Null)
+                                                                        {
+                                                                            string locationInstance4 = ((string)locationValue4);
+                                                                            columnInstance.Location = locationInstance4;
+                                                                        }
+                                                                        
+                                                                        JToken tagsSequenceElement4 = ((JToken)columnsValue["tags"]);
+                                                                        if (tagsSequenceElement4 != null && tagsSequenceElement4.Type != JTokenType.Null)
+                                                                        {
+                                                                            foreach (JProperty property4 in tagsSequenceElement4)
+                                                                            {
+                                                                                string tagsKey4 = ((string)property4.Name);
+                                                                                string tagsValue4 = ((string)property4.Value);
+                                                                                columnInstance.Tags.Add(tagsKey4, tagsValue4);
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                                
+                                                                JToken recommendedIndexesArray = propertiesValue4["recommendedIndexes"];
+                                                                if (recommendedIndexesArray != null && recommendedIndexesArray.Type != JTokenType.Null)
+                                                                {
+                                                                    foreach (JToken recommendedIndexesValue in ((JArray)recommendedIndexesArray))
+                                                                    {
+                                                                        RecommendedIndex recommendedIndexInstance = new RecommendedIndex();
+                                                                        propertiesInstance4.RecommendedIndexes.Add(recommendedIndexInstance);
+                                                                        
+                                                                        JToken propertiesValue6 = recommendedIndexesValue["properties"];
+                                                                        if (propertiesValue6 != null && propertiesValue6.Type != JTokenType.Null)
+                                                                        {
+                                                                            RecommendedIndexProperties propertiesInstance6 = new RecommendedIndexProperties();
+                                                                            recommendedIndexInstance.Properties = propertiesInstance6;
+                                                                            
+                                                                            JToken actionValue = propertiesValue6["action"];
+                                                                            if (actionValue != null && actionValue.Type != JTokenType.Null)
+                                                                            {
+                                                                                string actionInstance = ((string)actionValue);
+                                                                                propertiesInstance6.Action = actionInstance;
+                                                                            }
+                                                                            
+                                                                            JToken stateValue = propertiesValue6["state"];
+                                                                            if (stateValue != null && stateValue.Type != JTokenType.Null)
+                                                                            {
+                                                                                string stateInstance = ((string)stateValue);
+                                                                                propertiesInstance6.State = stateInstance;
+                                                                            }
+                                                                            
+                                                                            JToken createdValue = propertiesValue6["created"];
+                                                                            if (createdValue != null && createdValue.Type != JTokenType.Null)
+                                                                            {
+                                                                                DateTime createdInstance = ((DateTime)createdValue);
+                                                                                propertiesInstance6.Created = createdInstance;
+                                                                            }
+                                                                            
+                                                                            JToken lastModifiedValue = propertiesValue6["lastModified"];
+                                                                            if (lastModifiedValue != null && lastModifiedValue.Type != JTokenType.Null)
+                                                                            {
+                                                                                DateTime lastModifiedInstance = ((DateTime)lastModifiedValue);
+                                                                                propertiesInstance6.LastModified = lastModifiedInstance;
+                                                                            }
+                                                                            
+                                                                            JToken indexTypeValue = propertiesValue6["indexType"];
+                                                                            if (indexTypeValue != null && indexTypeValue.Type != JTokenType.Null)
+                                                                            {
+                                                                                string indexTypeInstance = ((string)indexTypeValue);
+                                                                                propertiesInstance6.IndexType = indexTypeInstance;
+                                                                            }
+                                                                            
+                                                                            JToken schemaValue = propertiesValue6["schema"];
+                                                                            if (schemaValue != null && schemaValue.Type != JTokenType.Null)
+                                                                            {
+                                                                                string schemaInstance2 = ((string)schemaValue);
+                                                                                propertiesInstance6.Schema = schemaInstance2;
+                                                                            }
+                                                                            
+                                                                            JToken tableValue = propertiesValue6["table"];
+                                                                            if (tableValue != null && tableValue.Type != JTokenType.Null)
+                                                                            {
+                                                                                string tableInstance2 = ((string)tableValue);
+                                                                                propertiesInstance6.Table = tableInstance2;
+                                                                            }
+                                                                            
+                                                                            JToken columnsArray2 = propertiesValue6["columns"];
+                                                                            if (columnsArray2 != null && columnsArray2.Type != JTokenType.Null)
+                                                                            {
+                                                                                foreach (JToken columnsValue2 in ((JArray)columnsArray2))
+                                                                                {
+                                                                                    propertiesInstance6.Columns.Add(((string)columnsValue2));
+                                                                                }
+                                                                            }
+                                                                            
+                                                                            JToken includedColumnsArray = propertiesValue6["includedColumns"];
+                                                                            if (includedColumnsArray != null && includedColumnsArray.Type != JTokenType.Null)
+                                                                            {
+                                                                                foreach (JToken includedColumnsValue in ((JArray)includedColumnsArray))
+                                                                                {
+                                                                                    propertiesInstance6.IncludedColumns.Add(((string)includedColumnsValue));
+                                                                                }
+                                                                            }
+                                                                            
+                                                                            JToken indexScriptValue = propertiesValue6["indexScript"];
+                                                                            if (indexScriptValue != null && indexScriptValue.Type != JTokenType.Null)
+                                                                            {
+                                                                                string indexScriptInstance = ((string)indexScriptValue);
+                                                                                propertiesInstance6.IndexScript = indexScriptInstance;
+                                                                            }
+                                                                            
+                                                                            JToken estimatedImpactArray = propertiesValue6["estimatedImpact"];
+                                                                            if (estimatedImpactArray != null && estimatedImpactArray.Type != JTokenType.Null)
+                                                                            {
+                                                                                foreach (JToken estimatedImpactValue in ((JArray)estimatedImpactArray))
+                                                                                {
+                                                                                    OperationImpact operationImpactInstance = new OperationImpact();
+                                                                                    propertiesInstance6.EstimatedImpact.Add(operationImpactInstance);
+                                                                                    
+                                                                                    JToken nameValue5 = estimatedImpactValue["name"];
+                                                                                    if (nameValue5 != null && nameValue5.Type != JTokenType.Null)
+                                                                                    {
+                                                                                        string nameInstance5 = ((string)nameValue5);
+                                                                                        operationImpactInstance.Name = nameInstance5;
+                                                                                    }
+                                                                                    
+                                                                                    JToken unitValue = estimatedImpactValue["unit"];
+                                                                                    if (unitValue != null && unitValue.Type != JTokenType.Null)
+                                                                                    {
+                                                                                        string unitInstance = ((string)unitValue);
+                                                                                        operationImpactInstance.Unit = unitInstance;
+                                                                                    }
+                                                                                    
+                                                                                    JToken changeValueAbsoluteValue = estimatedImpactValue["changeValueAbsolute"];
+                                                                                    if (changeValueAbsoluteValue != null && changeValueAbsoluteValue.Type != JTokenType.Null)
+                                                                                    {
+                                                                                        double changeValueAbsoluteInstance = ((double)changeValueAbsoluteValue);
+                                                                                        operationImpactInstance.ChangeValueAbsolute = changeValueAbsoluteInstance;
+                                                                                    }
+                                                                                    
+                                                                                    JToken changeValueRelativeValue = estimatedImpactValue["changeValueRelative"];
+                                                                                    if (changeValueRelativeValue != null && changeValueRelativeValue.Type != JTokenType.Null)
+                                                                                    {
+                                                                                        double changeValueRelativeInstance = ((double)changeValueRelativeValue);
+                                                                                        operationImpactInstance.ChangeValueRelative = changeValueRelativeInstance;
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                            
+                                                                            JToken reportedImpactArray = propertiesValue6["reportedImpact"];
+                                                                            if (reportedImpactArray != null && reportedImpactArray.Type != JTokenType.Null)
+                                                                            {
+                                                                                foreach (JToken reportedImpactValue in ((JArray)reportedImpactArray))
+                                                                                {
+                                                                                    OperationImpact operationImpactInstance2 = new OperationImpact();
+                                                                                    propertiesInstance6.ReportedImpact.Add(operationImpactInstance2);
+                                                                                    
+                                                                                    JToken nameValue6 = reportedImpactValue["name"];
+                                                                                    if (nameValue6 != null && nameValue6.Type != JTokenType.Null)
+                                                                                    {
+                                                                                        string nameInstance6 = ((string)nameValue6);
+                                                                                        operationImpactInstance2.Name = nameInstance6;
+                                                                                    }
+                                                                                    
+                                                                                    JToken unitValue2 = reportedImpactValue["unit"];
+                                                                                    if (unitValue2 != null && unitValue2.Type != JTokenType.Null)
+                                                                                    {
+                                                                                        string unitInstance2 = ((string)unitValue2);
+                                                                                        operationImpactInstance2.Unit = unitInstance2;
+                                                                                    }
+                                                                                    
+                                                                                    JToken changeValueAbsoluteValue2 = reportedImpactValue["changeValueAbsolute"];
+                                                                                    if (changeValueAbsoluteValue2 != null && changeValueAbsoluteValue2.Type != JTokenType.Null)
+                                                                                    {
+                                                                                        double changeValueAbsoluteInstance2 = ((double)changeValueAbsoluteValue2);
+                                                                                        operationImpactInstance2.ChangeValueAbsolute = changeValueAbsoluteInstance2;
+                                                                                    }
+                                                                                    
+                                                                                    JToken changeValueRelativeValue2 = reportedImpactValue["changeValueRelative"];
+                                                                                    if (changeValueRelativeValue2 != null && changeValueRelativeValue2.Type != JTokenType.Null)
+                                                                                    {
+                                                                                        double changeValueRelativeInstance2 = ((double)changeValueRelativeValue2);
+                                                                                        operationImpactInstance2.ChangeValueRelative = changeValueRelativeInstance2;
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                        
+                                                                        JToken idValue5 = recommendedIndexesValue["id"];
+                                                                        if (idValue5 != null && idValue5.Type != JTokenType.Null)
+                                                                        {
+                                                                            string idInstance5 = ((string)idValue5);
+                                                                            recommendedIndexInstance.Id = idInstance5;
+                                                                        }
+                                                                        
+                                                                        JToken nameValue7 = recommendedIndexesValue["name"];
+                                                                        if (nameValue7 != null && nameValue7.Type != JTokenType.Null)
+                                                                        {
+                                                                            string nameInstance7 = ((string)nameValue7);
+                                                                            recommendedIndexInstance.Name = nameInstance7;
+                                                                        }
+                                                                        
+                                                                        JToken typeValue5 = recommendedIndexesValue["type"];
+                                                                        if (typeValue5 != null && typeValue5.Type != JTokenType.Null)
+                                                                        {
+                                                                            string typeInstance5 = ((string)typeValue5);
+                                                                            recommendedIndexInstance.Type = typeInstance5;
+                                                                        }
+                                                                        
+                                                                        JToken locationValue5 = recommendedIndexesValue["location"];
+                                                                        if (locationValue5 != null && locationValue5.Type != JTokenType.Null)
+                                                                        {
+                                                                            string locationInstance5 = ((string)locationValue5);
+                                                                            recommendedIndexInstance.Location = locationInstance5;
+                                                                        }
+                                                                        
+                                                                        JToken tagsSequenceElement5 = ((JToken)recommendedIndexesValue["tags"]);
+                                                                        if (tagsSequenceElement5 != null && tagsSequenceElement5.Type != JTokenType.Null)
+                                                                        {
+                                                                            foreach (JProperty property5 in tagsSequenceElement5)
+                                                                            {
+                                                                                string tagsKey5 = ((string)property5.Name);
+                                                                                string tagsValue5 = ((string)property5.Value);
+                                                                                recommendedIndexInstance.Tags.Add(tagsKey5, tagsValue5);
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                            
+                                                            JToken idValue6 = tablesValue["id"];
+                                                            if (idValue6 != null && idValue6.Type != JTokenType.Null)
+                                                            {
+                                                                string idInstance6 = ((string)idValue6);
+                                                                tableInstance.Id = idInstance6;
+                                                            }
+                                                            
+                                                            JToken nameValue8 = tablesValue["name"];
+                                                            if (nameValue8 != null && nameValue8.Type != JTokenType.Null)
+                                                            {
+                                                                string nameInstance8 = ((string)nameValue8);
+                                                                tableInstance.Name = nameInstance8;
+                                                            }
+                                                            
+                                                            JToken typeValue6 = tablesValue["type"];
+                                                            if (typeValue6 != null && typeValue6.Type != JTokenType.Null)
+                                                            {
+                                                                string typeInstance6 = ((string)typeValue6);
+                                                                tableInstance.Type = typeInstance6;
+                                                            }
+                                                            
+                                                            JToken locationValue6 = tablesValue["location"];
+                                                            if (locationValue6 != null && locationValue6.Type != JTokenType.Null)
+                                                            {
+                                                                string locationInstance6 = ((string)locationValue6);
+                                                                tableInstance.Location = locationInstance6;
+                                                            }
+                                                            
+                                                            JToken tagsSequenceElement6 = ((JToken)tablesValue["tags"]);
+                                                            if (tagsSequenceElement6 != null && tagsSequenceElement6.Type != JTokenType.Null)
+                                                            {
+                                                                foreach (JProperty property6 in tagsSequenceElement6)
+                                                                {
+                                                                    string tagsKey6 = ((string)property6.Name);
+                                                                    string tagsValue6 = ((string)property6.Value);
+                                                                    tableInstance.Tags.Add(tagsKey6, tagsValue6);
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                
+                                                JToken idValue7 = schemasValue["id"];
+                                                if (idValue7 != null && idValue7.Type != JTokenType.Null)
+                                                {
+                                                    string idInstance7 = ((string)idValue7);
+                                                    schemaInstance.Id = idInstance7;
+                                                }
+                                                
+                                                JToken nameValue9 = schemasValue["name"];
+                                                if (nameValue9 != null && nameValue9.Type != JTokenType.Null)
+                                                {
+                                                    string nameInstance9 = ((string)nameValue9);
+                                                    schemaInstance.Name = nameInstance9;
+                                                }
+                                                
+                                                JToken typeValue7 = schemasValue["type"];
+                                                if (typeValue7 != null && typeValue7.Type != JTokenType.Null)
+                                                {
+                                                    string typeInstance7 = ((string)typeValue7);
+                                                    schemaInstance.Type = typeInstance7;
+                                                }
+                                                
+                                                JToken locationValue7 = schemasValue["location"];
+                                                if (locationValue7 != null && locationValue7.Type != JTokenType.Null)
+                                                {
+                                                    string locationInstance7 = ((string)locationValue7);
+                                                    schemaInstance.Location = locationInstance7;
+                                                }
+                                                
+                                                JToken tagsSequenceElement7 = ((JToken)schemasValue["tags"]);
+                                                if (tagsSequenceElement7 != null && tagsSequenceElement7.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JProperty property7 in tagsSequenceElement7)
+                                                    {
+                                                        string tagsKey7 = ((string)property7.Name);
+                                                        string tagsValue7 = ((string)property7.Value);
+                                                        schemaInstance.Tags.Add(tagsKey7, tagsValue7);
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                    
+                                    JToken idValue8 = valueValue["id"];
+                                    if (idValue8 != null && idValue8.Type != JTokenType.Null)
+                                    {
+                                        string idInstance8 = ((string)idValue8);
+                                        databaseInstance.Id = idInstance8;
+                                    }
+                                    
+                                    JToken nameValue10 = valueValue["name"];
+                                    if (nameValue10 != null && nameValue10.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance10 = ((string)nameValue10);
+                                        databaseInstance.Name = nameInstance10;
+                                    }
+                                    
+                                    JToken typeValue8 = valueValue["type"];
+                                    if (typeValue8 != null && typeValue8.Type != JTokenType.Null)
+                                    {
+                                        string typeInstance8 = ((string)typeValue8);
+                                        databaseInstance.Type = typeInstance8;
+                                    }
+                                    
+                                    JToken locationValue8 = valueValue["location"];
+                                    if (locationValue8 != null && locationValue8.Type != JTokenType.Null)
+                                    {
+                                        string locationInstance8 = ((string)locationValue8);
+                                        databaseInstance.Location = locationInstance8;
+                                    }
+                                    
+                                    JToken tagsSequenceElement8 = ((JToken)valueValue["tags"]);
+                                    if (tagsSequenceElement8 != null && tagsSequenceElement8.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property8 in tagsSequenceElement8)
+                                        {
+                                            string tagsKey8 = ((string)property8.Name);
+                                            string tagsValue8 = ((string)property8.Value);
+                                            databaseInstance.Tags.Add(tagsKey8, tagsValue8);
                                         }
                                     }
                                 }

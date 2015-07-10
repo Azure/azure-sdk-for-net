@@ -246,14 +246,14 @@ namespace Microsoft.Azure.Management.Network
                     }
                 }
                 
-                if (parameters.GatewaySize != null)
-                {
-                    propertiesValue["gatewaySize"] = parameters.GatewaySize;
-                }
-                
                 if (parameters.GatewayType != null)
                 {
                     propertiesValue["gatewayType"] = parameters.GatewayType;
+                }
+                
+                if (parameters.VpnType != null)
+                {
+                    propertiesValue["vpnType"] = parameters.VpnType;
                 }
                 
                 propertiesValue["enableBgp"] = parameters.EnableBgp;
@@ -433,18 +433,18 @@ namespace Microsoft.Azure.Management.Network
                                     }
                                 }
                                 
-                                JToken gatewaySizeValue = propertiesValue3["gatewaySize"];
-                                if (gatewaySizeValue != null && gatewaySizeValue.Type != JTokenType.Null)
-                                {
-                                    string gatewaySizeInstance = ((string)gatewaySizeValue);
-                                    virtualNetworkGatewayInstance.GatewaySize = gatewaySizeInstance;
-                                }
-                                
                                 JToken gatewayTypeValue = propertiesValue3["gatewayType"];
                                 if (gatewayTypeValue != null && gatewayTypeValue.Type != JTokenType.Null)
                                 {
                                     string gatewayTypeInstance = ((string)gatewayTypeValue);
                                     virtualNetworkGatewayInstance.GatewayType = gatewayTypeInstance;
+                                }
+                                
+                                JToken vpnTypeValue = propertiesValue3["vpnType"];
+                                if (vpnTypeValue != null && vpnTypeValue.Type != JTokenType.Null)
+                                {
+                                    string vpnTypeInstance = ((string)vpnTypeValue);
+                                    virtualNetworkGatewayInstance.VpnType = vpnTypeInstance;
                                 }
                                 
                                 JToken enableBgpValue = propertiesValue3["enableBgp"];
@@ -951,14 +951,14 @@ namespace Microsoft.Azure.Management.Network
                     }
                 }
                 
-                if (parameters.GatewaySize != null)
-                {
-                    propertiesValue["gatewaySize"] = parameters.GatewaySize;
-                }
-                
                 if (parameters.GatewayType != null)
                 {
                     propertiesValue["gatewayType"] = parameters.GatewayType;
+                }
+                
+                if (parameters.VpnType != null)
+                {
+                    propertiesValue["vpnType"] = parameters.VpnType;
                 }
                 
                 propertiesValue["enableBgp"] = parameters.EnableBgp;
@@ -1021,7 +1021,7 @@ namespace Microsoft.Azure.Management.Network
                         TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Created)
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
@@ -1035,7 +1035,7 @@ namespace Microsoft.Azure.Management.Network
                     // Create Result
                     VirtualNetworkGatewayPutResponse result = null;
                     // Deserialize Response
-                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Created)
+                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -1138,18 +1138,18 @@ namespace Microsoft.Azure.Management.Network
                                     }
                                 }
                                 
-                                JToken gatewaySizeValue = propertiesValue3["gatewaySize"];
-                                if (gatewaySizeValue != null && gatewaySizeValue.Type != JTokenType.Null)
-                                {
-                                    string gatewaySizeInstance = ((string)gatewaySizeValue);
-                                    virtualNetworkGatewayInstance.GatewaySize = gatewaySizeInstance;
-                                }
-                                
                                 JToken gatewayTypeValue = propertiesValue3["gatewayType"];
                                 if (gatewayTypeValue != null && gatewayTypeValue.Type != JTokenType.Null)
                                 {
                                     string gatewayTypeInstance = ((string)gatewayTypeValue);
                                     virtualNetworkGatewayInstance.GatewayType = gatewayTypeInstance;
+                                }
+                                
+                                JToken vpnTypeValue = propertiesValue3["vpnType"];
+                                if (vpnTypeValue != null && vpnTypeValue.Type != JTokenType.Null)
+                                {
+                                    string vpnTypeInstance = ((string)vpnTypeValue);
+                                    virtualNetworkGatewayInstance.VpnType = vpnTypeInstance;
                                 }
                                 
                                 JToken enableBgpValue = propertiesValue3["enableBgp"];
@@ -1688,18 +1688,18 @@ namespace Microsoft.Azure.Management.Network
                                     }
                                 }
                                 
-                                JToken gatewaySizeValue = propertiesValue["gatewaySize"];
-                                if (gatewaySizeValue != null && gatewaySizeValue.Type != JTokenType.Null)
-                                {
-                                    string gatewaySizeInstance = ((string)gatewaySizeValue);
-                                    virtualNetworkGatewayInstance.GatewaySize = gatewaySizeInstance;
-                                }
-                                
                                 JToken gatewayTypeValue = propertiesValue["gatewayType"];
                                 if (gatewayTypeValue != null && gatewayTypeValue.Type != JTokenType.Null)
                                 {
                                     string gatewayTypeInstance = ((string)gatewayTypeValue);
                                     virtualNetworkGatewayInstance.GatewayType = gatewayTypeInstance;
+                                }
+                                
+                                JToken vpnTypeValue = propertiesValue["vpnType"];
+                                if (vpnTypeValue != null && vpnTypeValue.Type != JTokenType.Null)
+                                {
+                                    string vpnTypeInstance = ((string)vpnTypeValue);
+                                    virtualNetworkGatewayInstance.VpnType = vpnTypeInstance;
                                 }
                                 
                                 JToken enableBgpValue = propertiesValue["enableBgp"];
@@ -2008,18 +2008,18 @@ namespace Microsoft.Azure.Management.Network
                                             }
                                         }
                                         
-                                        JToken gatewaySizeValue = propertiesValue["gatewaySize"];
-                                        if (gatewaySizeValue != null && gatewaySizeValue.Type != JTokenType.Null)
-                                        {
-                                            string gatewaySizeInstance = ((string)gatewaySizeValue);
-                                            virtualNetworkGatewayJsonFormatInstance.GatewaySize = gatewaySizeInstance;
-                                        }
-                                        
                                         JToken gatewayTypeValue = propertiesValue["gatewayType"];
                                         if (gatewayTypeValue != null && gatewayTypeValue.Type != JTokenType.Null)
                                         {
                                             string gatewayTypeInstance = ((string)gatewayTypeValue);
                                             virtualNetworkGatewayJsonFormatInstance.GatewayType = gatewayTypeInstance;
+                                        }
+                                        
+                                        JToken vpnTypeValue = propertiesValue["vpnType"];
+                                        if (vpnTypeValue != null && vpnTypeValue.Type != JTokenType.Null)
+                                        {
+                                            string vpnTypeInstance = ((string)vpnTypeValue);
+                                            virtualNetworkGatewayJsonFormatInstance.VpnType = vpnTypeInstance;
                                         }
                                         
                                         JToken enableBgpValue = propertiesValue["enableBgp"];

@@ -45,28 +45,28 @@ namespace AzureRedisCache.Tests
                                     });
 
             Assert.NotNull(responseCreate.RequestId);
-            Assert.Contains(fixture.RedisCacheName, responseCreate.Id);
-            Assert.Equal(fixture.Location, responseCreate.Location);
-            Assert.Equal(fixture.RedisCacheName, responseCreate.Name);
-            Assert.Equal("Microsoft.Cache/Redis", responseCreate.Type);
-                
-            Assert.True("creating".Equals(responseCreate.Properties.ProvisioningState, StringComparison.InvariantCultureIgnoreCase));
-            Assert.Equal(SkuName.Basic, responseCreate.Properties.Sku.Name);
-            Assert.Equal(SkuFamily.C, responseCreate.Properties.Sku.Family);
-            Assert.Equal(0, responseCreate.Properties.Sku.Capacity);
-            Assert.Contains("2.8", responseCreate.Properties.RedisVersion);
-                        
-            Assert.Contains(fixture.RedisCacheName, responseCreate.Properties.HostName);
-            Assert.Equal(6379, responseCreate.Properties.Port);
-            Assert.Equal(6380, responseCreate.Properties.SslPort);
-            Assert.False(responseCreate.Properties.EnableNonSslPort);
+            Assert.Contains(fixture.RedisCacheName, responseCreate.Resource.Id);
+            Assert.Equal(fixture.Location, responseCreate.Resource.Location);
+            Assert.Equal(fixture.RedisCacheName, responseCreate.Resource.Name);
+            Assert.Equal("Microsoft.Cache/Redis", responseCreate.Resource.Type);
+
+            Assert.True("creating".Equals(responseCreate.Resource.Properties.ProvisioningState, StringComparison.InvariantCultureIgnoreCase));
+            Assert.Equal(SkuName.Basic, responseCreate.Resource.Properties.Sku.Name);
+            Assert.Equal(SkuFamily.C, responseCreate.Resource.Properties.Sku.Family);
+            Assert.Equal(0, responseCreate.Resource.Properties.Sku.Capacity);
+            Assert.Contains("2.8", responseCreate.Resource.Properties.RedisVersion);
+
+            Assert.Contains(fixture.RedisCacheName, responseCreate.Resource.Properties.HostName);
+            Assert.Equal(6379, responseCreate.Resource.Properties.Port);
+            Assert.Equal(6380, responseCreate.Resource.Properties.SslPort);
+            Assert.False(responseCreate.Resource.Properties.EnableNonSslPort.Value);
             
             // wait for maximum 30 minutes for cache to create
             for (int i = 0; i < 60; i++)
             {
                 TestUtilities.Wait(new TimeSpan(0, 0, 30));
                 RedisGetResponse responseGet = _client.Redis.Get(resourceGroupName: fixture.ResourceGroupName, name: fixture.RedisCacheName);
-                if ("succeeded".Equals(responseGet.Properties.ProvisioningState, StringComparison.InvariantCultureIgnoreCase))
+                if ("succeeded".Equals(responseGet.Resource.Properties.ProvisioningState, StringComparison.InvariantCultureIgnoreCase))
                 {
                     break;
                 }
@@ -86,27 +86,29 @@ namespace AzureRedisCache.Tests
                                                 Family = SkuFamily.C,
                                                 Capacity = 0
                                             },
-                                            MaxMemoryPolicy = MaxMemoryPolicy.AllKeysLRU,
+                                            RedisConfiguration = new Dictionary<string, string>() { 
+                                                {"maxmemory-policy","allkeys-lru"}
+                                            },
                                             EnableNonSslPort = true
                                         }
                                     });
 
             Assert.NotNull(responseUpdate.RequestId);
-            Assert.Contains(fixture.RedisCacheName, responseUpdate.Id);
-            Assert.Equal(fixture.Location, responseUpdate.Location);
-            Assert.Equal(fixture.RedisCacheName, responseUpdate.Name);
-            Assert.Equal("Microsoft.Cache/Redis", responseUpdate.Type);
+            Assert.Contains(fixture.RedisCacheName, responseUpdate.Resource.Id);
+            Assert.Equal(fixture.Location, responseUpdate.Resource.Location);
+            Assert.Equal(fixture.RedisCacheName, responseUpdate.Resource.Name);
+            Assert.Equal("Microsoft.Cache/Redis", responseUpdate.Resource.Type);
 
-            Assert.Equal(SkuName.Basic, responseUpdate.Properties.Sku.Name);
-            Assert.Equal(SkuFamily.C, responseUpdate.Properties.Sku.Family);
-            Assert.Equal(0, responseUpdate.Properties.Sku.Capacity);
-            Assert.Contains("2.8", responseUpdate.Properties.RedisVersion);
-            Assert.True(MaxMemoryPolicy.AllKeysLRU.Equals(responseUpdate.Properties.MaxMemoryPolicy.Replace("-", ""), StringComparison.InvariantCultureIgnoreCase));
+            Assert.Equal(SkuName.Basic, responseUpdate.Resource.Properties.Sku.Name);
+            Assert.Equal(SkuFamily.C, responseUpdate.Resource.Properties.Sku.Family);
+            Assert.Equal(0, responseUpdate.Resource.Properties.Sku.Capacity);
+            Assert.Contains("2.8", responseUpdate.Resource.Properties.RedisVersion);
+            Assert.Equal("allkeys-lru", responseUpdate.Resource.Properties.RedisConfiguration["maxmemory-policy"]);
 
-            Assert.Contains(fixture.RedisCacheName, responseUpdate.Properties.HostName);
-            Assert.Equal(6379, responseUpdate.Properties.Port);
-            Assert.Equal(6380, responseUpdate.Properties.SslPort);
-            Assert.True(responseUpdate.Properties.EnableNonSslPort);
+            Assert.Contains(fixture.RedisCacheName, responseUpdate.Resource.Properties.HostName);
+            Assert.Equal(6379, responseUpdate.Resource.Properties.Port);
+            Assert.Equal(6380, responseUpdate.Resource.Properties.SslPort);
+            Assert.True(responseUpdate.Resource.Properties.EnableNonSslPort.Value);
 
             AzureOperationResponse responseDelete = _client.Redis.Delete(resourceGroupName: fixture.ResourceGroupName, name: fixture.RedisCacheName);
                 

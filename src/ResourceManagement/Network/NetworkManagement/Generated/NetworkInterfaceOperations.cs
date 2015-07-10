@@ -334,6 +334,16 @@ namespace Microsoft.Azure.Management.Network
                             dnsSettingsValue["appliedDnsServers"] = appliedDnsServersArray;
                         }
                     }
+                    
+                    if (parameters.DnsSettings.InternalDnsNameLabel != null)
+                    {
+                        dnsSettingsValue["internalDnsNameLabel"] = parameters.DnsSettings.InternalDnsNameLabel;
+                    }
+                    
+                    if (parameters.DnsSettings.InternalFqdn != null)
+                    {
+                        dnsSettingsValue["internalFqdn"] = parameters.DnsSettings.InternalFqdn;
+                    }
                 }
                 
                 if (parameters.MacAddress != null)
@@ -345,6 +355,8 @@ namespace Microsoft.Azure.Management.Network
                 {
                     propertiesValue["primary"] = parameters.Primary.Value;
                 }
+                
+                propertiesValue["enableIPForwarding"] = parameters.EnableIPForwarding;
                 
                 if (parameters.ProvisioningState != null)
                 {
@@ -586,7 +598,7 @@ namespace Microsoft.Azure.Management.Network
                                 JToken dnsSettingsValue2 = propertiesValue3["dnsSettings"];
                                 if (dnsSettingsValue2 != null && dnsSettingsValue2.Type != JTokenType.Null)
                                 {
-                                    DnsSettings dnsSettingsInstance = new DnsSettings();
+                                    NetworkInterfaceDnsSettings dnsSettingsInstance = new NetworkInterfaceDnsSettings();
                                     networkInterfaceInstance.DnsSettings = dnsSettingsInstance;
                                     
                                     JToken dnsServersArray2 = dnsSettingsValue2["dnsServers"];
@@ -606,6 +618,20 @@ namespace Microsoft.Azure.Management.Network
                                             dnsSettingsInstance.AppliedDnsServers.Add(((string)appliedDnsServersValue));
                                         }
                                     }
+                                    
+                                    JToken internalDnsNameLabelValue = dnsSettingsValue2["internalDnsNameLabel"];
+                                    if (internalDnsNameLabelValue != null && internalDnsNameLabelValue.Type != JTokenType.Null)
+                                    {
+                                        string internalDnsNameLabelInstance = ((string)internalDnsNameLabelValue);
+                                        dnsSettingsInstance.InternalDnsNameLabel = internalDnsNameLabelInstance;
+                                    }
+                                    
+                                    JToken internalFqdnValue = dnsSettingsValue2["internalFqdn"];
+                                    if (internalFqdnValue != null && internalFqdnValue.Type != JTokenType.Null)
+                                    {
+                                        string internalFqdnInstance = ((string)internalFqdnValue);
+                                        dnsSettingsInstance.InternalFqdn = internalFqdnInstance;
+                                    }
                                 }
                                 
                                 JToken macAddressValue = propertiesValue3["macAddress"];
@@ -620,6 +646,13 @@ namespace Microsoft.Azure.Management.Network
                                 {
                                     bool primaryInstance = ((bool)primaryValue);
                                     networkInterfaceInstance.Primary = primaryInstance;
+                                }
+                                
+                                JToken enableIPForwardingValue = propertiesValue3["enableIPForwarding"];
+                                if (enableIPForwardingValue != null && enableIPForwardingValue.Type != JTokenType.Null)
+                                {
+                                    bool enableIPForwardingInstance = ((bool)enableIPForwardingValue);
+                                    networkInterfaceInstance.EnableIPForwarding = enableIPForwardingInstance;
                                 }
                                 
                                 JToken provisioningStateValue2 = propertiesValue3["provisioningState"];
@@ -1363,7 +1396,7 @@ namespace Microsoft.Azure.Management.Network
                                 JToken dnsSettingsValue = propertiesValue["dnsSettings"];
                                 if (dnsSettingsValue != null && dnsSettingsValue.Type != JTokenType.Null)
                                 {
-                                    DnsSettings dnsSettingsInstance = new DnsSettings();
+                                    NetworkInterfaceDnsSettings dnsSettingsInstance = new NetworkInterfaceDnsSettings();
                                     networkInterfaceInstance.DnsSettings = dnsSettingsInstance;
                                     
                                     JToken dnsServersArray = dnsSettingsValue["dnsServers"];
@@ -1383,6 +1416,20 @@ namespace Microsoft.Azure.Management.Network
                                             dnsSettingsInstance.AppliedDnsServers.Add(((string)appliedDnsServersValue));
                                         }
                                     }
+                                    
+                                    JToken internalDnsNameLabelValue = dnsSettingsValue["internalDnsNameLabel"];
+                                    if (internalDnsNameLabelValue != null && internalDnsNameLabelValue.Type != JTokenType.Null)
+                                    {
+                                        string internalDnsNameLabelInstance = ((string)internalDnsNameLabelValue);
+                                        dnsSettingsInstance.InternalDnsNameLabel = internalDnsNameLabelInstance;
+                                    }
+                                    
+                                    JToken internalFqdnValue = dnsSettingsValue["internalFqdn"];
+                                    if (internalFqdnValue != null && internalFqdnValue.Type != JTokenType.Null)
+                                    {
+                                        string internalFqdnInstance = ((string)internalFqdnValue);
+                                        dnsSettingsInstance.InternalFqdn = internalFqdnInstance;
+                                    }
                                 }
                                 
                                 JToken macAddressValue = propertiesValue["macAddress"];
@@ -1397,6 +1444,13 @@ namespace Microsoft.Azure.Management.Network
                                 {
                                     bool primaryInstance = ((bool)primaryValue);
                                     networkInterfaceInstance.Primary = primaryInstance;
+                                }
+                                
+                                JToken enableIPForwardingValue = propertiesValue["enableIPForwarding"];
+                                if (enableIPForwardingValue != null && enableIPForwardingValue.Type != JTokenType.Null)
+                                {
+                                    bool enableIPForwardingInstance = ((bool)enableIPForwardingValue);
+                                    networkInterfaceInstance.EnableIPForwarding = enableIPForwardingInstance;
                                 }
                                 
                                 JToken provisioningStateValue2 = propertiesValue["provisioningState"];
@@ -1763,7 +1817,7 @@ namespace Microsoft.Azure.Management.Network
                                         JToken dnsSettingsValue = propertiesValue["dnsSettings"];
                                         if (dnsSettingsValue != null && dnsSettingsValue.Type != JTokenType.Null)
                                         {
-                                            DnsSettings dnsSettingsInstance = new DnsSettings();
+                                            NetworkInterfaceDnsSettings dnsSettingsInstance = new NetworkInterfaceDnsSettings();
                                             networkInterfaceJsonFormatInstance.DnsSettings = dnsSettingsInstance;
                                             
                                             JToken dnsServersArray = dnsSettingsValue["dnsServers"];
@@ -1783,6 +1837,20 @@ namespace Microsoft.Azure.Management.Network
                                                     dnsSettingsInstance.AppliedDnsServers.Add(((string)appliedDnsServersValue));
                                                 }
                                             }
+                                            
+                                            JToken internalDnsNameLabelValue = dnsSettingsValue["internalDnsNameLabel"];
+                                            if (internalDnsNameLabelValue != null && internalDnsNameLabelValue.Type != JTokenType.Null)
+                                            {
+                                                string internalDnsNameLabelInstance = ((string)internalDnsNameLabelValue);
+                                                dnsSettingsInstance.InternalDnsNameLabel = internalDnsNameLabelInstance;
+                                            }
+                                            
+                                            JToken internalFqdnValue = dnsSettingsValue["internalFqdn"];
+                                            if (internalFqdnValue != null && internalFqdnValue.Type != JTokenType.Null)
+                                            {
+                                                string internalFqdnInstance = ((string)internalFqdnValue);
+                                                dnsSettingsInstance.InternalFqdn = internalFqdnInstance;
+                                            }
                                         }
                                         
                                         JToken macAddressValue = propertiesValue["macAddress"];
@@ -1797,6 +1865,13 @@ namespace Microsoft.Azure.Management.Network
                                         {
                                             bool primaryInstance = ((bool)primaryValue);
                                             networkInterfaceJsonFormatInstance.Primary = primaryInstance;
+                                        }
+                                        
+                                        JToken enableIPForwardingValue = propertiesValue["enableIPForwarding"];
+                                        if (enableIPForwardingValue != null && enableIPForwardingValue.Type != JTokenType.Null)
+                                        {
+                                            bool enableIPForwardingInstance = ((bool)enableIPForwardingValue);
+                                            networkInterfaceJsonFormatInstance.EnableIPForwarding = enableIPForwardingInstance;
                                         }
                                         
                                         JToken provisioningStateValue2 = propertiesValue["provisioningState"];
@@ -2162,7 +2237,7 @@ namespace Microsoft.Azure.Management.Network
                                         JToken dnsSettingsValue = propertiesValue["dnsSettings"];
                                         if (dnsSettingsValue != null && dnsSettingsValue.Type != JTokenType.Null)
                                         {
-                                            DnsSettings dnsSettingsInstance = new DnsSettings();
+                                            NetworkInterfaceDnsSettings dnsSettingsInstance = new NetworkInterfaceDnsSettings();
                                             networkInterfaceJsonFormatInstance.DnsSettings = dnsSettingsInstance;
                                             
                                             JToken dnsServersArray = dnsSettingsValue["dnsServers"];
@@ -2182,6 +2257,20 @@ namespace Microsoft.Azure.Management.Network
                                                     dnsSettingsInstance.AppliedDnsServers.Add(((string)appliedDnsServersValue));
                                                 }
                                             }
+                                            
+                                            JToken internalDnsNameLabelValue = dnsSettingsValue["internalDnsNameLabel"];
+                                            if (internalDnsNameLabelValue != null && internalDnsNameLabelValue.Type != JTokenType.Null)
+                                            {
+                                                string internalDnsNameLabelInstance = ((string)internalDnsNameLabelValue);
+                                                dnsSettingsInstance.InternalDnsNameLabel = internalDnsNameLabelInstance;
+                                            }
+                                            
+                                            JToken internalFqdnValue = dnsSettingsValue["internalFqdn"];
+                                            if (internalFqdnValue != null && internalFqdnValue.Type != JTokenType.Null)
+                                            {
+                                                string internalFqdnInstance = ((string)internalFqdnValue);
+                                                dnsSettingsInstance.InternalFqdn = internalFqdnInstance;
+                                            }
                                         }
                                         
                                         JToken macAddressValue = propertiesValue["macAddress"];
@@ -2196,6 +2285,13 @@ namespace Microsoft.Azure.Management.Network
                                         {
                                             bool primaryInstance = ((bool)primaryValue);
                                             networkInterfaceJsonFormatInstance.Primary = primaryInstance;
+                                        }
+                                        
+                                        JToken enableIPForwardingValue = propertiesValue["enableIPForwarding"];
+                                        if (enableIPForwardingValue != null && enableIPForwardingValue.Type != JTokenType.Null)
+                                        {
+                                            bool enableIPForwardingInstance = ((bool)enableIPForwardingValue);
+                                            networkInterfaceJsonFormatInstance.EnableIPForwarding = enableIPForwardingInstance;
                                         }
                                         
                                         JToken provisioningStateValue2 = propertiesValue["provisioningState"];

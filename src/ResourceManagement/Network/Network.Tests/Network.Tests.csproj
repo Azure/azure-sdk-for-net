@@ -12,7 +12,10 @@
     <Compile Include="Helpers\RecordedDelegatingHandler.cs" />
     <Compile Include="Helpers\ResourcesManagementTestUtilities.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tests\ApplicationGatewayTests.cs" />
     <Compile Include="Tests\GatewayOperationsTests.cs" />
+    <Compile Include="Tests\RouteTest.cs" />
+    <Compile Include="Tests\RouteTableTest.cs" />
     <Compile Include="Tests\UsageTests.cs" />
     <Compile Include="Tests\LoadBalancerTests.cs" />
     <Compile Include="Tests\NetworkInterfaceTests.cs" />
@@ -25,6 +28,24 @@
     <Compile Include="Tests\CheckDnsAvailabilityTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ApplicationGatewayCertificate\GW5000.pfx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Network.Tests.Tests.RouteTableTests\EmptyRouteTableTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Network.Tests.Tests.RouteTableTests\RouteTableApiTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Network.Tests.Tests.RouteTableTests\SubnetRouteTableTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Network.Tests.Tests.RouteTests\RoutesApiTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Networks.Tests.ApplicationGatewayTests\ApplicationGatewayApiTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\Networks.Tests.LoadBalancerTests\CreateEmptyLoadBalancer.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -50,6 +71,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Networks.Tests.NetworkInterfaceTests\NetworkInterfaceApiTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Networks.Tests.NetworkInterfaceTests\NetworkInterfaceDnsSettingsTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Networks.Tests.NetworkInterfaceTests\NetworkInterfaceEnableIPForwardingTest.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Networks.Tests.NetworkSecurityGroupTests\NetworkSecurityGroupApiTest.json">
