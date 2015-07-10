@@ -79,6 +79,17 @@ namespace Microsoft.Azure.Management.Network.Models
             set { this._provisioningState = value; }
         }
         
+        private ResourceId _routeTable;
+        
+        /// <summary>
+        /// Optional. Gets or sets the reference of the RouteTable resource
+        /// </summary>
+        public ResourceId RouteTable
+        {
+            get { return this._routeTable; }
+            set { this._routeTable = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the Subnet class.
         /// </summary>

@@ -53,15 +53,15 @@ namespace Microsoft.Azure.Management.DataFactories.Models
             set { this._dataSliceRangeStartTime = value; }
         }
         
-        private string _sliceStatus;
+        private string _sliceState;
         
         /// <summary>
         /// Optional. The data slice new status.
         /// </summary>
-        public string SliceStatus
+        public string SliceState
         {
-            get { return this._sliceStatus; }
-            set { this._sliceStatus = value; }
+            get { return this._sliceState; }
+            set { this._sliceState = value; }
         }
         
         private string _updateType;
