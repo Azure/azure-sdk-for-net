@@ -1,4 +1,4 @@
-﻿//
+//
 // Copyright (c) Microsoft.  All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,12 +21,12 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyDescription("Provides Microsoft Azure Data Factory management operations.")]
 
 [assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("1.0.1.0")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
 [assembly: AssemblyProduct("Microsoft Azure .NET SDK")]
-[assembly: AssemblyCopyright("Copyright © Microsoft Corporation")]
+[assembly: AssemblyCopyright("Copyright � Microsoft Corporation")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: NeutralResourcesLanguage("en")]

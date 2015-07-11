@@ -242,6 +242,14 @@ namespace Microsoft.Azure.Management.DataFactories
             }
         }
 
+        protected override DataFactoryManagementClient WithHandler(ServiceClient<DataFactoryManagementClient> newClient,
+            DelegatingHandler handler)
+        {
+            DataFactoryManagementClient client = base.WithHandler(newClient, handler);
+            client.InternalClient.HttpClient = client.HttpClient;
+            return client;
+        }
+
         private void Initialize()
         {
             this.InternalClient = new Core.DataFactoryManagementClient();
