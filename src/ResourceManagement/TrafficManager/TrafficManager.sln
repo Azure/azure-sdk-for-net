@@ -1,20 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.30501.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestDependencies", "..\..\TestDependencies\TestDependencies.csproj", "{40F35645-00EE-4DF2-B66E-7624546B66DF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrafficManagerManagement", "TrafficManagerManagement\TrafficManagerManagement.csproj", "{802CEC71-2D1F-42D3-A798-3ABB7D6BA25A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrafficManager.Tests", "TrafficManager.Tests\TrafficManager.Tests.csproj", "{779C466E-5DF8-46D7-82E5-20BFFEF31C77}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{D791DC83-F981-42F9-9611-8C8782E2292C}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\NuGet.Config = .nuget\NuGet.Config
-		.nuget\NuGet.exe = .nuget\NuGet.exe
-		.nuget\NuGet.targets = .nuget\NuGet.targets
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
