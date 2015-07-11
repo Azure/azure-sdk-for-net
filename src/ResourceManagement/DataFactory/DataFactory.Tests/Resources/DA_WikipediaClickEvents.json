@@ -1,29 +1,24 @@
-{            
-    name: "DA_WikipediaClickEvents",
-    properties:
-    {
-        location: 
-        {
-            type: "AzureBlobLocation",
-            blobPath: "wikidatagateway/wikisampledatain/",
-            linkedServiceName: "LinkedService-WikipediaClickEvents"
+{
+    "name": "DA_WikipediaClickEvents",
+    "properties": {
+        "availability": {
+            "frequency": "Hour",
+            "interval": 1
         },
-        availability: {
-            frequency: "Hour",
-            interval: 1,
-            waitOnExternal:
-            {
-                retryInterval: "00:01:00",
-                retryTimeout: "00:10:00",
-                maximumRetry: 3
+        "policy": {
+            "validation": {
+                "minimumSizeMB": 1.0
+            },
+            "externalData": {
+                "retryInterval": "00:01:00",
+                "retryTimeout": "00:10:00",
+                "maximumRetry": 3
             }
         },
-        policy: 
-        {
-            validation:
-            {
-                minimumSizeMB: 1.0
-            }
+        "type": "AzureBlob",
+        "linkedServiceName": "LinkedService-WikipediaClickEvents",
+        "typeProperties": {
+            "folderPath": "wikidatagateway/wikisampledatain/"
         }
     }
 }
