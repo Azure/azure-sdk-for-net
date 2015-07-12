@@ -17,7 +17,6 @@
     <Compile Include="TestFixtureData.cs" />
     <Compile Include="HostedServiceOperationTests.cs" />
     <Compile Include="TestUtilities\ComputeManagementClientUndoHandlers.cs" />
-    <Compile Include="TestUtilities\ComputeManagementTestUtilities.cs" />
     <Compile Include="TestUtilities\ManagementTestUtilities.cs" />
     <Compile Include="TestUtilities\StorageTestUtilities.cs" />
     <Compile Include="TestUtilities\TestLogTracingInterceptor.cs" />

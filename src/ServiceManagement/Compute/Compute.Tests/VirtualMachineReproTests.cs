@@ -25,6 +25,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
     using Microsoft.WindowsAzure.Management.Storage;
     using Microsoft.WindowsAzure.Management.Storage.Models;
     using Microsoft.Azure.Test;
+    using Microsoft.Azure.Test.HttpRecorder;
     using Xunit;
     using Hyak.Common;
 
@@ -321,14 +322,17 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
                            </RebootEvent>
                          </RebootEvents>
                        </DeploymentEventCollection> */
-                    var startTime = new DateTime(2015, 1, 10);
-                    var endTime = new DateTime(2015, 1, 20);
+                    //
+                    // Request Uri needs to be modified accordingly as well:
+                    // ".../events?starttime=2015-01-10T08:00:00.0000000Z&endtime=2015-01-20T08:00:00.0000000Z"
+                    var startTime = ComputeManagementTestUtilities.GetDeploymentEventStartDate();
+                    var endTime = ComputeManagementTestUtilities.GetDeploymentEventEndDate();
                     var events = compute.Deployments.ListEvents(serviceName, deploymentName, startTime, endTime);
                     var slot = DeploymentSlot.Production;
                     Func<RebootEvent, bool> func = e => !string.IsNullOrEmpty(e.RoleName)
                         && !string.IsNullOrEmpty(e.InstanceName)
                         && !string.IsNullOrEmpty(e.RebootReason)
-                        && e.RebootStartTime.Value >= startTime && e.RebootStartTime.Value <= endTime;
+                        && e.RebootStartTime.Value >= DateTime.MinValue.AddDays(1) && e.RebootStartTime.Value <= DateTime.MaxValue.AddDays(-1);
                     Assert.True(!events.DeploymentEvents.Any() || events.DeploymentEvents.All(e => func(e)));
                     events = compute.Deployments.ListEventsBySlot(serviceName, slot, startTime, endTime);
                     Assert.True(!events.DeploymentEvents.Any() || events.DeploymentEvents.All(e => func(e)));
@@ -1195,18 +1199,6 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
                     Assert.True(listSvcResult.ComputeCapabilities == null
                              || listSvcResult.ComputeCapabilities.WebWorkerRoleSizes.Count() > 0);
 
-                    var startTime = new DateTime(2015, 1, 10);
-                    var endTime = new DateTime(2015, 1, 20);
-                    var events = compute.Deployments.ListEvents(serviceName, deploymentName, startTime, endTime);
-                    var slot = DeploymentSlot.Production;
-                    Func<RebootEvent, bool> func = e => !string.IsNullOrEmpty(e.RoleName)
-                        && !string.IsNullOrEmpty(e.InstanceName)
-                        && !string.IsNullOrEmpty(e.RebootReason)
-                        && e.RebootStartTime.Value >= startTime && e.RebootStartTime.Value <= endTime;
-                    Assert.True(!events.DeploymentEvents.Any() || events.DeploymentEvents.All(e => func(e)));
-                    events = compute.Deployments.ListEventsBySlot(serviceName, slot, startTime, endTime);
-                    Assert.True(!events.DeploymentEvents.Any() || events.DeploymentEvents.All(e => func(e)));
-
                     compute.VirtualMachines.Shutdown(
                         serviceName,
                         deploymentName,
@@ -1496,9 +1488,16 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
                     //
                     // If this test is re-recorded, 'CreatedTime' and 'LastModifiedTime' of the response body
                     // should be modified again.
+                    //
+                    // Sample:
+                    // <CreatedTime>0001-01-01T00:00:00Z</CreatedTime>
+                    // <LastModifiedTime>9999-12-31T23:59:59Z</LastModifiedTime>
                     var getDepResult = compute.Deployments.GetByName(serviceName, deploymentName);
-                    Assert.True(getDepResult.CreatedTime < DateTime.MinValue.AddDays(1));
-                    Assert.True(getDepResult.LastModifiedTime > DateTime.MaxValue.AddDays(-1));
+                    if (HttpMockServer.Mode == HttpRecorderMode.Playback)
+                    {
+                        Assert.True(getDepResult.CreatedTime < DateTime.MinValue.AddDays(1));
+                        Assert.True(getDepResult.LastModifiedTime > DateTime.MaxValue.AddDays(-1));
+                    }
 
                     // Delete the service
                     compute.HostedServices.DeleteAll(serviceName);

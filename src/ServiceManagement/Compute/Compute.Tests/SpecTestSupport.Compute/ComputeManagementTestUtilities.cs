@@ -120,5 +120,28 @@ namespace Microsoft.Azure.Test
 
             return blobUri;
         }
+        public static DateTime GetDeploymentEventStartDate()
+        {
+            if (HttpMockServer.Mode != HttpRecorderMode.Playback)
+            {
+                return DateTime.Now.AddDays(-30);
+            }
+            else
+            {
+                return new DateTime(2015, 1, 10);
+            }
+        }
+
+        public static DateTime GetDeploymentEventEndDate()
+        {
+            if (HttpMockServer.Mode != HttpRecorderMode.Playback)
+            {
+                return DateTime.Now.AddDays(-20);
+            }
+            else
+            {
+                return new DateTime(2015, 1, 20);
+            }
+        }
     }
 }
