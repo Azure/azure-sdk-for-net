@@ -40,7 +40,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
         }
 
         [Fact]
-        public void CanUpdateVMInputEndpoints()
+        public void CanUpdateHostedServiceExtendedProperties()
         {
             TestLogTracingInterceptor.Current.Start();
             using (var undoContext = UndoContext.Current)
@@ -186,6 +186,65 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
                     Assert.True(hostedService.Properties.Description == serviceDescription);
                     Assert.True(hostedService.Properties.ExtendedProperties["bar"] == "foo1");
                     Assert.True(hostedService.Properties.ExtendedProperties["baz"] == "foo2");
+
+                    var result = compute.HostedServices.DeleteAll(serviceName);
+                }
+                finally
+                {
+                    undoContext.Dispose();
+                    mgmt.Dispose();
+                    compute.Dispose();
+                    storage.Dispose();
+                    TestLogTracingInterceptor.Current.Stop();
+                }
+            }
+        }
+
+        [Fact]
+        public void CanUpdateVMInputEndpoints()
+        {
+            TestLogTracingInterceptor.Current.Start();
+            using (var undoContext = UndoContext.Current)
+            {
+                undoContext.Start();
+                var mgmt = fixture.GetManagementClient();
+                var compute = fixture.GetComputeManagementClient();
+                var storage = fixture.GetStorageManagementClient();
+
+                try
+                {
+                    string storageAccountName = TestUtilities.GenerateName("psteststo").ToLower();
+                    string serviceName = TestUtilities.GenerateName("pstestsvc");
+                    string serviceLabel = serviceName + "1";
+                    string serviceDescription = serviceName + "2";
+                    string deploymentName = string.Format("{0}Prod", serviceName);
+                    string deploymentLabel = deploymentName;
+
+                    string location = mgmt.GetDefaultLocation("Storage", "Compute");
+                    const string usWestLocStr = "West US";
+                    if (mgmt.Locations.List().Any(
+                        c => string.Equals(c.Name, usWestLocStr, StringComparison.OrdinalIgnoreCase)))
+                    {
+                        location = usWestLocStr;
+                    }
+
+                    storage.StorageAccounts.Create(
+                        new StorageAccountCreateParameters
+                        {
+                            Location = location,
+                            Label = storageAccountName,
+                            Name = storageAccountName,
+                            AccountType = StorageAccountTypes.StandardGRS
+                        });
+
+                    compute.HostedServices.Create(
+                        new HostedServiceCreateParameters
+                        {
+                            Location = location,
+                            Label = serviceDescription,
+                            Description = serviceLabel,
+                            ServiceName = serviceName
+                        });
 
                     var image = compute.VirtualMachineOSImages.List()
                                 .FirstOrDefault(s => string.Equals(s.OperatingSystemType,
@@ -1069,19 +1128,12 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
                             Location = location,
                             Label = serviceDescription,
                             Description = serviceLabel,
-                            ServiceName = serviceName,
-                            ExtendedProperties = new Dictionary<string, string>
-                            {
-                                { "foo1", "bar" },
-                                { "foo2", "baz" }
-                            }
+                            ServiceName = serviceName
                         });
 
                     var hostedService = compute.HostedServices.Get(serviceName);
                     Assert.True(hostedService.Properties.Label == serviceDescription);
                     Assert.True(hostedService.Properties.Description == serviceLabel);
-                    Assert.True(hostedService.Properties.ExtendedProperties["foo1"] == "bar");
-                    Assert.True(hostedService.Properties.ExtendedProperties["foo2"] == "baz");
 
                     var image = compute.VirtualMachineOSImages.List()
                                 .FirstOrDefault(s => string.Equals(s.OperatingSystemType,
