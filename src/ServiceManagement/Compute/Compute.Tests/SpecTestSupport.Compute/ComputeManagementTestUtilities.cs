@@ -16,13 +16,11 @@
 using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.WindowsAzure.Management.Compute;
 using Microsoft.WindowsAzure.Management.Storage;
-using System;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Auth;
 using Microsoft.WindowsAzure.Storage.Blob;
+using System;
+using System.Linq;
 
 namespace Microsoft.Azure.Test
 {
@@ -120,6 +118,7 @@ namespace Microsoft.Azure.Test
 
             return blobUri;
         }
+
         public static DateTime GetDeploymentEventStartDate()
         {
             if (HttpMockServer.Mode != HttpRecorderMode.Playback)

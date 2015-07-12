@@ -1545,11 +1545,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
                     // <CreatedTime>0001-01-01T00:00:00Z</CreatedTime>
                     // <LastModifiedTime>9999-12-31T23:59:59Z</LastModifiedTime>
                     var getDepResult = compute.Deployments.GetByName(serviceName, deploymentName);
-                    if (HttpMockServer.Mode == HttpRecorderMode.Playback)
-                    {
-                        Assert.True(getDepResult.CreatedTime < DateTime.MinValue.AddDays(1));
-                        Assert.True(getDepResult.LastModifiedTime > DateTime.MaxValue.AddDays(-1));
-                    }
+                    Assert.True(getDepResult.CreatedTime < DateTime.MinValue.AddDays(1));
+                    Assert.True(getDepResult.LastModifiedTime > DateTime.MaxValue.AddDays(-1));
 
                     // Delete the service
                     compute.HostedServices.DeleteAll(serviceName);

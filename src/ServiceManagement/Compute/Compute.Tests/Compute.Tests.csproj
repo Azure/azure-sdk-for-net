@@ -10,6 +10,9 @@
   <ItemGroup>
     <Compile Include="ComputeOperationTests.cs" />
     <Compile Include="IntegrationTests.Compute.cs" />
+    <None Include="MockSessionRecords.ps1">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ExtensionImageTests.cs" />
     <Compile Include="PirTests.cs" />
@@ -144,4 +147,11 @@
       <Name>ComputeManagement</Name>
     </ProjectReference>
   </ItemGroup>
+  <Target Name="AfterBuild">
+    <PropertyGroup>
+      <PowerShellExe Condition=" '$(PowerShellExe)'=='' ">%WINDIR%\System32\WindowsPowerShell\v1.0\powershell.exe</PowerShellExe>
+      <MockSessionRecordScriptPath>"$(OutputPath)\MockSessionRecords.ps1"</MockSessionRecordScriptPath>
+    </PropertyGroup>
+    <Exec Command="$(PowerShellExe) $(MockSessionRecordScriptPath)" />
+  </Target>
 </Project>
