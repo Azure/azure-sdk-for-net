@@ -196,7 +196,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<VirtualMachineImageResourceList>> ListVersionsWithHttpMessagesAsync(string location, string publisherName, string type, Expression<Func<Resource, bool>> filter = default(Expression<Func<Resource, bool>>), int? top = default(int?), string orderby = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IList<VirtualMachineImageResource>>> ListVersionsWithHttpMessagesAsync(string location, string publisherName, string type, Expression<Func<VirtualMachineImageResource, bool>> filter = default(Expression<Func<VirtualMachineImageResource, bool>>), int? top = default(int?), string orderby = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (location == null)
             {
@@ -312,14 +312,14 @@ namespace Microsoft.Azure.Management.Compute
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<VirtualMachineImageResourceList>();
+            var result = new AzureOperationResponse<IList<VirtualMachineImageResource>>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             // Deserialize Response
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<VirtualMachineImageResourceList>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<IList<VirtualMachineImageResource>>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -341,7 +341,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<VirtualMachineImageResourceList>> ListTypesWithHttpMessagesAsync(string location, string publisherName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IList<VirtualMachineImageResource>>> ListTypesWithHttpMessagesAsync(string location, string publisherName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (location == null)
             {
@@ -436,14 +436,14 @@ namespace Microsoft.Azure.Management.Compute
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<VirtualMachineImageResourceList>();
+            var result = new AzureOperationResponse<IList<VirtualMachineImageResource>>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             // Deserialize Response
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<VirtualMachineImageResourceList>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<IList<VirtualMachineImageResource>>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {

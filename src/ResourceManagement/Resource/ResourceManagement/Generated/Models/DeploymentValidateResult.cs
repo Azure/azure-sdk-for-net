@@ -23,15 +23,5 @@ namespace Microsoft.Azure.Management.Resources.Models
         [JsonProperty(PropertyName = "properties")]
         public DeploymentPropertiesExtended Properties { get; set; }
 
-        /// <summary>
-        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
-        /// </summary>
-        public virtual void Validate()
-        {
-            if (this.Properties != null)
-            {
-                this.Properties.Validate();
-            }
-        }
     }
 }

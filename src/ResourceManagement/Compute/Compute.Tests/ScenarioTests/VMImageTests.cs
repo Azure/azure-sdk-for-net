@@ -73,9 +73,9 @@ namespace Compute.Tests
                     "WindowsServer",
                     "2012-R2-Datacenter");
 
-                Assert.True(vmimages.Resources.Count > 0);
-                Assert.True(vmimages.Resources.Count(vmi => vmi.Name == AvailableWindowsServerImageVersions[0]) != 0);
-                Assert.True(vmimages.Resources.Count(vmi => vmi.Name == AvailableWindowsServerImageVersions[1]) != 0);
+                Assert.True(vmimages.Count > 0);
+                Assert.True(vmimages.Count(vmi => vmi.Name == AvailableWindowsServerImageVersions[0]) != 0);
+                Assert.True(vmimages.Count(vmi => vmi.Name == AvailableWindowsServerImageVersions[1]) != 0);
             }
         }
 
@@ -94,7 +94,7 @@ namespace Compute.Tests
                     "WindowsServer",
                     "2012-R2-Datacenter",
                     top: 1);
-                Assert.True(vmimages.Resources.Count == 0);
+                Assert.True(vmimages.Count == 0);
 
                 // Filter: top - Positive Test
                 vmimages = _pirClient.VirtualMachineImages.List(
@@ -103,7 +103,7 @@ namespace Compute.Tests
                     "WindowsServer",
                     "2012-R2-Datacenter",
                     top: 1);
-                Assert.True(vmimages.Resources.Count == 1);
+                Assert.True(vmimages.Count == 1);
 
                 // Filter: top - Positive Test
                 vmimages = _pirClient.VirtualMachineImages.List(
@@ -112,8 +112,8 @@ namespace Compute.Tests
                     "WindowsServer",
                     "2012-R2-Datacenter",
                     top: 2);
-                Assert.True(vmimages.Resources.Count == 2);
-                Assert.True(vmimages.Resources.Count(vmi => vmi.Name == AvailableWindowsServerImageVersions[1]) != 0);
+                Assert.True(vmimages.Count == 2);
+                Assert.True(vmimages.Count(vmi => vmi.Name == AvailableWindowsServerImageVersions[1]) != 0);
 
                 // Filter: orderby - Positive Test
                 vmimages = _pirClient.VirtualMachineImages.List(
@@ -122,10 +122,10 @@ namespace Compute.Tests
                     "WindowsServer",
                     "2012-R2-Datacenter",
                     orderby:"name desc");
-                Assert.Equal(AvailableWindowsServerImageVersions.Length, vmimages.Resources.Count);
+                Assert.Equal(AvailableWindowsServerImageVersions.Length, vmimages.Count);
                 for (int i = 0; i < AvailableWindowsServerImageVersions.Length; i++)
                 {
-                    Assert.Equal(AvailableWindowsServerImageVersions[i], vmimages.Resources[i].Name);
+                    Assert.Equal(AvailableWindowsServerImageVersions[i], vmimages[i].Name);
                 }
 
                 // Filter: orderby - Positive Test
@@ -136,9 +136,9 @@ namespace Compute.Tests
                     "2012-R2-Datacenter",
                     top: 2,
                     orderby: "name asc");
-                Assert.True(vmimages.Resources.Count == 2);
-                Assert.True(vmimages.Resources[0].Name == AvailableWindowsServerImageVersions.Last());
-                Assert.True(vmimages.Resources[1].Name == AvailableWindowsServerImageVersions.Reverse().Skip(1).First());
+                Assert.True(vmimages.Count == 2);
+                Assert.True(vmimages[0].Name == AvailableWindowsServerImageVersions.Last());
+                Assert.True(vmimages[1].Name == AvailableWindowsServerImageVersions.Reverse().Skip(1).First());
 
                 // Filter: top orderby - Positive Test
                 vmimages = _pirClient.VirtualMachineImages.List(
@@ -148,8 +148,8 @@ namespace Compute.Tests
                     "2012-R2-Datacenter",
                     top: 1,
                     orderby: "name desc");
-                Assert.True(vmimages.Resources.Count == 1);
-                Assert.True(vmimages.Resources[0].Name == AvailableWindowsServerImageVersions[0]);
+                Assert.True(vmimages.Count == 1);
+                Assert.True(vmimages[0].Name == AvailableWindowsServerImageVersions[0]);
 
                 // Filter: top orderby - Positive Test
                 vmimages = _pirClient.VirtualMachineImages.List(
@@ -159,8 +159,8 @@ namespace Compute.Tests
                     "2012-R2-Datacenter",
                     top: 1, 
                     orderby: "name asc");
-                Assert.True(vmimages.Resources.Count == 1);
-                Assert.True(vmimages.Resources[0].Name == AvailableWindowsServerImageVersions.Last());
+                Assert.True(vmimages.Count == 1);
+                Assert.True(vmimages[0].Name == AvailableWindowsServerImageVersions.Last());
             }
         }
 
@@ -175,8 +175,8 @@ namespace Compute.Tests
                 var publishers = _pirClient.VirtualMachineImages.ListPublishers(
                     ComputeManagementTestUtilities.DefaultLocation);
 
-                Assert.True(publishers.Resources.Count > 0);
-                Assert.True(publishers.Resources.Count(pub => pub.Name == "MicrosoftWindowsServer") != 0);
+                Assert.True(publishers.Count > 0);
+                Assert.True(publishers.Count(pub => pub.Name == "MicrosoftWindowsServer") != 0);
             }
         }
 
@@ -192,8 +192,8 @@ namespace Compute.Tests
                     ComputeManagementTestUtilities.DefaultLocation,
                     "MicrosoftWindowsServer");
 
-                Assert.True(offers.Resources.Count > 0);
-                Assert.True(offers.Resources.Count(offer => offer.Name == "WindowsServer") != 0);
+                Assert.True(offers.Count > 0);
+                Assert.True(offers.Count(offer => offer.Name == "WindowsServer") != 0);
             }
         }
 
@@ -210,8 +210,8 @@ namespace Compute.Tests
                     "MicrosoftWindowsServer",
                     "WindowsServer");
 
-                Assert.True(skus.Resources.Count > 0);
-                Assert.True(skus.Resources.Count(sku => sku.Name == "2012-R2-Datacenter") != 0);
+                Assert.True(skus.Count > 0);
+                Assert.True(skus.Count(sku => sku.Name == "2012-R2-Datacenter") != 0);
             }
         }
     }

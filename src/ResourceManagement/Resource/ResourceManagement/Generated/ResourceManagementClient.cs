@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.Resources
         /// Subscription credentials which uniquely identify Microsoft Azure
         /// subscription.
         /// </summary>
-        public SubscriptionCloudCredentials Credentials { get; set; }
+        public SubscriptionCloudCredentials Credentials { get; private set; }
 
         /// <summary>
         /// Gets subscription credentials which uniquely identify Microsoft
@@ -134,25 +134,17 @@ namespace Microsoft.Azure.Management.Resources
         /// <param name='credentials'>
         /// Required. Subscription credentials which uniquely identify Microsoft Azure subscription.
         /// </param>
-        /// <param name='subscriptionId'>
-        /// Required. Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
-        /// </param>
         /// <param name='handlers'>
         /// Optional. The set of delegating handlers to insert in the http
         /// client pipeline.
         /// </param>
-        public ResourceManagementClient(SubscriptionCloudCredentials credentials, string subscriptionId, params DelegatingHandler[] handlers) : this(handlers)
+        public ResourceManagementClient(SubscriptionCloudCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (credentials == null)
             {
                 throw new ArgumentNullException("credentials");
             }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException("subscriptionId");
-            }
             this.Credentials = credentials;
-            this.SubscriptionId = subscriptionId;
         }
 
         /// <summary>
@@ -164,14 +156,11 @@ namespace Microsoft.Azure.Management.Resources
         /// <param name='credentials'>
         /// Required. Subscription credentials which uniquely identify Microsoft Azure subscription.
         /// </param>
-        /// <param name='subscriptionId'>
-        /// Required. Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
-        /// </param>
         /// <param name='handlers'>
         /// Optional. The set of delegating handlers to insert in the http
         /// client pipeline.
         /// </param>
-        public ResourceManagementClient(Uri baseUri, SubscriptionCloudCredentials credentials, string subscriptionId, params DelegatingHandler[] handlers) : this(handlers)
+        public ResourceManagementClient(Uri baseUri, SubscriptionCloudCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (baseUri == null)
             {
@@ -181,13 +170,8 @@ namespace Microsoft.Azure.Management.Resources
             {
                 throw new ArgumentNullException("credentials");
             }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException("subscriptionId");
-            }
             this.BaseUri = baseUri;
             this.Credentials = credentials;
-            this.SubscriptionId = subscriptionId;
         }
 
         /// <summary>
@@ -204,6 +188,10 @@ namespace Microsoft.Azure.Management.Resources
             this.Deployments = new DeploymentsOperations(this);
             this.BaseUri = new Uri("https://management.azure.com");
             this.ApiVersion = "2014-04-01-preview";
+            if (this.Credentials != null)
+            {
+                this.Credentials.InitializeServiceClient(this);
+            }
             SerializationSettings = new JsonSerializerSettings
             {
                 Formatting = Formatting.Indented,

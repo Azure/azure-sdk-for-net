@@ -12,6 +12,14 @@ namespace Microsoft.Azure.Management.Storage.Models
     public partial class StorageAccount : Resource
     {
         /// <summary>
+        /// Gets the status of the storage account at the time the operation
+        /// was called. Possible values for this property include:
+        /// 'Creating', 'ResolvingDNS', 'Succeeded'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.provisioningState")]
+        public ProvisioningState? ProvisioningState { get; set; }
+
+        /// <summary>
         /// Gets the type of the storage account. Possible values for this
         /// property include: 'Standard_LRS', 'Standard_ZRS', 'Standard_GRS',
         /// 'Standard_RAGRS', 'Premium_LRS'

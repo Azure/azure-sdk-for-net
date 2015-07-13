@@ -81,91 +81,18 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<ApplicationGatewayRequestRoutingRule> RequestRoutingRules { get; set; }
 
         /// <summary>
+        /// Gets or sets Provisioning state of the ApplicationGateway resource
+        /// Updating/Deleting/Failed
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.provisioningState")]
+        public string ProvisioningState { get; set; }
+
+        /// <summary>
         /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
         /// </summary>
         public override void Validate()
         {
             base.Validate();
-            if (this.GatewayIpConfigurations != null)
-            {
-                foreach ( var element in this.GatewayIpConfigurations)
-            {
-                if (element != null)
-            {
-                element.Validate();
-            }
-            }
-            }
-            if (this.SslCertificates != null)
-            {
-                foreach ( var element1 in this.SslCertificates)
-            {
-                if (element1 != null)
-            {
-                element1.Validate();
-            }
-            }
-            }
-            if (this.FrontendIpConfigurations != null)
-            {
-                foreach ( var element2 in this.FrontendIpConfigurations)
-            {
-                if (element2 != null)
-            {
-                element2.Validate();
-            }
-            }
-            }
-            if (this.FrontendPorts != null)
-            {
-                foreach ( var element3 in this.FrontendPorts)
-            {
-                if (element3 != null)
-            {
-                element3.Validate();
-            }
-            }
-            }
-            if (this.BackendAddressPools != null)
-            {
-                foreach ( var element4 in this.BackendAddressPools)
-            {
-                if (element4 != null)
-            {
-                element4.Validate();
-            }
-            }
-            }
-            if (this.BackendHttpSettingsCollection != null)
-            {
-                foreach ( var element5 in this.BackendHttpSettingsCollection)
-            {
-                if (element5 != null)
-            {
-                element5.Validate();
-            }
-            }
-            }
-            if (this.HttpListeners != null)
-            {
-                foreach ( var element6 in this.HttpListeners)
-            {
-                if (element6 != null)
-            {
-                element6.Validate();
-            }
-            }
-            }
-            if (this.RequestRoutingRules != null)
-            {
-                foreach ( var element7 in this.RequestRoutingRules)
-            {
-                if (element7 != null)
-            {
-                element7.Validate();
-            }
-            }
-            }
         }
     }
 }

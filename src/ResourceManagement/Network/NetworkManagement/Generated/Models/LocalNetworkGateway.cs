@@ -31,6 +31,13 @@ namespace Microsoft.Azure.Management.Network.Models
         public string GatewayIpAddress { get; set; }
 
         /// <summary>
+        /// Gets or sets Provisioning state of the LocalNetworkGateway
+        /// resource Updating/Deleting/Failed
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.provisioningState")]
+        public string ProvisioningState { get; set; }
+
+        /// <summary>
         /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
         /// </summary>
         public override void Validate()

@@ -29,25 +29,5 @@ namespace Microsoft.Azure.Management.Compute.Models
         [JsonProperty(PropertyName = "dataDisks")]
         public IList<DataDisk> DataDisks { get; set; }
 
-        /// <summary>
-        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
-        /// </summary>
-        public virtual void Validate()
-        {
-            if (this.OsDisk != null)
-            {
-                this.OsDisk.Validate();
-            }
-            if (this.DataDisks != null)
-            {
-                foreach ( var element in this.DataDisks)
-            {
-                if (element != null)
-            {
-                element.Validate();
-            }
-            }
-            }
-        }
     }
 }

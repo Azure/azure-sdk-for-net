@@ -47,15 +47,5 @@ namespace Microsoft.Azure.Management.Compute.Models
         [JsonProperty(PropertyName = "error")]
         public ApiError Error { get; set; }
 
-        /// <summary>
-        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
-        /// </summary>
-        public virtual void Validate()
-        {
-            if (this.Error != null)
-            {
-                this.Error.Validate();
-            }
-        }
     }
 }

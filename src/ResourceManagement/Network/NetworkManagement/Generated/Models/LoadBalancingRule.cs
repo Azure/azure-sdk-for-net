@@ -104,23 +104,11 @@ namespace Microsoft.Azure.Management.Network.Models
         public bool? EnableFloatingIP { get; set; }
 
         /// <summary>
-        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
+        /// Gets or sets Provisioning state of the PublicIP resource
+        /// Updating/Deleting/Failed
         /// </summary>
-        public override void Validate()
-        {
-            base.Validate();
-            if (this.FrontendIPConfiguration != null)
-            {
-                this.FrontendIPConfiguration.Validate();
-            }
-            if (this.BackendAddressPool != null)
-            {
-                this.BackendAddressPool.Validate();
-            }
-            if (this.Probe != null)
-            {
-                this.Probe.Validate();
-            }
-        }
+        [JsonProperty(PropertyName = "properties.provisioningState")]
+        public string ProvisioningState { get; set; }
+
     }
 }

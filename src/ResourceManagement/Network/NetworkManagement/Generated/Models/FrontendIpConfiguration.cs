@@ -66,39 +66,11 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<SubResource> LoadBalancingRules { get; set; }
 
         /// <summary>
-        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
+        /// Gets or sets Provisioning state of the PublicIP resource
+        /// Updating/Deleting/Failed
         /// </summary>
-        public override void Validate()
-        {
-            base.Validate();
-            if (this.Subnet != null)
-            {
-                this.Subnet.Validate();
-            }
-            if (this.PublicIPAddress != null)
-            {
-                this.PublicIPAddress.Validate();
-            }
-            if (this.InboundNatRules != null)
-            {
-                foreach ( var element in this.InboundNatRules)
-            {
-                if (element != null)
-            {
-                element.Validate();
-            }
-            }
-            }
-            if (this.LoadBalancingRules != null)
-            {
-                foreach ( var element1 in this.LoadBalancingRules)
-            {
-                if (element1 != null)
-            {
-                element1.Validate();
-            }
-            }
-            }
-        }
+        [JsonProperty(PropertyName = "properties.provisioningState")]
+        public string ProvisioningState { get; set; }
+
     }
 }

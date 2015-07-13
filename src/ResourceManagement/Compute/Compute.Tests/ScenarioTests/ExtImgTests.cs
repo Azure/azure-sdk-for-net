@@ -124,8 +124,8 @@ namespace Compute.Tests
                     parameters.Location, 
                     parameters.PublisherName);
 
-                Assert.True(vmextimg.Resources.Count > 0);
-                Assert.True(vmextimg.Resources.Count(vmi => vmi.Name == "vmaccess") != 0);
+                Assert.True(vmextimg.Count > 0);
+                Assert.True(vmextimg.Count(vmi => vmi.Name == "vmaccess") != 0);
             }
         }
 
@@ -144,8 +144,8 @@ namespace Compute.Tests
                     parameters.PublisherName,
                     parameters.Type);
 
-                Assert.True(vmextimg.Resources.Count > 0);
-                Assert.True(vmextimg.Resources.Count(vmi => vmi.Name == "1.1.0") != 0);
+                Assert.True(vmextimg.Count > 0);
+                Assert.True(vmextimg.Count(vmi => vmi.Name == "1.1.0") != 0);
             }
         }
 
@@ -166,8 +166,8 @@ namespace Compute.Tests
                     parameters.PublisherName,
                     parameters.Type,
                     f => f.Name.StartsWith("1.1"));
-                Assert.True(vmextimg.Resources.Count > 0);
-                Assert.True(vmextimg.Resources.Count(vmi => vmi.Name == "1.1.0") != 0);
+                Assert.True(vmextimg.Count > 0);
+                Assert.True(vmextimg.Count(vmi => vmi.Name == "1.1.0") != 0);
 
                 // Filter: startswith - Negative Test
                 parameters.FilterExpression = "$filter=startswith(name,'1.0')";
@@ -176,8 +176,8 @@ namespace Compute.Tests
                     parameters.PublisherName,
                     parameters.Type,
                     f => f.Name.StartsWith("1.0"));
-                Assert.True(vmextimg.Resources.Count == 0);
-                Assert.True(vmextimg.Resources.Count(vmi => vmi.Name == "1.1.0") == 0);
+                Assert.True(vmextimg.Count == 0);
+                Assert.True(vmextimg.Count(vmi => vmi.Name == "1.1.0") == 0);
 
                 // Filter: top - Positive Test
                 parameters.FilterExpression = "$top=1";
@@ -186,8 +186,8 @@ namespace Compute.Tests
                     parameters.PublisherName,
                     parameters.Type,
                     top: 1);
-                Assert.True(vmextimg.Resources.Count == 1);
-                Assert.True(vmextimg.Resources.Count(vmi => vmi.Name == "1.1.0") != 0);
+                Assert.True(vmextimg.Count == 1);
+                Assert.True(vmextimg.Count(vmi => vmi.Name == "1.1.0") != 0);
 
                 // Filter: top - Negative Test
                 parameters.FilterExpression = "$top=0";
@@ -196,7 +196,7 @@ namespace Compute.Tests
                     parameters.PublisherName,
                     parameters.Type,
                     top: 0);
-                Assert.True(vmextimg.Resources.Count == 0);
+                Assert.True(vmextimg.Count == 0);
             }
         }
     }

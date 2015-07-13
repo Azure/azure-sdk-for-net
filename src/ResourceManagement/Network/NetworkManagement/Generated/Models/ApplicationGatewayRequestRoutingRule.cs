@@ -51,23 +51,11 @@ namespace Microsoft.Azure.Management.Network.Models
         public SubResource HttpListener { get; set; }
 
         /// <summary>
-        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
+        /// Gets or sets Provisioning state of the request routing rule
+        /// resource Updating/Deleting/Failed
         /// </summary>
-        public override void Validate()
-        {
-            base.Validate();
-            if (this.BackendAddressPool != null)
-            {
-                this.BackendAddressPool.Validate();
-            }
-            if (this.BackendHttpSettings != null)
-            {
-                this.BackendHttpSettings.Validate();
-            }
-            if (this.HttpListener != null)
-            {
-                this.HttpListener.Validate();
-            }
-        }
+        [JsonProperty(PropertyName = "properties.provisioningState")]
+        public string ProvisioningState { get; set; }
+
     }
 }

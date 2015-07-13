@@ -19,5 +19,12 @@ namespace Microsoft.Azure.Management.Storage.Models
         [JsonProperty(PropertyName = "properties.accountType")]
         public AccountType? AccountType { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
+        /// </summary>
+        public override void Validate()
+        {
+            base.Validate();
+        }
     }
 }

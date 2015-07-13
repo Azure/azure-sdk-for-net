@@ -45,25 +45,11 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<SubResource> IpConfigurations { get; set; }
 
         /// <summary>
-        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
+        /// Gets or sets Provisioning state of the PublicIP resource
+        /// Updating/Deleting/Failed
         /// </summary>
-        public override void Validate()
-        {
-            base.Validate();
-            if (this.NetworkSecurityGroup != null)
-            {
-                this.NetworkSecurityGroup.Validate();
-            }
-            if (this.IpConfigurations != null)
-            {
-                foreach ( var element in this.IpConfigurations)
-            {
-                if (element != null)
-            {
-                element.Validate();
-            }
-            }
-            }
-        }
+        [JsonProperty(PropertyName = "properties.provisioningState")]
+        public string ProvisioningState { get; set; }
+
     }
 }

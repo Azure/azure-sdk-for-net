@@ -390,10 +390,6 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "securityRuleParameters");
             }
-            if (securityRuleParameters != null)
-            {
-                securityRuleParameters.Validate();
-            }
             if (this.Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
