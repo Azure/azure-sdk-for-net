@@ -22,8 +22,35 @@ using Xunit;
 
 namespace Microsoft.Azure.Management.TrafficManager.Testing.ScenarioTests
 {
+    using System;
+
     public class ProfileScenarioTests
     {
+        public ProfileScenarioTests()
+        {
+            // Cleanup
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+                TrafficManagerManagementClient trafficManagerClient = TrafficManagerHelper.GetTrafficManagerClient();
+
+                try
+                {
+                    ProfileListResponse listResponse = trafficManagerClient.Profiles.ListAll();
+
+                    foreach (Profile profile in listResponse.Profiles)
+                    {
+                        string resourceGroup = TrafficManagerHelper.ExtractResourceGroupFromId(profile.Id);
+                        trafficManagerClient.Profiles.Delete(resourceGroup, profile.Name);
+                    }
+                }
+                catch (Exception)
+                {
+                    // TODO: (alguerra) Remove after we fix bug on list operation
+                }
+            }
+        }
+
         [Fact]
         public void CrudProfileFullCycle()
         {
@@ -143,7 +170,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Testing.ScenarioTests
             }
         }
 
-        [Fact(Skip = "Garbage on the storage")]
+        [Fact]
         public void ListAllProfiles()
         {
             using (UndoContext context = UndoContext.Current)
@@ -169,6 +196,61 @@ namespace Microsoft.Azure.Management.TrafficManager.Testing.ScenarioTests
                 ProfileListResponse listResponse = trafficManagerClient.Profiles.ListAll();
 
                 Assert.Equal(5, listResponse.Profiles.Count);
+            }
+        }
+
+        [Fact]
+        public void NameAvailabilityTest_NameAvailable()
+        {
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+                TrafficManagerManagementClient trafficManagerClient = TrafficManagerHelper.GetTrafficManagerClient();
+
+                string relativeName = TestUtilities.GenerateName("hydratestrelativename");
+
+                var parameters = new CheckTrafficManagerRelativeDnsNameAvailabilityParameters
+                {
+                    Name = relativeName,
+                    Type = "microsoft.network/trafficmanagerprofiles"
+                };
+
+                CheckTrafficManagerRelativeDnsNameAvailabilityResponse response = trafficManagerClient.Profiles.CheckTrafficManagerRelativeDnsNameAvailability(parameters);
+
+                Assert.True(response.NameAvailable);
+            }
+        }
+
+        [Fact]
+        public void NameAvailabilityTest_NameNotAvailable()
+        {
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+                TrafficManagerManagementClient trafficManagerClient = TrafficManagerHelper.GetTrafficManagerClient();
+
+                string relativeName = TestUtilities.GenerateName("hydratestrelativename");
+                string profileName = TestUtilities.GenerateName("hydratestwatmv2profile");
+                ResourceGroupExtended resourceGroup = TrafficManagerHelper.CreateResourceGroup();
+
+                // Create the profile
+                trafficManagerClient.Profiles.CreateOrUpdate(
+                    resourceGroup.Name,
+                    profileName,
+                    new ProfileCreateOrUpdateParameters
+                    {
+                        Profile = TrafficManagerHelper.GenerateDefaultProfile(profileName, relativeName)
+                    });
+
+                var parameters = new CheckTrafficManagerRelativeDnsNameAvailabilityParameters
+                {
+                    Name = relativeName,
+                    Type = "microsoft.network/trafficmanagerprofiles"
+                };
+
+                CheckTrafficManagerRelativeDnsNameAvailabilityResponse response = trafficManagerClient.Profiles.CheckTrafficManagerRelativeDnsNameAvailability(parameters);
+
+                Assert.False(response.NameAvailable);
             }
         }
     }

@@ -1,8 +1,9 @@
 {
-    name: "LinkedService-CuratedWikiData",
-    properties:
-    {
-        type: "AzureStorageLinkedService",
-        connectionString: "$EncryptedString$BlobEncryptedConnectionString"
+  "name": "LinkedService-CuratedWikiData",
+  "properties": {
+    "type": "AzureStorage",
+    "typeProperties": {
+      "ConnectionString": "DefaultEndpointsProtocol=https;AccountName=mytestaccountname;AccountKey=mytestaccountkey"
     }
+  }
 }
