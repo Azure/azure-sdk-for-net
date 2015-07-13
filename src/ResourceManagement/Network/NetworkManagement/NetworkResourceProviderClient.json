@@ -26,13 +26,6 @@
         "description": "The delete applicationgateway operation deletes the specified applicationgateway.",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
             "name": "resourceGroupName",
             "in": "path",
             "required": true,
@@ -47,10 +40,12 @@
             "description": "The name of the applicationgateway."
           },
           {
-            "name": "api-version",
             "in": "query",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -74,13 +69,6 @@
         "description": "The Get applicationgateway operation retreives information about the specified applicationgateway.",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
             "name": "resourceGroupName",
             "in": "path",
             "required": true,
@@ -95,10 +83,12 @@
             "description": "The name of the applicationgateway."
           },
           {
-            "name": "api-version",
             "in": "query",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -118,13 +108,6 @@
         "description": "The Put ApplicationGateway operation creates/updates a ApplicationGateway",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
             "name": "resourceGroupName",
             "in": "path",
             "required": true,
@@ -139,12 +122,6 @@
             "description": "The name of the ApplicationGateway."
           },
           {
-            "name": "api-version",
-            "in": "query",
-            "required": true,
-            "type": "string"
-          },
-          {
             "name": "parameters",
             "in": "body",
             "required": true,
@@ -152,6 +129,14 @@
               "$ref": "#/definitions/ApplicationGateway"
             },
             "description": "Parameters supplied to the create/delete ApplicationGateway operation"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -180,13 +165,6 @@
         "description": "The List ApplicationGateway opertion retrieves all the applicationgateways in a resource group.",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
             "name": "resourceGroupName",
             "in": "path",
             "required": true,
@@ -194,10 +172,12 @@
             "description": "The name of the resource group."
           },
           {
-            "name": "api-version",
             "in": "query",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -220,17 +200,12 @@
         "description": "The List applicationgateway opertion retrieves all the applicationgateways in a subscription.",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
+            "in": "query",
+            "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "name": "api-version",
             "in": "query",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -253,13 +228,6 @@
         "description": "The Start ApplicationGateway operation starts application gatewayin the specified resource group through Network resource provider.",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
             "name": "resourceGroupName",
             "in": "path",
             "required": true,
@@ -274,10 +242,12 @@
             "description": "The name of the application gateway."
           },
           {
-            "name": "api-version",
             "in": "query",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -297,13 +267,6 @@
         "description": "The STOP ApplicationGateway operation stops application gatewayin the specified resource group through Network resource provider.",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
             "name": "resourceGroupName",
             "in": "path",
             "required": true,
@@ -318,10 +281,12 @@
             "description": "The name of the application gateway."
           },
           {
-            "name": "api-version",
             "in": "query",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -344,13 +309,6 @@
         "description": "The delete loadbalancer operation deletes the specified loadbalancer.",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
             "name": "resourceGroupName",
             "in": "path",
             "required": true,
@@ -365,10 +323,12 @@
             "description": "The name of the loadBalancer."
           },
           {
-            "name": "api-version",
             "in": "query",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -392,13 +352,6 @@
         "description": "The Get ntework interface operation retreives information about the specified network interface.",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
             "name": "resourceGroupName",
             "in": "path",
             "required": true,
@@ -413,10 +366,12 @@
             "description": "The name of the loadBalancer."
           },
           {
-            "name": "api-version",
             "in": "query",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -436,13 +391,6 @@
         "description": "The Put LoadBalancer operation creates/updates a LoadBalancer",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
             "name": "resourceGroupName",
             "in": "path",
             "required": true,
@@ -457,12 +405,6 @@
             "description": "The name of the loadBalancer."
           },
           {
-            "name": "api-version",
-            "in": "query",
-            "required": true,
-            "type": "string"
-          },
-          {
             "name": "parameters",
             "in": "body",
             "required": true,
@@ -470,6 +412,14 @@
               "$ref": "#/definitions/LoadBalancer"
             },
             "description": "Parameters supplied to the create/delete LoadBalancer operation"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -498,17 +448,12 @@
         "description": "The List loadBalancer opertion retrieves all the loadbalancers in a subscription.",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
+            "in": "query",
+            "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "name": "api-version",
             "in": "query",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -531,13 +476,6 @@
         "description": "The List loadBalancer opertion retrieves all the loadbalancers in a resource group.",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
             "name": "resourceGroupName",
             "in": "path",
             "required": true,
@@ -545,10 +483,12 @@
             "description": "The name of the resource group."
           },
           {
-            "name": "api-version",
             "in": "query",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -571,13 +511,6 @@
         "description": "The Put LocalNetworkGateway operation creates/updates a local network gateway in the specified resource group through Network resource provider.",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
             "name": "resourceGroupName",
             "in": "path",
             "required": true,
@@ -592,12 +525,6 @@
             "description": "The name of the local network gateway."
           },
           {
-            "name": "api-version",
-            "in": "query",
-            "required": true,
-            "type": "string"
-          },
-          {
             "name": "parameters",
             "in": "body",
             "required": true,
@@ -605,6 +532,14 @@
               "$ref": "#/definitions/LocalNetworkGateway"
             },
             "description": "Parameters supplied to the Begin Create or update Local Network Gateway operation through Network resource provider."
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -631,13 +566,6 @@
         "description": "The Get LocalNetworkGateway operation retrieves information about the specified local network gateway through Network resource provider.",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
             "name": "resourceGroupName",
             "in": "path",
             "required": true,
@@ -652,10 +580,12 @@
             "description": "The name of the local network gateway."
           },
           {
-            "name": "api-version",
             "in": "query",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -677,13 +607,6 @@
         "description": "The Delete LocalNetworkGateway operation deletes the specifed local network Gateway through Network resource provider.",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
             "name": "resourceGroupName",
             "in": "path",
             "required": true,
@@ -698,10 +621,12 @@
             "description": "The name of the local network gateway."
           },
           {
-            "name": "api-version",
             "in": "query",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -727,13 +652,6 @@
         "description": "The List LocalNetworkGateways opertion retrieves all the local network gateways stored.",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
             "name": "resourceGroupName",
             "in": "path",
             "required": true,
@@ -741,10 +659,12 @@
             "description": "The name of the resource group."
           },
           {
-            "name": "api-version",
             "in": "query",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -767,13 +687,6 @@
         "description": "The delete netwokInterface operation deletes the specified netwokInterface.",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
             "name": "resourceGroupName",
             "in": "path",
             "required": true,
@@ -788,10 +701,12 @@
             "description": "The name of the network interface."
           },
           {
-            "name": "api-version",
             "in": "query",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -815,13 +730,6 @@
         "description": "The Get ntework interface operation retreives information about the specified network interface.",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
             "name": "resourceGroupName",
             "in": "path",
             "required": true,
@@ -836,10 +744,12 @@
             "description": "The name of the network interface."
           },
           {
-            "name": "api-version",
             "in": "query",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -859,13 +769,6 @@
         "description": "The Put NetworkInterface operation creates/updates a networkInterface",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
             "name": "resourceGroupName",
             "in": "path",
             "required": true,
@@ -880,12 +783,6 @@
             "description": "The name of the network interface."
           },
           {
-            "name": "api-version",
-            "in": "query",
-            "required": true,
-            "type": "string"
-          },
-          {
             "name": "parameters",
             "in": "body",
             "required": true,
@@ -893,6 +790,14 @@
               "$ref": "#/definitions/NetworkInterface"
             },
             "description": "Parameters supplied to the create/update NetworkInterface operation"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -921,17 +826,12 @@
         "description": "The List networkInterfaces opertion retrieves all the networkInterfaces in a subscription.",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
+            "in": "query",
+            "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "name": "api-version",
             "in": "query",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -954,13 +854,6 @@
         "description": "The List networkInterfaces opertion retrieves all the networkInterfaces in a resource group.",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
             "name": "resourceGroupName",
             "in": "path",
             "required": true,
@@ -968,10 +861,12 @@
             "description": "The name of the resource group."
           },
           {
-            "name": "api-version",
             "in": "query",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -994,13 +889,6 @@
         "description": "The Delete NetworkSecurityGroup operation deletes the specifed network security group",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
             "name": "resourceGroupName",
             "in": "path",
             "required": true,
@@ -1015,10 +903,12 @@
             "description": "The name of the network security group."
           },
           {
-            "name": "api-version",
             "in": "query",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -1042,13 +932,6 @@
         "description": "The Get NetworkSecurityGroups operation retrieves information about the specified network security group.",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
             "name": "resourceGroupName",
             "in": "path",
             "required": true,
@@ -1063,10 +946,12 @@
             "description": "The name of the network security group."
           },
           {
-            "name": "api-version",
             "in": "query",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -1086,13 +971,6 @@
         "description": "The Put NetworkSecurityGroup operation creates/updates a network security groupin the specified resource group.",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
             "name": "resourceGroupName",
             "in": "path",
             "required": true,
@@ -1107,12 +985,6 @@
             "description": "The name of the network security group."
           },
           {
-            "name": "api-version",
-            "in": "query",
-            "required": true,
-            "type": "string"
-          },
-          {
             "name": "parameters",
             "in": "body",
             "required": true,
@@ -1120,6 +992,14 @@
               "$ref": "#/definitions/NetworkSecurityGroup"
             },
             "description": "Parameters supplied to the create/update Network Security Group operation"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -1148,17 +1028,12 @@
         "description": "The list NetworkSecurityGroups returns all network security groups in a subscription",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
+            "in": "query",
+            "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "name": "api-version",
             "in": "query",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -1181,13 +1056,6 @@
         "description": "The list NetworkSecurityGroups returns all network security groups in a resource group",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
             "name": "resourceGroupName",
             "in": "path",
             "required": true,
@@ -1195,10 +1063,12 @@
             "description": "The name of the resource group."
           },
           {
-            "name": "api-version",
             "in": "query",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -1221,13 +1091,6 @@
         "description": "The delete publicIpAddress operation deletes the specified publicIpAddress.",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
             "name": "resourceGroupName",
             "in": "path",
             "required": true,
@@ -1242,10 +1105,12 @@
             "description": "The name of the subnet."
           },
           {
-            "name": "api-version",
             "in": "query",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -1269,13 +1134,6 @@
         "description": "The Get publicIpAddress operation retreives information about the specified pubicIpAddress",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
             "name": "resourceGroupName",
             "in": "path",
             "required": true,
@@ -1290,10 +1148,12 @@
             "description": "The name of the subnet."
           },
           {
-            "name": "api-version",
             "in": "query",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -1313,13 +1173,6 @@
         "description": "The Put PublicIPAddress operation creates/updates a stable/dynamic PublicIP address",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
             "name": "resourceGroupName",
             "in": "path",
             "required": true,
@@ -1334,12 +1187,6 @@
             "description": "The name of the publicIpAddress."
           },
           {
-            "name": "api-version",
-            "in": "query",
-            "required": true,
-            "type": "string"
-          },
-          {
             "name": "parameters",
             "in": "body",
             "required": true,
@@ -1347,6 +1194,14 @@
               "$ref": "#/definitions/PublicIpAddress"
             },
             "description": "Parameters supplied to the create/update PublicIPAddress operation"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -1375,17 +1230,12 @@
         "description": "The List publicIpAddress opertion retrieves all the publicIpAddresses in a subscription.",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
+            "in": "query",
+            "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "name": "api-version",
             "in": "query",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -1408,13 +1258,6 @@
         "description": "The List publicIpAddress opertion retrieves all the publicIpAddresses in a resource group.",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
             "name": "resourceGroupName",
             "in": "path",
             "required": true,
@@ -1422,10 +1265,12 @@
             "description": "The name of the resource group."
           },
           {
-            "name": "api-version",
             "in": "query",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -1448,13 +1293,6 @@
         "description": "The delete network security rule operation deletes the specified network security rule.",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
             "name": "resourceGroupName",
             "in": "path",
             "required": true,
@@ -1476,10 +1314,12 @@
             "description": "The name of the security rule."
           },
           {
-            "name": "api-version",
             "in": "query",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -1503,13 +1343,6 @@
         "description": "The Get NetworkSecurityRule operation retreives information about the specified network security rule.",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
             "name": "resourceGroupName",
             "in": "path",
             "required": true,
@@ -1531,10 +1364,12 @@
             "description": "The name of the security rule."
           },
           {
-            "name": "api-version",
             "in": "query",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -1554,13 +1389,6 @@
         "description": "The Put network security rule operation creates/updates a security rule in the specified network security group",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
             "name": "resourceGroupName",
             "in": "path",
             "required": true,
@@ -1582,12 +1410,6 @@
             "description": "The name of the security rule."
           },
           {
-            "name": "api-version",
-            "in": "query",
-            "required": true,
-            "type": "string"
-          },
-          {
             "name": "securityRuleParameters",
             "in": "body",
             "required": true,
@@ -1595,6 +1417,14 @@
               "$ref": "#/definitions/SecurityRule"
             },
             "description": "Parameters supplied to the create/update network security rule operation"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -1623,13 +1453,6 @@
         "description": "The List network security rule opertion retrieves all the security rules in a network security group.",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
             "name": "resourceGroupName",
             "in": "path",
             "required": true,
@@ -1644,10 +1467,12 @@
             "description": "The name of the network security group."
           },
           {
-            "name": "api-version",
             "in": "query",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -1670,13 +1495,6 @@
         "description": "The delete subnet operation deletes the specified subnet.",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
             "name": "resourceGroupName",
             "in": "path",
             "required": true,
@@ -1698,10 +1516,12 @@
             "description": "The name of the subnet."
           },
           {
-            "name": "api-version",
             "in": "query",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -1725,13 +1545,6 @@
         "description": "The Get subnet operation retreives information about the specified subnet.",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
             "name": "resourceGroupName",
             "in": "path",
             "required": true,
@@ -1753,10 +1566,12 @@
             "description": "The name of the subnet."
           },
           {
-            "name": "api-version",
             "in": "query",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -1776,13 +1591,6 @@
         "description": "The Put Subnet operation creates/updates a subnet in thespecified virtual network",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
             "name": "resourceGroupName",
             "in": "path",
             "required": true,
@@ -1804,12 +1612,6 @@
             "description": "The name of the subnet."
           },
           {
-            "name": "api-version",
-            "in": "query",
-            "required": true,
-            "type": "string"
-          },
-          {
             "name": "subnetParameters",
             "in": "body",
             "required": true,
@@ -1817,6 +1619,14 @@
               "$ref": "#/definitions/Subnet"
             },
             "description": "Parameters supplied to the create/update Subnet operation"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -1845,13 +1655,6 @@
         "description": "The List subnets opertion retrieves all the subnets in a virtual network.",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
             "name": "resourceGroupName",
             "in": "path",
             "required": true,
@@ -1866,10 +1669,12 @@
             "description": "The name of the virtual network."
           },
           {
-            "name": "api-version",
             "in": "query",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -1892,13 +1697,6 @@
         "description": "Lists compute usages for a subscription.",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
             "name": "location",
             "in": "path",
             "required": true,
@@ -1906,10 +1704,12 @@
             "description": "The location upon which resource usage is queried."
           },
           {
-            "name": "api-version",
             "in": "query",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -1931,13 +1731,6 @@
         "description": "The Put VirtualNetworkGatewayConnection operation creates/updates a virtual network gateway connection in the specified resource group through Network resource provider.",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
             "name": "resourceGroupName",
             "in": "path",
             "required": true,
@@ -1952,12 +1745,6 @@
             "description": "The name of the virtual network gateway conenction."
           },
           {
-            "name": "api-version",
-            "in": "query",
-            "required": true,
-            "type": "string"
-          },
-          {
             "name": "parameters",
             "in": "body",
             "required": true,
@@ -1965,6 +1752,14 @@
               "$ref": "#/definitions/VirtualNetworkGatewayConnection"
             },
             "description": "Parameters supplied to the Begin Create or update Virtual Network Gateway connection operation through Network resource provider."
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -1991,13 +1786,6 @@
         "description": "The Get VirtualNetworkGatewayConnection operation retrieves information about the specified virtual network gateway connection through Network resource provider.",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
             "name": "resourceGroupName",
             "in": "path",
             "required": true,
@@ -2012,10 +1800,12 @@
             "description": "The name of the virtual network gateway connection."
           },
           {
-            "name": "api-version",
             "in": "query",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -2037,13 +1827,6 @@
         "description": "The Delete VirtualNetworkGatewayConnection operation deletes the specifed virtual network Gateway connection through Network resource provider.",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
             "name": "resourceGroupName",
             "in": "path",
             "required": true,
@@ -2058,10 +1841,12 @@
             "description": "The name of the virtual network gateway connection."
           },
           {
-            "name": "api-version",
             "in": "query",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -2087,13 +1872,6 @@
         "description": "The Get VirtualNetworkGatewayConnectionSharedKey operation retrieves information about the specified virtual network gateway connection shared key through Network resource provider.",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
             "name": "resourceGroupName",
             "in": "path",
             "required": true,
@@ -2108,10 +1886,12 @@
             "description": "The virtual network gateway connection shared key name."
           },
           {
-            "name": "api-version",
             "in": "query",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -2131,13 +1911,6 @@
         "description": "The Put VirtualNetworkGatewayConnectionSharedKey operation sets the virtual network gateway connection shared key for passed virtual network gateway connection in the specified resource group through Network resource provider.",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
             "name": "resourceGroupName",
             "in": "path",
             "required": true,
@@ -2152,12 +1925,6 @@
             "description": "The virtual network gateway connection name."
           },
           {
-            "name": "api-version",
-            "in": "query",
-            "required": true,
-            "type": "string"
-          },
-          {
             "name": "parameters",
             "in": "body",
             "required": true,
@@ -2165,6 +1932,14 @@
               "$ref": "#/definitions/ConnectionSharedKey"
             },
             "description": "Parameters supplied to the Begin Set Virtual Network Gateway conection Shared key operation throughNetwork resource provider."
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -2193,13 +1968,6 @@
         "description": "The List VirtualNetworkGatewayConnections operation retrieves all the virtual network gateways connections created.",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
             "name": "resourceGroupName",
             "in": "path",
             "required": true,
@@ -2207,10 +1975,12 @@
             "description": "The name of the resource group."
           },
           {
-            "name": "api-version",
             "in": "query",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -2233,13 +2003,6 @@
         "description": "The VirtualNetworkGatewayConnectionResetSharedKey operation resets the virtual network gateway connection shared key for passed virtual network gateway connection in the specified resource group through Network resource provider.",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
             "name": "resourceGroupName",
             "in": "path",
             "required": true,
@@ -2254,12 +2017,6 @@
             "description": "The virtual network gateway connection reset shared key Name."
           },
           {
-            "name": "api-version",
-            "in": "query",
-            "required": true,
-            "type": "string"
-          },
-          {
             "name": "parameters",
             "in": "body",
             "required": true,
@@ -2267,6 +2024,14 @@
               "$ref": "#/definitions/ConnectionResetSharedKey"
             },
             "description": "Parameters supplied to the Begin Reset Virtual Network Gateway connection shared key operation through Network resource provider."
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -2292,13 +2057,6 @@
         "description": "The Put VirtualNetworkGateway operation creates/updates a virtual network gateway in the specified resource group through Network resource provider.",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
             "name": "resourceGroupName",
             "in": "path",
             "required": true,
@@ -2313,12 +2071,6 @@
             "description": "The name of the virtual network gateway."
           },
           {
-            "name": "api-version",
-            "in": "query",
-            "required": true,
-            "type": "string"
-          },
-          {
             "name": "parameters",
             "in": "body",
             "required": true,
@@ -2326,6 +2078,14 @@
               "$ref": "#/definitions/VirtualNetworkGateway"
             },
             "description": "Parameters supplied to the Begin Create or update Virtual Network Gateway operation through Network resource provider."
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -2352,13 +2112,6 @@
         "description": "The Get VirtualNetworkGateway operation retrieves information about the specified virtual network gateway through Network resource provider.",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
             "name": "resourceGroupName",
             "in": "path",
             "required": true,
@@ -2373,10 +2126,12 @@
             "description": "The name of the virtual network gateway."
           },
           {
-            "name": "api-version",
             "in": "query",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -2398,13 +2153,6 @@
         "description": "The Delete VirtualNetworkGateway operation deletes the specifed virtual network Gateway through Network resource provider.",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
             "name": "resourceGroupName",
             "in": "path",
             "required": true,
@@ -2419,10 +2167,12 @@
             "description": "The name of the virtual network gateway."
           },
           {
-            "name": "api-version",
             "in": "query",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -2448,13 +2198,6 @@
         "description": "The List VirtualNetworkGateways opertion retrieves all the virtual network gateways stored.",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
             "name": "resourceGroupName",
             "in": "path",
             "required": true,
@@ -2462,10 +2205,12 @@
             "description": "The name of the resource group."
           },
           {
-            "name": "api-version",
             "in": "query",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -2488,13 +2233,6 @@
         "description": "The Reset VirtualNetworkGateway operation resets the primary of the virtual network gatewayin the specified resource group through Network resource provider.",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
             "name": "resourceGroupName",
             "in": "path",
             "required": true,
@@ -2509,12 +2247,6 @@
             "description": "The name of the virtual network gateway."
           },
           {
-            "name": "api-version",
-            "in": "query",
-            "required": true,
-            "type": "string"
-          },
-          {
             "name": "parameters",
             "in": "body",
             "required": true,
@@ -2522,6 +2254,14 @@
               "$ref": "#/definitions/VirtualNetworkGateway"
             },
             "description": "Parameters supplied to the Begin Reset Virtual Network Gateway operation through Network resource provider."
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -2547,13 +2287,6 @@
         "description": "The Delete VirtualNetwork operation deletes the specifed virtual network",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
             "name": "resourceGroupName",
             "in": "path",
             "required": true,
@@ -2568,10 +2301,12 @@
             "description": "The name of the virtual network."
           },
           {
-            "name": "api-version",
             "in": "query",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -2595,13 +2330,6 @@
         "description": "The Get VirtualNetwork operation retrieves information about the specified virtual network.",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
             "name": "resourceGroupName",
             "in": "path",
             "required": true,
@@ -2616,10 +2344,12 @@
             "description": "The name of the virtual network."
           },
           {
-            "name": "api-version",
             "in": "query",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -2639,13 +2369,6 @@
         "description": "The Put VirtualNetwork operation creates/updates a virtual network in the specified resource group.",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
             "name": "resourceGroupName",
             "in": "path",
             "required": true,
@@ -2660,12 +2383,6 @@
             "description": "The name of the virtual network."
           },
           {
-            "name": "api-version",
-            "in": "query",
-            "required": true,
-            "type": "string"
-          },
-          {
             "name": "parameters",
             "in": "body",
             "required": true,
@@ -2673,6 +2390,14 @@
               "$ref": "#/definitions/VirtualNetwork"
             },
             "description": "Parameters supplied to the create/update Virtual Network operation"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -2701,17 +2426,12 @@
         "description": "The list VirtualNetwork returns all Virtual Networks in a subscription",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
+            "in": "query",
+            "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "name": "api-version",
             "in": "query",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -2734,13 +2454,6 @@
         "description": "The list VirtualNetwork returns all Virtual Networks in a resource group",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
             "name": "resourceGroupName",
             "in": "path",
             "required": true,
@@ -2748,10 +2461,12 @@
             "description": "The name of the resource group."
           },
           {
-            "name": "api-version",
             "in": "query",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -2771,13 +2486,6 @@
         "description": "Checks whether a domain name in the cloudapp.net zone is available for use.",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
             "name": "location",
             "in": "path",
             "required": true,
@@ -2792,10 +2500,12 @@
             "description": "The domain name to be verified. It must conform to the following regular expression: ^[a-z][a-z0-9-]{1,61}[a-z0-9]$."
           },
           {
-            "name": "api-version",
             "in": "query",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -4597,6 +4307,22 @@
         "id"
       ],
       "x-ms-external": true
+    }
+  },
+  "parameters": {
+    "SubscriptionIdParameter": {
+      "name": "subscriptionId",
+      "in": "path",
+      "required": true,
+      "type": "string",
+      "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
+    },
+    "ApiVersionParameter": {
+      "name": "api-version",
+      "in": "query",
+      "required": true,
+      "type": "string",
+      "description": "Client Api Version."
     }
   }
 }

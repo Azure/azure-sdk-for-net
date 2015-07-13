@@ -29,12 +29,5 @@ namespace Microsoft.Azure.Management.Storage.Models
         [JsonProperty(PropertyName = "table")]
         public string Table { get; set; }
 
-        /// <summary>
-        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
-        /// </summary>
-        public virtual void Validate()
-        {
-            //Nothing to validate
-        }
     }
 }

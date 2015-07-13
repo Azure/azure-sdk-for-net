@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Subscriptions
             /// </param>
             public static async Task<Subscription> GetAsync( this ISubscriptionsOperations operations, string subscriptionId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<Subscription> result = await operations.GetWithOperationResponseAsync(subscriptionId, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<Subscription> result = await operations.GetWithHttpMessagesAsync(subscriptionId, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Subscriptions
             /// </param>
             public static async Task<SubscriptionListResult> ListAsync( this ISubscriptionsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<SubscriptionListResult> result = await operations.ListWithOperationResponseAsync(cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<SubscriptionListResult> result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -97,7 +97,7 @@ namespace Microsoft.Azure.Subscriptions
             /// </param>
             public static async Task<SubscriptionListResult> ListNextAsync( this ISubscriptionsOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<SubscriptionListResult> result = await operations.ListNextWithOperationResponseAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<SubscriptionListResult> result = await operations.ListNextWithHttpMessagesAsync(nextLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

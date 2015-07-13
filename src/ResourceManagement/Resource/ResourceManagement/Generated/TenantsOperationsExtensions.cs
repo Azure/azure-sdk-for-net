@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Subscriptions
             /// </param>
             public static async Task<TenantListResult> ListAsync( this ITenantsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<TenantListResult> result = await operations.ListWithOperationResponseAsync(cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<TenantListResult> result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Subscriptions
             /// </param>
             public static async Task<TenantListResult> ListNextAsync( this ITenantsOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<TenantListResult> result = await operations.ListNextWithOperationResponseAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<TenantListResult> result = await operations.ListNextWithHttpMessagesAsync(nextLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

@@ -30,14 +30,11 @@
             "in": "path",
             "required": true,
             "type": "string",
-            "description": "Id of the subscription.",
-            "x-ms-global-parameter": false
+            "description": "Id of the subscription."
           },
           {
-            "name": "api-version",
             "in": "query",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/ApiVersionParameter"
           }
         ],
         "responses": {
@@ -59,10 +56,12 @@
         "description": "Gets a list of the subscriptionIds.",
         "parameters": [
           {
-            "name": "api-version",
             "in": "query",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -85,10 +84,12 @@
         "description": "Gets a list of the tenantIds.",
         "parameters": [
           {
-            "name": "api-version",
             "in": "query",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -238,6 +239,9 @@
           "description": "Resource tags"
         }
       },
+      "required": [
+        "location"
+      ],
       "x-ms-external": true
     },
     "SubResource": {
@@ -247,7 +251,26 @@
           "description": "Resource Id"
         }
       },
+      "required": [
+        "id"
+      ],
       "x-ms-external": true
+    }
+  },
+  "parameters": {
+    "SubscriptionIdParameter": {
+      "name": "subscriptionId",
+      "in": "path",
+      "required": true,
+      "type": "string",
+      "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
+    },
+    "ApiVersionParameter": {
+      "name": "api-version",
+      "in": "query",
+      "required": true,
+      "type": "string",
+      "description": "Client Api Version."
     }
   }
 }

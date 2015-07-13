@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task DeleteValueAsync( this ITagsOperations operations, string tagName, string tagValue, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.DeleteValueWithOperationResponseAsync(tagName, tagValue, cancellationToken).ConfigureAwait(false);
+                await operations.DeleteValueWithHttpMessagesAsync(tagName, tagValue, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<TagValue> CreateOrUpdateValueAsync( this ITagsOperations operations, string tagName, string tagValue, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<TagValue> result = await operations.CreateOrUpdateValueWithOperationResponseAsync(tagName, tagValue, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<TagValue> result = await operations.CreateOrUpdateValueWithHttpMessagesAsync(tagName, tagValue, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -115,7 +115,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<TagDetails> CreateOrUpdateAsync( this ITagsOperations operations, string tagName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<TagDetails> result = await operations.CreateOrUpdateWithOperationResponseAsync(tagName, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<TagDetails> result = await operations.CreateOrUpdateWithHttpMessagesAsync(tagName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -147,7 +147,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task DeleteAsync( this ITagsOperations operations, string tagName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.DeleteWithOperationResponseAsync(tagName, cancellationToken).ConfigureAwait(false);
+                await operations.DeleteWithHttpMessagesAsync(tagName, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -172,7 +172,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<TagsListResult> ListAsync( this ITagsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<TagsListResult> result = await operations.ListWithOperationResponseAsync(cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<TagsListResult> result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -204,7 +204,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<TagsListResult> ListNextAsync( this ITagsOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<TagsListResult> result = await operations.ListNextWithOperationResponseAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<TagsListResult> result = await operations.ListNextWithHttpMessagesAsync(nextLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

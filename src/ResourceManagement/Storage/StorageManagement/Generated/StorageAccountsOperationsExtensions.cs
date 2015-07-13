@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.Storage
             /// </param>
             public static async Task<CheckNameAvailabilityResult> CheckNameAvailabilityAsync( this IStorageAccountsOperations operations, StorageAccountCheckNameAvailabilityParameters accountName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<CheckNameAvailabilityResult> result = await operations.CheckNameAvailabilityWithOperationResponseAsync(accountName, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<CheckNameAvailabilityResult> result = await operations.CheckNameAvailabilityWithHttpMessagesAsync(accountName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -99,7 +99,7 @@ namespace Microsoft.Azure.Management.Storage
             /// </param>
             public static async Task<StorageAccount> CreateAsync( this IStorageAccountsOperations operations, string resourceGroupName, string accountName, StorageAccountCreateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<StorageAccount> result = await operations.CreateWithOperationResponseAsync(resourceGroupName, accountName, parameters, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<StorageAccount> result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, accountName, parameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -155,7 +155,7 @@ namespace Microsoft.Azure.Management.Storage
             /// </param>
             public static async Task<StorageAccount> BeginCreateAsync( this IStorageAccountsOperations operations, string resourceGroupName, string accountName, StorageAccountCreateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<StorageAccount> result = await operations.BeginCreateWithOperationResponseAsync(resourceGroupName, accountName, parameters, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<StorageAccount> result = await operations.BeginCreateWithHttpMessagesAsync(resourceGroupName, accountName, parameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -197,7 +197,7 @@ namespace Microsoft.Azure.Management.Storage
             /// </param>
             public static async Task DeleteAsync( this IStorageAccountsOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.DeleteWithOperationResponseAsync(resourceGroupName, accountName, cancellationToken).ConfigureAwait(false);
+                await operations.DeleteWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -242,7 +242,7 @@ namespace Microsoft.Azure.Management.Storage
             /// </param>
             public static async Task<StorageAccount> GetPropertiesAsync( this IStorageAccountsOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<StorageAccount> result = await operations.GetPropertiesWithOperationResponseAsync(resourceGroupName, accountName, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<StorageAccount> result = await operations.GetPropertiesWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -308,7 +308,7 @@ namespace Microsoft.Azure.Management.Storage
             /// </param>
             public static async Task<StorageAccount> UpdateAsync( this IStorageAccountsOperations operations, string resourceGroupName, string accountName, StorageAccountUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<StorageAccount> result = await operations.UpdateWithOperationResponseAsync(resourceGroupName, accountName, parameters, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<StorageAccount> result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, accountName, parameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -346,7 +346,7 @@ namespace Microsoft.Azure.Management.Storage
             /// </param>
             public static async Task<StorageAccountKeys> ListKeysAsync( this IStorageAccountsOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<StorageAccountKeys> result = await operations.ListKeysWithOperationResponseAsync(resourceGroupName, accountName, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<StorageAccountKeys> result = await operations.ListKeysWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -374,7 +374,7 @@ namespace Microsoft.Azure.Management.Storage
             /// </param>
             public static async Task<StorageAccountListResult> ListAsync( this IStorageAccountsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<StorageAccountListResult> result = await operations.ListWithOperationResponseAsync(cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<StorageAccountListResult> result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -410,7 +410,7 @@ namespace Microsoft.Azure.Management.Storage
             /// </param>
             public static async Task<StorageAccountListResult> ListByResourceGroupAsync( this IStorageAccountsOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<StorageAccountListResult> result = await operations.ListByResourceGroupWithOperationResponseAsync(resourceGroupName, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<StorageAccountListResult> result = await operations.ListByResourceGroupWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -458,7 +458,7 @@ namespace Microsoft.Azure.Management.Storage
             /// </param>
             public static async Task<StorageAccountKeys> RegenerateKeyAsync( this IStorageAccountsOperations operations, string resourceGroupName, string accountName, StorageAccountRegenerateKeyParameters regenerateKey, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<StorageAccountKeys> result = await operations.RegenerateKeyWithOperationResponseAsync(resourceGroupName, accountName, regenerateKey, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<StorageAccountKeys> result = await operations.RegenerateKeyWithHttpMessagesAsync(resourceGroupName, accountName, regenerateKey, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -492,7 +492,7 @@ namespace Microsoft.Azure.Management.Storage
             /// </param>
             public static async Task<StorageAccountListResult> ListNextAsync( this IStorageAccountsOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<StorageAccountListResult> result = await operations.ListNextWithOperationResponseAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<StorageAccountListResult> result = await operations.ListNextWithHttpMessagesAsync(nextLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -528,7 +528,7 @@ namespace Microsoft.Azure.Management.Storage
             /// </param>
             public static async Task<StorageAccountListResult> ListByResourceGroupNextAsync( this IStorageAccountsOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<StorageAccountListResult> result = await operations.ListByResourceGroupNextWithOperationResponseAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<StorageAccountListResult> result = await operations.ListByResourceGroupNextWithHttpMessagesAsync(nextLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

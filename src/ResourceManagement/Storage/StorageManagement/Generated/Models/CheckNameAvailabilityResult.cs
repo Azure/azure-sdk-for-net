@@ -34,11 +34,5 @@ namespace Microsoft.Azure.Management.Storage.Models
         [JsonProperty(PropertyName = "message")]
         public string Message { get; set; }
 
-        /// <summary>
-        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
-        /// </summary>
-        public virtual void Validate()
-        {
-        }
     }
 }

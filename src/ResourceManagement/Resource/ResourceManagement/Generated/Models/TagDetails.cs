@@ -40,10 +40,6 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// </summary>
         public virtual void Validate()
         {
-            if (this.Count != null)
-            {
-                this.Count.Validate();
-            }
             if (this.Values != null)
             {
                 foreach ( var element in this.Values)

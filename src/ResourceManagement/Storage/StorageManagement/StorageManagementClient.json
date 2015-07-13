@@ -26,19 +26,6 @@
         "description": "Checks that account name is valid and is not in use.",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
-            "name": "api-version",
-            "in": "query",
-            "required": true,
-            "type": "string"
-          },
-          {
             "name": "accountName",
             "in": "body",
             "required": true,
@@ -46,6 +33,14 @@
               "$ref": "#/definitions/StorageAccountCheckNameAvailabilityParameters"
             },
             "description": "The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only.  "
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -67,13 +62,6 @@
         "description": "Asynchronously creates a new storage account with the specified parameters. Existing accounts cannot be updated with this API and should instead use the Update Storage Account API. If an account is already created and subsequent PUT request is issued with exact same set of properties, then HTTP 200 would be returned. ",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
             "name": "resourceGroupName",
             "in": "path",
             "required": true,
@@ -88,12 +76,6 @@
             "description": "The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only.  "
           },
           {
-            "name": "api-version",
-            "in": "query",
-            "required": true,
-            "type": "string"
-          },
-          {
             "name": "parameters",
             "in": "body",
             "required": true,
@@ -101,6 +83,14 @@
               "$ref": "#/definitions/StorageAccountCreateParameters"
             },
             "description": "The parameters to provide for the created account."
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -124,13 +114,6 @@
         "description": "Deletes a storage account in Microsoft Azure.",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
             "name": "resourceGroupName",
             "in": "path",
             "required": true,
@@ -145,10 +128,12 @@
             "description": "The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only.  "
           },
           {
-            "name": "api-version",
             "in": "query",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -168,13 +153,6 @@
         "description": "Returns the properties for the specified storage account including but not limited to name, account type, location, and account status. The ListKeys operation should be used to retrieve storage keys.",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
             "name": "resourceGroupName",
             "in": "path",
             "required": true,
@@ -189,10 +167,12 @@
             "description": "The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only.  "
           },
           {
-            "name": "api-version",
             "in": "query",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -212,13 +192,6 @@
         "description": "Updates the account type or tags for a storage account. It can also be used to add a custom domain (note that custom domains cannot be added via the Create operation). Only one custom domain is supported per storage account. This API can only be used to update one of tags, accountType, or customDomain per call. To update multiple of these properties, call the API multiple times with one change per call. This call does not change the storage keys for the account. If you want to change storage account keys, use the RegenerateKey operation. The location and name of the storage account cannot be changed after creation.",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
             "name": "resourceGroupName",
             "in": "path",
             "required": true,
@@ -233,12 +206,6 @@
             "description": "The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only.  "
           },
           {
-            "name": "api-version",
-            "in": "query",
-            "required": true,
-            "type": "string"
-          },
-          {
             "name": "parameters",
             "in": "body",
             "required": true,
@@ -246,6 +213,14 @@
               "$ref": "#/definitions/StorageAccountUpdateParameters"
             },
             "description": "The parameters to update on the account. Note that only one property can be changed at a time using this API. "
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -267,13 +242,6 @@
         "description": "Lists the access keys for the specified storage account.",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
             "name": "resourceGroupName",
             "in": "path",
             "required": true,
@@ -288,10 +256,12 @@
             "description": "The name of the storage account."
           },
           {
-            "name": "api-version",
             "in": "query",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -313,17 +283,12 @@
         "description": "Lists all the storage accounts available under the subscription. Note that storage keys are not returned; use the ListKeys operation for this.",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
+            "in": "query",
+            "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "name": "api-version",
             "in": "query",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -346,13 +311,6 @@
         "description": "Lists all the storage accounts available under the given resource group. Note that storage keys are not returned; use the ListKeys operation for this.",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
             "name": "resourceGroupName",
             "in": "path",
             "required": true,
@@ -360,10 +318,12 @@
             "description": "The name of the resource group within the user’s subscription."
           },
           {
-            "name": "api-version",
             "in": "query",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -386,13 +346,6 @@
         "description": "Regenerates the access keys for the specified storage account.",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
             "name": "resourceGroupName",
             "in": "path",
             "required": true,
@@ -407,12 +360,6 @@
             "description": "The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only.  "
           },
           {
-            "name": "api-version",
-            "in": "query",
-            "required": true,
-            "type": "string"
-          },
-          {
             "name": "regenerateKey",
             "in": "body",
             "required": true,
@@ -420,6 +367,14 @@
               "$ref": "#/definitions/StorageAccountRegenerateKeyParameters"
             },
             "description": "Specifies name of the key which should be regenerated."
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -527,16 +482,6 @@
     },
     "StorageAccountProperties": {
       "properties": {
-        "provisioningState": {
-          "type": "string",
-          "description": "Gets the status of the storage account at the time the operation was called.",
-          "enum": [
-            "Creating",
-            "ResolvingDNS",
-            "Succeeded"
-          ],
-          "x-ms-enum": "ProvisioningState"
-        },
         "accountType": {
           "type": "string",
           "description": "Gets the type of the storage account.",
@@ -715,6 +660,9 @@
           "description": "Resource tags"
         }
       },
+      "required": [
+        "location"
+      ],
       "x-ms-external": true
     },
     "SubResource": {
@@ -724,7 +672,26 @@
           "description": "Resource Id"
         }
       },
+      "required": [
+        "id"
+      ],
       "x-ms-external": true
+    }
+  },
+  "parameters": {
+    "SubscriptionIdParameter": {
+      "name": "subscriptionId",
+      "in": "path",
+      "required": true,
+      "type": "string",
+      "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
+    },
+    "ApiVersionParameter": {
+      "name": "api-version",
+      "in": "query",
+      "required": true,
+      "type": "string",
+      "description": "Client Api Version."
     }
   }
 }

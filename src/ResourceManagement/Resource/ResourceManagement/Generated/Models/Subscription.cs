@@ -36,12 +36,5 @@ namespace Microsoft.Azure.Subscriptions.Models
         [JsonProperty(PropertyName = "state")]
         public string State { get; set; }
 
-        /// <summary>
-        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
-        /// </summary>
-        public virtual void Validate()
-        {
-            //Nothing to validate
-        }
     }
 }

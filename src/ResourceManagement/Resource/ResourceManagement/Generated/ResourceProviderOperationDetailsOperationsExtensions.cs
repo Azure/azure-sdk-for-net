@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<ResourceProviderOperationDetailListResult> ListAsync( this IResourceProviderOperationDetailsOperations operations, string resourceProviderNamespace, string apiVersion, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<ResourceProviderOperationDetailListResult> result = await operations.ListWithOperationResponseAsync(resourceProviderNamespace, apiVersion, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<ResourceProviderOperationDetailListResult> result = await operations.ListWithHttpMessagesAsync(resourceProviderNamespace, apiVersion, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

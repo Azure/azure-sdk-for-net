@@ -28,10 +28,6 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// </summary>
         public virtual void Validate()
         {
-            if (this.Error != null)
-            {
-                this.Error.Validate();
-            }
             if (this.Properties != null)
             {
                 this.Properties.Validate();

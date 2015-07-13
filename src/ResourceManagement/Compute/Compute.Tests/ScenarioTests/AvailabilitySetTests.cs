@@ -240,6 +240,7 @@ namespace Compute.Tests
                         {"testTag", "1"},
                     },
             };
+            typeof(Resource).GetProperty("ProvisioningState").SetValue(inputAvailabilitySet, "InProgress");
 
             // function to test the limits available.       
             inputAvailabilitySet.PlatformFaultDomainCount = FDTooLow;
@@ -254,7 +255,7 @@ namespace Compute.Tests
             catch (CloudException ex)
             {
                 Assert.True(ex.Response.StatusCode == HttpStatusCode.BadRequest);
-                Assert.True(ex.Message == "InvalidParameter");
+                Assert.Equal("InvalidParameter", ex.Message);
             }
             Assert.True(createOrUpdateResponse == null);
 

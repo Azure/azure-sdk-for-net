@@ -49,6 +49,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         public object ProtectedSettings { get; set; }
 
         /// <summary>
+        /// Gets or sets the provisioning state, which only appears in the
+        /// response.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.provisioningState")]
+        public string ProvisioningState { get; set; }
+
+        /// <summary>
         /// Gets or sets the virtual machine extension instance view.
         /// </summary>
         [JsonProperty(PropertyName = "properties.instanceView")]

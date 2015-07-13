@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<DeploymentOperation> GetAsync( this IDeploymentOperationsOperations operations, string resourceGroupName, string deploymentName, string operationId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<DeploymentOperation> result = await operations.GetWithOperationResponseAsync(resourceGroupName, deploymentName, operationId, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<DeploymentOperation> result = await operations.GetWithHttpMessagesAsync(resourceGroupName, deploymentName, operationId, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -96,7 +96,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<DeploymentOperationsListResult> ListAsync( this IDeploymentOperationsOperations operations, string resourceGroupName, string deploymentName, int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<DeploymentOperationsListResult> result = await operations.ListWithOperationResponseAsync(resourceGroupName, deploymentName, top, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<DeploymentOperationsListResult> result = await operations.ListWithHttpMessagesAsync(resourceGroupName, deploymentName, top, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -128,7 +128,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<DeploymentOperationsListResult> ListNextAsync( this IDeploymentOperationsOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<DeploymentOperationsListResult> result = await operations.ListNextWithOperationResponseAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<DeploymentOperationsListResult> result = await operations.ListNextWithHttpMessagesAsync(nextLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

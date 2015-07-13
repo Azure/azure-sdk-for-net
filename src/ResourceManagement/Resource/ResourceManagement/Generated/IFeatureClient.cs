@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Resources
 
     /// <summary>
     /// </summary>
-    public partial interface IFeatureClient : IDisposable
+    public partial interface IFeatureClient
     {
         /// <summary>
         /// The base URI of the service.

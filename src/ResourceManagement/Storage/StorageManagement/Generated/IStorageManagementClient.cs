@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Storage
 
     /// <summary>
     /// </summary>
-    public partial interface IStorageManagementClient : IDisposable
+    public partial interface IStorageManagementClient
     {
         /// <summary>
         /// The base URI of the service.

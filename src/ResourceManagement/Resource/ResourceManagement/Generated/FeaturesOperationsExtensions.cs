@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<FeatureOperationsListResult> ListAllAsync( this IFeaturesOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<FeatureOperationsListResult> result = await operations.ListAllWithOperationResponseAsync(cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<FeatureOperationsListResult> result = await operations.ListAllWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<FeatureOperationsListResult> ListAsync( this IFeaturesOperations operations, string resourceProviderNamespace, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<FeatureOperationsListResult> result = await operations.ListWithOperationResponseAsync(resourceProviderNamespace, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<FeatureOperationsListResult> result = await operations.ListWithHttpMessagesAsync(resourceProviderNamespace, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -105,7 +105,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<FeatureResult> GetAsync( this IFeaturesOperations operations, string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<FeatureResult> result = await operations.GetWithOperationResponseAsync(resourceProviderNamespace, featureName, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<FeatureResult> result = await operations.GetWithHttpMessagesAsync(resourceProviderNamespace, featureName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -143,7 +143,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<FeatureResult> RegisterAsync( this IFeaturesOperations operations, string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<FeatureResult> result = await operations.RegisterWithOperationResponseAsync(resourceProviderNamespace, featureName, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<FeatureResult> result = await operations.RegisterWithHttpMessagesAsync(resourceProviderNamespace, featureName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -177,7 +177,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<FeatureOperationsListResult> ListAllNextAsync( this IFeaturesOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<FeatureOperationsListResult> result = await operations.ListAllNextWithOperationResponseAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<FeatureOperationsListResult> result = await operations.ListAllNextWithHttpMessagesAsync(nextLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -209,7 +209,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<FeatureOperationsListResult> ListNextAsync( this IFeaturesOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<FeatureOperationsListResult> result = await operations.ListNextWithOperationResponseAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<FeatureOperationsListResult> result = await operations.ListNextWithHttpMessagesAsync(nextLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

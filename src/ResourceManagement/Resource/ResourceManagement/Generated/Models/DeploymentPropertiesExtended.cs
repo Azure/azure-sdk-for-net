@@ -87,34 +87,6 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// </summary>
         public virtual void Validate()
         {
-            if (this.Providers != null)
-            {
-                foreach ( var element in this.Providers)
-            {
-                if (element != null)
-            {
-                element.Validate();
-            }
-            }
-            }
-            if (this.Dependencies != null)
-            {
-                foreach ( var element1 in this.Dependencies)
-            {
-                if (element1 != null)
-            {
-                element1.Validate();
-            }
-            }
-            }
-            if (this.TemplateLink != null)
-            {
-                this.TemplateLink.Validate();
-            }
-            if (this.ParametersLink != null)
-            {
-                this.ParametersLink.Validate();
-            }
         }
     }
 }

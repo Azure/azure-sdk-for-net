@@ -26,17 +26,12 @@
         "description": "Gets a list of previewed features for all the providers in the current subscription.",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
+            "in": "query",
+            "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "name": "api-version",
             "in": "query",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -59,13 +54,6 @@
         "description": "Gets a list of previewed features of a resource provider.",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
             "name": "resourceProviderNamespace",
             "in": "path",
             "required": true,
@@ -73,10 +61,12 @@
             "description": "The namespace of the resource provider."
           },
           {
-            "name": "api-version",
             "in": "query",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -99,13 +89,6 @@
         "description": "Get all features under the subscription.",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
             "name": "resourceProviderNamespace",
             "in": "path",
             "required": true,
@@ -120,10 +103,12 @@
             "description": "Previewed feature name in the resource provider."
           },
           {
-            "name": "api-version",
             "in": "query",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -145,13 +130,6 @@
         "description": "Registers for a previewed feature of a resource provider.",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
             "name": "resourceProviderNamespace",
             "in": "path",
             "required": true,
@@ -166,10 +144,12 @@
             "description": "Previewed feature name in the resource provider."
           },
           {
-            "name": "api-version",
             "in": "query",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "in": "query",
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -298,6 +278,9 @@
           "description": "Resource tags"
         }
       },
+      "required": [
+        "location"
+      ],
       "x-ms-external": true
     },
     "SubResource": {
@@ -307,7 +290,26 @@
           "description": "Resource Id"
         }
       },
+      "required": [
+        "id"
+      ],
       "x-ms-external": true
+    }
+  },
+  "parameters": {
+    "SubscriptionIdParameter": {
+      "name": "subscriptionId",
+      "in": "path",
+      "required": true,
+      "type": "string",
+      "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
+    },
+    "ApiVersionParameter": {
+      "name": "api-version",
+      "in": "query",
+      "required": true,
+      "type": "string",
+      "description": "Client Api Version."
     }
   }
 }

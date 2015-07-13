@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<ResourceListResult> ListResourcesAsync( this IResourceGroupsOperations operations, string resourceGroupName, Expression<Func<GenericResourceFilter, bool>> filter = default(Expression<Func<GenericResourceFilter, bool>>), int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<ResourceListResult> result = await operations.ListResourcesWithOperationResponseAsync(resourceGroupName, filter, top, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<ResourceListResult> result = await operations.ListResourcesWithHttpMessagesAsync(resourceGroupName, filter, top, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -84,7 +84,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<bool?> CheckExistenceAsync( this IResourceGroupsOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<bool?> result = await operations.CheckExistenceWithOperationResponseAsync(resourceGroupName, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<bool?> result = await operations.CheckExistenceWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -124,7 +124,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<ResourceGroupExtended> CreateOrUpdateAsync( this IResourceGroupsOperations operations, string resourceGroupName, ResourceGroup parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<ResourceGroupExtended> result = await operations.CreateOrUpdateWithOperationResponseAsync(resourceGroupName, parameters, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<ResourceGroupExtended> result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, parameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -158,7 +158,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task DeleteAsync( this IResourceGroupsOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.DeleteWithOperationResponseAsync(resourceGroupName, cancellationToken).ConfigureAwait(false);
+                await operations.DeleteWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -191,7 +191,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task BeginDeleteAsync( this IResourceGroupsOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.BeginDeleteWithOperationResponseAsync(resourceGroupName, cancellationToken).ConfigureAwait(false);
+                await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -222,7 +222,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<ResourceGroupExtended> GetAsync( this IResourceGroupsOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<ResourceGroupExtended> result = await operations.GetWithOperationResponseAsync(resourceGroupName, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<ResourceGroupExtended> result = await operations.GetWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -268,7 +268,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<ResourceGroupExtended> PatchAsync( this IResourceGroupsOperations operations, string resourceGroupName, ResourceGroup parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<ResourceGroupExtended> result = await operations.PatchWithOperationResponseAsync(resourceGroupName, parameters, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<ResourceGroupExtended> result = await operations.PatchWithHttpMessagesAsync(resourceGroupName, parameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -306,7 +306,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<ResourceGroupListResult> ListAsync( this IResourceGroupsOperations operations, Expression<Func<ResourceGroupExtendedFilter, bool>> filter = default(Expression<Func<ResourceGroupExtendedFilter, bool>>), int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<ResourceGroupListResult> result = await operations.ListWithOperationResponseAsync(filter, top, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<ResourceGroupListResult> result = await operations.ListWithHttpMessagesAsync(filter, top, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -338,7 +338,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<ResourceListResult> ListResourcesNextAsync( this IResourceGroupsOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<ResourceListResult> result = await operations.ListResourcesNextWithOperationResponseAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<ResourceListResult> result = await operations.ListResourcesNextWithHttpMessagesAsync(nextLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -370,7 +370,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<ResourceGroupListResult> ListNextAsync( this IResourceGroupsOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<ResourceGroupListResult> result = await operations.ListNextWithOperationResponseAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<ResourceGroupListResult> result = await operations.ListNextWithHttpMessagesAsync(nextLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
