@@ -1,0 +1,72 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/providers/Microsoft.Network/checkTrafficManagerNameAvailability?api-version=2015-04-28-preview",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9jaGVja1RyYWZmaWNNYW5hZ2VyTmFtZUF2YWlsYWJpbGl0eT9hcGktdmVyc2lvbj0yMDE1LTA0LTI4LXByZXZpZXc=",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"name\": \"hydratestrelativename2768\",\r\n  \"type\": \"microsoft.network/trafficmanagerprofiles\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "98"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.TrafficManager.TrafficManagerManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"hydratestrelativename2768\",\r\n  \"type\": \"Microsoft.Network/trafficManagerProfiles\",\r\n  \"nameAvailable\": true,\r\n  \"reason\": null,\r\n  \"message\": null\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "137"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "01fbf4fd-f925-481d-94b6-10aedecab388"
+        ],
+        "x-ms-ratelimit-remaining-tenant-writes": [
+          "1196"
+        ],
+        "x-ms-correlation-request-id": [
+          "799d46dd-2dba-43fe-81c0-751c09faacbf"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTEUROPE:20150707T180648Z:799d46dd-2dba-43fe-81c0-751c09faacbf"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Tue, 07 Jul 2015 18:06:48 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/7.5"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {
+    "NameAvailabilityTest_NameAvailable": [
+      "hydratestrelativename2768"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "f3352c17-4be9-4c46-8f38-019a54ec05f7"
+  }
+}

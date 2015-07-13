@@ -21,30 +21,18 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.TrafficManager.Models;
 
 namespace Microsoft.Azure.Management.TrafficManager.Models
 {
     /// <summary>
-    /// Class respresenting a Traffic Manager endpoint.
+    /// Parameters supplied to check Traffic Manager name operation.
     /// </summary>
-    public partial class Endpoint
+    public partial class CheckTrafficManagerRelativeDnsNameAvailabilityParameters
     {
-        private string _id;
-        
-        /// <summary>
-        /// Optional. Gets or sets the ID of the Traffic Manager endpoint.
-        /// </summary>
-        public string Id
-        {
-            get { return this._id; }
-            set { this._id = value; }
-        }
-        
         private string _name;
         
         /// <summary>
-        /// Optional. Gets or sets the name of the Traffic Manager endpoint.
+        /// Required. Gets or sets the name of the resource.
         /// </summary>
         public string Name
         {
@@ -52,23 +40,10 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
             set { this._name = value; }
         }
         
-        private EndpointProperties _properties;
-        
-        /// <summary>
-        /// Optional. Gets or sets the properties of the Traffic Manager
-        /// endpoint.
-        /// </summary>
-        public EndpointProperties Properties
-        {
-            get { return this._properties; }
-            set { this._properties = value; }
-        }
-        
         private string _type;
         
         /// <summary>
-        /// Optional. Gets or sets the endpoint type of the Traffic Manager
-        /// endpoint.
+        /// Required. Gets or sets the type of the resource.
         /// </summary>
         public string Type
         {
@@ -77,10 +52,31 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
         }
         
         /// <summary>
-        /// Initializes a new instance of the Endpoint class.
+        /// Initializes a new instance of the
+        /// CheckTrafficManagerRelativeDnsNameAvailabilityParameters class.
         /// </summary>
-        public Endpoint()
+        public CheckTrafficManagerRelativeDnsNameAvailabilityParameters()
         {
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the
+        /// CheckTrafficManagerRelativeDnsNameAvailabilityParameters class
+        /// with required arguments.
+        /// </summary>
+        public CheckTrafficManagerRelativeDnsNameAvailabilityParameters(string name, string type)
+            : this()
+        {
+            if (name == null)
+            {
+                throw new ArgumentNullException("name");
+            }
+            if (type == null)
+            {
+                throw new ArgumentNullException("type");
+            }
+            this.Name = name;
+            this.Type = type;
         }
     }
 }
