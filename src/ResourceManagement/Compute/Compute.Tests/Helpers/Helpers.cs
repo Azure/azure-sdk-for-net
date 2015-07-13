@@ -15,7 +15,10 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Compute.Models;
+using Microsoft.Azure.Management.Resources;
 using Xunit;
 
 namespace Compute.Tests
@@ -40,16 +43,28 @@ namespace Compute.Tests
                 entityName);
         }
 
-        public static void ValidateVirtualMachineSizeListResponse(VirtualMachineSizeListResponse vmSizeListResponse)
+        public static void DeleteIfExists(this IResourceGroupsOperations rgOps, string rgName)
         {
-            List<VirtualMachineSize> expectedVMSizePropertiesList = new List<VirtualMachineSize>()
+            try
+            {
+                rgOps.Delete(rgName);
+            }
+            catch (CloudException)
+            {
+                // Ignore
+            }
+        }
+
+        public static void ValidateVirtualMachineSizeListResponse(IList<VirtualMachineSize> vmSizeListResponse)
+        {
+            var expectedVMSizePropertiesList = new List<VirtualMachineSize>()
             {
                 new VirtualMachineSize()
                 {
                     Name = "Standard_A0",
                     MemoryInMB = 768,
                     NumberOfCores = 1,
-                    OSDiskSizeInMB = 130048,
+                    OsDiskSizeInMB = 130048,
                     ResourceDiskSizeInMB = 20480,
                     MaxDataDiskCount = 1
                 },
@@ -58,13 +73,13 @@ namespace Compute.Tests
                     Name = "Standard_A1",
                     MemoryInMB = 1792,
                     NumberOfCores = 1,
-                    OSDiskSizeInMB = 130048,
+                    OsDiskSizeInMB = 130048,
                     ResourceDiskSizeInMB = 71680,
                     MaxDataDiskCount = 2
                 }
             };
 
-            List<VirtualMachineSize> vmSizesPropertyList = vmSizeListResponse.VirtualMachineSizes.ToList();
+            IList<VirtualMachineSize> vmSizesPropertyList = vmSizeListResponse;
             Assert.NotNull(vmSizesPropertyList);
             Assert.True(vmSizesPropertyList.Count > 1, "ListVMSizes should return more than 1 VM sizes");
 

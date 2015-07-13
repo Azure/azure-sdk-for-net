@@ -28,20 +28,20 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets or sets Address prefix for the subnet.
         /// </summary>
-        [JsonProperty(PropertyName = "addressPrefix")]
+        [JsonProperty(PropertyName = "properties.addressPrefix")]
         public string AddressPrefix { get; set; }
 
         /// <summary>
         /// Gets or sets the reference of the NetworkSecurityGroup resource
         /// </summary>
-        [JsonProperty(PropertyName = "networkSecurityGroup")]
+        [JsonProperty(PropertyName = "properties.networkSecurityGroup")]
         public SubResource NetworkSecurityGroup { get; set; }
 
         /// <summary>
         /// Gets array of references to the network interface IP
         /// configurations using subnet
         /// </summary>
-        [JsonProperty(PropertyName = "ipConfigurations")]
+        [JsonProperty(PropertyName = "properties.ipConfigurations")]
         public IList<SubResource> IpConfigurations { get; set; }
 
         /// <summary>

@@ -13,6 +13,7 @@
 // limitations under the License.
 //
 
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.Network;
@@ -38,9 +39,9 @@ namespace Compute.Tests
     {
         private static readonly string CustomData = Convert.ToBase64String(Encoding.UTF8.GetBytes("echo 'Hello World'"));
 
-        private const string OOBESystem = PassNames.OOBESystem;
-        private const string MicrosoftWindowsShellSetup = ComponentNames.MicrosoftWindowsShellSetup;
-        private const string AutoLogon = SettingNames.AutoLogon;
+        private const PassNames OOBESystem = PassNames.OobeSystem;
+        private const ComponentNames MicrosoftWindowsShellSetup = ComponentNames.MicrosoftWindowsShellSetup;
+        private const SettingNames AutoLogon = SettingNames.AutoLogon;
 
         private const string PacificStandardTime = "Pacific Standard Time";
 
@@ -68,16 +69,16 @@ namespace Compute.Tests
             "oe6IQTw7zJF7xuBIzTYwjOCM197GKW7xc4GU4JZIN+faZ7njl/fxfUNdlqvgZUUn" +
             "kfdrzU3PZPl0w9NuncgEje/PZ+YtZvIsnH7MLSPeIGNQwW6V2kc8";
 
-        private void EnableWinRMCustomDataAndUnattendContent(string rgName, string keyVaultName, Uri winRMCertificateUrl, string autoLogonContent, VirtualMachine inputVM)
+        private void EnableWinRMCustomDataAndUnattendContent(string rgName, string keyVaultName, string winRMCertificateUrl, string autoLogonContent, VirtualMachine inputVM)
         {
-            OSProfile osProfile = inputVM.OSProfile;
+            var osProfile = inputVM.OsProfile;
             osProfile.CustomData = CustomData;
             osProfile.WindowsConfiguration = new WindowsConfiguration
             {
                 ProvisionVMAgent = true,
                 EnableAutomaticUpdates = false,
                 TimeZone = PacificStandardTime,
-                AdditionalUnattendContents = new List<AdditionalUnattendContent>
+                AdditionalUnattendContent = new List<AdditionalUnattendContent>
                     {
                         new AdditionalUnattendContent 
                         {
@@ -87,7 +88,7 @@ namespace Compute.Tests
                             Content = autoLogonContent
                         }
                     },
-                WinRMConfiguration = new WinRMConfiguration
+                WinRM = new WinRMConfiguration
                 {
                     Listeners = new List<WinRMListener>
                         {
@@ -114,46 +115,46 @@ namespace Compute.Tests
                              new VaultCertificate
                              {
                                  CertificateStore = "My",
-                                 CertificateUrl = winRMCertificateUrl.AbsoluteUri
+                                 CertificateUrl = winRMCertificateUrl
                              }
                          }
                     }
                 };
         }
 
-        private void ValidateWinRMCustomDataAndUnattendContent(string rgName, string keyVaultName, Uri winRMCertificateUrl, string autoLogonContent, VirtualMachine outputVM)
+        private void ValidateWinRMCustomDataAndUnattendContent(string winRMCertificateUrl, string autoLogonContent, VirtualMachine outputVM)
         {
-            OSProfile osProfile = outputVM.OSProfile;
+            var osProfile = outputVM.OsProfile;
             // CustomData:
             Assert.Equal(osProfile.CustomData, CustomData);
 
             Assert.Null(osProfile.LinuxConfiguration);
             Assert.NotNull(osProfile.WindowsConfiguration);
 
-            Assert.True(osProfile.WindowsConfiguration.ProvisionVMAgent.Value);
-            Assert.False(osProfile.WindowsConfiguration.EnableAutomaticUpdates.Value);
+            Assert.True(osProfile.WindowsConfiguration.ProvisionVMAgent != null && osProfile.WindowsConfiguration.ProvisionVMAgent.Value);
+            Assert.True(osProfile.WindowsConfiguration.EnableAutomaticUpdates != null && !osProfile.WindowsConfiguration.EnableAutomaticUpdates.Value);
 
             // TimeZone
             Assert.Equal(PacificStandardTime, osProfile.WindowsConfiguration.TimeZone);
 
             // WinRM
-            Assert.NotNull(osProfile.WindowsConfiguration.WinRMConfiguration);
-            var listeners = osProfile.WindowsConfiguration.WinRMConfiguration.Listeners;
+            Assert.NotNull(osProfile.WindowsConfiguration.WinRM);
+            var listeners = osProfile.WindowsConfiguration.WinRM.Listeners;
             Assert.NotNull(listeners);
             Assert.Equal(2, listeners.Count);
 
-            if (listeners[0].Protocol.Equals(ProtocolTypes.Http, StringComparison.InvariantCultureIgnoreCase))
+            if (listeners[0].Protocol == ProtocolTypes.Http)
             {
                 Assert.Null(listeners[0].CertificateUrl);
 
-                Assert.True(listeners[1].Protocol.Equals(ProtocolTypes.Https, StringComparison.InvariantCultureIgnoreCase));
-                Assert.True(listeners[1].CertificateUrl.AbsoluteUri.Equals(winRMCertificateUrl.AbsoluteUri, StringComparison.OrdinalIgnoreCase));
+                Assert.True(listeners[1].Protocol == ProtocolTypes.Https);
+                Assert.True(listeners[1].CertificateUrl.Equals(winRMCertificateUrl, StringComparison.OrdinalIgnoreCase));
             }
-            else if (listeners[0].Protocol.Equals(ProtocolTypes.Https, StringComparison.InvariantCultureIgnoreCase))
+            else if (listeners[0].Protocol == ProtocolTypes.Https)
             {
-                Assert.True(listeners[0].CertificateUrl.AbsoluteUri.Equals(winRMCertificateUrl.AbsoluteUri, StringComparison.OrdinalIgnoreCase));
+                Assert.True(listeners[0].CertificateUrl.Equals(winRMCertificateUrl, StringComparison.OrdinalIgnoreCase));
 
-                Assert.True(listeners[1].Protocol.Equals(ProtocolTypes.Http, StringComparison.InvariantCultureIgnoreCase));
+                Assert.True(listeners[1].Protocol == ProtocolTypes.Http);
                 Assert.Null(listeners[1].CertificateUrl);
             }
             else
@@ -163,7 +164,7 @@ namespace Compute.Tests
             }
 
             // AdditionalUnattendContent
-            var additionalContents = osProfile.WindowsConfiguration.AdditionalUnattendContents;
+            var additionalContents = osProfile.WindowsConfiguration.AdditionalUnattendContent;
             Assert.NotNull(additionalContents);
             Assert.Equal(1, additionalContents.Count);
             Assert.Equal(OOBESystem, additionalContents[0].PassName);
@@ -172,6 +173,8 @@ namespace Compute.Tests
             Assert.Equal(autoLogonContent, additionalContents[0].Content);
         }
 
+        // See recording instructions in HyakSpec\ReadMe.txt. The key vault URLs produced by the script are plugged
+        // into SecretVaultHelper, below.
         [Fact]
         public void TestVMWithWindowsOSProfile()
         {
@@ -189,16 +192,16 @@ namespace Compute.Tests
 
                 // The following variables are defined here to allow validation
                 string autoLogonContent = null;
-                Uri winRMCertificateUrl = SecretVaultHelper.AddSecret(m_subId, rgName, keyVaultName, winRMCertificateBase64).Result;
+                string winRMCertificateUrl = SecretVaultHelper.AddSecret(m_subId, rgName, keyVaultName, winRMCertificateBase64).Result;
 
                 Action<VirtualMachine> enableWinRMCustomDataAndUnattendContent = inputVM =>
                     {
-                        autoLogonContent = GetAutoLogonContent(5, inputVM.OSProfile.AdminUsername, inputVM.OSProfile.AdminPassword);
+                        autoLogonContent = GetAutoLogonContent(5, inputVM.OsProfile.AdminUsername, inputVM.OsProfile.AdminPassword);
                         EnableWinRMCustomDataAndUnattendContent(rgName, keyVaultName, winRMCertificateUrl, autoLogonContent, inputVM);
                     };
 
                 Action<VirtualMachine> validateWinRMCustomDataAndUnattendContent = 
-                    outputVM => ValidateWinRMCustomDataAndUnattendContent(rgName, keyVaultName, winRMCertificateUrl, autoLogonContent, outputVM);
+                    outputVM => ValidateWinRMCustomDataAndUnattendContent(winRMCertificateUrl, autoLogonContent, outputVM);
 
                 SecretVaultHelper.CreateKeyVault(m_subId, rgName, keyVaultName).Wait();
                 
@@ -225,13 +228,13 @@ namespace Compute.Tests
 
                 Action<VirtualMachine> enableSSHAndCustomData = customizedVM =>
                 {
-                    OSProfile osProfile = customizedVM.OSProfile;
+                    var osProfile = customizedVM.OsProfile;
                     sshPath = "/home/" + osProfile.AdminUsername + "/.ssh/authorized_keys";
                     osProfile.CustomData = CustomData;
                     osProfile.LinuxConfiguration = new LinuxConfiguration
                     {
                         DisablePasswordAuthentication = false,
-                        SshConfiguration = new SshConfiguration
+                        Ssh = new SshConfiguration
                         {
                             PublicKeys = new List<SshPublicKey>
                         {
@@ -247,17 +250,17 @@ namespace Compute.Tests
 
                 Action<VirtualMachine> validateWinRMCustomDataAndUnattendContent = outputVM =>
                 {
-                    OSProfile osProfile = outputVM.OSProfile;
+                    var osProfile = outputVM.OsProfile;
                     Assert.Equal<string>(CustomData, osProfile.CustomData);
 
                     Assert.Null(osProfile.WindowsConfiguration);
 
                     Assert.NotNull(osProfile.LinuxConfiguration);
-                    Assert.NotNull(osProfile.LinuxConfiguration.SshConfiguration);
-                    var publicKeys = osProfile.LinuxConfiguration.SshConfiguration.PublicKeys;
-                    Assert.NotNull(osProfile.LinuxConfiguration.SshConfiguration.PublicKeys);
+                    Assert.NotNull(osProfile.LinuxConfiguration.Ssh);
+                    var publicKeys = osProfile.LinuxConfiguration.Ssh.PublicKeys;
+                    Assert.NotNull(osProfile.LinuxConfiguration.Ssh.PublicKeys);
 
-                    Assert.False(osProfile.LinuxConfiguration.DisablePasswordAuthentication.Value);
+                    Assert.True(osProfile.LinuxConfiguration.DisablePasswordAuthentication != null && !osProfile.LinuxConfiguration.DisablePasswordAuthentication.Value);
 
                     Assert.Equal(1, publicKeys.Count);
                     Assert.Equal(sshPath, publicKeys[0].Path);
@@ -281,28 +284,26 @@ namespace Compute.Tests
             string storageAccountName = TestUtilities.GenerateName(TestPrefix);
             string asName = TestUtilities.GenerateName("as");
 
-            string imgRefId = GetPlatformOSImage(useWindowsProfile);
+            ImageReference imageRef = GetPlatformVMImage(useWindowsProfile);
 
             VirtualMachine inputVM;
             try
             {
                 StorageAccount storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
 
-                VirtualMachine vm = CreateVM(rgName, asName, storageAccountOutput, imgRefId, out inputVM, vmCustomizer);
+                VirtualMachine vm = CreateVM_NoAsyncTracking(rgName, asName, storageAccountOutput, imageRef, out inputVM, vmCustomizer);
 
-                VirtualMachineGetResponse getVMWithInstanceViewResponse = m_CrpClient.VirtualMachines.GetWithInstanceView(rgName, inputVM.Name);
-                Assert.True(getVMWithInstanceViewResponse.StatusCode == HttpStatusCode.OK);
-                ValidateVMInstanceView(inputVM, getVMWithInstanceViewResponse.VirtualMachine);
+                var getVMWithInstanceViewResponse = m_CrpClient.VirtualMachines.Get(rgName, inputVM.Name, "instanceView");
+                ValidateVMInstanceView(inputVM, getVMWithInstanceViewResponse);
 
-                var lroResponse = m_CrpClient.VirtualMachines.CreateOrUpdate(rgName, vm);
-                Assert.True(lroResponse.Status == ComputeOperationStatus.Succeeded);
+                var lroResponse = m_CrpClient.VirtualMachines.CreateOrUpdate(rgName, vm.Name, vm);
+                Assert.True(lroResponse.ProvisioningState == "Succeeded");
                 if (vmValidator != null)
                 {
                     vmValidator(vm);
                 }
 
-                var deleteOperationResponse = m_CrpClient.VirtualMachines.BeginDeleting(rgName, vm.Name);
-                Assert.True(deleteOperationResponse.StatusCode == HttpStatusCode.Accepted);
+                m_CrpClient.VirtualMachines.Delete(rgName, vm.Name);
 
                 // TODO: VM delete operation takes too long, disable it for now
                 // lroResponse = m_CrpClient.VirtualMachines.Delete(rgName, vm.Name);
@@ -315,8 +316,7 @@ namespace Compute.Tests
                     // TODO: RG delete operation takes too long, disable it for now
                     // var deleteResourceGroupResponse = m_ResourcesClient.ResourceGroups.Delete(rgName);
                     // Assert.True(deleteResourceGroupResponse.StatusCode == HttpStatusCode.OK);
-                    var deleteResourceGroupResponse = m_ResourcesClient.ResourceGroups.BeginDeleting(rgName);
-                    Assert.True(deleteResourceGroupResponse.StatusCode == HttpStatusCode.Accepted);
+                    m_ResourcesClient.ResourceGroups.Delete(rgName);
                 }
             }
         }
@@ -359,9 +359,9 @@ namespace Compute.Tests
         // 3. Complete the recording. 
         // 4. After recording completes, please delete key vault you created by deleting the whole resource group.
 
-        public static string KeyVaultId = "/subscriptions/0e1dad42-1d4c-4329-9d38-ea44c03a519d/resourceGroups/pslibtestosprofile/providers/Microsoft.KeyVault/vaults/pslibtestkeyvault";
+        public static string KeyVaultId = "/subscriptions/ccfebd33-45cd-4e22-9389-98982441aa5d/resourceGroups/pslibtestosprofile/providers/Microsoft.KeyVault/vaults/pslibtestkeyvault";
 
-        public static Uri CertificateUrl = new Uri("https://pslibtestkeyvault.vault.azure.net:443/secrets/WinRM/5c0b61f14941409aa752665210fd1319");
+        public static Uri CertificateUrl = new Uri("https://pslibtestkeyvault.vault.azure.net:443/secrets/WinRM/24c727e7449b47cb9d2f385113f59a63");
 
 #pragma warning disable 1998
         public static async Task CreateKeyVault(string subId, string rgName, string keyVaultName)
@@ -372,14 +372,14 @@ namespace Compute.Tests
         {
         }
 
-        public static async Task<SourceVaultReference> GetVaultId(string subId, string rgName, string keyVaultName)
+        public static async Task<SubResource> GetVaultId(string subId, string rgName, string keyVaultName)
         {
-            return new SourceVaultReference { ReferenceUri = KeyVaultId };
+            return new SubResource { Id = KeyVaultId };
         }
 
-        public static async Task<Uri> AddSecret(string subId, string rgName, string keyVaultName, string secret)
+        public static async Task<string> AddSecret(string subId, string rgName, string keyVaultName, string secret)
         {
-            return CertificateUrl;
+            return CertificateUrl.AbsoluteUri;
         }
 
         public static async Task DeleteSecret(string subId, string rgName, string keyVaultName, string secret)

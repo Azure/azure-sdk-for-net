@@ -174,7 +174,7 @@ namespace ResourceGroups.Tests
                 client.ResourceGroups.CreateOrUpdate(groupName, new ResourceGroup { Location = "West Europe" });
 
                 //Action
-                DeploymentValidateResponse validationResult = client.Deployments.Validate(groupName, deploymentName, parameters);
+                var validationResult = client.Deployments.Validate(groupName, deploymentName, parameters);
  
                  //Assert
                 Assert.Null(validationResult.Error);
@@ -211,7 +211,7 @@ namespace ResourceGroups.Tests
                 client.ResourceGroups.CreateOrUpdate(groupName, new ResourceGroup { Location = "West Europe" });
 
                 //Action
-                DeploymentValidateResponse validationResult = client.Deployments.Validate(groupName, deploymentName, parameters);
+                var validationResult = client.Deployments.Validate(groupName, deploymentName, parameters);
 
                 //Assert
                 Assert.Null(validationResult.Error);

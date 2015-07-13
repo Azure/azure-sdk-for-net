@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<Provider> UnregisterAsync( this IProvidersOperations operations, string resourceProviderNamespace, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<Provider> result = await operations.UnregisterWithOperationResponseAsync(resourceProviderNamespace, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<Provider> result = await operations.UnregisterWithHttpMessagesAsync(resourceProviderNamespace, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<Provider> RegisterAsync( this IProvidersOperations operations, string resourceProviderNamespace, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<Provider> result = await operations.RegisterWithOperationResponseAsync(resourceProviderNamespace, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<Provider> result = await operations.RegisterWithHttpMessagesAsync(resourceProviderNamespace, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -104,7 +104,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<ProviderListResult> ListAsync( this IProvidersOperations operations, int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<ProviderListResult> result = await operations.ListWithOperationResponseAsync(top, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<ProviderListResult> result = await operations.ListWithHttpMessagesAsync(top, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -136,7 +136,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<Provider> GetAsync( this IProvidersOperations operations, string resourceProviderNamespace, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<Provider> result = await operations.GetWithOperationResponseAsync(resourceProviderNamespace, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<Provider> result = await operations.GetWithHttpMessagesAsync(resourceProviderNamespace, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -168,7 +168,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<ProviderListResult> ListNextAsync( this IProvidersOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<ProviderListResult> result = await operations.ListNextWithOperationResponseAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<ProviderListResult> result = await operations.ListNextWithHttpMessagesAsync(nextLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Network
 
     /// <summary>
     /// </summary>
-    public partial interface INetworkResourceProviderClient : IDisposable
+    public partial interface INetworkResourceProviderClient
     {
         /// <summary>
         /// The base URI of the service.
@@ -53,10 +53,13 @@ namespace Microsoft.Azure.Management.Network
         /// The domain name to be verified. It must conform to the following
         /// regular expression: ^[a-z][a-z0-9-]{1,61}[a-z0-9]$.
         /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>        
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        Task<AzureOperationResponse<DnsNameAvailabilityResult>> CheckDnsNameAvailabilityWithOperationResponseAsync(string location, string domainNameLabel = default(string), CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DnsNameAvailabilityResult>> CheckDnsNameAvailabilityWithHttpMessagesAsync(string location, string domainNameLabel = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

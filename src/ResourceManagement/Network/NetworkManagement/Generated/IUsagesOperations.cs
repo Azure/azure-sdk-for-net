@@ -19,9 +19,12 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='location'>
         /// The location upon which resource usage is queried.
         /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        Task<AzureOperationResponse<UsagesListResult>> ListWithOperationResponseAsync(string location, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<UsagesListResult>> ListWithHttpMessagesAsync(string location, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

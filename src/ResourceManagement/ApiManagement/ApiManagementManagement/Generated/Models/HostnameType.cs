@@ -43,5 +43,10 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// Management hostname type. Is used to update management hostname.
         /// </summary>
         Management = 3,
+        
+        /// <summary>
+        /// Kudu hostname type. Is used to update kudu hostname.
+        /// </summary>
+        Kudu = 4,
     }
 }

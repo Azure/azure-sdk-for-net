@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task DeleteAsync( this INetworkSecurityGroupsOperations operations, string resourceGroupName, string networkSecurityGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.DeleteWithOperationResponseAsync(resourceGroupName, networkSecurityGroupName, cancellationToken).ConfigureAwait(false);
+                await operations.DeleteWithHttpMessagesAsync(resourceGroupName, networkSecurityGroupName, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task BeginDeleteAsync( this INetworkSecurityGroupsOperations operations, string resourceGroupName, string networkSecurityGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.BeginDeleteWithOperationResponseAsync(resourceGroupName, networkSecurityGroupName, cancellationToken).ConfigureAwait(false);
+                await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, networkSecurityGroupName, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -125,7 +125,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task<NetworkSecurityGroup> GetAsync( this INetworkSecurityGroupsOperations operations, string resourceGroupName, string networkSecurityGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<NetworkSecurityGroup> result = await operations.GetWithOperationResponseAsync(resourceGroupName, networkSecurityGroupName, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<NetworkSecurityGroup> result = await operations.GetWithHttpMessagesAsync(resourceGroupName, networkSecurityGroupName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -171,7 +171,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task<NetworkSecurityGroup> CreateOrUpdateAsync( this INetworkSecurityGroupsOperations operations, string resourceGroupName, string networkSecurityGroupName, NetworkSecurityGroup parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<NetworkSecurityGroup> result = await operations.CreateOrUpdateWithOperationResponseAsync(resourceGroupName, networkSecurityGroupName, parameters, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<NetworkSecurityGroup> result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, networkSecurityGroupName, parameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -217,7 +217,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task<NetworkSecurityGroup> BeginCreateOrUpdateAsync( this INetworkSecurityGroupsOperations operations, string resourceGroupName, string networkSecurityGroupName, NetworkSecurityGroup parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<NetworkSecurityGroup> result = await operations.BeginCreateOrUpdateWithOperationResponseAsync(resourceGroupName, networkSecurityGroupName, parameters, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<NetworkSecurityGroup> result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, networkSecurityGroupName, parameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -245,7 +245,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task<NetworkSecurityGroupListResult> ListAllAsync( this INetworkSecurityGroupsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<NetworkSecurityGroupListResult> result = await operations.ListAllWithOperationResponseAsync(cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<NetworkSecurityGroupListResult> result = await operations.ListAllWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -279,7 +279,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task<NetworkSecurityGroupListResult> ListAsync( this INetworkSecurityGroupsOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<NetworkSecurityGroupListResult> result = await operations.ListWithOperationResponseAsync(resourceGroupName, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<NetworkSecurityGroupListResult> result = await operations.ListWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -313,7 +313,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task<NetworkSecurityGroupListResult> ListAllNextAsync( this INetworkSecurityGroupsOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<NetworkSecurityGroupListResult> result = await operations.ListAllNextWithOperationResponseAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<NetworkSecurityGroupListResult> result = await operations.ListAllNextWithHttpMessagesAsync(nextLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -347,7 +347,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task<NetworkSecurityGroupListResult> ListNextAsync( this INetworkSecurityGroupsOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<NetworkSecurityGroupListResult> result = await operations.ListNextWithOperationResponseAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<NetworkSecurityGroupListResult> result = await operations.ListNextWithHttpMessagesAsync(nextLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

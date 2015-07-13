@@ -28,10 +28,13 @@ namespace Microsoft.Azure.Management.Network
         /// Parameters supplied to the Begin Create or update Local Network
         /// Gateway operation through Network resource provider.
         /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        Task<AzureOperationResponse<LocalNetworkGateway>> CreateOrUpdateWithOperationResponseAsync(string resourceGroupName, string localNetworkGatewayName, LocalNetworkGateway parameters, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<LocalNetworkGateway>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string localNetworkGatewayName, LocalNetworkGateway parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The Put LocalNetworkGateway operation creates/updates a local
         /// network gateway in the specified resource group through Network
@@ -47,10 +50,13 @@ namespace Microsoft.Azure.Management.Network
         /// Parameters supplied to the Begin Create or update Local Network
         /// Gateway operation through Network resource provider.
         /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        Task<AzureOperationResponse<LocalNetworkGateway>> BeginCreateOrUpdateWithOperationResponseAsync(string resourceGroupName, string localNetworkGatewayName, LocalNetworkGateway parameters, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<LocalNetworkGateway>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string localNetworkGatewayName, LocalNetworkGateway parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The Get LocalNetworkGateway operation retrieves information about
         /// the specified local network gateway through Network resource
@@ -62,10 +68,13 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='localNetworkGatewayName'>
         /// The name of the local network gateway.
         /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        Task<AzureOperationResponse<LocalNetworkGateway>> GetWithOperationResponseAsync(string resourceGroupName, string localNetworkGatewayName, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<LocalNetworkGateway>> GetWithHttpMessagesAsync(string resourceGroupName, string localNetworkGatewayName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The Delete LocalNetworkGateway operation deletes the specifed
         /// local network Gateway through Network resource provider.
@@ -76,10 +85,13 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='localNetworkGatewayName'>
         /// The name of the local network gateway.
         /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        Task<AzureOperationResponse> DeleteWithOperationResponseAsync(string resourceGroupName, string localNetworkGatewayName, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string localNetworkGatewayName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The Delete LocalNetworkGateway operation deletes the specifed
         /// local network Gateway through Network resource provider.
@@ -90,10 +102,13 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='localNetworkGatewayName'>
         /// The name of the local network gateway.
         /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        Task<AzureOperationResponse> BeginDeleteWithOperationResponseAsync(string resourceGroupName, string localNetworkGatewayName, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string localNetworkGatewayName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The List LocalNetworkGateways opertion retrieves all the local
         /// network gateways stored.
@@ -101,10 +116,13 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        Task<AzureOperationResponse<LocalNetworkGatewayListResult>> ListWithOperationResponseAsync(string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<LocalNetworkGatewayListResult>> ListWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The List LocalNetworkGateways opertion retrieves all the local
         /// network gateways stored.
@@ -112,9 +130,12 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='nextLink'>
         /// NextLink from the previous successful call to List operation.
         /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        Task<AzureOperationResponse<LocalNetworkGatewayListResult>> ListNextWithOperationResponseAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<LocalNetworkGatewayListResult>> ListNextWithHttpMessagesAsync(string nextLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

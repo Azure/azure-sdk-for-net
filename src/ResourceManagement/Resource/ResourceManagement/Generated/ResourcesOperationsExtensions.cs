@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task MoveResourcesAsync( this IResourcesOperations operations, string sourceResourceGroupName, ResourcesMoveInfo parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.MoveResourcesWithOperationResponseAsync(sourceResourceGroupName, parameters, cancellationToken).ConfigureAwait(false);
+                await operations.MoveResourcesWithHttpMessagesAsync(sourceResourceGroupName, parameters, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<ResourceListResult> ListAsync( this IResourcesOperations operations, Expression<Func<GenericResourceFilter, bool>> filter = default(Expression<Func<GenericResourceFilter, bool>>), int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<ResourceListResult> result = await operations.ListWithOperationResponseAsync(filter, top, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<ResourceListResult> result = await operations.ListWithHttpMessagesAsync(filter, top, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -143,7 +143,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<bool?> CheckExistenceAsync( this IResourcesOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<bool?> result = await operations.CheckExistenceWithOperationResponseAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<bool?> result = await operations.CheckExistenceWithHttpMessagesAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -203,7 +203,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task DeleteAsync( this IResourcesOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.DeleteWithOperationResponseAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion, cancellationToken).ConfigureAwait(false);
+                await operations.DeleteWithHttpMessagesAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -268,7 +268,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<GenericResource> CreateOrUpdateAsync( this IResourcesOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion, GenericResource parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<GenericResource> result = await operations.CreateOrUpdateWithOperationResponseAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion, parameters, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<GenericResource> result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion, parameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -328,7 +328,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<GenericResource> GetAsync( this IResourcesOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<GenericResource> result = await operations.GetWithOperationResponseAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<GenericResource> result = await operations.GetWithHttpMessagesAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -360,7 +360,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             public static async Task<ResourceListResult> ListNextAsync( this IResourcesOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<ResourceListResult> result = await operations.ListNextWithOperationResponseAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<ResourceListResult> result = await operations.ListNextWithHttpMessagesAsync(nextLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

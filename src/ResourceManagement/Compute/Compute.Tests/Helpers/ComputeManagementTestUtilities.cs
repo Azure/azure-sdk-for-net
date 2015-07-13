@@ -20,40 +20,50 @@ using Microsoft.Azure.Management.Storage;
 using Microsoft.Azure.Test;
 using Microsoft.Azure.Test.HttpRecorder;
 using System;
+using System.Net;
 
 namespace Compute.Tests
 {
     public static class ComputeManagementTestUtilities
     {
-        public static string DefaultLocation = "EastAsia";
+        public static string DefaultLocation = "SoutheastAsia";
 
-        public static ComputeManagementClient GetComputeManagementClient(RecordedDelegatingHandler handler)
+        public static ComputeManagementClient GetComputeManagementClient(RecordedDelegatingHandler handler = null)
         {
-            return GetComputeManagementClient(new CSMTestEnvironmentFactory(), handler);
+            return GetComputeManagementClient(new CSMTestEnvironmentFactory(), 
+                handler ?? new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
         }
 
         public static ComputeManagementClient GetComputeManagementClient(TestEnvironmentFactory factory, RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
-            return TestBase.GetServiceClient<ComputeManagementClient>(factory).WithHandler(handler);
+            var client = TestBase.GetServiceClient<ComputeManagementClient>(factory, handler);
+            client.LongRunningOperationRetryTimeout = 0;
+            return client;
         }
 
         public static ResourceManagementClient GetResourceManagementClient(RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
-            return TestBase.GetServiceClient<ResourceManagementClient>(new CSMTestEnvironmentFactory()).WithHandler(handler);
+            var client = TestBase.GetServiceClient<ResourceManagementClient>(new CSMTestEnvironmentFactory(), handler);
+            client.LongRunningOperationRetryTimeout = 0;
+            return client;
         }
 
         public static NetworkResourceProviderClient GetNetworkResourceProviderClient(RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
-            return TestBase.GetServiceClient<NetworkResourceProviderClient>(new CSMTestEnvironmentFactory()).WithHandler(handler);
+            var client = TestBase.GetServiceClient<NetworkResourceProviderClient>(new CSMTestEnvironmentFactory(), handler);
+            client.LongRunningOperationRetryTimeout = 0;
+            return client;
         }
 
         public static StorageManagementClient GetStorageManagementClient(RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
-            return TestBase.GetServiceClient<StorageManagementClient>(new CSMTestEnvironmentFactory()).WithHandler(handler);
+            var client = TestBase.GetServiceClient<StorageManagementClient>(new CSMTestEnvironmentFactory(), handler);
+            client.LongRunningOperationRetryTimeout = 0;
+            return client;
         }
 
         public static void WaitSeconds(double seconds)

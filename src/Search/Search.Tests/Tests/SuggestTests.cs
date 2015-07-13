@@ -40,6 +40,7 @@ namespace Microsoft.Azure.Search.Tests
                     client.Documents.Suggest<Hotel>("good", "sg", suggestParameters);
 
                 Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+                Assert.Null(response.Coverage);
                 Assert.NotNull(response.Results);
 
                 IEnumerable<Hotel> expectedDocs =
@@ -67,6 +68,7 @@ namespace Microsoft.Azure.Search.Tests
                 DocumentSuggestResponse response = client.Documents.Suggest("good", "sg", suggestParameters);
 
                 Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+                Assert.Null(response.Coverage);
                 Assert.NotNull(response.Results);
 
                 Document[] expectedDocs =
@@ -286,6 +288,22 @@ namespace Microsoft.Azure.Search.Tests
                 Assert.Equal(HttpStatusCode.OK, response.StatusCode);
                 Assert.NotNull(response.Results);
                 Assert.Equal(0, response.Results.Count);
+            });
+        }
+
+        [Fact]
+        [Trait(TestTraits.AcceptanceType, TestTraits.LiveBVT)]
+        public void CanSuggestWithMinimumCoverage()
+        {
+            Run(() =>
+            {
+                SearchIndexClient client = Data.GetSearchIndexClientForQuery();
+
+                var parameters = new SuggestParameters() { MinimumCoverage = 50 };
+                DocumentSuggestResponse<Hotel> response = client.Documents.Suggest<Hotel>("luxury", "sg", parameters);
+
+                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+                Assert.Equal(100, response.Coverage);
             });
         }
 

@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.Resources
 
     /// <summary>
     /// </summary>
-    public partial interface IResourceManagementClient : IDisposable
+    public partial interface IResourceManagementClient
     {
         /// <summary>
         /// The base URI of the service.

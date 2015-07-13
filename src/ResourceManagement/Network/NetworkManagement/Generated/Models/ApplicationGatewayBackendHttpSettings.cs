@@ -28,29 +28,22 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets or sets the port
         /// </summary>
-        [JsonProperty(PropertyName = "port")]
+        [JsonProperty(PropertyName = "properties.port")]
         public int? Port { get; set; }
 
         /// <summary>
         /// Gets or sets the protocol. Possible values for this property
         /// include: 'Http', 'Https'
         /// </summary>
-        [JsonProperty(PropertyName = "protocol")]
+        [JsonProperty(PropertyName = "properties.protocol")]
         public ApplicationGatewayProtocol? Protocol { get; set; }
 
         /// <summary>
         /// Gets or sets the cookie affinity. Possible values for this
         /// property include: 'Enabled', 'Disabled'
         /// </summary>
-        [JsonProperty(PropertyName = "cookieBasedAffinity")]
+        [JsonProperty(PropertyName = "properties.cookieBasedAffinity")]
         public ApplicationGatewayCookieBasedAffinity? CookieBasedAffinity { get; set; }
 
-        /// <summary>
-        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
-        /// </summary>
-        public override void Validate()
-        {
-            base.Validate();
-        }
     }
 }

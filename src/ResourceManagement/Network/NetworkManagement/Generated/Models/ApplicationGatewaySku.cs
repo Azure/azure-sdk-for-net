@@ -12,6 +12,14 @@ namespace Microsoft.Azure.Management.Network.Models
     public partial class ApplicationGatewaySku
     {
         /// <summary>
+        /// Gets or sets name of application gateway SKU. Possible values for
+        /// this property include: 'Standard_Small', 'Standard_Medium',
+        /// 'Standard_Large'
+        /// </summary>
+        [JsonProperty(PropertyName = "name")]
+        public ApplicationGatewaySkuName? Name { get; set; }
+
+        /// <summary>
         /// Gets or sets tier of application gateway. Possible values for this
         /// property include: 'Standard'
         /// </summary>
@@ -24,11 +32,5 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "capacity")]
         public int? Capacity { get; set; }
 
-        /// <summary>
-        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
-        /// </summary>
-        public virtual void Validate()
-        {
-        }
     }
 }

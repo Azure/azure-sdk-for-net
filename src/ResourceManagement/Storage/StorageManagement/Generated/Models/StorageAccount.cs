@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// property include: 'Standard_LRS', 'Standard_ZRS', 'Standard_GRS',
         /// 'Standard_RAGRS', 'Premium_LRS'
         /// </summary>
-        [JsonProperty(PropertyName = "accountType")]
+        [JsonProperty(PropertyName = "properties.accountType")]
         public AccountType? AccountType { get; set; }
 
         /// <summary>
@@ -24,13 +24,13 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// blob, queue or table object.Note that StandardZRS and PremiumLRS
         /// accounts only return the blob endpoint.
         /// </summary>
-        [JsonProperty(PropertyName = "primaryEndpoints")]
+        [JsonProperty(PropertyName = "properties.primaryEndpoints")]
         public Endpoints PrimaryEndpoints { get; set; }
 
         /// <summary>
         /// Gets the location of the primary for the storage account.
         /// </summary>
-        [JsonProperty(PropertyName = "primaryLocation")]
+        [JsonProperty(PropertyName = "properties.primaryLocation")]
         public string PrimaryLocation { get; set; }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// storage account is available or unavailable. Possible values for
         /// this property include: 'Available', 'Unavailable'
         /// </summary>
-        [JsonProperty(PropertyName = "statusOfPrimary")]
+        [JsonProperty(PropertyName = "properties.statusOfPrimary")]
         public AccountStatus? StatusOfPrimary { get; set; }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// failover instance. Only available if the accountType is
         /// StandardGRS or StandardRAGRS.
         /// </summary>
-        [JsonProperty(PropertyName = "lastGeoFailoverTime")]
+        [JsonProperty(PropertyName = "properties.lastGeoFailoverTime")]
         public DateTime? LastGeoFailoverTime { get; set; }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// account. Only available if the accountType is StandardGRS or
         /// StandardRAGRS.
         /// </summary>
-        [JsonProperty(PropertyName = "secondaryLocation")]
+        [JsonProperty(PropertyName = "properties.secondaryLocation")]
         public string SecondaryLocation { get; set; }
 
         /// <summary>
@@ -65,20 +65,20 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// the accountType is StandardGRS or StandardRAGRS. Possible values
         /// for this property include: 'Available', 'Unavailable'
         /// </summary>
-        [JsonProperty(PropertyName = "statusOfSecondary")]
+        [JsonProperty(PropertyName = "properties.statusOfSecondary")]
         public AccountStatus? StatusOfSecondary { get; set; }
 
         /// <summary>
         /// Gets the creation date and time of the storage account in UTC.
         /// </summary>
-        [JsonProperty(PropertyName = "creationTime")]
+        [JsonProperty(PropertyName = "properties.creationTime")]
         public DateTime? CreationTime { get; set; }
 
         /// <summary>
         /// Gets the user assigned custom domain assigned to this storage
         /// account.
         /// </summary>
-        [JsonProperty(PropertyName = "customDomain")]
+        [JsonProperty(PropertyName = "properties.customDomain")]
         public CustomDomain CustomDomain { get; set; }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// storage account. Only available if the accountType is
         /// StandardRAGRS.
         /// </summary>
-        [JsonProperty(PropertyName = "secondaryEndpoints")]
+        [JsonProperty(PropertyName = "properties.secondaryEndpoints")]
         public Endpoints SecondaryEndpoints { get; set; }
 
         /// <summary>
@@ -96,18 +96,6 @@ namespace Microsoft.Azure.Management.Storage.Models
         public override void Validate()
         {
             base.Validate();
-            if (this.PrimaryEndpoints != null)
-            {
-                this.PrimaryEndpoints.Validate();
-            }
-            if (this.CustomDomain != null)
-            {
-                this.CustomDomain.Validate();
-            }
-            if (this.SecondaryEndpoints != null)
-            {
-                this.SecondaryEndpoints.Validate();
-            }
         }
     }
 }

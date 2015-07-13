@@ -29,10 +29,6 @@ namespace Microsoft.Azure.Management.Resources.Models
         public override void Validate()
         {
             base.Validate();
-            if (this.Plan != null)
-            {
-                this.Plan.Validate();
-            }
         }
     }
 }

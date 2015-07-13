@@ -21,73 +21,26 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets or sets Security rules of network security group
         /// </summary>
-        [JsonProperty(PropertyName = "securityRules")]
+        [JsonProperty(PropertyName = "properties.securityRules")]
         public IList<SecurityRule> SecurityRules { get; set; }
 
         /// <summary>
         /// Gets or sets Default security rules of network security group
         /// </summary>
-        [JsonProperty(PropertyName = "defaultSecurityRules")]
+        [JsonProperty(PropertyName = "properties.defaultSecurityRules")]
         public IList<SecurityRule> DefaultSecurityRules { get; set; }
 
         /// <summary>
         /// Gets collection of references to Network Interfaces
         /// </summary>
-        [JsonProperty(PropertyName = "networkInterfaces")]
+        [JsonProperty(PropertyName = "properties.networkInterfaces")]
         public IList<SubResource> NetworkInterfaces { get; set; }
 
         /// <summary>
         /// Gets collection of references to subnets
         /// </summary>
-        [JsonProperty(PropertyName = "subnets")]
+        [JsonProperty(PropertyName = "properties.subnets")]
         public IList<SubResource> Subnets { get; set; }
 
-        /// <summary>
-        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
-        /// </summary>
-        public override void Validate()
-        {
-            base.Validate();
-            if (this.SecurityRules != null)
-            {
-                foreach ( var element in this.SecurityRules)
-            {
-                if (element != null)
-            {
-                element.Validate();
-            }
-            }
-            }
-            if (this.DefaultSecurityRules != null)
-            {
-                foreach ( var element1 in this.DefaultSecurityRules)
-            {
-                if (element1 != null)
-            {
-                element1.Validate();
-            }
-            }
-            }
-            if (this.NetworkInterfaces != null)
-            {
-                foreach ( var element2 in this.NetworkInterfaces)
-            {
-                if (element2 != null)
-            {
-                element2.Validate();
-            }
-            }
-            }
-            if (this.Subnets != null)
-            {
-                foreach ( var element3 in this.Subnets)
-            {
-                if (element3 != null)
-            {
-                element3.Validate();
-            }
-            }
-            }
-        }
     }
 }

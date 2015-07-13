@@ -46,10 +46,6 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// </summary>
         public virtual void Validate()
         {
-            if (this.TargetResource != null)
-            {
-                this.TargetResource.Validate();
-            }
         }
     }
 }

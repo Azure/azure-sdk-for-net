@@ -36,21 +36,5 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "innerError")]
         public string InnerError { get; set; }
 
-        /// <summary>
-        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
-        /// </summary>
-        public virtual void Validate()
-        {
-            if (this.Details != null)
-            {
-                foreach ( var element in this.Details)
-            {
-                if (element != null)
-            {
-                element.Validate();
-            }
-            }
-            }
-        }
     }
 }

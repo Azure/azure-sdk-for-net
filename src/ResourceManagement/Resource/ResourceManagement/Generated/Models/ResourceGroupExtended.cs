@@ -44,14 +44,16 @@ namespace Microsoft.Azure.Management.Resources.Models
         public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
+        /// Gets or sets resource group provisioning state.
+        /// </summary>
+        [JsonProperty(PropertyName = "provisioningState")]
+        public string ProvisioningState { get; set; }
+
+        /// <summary>
         /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
         /// </summary>
         public virtual void Validate()
         {
-            if (this.Properties != null)
-            {
-                this.Properties.Validate();
-            }
         }
     }
 }

@@ -48,7 +48,7 @@ namespace Compute.Tests
                 context.Start();
                 EnsureClientsInitialized();
 
-                string imgRefId = GetPlatformOSImage(useWindowsImage: true);
+                ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
 
                 // Create resource group
                 string rg1Name = TestUtilities.GenerateName(TestPrefix) + 1;
@@ -62,47 +62,28 @@ namespace Compute.Tests
                     // Create Storage Account, so that both the VMs can share it
                     var storageAccountOutput = CreateStorageAccount(rg1Name, storageAccountName);
 
-                    VirtualMachine vm1 = CreateVM(rg1Name, asName, storageAccountOutput, imgRefId, out inputVM1);
+                    VirtualMachine vm1 = CreateVM_NoAsyncTracking(rg1Name, asName, storageAccountOutput, imageRef, out inputVM1);
 
-                    var startOperationResponse = m_CrpClient.VirtualMachines.BeginStarting(rg1Name, vm1.Name);
-                    Assert.Equal(HttpStatusCode.Accepted, startOperationResponse.StatusCode);
-                    ComputeLongRunningOperationResponse lroResponse = m_CrpClient.VirtualMachines.Start(rg1Name, vm1.Name);
-                    Assert.Equal(ComputeOperationStatus.Succeeded, lroResponse.Status);
-
-                    var stopOperationResponse = m_CrpClient.VirtualMachines.BeginPoweringOff(rg1Name, vm1.Name);
-                    Assert.Equal(HttpStatusCode.Accepted, startOperationResponse.StatusCode);
-                    lroResponse = m_CrpClient.VirtualMachines.PowerOff(rg1Name, vm1.Name);
-                    Assert.Equal(ComputeOperationStatus.Succeeded, lroResponse.Status);
-
-                    var restartOperationResponse = m_CrpClient.VirtualMachines.BeginRestarting(rg1Name, vm1.Name);
-                    Assert.Equal(HttpStatusCode.Accepted, startOperationResponse.StatusCode);
-                    lroResponse = m_CrpClient.VirtualMachines.Restart(rg1Name, vm1.Name);
-                    Assert.Equal(ComputeOperationStatus.Succeeded, lroResponse.Status);
-
-                    var deallocateOperationResponse = m_CrpClient.VirtualMachines.BeginDeallocating(rg1Name, vm1.Name);
-                    Assert.Equal(HttpStatusCode.Accepted, startOperationResponse.StatusCode);
-                    lroResponse = m_CrpClient.VirtualMachines.Deallocate(rg1Name, vm1.Name);
-                    Assert.Equal(ComputeOperationStatus.Succeeded, lroResponse.Status);
-
-                    var generalizeResponse = m_CrpClient.VirtualMachines.Generalize(rg1Name, vm1.Name);
-                    Assert.Equal(HttpStatusCode.OK, generalizeResponse.StatusCode);
+                    m_CrpClient.VirtualMachines.Start(rg1Name, vm1.Name);
+                    m_CrpClient.VirtualMachines.Restart(rg1Name, vm1.Name);
+                    m_CrpClient.VirtualMachines.PowerOff(rg1Name, vm1.Name);
+                    m_CrpClient.VirtualMachines.Deallocate(rg1Name, vm1.Name);
+                    m_CrpClient.VirtualMachines.Generalize(rg1Name, vm1.Name);
 
                     var captureParams = new VirtualMachineCaptureParameters
                     {
                         DestinationContainerName = TestUtilities.GenerateName(TestPrefix),
-                        VirtualHardDiskNamePrefix = TestUtilities.GenerateName(TestPrefix),
-                        Overwrite = true
+                        VhdPrefix = TestUtilities.GenerateName(TestPrefix),
+                        OverwriteVhds = true
                     };
 
-                    ComputeLongRunningOperationResponse captureResponse = 
-                        m_CrpClient.VirtualMachines.Capture(rg1Name, vm1.Name, captureParams);
-                    Assert.Equal(ComputeOperationStatus.Succeeded, captureResponse.Status);
-                    Assert.NotNull(captureResponse.Output);
-                    string outputAsString = captureResponse.Output;
+                    var captureResponse = m_CrpClient.VirtualMachines.Capture(rg1Name, vm1.Name, captureParams);
+                    Assert.NotNull(captureResponse.Properties.Output);
+                    string outputAsString = captureResponse.Properties.Output.ToString();
                     Assert.Equal('{', outputAsString[0]);
                     Assert.True(outputAsString.Contains(captureParams.DestinationContainerName.ToLowerInvariant()));
                     Assert.True(outputAsString.ToLowerInvariant().Contains(
-                        captureParams.VirtualHardDiskNamePrefix.ToLowerInvariant()));
+                        captureParams.VhdPrefix.ToLowerInvariant()));
 
                     passed = true;
                 }
@@ -110,8 +91,7 @@ namespace Compute.Tests
                 {
                     // Cleanup the created resources. But don't wait since it takes too long, and it's not the purpose
                     // of the test to cover deletion. CSM does persistent retrying over all RG resources.
-                    var deleteRg1Response = m_ResourcesClient.ResourceGroups.BeginDeleting(rg1Name);
-                    Assert.True(deleteRg1Response.StatusCode == HttpStatusCode.Accepted, "BeginDeleting status was not Accepted.");
+                    m_ResourcesClient.ResourceGroups.Delete(rg1Name);
                 }
 
                 Assert.True(passed);

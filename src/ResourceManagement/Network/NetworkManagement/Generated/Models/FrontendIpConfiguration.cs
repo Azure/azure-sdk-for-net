@@ -30,39 +30,39 @@ namespace Microsoft.Azure.Management.Network.Models
         /// specified if a specific private IP address shall be allocated
         /// from the subnet specified in subnetRef
         /// </summary>
-        [JsonProperty(PropertyName = "privateIPAddress")]
+        [JsonProperty(PropertyName = "properties.privateIPAddress")]
         public string PrivateIPAddress { get; set; }
 
         /// <summary>
         /// Gets or sets PrivateIP allocation method (Static/Dynamic).
         /// Possible values for this property include: 'Static', 'Dynamic'
         /// </summary>
-        [JsonProperty(PropertyName = "privateIPAllocationMethod")]
+        [JsonProperty(PropertyName = "properties.privateIPAllocationMethod")]
         public IpAllocationMethod? PrivateIPAllocationMethod { get; set; }
 
         /// <summary>
         /// Gets or sets the reference of the subnet resource.A subnet from
         /// wher the load balancer gets its private frontend address
         /// </summary>
-        [JsonProperty(PropertyName = "subnet")]
+        [JsonProperty(PropertyName = "properties.subnet")]
         public SubResource Subnet { get; set; }
 
         /// <summary>
         /// Gets or sets the reference of the PublicIP resource
         /// </summary>
-        [JsonProperty(PropertyName = "publicIPAddress")]
+        [JsonProperty(PropertyName = "properties.publicIPAddress")]
         public SubResource PublicIPAddress { get; set; }
 
         /// <summary>
         /// Read only.Inbound rules URIs that use this frontend IP
         /// </summary>
-        [JsonProperty(PropertyName = "inboundNatRules")]
+        [JsonProperty(PropertyName = "properties.inboundNatRules")]
         public IList<SubResource> InboundNatRules { get; set; }
 
         /// <summary>
         /// Gets Load Balancing rules URIs that use this frontend IP
         /// </summary>
-        [JsonProperty(PropertyName = "loadBalancingRules")]
+        [JsonProperty(PropertyName = "properties.loadBalancingRules")]
         public IList<SubResource> LoadBalancingRules { get; set; }
 
         /// <summary>

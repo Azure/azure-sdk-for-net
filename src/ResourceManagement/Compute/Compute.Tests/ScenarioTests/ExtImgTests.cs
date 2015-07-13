@@ -72,13 +72,16 @@ namespace Compute.Tests
         //  }
         //}
 
-        private static readonly VirtualMachineExtensionImageGetParameters parameters = new VirtualMachineExtensionImageGetParameters()
+        private class VirtualMachineExtensionImageGetParameters
         {
-            Location = "westus",
-            PublisherName = "Microsoft.Windows",
-            Type = "vmaccess",
-            Version = "1.1.0"
-        };
+            public string Location = "westus";
+            public string PublisherName = "Microsoft.Windows";
+            public string Type = "vmaccess";
+            public string FilterExpression = "";
+        }
+
+        private static readonly VirtualMachineExtensionImageGetParameters parameters =
+            new VirtualMachineExtensionImageGetParameters();
 
         [Fact]
         public void TestExtImgGet()
@@ -87,19 +90,23 @@ namespace Compute.Tests
             {
                 context.Start();
                 ComputeManagementClient _pirClient =
-                    ComputeManagementTestUtilities.GetComputeManagementClient(new RDFETestEnvironmentFactory(),
+                    ComputeManagementTestUtilities.GetComputeManagementClient(new CSMTestEnvironmentFactory(),
                         new RecordedDelegatingHandler {StatusCodeToReturn = HttpStatusCode.OK});
 
-                var vmimageext = _pirClient.VirtualMachineExtensionImages.Get(parameters);
+                var vmimageext = _pirClient.VirtualMachineExtensionImages.Get(
+                    parameters.Location,
+                    parameters.PublisherName,
+                    parameters.Type,
+                    "1.1.0");
 
-                Assert.True(vmimageext.VirtualMachineExtensionImage.Name == "1.1.0");
-                Assert.True(vmimageext.VirtualMachineExtensionImage.Location == "westus");
+                Assert.True(vmimageext.Name == "1.1.0");
+                Assert.True(vmimageext.Location == "westus");
 
-                Assert.True(vmimageext.VirtualMachineExtensionImage.OperatingSystem == "Windows");
-                Assert.True(vmimageext.VirtualMachineExtensionImage.ComputeRole == "PaaS");
-                Assert.True(vmimageext.VirtualMachineExtensionImage.HandlerSchema == "");
-                Assert.True(vmimageext.VirtualMachineExtensionImage.VMScaleSetEnabled == false);
-                Assert.True(vmimageext.VirtualMachineExtensionImage.SupportsMultipleExtensions == false);
+                Assert.True(vmimageext.OperatingSystem == "Windows");
+                Assert.True(vmimageext.ComputeRole == "PaaS");
+                Assert.True(vmimageext.HandlerSchema == "");
+                Assert.True(vmimageext.VmScaleSetEnabled == false);
+                Assert.True(vmimageext.SupportsMultipleExtensions == false);
             }
         }
 
@@ -110,10 +117,12 @@ namespace Compute.Tests
             {
                 context.Start();
                 ComputeManagementClient _pirClient =
-                    ComputeManagementTestUtilities.GetComputeManagementClient(new RDFETestEnvironmentFactory(),
+                    ComputeManagementTestUtilities.GetComputeManagementClient(new CSMTestEnvironmentFactory(),
                         new RecordedDelegatingHandler {StatusCodeToReturn = HttpStatusCode.OK});
 
-                var vmextimg = _pirClient.VirtualMachineExtensionImages.ListTypes(parameters);
+                var vmextimg = _pirClient.VirtualMachineExtensionImages.ListTypes(
+                    parameters.Location, 
+                    parameters.PublisherName);
 
                 Assert.True(vmextimg.Resources.Count > 0);
                 Assert.True(vmextimg.Resources.Count(vmi => vmi.Name == "vmaccess") != 0);
@@ -127,10 +136,13 @@ namespace Compute.Tests
             {
                 context.Start();
                 ComputeManagementClient _pirClient =
-                    ComputeManagementTestUtilities.GetComputeManagementClient(new RDFETestEnvironmentFactory(),
+                    ComputeManagementTestUtilities.GetComputeManagementClient(new CSMTestEnvironmentFactory(),
                         new RecordedDelegatingHandler {StatusCodeToReturn = HttpStatusCode.OK});
 
-                var vmextimg = _pirClient.VirtualMachineExtensionImages.ListVersions(parameters);
+                var vmextimg = _pirClient.VirtualMachineExtensionImages.ListVersions(
+                    parameters.Location,
+                    parameters.PublisherName,
+                    parameters.Type);
 
                 Assert.True(vmextimg.Resources.Count > 0);
                 Assert.True(vmextimg.Resources.Count(vmi => vmi.Name == "1.1.0") != 0);
@@ -144,37 +156,46 @@ namespace Compute.Tests
             {
                 context.Start();
                 ComputeManagementClient _pirClient =
-                    ComputeManagementTestUtilities.GetComputeManagementClient(new RDFETestEnvironmentFactory(),
+                    ComputeManagementTestUtilities.GetComputeManagementClient(new CSMTestEnvironmentFactory(),
                         new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
-                VirtualMachineExtensionImageListVersionsParameters listVersionsParamers = new VirtualMachineExtensionImageListVersionsParameters()
-                {
-                    Location = parameters.Location,
-                    Type = parameters.Type,
-                    PublisherName = parameters.PublisherName,
-                };
-
                 // Filter: startswith - Positive Test
-                listVersionsParamers.FilterExpression = "$filter=startswith(name,'1.1')";
-                var vmextimg = _pirClient.VirtualMachineExtensionImages.ListVersions(listVersionsParamers);
+                parameters.FilterExpression = "$filter=startswith(name,'1.1')";
+                var vmextimg = _pirClient.VirtualMachineExtensionImages.ListVersions(
+                    parameters.Location,
+                    parameters.PublisherName,
+                    parameters.Type,
+                    f => f.Name.StartsWith("1.1"));
                 Assert.True(vmextimg.Resources.Count > 0);
                 Assert.True(vmextimg.Resources.Count(vmi => vmi.Name == "1.1.0") != 0);
 
                 // Filter: startswith - Negative Test
-                listVersionsParamers.FilterExpression = "$filter=startswith(name,'1.0')";
-                vmextimg = _pirClient.VirtualMachineExtensionImages.ListVersions(listVersionsParamers);
+                parameters.FilterExpression = "$filter=startswith(name,'1.0')";
+                vmextimg = _pirClient.VirtualMachineExtensionImages.ListVersions(
+                    parameters.Location,
+                    parameters.PublisherName,
+                    parameters.Type,
+                    f => f.Name.StartsWith("1.0"));
                 Assert.True(vmextimg.Resources.Count == 0);
                 Assert.True(vmextimg.Resources.Count(vmi => vmi.Name == "1.1.0") == 0);
 
                 // Filter: top - Positive Test
-                listVersionsParamers.FilterExpression = "$top=1";
-                vmextimg = _pirClient.VirtualMachineExtensionImages.ListVersions(listVersionsParamers);
+                parameters.FilterExpression = "$top=1";
+                vmextimg = _pirClient.VirtualMachineExtensionImages.ListVersions(
+                    parameters.Location,
+                    parameters.PublisherName,
+                    parameters.Type,
+                    top: 1);
                 Assert.True(vmextimg.Resources.Count == 1);
                 Assert.True(vmextimg.Resources.Count(vmi => vmi.Name == "1.1.0") != 0);
 
                 // Filter: top - Negative Test
-                listVersionsParamers.FilterExpression = "$top=0";
-                vmextimg = _pirClient.VirtualMachineExtensionImages.ListVersions(listVersionsParamers);
+                parameters.FilterExpression = "$top=0";
+                vmextimg = _pirClient.VirtualMachineExtensionImages.ListVersions(
+                    parameters.Location,
+                    parameters.PublisherName,
+                    parameters.Type,
+                    top: 0);
                 Assert.True(vmextimg.Resources.Count == 0);
             }
         }

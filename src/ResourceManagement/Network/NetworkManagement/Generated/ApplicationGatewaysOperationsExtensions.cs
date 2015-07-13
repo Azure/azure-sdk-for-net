@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task DeleteAsync( this IApplicationGatewaysOperations operations, string resourceGroupName, string applicationGatewayName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.DeleteWithOperationResponseAsync(resourceGroupName, applicationGatewayName, cancellationToken).ConfigureAwait(false);
+                await operations.DeleteWithHttpMessagesAsync(resourceGroupName, applicationGatewayName, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task BeginDeleteAsync( this IApplicationGatewaysOperations operations, string resourceGroupName, string applicationGatewayName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.BeginDeleteWithOperationResponseAsync(resourceGroupName, applicationGatewayName, cancellationToken).ConfigureAwait(false);
+                await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, applicationGatewayName, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -125,7 +125,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task<ApplicationGateway> GetAsync( this IApplicationGatewaysOperations operations, string resourceGroupName, string applicationGatewayName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<ApplicationGateway> result = await operations.GetWithOperationResponseAsync(resourceGroupName, applicationGatewayName, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<ApplicationGateway> result = await operations.GetWithHttpMessagesAsync(resourceGroupName, applicationGatewayName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -169,7 +169,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task<ApplicationGateway> CreateOrUpdateAsync( this IApplicationGatewaysOperations operations, string resourceGroupName, string applicationGatewayName, ApplicationGateway parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<ApplicationGateway> result = await operations.CreateOrUpdateWithOperationResponseAsync(resourceGroupName, applicationGatewayName, parameters, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<ApplicationGateway> result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, applicationGatewayName, parameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -213,7 +213,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task<ApplicationGateway> BeginCreateOrUpdateAsync( this IApplicationGatewaysOperations operations, string resourceGroupName, string applicationGatewayName, ApplicationGateway parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<ApplicationGateway> result = await operations.BeginCreateOrUpdateWithOperationResponseAsync(resourceGroupName, applicationGatewayName, parameters, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<ApplicationGateway> result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, applicationGatewayName, parameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -247,7 +247,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task<ApplicationGatewayListResult> ListAsync( this IApplicationGatewaysOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<ApplicationGatewayListResult> result = await operations.ListWithOperationResponseAsync(resourceGroupName, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<ApplicationGatewayListResult> result = await operations.ListWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -275,7 +275,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task<ApplicationGatewayListResult> ListAllAsync( this IApplicationGatewaysOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<ApplicationGatewayListResult> result = await operations.ListAllWithOperationResponseAsync(cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<ApplicationGatewayListResult> result = await operations.ListAllWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -315,7 +315,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task StartAsync( this IApplicationGatewaysOperations operations, string resourceGroupName, string applicationGatewayName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.StartWithOperationResponseAsync(resourceGroupName, applicationGatewayName, cancellationToken).ConfigureAwait(false);
+                await operations.StartWithHttpMessagesAsync(resourceGroupName, applicationGatewayName, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -354,7 +354,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task BeginStartAsync( this IApplicationGatewaysOperations operations, string resourceGroupName, string applicationGatewayName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.BeginStartWithOperationResponseAsync(resourceGroupName, applicationGatewayName, cancellationToken).ConfigureAwait(false);
+                await operations.BeginStartWithHttpMessagesAsync(resourceGroupName, applicationGatewayName, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -393,7 +393,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task StopAsync( this IApplicationGatewaysOperations operations, string resourceGroupName, string applicationGatewayName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.StopWithOperationResponseAsync(resourceGroupName, applicationGatewayName, cancellationToken).ConfigureAwait(false);
+                await operations.StopWithHttpMessagesAsync(resourceGroupName, applicationGatewayName, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -432,7 +432,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task BeginStopAsync( this IApplicationGatewaysOperations operations, string resourceGroupName, string applicationGatewayName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.BeginStopWithOperationResponseAsync(resourceGroupName, applicationGatewayName, cancellationToken).ConfigureAwait(false);
+                await operations.BeginStopWithHttpMessagesAsync(resourceGroupName, applicationGatewayName, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -465,7 +465,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task<ApplicationGatewayListResult> ListNextAsync( this IApplicationGatewaysOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<ApplicationGatewayListResult> result = await operations.ListNextWithOperationResponseAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<ApplicationGatewayListResult> result = await operations.ListNextWithHttpMessagesAsync(nextLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -499,7 +499,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task<ApplicationGatewayListResult> ListAllNextAsync( this IApplicationGatewaysOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<ApplicationGatewayListResult> result = await operations.ListAllNextWithOperationResponseAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<ApplicationGatewayListResult> result = await operations.ListAllNextWithHttpMessagesAsync(nextLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

@@ -21,13 +21,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Local network site Address space
         /// </summary>
-        [JsonProperty(PropertyName = "localNetworkAddressSpace")]
+        [JsonProperty(PropertyName = "properties.localNetworkAddressSpace")]
         public AddressSpace LocalNetworkAddressSpace { get; set; }
 
         /// <summary>
         /// IP address of local network gateway.
         /// </summary>
-        [JsonProperty(PropertyName = "gatewayIpAddress")]
+        [JsonProperty(PropertyName = "properties.gatewayIpAddress")]
         public string GatewayIpAddress { get; set; }
 
         /// <summary>
@@ -36,10 +36,6 @@ namespace Microsoft.Azure.Management.Network.Models
         public override void Validate()
         {
             base.Validate();
-            if (this.LocalNetworkAddressSpace != null)
-            {
-                this.LocalNetworkAddressSpace.Validate();
-            }
         }
     }
 }

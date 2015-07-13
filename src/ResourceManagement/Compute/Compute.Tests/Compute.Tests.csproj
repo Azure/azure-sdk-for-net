@@ -1,12 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
+    <SDKTestProject>true</SDKTestProject>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <FileAlignment>512</FileAlignment>
+    <RestorePackages>true</RestorePackages>
     <ProjectGuid>{3C768CCE-36A0-433E-8280-31979756CC07}</ProjectGuid>
     <RootNamespace>Compute.Tests</RootNamespace>
     <AssemblyName>Compute.Tests</AssemblyName>
   </PropertyGroup>
   <Import Project="..\..\..\..\tools\Library.Settings.targets" />
-  <Import Project="$(LibraryToolsFolder)\Test.Dependencies.target" />
   <ItemGroup>
     <Compile Include="Helpers\ApiConstants.cs" />
     <Compile Include="Helpers\ComputeManagementTestUtilities.cs" />
@@ -36,8 +41,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\CreateKeyVaultAndCertificateScript.ps1" />
     <None Include="SessionRecords\Compute.Tests.AvailabilitySetTests\TestOperations.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -99,9 +102,6 @@
     <None Include="SessionRecords\Compute.Tests.VMScenarioTests\TestVMScenarioOperations.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="SessionRecords\Compute.Tests.VMScenarioTests\TestVMScenarioWithPlan.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="SessionRecords\Compute.Tests.VMSizesTests\TestListVMSizes.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -116,24 +116,59 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Azure.Management.Storage">
-      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Azure.Management.Storage.2.4.0-preview\lib\net40\Microsoft.Azure.Management.Storage.dll</HintPath>
+    <Reference Include="Microsoft.Azure.Test.Framework">
+      <HintPath>..\..\..\..\packages\Microsoft.Azure.Test.Framework.2.0.5658.29898-prerelease\lib\net45\Microsoft.Azure.Test.Framework.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.Azure.Management.Network">
-      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Azure.Management.Network.2.0.3-preview\lib\net40\Microsoft.Azure.Management.Network.dll</HintPath>
+    <Reference Include="Microsoft.Azure.Test.HttpRecorder">
+      <HintPath>..\..\..\..\packages\Microsoft.Azure.Test.HttpRecorder.2.0.5658.29898-prerelease\lib\net45\Microsoft.Azure.Test.HttpRecorder.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\TestDependencies\TestDependencies.csproj">
-      <Project>{40f35645-00ee-4df2-b66e-7624546b66df}</Project>
-      <Name>TestDependencies</Name>
+    <ProjectReference Include="..\..\Resource\ResourceManagement\ResourceManagement.csproj">
+      <Project>{165ef660-235b-45af-83cb-0d32bef4c1a2}</Project>
+      <Name>ResourceManagement</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Storage\StorageManagement\StorageManagement.csproj">
+      <Project>{a7f47b7f-319b-411f-bf33-f57899a430cb}</Project>
+      <Name>StorageManagement</Name>
     </ProjectReference>
     <ProjectReference Include="..\ComputeManagement\ComputeManagement.csproj">
       <Project>{4f41c7a2-7df6-4cc1-9f2d-66e8f05c2331}</Project>
       <Name>ComputeManagement</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Network\NetworkManagement\NetworkManagement.csproj">
+      <Project>{4500a2d3-c087-4fbc-bebd-e630cd728788}</Project>
+      <Name>NetworkManagement</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.IdentityModel.Clients.ActiveDirectory, Version=2.14.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\Microsoft.IdentityModel.Clients.ActiveDirectory.2.14.201151115\lib\net45\Microsoft.IdentityModel.Clients.ActiveDirectory.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Clients.ActiveDirectory.WindowsForms, Version=2.14.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\Microsoft.IdentityModel.Clients.ActiveDirectory.2.14.201151115\lib\net45\Microsoft.IdentityModel.Clients.ActiveDirectory.WindowsForms.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Rest.ClientRuntime, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\Microsoft.Rest.ClientRuntime.1.0.2\lib\net45\Microsoft.Rest.ClientRuntime.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Rest.ClientRuntime.Azure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\Microsoft.Rest.ClientRuntime.Azure.1.0.9\lib\net45\Microsoft.Rest.ClientRuntime.Azure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="xunit">
+      <HintPath>$(LibraryNugetPackageFolder)\xunit.1.9.2\lib\net20\xunit.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(LibraryNugetPackageFolder)\xunit.runner.visualstudio.0.99.9-build1021\build\net20\xunit.runner.visualstudio.props" Condition="Exists('$(LibraryNugetPackageFolder)\xunit.runner.visualstudio.0.99.9-build1021\build\net20\xunit.runner.visualstudio.props')" />
 </Project>

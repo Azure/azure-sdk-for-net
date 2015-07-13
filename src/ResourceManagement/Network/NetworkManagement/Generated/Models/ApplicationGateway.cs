@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets or sets sku of application gateway resource
         /// </summary>
-        [JsonProperty(PropertyName = "sku")]
+        [JsonProperty(PropertyName = "properties.sku")]
         public ApplicationGatewaySku Sku { get; set; }
 
         /// <summary>
@@ -29,55 +29,55 @@ namespace Microsoft.Azure.Management.Network.Models
         /// values for this property include: 'Stopped', 'Starting',
         /// 'Running', 'Stopping'
         /// </summary>
-        [JsonProperty(PropertyName = "operationalState")]
+        [JsonProperty(PropertyName = "properties.operationalState")]
         public ApplicationGatewayOperationalState? OperationalState { get; set; }
 
         /// <summary>
         /// Gets or sets subnets of application gateway resource
         /// </summary>
-        [JsonProperty(PropertyName = "gatewayIpConfigurations")]
+        [JsonProperty(PropertyName = "properties.gatewayIpConfigurations")]
         public IList<ApplicationGatewayIpConfiguration> GatewayIpConfigurations { get; set; }
 
         /// <summary>
         /// Gets or sets ssl certificates of application gateway resource
         /// </summary>
-        [JsonProperty(PropertyName = "sslCertificates")]
+        [JsonProperty(PropertyName = "properties.sslCertificates")]
         public IList<ApplicationGatewaySslCertificate> SslCertificates { get; set; }
 
         /// <summary>
         /// Gets or sets frontend IP addresses of application gateway resource
         /// </summary>
-        [JsonProperty(PropertyName = "frontendIpConfigurations")]
+        [JsonProperty(PropertyName = "properties.frontendIpConfigurations")]
         public IList<ApplicationGatewayFrontendIpConfiguration> FrontendIpConfigurations { get; set; }
 
         /// <summary>
         /// Gets or sets frontend ports of application gateway resource
         /// </summary>
-        [JsonProperty(PropertyName = "frontendPorts")]
+        [JsonProperty(PropertyName = "properties.frontendPorts")]
         public IList<ApplicationGatewayFrontendPort> FrontendPorts { get; set; }
 
         /// <summary>
         /// Gets or sets backend address pool of application gateway resource
         /// </summary>
-        [JsonProperty(PropertyName = "backendAddressPools")]
+        [JsonProperty(PropertyName = "properties.backendAddressPools")]
         public IList<ApplicationGatewayBackendAddressPool> BackendAddressPools { get; set; }
 
         /// <summary>
         /// Gets or sets backend http settings of application gateway resource
         /// </summary>
-        [JsonProperty(PropertyName = "backendHttpSettingsCollection")]
+        [JsonProperty(PropertyName = "properties.backendHttpSettingsCollection")]
         public IList<ApplicationGatewayBackendHttpSettings> BackendHttpSettingsCollection { get; set; }
 
         /// <summary>
         /// Gets or sets HTTP listeners of application gateway resource
         /// </summary>
-        [JsonProperty(PropertyName = "httpListeners")]
+        [JsonProperty(PropertyName = "properties.httpListeners")]
         public IList<ApplicationGatewayHttpListener> HttpListeners { get; set; }
 
         /// <summary>
         /// Gets or sets request routing rules of application gateway resource
         /// </summary>
-        [JsonProperty(PropertyName = "requestRoutingRules")]
+        [JsonProperty(PropertyName = "properties.requestRoutingRules")]
         public IList<ApplicationGatewayRequestRoutingRule> RequestRoutingRules { get; set; }
 
         /// <summary>
@@ -86,10 +86,6 @@ namespace Microsoft.Azure.Management.Network.Models
         public override void Validate()
         {
             base.Validate();
-            if (this.Sku != null)
-            {
-                this.Sku.Validate();
-            }
             if (this.GatewayIpConfigurations != null)
             {
                 foreach ( var element in this.GatewayIpConfigurations)

@@ -16,6 +16,7 @@
 using System;
 using Microsoft.Azure;
 using Microsoft.Azure.Management.Resources;
+using Microsoft.Azure.Management.Resources.Models;
 using Xunit;
 using System.Net.Http;
 using System.Net;

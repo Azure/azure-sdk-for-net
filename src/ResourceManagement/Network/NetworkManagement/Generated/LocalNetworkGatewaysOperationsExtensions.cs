@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task<LocalNetworkGateway> CreateOrUpdateAsync( this ILocalNetworkGatewaysOperations operations, string resourceGroupName, string localNetworkGatewayName, LocalNetworkGateway parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<LocalNetworkGateway> result = await operations.CreateOrUpdateWithOperationResponseAsync(resourceGroupName, localNetworkGatewayName, parameters, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<LocalNetworkGateway> result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, localNetworkGatewayName, parameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -103,7 +103,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task<LocalNetworkGateway> BeginCreateOrUpdateAsync( this ILocalNetworkGatewaysOperations operations, string resourceGroupName, string localNetworkGatewayName, LocalNetworkGateway parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<LocalNetworkGateway> result = await operations.BeginCreateOrUpdateWithOperationResponseAsync(resourceGroupName, localNetworkGatewayName, parameters, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<LocalNetworkGateway> result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, localNetworkGatewayName, parameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -143,7 +143,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task<LocalNetworkGateway> GetAsync( this ILocalNetworkGatewaysOperations operations, string resourceGroupName, string localNetworkGatewayName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<LocalNetworkGateway> result = await operations.GetWithOperationResponseAsync(resourceGroupName, localNetworkGatewayName, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<LocalNetworkGateway> result = await operations.GetWithHttpMessagesAsync(resourceGroupName, localNetworkGatewayName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -183,7 +183,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task DeleteAsync( this ILocalNetworkGatewaysOperations operations, string resourceGroupName, string localNetworkGatewayName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.DeleteWithOperationResponseAsync(resourceGroupName, localNetworkGatewayName, cancellationToken).ConfigureAwait(false);
+                await operations.DeleteWithHttpMessagesAsync(resourceGroupName, localNetworkGatewayName, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -222,7 +222,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task BeginDeleteAsync( this ILocalNetworkGatewaysOperations operations, string resourceGroupName, string localNetworkGatewayName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.BeginDeleteWithOperationResponseAsync(resourceGroupName, localNetworkGatewayName, cancellationToken).ConfigureAwait(false);
+                await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, localNetworkGatewayName, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -255,7 +255,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task<LocalNetworkGatewayListResult> ListAsync( this ILocalNetworkGatewaysOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<LocalNetworkGatewayListResult> result = await operations.ListWithOperationResponseAsync(resourceGroupName, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<LocalNetworkGatewayListResult> result = await operations.ListWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -289,7 +289,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task<LocalNetworkGatewayListResult> ListNextAsync( this ILocalNetworkGatewaysOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<LocalNetworkGatewayListResult> result = await operations.ListNextWithOperationResponseAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<LocalNetworkGatewayListResult> result = await operations.ListNextWithHttpMessagesAsync(nextLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

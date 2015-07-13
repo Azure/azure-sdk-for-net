@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Gets or sets the reference of the subnet resource.A subnet from
         /// where appliation gateway gets its private address
         /// </summary>
-        [JsonProperty(PropertyName = "subnet")]
+        [JsonProperty(PropertyName = "properties.subnet")]
         public SubResource Subnet { get; set; }
 
         /// <summary>

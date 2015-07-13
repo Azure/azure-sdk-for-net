@@ -27,10 +27,13 @@ namespace Microsoft.Azure.Management.Resources
         /// <param name='operationId'>
         /// Operation Id.
         /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        Task<AzureOperationResponse<DeploymentOperation>> GetWithOperationResponseAsync(string resourceGroupName, string deploymentName, string operationId, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DeploymentOperation>> GetWithHttpMessagesAsync(string resourceGroupName, string deploymentName, string operationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets a list of deployments operations.
         /// </summary>
@@ -43,19 +46,25 @@ namespace Microsoft.Azure.Management.Resources
         /// <param name='top'>
         /// Query parameters.
         /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        Task<AzureOperationResponse<DeploymentOperationsListResult>> ListWithOperationResponseAsync(string resourceGroupName, string deploymentName, int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DeploymentOperationsListResult>> ListWithHttpMessagesAsync(string resourceGroupName, string deploymentName, int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets a list of deployments operations.
         /// </summary>
         /// <param name='nextLink'>
         /// NextLink from the previous successful call to List operation.
         /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        Task<AzureOperationResponse<DeploymentOperationsListResult>> ListNextWithOperationResponseAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DeploymentOperationsListResult>> ListNextWithHttpMessagesAsync(string nextLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

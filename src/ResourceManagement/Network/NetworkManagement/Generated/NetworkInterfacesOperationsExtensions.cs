@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task DeleteAsync( this INetworkInterfacesOperations operations, string resourceGroupName, string networkInterfaceName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.DeleteWithOperationResponseAsync(resourceGroupName, networkInterfaceName, cancellationToken).ConfigureAwait(false);
+                await operations.DeleteWithHttpMessagesAsync(resourceGroupName, networkInterfaceName, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task BeginDeleteAsync( this INetworkInterfacesOperations operations, string resourceGroupName, string networkInterfaceName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.BeginDeleteWithOperationResponseAsync(resourceGroupName, networkInterfaceName, cancellationToken).ConfigureAwait(false);
+                await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, networkInterfaceName, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -121,7 +121,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task<NetworkInterface> GetAsync( this INetworkInterfacesOperations operations, string resourceGroupName, string networkInterfaceName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<NetworkInterface> result = await operations.GetWithOperationResponseAsync(resourceGroupName, networkInterfaceName, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<NetworkInterface> result = await operations.GetWithHttpMessagesAsync(resourceGroupName, networkInterfaceName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -165,7 +165,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task<NetworkInterface> CreateOrUpdateAsync( this INetworkInterfacesOperations operations, string resourceGroupName, string networkInterfaceName, NetworkInterface parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<NetworkInterface> result = await operations.CreateOrUpdateWithOperationResponseAsync(resourceGroupName, networkInterfaceName, parameters, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<NetworkInterface> result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, networkInterfaceName, parameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -209,7 +209,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task<NetworkInterface> BeginCreateOrUpdateAsync( this INetworkInterfacesOperations operations, string resourceGroupName, string networkInterfaceName, NetworkInterface parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<NetworkInterface> result = await operations.BeginCreateOrUpdateWithOperationResponseAsync(resourceGroupName, networkInterfaceName, parameters, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<NetworkInterface> result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, networkInterfaceName, parameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -237,7 +237,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task<NetworkInterfaceListResult> ListAllAsync( this INetworkInterfacesOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<NetworkInterfaceListResult> result = await operations.ListAllWithOperationResponseAsync(cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<NetworkInterfaceListResult> result = await operations.ListAllWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -271,7 +271,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task<NetworkInterfaceListResult> ListAsync( this INetworkInterfacesOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<NetworkInterfaceListResult> result = await operations.ListWithOperationResponseAsync(resourceGroupName, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<NetworkInterfaceListResult> result = await operations.ListWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -305,7 +305,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task<NetworkInterfaceListResult> ListAllNextAsync( this INetworkInterfacesOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<NetworkInterfaceListResult> result = await operations.ListAllNextWithOperationResponseAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<NetworkInterfaceListResult> result = await operations.ListAllNextWithHttpMessagesAsync(nextLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -339,7 +339,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task<NetworkInterfaceListResult> ListNextAsync( this INetworkInterfacesOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<NetworkInterfaceListResult> result = await operations.ListNextWithOperationResponseAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<NetworkInterfaceListResult> result = await operations.ListNextWithHttpMessagesAsync(nextLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

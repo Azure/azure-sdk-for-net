@@ -23,12 +23,5 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "ipAddress")]
         public string IpAddress { get; set; }
 
-        /// <summary>
-        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
-        /// </summary>
-        public virtual void Validate()
-        {
-            //Nothing to validate
-        }
     }
 }

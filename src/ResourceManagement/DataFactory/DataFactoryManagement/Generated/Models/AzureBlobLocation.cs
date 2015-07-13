@@ -32,6 +32,18 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     /// </summary>
     public partial class AzureBlobLocation : TableLocation
     {
+        private Compression _compression;
+        
+        /// <summary>
+        /// Optional. Gets or sets the data compression method used for the
+        /// blob storage.
+        /// </summary>
+        public Compression Compression
+        {
+            get { return this._compression; }
+            set { this._compression = value; }
+        }
+        
         private string _fileName;
         
         /// <summary>

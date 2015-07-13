@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.Resources
 
     /// <summary>
     /// </summary>
-    public partial interface IAuthorizationClient : IDisposable
+    public partial interface IAuthorizationClient
     {
         /// <summary>
         /// The base URI of the service.

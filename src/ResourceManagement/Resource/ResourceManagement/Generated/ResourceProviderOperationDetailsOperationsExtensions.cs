@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.Resources
             /// </param>
             /// <param name='apiVersion'>
             /// </param>
-            public static IList<ResourceProviderOperationDefinition> List(this IResourceProviderOperationDetailsOperations operations, string resourceProviderNamespace, string apiVersion)
+            public static ResourceProviderOperationDetailListResult List(this IResourceProviderOperationDetailsOperations operations, string resourceProviderNamespace, string apiVersion)
             {
                 return Task.Factory.StartNew(s => ((IResourceProviderOperationDetailsOperations)s).ListAsync(resourceProviderNamespace, apiVersion), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -42,9 +42,9 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<IList<ResourceProviderOperationDefinition>> ListAsync( this IResourceProviderOperationDetailsOperations operations, string resourceProviderNamespace, string apiVersion, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ResourceProviderOperationDetailListResult> ListAsync( this IResourceProviderOperationDetailsOperations operations, string resourceProviderNamespace, string apiVersion, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IList<ResourceProviderOperationDefinition>> result = await operations.ListWithOperationResponseAsync(resourceProviderNamespace, apiVersion, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<ResourceProviderOperationDetailListResult> result = await operations.ListWithHttpMessagesAsync(resourceProviderNamespace, apiVersion, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

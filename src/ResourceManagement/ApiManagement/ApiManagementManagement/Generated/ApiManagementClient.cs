@@ -330,6 +330,16 @@ namespace Microsoft.Azure.Management.ApiManagement
             get { return this._users; }
         }
         
+        private IUserSubscriptionsOperations _userSubscriptions;
+        
+        /// <summary>
+        /// Operations for managing User Subscriptions.
+        /// </summary>
+        public virtual IUserSubscriptionsOperations UserSubscriptions
+        {
+            get { return this._userSubscriptions; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the ApiManagementClient class.
         /// </summary>
@@ -360,6 +370,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             this._userGroups = new UserGroupsOperations(this);
             this._userIdentities = new UserIdentitiesOperations(this);
             this._users = new UsersOperations(this);
+            this._userSubscriptions = new UserSubscriptionsOperations(this);
             this._apiVersion = "2014-02-14";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
@@ -449,6 +460,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             this._userGroups = new UserGroupsOperations(this);
             this._userIdentities = new UserIdentitiesOperations(this);
             this._users = new UsersOperations(this);
+            this._userSubscriptions = new UserSubscriptionsOperations(this);
             this._apiVersion = "2014-02-14";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;

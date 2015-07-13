@@ -1,0 +1,126 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/2804ae14-b835-4630-ac14-44f01a5a8c28/resourcegroups/apiapptest2608?api-version=2014-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjgwNGFlMTQtYjgzNS00NjMwLWFjMTQtNDRmMDFhNWE4YzI4L3Jlc291cmNlZ3JvdXBzL2FwaWFwcHRlc3QyNjA4P2FwaS12ZXJzaW9uPTIwMTQtMDQtMDEtcHJldmlldw==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"South Central US\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "38"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/2804ae14-b835-4630-ac14-44f01a5a8c28/resourceGroups/apiapptest2608\",\r\n  \"name\": \"apiapptest2608\",\r\n  \"location\": \"southcentralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "189"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1197"
+        ],
+        "x-ms-request-id": [
+          "e03033a2-9be0-4ea9-8c9e-c11c59a8d6d7"
+        ],
+        "x-ms-correlation-request-id": [
+          "e03033a2-9be0-4ea9-8c9e-c11c59a8d6d7"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20150515T234122Z:e03033a2-9be0-4ea9-8c9e-c11c59a8d6d7"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 15 May 2015 23:41:22 GMT"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/2804ae14-b835-4630-ac14-44f01a5a8c28/providers/Microsoft.AppService/deploymenttemplates/SalesforceConnector/listmetadata?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjgwNGFlMTQtYjgzNS00NjMwLWFjMTQtNDRmMDFhNWE4YzI4L3Byb3ZpZGVycy9NaWNyb3NvZnQuQXBwU2VydmljZS9kZXBsb3ltZW50dGVtcGxhdGVzL1NhbGVzZm9yY2VDb25uZWN0b3IvbGlzdG1ldGFkYXRhP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.ApiApps.ApiAppManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": {\r\n    \"microserviceId\": \"SalesforceConnector\",\r\n    \"displayName\": \"Salesforce Connector\",\r\n    \"appSettings\": [\r\n      {\r\n        \"name\": \"salesforceentities\",\r\n        \"type\": \"String\",\r\n        \"displayName\": \"Salesforce Entities\",\r\n        \"description\": \"These are the salesforce entities such as Account, Lead, and Opportunity which your connector needs to perform operations on. Ex: Account,Lead,Opportunity,Case. Ex: Account,Opportunity\",\r\n        \"tooltip\": \"These are the salesforce entities such as Account, Lead, and Opportunity which your connector needs to perform operations on. Ex: Account,Lead,Opportunity,Case. Ex: Account,Opportunity\",\r\n        \"uiHint\": \"None\",\r\n        \"defaultValue\": \"Account,Lead,Opportunity,Case,Contact\",\r\n        \"constraints\": {\r\n          \"required\": true,\r\n          \"hidden\": false,\r\n          \"hasDigit\": false,\r\n          \"hasLetter\": false,\r\n          \"hasPunctuation\": false,\r\n          \"numeric\": false\r\n        }\r\n      }\r\n    ],\r\n    \"dependsOn\": []\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "790"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "e0b59990-1a1c-4cfc-932b-aaa977e121bb"
+        ],
+        "x-rp-requesturi": [
+          "https://apiapp-rp-prod-all.msp.windows.net/subscriptions/2804ae14-b835-4630-ac14-44f01a5a8c28/providers/Microsoft.AppService/deploymenttemplates/SalesforceConnector/listmetadata?api-version=2015-03-01-preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1195"
+        ],
+        "x-ms-correlation-request-id": [
+          "9124e433-1b8b-4af5-b6b6-f731024db486"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20150515T234124Z:9124e433-1b8b-4af5-b6b6-f731024db486"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 15 May 2015 23:41:23 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {
+    "WithNewGroup": [
+      "apiapptest2608"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "2804ae14-b835-4630-ac14-44f01a5a8c28"
+  }
+}

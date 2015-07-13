@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets Load balancer rules that use this probe
         /// </summary>
-        [JsonProperty(PropertyName = "loadBalancingRules")]
+        [JsonProperty(PropertyName = "properties.loadBalancingRules")]
         public IList<SubResource> LoadBalancingRules { get; set; }
 
         /// <summary>
@@ -39,14 +39,14 @@ namespace Microsoft.Azure.Management.Network.Models
         /// successful. Possible values for this property include: 'Http',
         /// 'Tcp'
         /// </summary>
-        [JsonProperty(PropertyName = "protocol")]
+        [JsonProperty(PropertyName = "properties.protocol")]
         public ProbeProtocol? Protocol { get; set; }
 
         /// <summary>
         /// Gets or sets Port for communicating the probe. Possible values
         /// range from 1 to 65535, inclusive.
         /// </summary>
-        [JsonProperty(PropertyName = "port")]
+        [JsonProperty(PropertyName = "properties.port")]
         public int? Port { get; set; }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// which allows two full probes before taking the instance out of
         /// rotation. The default value is 15, the minimum value is 5
         /// </summary>
-        [JsonProperty(PropertyName = "intervalInSeconds")]
+        [JsonProperty(PropertyName = "properties.intervalInSeconds")]
         public int? IntervalInSeconds { get; set; }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// endpoint. This values allows endponints to be taken out of
         /// rotation faster or slower than the typical times used in Azure.
         /// </summary>
-        [JsonProperty(PropertyName = "numberOfProbes")]
+        [JsonProperty(PropertyName = "properties.numberOfProbes")]
         public int? NumberOfProbes { get; set; }
 
         /// <summary>
@@ -73,25 +73,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// VM. Path is required if a protocol is set to http. Otherwise, it
         /// is not allowed. There is no default value
         /// </summary>
-        [JsonProperty(PropertyName = "requestPath")]
+        [JsonProperty(PropertyName = "properties.requestPath")]
         public string RequestPath { get; set; }
 
-        /// <summary>
-        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
-        /// </summary>
-        public override void Validate()
-        {
-            base.Validate();
-            if (this.LoadBalancingRules != null)
-            {
-                foreach ( var element in this.LoadBalancingRules)
-            {
-                if (element != null)
-            {
-                element.Validate();
-            }
-            }
-            }
-        }
     }
 }

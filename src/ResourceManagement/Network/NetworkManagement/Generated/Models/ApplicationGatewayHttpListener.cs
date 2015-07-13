@@ -29,26 +29,26 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Gets or sets frontend IP configuration resource of application
         /// gateway
         /// </summary>
-        [JsonProperty(PropertyName = "frontendIpConfiguration")]
+        [JsonProperty(PropertyName = "properties.frontendIpConfiguration")]
         public SubResource FrontendIpConfiguration { get; set; }
 
         /// <summary>
         /// Gets or sets frontend port resource of application gateway
         /// </summary>
-        [JsonProperty(PropertyName = "frontendPort")]
+        [JsonProperty(PropertyName = "properties.frontendPort")]
         public SubResource FrontendPort { get; set; }
 
         /// <summary>
         /// Gets or sets the protocol. Possible values for this property
         /// include: 'Http', 'Https'
         /// </summary>
-        [JsonProperty(PropertyName = "protocol")]
+        [JsonProperty(PropertyName = "properties.protocol")]
         public ApplicationGatewayProtocol? Protocol { get; set; }
 
         /// <summary>
         /// Gets or sets ssl certificate resource of application gateway
         /// </summary>
-        [JsonProperty(PropertyName = "sslCertificate")]
+        [JsonProperty(PropertyName = "properties.sslCertificate")]
         public SubResource SslCertificate { get; set; }
 
         /// <summary>

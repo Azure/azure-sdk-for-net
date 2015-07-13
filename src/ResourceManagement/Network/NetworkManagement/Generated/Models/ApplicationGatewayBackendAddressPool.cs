@@ -28,41 +28,14 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets or sets backendIpConfiguration of application gateway
         /// </summary>
-        [JsonProperty(PropertyName = "backendIpConfigurations")]
+        [JsonProperty(PropertyName = "properties.backendIpConfigurations")]
         public IList<SubResource> BackendIpConfigurations { get; set; }
 
         /// <summary>
         /// Gets or sets the backend addresses
         /// </summary>
-        [JsonProperty(PropertyName = "backendAddresses")]
+        [JsonProperty(PropertyName = "properties.backendAddresses")]
         public IList<ApplicationGatewayBackendAddress> BackendAddresses { get; set; }
 
-        /// <summary>
-        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
-        /// </summary>
-        public override void Validate()
-        {
-            base.Validate();
-            if (this.BackendIpConfigurations != null)
-            {
-                foreach ( var element in this.BackendIpConfigurations)
-            {
-                if (element != null)
-            {
-                element.Validate();
-            }
-            }
-            }
-            if (this.BackendAddresses != null)
-            {
-                foreach ( var element1 in this.BackendAddresses)
-            {
-                if (element1 != null)
-            {
-                element1.Validate();
-            }
-            }
-            }
-        }
     }
 }

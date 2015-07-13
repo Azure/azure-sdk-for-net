@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// Gets or sets the list of Features.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
-        public IList<FeatureResponse> Value { get; set; }
+        public IList<FeatureResult> Value { get; set; }
 
         /// <summary>
         /// Gets or sets the URL to get the next set of results.
@@ -23,21 +23,5 @@ namespace Microsoft.Azure.Management.Resources.Models
         [JsonProperty(PropertyName = "nextLink")]
         public string NextLink { get; set; }
 
-        /// <summary>
-        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
-        /// </summary>
-        public virtual void Validate()
-        {
-            if (this.Value != null)
-            {
-                foreach ( var element in this.Value)
-            {
-                if (element != null)
-            {
-                element.Validate();
-            }
-            }
-            }
-        }
     }
 }
