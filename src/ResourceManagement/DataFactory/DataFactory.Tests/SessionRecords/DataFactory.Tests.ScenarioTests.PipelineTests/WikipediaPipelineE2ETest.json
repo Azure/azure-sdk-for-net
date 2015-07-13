@@ -1,0 +1,3203 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703?api-version=2014-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDQzMWViYjItNWEwNy00ZDg1LTg1Y2YtN2FmMzRhZTg1ZmY1L3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA3MDM/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1wcmV2aWV3",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"Brazil South\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "34"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourceGroups/resourcegroup703\",\r\n  \"name\": \"resourcegroup703\",\r\n  \"location\": \"brazilsouth\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "190"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1198"
+        ],
+        "x-ms-request-id": [
+          "8bb8cdb9-3a9c-42a7-8f52-cfb8fb19c0c2"
+        ],
+        "x-ms-correlation-request-id": [
+          "8bb8cdb9-3a9c-42a7-8f52-cfb8fb19c0c2"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150708T185558Z:8bb8cdb9-3a9c-42a7-8f52-cfb8fb19c0c2"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 08 Jul 2015 18:55:58 GMT"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159?api-version=2015-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDQzMWViYjItNWEwNy00ZDg1LTg1Y2YtN2FmMzRhZTg1ZmY1L3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA3MDMvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhRmFjdG9yeS9kYXRhZmFjdG9yaWVzL0RhdGFGYWN0b3J5NjE1OT9hcGktdmVyc2lvbj0yMDE1LTA3LTAxLXByZXZpZXc=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"name\": \"DataFactory6159\",\r\n  \"location\": \"Brazil South\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Content-Length": [
+          "64"
+        ],
+        "x-ms-client-request-id": [
+          "c5898355-3293-495b-9de7-22eec8406310"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataFactories.Core.DataFactoryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"DataFactory6159\",\r\n  \"id\": \"/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159\",\r\n  \"type\": \"Microsoft.DataFactory/datafactories\",\r\n  \"location\": \"Brazil South\",\r\n  \"tags\": null,\r\n  \"properties\": {\r\n    \"dataFactoryId\": \"aa5eb6dd-1443-4893-b560-901d3aed1932\",\r\n    \"provisioningState\": \"PendingCreation\",\r\n    \"error\": null,\r\n    \"errorMessage\": null\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "467"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "5226f76b-906b-40f5-8eda-3af4ad803354"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1197"
+        ],
+        "x-ms-correlation-request-id": [
+          "73b4c767-b487-4449-9cc4-5a12d4d6654f"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150708T185600Z:73b4c767-b487-4449-9cc4-5a12d4d6654f"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 08 Jul 2015 18:55:59 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159?api-version=2015-07-01-preview"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159?api-version=2015-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDQzMWViYjItNWEwNy00ZDg1LTg1Y2YtN2FmMzRhZTg1ZmY1L3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA3MDMvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhRmFjdG9yeS9kYXRhZmFjdG9yaWVzL0RhdGFGYWN0b3J5NjE1OT9hcGktdmVyc2lvbj0yMDE1LTA3LTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "6f468bcb-c320-49da-bedf-4701c61b3b96"
+        ],
+        "x-ms-version": [
+          "2015-07-01-preview"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataFactories.Core.DataFactoryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"DataFactory6159\",\r\n  \"id\": \"/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159\",\r\n  \"type\": \"Microsoft.DataFactory/datafactories\",\r\n  \"location\": \"Brazil South\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"dataFactoryId\": \"aa5eb6dd-1443-4893-b560-901d3aed1932\",\r\n    \"provisioningState\": \"PendingCreation\",\r\n    \"error\": null,\r\n    \"errorMessage\": null\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "465"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "a0709732-d955-4e45-9fd6-c98e87df1c78"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14998"
+        ],
+        "x-ms-correlation-request-id": [
+          "8579e5a2-d270-40f5-a516-b7b0f7a4da21"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150708T185600Z:8579e5a2-d270-40f5-a516-b7b0f7a4da21"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 08 Jul 2015 18:56:00 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159?api-version=2015-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDQzMWViYjItNWEwNy00ZDg1LTg1Y2YtN2FmMzRhZTg1ZmY1L3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA3MDMvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhRmFjdG9yeS9kYXRhZmFjdG9yaWVzL0RhdGFGYWN0b3J5NjE1OT9hcGktdmVyc2lvbj0yMDE1LTA3LTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "540d56e7-a506-4616-84fb-4d4da19d2cf4"
+        ],
+        "x-ms-version": [
+          "2015-07-01-preview"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataFactories.Core.DataFactoryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"DataFactory6159\",\r\n  \"id\": \"/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159\",\r\n  \"type\": \"Microsoft.DataFactory/datafactories\",\r\n  \"location\": \"Brazil South\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"dataFactoryId\": \"aa5eb6dd-1443-4893-b560-901d3aed1932\",\r\n    \"provisioningState\": \"PendingCreation\",\r\n    \"error\": null,\r\n    \"errorMessage\": null\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "465"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "efb9dd0b-4dd2-4381-b3e5-86d541b7b266"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14997"
+        ],
+        "x-ms-correlation-request-id": [
+          "9958fbfb-e199-48fc-93e2-09abe1f68041"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150708T185605Z:9958fbfb-e199-48fc-93e2-09abe1f68041"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 08 Jul 2015 18:56:04 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159?api-version=2015-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDQzMWViYjItNWEwNy00ZDg1LTg1Y2YtN2FmMzRhZTg1ZmY1L3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA3MDMvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhRmFjdG9yeS9kYXRhZmFjdG9yaWVzL0RhdGFGYWN0b3J5NjE1OT9hcGktdmVyc2lvbj0yMDE1LTA3LTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "9632eaf5-cfb0-402b-80a6-c276e7b53342"
+        ],
+        "x-ms-version": [
+          "2015-07-01-preview"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataFactories.Core.DataFactoryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"DataFactory6159\",\r\n  \"id\": \"/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159\",\r\n  \"type\": \"Microsoft.DataFactory/datafactories\",\r\n  \"location\": \"Brazil South\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"dataFactoryId\": \"aa5eb6dd-1443-4893-b560-901d3aed1932\",\r\n    \"provisioningState\": \"PendingCreation\",\r\n    \"error\": null,\r\n    \"errorMessage\": null\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "465"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "e9f81de1-fa73-443a-b7b0-a67efddabd16"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14996"
+        ],
+        "x-ms-correlation-request-id": [
+          "3f4d28e6-af8e-4d45-8c9b-587fc86653c1"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150708T185610Z:3f4d28e6-af8e-4d45-8c9b-587fc86653c1"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 08 Jul 2015 18:56:10 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159?api-version=2015-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDQzMWViYjItNWEwNy00ZDg1LTg1Y2YtN2FmMzRhZTg1ZmY1L3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA3MDMvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhRmFjdG9yeS9kYXRhZmFjdG9yaWVzL0RhdGFGYWN0b3J5NjE1OT9hcGktdmVyc2lvbj0yMDE1LTA3LTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "06ca2c1c-0621-4be0-8bcc-d73a09f0511b"
+        ],
+        "x-ms-version": [
+          "2015-07-01-preview"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataFactories.Core.DataFactoryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"DataFactory6159\",\r\n  \"id\": \"/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159\",\r\n  \"type\": \"Microsoft.DataFactory/datafactories\",\r\n  \"location\": \"Brazil South\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"dataFactoryId\": \"aa5eb6dd-1443-4893-b560-901d3aed1932\",\r\n    \"provisioningState\": \"PendingCreation\",\r\n    \"error\": null,\r\n    \"errorMessage\": null\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "465"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "bb5c6a10-48e6-4ee9-8419-d42224bc4140"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14995"
+        ],
+        "x-ms-correlation-request-id": [
+          "8ff0f734-7266-4a54-8760-f2ec81eae37a"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150708T185615Z:8ff0f734-7266-4a54-8760-f2ec81eae37a"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 08 Jul 2015 18:56:14 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159?api-version=2015-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDQzMWViYjItNWEwNy00ZDg1LTg1Y2YtN2FmMzRhZTg1ZmY1L3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA3MDMvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhRmFjdG9yeS9kYXRhZmFjdG9yaWVzL0RhdGFGYWN0b3J5NjE1OT9hcGktdmVyc2lvbj0yMDE1LTA3LTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "f2f4fbfc-688a-4f85-999a-ca8d429b0319"
+        ],
+        "x-ms-version": [
+          "2015-07-01-preview"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataFactories.Core.DataFactoryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"DataFactory6159\",\r\n  \"id\": \"/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159\",\r\n  \"type\": \"Microsoft.DataFactory/datafactories\",\r\n  \"location\": \"Brazil South\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"dataFactoryId\": \"aa5eb6dd-1443-4893-b560-901d3aed1932\",\r\n    \"provisioningState\": \"PendingCreation\",\r\n    \"error\": null,\r\n    \"errorMessage\": null\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "465"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "174f8428-5cdb-42b0-8f2b-c157490e57fe"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14994"
+        ],
+        "x-ms-correlation-request-id": [
+          "8f09610b-52a7-49c2-8b5e-ad0c493ab561"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150708T185620Z:8f09610b-52a7-49c2-8b5e-ad0c493ab561"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 08 Jul 2015 18:56:20 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159?api-version=2015-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDQzMWViYjItNWEwNy00ZDg1LTg1Y2YtN2FmMzRhZTg1ZmY1L3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA3MDMvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhRmFjdG9yeS9kYXRhZmFjdG9yaWVzL0RhdGFGYWN0b3J5NjE1OT9hcGktdmVyc2lvbj0yMDE1LTA3LTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "d2e09558-43d8-4d12-a09b-6263ffa4df58"
+        ],
+        "x-ms-version": [
+          "2015-07-01-preview"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataFactories.Core.DataFactoryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"DataFactory6159\",\r\n  \"id\": \"/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159\",\r\n  \"type\": \"Microsoft.DataFactory/datafactories\",\r\n  \"location\": \"Brazil South\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"dataFactoryId\": \"aa5eb6dd-1443-4893-b560-901d3aed1932\",\r\n    \"provisioningState\": \"PendingCreation\",\r\n    \"error\": null,\r\n    \"errorMessage\": null\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "465"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "108d59df-37fd-4469-af05-4b9aec29c06e"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14993"
+        ],
+        "x-ms-correlation-request-id": [
+          "49ccbdc1-1b04-41a8-a203-1e38c5fbefc7"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150708T185625Z:49ccbdc1-1b04-41a8-a203-1e38c5fbefc7"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 08 Jul 2015 18:56:25 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159?api-version=2015-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDQzMWViYjItNWEwNy00ZDg1LTg1Y2YtN2FmMzRhZTg1ZmY1L3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA3MDMvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhRmFjdG9yeS9kYXRhZmFjdG9yaWVzL0RhdGFGYWN0b3J5NjE1OT9hcGktdmVyc2lvbj0yMDE1LTA3LTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "3aaa424b-fe31-4e35-a8ba-e763e5188d22"
+        ],
+        "x-ms-version": [
+          "2015-07-01-preview"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataFactories.Core.DataFactoryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"DataFactory6159\",\r\n  \"id\": \"/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159\",\r\n  \"type\": \"Microsoft.DataFactory/datafactories\",\r\n  \"location\": \"Brazil South\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"dataFactoryId\": \"aa5eb6dd-1443-4893-b560-901d3aed1932\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"error\": null,\r\n    \"errorMessage\": null\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "459"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "f946c421-86f3-428b-95b2-731ecf41d97c"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14992"
+        ],
+        "x-ms-correlation-request-id": [
+          "8526f9b4-f87e-4980-b1fc-2f73b4c30b75"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150708T185631Z:8526f9b4-f87e-4980-b1fc-2f73b4c30b75"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 08 Jul 2015 18:56:30 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159?api-version=2015-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDQzMWViYjItNWEwNy00ZDg1LTg1Y2YtN2FmMzRhZTg1ZmY1L3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA3MDMvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhRmFjdG9yeS9kYXRhZmFjdG9yaWVzL0RhdGFGYWN0b3J5NjE1OT9hcGktdmVyc2lvbj0yMDE1LTA3LTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "b49269c7-1533-47f9-9e15-bdb3d7a4a1eb"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataFactories.Core.DataFactoryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"DataFactory6159\",\r\n  \"id\": \"/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159\",\r\n  \"type\": \"Microsoft.DataFactory/datafactories\",\r\n  \"location\": \"Brazil South\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"dataFactoryId\": \"aa5eb6dd-1443-4893-b560-901d3aed1932\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"error\": null,\r\n    \"errorMessage\": null\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "459"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "384a9319-5f33-41fa-8fe4-71c1e9d70658"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14991"
+        ],
+        "x-ms-correlation-request-id": [
+          "907ceeb8-925c-4954-90fb-33c6a25ccf8f"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150708T185631Z:907ceeb8-925c-4954-90fb-33c6a25ccf8f"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 08 Jul 2015 18:56:31 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/linkedservices/LinkedService-WikipediaClickEvents?api-version=2015-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDQzMWViYjItNWEwNy00ZDg1LTg1Y2YtN2FmMzRhZTg1ZmY1L3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA3MDMvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhRmFjdG9yeS9kYXRhZmFjdG9yaWVzL0RhdGFGYWN0b3J5NjE1OS9saW5rZWRzZXJ2aWNlcy9MaW5rZWRTZXJ2aWNlLVdpa2lwZWRpYUNsaWNrRXZlbnRzP2FwaS12ZXJzaW9uPTIwMTUtMDctMDEtcHJldmlldw==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"name\": \"LinkedService-WikipediaClickEvents\",\r\n  \"properties\": {\r\n    \"type\": \"AzureStorage\",\r\n    \"typeProperties\": {\r\n      \"ConnectionString\": \"DefaultEndpointsProtocol=https;AccountName=mywikistorage;AccountKey=mytestaccountkey\"\r\n    }\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Content-Length": [
+          "254"
+        ],
+        "x-ms-client-request-id": [
+          "5235cf5d-bb3b-49fd-a8dc-a42969b15a3e"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataFactories.Core.DataFactoryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/linkedservices/LinkedService-WikipediaClickEvents\",\r\n  \"name\": \"LinkedService-WikipediaClickEvents\",\r\n  \"properties\": {\r\n    \"hubName\": \"datafactory6159_hub\",\r\n    \"type\": \"AzureStorage\",\r\n    \"typeProperties\": {\r\n      \"connectionString\": \"DefaultEndpointsProtocol=https;AccountName=mywikistorage;AccountKey=**********\"\r\n    },\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "468"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "e43d3f9e-3935-48ec-a463-2ef78c8ab59c"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1196"
+        ],
+        "x-ms-correlation-request-id": [
+          "bf328bfc-32f1-410a-b791-69c5be56a953"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150708T185633Z:bf328bfc-32f1-410a-b791-69c5be56a953"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 08 Jul 2015 18:56:33 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/linkedservices/LinkedService-WikipediaClickEvents?api-version=2015-07-01-preview"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/linkedservices/LinkedService-WikipediaClickEvents?api-version=2015-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDQzMWViYjItNWEwNy00ZDg1LTg1Y2YtN2FmMzRhZTg1ZmY1L3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA3MDMvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhRmFjdG9yeS9kYXRhZmFjdG9yaWVzL0RhdGFGYWN0b3J5NjE1OS9saW5rZWRzZXJ2aWNlcy9MaW5rZWRTZXJ2aWNlLVdpa2lwZWRpYUNsaWNrRXZlbnRzP2FwaS12ZXJzaW9uPTIwMTUtMDctMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "4a787860-e24f-45b7-aa7d-0d08c5774840"
+        ],
+        "x-ms-version": [
+          "2015-07-01-preview"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataFactories.Core.DataFactoryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/linkedservices/LinkedService-WikipediaClickEvents\",\r\n  \"name\": \"LinkedService-WikipediaClickEvents\",\r\n  \"properties\": {\r\n    \"hubName\": \"datafactory6159_hub\",\r\n    \"type\": \"AzureStorage\",\r\n    \"typeProperties\": {\r\n      \"connectionString\": \"DefaultEndpointsProtocol=https;AccountName=mywikistorage;AccountKey=**********\"\r\n    },\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "468"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "50214a70-376a-4976-86ce-0d4a13d8e532"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14990"
+        ],
+        "x-ms-correlation-request-id": [
+          "babf44d2-fb3b-4366-8d16-b8b74cd6c41a"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150708T185633Z:babf44d2-fb3b-4366-8d16-b8b74cd6c41a"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 08 Jul 2015 18:56:33 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/linkedservices/LinkedService-CuratedWikiData?api-version=2015-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDQzMWViYjItNWEwNy00ZDg1LTg1Y2YtN2FmMzRhZTg1ZmY1L3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA3MDMvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhRmFjdG9yeS9kYXRhZmFjdG9yaWVzL0RhdGFGYWN0b3J5NjE1OS9saW5rZWRzZXJ2aWNlcy9MaW5rZWRTZXJ2aWNlLUN1cmF0ZWRXaWtpRGF0YT9hcGktdmVyc2lvbj0yMDE1LTA3LTAxLXByZXZpZXc=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"name\": \"LinkedService-CuratedWikiData\",\r\n  \"properties\": {\r\n    \"type\": \"AzureStorage\",\r\n    \"typeProperties\": {\r\n      \"ConnectionString\": \"DefaultEndpointsProtocol=https;AccountName=mytestaccountname;AccountKey=mytestaccountkey\"\r\n    }\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Content-Length": [
+          "253"
+        ],
+        "x-ms-client-request-id": [
+          "5eeb8c8c-97fa-46d5-9f5d-e0e2883ca7e1"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataFactories.Core.DataFactoryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/linkedservices/LinkedService-CuratedWikiData\",\r\n  \"name\": \"LinkedService-CuratedWikiData\",\r\n  \"properties\": {\r\n    \"hubName\": \"datafactory6159_hub\",\r\n    \"type\": \"AzureStorage\",\r\n    \"typeProperties\": {\r\n      \"connectionString\": \"DefaultEndpointsProtocol=https;AccountName=mytestaccountname;AccountKey=**********\"\r\n    },\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "462"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "b3df9581-620c-4d9a-aecc-d2de8d571cd6"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1195"
+        ],
+        "x-ms-correlation-request-id": [
+          "1e6c8543-8e75-4f2f-b9e5-22ebcd3e0483"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150708T185633Z:1e6c8543-8e75-4f2f-b9e5-22ebcd3e0483"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 08 Jul 2015 18:56:33 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/linkedservices/LinkedService-CuratedWikiData?api-version=2015-07-01-preview"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/linkedservices/LinkedService-CuratedWikiData?api-version=2015-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDQzMWViYjItNWEwNy00ZDg1LTg1Y2YtN2FmMzRhZTg1ZmY1L3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA3MDMvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhRmFjdG9yeS9kYXRhZmFjdG9yaWVzL0RhdGFGYWN0b3J5NjE1OS9saW5rZWRzZXJ2aWNlcy9MaW5rZWRTZXJ2aWNlLUN1cmF0ZWRXaWtpRGF0YT9hcGktdmVyc2lvbj0yMDE1LTA3LTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "ef2b05a9-3670-4b13-93a0-c286d66f99cb"
+        ],
+        "x-ms-version": [
+          "2015-07-01-preview"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataFactories.Core.DataFactoryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/linkedservices/LinkedService-CuratedWikiData\",\r\n  \"name\": \"LinkedService-CuratedWikiData\",\r\n  \"properties\": {\r\n    \"hubName\": \"datafactory6159_hub\",\r\n    \"type\": \"AzureStorage\",\r\n    \"typeProperties\": {\r\n      \"connectionString\": \"DefaultEndpointsProtocol=https;AccountName=mytestaccountname;AccountKey=**********\"\r\n    },\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "462"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "6eb12f37-cb5b-4b24-a53e-4d03701c22c1"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14989"
+        ],
+        "x-ms-correlation-request-id": [
+          "3266ccb0-3097-4bf8-b276-005fb9b3d775"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150708T185633Z:3266ccb0-3097-4bf8-b276-005fb9b3d775"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 08 Jul 2015 18:56:33 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/linkedservices/LinkedService-WikiAggregatedData?api-version=2015-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDQzMWViYjItNWEwNy00ZDg1LTg1Y2YtN2FmMzRhZTg1ZmY1L3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA3MDMvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhRmFjdG9yeS9kYXRhZmFjdG9yaWVzL0RhdGFGYWN0b3J5NjE1OS9saW5rZWRzZXJ2aWNlcy9MaW5rZWRTZXJ2aWNlLVdpa2lBZ2dyZWdhdGVkRGF0YT9hcGktdmVyc2lvbj0yMDE1LTA3LTAxLXByZXZpZXc=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"name\": \"LinkedService-WikiAggregatedData\",\r\n  \"properties\": {\r\n    \"type\": \"AzureSqlDatabase\",\r\n    \"typeProperties\": {\r\n      \"ConnectionString\": \"Server=tcp:mytestsql.database.windows.net,1433;Database=mdpwikisamplev2;User ID=test@test.net;Password=fakepassword;Trusted_Connection=False;Encrypt=True;Connection Timeout=30\"\r\n    }\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Content-Length": [
+          "347"
+        ],
+        "x-ms-client-request-id": [
+          "10c40a47-6d7a-44d5-8ff9-c0cf728969d5"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataFactories.Core.DataFactoryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/linkedservices/LinkedService-WikiAggregatedData\",\r\n  \"name\": \"LinkedService-WikiAggregatedData\",\r\n  \"properties\": {\r\n    \"hubName\": \"datafactory6159_hub\",\r\n    \"type\": \"AzureSqlDatabase\",\r\n    \"typeProperties\": {\r\n      \"connectionString\": \"Data Source=tcp:mytestsql.database.windows.net,1433;Initial Catalog=mdpwikisamplev2;Integrated Security=False;User ID=test@test.net;Password=**********;Connect Timeout=30;Encrypt=True\"\r\n    },\r\n    \"provisioningState\": \"PendingCreation\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "579"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "548d1c37-8c1f-4642-9545-e2c65b6449e5"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1194"
+        ],
+        "x-ms-correlation-request-id": [
+          "e83cc3de-5a44-49fd-aefd-e15024df1a7f"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150708T185634Z:e83cc3de-5a44-49fd-aefd-e15024df1a7f"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 08 Jul 2015 18:56:34 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/linkedservices/LinkedService-WikiAggregatedData?api-version=2015-07-01-preview"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/linkedservices/LinkedService-WikiAggregatedData?api-version=2015-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDQzMWViYjItNWEwNy00ZDg1LTg1Y2YtN2FmMzRhZTg1ZmY1L3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA3MDMvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhRmFjdG9yeS9kYXRhZmFjdG9yaWVzL0RhdGFGYWN0b3J5NjE1OS9saW5rZWRzZXJ2aWNlcy9MaW5rZWRTZXJ2aWNlLVdpa2lBZ2dyZWdhdGVkRGF0YT9hcGktdmVyc2lvbj0yMDE1LTA3LTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "c20e4951-83cd-4f6b-b195-209045c8879b"
+        ],
+        "x-ms-version": [
+          "2015-07-01-preview"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataFactories.Core.DataFactoryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/linkedservices/LinkedService-WikiAggregatedData\",\r\n  \"name\": \"LinkedService-WikiAggregatedData\",\r\n  \"properties\": {\r\n    \"hubName\": \"datafactory6159_hub\",\r\n    \"type\": \"AzureSqlDatabase\",\r\n    \"typeProperties\": {\r\n      \"connectionString\": \"Data Source=tcp:mytestsql.database.windows.net,1433;Initial Catalog=mdpwikisamplev2;Integrated Security=False;User ID=test@test.net;Password=**********;Connect Timeout=30;Encrypt=True\"\r\n    },\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "573"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "24fff14e-810a-4a81-a9fb-8570d648a3d2"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14988"
+        ],
+        "x-ms-correlation-request-id": [
+          "b06fb0e0-31ce-47a8-90a0-a2ba20ed7d1f"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150708T185634Z:b06fb0e0-31ce-47a8-90a0-a2ba20ed7d1f"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 08 Jul 2015 18:56:34 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/linkedservices/HDILinkedService?api-version=2015-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDQzMWViYjItNWEwNy00ZDg1LTg1Y2YtN2FmMzRhZTg1ZmY1L3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA3MDMvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhRmFjdG9yeS9kYXRhZmFjdG9yaWVzL0RhdGFGYWN0b3J5NjE1OS9saW5rZWRzZXJ2aWNlcy9IRElMaW5rZWRTZXJ2aWNlP2FwaS12ZXJzaW9uPTIwMTUtMDctMDEtcHJldmlldw==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"name\": \"HDILinkedService\",\r\n  \"properties\": {\r\n    \"type\": \"HDInsight\",\r\n    \"typeProperties\": {\r\n      \"ClusterUri\": \"https://testhdi.azurehdinsight.net/\",\r\n      \"UserName\": \"testaccount\",\r\n      \"Password\": \"fakepassword\",\r\n      \"LinkedServiceName\": \"LinkedService-CuratedWikiData\"\r\n    }\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Content-Length": [
+          "308"
+        ],
+        "x-ms-client-request-id": [
+          "2da6bee0-cb1e-4499-ab4e-5b44584930d8"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataFactories.Core.DataFactoryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/linkedservices/HDILinkedService\",\r\n  \"name\": \"HDILinkedService\",\r\n  \"properties\": {\r\n    \"hubName\": \"datafactory6159_hub\",\r\n    \"type\": \"HDInsight\",\r\n    \"typeProperties\": {\r\n      \"clusterUri\": \"https://testhdi.azurehdinsight.net/\",\r\n      \"userName\": \"testaccount\",\r\n      \"password\": \"**********\",\r\n      \"storageAccountName\": null,\r\n      \"storageAccountKey\": null,\r\n      \"location\": null,\r\n      \"linkedServiceName\": \"LinkedService-CuratedWikiData\"\r\n    },\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "548"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "79521de7-e34b-4455-b874-e6de1a2af58b"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1193"
+        ],
+        "x-ms-correlation-request-id": [
+          "589f7e39-549c-460a-b328-f0581a3e9c96"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150708T185634Z:589f7e39-549c-460a-b328-f0581a3e9c96"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 08 Jul 2015 18:56:34 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/linkedservices/HDILinkedService?api-version=2015-07-01-preview"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/linkedservices/HDILinkedService?api-version=2015-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDQzMWViYjItNWEwNy00ZDg1LTg1Y2YtN2FmMzRhZTg1ZmY1L3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA3MDMvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhRmFjdG9yeS9kYXRhZmFjdG9yaWVzL0RhdGFGYWN0b3J5NjE1OS9saW5rZWRzZXJ2aWNlcy9IRElMaW5rZWRTZXJ2aWNlP2FwaS12ZXJzaW9uPTIwMTUtMDctMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "f8d7ff75-d147-402f-bcf7-5fca9af85ce8"
+        ],
+        "x-ms-version": [
+          "2015-07-01-preview"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataFactories.Core.DataFactoryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/linkedservices/HDILinkedService\",\r\n  \"name\": \"HDILinkedService\",\r\n  \"properties\": {\r\n    \"hubName\": \"datafactory6159_hub\",\r\n    \"type\": \"HDInsight\",\r\n    \"typeProperties\": {\r\n      \"clusterUri\": \"https://testhdi.azurehdinsight.net/\",\r\n      \"userName\": \"testaccount\",\r\n      \"password\": \"**********\",\r\n      \"storageAccountName\": null,\r\n      \"storageAccountKey\": null,\r\n      \"location\": null,\r\n      \"linkedServiceName\": \"LinkedService-CuratedWikiData\"\r\n    },\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "548"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "ab948e97-1e5d-48aa-a9c1-6b2389f0569a"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14987"
+        ],
+        "x-ms-correlation-request-id": [
+          "fd68c937-899e-42d5-8db2-afc9821bd40f"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150708T185634Z:fd68c937-899e-42d5-8db2-afc9821bd40f"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 08 Jul 2015 18:56:34 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/tables/DA_WikiAggregatedData?api-version=2015-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDQzMWViYjItNWEwNy00ZDg1LTg1Y2YtN2FmMzRhZTg1ZmY1L3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA3MDMvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhRmFjdG9yeS9kYXRhZmFjdG9yaWVzL0RhdGFGYWN0b3J5NjE1OS90YWJsZXMvREFfV2lraUFnZ3JlZ2F0ZWREYXRhP2FwaS12ZXJzaW9uPTIwMTUtMDctMDEtcHJldmlldw==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"name\": \"DA_WikiAggregatedData\",\r\n  \"properties\": {\r\n    \"structure\": [\r\n      {\r\n        \"name\": \"slicetimestamp\",\r\n        \"type\": \"String\"\r\n      },\r\n      {\r\n        \"name\": \"projectname\",\r\n        \"type\": \"String\"\r\n      },\r\n      {\r\n        \"name\": \"hits\",\r\n        \"type\": \"Decimal\"\r\n      }\r\n    ],\r\n    \"availability\": {\r\n      \"frequency\": \"Hour\",\r\n      \"interval\": 1\r\n    },\r\n    \"policy\": {\r\n      \"validation\": {\r\n        \"minimumRows\": 8\r\n      }\r\n    },\r\n    \"type\": \"AzureSqlTable\",\r\n    \"linkedServiceName\": \"LinkedService-WikiAggregatedData\",\r\n    \"typeProperties\": {\r\n      \"tableName\": \"wikiaggregateddata\"\r\n    }\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Content-Length": [
+          "649"
+        ],
+        "x-ms-client-request-id": [
+          "257c1c21-c98a-4975-82df-5db84d2bc86c"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataFactories.Core.DataFactoryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"DA_WikiAggregatedData\",\r\n  \"id\": \"/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/tables/DA_WikiAggregatedData\",\r\n  \"properties\": {\r\n    \"structure\": [\r\n      {\r\n        \"position\": 0,\r\n        \"name\": \"slicetimestamp\",\r\n        \"type\": \"String\"\r\n      },\r\n      {\r\n        \"position\": 0,\r\n        \"name\": \"projectname\",\r\n        \"type\": \"String\"\r\n      },\r\n      {\r\n        \"position\": 0,\r\n        \"name\": \"hits\",\r\n        \"type\": \"Decimal\"\r\n      }\r\n    ],\r\n    \"published\": false,\r\n    \"type\": \"AzureSqlTable\",\r\n    \"linkedServiceName\": \"LinkedService-WikiAggregatedData\",\r\n    \"typeProperties\": {\r\n      \"tableName\": \"wikiaggregateddata\"\r\n    },\r\n    \"availability\": {\r\n      \"frequency\": \"Hour\",\r\n      \"interval\": 1\r\n    },\r\n    \"policy\": {\r\n      \"validation\": {\r\n        \"minimumRows\": 8\r\n      }\r\n    },\r\n    \"createTime\": \"2015-07-08T18:56:36.0865662Z\",\r\n    \"provisioningState\": \"PendingCreation\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "717"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "0c5be29f-5960-4aca-938d-a102d6b50073"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1192"
+        ],
+        "x-ms-correlation-request-id": [
+          "f8ccf3be-9b6d-4d48-8569-487012c3beb8"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150708T185637Z:f8ccf3be-9b6d-4d48-8569-487012c3beb8"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 08 Jul 2015 18:56:36 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/tables/DA_WikiAggregatedData?api-version=2015-07-01-preview"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/tables/DA_WikiAggregatedData?api-version=2015-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDQzMWViYjItNWEwNy00ZDg1LTg1Y2YtN2FmMzRhZTg1ZmY1L3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA3MDMvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhRmFjdG9yeS9kYXRhZmFjdG9yaWVzL0RhdGFGYWN0b3J5NjE1OS90YWJsZXMvREFfV2lraUFnZ3JlZ2F0ZWREYXRhP2FwaS12ZXJzaW9uPTIwMTUtMDctMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "d0dffa8f-f807-4c01-bc63-a0c493969261"
+        ],
+        "x-ms-version": [
+          "2015-07-01-preview"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataFactories.Core.DataFactoryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"DA_WikiAggregatedData\",\r\n  \"id\": \"/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/tables/DA_WikiAggregatedData\",\r\n  \"properties\": {\r\n    \"structure\": [\r\n      {\r\n        \"position\": 0,\r\n        \"name\": \"slicetimestamp\",\r\n        \"type\": \"String\"\r\n      },\r\n      {\r\n        \"position\": 0,\r\n        \"name\": \"projectname\",\r\n        \"type\": \"String\"\r\n      },\r\n      {\r\n        \"position\": 0,\r\n        \"name\": \"hits\",\r\n        \"type\": \"Decimal\"\r\n      }\r\n    ],\r\n    \"published\": false,\r\n    \"type\": \"AzureSqlTable\",\r\n    \"linkedServiceName\": \"LinkedService-WikiAggregatedData\",\r\n    \"typeProperties\": {\r\n      \"tableName\": \"wikiaggregateddata\"\r\n    },\r\n    \"availability\": {\r\n      \"frequency\": \"Hour\",\r\n      \"interval\": 1\r\n    },\r\n    \"policy\": {\r\n      \"validation\": {\r\n        \"minimumRows\": 8\r\n      }\r\n    },\r\n    \"createTime\": \"2015-07-08T18:56:36.0865662Z\",\r\n    \"provisioningState\": \"PendingCreation\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "717"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "fc4d82bd-e8e0-421b-b284-3fb20894a892"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14986"
+        ],
+        "x-ms-correlation-request-id": [
+          "334263c7-2b66-45fc-8347-f1afccc8b35b"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150708T185637Z:334263c7-2b66-45fc-8347-f1afccc8b35b"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 08 Jul 2015 18:56:36 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/tables/DA_WikiAggregatedData?api-version=2015-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDQzMWViYjItNWEwNy00ZDg1LTg1Y2YtN2FmMzRhZTg1ZmY1L3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA3MDMvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhRmFjdG9yeS9kYXRhZmFjdG9yaWVzL0RhdGFGYWN0b3J5NjE1OS90YWJsZXMvREFfV2lraUFnZ3JlZ2F0ZWREYXRhP2FwaS12ZXJzaW9uPTIwMTUtMDctMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "2f089b76-b30c-45e4-80bb-a8cef3deb3b9"
+        ],
+        "x-ms-version": [
+          "2015-07-01-preview"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataFactories.Core.DataFactoryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"DA_WikiAggregatedData\",\r\n  \"id\": \"/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/tables/DA_WikiAggregatedData\",\r\n  \"properties\": {\r\n    \"structure\": [\r\n      {\r\n        \"position\": 0,\r\n        \"name\": \"slicetimestamp\",\r\n        \"type\": \"String\"\r\n      },\r\n      {\r\n        \"position\": 0,\r\n        \"name\": \"projectname\",\r\n        \"type\": \"String\"\r\n      },\r\n      {\r\n        \"position\": 0,\r\n        \"name\": \"hits\",\r\n        \"type\": \"Decimal\"\r\n      }\r\n    ],\r\n    \"published\": false,\r\n    \"type\": \"AzureSqlTable\",\r\n    \"linkedServiceName\": \"LinkedService-WikiAggregatedData\",\r\n    \"typeProperties\": {\r\n      \"tableName\": \"wikiaggregateddata\"\r\n    },\r\n    \"availability\": {\r\n      \"frequency\": \"Hour\",\r\n      \"interval\": 1\r\n    },\r\n    \"policy\": {\r\n      \"validation\": {\r\n        \"minimumRows\": 8\r\n      }\r\n    },\r\n    \"createTime\": \"2015-07-08T18:56:36.0865662Z\",\r\n    \"provisioningState\": \"PendingCreation\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "717"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "6a4904b7-676a-41f7-8fa3-3ab96d97c02a"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14985"
+        ],
+        "x-ms-correlation-request-id": [
+          "1a3ad001-bef5-40f6-a4db-224148104c05"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150708T185642Z:1a3ad001-bef5-40f6-a4db-224148104c05"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 08 Jul 2015 18:56:42 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/tables/DA_WikiAggregatedData?api-version=2015-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDQzMWViYjItNWEwNy00ZDg1LTg1Y2YtN2FmMzRhZTg1ZmY1L3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA3MDMvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhRmFjdG9yeS9kYXRhZmFjdG9yaWVzL0RhdGFGYWN0b3J5NjE1OS90YWJsZXMvREFfV2lraUFnZ3JlZ2F0ZWREYXRhP2FwaS12ZXJzaW9uPTIwMTUtMDctMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "99f8f2cf-9d05-4a51-965d-6e280bc83032"
+        ],
+        "x-ms-version": [
+          "2015-07-01-preview"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataFactories.Core.DataFactoryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"DA_WikiAggregatedData\",\r\n  \"id\": \"/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/tables/DA_WikiAggregatedData\",\r\n  \"properties\": {\r\n    \"structure\": [\r\n      {\r\n        \"position\": 0,\r\n        \"name\": \"slicetimestamp\",\r\n        \"type\": \"String\"\r\n      },\r\n      {\r\n        \"position\": 0,\r\n        \"name\": \"projectname\",\r\n        \"type\": \"String\"\r\n      },\r\n      {\r\n        \"position\": 0,\r\n        \"name\": \"hits\",\r\n        \"type\": \"Decimal\"\r\n      }\r\n    ],\r\n    \"published\": false,\r\n    \"type\": \"AzureSqlTable\",\r\n    \"linkedServiceName\": \"LinkedService-WikiAggregatedData\",\r\n    \"typeProperties\": {\r\n      \"tableName\": \"wikiaggregateddata\"\r\n    },\r\n    \"availability\": {\r\n      \"frequency\": \"Hour\",\r\n      \"interval\": 1\r\n    },\r\n    \"policy\": {\r\n      \"validation\": {\r\n        \"minimumRows\": 8\r\n      }\r\n    },\r\n    \"createTime\": \"2015-07-08T18:56:36.0865662Z\",\r\n    \"provisioningState\": \"PendingCreation\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "717"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "cffe5b9a-b5e5-49f0-a8f9-910156d9d658"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14984"
+        ],
+        "x-ms-correlation-request-id": [
+          "1dcb85be-d02b-4876-9510-b08756618c86"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150708T185647Z:1dcb85be-d02b-4876-9510-b08756618c86"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 08 Jul 2015 18:56:47 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/tables/DA_WikiAggregatedData?api-version=2015-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDQzMWViYjItNWEwNy00ZDg1LTg1Y2YtN2FmMzRhZTg1ZmY1L3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA3MDMvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhRmFjdG9yeS9kYXRhZmFjdG9yaWVzL0RhdGFGYWN0b3J5NjE1OS90YWJsZXMvREFfV2lraUFnZ3JlZ2F0ZWREYXRhP2FwaS12ZXJzaW9uPTIwMTUtMDctMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "3fddea6e-4d47-484f-af30-cb68d0665f25"
+        ],
+        "x-ms-version": [
+          "2015-07-01-preview"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataFactories.Core.DataFactoryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"DA_WikiAggregatedData\",\r\n  \"id\": \"/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/tables/DA_WikiAggregatedData\",\r\n  \"properties\": {\r\n    \"structure\": [\r\n      {\r\n        \"position\": 0,\r\n        \"name\": \"slicetimestamp\",\r\n        \"type\": \"String\"\r\n      },\r\n      {\r\n        \"position\": 0,\r\n        \"name\": \"projectname\",\r\n        \"type\": \"String\"\r\n      },\r\n      {\r\n        \"position\": 0,\r\n        \"name\": \"hits\",\r\n        \"type\": \"Decimal\"\r\n      }\r\n    ],\r\n    \"published\": false,\r\n    \"type\": \"AzureSqlTable\",\r\n    \"linkedServiceName\": \"LinkedService-WikiAggregatedData\",\r\n    \"typeProperties\": {\r\n      \"tableName\": \"wikiaggregateddata\"\r\n    },\r\n    \"availability\": {\r\n      \"frequency\": \"Hour\",\r\n      \"interval\": 1\r\n    },\r\n    \"policy\": {\r\n      \"validation\": {\r\n        \"minimumRows\": 8\r\n      }\r\n    },\r\n    \"createTime\": \"2015-07-08T18:56:36.0865662Z\",\r\n    \"provisioningState\": \"PendingCreation\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "717"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "ff8077bc-b376-447c-b23c-26c7ef00c9d3"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14983"
+        ],
+        "x-ms-correlation-request-id": [
+          "e72c7ef6-8ec8-4f5a-a7a6-f05c374a76f4"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150708T185653Z:e72c7ef6-8ec8-4f5a-a7a6-f05c374a76f4"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 08 Jul 2015 18:56:52 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/tables/DA_WikiAggregatedData?api-version=2015-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDQzMWViYjItNWEwNy00ZDg1LTg1Y2YtN2FmMzRhZTg1ZmY1L3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA3MDMvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhRmFjdG9yeS9kYXRhZmFjdG9yaWVzL0RhdGFGYWN0b3J5NjE1OS90YWJsZXMvREFfV2lraUFnZ3JlZ2F0ZWREYXRhP2FwaS12ZXJzaW9uPTIwMTUtMDctMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "897a304b-e696-42f9-bd89-dfb97fb22daa"
+        ],
+        "x-ms-version": [
+          "2015-07-01-preview"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataFactories.Core.DataFactoryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"DA_WikiAggregatedData\",\r\n  \"id\": \"/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/tables/DA_WikiAggregatedData\",\r\n  \"properties\": {\r\n    \"structure\": [\r\n      {\r\n        \"position\": 0,\r\n        \"name\": \"slicetimestamp\",\r\n        \"type\": \"String\"\r\n      },\r\n      {\r\n        \"position\": 0,\r\n        \"name\": \"projectname\",\r\n        \"type\": \"String\"\r\n      },\r\n      {\r\n        \"position\": 0,\r\n        \"name\": \"hits\",\r\n        \"type\": \"Decimal\"\r\n      }\r\n    ],\r\n    \"published\": false,\r\n    \"type\": \"AzureSqlTable\",\r\n    \"linkedServiceName\": \"LinkedService-WikiAggregatedData\",\r\n    \"typeProperties\": {\r\n      \"tableName\": \"wikiaggregateddata\"\r\n    },\r\n    \"availability\": {\r\n      \"frequency\": \"Hour\",\r\n      \"interval\": 1\r\n    },\r\n    \"policy\": {\r\n      \"validation\": {\r\n        \"minimumRows\": 8\r\n      }\r\n    },\r\n    \"createTime\": \"2015-07-08T18:56:36.0865662Z\",\r\n    \"provisioningState\": \"PendingCreation\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "717"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "07f6635a-2645-44b7-a1b1-3a56dcc6c0e1"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14982"
+        ],
+        "x-ms-correlation-request-id": [
+          "97e152c1-31e6-4874-8a23-ca5d4dc3a16b"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150708T185658Z:97e152c1-31e6-4874-8a23-ca5d4dc3a16b"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 08 Jul 2015 18:56:57 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/tables/DA_WikiAggregatedData?api-version=2015-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDQzMWViYjItNWEwNy00ZDg1LTg1Y2YtN2FmMzRhZTg1ZmY1L3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA3MDMvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhRmFjdG9yeS9kYXRhZmFjdG9yaWVzL0RhdGFGYWN0b3J5NjE1OS90YWJsZXMvREFfV2lraUFnZ3JlZ2F0ZWREYXRhP2FwaS12ZXJzaW9uPTIwMTUtMDctMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "cc7cd738-9bcb-4422-9497-3faa576a64a2"
+        ],
+        "x-ms-version": [
+          "2015-07-01-preview"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataFactories.Core.DataFactoryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"DA_WikiAggregatedData\",\r\n  \"id\": \"/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/tables/DA_WikiAggregatedData\",\r\n  \"properties\": {\r\n    \"structure\": [\r\n      {\r\n        \"position\": 0,\r\n        \"name\": \"slicetimestamp\",\r\n        \"type\": \"String\"\r\n      },\r\n      {\r\n        \"position\": 0,\r\n        \"name\": \"projectname\",\r\n        \"type\": \"String\"\r\n      },\r\n      {\r\n        \"position\": 0,\r\n        \"name\": \"hits\",\r\n        \"type\": \"Decimal\"\r\n      }\r\n    ],\r\n    \"published\": false,\r\n    \"type\": \"AzureSqlTable\",\r\n    \"linkedServiceName\": \"LinkedService-WikiAggregatedData\",\r\n    \"typeProperties\": {\r\n      \"tableName\": \"wikiaggregateddata\"\r\n    },\r\n    \"availability\": {\r\n      \"frequency\": \"Hour\",\r\n      \"interval\": 1\r\n    },\r\n    \"policy\": {\r\n      \"validation\": {\r\n        \"minimumRows\": 8\r\n      }\r\n    },\r\n    \"createTime\": \"2015-07-08T18:56:36.0865662Z\",\r\n    \"provisioningState\": \"PendingCreation\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "717"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "7cdfdb6d-0dab-4e88-846d-61510561ea43"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14981"
+        ],
+        "x-ms-correlation-request-id": [
+          "d631fb26-03c4-45a8-ba6e-f4f8623656c0"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150708T185703Z:d631fb26-03c4-45a8-ba6e-f4f8623656c0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 08 Jul 2015 18:57:03 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/tables/DA_WikiAggregatedData?api-version=2015-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDQzMWViYjItNWEwNy00ZDg1LTg1Y2YtN2FmMzRhZTg1ZmY1L3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA3MDMvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhRmFjdG9yeS9kYXRhZmFjdG9yaWVzL0RhdGFGYWN0b3J5NjE1OS90YWJsZXMvREFfV2lraUFnZ3JlZ2F0ZWREYXRhP2FwaS12ZXJzaW9uPTIwMTUtMDctMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "d4bf757a-9ecb-422f-b01e-c287410b45a0"
+        ],
+        "x-ms-version": [
+          "2015-07-01-preview"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataFactories.Core.DataFactoryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"DA_WikiAggregatedData\",\r\n  \"id\": \"/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/tables/DA_WikiAggregatedData\",\r\n  \"properties\": {\r\n    \"structure\": [\r\n      {\r\n        \"position\": 0,\r\n        \"name\": \"slicetimestamp\",\r\n        \"type\": \"String\"\r\n      },\r\n      {\r\n        \"position\": 0,\r\n        \"name\": \"projectname\",\r\n        \"type\": \"String\"\r\n      },\r\n      {\r\n        \"position\": 0,\r\n        \"name\": \"hits\",\r\n        \"type\": \"Decimal\"\r\n      }\r\n    ],\r\n    \"published\": false,\r\n    \"type\": \"AzureSqlTable\",\r\n    \"linkedServiceName\": \"LinkedService-WikiAggregatedData\",\r\n    \"typeProperties\": {\r\n      \"tableName\": \"wikiaggregateddata\"\r\n    },\r\n    \"availability\": {\r\n      \"frequency\": \"Hour\",\r\n      \"interval\": 1\r\n    },\r\n    \"policy\": {\r\n      \"validation\": {\r\n        \"minimumRows\": 8\r\n      }\r\n    },\r\n    \"createTime\": \"2015-07-08T18:56:36.0865662Z\",\r\n    \"provisioningState\": \"PendingCreation\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "717"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "097b6f18-a44d-4311-a549-4732af3a3cf8"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14980"
+        ],
+        "x-ms-correlation-request-id": [
+          "e2a1857a-0ac5-4a9d-9505-49d7135a4cbd"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150708T185708Z:e2a1857a-0ac5-4a9d-9505-49d7135a4cbd"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 08 Jul 2015 18:57:08 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/tables/DA_WikiAggregatedData?api-version=2015-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDQzMWViYjItNWEwNy00ZDg1LTg1Y2YtN2FmMzRhZTg1ZmY1L3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA3MDMvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhRmFjdG9yeS9kYXRhZmFjdG9yaWVzL0RhdGFGYWN0b3J5NjE1OS90YWJsZXMvREFfV2lraUFnZ3JlZ2F0ZWREYXRhP2FwaS12ZXJzaW9uPTIwMTUtMDctMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "13223340-dc9f-41ed-8554-dbf5ff78290b"
+        ],
+        "x-ms-version": [
+          "2015-07-01-preview"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataFactories.Core.DataFactoryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"DA_WikiAggregatedData\",\r\n  \"id\": \"/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/tables/DA_WikiAggregatedData\",\r\n  \"properties\": {\r\n    \"structure\": [\r\n      {\r\n        \"position\": 0,\r\n        \"name\": \"slicetimestamp\",\r\n        \"type\": \"String\"\r\n      },\r\n      {\r\n        \"position\": 0,\r\n        \"name\": \"projectname\",\r\n        \"type\": \"String\"\r\n      },\r\n      {\r\n        \"position\": 0,\r\n        \"name\": \"hits\",\r\n        \"type\": \"Decimal\"\r\n      }\r\n    ],\r\n    \"published\": false,\r\n    \"type\": \"AzureSqlTable\",\r\n    \"linkedServiceName\": \"LinkedService-WikiAggregatedData\",\r\n    \"typeProperties\": {\r\n      \"tableName\": \"wikiaggregateddata\"\r\n    },\r\n    \"availability\": {\r\n      \"frequency\": \"Hour\",\r\n      \"interval\": 1\r\n    },\r\n    \"policy\": {\r\n      \"validation\": {\r\n        \"minimumRows\": 8\r\n      }\r\n    },\r\n    \"createTime\": \"2015-07-08T18:56:36.0865662Z\",\r\n    \"provisioningState\": \"PendingCreation\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "717"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "e1287256-9996-45f9-85b9-1287636911d2"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14979"
+        ],
+        "x-ms-correlation-request-id": [
+          "d914eb16-02ab-4673-8b44-5a841842fd57"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150708T185713Z:d914eb16-02ab-4673-8b44-5a841842fd57"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 08 Jul 2015 18:57:13 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/tables/DA_WikiAggregatedData?api-version=2015-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDQzMWViYjItNWEwNy00ZDg1LTg1Y2YtN2FmMzRhZTg1ZmY1L3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA3MDMvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhRmFjdG9yeS9kYXRhZmFjdG9yaWVzL0RhdGFGYWN0b3J5NjE1OS90YWJsZXMvREFfV2lraUFnZ3JlZ2F0ZWREYXRhP2FwaS12ZXJzaW9uPTIwMTUtMDctMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "968439fd-94d4-4ac2-af11-a63d82daee28"
+        ],
+        "x-ms-version": [
+          "2015-07-01-preview"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataFactories.Core.DataFactoryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"DA_WikiAggregatedData\",\r\n  \"id\": \"/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/tables/DA_WikiAggregatedData\",\r\n  \"properties\": {\r\n    \"structure\": [\r\n      {\r\n        \"position\": 0,\r\n        \"name\": \"slicetimestamp\",\r\n        \"type\": \"String\"\r\n      },\r\n      {\r\n        \"position\": 0,\r\n        \"name\": \"projectname\",\r\n        \"type\": \"String\"\r\n      },\r\n      {\r\n        \"position\": 0,\r\n        \"name\": \"hits\",\r\n        \"type\": \"Decimal\"\r\n      }\r\n    ],\r\n    \"published\": false,\r\n    \"type\": \"AzureSqlTable\",\r\n    \"linkedServiceName\": \"LinkedService-WikiAggregatedData\",\r\n    \"typeProperties\": {\r\n      \"tableName\": \"wikiaggregateddata\"\r\n    },\r\n    \"availability\": {\r\n      \"frequency\": \"Hour\",\r\n      \"interval\": 1\r\n    },\r\n    \"policy\": {\r\n      \"validation\": {\r\n        \"minimumRows\": 8\r\n      }\r\n    },\r\n    \"createTime\": \"2015-07-08T18:56:34.7373533Z\",\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "711"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "4e81243e-03a7-4feb-9839-c05dd94251c2"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14978"
+        ],
+        "x-ms-correlation-request-id": [
+          "c7836e58-d857-4c7e-87b5-43876b77c8c6"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150708T185718Z:c7836e58-d857-4c7e-87b5-43876b77c8c6"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 08 Jul 2015 18:57:18 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/tables/DA_CuratedWikiData?api-version=2015-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDQzMWViYjItNWEwNy00ZDg1LTg1Y2YtN2FmMzRhZTg1ZmY1L3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA3MDMvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhRmFjdG9yeS9kYXRhZmFjdG9yaWVzL0RhdGFGYWN0b3J5NjE1OS90YWJsZXMvREFfQ3VyYXRlZFdpa2lEYXRhP2FwaS12ZXJzaW9uPTIwMTUtMDctMDEtcHJldmlldw==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"name\": \"DA_CuratedWikiData\",\r\n  \"properties\": {\r\n    \"structure\": [\r\n      {\r\n        \"name\": \"slicetimestamp\",\r\n        \"type\": \"String\"\r\n      },\r\n      {\r\n        \"name\": \"projectname\",\r\n        \"type\": \"String\"\r\n      },\r\n      {\r\n        \"name\": \"pageviews\",\r\n        \"type\": \"Decimal\"\r\n      }\r\n    ],\r\n    \"availability\": {\r\n      \"frequency\": \"Hour\",\r\n      \"interval\": 1\r\n    },\r\n    \"type\": \"AzureBlob\",\r\n    \"linkedServiceName\": \"LinkedService-CuratedWikiData\",\r\n    \"typeProperties\": {\r\n      \"folderPath\": \"wikidatagateway/wikisampledataout/runtime={Slice}\",\r\n      \"partitionedBy\": [\r\n        {\r\n          \"name\": \"Slice\",\r\n          \"value\": {\r\n            \"type\": \"DateTime\",\r\n            \"date\": \"SliceStart\",\r\n            \"format\": \"yyyyMMddHH\"\r\n          }\r\n        }\r\n      ]\r\n    }\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Content-Length": [
+          "818"
+        ],
+        "x-ms-client-request-id": [
+          "68e06b20-9ba6-4ca9-9dac-13c955bfa024"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataFactories.Core.DataFactoryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"DA_CuratedWikiData\",\r\n  \"id\": \"/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/tables/DA_CuratedWikiData\",\r\n  \"properties\": {\r\n    \"structure\": [\r\n      {\r\n        \"position\": 0,\r\n        \"name\": \"slicetimestamp\",\r\n        \"type\": \"String\"\r\n      },\r\n      {\r\n        \"position\": 0,\r\n        \"name\": \"projectname\",\r\n        \"type\": \"String\"\r\n      },\r\n      {\r\n        \"position\": 0,\r\n        \"name\": \"pageviews\",\r\n        \"type\": \"Decimal\"\r\n      }\r\n    ],\r\n    \"published\": false,\r\n    \"type\": \"AzureBlob\",\r\n    \"linkedServiceName\": \"LinkedService-CuratedWikiData\",\r\n    \"typeProperties\": {\r\n      \"folderPath\": \"wikidatagateway/wikisampledataout/runtime={Slice}\",\r\n      \"partitionedBy\": [\r\n        {\r\n          \"name\": \"Slice\",\r\n          \"value\": {\r\n            \"type\": \"DateTime\",\r\n            \"date\": \"SliceStart\",\r\n            \"format\": \"yyyyMMddHH\"\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"availability\": {\r\n      \"frequency\": \"Hour\",\r\n      \"interval\": 1\r\n    },\r\n    \"createTime\": \"2015-07-08T18:57:19.4319452Z\",\r\n    \"provisioningState\": \"PendingCreation\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "804"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "da83633a-e459-4409-892f-cd39a097b5a1"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1191"
+        ],
+        "x-ms-correlation-request-id": [
+          "914a9896-8c6e-44c2-b02e-c159ac0262e8"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150708T185719Z:914a9896-8c6e-44c2-b02e-c159ac0262e8"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 08 Jul 2015 18:57:19 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/tables/DA_CuratedWikiData?api-version=2015-07-01-preview"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/tables/DA_CuratedWikiData?api-version=2015-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDQzMWViYjItNWEwNy00ZDg1LTg1Y2YtN2FmMzRhZTg1ZmY1L3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA3MDMvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhRmFjdG9yeS9kYXRhZmFjdG9yaWVzL0RhdGFGYWN0b3J5NjE1OS90YWJsZXMvREFfQ3VyYXRlZFdpa2lEYXRhP2FwaS12ZXJzaW9uPTIwMTUtMDctMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "381e853f-871e-4af4-9887-fc461ec4fefa"
+        ],
+        "x-ms-version": [
+          "2015-07-01-preview"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataFactories.Core.DataFactoryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"DA_CuratedWikiData\",\r\n  \"id\": \"/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/tables/DA_CuratedWikiData\",\r\n  \"properties\": {\r\n    \"structure\": [\r\n      {\r\n        \"position\": 0,\r\n        \"name\": \"slicetimestamp\",\r\n        \"type\": \"String\"\r\n      },\r\n      {\r\n        \"position\": 0,\r\n        \"name\": \"projectname\",\r\n        \"type\": \"String\"\r\n      },\r\n      {\r\n        \"position\": 0,\r\n        \"name\": \"pageviews\",\r\n        \"type\": \"Decimal\"\r\n      }\r\n    ],\r\n    \"published\": false,\r\n    \"type\": \"AzureBlob\",\r\n    \"linkedServiceName\": \"LinkedService-CuratedWikiData\",\r\n    \"typeProperties\": {\r\n      \"folderPath\": \"wikidatagateway/wikisampledataout/runtime={Slice}\",\r\n      \"partitionedBy\": [\r\n        {\r\n          \"name\": \"Slice\",\r\n          \"value\": {\r\n            \"type\": \"DateTime\",\r\n            \"date\": \"SliceStart\",\r\n            \"format\": \"yyyyMMddHH\"\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"availability\": {\r\n      \"frequency\": \"Hour\",\r\n      \"interval\": 1\r\n    },\r\n    \"createTime\": \"2015-07-08T18:57:19.4319452Z\",\r\n    \"provisioningState\": \"PendingCreation\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "804"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "ffe8c5a8-2e8d-4283-be61-d6ea8f217b67"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14977"
+        ],
+        "x-ms-correlation-request-id": [
+          "90fbc77d-d401-47ff-9a5b-371c9929bb72"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150708T185720Z:90fbc77d-d401-47ff-9a5b-371c9929bb72"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 08 Jul 2015 18:57:19 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/tables/DA_CuratedWikiData?api-version=2015-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDQzMWViYjItNWEwNy00ZDg1LTg1Y2YtN2FmMzRhZTg1ZmY1L3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA3MDMvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhRmFjdG9yeS9kYXRhZmFjdG9yaWVzL0RhdGFGYWN0b3J5NjE1OS90YWJsZXMvREFfQ3VyYXRlZFdpa2lEYXRhP2FwaS12ZXJzaW9uPTIwMTUtMDctMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "b80be62e-c839-4d15-9232-8d7f6a0e59bd"
+        ],
+        "x-ms-version": [
+          "2015-07-01-preview"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataFactories.Core.DataFactoryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"DA_CuratedWikiData\",\r\n  \"id\": \"/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/tables/DA_CuratedWikiData\",\r\n  \"properties\": {\r\n    \"structure\": [\r\n      {\r\n        \"position\": 0,\r\n        \"name\": \"slicetimestamp\",\r\n        \"type\": \"String\"\r\n      },\r\n      {\r\n        \"position\": 0,\r\n        \"name\": \"projectname\",\r\n        \"type\": \"String\"\r\n      },\r\n      {\r\n        \"position\": 0,\r\n        \"name\": \"pageviews\",\r\n        \"type\": \"Decimal\"\r\n      }\r\n    ],\r\n    \"published\": false,\r\n    \"type\": \"AzureBlob\",\r\n    \"linkedServiceName\": \"LinkedService-CuratedWikiData\",\r\n    \"typeProperties\": {\r\n      \"folderPath\": \"wikidatagateway/wikisampledataout/runtime={Slice}\",\r\n      \"partitionedBy\": [\r\n        {\r\n          \"name\": \"Slice\",\r\n          \"value\": {\r\n            \"type\": \"DateTime\",\r\n            \"date\": \"SliceStart\",\r\n            \"format\": \"yyyyMMddHH\"\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"availability\": {\r\n      \"frequency\": \"Hour\",\r\n      \"interval\": 1\r\n    },\r\n    \"createTime\": \"2015-07-08T18:57:19.4319452Z\",\r\n    \"provisioningState\": \"PendingCreation\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "804"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "65f2abfa-51fb-4986-8193-2108de0be7d3"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14976"
+        ],
+        "x-ms-correlation-request-id": [
+          "d60f2456-24ae-48b7-829c-15e920e36b4b"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150708T185725Z:d60f2456-24ae-48b7-829c-15e920e36b4b"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 08 Jul 2015 18:57:25 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/tables/DA_CuratedWikiData?api-version=2015-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDQzMWViYjItNWEwNy00ZDg1LTg1Y2YtN2FmMzRhZTg1ZmY1L3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA3MDMvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhRmFjdG9yeS9kYXRhZmFjdG9yaWVzL0RhdGFGYWN0b3J5NjE1OS90YWJsZXMvREFfQ3VyYXRlZFdpa2lEYXRhP2FwaS12ZXJzaW9uPTIwMTUtMDctMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "dcde55ea-869c-425a-b08e-fa6d918113a0"
+        ],
+        "x-ms-version": [
+          "2015-07-01-preview"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataFactories.Core.DataFactoryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"DA_CuratedWikiData\",\r\n  \"id\": \"/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/tables/DA_CuratedWikiData\",\r\n  \"properties\": {\r\n    \"structure\": [\r\n      {\r\n        \"position\": 0,\r\n        \"name\": \"slicetimestamp\",\r\n        \"type\": \"String\"\r\n      },\r\n      {\r\n        \"position\": 0,\r\n        \"name\": \"projectname\",\r\n        \"type\": \"String\"\r\n      },\r\n      {\r\n        \"position\": 0,\r\n        \"name\": \"pageviews\",\r\n        \"type\": \"Decimal\"\r\n      }\r\n    ],\r\n    \"published\": false,\r\n    \"type\": \"AzureBlob\",\r\n    \"linkedServiceName\": \"LinkedService-CuratedWikiData\",\r\n    \"typeProperties\": {\r\n      \"folderPath\": \"wikidatagateway/wikisampledataout/runtime={Slice}\",\r\n      \"partitionedBy\": [\r\n        {\r\n          \"name\": \"Slice\",\r\n          \"value\": {\r\n            \"type\": \"DateTime\",\r\n            \"date\": \"SliceStart\",\r\n            \"format\": \"yyyyMMddHH\"\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"availability\": {\r\n      \"frequency\": \"Hour\",\r\n      \"interval\": 1\r\n    },\r\n    \"createTime\": \"2015-07-08T18:57:19.4319452Z\",\r\n    \"provisioningState\": \"PendingCreation\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "804"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "2723677d-26e7-4856-bdd7-f8feb6c8787e"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14975"
+        ],
+        "x-ms-correlation-request-id": [
+          "dd21da6f-25db-434d-8177-e73e3da4117b"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150708T185730Z:dd21da6f-25db-434d-8177-e73e3da4117b"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 08 Jul 2015 18:57:30 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/tables/DA_CuratedWikiData?api-version=2015-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDQzMWViYjItNWEwNy00ZDg1LTg1Y2YtN2FmMzRhZTg1ZmY1L3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA3MDMvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhRmFjdG9yeS9kYXRhZmFjdG9yaWVzL0RhdGFGYWN0b3J5NjE1OS90YWJsZXMvREFfQ3VyYXRlZFdpa2lEYXRhP2FwaS12ZXJzaW9uPTIwMTUtMDctMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "e13f125c-298c-482b-a01c-a28fae19fd65"
+        ],
+        "x-ms-version": [
+          "2015-07-01-preview"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataFactories.Core.DataFactoryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"DA_CuratedWikiData\",\r\n  \"id\": \"/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/tables/DA_CuratedWikiData\",\r\n  \"properties\": {\r\n    \"structure\": [\r\n      {\r\n        \"position\": 0,\r\n        \"name\": \"slicetimestamp\",\r\n        \"type\": \"String\"\r\n      },\r\n      {\r\n        \"position\": 0,\r\n        \"name\": \"projectname\",\r\n        \"type\": \"String\"\r\n      },\r\n      {\r\n        \"position\": 0,\r\n        \"name\": \"pageviews\",\r\n        \"type\": \"Decimal\"\r\n      }\r\n    ],\r\n    \"published\": false,\r\n    \"type\": \"AzureBlob\",\r\n    \"linkedServiceName\": \"LinkedService-CuratedWikiData\",\r\n    \"typeProperties\": {\r\n      \"folderPath\": \"wikidatagateway/wikisampledataout/runtime={Slice}\",\r\n      \"partitionedBy\": [\r\n        {\r\n          \"name\": \"Slice\",\r\n          \"value\": {\r\n            \"type\": \"DateTime\",\r\n            \"date\": \"SliceStart\",\r\n            \"format\": \"yyyyMMddHH\"\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"availability\": {\r\n      \"frequency\": \"Hour\",\r\n      \"interval\": 1\r\n    },\r\n    \"createTime\": \"2015-07-08T18:57:19.4319452Z\",\r\n    \"provisioningState\": \"PendingCreation\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "804"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "c798b546-1b26-40dc-9a31-e8ed443c0656"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14974"
+        ],
+        "x-ms-correlation-request-id": [
+          "10133b6c-a9c8-404d-8ff1-d729e96bdcb1"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150708T185735Z:10133b6c-a9c8-404d-8ff1-d729e96bdcb1"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 08 Jul 2015 18:57:35 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/tables/DA_CuratedWikiData?api-version=2015-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDQzMWViYjItNWEwNy00ZDg1LTg1Y2YtN2FmMzRhZTg1ZmY1L3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA3MDMvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhRmFjdG9yeS9kYXRhZmFjdG9yaWVzL0RhdGFGYWN0b3J5NjE1OS90YWJsZXMvREFfQ3VyYXRlZFdpa2lEYXRhP2FwaS12ZXJzaW9uPTIwMTUtMDctMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "e0f12ea6-3b83-41e7-b93f-05a32e48a12d"
+        ],
+        "x-ms-version": [
+          "2015-07-01-preview"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataFactories.Core.DataFactoryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"DA_CuratedWikiData\",\r\n  \"id\": \"/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/tables/DA_CuratedWikiData\",\r\n  \"properties\": {\r\n    \"structure\": [\r\n      {\r\n        \"position\": 0,\r\n        \"name\": \"slicetimestamp\",\r\n        \"type\": \"String\"\r\n      },\r\n      {\r\n        \"position\": 0,\r\n        \"name\": \"projectname\",\r\n        \"type\": \"String\"\r\n      },\r\n      {\r\n        \"position\": 0,\r\n        \"name\": \"pageviews\",\r\n        \"type\": \"Decimal\"\r\n      }\r\n    ],\r\n    \"published\": false,\r\n    \"type\": \"AzureBlob\",\r\n    \"linkedServiceName\": \"LinkedService-CuratedWikiData\",\r\n    \"typeProperties\": {\r\n      \"folderPath\": \"wikidatagateway/wikisampledataout/runtime={Slice}\",\r\n      \"partitionedBy\": [\r\n        {\r\n          \"name\": \"Slice\",\r\n          \"value\": {\r\n            \"type\": \"DateTime\",\r\n            \"date\": \"SliceStart\",\r\n            \"format\": \"yyyyMMddHH\"\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"availability\": {\r\n      \"frequency\": \"Hour\",\r\n      \"interval\": 1\r\n    },\r\n    \"createTime\": \"2015-07-08T18:57:19.4319452Z\",\r\n    \"provisioningState\": \"PendingCreation\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "804"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "00a36b66-a168-4fef-8683-cb01e0eec133"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14973"
+        ],
+        "x-ms-correlation-request-id": [
+          "fae5462d-fd1e-456a-aba9-a1f0af373923"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150708T185741Z:fae5462d-fd1e-456a-aba9-a1f0af373923"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 08 Jul 2015 18:57:41 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/tables/DA_CuratedWikiData?api-version=2015-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDQzMWViYjItNWEwNy00ZDg1LTg1Y2YtN2FmMzRhZTg1ZmY1L3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA3MDMvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhRmFjdG9yeS9kYXRhZmFjdG9yaWVzL0RhdGFGYWN0b3J5NjE1OS90YWJsZXMvREFfQ3VyYXRlZFdpa2lEYXRhP2FwaS12ZXJzaW9uPTIwMTUtMDctMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "fb7cec71-9f8f-4be4-9318-2aa3286c6e32"
+        ],
+        "x-ms-version": [
+          "2015-07-01-preview"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataFactories.Core.DataFactoryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"DA_CuratedWikiData\",\r\n  \"id\": \"/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/tables/DA_CuratedWikiData\",\r\n  \"properties\": {\r\n    \"structure\": [\r\n      {\r\n        \"position\": 0,\r\n        \"name\": \"slicetimestamp\",\r\n        \"type\": \"String\"\r\n      },\r\n      {\r\n        \"position\": 0,\r\n        \"name\": \"projectname\",\r\n        \"type\": \"String\"\r\n      },\r\n      {\r\n        \"position\": 0,\r\n        \"name\": \"pageviews\",\r\n        \"type\": \"Decimal\"\r\n      }\r\n    ],\r\n    \"published\": false,\r\n    \"type\": \"AzureBlob\",\r\n    \"linkedServiceName\": \"LinkedService-CuratedWikiData\",\r\n    \"typeProperties\": {\r\n      \"folderPath\": \"wikidatagateway/wikisampledataout/runtime={Slice}\",\r\n      \"partitionedBy\": [\r\n        {\r\n          \"name\": \"Slice\",\r\n          \"value\": {\r\n            \"type\": \"DateTime\",\r\n            \"date\": \"SliceStart\",\r\n            \"format\": \"yyyyMMddHH\"\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"availability\": {\r\n      \"frequency\": \"Hour\",\r\n      \"interval\": 1\r\n    },\r\n    \"createTime\": \"2015-07-08T18:57:19.4319452Z\",\r\n    \"provisioningState\": \"PendingCreation\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "804"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "52d197db-754f-44cf-b48c-6b8d9fd39abb"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14972"
+        ],
+        "x-ms-correlation-request-id": [
+          "3b47150f-8864-4dd3-b4ed-bf98a8e02976"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150708T185746Z:3b47150f-8864-4dd3-b4ed-bf98a8e02976"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 08 Jul 2015 18:57:45 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/tables/DA_CuratedWikiData?api-version=2015-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDQzMWViYjItNWEwNy00ZDg1LTg1Y2YtN2FmMzRhZTg1ZmY1L3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA3MDMvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhRmFjdG9yeS9kYXRhZmFjdG9yaWVzL0RhdGFGYWN0b3J5NjE1OS90YWJsZXMvREFfQ3VyYXRlZFdpa2lEYXRhP2FwaS12ZXJzaW9uPTIwMTUtMDctMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "9700a064-e784-49a7-9b14-6ee5d2296981"
+        ],
+        "x-ms-version": [
+          "2015-07-01-preview"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataFactories.Core.DataFactoryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"DA_CuratedWikiData\",\r\n  \"id\": \"/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/tables/DA_CuratedWikiData\",\r\n  \"properties\": {\r\n    \"structure\": [\r\n      {\r\n        \"position\": 0,\r\n        \"name\": \"slicetimestamp\",\r\n        \"type\": \"String\"\r\n      },\r\n      {\r\n        \"position\": 0,\r\n        \"name\": \"projectname\",\r\n        \"type\": \"String\"\r\n      },\r\n      {\r\n        \"position\": 0,\r\n        \"name\": \"pageviews\",\r\n        \"type\": \"Decimal\"\r\n      }\r\n    ],\r\n    \"published\": false,\r\n    \"type\": \"AzureBlob\",\r\n    \"linkedServiceName\": \"LinkedService-CuratedWikiData\",\r\n    \"typeProperties\": {\r\n      \"folderPath\": \"wikidatagateway/wikisampledataout/runtime={Slice}\",\r\n      \"partitionedBy\": [\r\n        {\r\n          \"name\": \"Slice\",\r\n          \"value\": {\r\n            \"type\": \"DateTime\",\r\n            \"date\": \"SliceStart\",\r\n            \"format\": \"yyyyMMddHH\"\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"availability\": {\r\n      \"frequency\": \"Hour\",\r\n      \"interval\": 1\r\n    },\r\n    \"createTime\": \"2015-07-08T18:57:18.9180132Z\",\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "798"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "5b7a41d2-7a05-42c8-88fe-7802178f1e32"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14971"
+        ],
+        "x-ms-correlation-request-id": [
+          "85855db2-2943-4aee-adc7-809df3f479ea"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150708T185751Z:85855db2-2943-4aee-adc7-809df3f479ea"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 08 Jul 2015 18:57:50 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/tables/DA_WikipediaClickEvents?api-version=2015-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDQzMWViYjItNWEwNy00ZDg1LTg1Y2YtN2FmMzRhZTg1ZmY1L3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA3MDMvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhRmFjdG9yeS9kYXRhZmFjdG9yaWVzL0RhdGFGYWN0b3J5NjE1OS90YWJsZXMvREFfV2lraXBlZGlhQ2xpY2tFdmVudHM/YXBpLXZlcnNpb249MjAxNS0wNy0wMS1wcmV2aWV3",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"name\": \"DA_WikipediaClickEvents\",\r\n  \"properties\": {\r\n    \"availability\": {\r\n      \"frequency\": \"Hour\",\r\n      \"interval\": 1\r\n    },\r\n    \"policy\": {\r\n      \"validation\": {\r\n        \"minimumSizeMB\": 1.0\r\n      },\r\n      \"externalData\": {\r\n        \"retryInterval\": \"00:01:00\",\r\n        \"retryTimeout\": \"00:10:00\",\r\n        \"maximumRetry\": 3\r\n      }\r\n    },\r\n    \"type\": \"AzureBlob\",\r\n    \"linkedServiceName\": \"LinkedService-WikipediaClickEvents\",\r\n    \"typeProperties\": {\r\n      \"folderPath\": \"wikidatagateway/wikisampledatain/\"\r\n    }\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Content-Length": [
+          "663"
+        ],
+        "x-ms-client-request-id": [
+          "89dd7403-d87a-4c3d-bbc0-b610c711d6f6"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataFactories.Core.DataFactoryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"DA_WikipediaClickEvents\",\r\n  \"id\": \"/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/tables/DA_WikipediaClickEvents\",\r\n  \"properties\": {\r\n    \"published\": false,\r\n    \"type\": \"AzureBlob\",\r\n    \"linkedServiceName\": \"LinkedService-WikipediaClickEvents\",\r\n    \"typeProperties\": {\r\n      \"folderPath\": \"wikidatagateway/wikisampledatain/\"\r\n    },\r\n    \"availability\": {\r\n      \"frequency\": \"Hour\",\r\n      \"interval\": 1\r\n    },\r\n    \"policy\": {\r\n      \"validation\": {\r\n        \"minimumSizeMB\": 1.0\r\n      },\r\n      \"externalData\": {\r\n        \"retryInterval\": \"00:01:00\",\r\n        \"retryTimeout\": \"00:10:00\",\r\n        \"maximumRetry\": 3\r\n      }\r\n    },\r\n    \"createTime\": \"2015-07-08T18:57:51.3290028Z\",\r\n    \"provisioningState\": \"PendingCreation\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "659"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "18c58f49-c738-40a7-9ab9-0b63f60b1d59"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1190"
+        ],
+        "x-ms-correlation-request-id": [
+          "61ae2fd4-1994-4b62-9e05-048948c25236"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150708T185751Z:61ae2fd4-1994-4b62-9e05-048948c25236"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 08 Jul 2015 18:57:51 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/tables/DA_WikipediaClickEvents?api-version=2015-07-01-preview"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/tables/DA_WikipediaClickEvents?api-version=2015-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDQzMWViYjItNWEwNy00ZDg1LTg1Y2YtN2FmMzRhZTg1ZmY1L3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA3MDMvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhRmFjdG9yeS9kYXRhZmFjdG9yaWVzL0RhdGFGYWN0b3J5NjE1OS90YWJsZXMvREFfV2lraXBlZGlhQ2xpY2tFdmVudHM/YXBpLXZlcnNpb249MjAxNS0wNy0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "d15fa129-9898-4831-8232-480e0b6845c9"
+        ],
+        "x-ms-version": [
+          "2015-07-01-preview"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataFactories.Core.DataFactoryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"DA_WikipediaClickEvents\",\r\n  \"id\": \"/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/tables/DA_WikipediaClickEvents\",\r\n  \"properties\": {\r\n    \"published\": false,\r\n    \"type\": \"AzureBlob\",\r\n    \"linkedServiceName\": \"LinkedService-WikipediaClickEvents\",\r\n    \"typeProperties\": {\r\n      \"folderPath\": \"wikidatagateway/wikisampledatain/\"\r\n    },\r\n    \"availability\": {\r\n      \"frequency\": \"Hour\",\r\n      \"interval\": 1\r\n    },\r\n    \"policy\": {\r\n      \"validation\": {\r\n        \"minimumSizeMB\": 1.0\r\n      },\r\n      \"externalData\": {\r\n        \"retryInterval\": \"00:01:00\",\r\n        \"retryTimeout\": \"00:10:00\",\r\n        \"maximumRetry\": 3\r\n      }\r\n    },\r\n    \"createTime\": \"2015-07-08T18:57:51.3290028Z\",\r\n    \"provisioningState\": \"PendingCreation\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "659"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "3cea0122-5576-4b33-804d-6295917105dc"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14970"
+        ],
+        "x-ms-correlation-request-id": [
+          "1d1532dc-e08d-4dc7-bff8-cd360fcc6f93"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150708T185751Z:1d1532dc-e08d-4dc7-bff8-cd360fcc6f93"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 08 Jul 2015 18:57:51 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/tables/DA_WikipediaClickEvents?api-version=2015-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDQzMWViYjItNWEwNy00ZDg1LTg1Y2YtN2FmMzRhZTg1ZmY1L3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA3MDMvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhRmFjdG9yeS9kYXRhZmFjdG9yaWVzL0RhdGFGYWN0b3J5NjE1OS90YWJsZXMvREFfV2lraXBlZGlhQ2xpY2tFdmVudHM/YXBpLXZlcnNpb249MjAxNS0wNy0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "7e80dc0b-121a-453d-b06d-39190beee784"
+        ],
+        "x-ms-version": [
+          "2015-07-01-preview"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataFactories.Core.DataFactoryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"DA_WikipediaClickEvents\",\r\n  \"id\": \"/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/tables/DA_WikipediaClickEvents\",\r\n  \"properties\": {\r\n    \"published\": false,\r\n    \"type\": \"AzureBlob\",\r\n    \"linkedServiceName\": \"LinkedService-WikipediaClickEvents\",\r\n    \"typeProperties\": {\r\n      \"folderPath\": \"wikidatagateway/wikisampledatain/\"\r\n    },\r\n    \"availability\": {\r\n      \"frequency\": \"Hour\",\r\n      \"interval\": 1\r\n    },\r\n    \"policy\": {\r\n      \"validation\": {\r\n        \"minimumSizeMB\": 1.0\r\n      },\r\n      \"externalData\": {\r\n        \"retryInterval\": \"00:01:00\",\r\n        \"retryTimeout\": \"00:10:00\",\r\n        \"maximumRetry\": 3\r\n      }\r\n    },\r\n    \"createTime\": \"2015-07-08T18:57:51.2798694Z\",\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "653"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "948231a9-50de-4701-82ac-4426ef784f47"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14969"
+        ],
+        "x-ms-correlation-request-id": [
+          "dbea6925-b45b-47e3-9e63-2ec3d899fc78"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150708T185757Z:dbea6925-b45b-47e3-9e63-2ec3d899fc78"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 08 Jul 2015 18:57:56 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/datapipelines/DP_Wikipedia1129?api-version=2015-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDQzMWViYjItNWEwNy00ZDg1LTg1Y2YtN2FmMzRhZTg1ZmY1L3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA3MDMvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhRmFjdG9yeS9kYXRhZmFjdG9yaWVzL0RhdGFGYWN0b3J5NjE1OS9kYXRhcGlwZWxpbmVzL0RQX1dpa2lwZWRpYTExMjk/YXBpLXZlcnNpb249MjAxNS0wNy0wMS1wcmV2aWV3",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"name\": \"DP_WikipediaSamplePipeline\",\r\n  \"properties\": {\r\n    \"description\": \"DP Wikipedia Sample Pipelines\",\r\n    \"activities\": [\r\n      {\r\n        \"name\": \"WikiHiveActivity\",\r\n        \"inputs\": [\r\n          {\r\n            \"name\": \"DA_WikipediaClickEvents\"\r\n          }\r\n        ],\r\n        \"outputs\": [\r\n          {\r\n            \"name\": \"DA_CuratedWikiData\"\r\n          }\r\n        ],\r\n        \"linkedServiceName\": \"HDILinkedService\",\r\n        \"type\": \"HDInsightHive\",\r\n        \"policy\": {\r\n          \"concurrency\": 1,\r\n          \"executionPriorityOrder\": \"NewestFirst\",\r\n          \"retry\": 2,\r\n          \"timeout\": \"01:00:00\"\r\n        },\r\n        \"typeProperties\": {\r\n          \"script\": \"$$Text.Format('CREATE EXTERNAL TABLE IF NOT EXISTS values2 (projectname string, title string, pageviews string, bytestransfer string) ROW FORMAT DELIMITED FIELDS TERMINATED BY \\\\' \\\\' LINES TERMINATED BY \\\\'10\\\\' STORED AS TEXTFILE LOCATION \\\\'wasb://wikidatagateway@mdpbvthadoopstore.blob.core.windows.net/wikisampledatain\\\\'; CREATE EXTERNAL TABLE IF NOT EXISTS stats2 (slicetimestamp string, projectname string, pageviews string) PARTITIONED BY (runtime STRING) ROW FORMAT DELIMITED FIELDS TERMINATED BY \\\\',\\\\' LINES TERMINATED BY \\\\'10\\\\' STORED AS TEXTFILE LOCATION \\\\'wasb://wikidatagateway@mdpbvthadoopstore.blob.core.windows.net/wikisampledataout\\\\'; ALTER TABLE stats2 ADD IF NOT EXISTS PARTITION (runtime = \\\\'{0:yyyyMMddHH}\\\\') LOCATION \\\\'wasb://wikidatagateway@mdpbvthadoopstore.blob.core.windows.net/wikisampledataout/runtime={0:yyyyMMddHH}\\\\'; INSERT OVERWRITE TABLE stats2 PARTITION (runtime = \\\\'{0:yyyyMMddHH}\\\\') SELECT slicetimestamp, projectname, sum(pageviews) FROM (SELECT \\\\'{0:yyyy/MM/dd HH:00:00}\\\\' AS slicetimestamp, CASE WHEN size(split(projectname, \\\\'[.]\\\\'))=1 THEN \\\\'wikipedia\\\\' ELSE CASE split(projectname, \\\\'[.]\\\\')[1] WHEN \\\\'b\\\\' THEN \\\\'wikibooks\\\\' WHEN \\\\'d\\\\' THEN \\\\'wiktionary\\\\' WHEN \\\\'m\\\\' THEN \\\\'wikimedia\\\\' WHEN \\\\'mv\\\\' THEN \\\\'wikipedia mobile\\\\' WHEN \\\\'n\\\\' THEN \\\\'wikinews\\\\' WHEN \\\\'q\\\\' THEN \\\\'wikiquote\\\\' WHEN \\\\'s\\\\' THEN \\\\'wikisource\\\\' WHEN \\\\'v\\\\' THEN \\\\'wikiversity\\\\' WHEN \\\\'w\\\\' THEN \\\\'mediawiki\\\\' ELSE \\\\'n/a\\\\' END END AS projectname, pageviews FROM values2) A GROUP BY slicetimestamp, projectname;', SliceStart)\"\r\n        }\r\n      },\r\n      {\r\n        \"name\": \"BlobToSqlCopyActivity\",\r\n        \"inputs\": [\r\n          {\r\n            \"name\": \"DA_CuratedWikiData\"\r\n          }\r\n        ],\r\n        \"outputs\": [\r\n          {\r\n            \"name\": \"DA_WikiAggregatedData\"\r\n          }\r\n        ],\r\n        \"linkedServiceName\": \"HDILinkedService\",\r\n        \"type\": \"Copy\",\r\n        \"policy\": {\r\n          \"concurrency\": 1,\r\n          \"executionPriorityOrder\": \"NewestFirst\",\r\n          \"retry\": 2,\r\n          \"timeout\": \"01:00:00\"\r\n        },\r\n        \"typeProperties\": {\r\n          \"source\": {\r\n            \"type\": \"BlobSource\",\r\n            \"blobColumnSeparators\": \",\"\r\n          },\r\n          \"sink\": {\r\n            \"type\": \"SqlSink\",\r\n            \"writeBatchSize\": 1000000,\r\n            \"writeBatchTimeout\": \"01:00:00\"\r\n          }\r\n        }\r\n      }\r\n    ]\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Content-Length": [
+          "3140"
+        ],
+        "x-ms-client-request-id": [
+          "76317838-4885-439d-bceb-721387360137"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataFactories.Core.DataFactoryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"DP_Wikipedia1129\",\r\n  \"id\": \"/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/datapipelines/DP_Wikipedia1129\",\r\n  \"properties\": {\r\n    \"description\": \"DP Wikipedia Sample Pipelines\",\r\n    \"activities\": [\r\n      {\r\n        \"type\": \"HDInsightHive\",\r\n        \"typeProperties\": {\r\n          \"script\": \"$$Text.Format('CREATE EXTERNAL TABLE IF NOT EXISTS values2 (projectname string, title string, pageviews string, bytestransfer string) ROW FORMAT DELIMITED FIELDS TERMINATED BY \\\\' \\\\' LINES TERMINATED BY \\\\'10\\\\' STORED AS TEXTFILE LOCATION \\\\'wasb://wikidatagateway@mdpbvthadoopstore.blob.core.windows.net/wikisampledatain\\\\'; CREATE EXTERNAL TABLE IF NOT EXISTS stats2 (slicetimestamp string, projectname string, pageviews string) PARTITIONED BY (runtime STRING) ROW FORMAT DELIMITED FIELDS TERMINATED BY \\\\',\\\\' LINES TERMINATED BY \\\\'10\\\\' STORED AS TEXTFILE LOCATION \\\\'wasb://wikidatagateway@mdpbvthadoopstore.blob.core.windows.net/wikisampledataout\\\\'; ALTER TABLE stats2 ADD IF NOT EXISTS PARTITION (runtime = \\\\'{0:yyyyMMddHH}\\\\') LOCATION \\\\'wasb://wikidatagateway@mdpbvthadoopstore.blob.core.windows.net/wikisampledataout/runtime={0:yyyyMMddHH}\\\\'; INSERT OVERWRITE TABLE stats2 PARTITION (runtime = \\\\'{0:yyyyMMddHH}\\\\') SELECT slicetimestamp, projectname, sum(pageviews) FROM (SELECT \\\\'{0:yyyy/MM/dd HH:00:00}\\\\' AS slicetimestamp, CASE WHEN size(split(projectname, \\\\'[.]\\\\'))=1 THEN \\\\'wikipedia\\\\' ELSE CASE split(projectname, \\\\'[.]\\\\')[1] WHEN \\\\'b\\\\' THEN \\\\'wikibooks\\\\' WHEN \\\\'d\\\\' THEN \\\\'wiktionary\\\\' WHEN \\\\'m\\\\' THEN \\\\'wikimedia\\\\' WHEN \\\\'mv\\\\' THEN \\\\'wikipedia mobile\\\\' WHEN \\\\'n\\\\' THEN \\\\'wikinews\\\\' WHEN \\\\'q\\\\' THEN \\\\'wikiquote\\\\' WHEN \\\\'s\\\\' THEN \\\\'wikisource\\\\' WHEN \\\\'v\\\\' THEN \\\\'wikiversity\\\\' WHEN \\\\'w\\\\' THEN \\\\'mediawiki\\\\' ELSE \\\\'n/a\\\\' END END AS projectname, pageviews FROM values2) A GROUP BY slicetimestamp, projectname;', SliceStart)\"\r\n        },\r\n        \"inputs\": [\r\n          {\r\n            \"name\": \"DA_WikipediaClickEvents\"\r\n          }\r\n        ],\r\n        \"outputs\": [\r\n          {\r\n            \"name\": \"DA_CuratedWikiData\"\r\n          }\r\n        ],\r\n        \"policy\": {\r\n          \"timeout\": \"01:00:00\",\r\n          \"concurrency\": 1,\r\n          \"executionPriorityOrder\": \"NewestFirst\",\r\n          \"retry\": 2\r\n        },\r\n        \"name\": \"WikiHiveActivity\",\r\n        \"linkedServiceName\": \"HDILinkedService\"\r\n      },\r\n      {\r\n        \"type\": \"Copy\",\r\n        \"typeProperties\": {\r\n          \"source\": {\r\n            \"type\": \"BlobSource\",\r\n            \"blobColumnSeparators\": \",\"\r\n          },\r\n          \"sink\": {\r\n            \"type\": \"SqlSink\",\r\n            \"writeBatchSize\": 1000000,\r\n            \"writeBatchTimeout\": \"01:00:00\"\r\n          }\r\n        },\r\n        \"inputs\": [\r\n          {\r\n            \"name\": \"DA_CuratedWikiData\"\r\n          }\r\n        ],\r\n        \"outputs\": [\r\n          {\r\n            \"name\": \"DA_WikiAggregatedData\"\r\n          }\r\n        ],\r\n        \"policy\": {\r\n          \"timeout\": \"01:00:00\",\r\n          \"concurrency\": 1,\r\n          \"executionPriorityOrder\": \"NewestFirst\",\r\n          \"retry\": 2\r\n        },\r\n        \"name\": \"BlobToSqlCopyActivity\",\r\n        \"linkedServiceName\": \"HDILinkedService\"\r\n      }\r\n    ],\r\n    \"isPaused\": false,\r\n    \"runtimeInfo\": {\r\n      \"deploymentTime\": \"2015-07-08T18:57:57.3997024Z\",\r\n      \"activePeriodSetTime\": \"2015-07-08T18:57:57.3997024Z\",\r\n      \"activityPeriods\": {\r\n        \"wikiHiveActivity\": {\r\n          \"start\": \"1601-01-01T00:00:00Z\",\r\n          \"end\": \"1601-01-01T00:00:00Z\"\r\n        },\r\n        \"blobToSqlCopyActivity\": {\r\n          \"start\": \"1601-01-01T00:00:00Z\",\r\n          \"end\": \"1601-01-01T00:00:00Z\"\r\n        }\r\n      }\r\n    },\r\n    \"provisioningState\": \"PendingCreation\",\r\n    \"hubName\": \"datafactory6159_hub\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "3003"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "e09c529d-1502-46fc-a3fb-8020eeccbc1e"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1189"
+        ],
+        "x-ms-correlation-request-id": [
+          "3ff05e68-c621-4f60-8d8f-95bcdc1d9a10"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150708T185801Z:3ff05e68-c621-4f60-8d8f-95bcdc1d9a10"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 08 Jul 2015 18:58:00 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/datapipelines/DP_Wikipedia1129?api-version=2015-07-01-preview"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/datapipelines/DP_Wikipedia1129?api-version=2015-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDQzMWViYjItNWEwNy00ZDg1LTg1Y2YtN2FmMzRhZTg1ZmY1L3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA3MDMvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhRmFjdG9yeS9kYXRhZmFjdG9yaWVzL0RhdGFGYWN0b3J5NjE1OS9kYXRhcGlwZWxpbmVzL0RQX1dpa2lwZWRpYTExMjk/YXBpLXZlcnNpb249MjAxNS0wNy0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "1b82b2b2-598b-45de-8210-ae0778a53bd0"
+        ],
+        "x-ms-version": [
+          "2015-07-01-preview"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataFactories.Core.DataFactoryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"DP_Wikipedia1129\",\r\n  \"id\": \"/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/datapipelines/DP_Wikipedia1129\",\r\n  \"properties\": {\r\n    \"description\": \"DP Wikipedia Sample Pipelines\",\r\n    \"activities\": [\r\n      {\r\n        \"type\": \"HDInsightHive\",\r\n        \"typeProperties\": {\r\n          \"script\": \"$$Text.Format('CREATE EXTERNAL TABLE IF NOT EXISTS values2 (projectname string, title string, pageviews string, bytestransfer string) ROW FORMAT DELIMITED FIELDS TERMINATED BY \\\\' \\\\' LINES TERMINATED BY \\\\'10\\\\' STORED AS TEXTFILE LOCATION \\\\'wasb://wikidatagateway@mdpbvthadoopstore.blob.core.windows.net/wikisampledatain\\\\'; CREATE EXTERNAL TABLE IF NOT EXISTS stats2 (slicetimestamp string, projectname string, pageviews string) PARTITIONED BY (runtime STRING) ROW FORMAT DELIMITED FIELDS TERMINATED BY \\\\',\\\\' LINES TERMINATED BY \\\\'10\\\\' STORED AS TEXTFILE LOCATION \\\\'wasb://wikidatagateway@mdpbvthadoopstore.blob.core.windows.net/wikisampledataout\\\\'; ALTER TABLE stats2 ADD IF NOT EXISTS PARTITION (runtime = \\\\'{0:yyyyMMddHH}\\\\') LOCATION \\\\'wasb://wikidatagateway@mdpbvthadoopstore.blob.core.windows.net/wikisampledataout/runtime={0:yyyyMMddHH}\\\\'; INSERT OVERWRITE TABLE stats2 PARTITION (runtime = \\\\'{0:yyyyMMddHH}\\\\') SELECT slicetimestamp, projectname, sum(pageviews) FROM (SELECT \\\\'{0:yyyy/MM/dd HH:00:00}\\\\' AS slicetimestamp, CASE WHEN size(split(projectname, \\\\'[.]\\\\'))=1 THEN \\\\'wikipedia\\\\' ELSE CASE split(projectname, \\\\'[.]\\\\')[1] WHEN \\\\'b\\\\' THEN \\\\'wikibooks\\\\' WHEN \\\\'d\\\\' THEN \\\\'wiktionary\\\\' WHEN \\\\'m\\\\' THEN \\\\'wikimedia\\\\' WHEN \\\\'mv\\\\' THEN \\\\'wikipedia mobile\\\\' WHEN \\\\'n\\\\' THEN \\\\'wikinews\\\\' WHEN \\\\'q\\\\' THEN \\\\'wikiquote\\\\' WHEN \\\\'s\\\\' THEN \\\\'wikisource\\\\' WHEN \\\\'v\\\\' THEN \\\\'wikiversity\\\\' WHEN \\\\'w\\\\' THEN \\\\'mediawiki\\\\' ELSE \\\\'n/a\\\\' END END AS projectname, pageviews FROM values2) A GROUP BY slicetimestamp, projectname;', SliceStart)\"\r\n        },\r\n        \"inputs\": [\r\n          {\r\n            \"name\": \"DA_WikipediaClickEvents\"\r\n          }\r\n        ],\r\n        \"outputs\": [\r\n          {\r\n            \"name\": \"DA_CuratedWikiData\"\r\n          }\r\n        ],\r\n        \"policy\": {\r\n          \"timeout\": \"01:00:00\",\r\n          \"concurrency\": 1,\r\n          \"executionPriorityOrder\": \"NewestFirst\",\r\n          \"retry\": 2\r\n        },\r\n        \"name\": \"WikiHiveActivity\",\r\n        \"linkedServiceName\": \"HDILinkedService\"\r\n      },\r\n      {\r\n        \"type\": \"Copy\",\r\n        \"typeProperties\": {\r\n          \"source\": {\r\n            \"type\": \"BlobSource\",\r\n            \"blobColumnSeparators\": \",\"\r\n          },\r\n          \"sink\": {\r\n            \"type\": \"SqlSink\",\r\n            \"writeBatchSize\": 1000000,\r\n            \"writeBatchTimeout\": \"01:00:00\"\r\n          }\r\n        },\r\n        \"inputs\": [\r\n          {\r\n            \"name\": \"DA_CuratedWikiData\"\r\n          }\r\n        ],\r\n        \"outputs\": [\r\n          {\r\n            \"name\": \"DA_WikiAggregatedData\"\r\n          }\r\n        ],\r\n        \"policy\": {\r\n          \"timeout\": \"01:00:00\",\r\n          \"concurrency\": 1,\r\n          \"executionPriorityOrder\": \"NewestFirst\",\r\n          \"retry\": 2\r\n        },\r\n        \"name\": \"BlobToSqlCopyActivity\",\r\n        \"linkedServiceName\": \"HDILinkedService\"\r\n      }\r\n    ],\r\n    \"isPaused\": false,\r\n    \"runtimeInfo\": {\r\n      \"deploymentTime\": \"2015-07-08T18:57:57.3997024Z\",\r\n      \"activePeriodSetTime\": \"2015-07-08T18:57:57.3997024Z\",\r\n      \"activityPeriods\": {\r\n        \"wikiHiveActivity\": {\r\n          \"start\": \"1601-01-01T00:00:00Z\",\r\n          \"end\": \"1601-01-01T00:00:00Z\"\r\n        },\r\n        \"blobToSqlCopyActivity\": {\r\n          \"start\": \"1601-01-01T00:00:00Z\",\r\n          \"end\": \"1601-01-01T00:00:00Z\"\r\n        }\r\n      }\r\n    },\r\n    \"provisioningState\": \"PendingCreation\",\r\n    \"hubName\": \"datafactory6159_hub\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "3003"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "eedda10f-11e1-460c-b96c-ee6de434843f"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14968"
+        ],
+        "x-ms-correlation-request-id": [
+          "a0861aaf-6a80-4272-ad39-e3f0f9e462d2"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150708T185801Z:a0861aaf-6a80-4272-ad39-e3f0f9e462d2"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 08 Jul 2015 18:58:01 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/datapipelines/DP_Wikipedia1129?api-version=2015-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDQzMWViYjItNWEwNy00ZDg1LTg1Y2YtN2FmMzRhZTg1ZmY1L3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA3MDMvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhRmFjdG9yeS9kYXRhZmFjdG9yaWVzL0RhdGFGYWN0b3J5NjE1OS9kYXRhcGlwZWxpbmVzL0RQX1dpa2lwZWRpYTExMjk/YXBpLXZlcnNpb249MjAxNS0wNy0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "481fd616-5e01-4ef7-85dd-6285b16774a2"
+        ],
+        "x-ms-version": [
+          "2015-07-01-preview"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataFactories.Core.DataFactoryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"DP_Wikipedia1129\",\r\n  \"id\": \"/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/datapipelines/DP_Wikipedia1129\",\r\n  \"properties\": {\r\n    \"description\": \"DP Wikipedia Sample Pipelines\",\r\n    \"activities\": [\r\n      {\r\n        \"type\": \"HDInsightHive\",\r\n        \"typeProperties\": {\r\n          \"script\": \"$$Text.Format('CREATE EXTERNAL TABLE IF NOT EXISTS values2 (projectname string, title string, pageviews string, bytestransfer string) ROW FORMAT DELIMITED FIELDS TERMINATED BY \\\\' \\\\' LINES TERMINATED BY \\\\'10\\\\' STORED AS TEXTFILE LOCATION \\\\'wasb://wikidatagateway@mdpbvthadoopstore.blob.core.windows.net/wikisampledatain\\\\'; CREATE EXTERNAL TABLE IF NOT EXISTS stats2 (slicetimestamp string, projectname string, pageviews string) PARTITIONED BY (runtime STRING) ROW FORMAT DELIMITED FIELDS TERMINATED BY \\\\',\\\\' LINES TERMINATED BY \\\\'10\\\\' STORED AS TEXTFILE LOCATION \\\\'wasb://wikidatagateway@mdpbvthadoopstore.blob.core.windows.net/wikisampledataout\\\\'; ALTER TABLE stats2 ADD IF NOT EXISTS PARTITION (runtime = \\\\'{0:yyyyMMddHH}\\\\') LOCATION \\\\'wasb://wikidatagateway@mdpbvthadoopstore.blob.core.windows.net/wikisampledataout/runtime={0:yyyyMMddHH}\\\\'; INSERT OVERWRITE TABLE stats2 PARTITION (runtime = \\\\'{0:yyyyMMddHH}\\\\') SELECT slicetimestamp, projectname, sum(pageviews) FROM (SELECT \\\\'{0:yyyy/MM/dd HH:00:00}\\\\' AS slicetimestamp, CASE WHEN size(split(projectname, \\\\'[.]\\\\'))=1 THEN \\\\'wikipedia\\\\' ELSE CASE split(projectname, \\\\'[.]\\\\')[1] WHEN \\\\'b\\\\' THEN \\\\'wikibooks\\\\' WHEN \\\\'d\\\\' THEN \\\\'wiktionary\\\\' WHEN \\\\'m\\\\' THEN \\\\'wikimedia\\\\' WHEN \\\\'mv\\\\' THEN \\\\'wikipedia mobile\\\\' WHEN \\\\'n\\\\' THEN \\\\'wikinews\\\\' WHEN \\\\'q\\\\' THEN \\\\'wikiquote\\\\' WHEN \\\\'s\\\\' THEN \\\\'wikisource\\\\' WHEN \\\\'v\\\\' THEN \\\\'wikiversity\\\\' WHEN \\\\'w\\\\' THEN \\\\'mediawiki\\\\' ELSE \\\\'n/a\\\\' END END AS projectname, pageviews FROM values2) A GROUP BY slicetimestamp, projectname;', SliceStart)\"\r\n        },\r\n        \"inputs\": [\r\n          {\r\n            \"name\": \"DA_WikipediaClickEvents\"\r\n          }\r\n        ],\r\n        \"outputs\": [\r\n          {\r\n            \"name\": \"DA_CuratedWikiData\"\r\n          }\r\n        ],\r\n        \"policy\": {\r\n          \"timeout\": \"01:00:00\",\r\n          \"concurrency\": 1,\r\n          \"executionPriorityOrder\": \"NewestFirst\",\r\n          \"retry\": 2\r\n        },\r\n        \"name\": \"WikiHiveActivity\",\r\n        \"linkedServiceName\": \"HDILinkedService\"\r\n      },\r\n      {\r\n        \"type\": \"Copy\",\r\n        \"typeProperties\": {\r\n          \"source\": {\r\n            \"type\": \"BlobSource\",\r\n            \"blobColumnSeparators\": \",\"\r\n          },\r\n          \"sink\": {\r\n            \"type\": \"SqlSink\",\r\n            \"writeBatchSize\": 1000000,\r\n            \"writeBatchTimeout\": \"01:00:00\"\r\n          }\r\n        },\r\n        \"inputs\": [\r\n          {\r\n            \"name\": \"DA_CuratedWikiData\"\r\n          }\r\n        ],\r\n        \"outputs\": [\r\n          {\r\n            \"name\": \"DA_WikiAggregatedData\"\r\n          }\r\n        ],\r\n        \"policy\": {\r\n          \"timeout\": \"01:00:00\",\r\n          \"concurrency\": 1,\r\n          \"executionPriorityOrder\": \"NewestFirst\",\r\n          \"retry\": 2\r\n        },\r\n        \"name\": \"BlobToSqlCopyActivity\",\r\n        \"linkedServiceName\": \"HDILinkedService\"\r\n      }\r\n    ],\r\n    \"isPaused\": false,\r\n    \"runtimeInfo\": {\r\n      \"deploymentTime\": \"2015-07-08T18:57:57.3997024Z\",\r\n      \"activePeriodSetTime\": \"2015-07-08T18:57:57.3997024Z\",\r\n      \"activityPeriods\": {\r\n        \"wikiHiveActivity\": {\r\n          \"start\": \"1601-01-01T00:00:00Z\",\r\n          \"end\": \"1601-01-01T00:00:00Z\"\r\n        },\r\n        \"blobToSqlCopyActivity\": {\r\n          \"start\": \"1601-01-01T00:00:00Z\",\r\n          \"end\": \"1601-01-01T00:00:00Z\"\r\n        }\r\n      }\r\n    },\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"hubName\": \"datafactory6159_hub\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "2997"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "0fa9fe77-b80e-4063-8e2f-b87506f5bfdc"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14967"
+        ],
+        "x-ms-correlation-request-id": [
+          "7822f754-51d8-4208-8edd-551f89f9a5c9"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150708T185806Z:7822f754-51d8-4208-8edd-551f89f9a5c9"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 08 Jul 2015 18:58:06 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/datapipelines/DP_Wikipedia1129/update?start=2014-10-08T08:00:00&end=2014-10-08T10:00:00&autoResolve=false&forceRecalc=false&api-version=2015-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDQzMWViYjItNWEwNy00ZDg1LTg1Y2YtN2FmMzRhZTg1ZmY1L3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA3MDMvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhRmFjdG9yeS9kYXRhZmFjdG9yaWVzL0RhdGFGYWN0b3J5NjE1OS9kYXRhcGlwZWxpbmVzL0RQX1dpa2lwZWRpYTExMjkvdXBkYXRlP3N0YXJ0PTIwMTQtMTAtMDhUMDglM0EwMCUzQTAwJmVuZD0yMDE0LTEwLTA4VDEwJTNBMDAlM0EwMCZhdXRvUmVzb2x2ZT1mYWxzZSZmb3JjZVJlY2FsYz1mYWxzZSZhcGktdmVyc2lvbj0yMDE1LTA3LTAxLXByZXZpZXc=",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "298257c1-f58e-4ab7-b0cd-44225ef9e7e7"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataFactories.Core.DataFactoryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "ef33dd46-167a-4836-8d6f-591beae99711"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1188"
+        ],
+        "x-ms-correlation-request-id": [
+          "ea68ccd7-5f06-42a4-8fd3-098a6d9e28f0"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150708T185810Z:ea68ccd7-5f06-42a4-8fd3-098a6d9e28f0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 08 Jul 2015 18:58:10 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/linkedservices/LinkedService-WikipediaClickEvents?api-version=2015-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDQzMWViYjItNWEwNy00ZDg1LTg1Y2YtN2FmMzRhZTg1ZmY1L3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA3MDMvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhRmFjdG9yeS9kYXRhZmFjdG9yaWVzL0RhdGFGYWN0b3J5NjE1OS9saW5rZWRzZXJ2aWNlcy9MaW5rZWRTZXJ2aWNlLVdpa2lwZWRpYUNsaWNrRXZlbnRzP2FwaS12ZXJzaW9uPTIwMTUtMDctMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "4125efe4-e8df-4bd1-9728-dab4fa0e9db7"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataFactories.Core.DataFactoryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/linkedservices/LinkedService-WikipediaClickEvents\",\r\n  \"name\": \"LinkedService-WikipediaClickEvents\",\r\n  \"properties\": {\r\n    \"hubName\": \"datafactory6159_hub\",\r\n    \"type\": \"AzureStorage\",\r\n    \"typeProperties\": {\r\n      \"connectionString\": \"DefaultEndpointsProtocol=https;AccountName=mywikistorage;AccountKey=**********\"\r\n    },\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "468"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "7599afde-04fe-4a84-9603-ac4ca8151dca"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14966"
+        ],
+        "x-ms-correlation-request-id": [
+          "058fa170-37df-4bca-b705-6b9a157b1963"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150708T185810Z:058fa170-37df-4bca-b705-6b9a157b1963"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 08 Jul 2015 18:58:10 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/linkedservices/LinkedService-CuratedWikiData?api-version=2015-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDQzMWViYjItNWEwNy00ZDg1LTg1Y2YtN2FmMzRhZTg1ZmY1L3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA3MDMvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhRmFjdG9yeS9kYXRhZmFjdG9yaWVzL0RhdGFGYWN0b3J5NjE1OS9saW5rZWRzZXJ2aWNlcy9MaW5rZWRTZXJ2aWNlLUN1cmF0ZWRXaWtpRGF0YT9hcGktdmVyc2lvbj0yMDE1LTA3LTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "acaa18af-7bb8-4d48-9d3c-384d16a936d6"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataFactories.Core.DataFactoryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/linkedservices/LinkedService-CuratedWikiData\",\r\n  \"name\": \"LinkedService-CuratedWikiData\",\r\n  \"properties\": {\r\n    \"hubName\": \"datafactory6159_hub\",\r\n    \"type\": \"AzureStorage\",\r\n    \"typeProperties\": {\r\n      \"connectionString\": \"DefaultEndpointsProtocol=https;AccountName=mytestaccountname;AccountKey=**********\"\r\n    },\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "462"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "e209d35e-cb5c-4213-ad81-e52d32ee775d"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14965"
+        ],
+        "x-ms-correlation-request-id": [
+          "d9d7fabf-818f-4fcc-9c7d-0857c1bbad72"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150708T185810Z:d9d7fabf-818f-4fcc-9c7d-0857c1bbad72"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 08 Jul 2015 18:58:10 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/linkedservices/LinkedService-WikiAggregatedData?api-version=2015-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDQzMWViYjItNWEwNy00ZDg1LTg1Y2YtN2FmMzRhZTg1ZmY1L3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA3MDMvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhRmFjdG9yeS9kYXRhZmFjdG9yaWVzL0RhdGFGYWN0b3J5NjE1OS9saW5rZWRzZXJ2aWNlcy9MaW5rZWRTZXJ2aWNlLVdpa2lBZ2dyZWdhdGVkRGF0YT9hcGktdmVyc2lvbj0yMDE1LTA3LTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "6eaa4420-6566-43a5-abbc-eee667d7a249"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataFactories.Core.DataFactoryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/linkedservices/LinkedService-WikiAggregatedData\",\r\n  \"name\": \"LinkedService-WikiAggregatedData\",\r\n  \"properties\": {\r\n    \"hubName\": \"datafactory6159_hub\",\r\n    \"type\": \"AzureSqlDatabase\",\r\n    \"typeProperties\": {\r\n      \"connectionString\": \"Data Source=tcp:mytestsql.database.windows.net,1433;Initial Catalog=mdpwikisamplev2;Integrated Security=False;User ID=test@test.net;Password=**********;Connect Timeout=30;Encrypt=True\"\r\n    },\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "573"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "938ad513-4a30-4afe-8717-75f7402870b4"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14964"
+        ],
+        "x-ms-correlation-request-id": [
+          "24defbfc-13e9-4083-b353-808de676043b"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150708T185810Z:24defbfc-13e9-4083-b353-808de676043b"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 08 Jul 2015 18:58:10 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/linkedservices/HDILinkedService?api-version=2015-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDQzMWViYjItNWEwNy00ZDg1LTg1Y2YtN2FmMzRhZTg1ZmY1L3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA3MDMvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhRmFjdG9yeS9kYXRhZmFjdG9yaWVzL0RhdGFGYWN0b3J5NjE1OS9saW5rZWRzZXJ2aWNlcy9IRElMaW5rZWRTZXJ2aWNlP2FwaS12ZXJzaW9uPTIwMTUtMDctMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "ab38cae1-51c3-4b13-9d39-1b8d01c89ab4"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataFactories.Core.DataFactoryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/linkedservices/HDILinkedService\",\r\n  \"name\": \"HDILinkedService\",\r\n  \"properties\": {\r\n    \"hubName\": \"datafactory6159_hub\",\r\n    \"type\": \"HDInsight\",\r\n    \"typeProperties\": {\r\n      \"clusterUri\": \"https://testhdi.azurehdinsight.net/\",\r\n      \"userName\": \"testaccount\",\r\n      \"password\": \"**********\",\r\n      \"storageAccountName\": null,\r\n      \"storageAccountKey\": null,\r\n      \"location\": null,\r\n      \"linkedServiceName\": \"LinkedService-CuratedWikiData\"\r\n    },\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "548"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "2d587bb9-9ac0-46df-87b0-dde35d9d674f"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14963"
+        ],
+        "x-ms-correlation-request-id": [
+          "d4001f49-99ee-4204-9d22-756eb975b805"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150708T185810Z:d4001f49-99ee-4204-9d22-756eb975b805"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 08 Jul 2015 18:58:10 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/tables/DA_WikipediaClickEvents?api-version=2015-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDQzMWViYjItNWEwNy00ZDg1LTg1Y2YtN2FmMzRhZTg1ZmY1L3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA3MDMvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhRmFjdG9yeS9kYXRhZmFjdG9yaWVzL0RhdGFGYWN0b3J5NjE1OS90YWJsZXMvREFfV2lraXBlZGlhQ2xpY2tFdmVudHM/YXBpLXZlcnNpb249MjAxNS0wNy0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "7350f3b4-c511-4edd-a29a-f9b21a82c37b"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataFactories.Core.DataFactoryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"DA_WikipediaClickEvents\",\r\n  \"id\": \"/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/tables/DA_WikipediaClickEvents\",\r\n  \"properties\": {\r\n    \"published\": false,\r\n    \"type\": \"AzureBlob\",\r\n    \"linkedServiceName\": \"LinkedService-WikipediaClickEvents\",\r\n    \"typeProperties\": {\r\n      \"folderPath\": \"wikidatagateway/wikisampledatain/\"\r\n    },\r\n    \"availability\": {\r\n      \"frequency\": \"Hour\",\r\n      \"interval\": 1\r\n    },\r\n    \"policy\": {\r\n      \"validation\": {\r\n        \"minimumSizeMB\": 1.0\r\n      },\r\n      \"externalData\": {\r\n        \"retryInterval\": \"00:01:00\",\r\n        \"retryTimeout\": \"00:10:00\",\r\n        \"maximumRetry\": 3\r\n      }\r\n    },\r\n    \"createTime\": \"2015-07-08T18:57:51.2798694Z\",\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "653"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "ab1b2c89-72a3-4250-8772-96f381e923a7"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14962"
+        ],
+        "x-ms-correlation-request-id": [
+          "cd6d21ee-0481-4b44-ba99-9be622c54c50"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150708T185810Z:cd6d21ee-0481-4b44-ba99-9be622c54c50"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 08 Jul 2015 18:58:10 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/tables/DA_CuratedWikiData?api-version=2015-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDQzMWViYjItNWEwNy00ZDg1LTg1Y2YtN2FmMzRhZTg1ZmY1L3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA3MDMvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhRmFjdG9yeS9kYXRhZmFjdG9yaWVzL0RhdGFGYWN0b3J5NjE1OS90YWJsZXMvREFfQ3VyYXRlZFdpa2lEYXRhP2FwaS12ZXJzaW9uPTIwMTUtMDctMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "26993845-3f57-442a-ae0e-21f7fe9321f2"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataFactories.Core.DataFactoryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"DA_CuratedWikiData\",\r\n  \"id\": \"/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/tables/DA_CuratedWikiData\",\r\n  \"properties\": {\r\n    \"structure\": [\r\n      {\r\n        \"position\": 0,\r\n        \"name\": \"slicetimestamp\",\r\n        \"type\": \"String\"\r\n      },\r\n      {\r\n        \"position\": 0,\r\n        \"name\": \"projectname\",\r\n        \"type\": \"String\"\r\n      },\r\n      {\r\n        \"position\": 0,\r\n        \"name\": \"pageviews\",\r\n        \"type\": \"Decimal\"\r\n      }\r\n    ],\r\n    \"published\": false,\r\n    \"type\": \"AzureBlob\",\r\n    \"linkedServiceName\": \"LinkedService-CuratedWikiData\",\r\n    \"typeProperties\": {\r\n      \"folderPath\": \"wikidatagateway/wikisampledataout/runtime={Slice}\",\r\n      \"partitionedBy\": [\r\n        {\r\n          \"name\": \"Slice\",\r\n          \"value\": {\r\n            \"type\": \"DateTime\",\r\n            \"date\": \"SliceStart\",\r\n            \"format\": \"yyyyMMddHH\"\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"availability\": {\r\n      \"frequency\": \"Hour\",\r\n      \"interval\": 1\r\n    },\r\n    \"createTime\": \"2015-07-08T18:57:18.9180132Z\",\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "798"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "de6e707a-0141-425e-bd8c-008a81294034"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14961"
+        ],
+        "x-ms-correlation-request-id": [
+          "a63c5274-e0a4-446b-8bd5-5200ff562a52"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150708T185811Z:a63c5274-e0a4-446b-8bd5-5200ff562a52"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 08 Jul 2015 18:58:11 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/tables/DA_WikiAggregatedData?api-version=2015-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDQzMWViYjItNWEwNy00ZDg1LTg1Y2YtN2FmMzRhZTg1ZmY1L3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA3MDMvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhRmFjdG9yeS9kYXRhZmFjdG9yaWVzL0RhdGFGYWN0b3J5NjE1OS90YWJsZXMvREFfV2lraUFnZ3JlZ2F0ZWREYXRhP2FwaS12ZXJzaW9uPTIwMTUtMDctMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "530e671c-cb1d-49ae-b670-ff377103b57c"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataFactories.Core.DataFactoryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"DA_WikiAggregatedData\",\r\n  \"id\": \"/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/tables/DA_WikiAggregatedData\",\r\n  \"properties\": {\r\n    \"structure\": [\r\n      {\r\n        \"position\": 0,\r\n        \"name\": \"slicetimestamp\",\r\n        \"type\": \"String\"\r\n      },\r\n      {\r\n        \"position\": 0,\r\n        \"name\": \"projectname\",\r\n        \"type\": \"String\"\r\n      },\r\n      {\r\n        \"position\": 0,\r\n        \"name\": \"hits\",\r\n        \"type\": \"Decimal\"\r\n      }\r\n    ],\r\n    \"published\": false,\r\n    \"type\": \"AzureSqlTable\",\r\n    \"linkedServiceName\": \"LinkedService-WikiAggregatedData\",\r\n    \"typeProperties\": {\r\n      \"tableName\": \"wikiaggregateddata\"\r\n    },\r\n    \"availability\": {\r\n      \"frequency\": \"Hour\",\r\n      \"interval\": 1\r\n    },\r\n    \"policy\": {\r\n      \"validation\": {\r\n        \"minimumRows\": 8\r\n      }\r\n    },\r\n    \"createTime\": \"2015-07-08T18:56:34.7373533Z\",\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "711"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "82dd3325-784c-4c3d-a678-4577861931d0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14960"
+        ],
+        "x-ms-correlation-request-id": [
+          "55a0fc6e-e216-419c-82bd-3f398552d82b"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150708T185811Z:55a0fc6e-e216-419c-82bd-3f398552d82b"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 08 Jul 2015 18:58:11 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/tables/DA_WikiAggregatedData/slices?start=2014-10-08T08:00:00&end=2014-10-08T10:00:00&api-version=2015-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDQzMWViYjItNWEwNy00ZDg1LTg1Y2YtN2FmMzRhZTg1ZmY1L3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA3MDMvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhRmFjdG9yeS9kYXRhZmFjdG9yaWVzL0RhdGFGYWN0b3J5NjE1OS90YWJsZXMvREFfV2lraUFnZ3JlZ2F0ZWREYXRhL3NsaWNlcz9zdGFydD0yMDE0LTEwLTA4VDA4JTNBMDAlM0EwMCZlbmQ9MjAxNC0xMC0wOFQxMCUzQTAwJTNBMDAmYXBpLXZlcnNpb249MjAxNS0wNy0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "8427bc10-c6b7-4dd4-a31b-cc4935a4505f"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataFactories.Core.DataFactoryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"status\": \"PendingExecution\",\r\n      \"state\": \"Waiting\",\r\n      \"substate\": \"ScheduledTime\",\r\n      \"retryCount\": 0,\r\n      \"longRetryCount\": 0,\r\n      \"statusUpdateTimestamp\": \"2015-07-08T18:58:07.9464626Z\",\r\n      \"start\": \"2014-10-08T08:00:00Z\",\r\n      \"end\": \"2014-10-08T09:00:00Z\"\r\n    },\r\n    {\r\n      \"status\": \"PendingExecution\",\r\n      \"state\": \"Waiting\",\r\n      \"substate\": \"ScheduledTime\",\r\n      \"retryCount\": 0,\r\n      \"longRetryCount\": 0,\r\n      \"statusUpdateTimestamp\": \"2015-07-08T18:58:07.9464626Z\",\r\n      \"start\": \"2014-10-08T09:00:00Z\",\r\n      \"end\": \"2014-10-08T10:00:00Z\"\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "459"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "f231d92f-c984-4bb4-af90-c1cce9e5642b"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14959"
+        ],
+        "x-ms-correlation-request-id": [
+          "ab4ea094-adf2-4c76-9861-32d38fd2c590"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150708T185812Z:ab4ea094-adf2-4c76-9861-32d38fd2c590"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 08 Jul 2015 18:58:12 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/tables/DA_WikiAggregatedData/sliceruns?startTime=2014-10-08T08:00:00.0000000Z&api-version=2015-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDQzMWViYjItNWEwNy00ZDg1LTg1Y2YtN2FmMzRhZTg1ZmY1L3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA3MDMvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhRmFjdG9yeS9kYXRhZmFjdG9yaWVzL0RhdGFGYWN0b3J5NjE1OS90YWJsZXMvREFfV2lraUFnZ3JlZ2F0ZWREYXRhL3NsaWNlcnVucz9zdGFydFRpbWU9MjAxNC0xMC0wOFQwOCUzQTAwJTNBMDAuMDAwMDAwMFomYXBpLXZlcnNpb249MjAxNS0wNy0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "8d6dea7e-d71c-4dc8-99a4-993a6015830c"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataFactories.Core.DataFactoryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": []\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "12"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "92a1b2d8-7785-4f5f-9f1e-6f855acf8178"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14958"
+        ],
+        "x-ms-correlation-request-id": [
+          "4fff9b4c-3d3b-43c9-b704-14bcf1eb8bed"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150708T185813Z:4fff9b4c-3d3b-43c9-b704-14bcf1eb8bed"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 08 Jul 2015 18:58:12 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/4431ebb2-5a07-4d85-85cf-7af34ae85ff5/resourcegroups/resourcegroup703/providers/Microsoft.DataFactory/datafactories/DataFactory6159/tables/DA_WikiAggregatedData/sliceruns?startTime=2014-10-08T09:00:00.0000000Z&api-version=2015-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDQzMWViYjItNWEwNy00ZDg1LTg1Y2YtN2FmMzRhZTg1ZmY1L3Jlc291cmNlZ3JvdXBzL3Jlc291cmNlZ3JvdXA3MDMvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhRmFjdG9yeS9kYXRhZmFjdG9yaWVzL0RhdGFGYWN0b3J5NjE1OS90YWJsZXMvREFfV2lraUFnZ3JlZ2F0ZWREYXRhL3NsaWNlcnVucz9zdGFydFRpbWU9MjAxNC0xMC0wOFQwOSUzQTAwJTNBMDAuMDAwMDAwMFomYXBpLXZlcnNpb249MjAxNS0wNy0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "efcff6ca-9b56-4662-92e5-644a52819e59"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.DataFactories.Core.DataFactoryManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": []\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "12"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "9b50c1eb-8075-4b48-9f71-5eeab8e399b2"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14957"
+        ],
+        "x-ms-correlation-request-id": [
+          "5d23bfa6-7e74-4175-bb76-cff7848a1449"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150708T185813Z:5d23bfa6-7e74-4175-bb76-cff7848a1449"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 08 Jul 2015 18:58:13 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {
+    "WikipediaPipelineE2ETest": [
+      "resourcegroup703",
+      "DataFactory6159",
+      "DP_Wikipedia1129"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "4431ebb2-5a07-4d85-85cf-7af34ae85ff5"
+  }
+}
