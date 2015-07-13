@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.BackupServices
     /// <summary>
     /// Definition of Vault-related operations for the Azure Backup extension.
     /// </summary>
-    internal partial class VaultOperations : IServiceOperations<BackupServicesManagementClient>, IVaultOperations
+    internal partial class VaultOperations : IServiceOperations<BackupVaultServicesManagementClient>, IVaultOperations
     {
         /// <summary>
         /// Initializes a new instance of the VaultOperations class.
@@ -46,18 +46,18 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal VaultOperations(BackupServicesManagementClient client)
+        internal VaultOperations(BackupVaultServicesManagementClient client)
         {
             this._client = client;
         }
         
-        private BackupServicesManagementClient _client;
+        private BackupVaultServicesManagementClient _client;
         
         /// <summary>
         /// Gets a reference to the
-        /// Microsoft.Azure.Management.BackupServices.BackupServicesManagementClient.
+        /// Microsoft.Azure.Management.BackupServices.BackupVaultServicesManagementClient.
         /// </summary>
-        public BackupServicesManagementClient Client
+        public BackupVaultServicesManagementClient Client
         {
             get { return this._client; }
         }

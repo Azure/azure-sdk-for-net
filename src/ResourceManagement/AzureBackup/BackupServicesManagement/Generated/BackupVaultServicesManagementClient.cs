@@ -28,7 +28,7 @@ using Microsoft.Azure.Management.BackupServices;
 
 namespace Microsoft.Azure.Management.BackupServices
 {
-    public partial class BackupServicesManagementClient : ServiceClient<BackupServicesManagementClient>, IBackupServicesManagementClient
+    public partial class BackupVaultServicesManagementClient : ServiceClient<BackupVaultServicesManagementClient>, IBackupVaultServicesManagementClient
     {
         private string _apiVersion;
         
@@ -100,104 +100,25 @@ namespace Microsoft.Azure.Management.BackupServices
             set { this._resourceName = value; }
         }
         
-        private IBackUpOperations _backUp;
+        private IVaultOperations _vault;
         
         /// <summary>
-        /// Definition of BackUp operations for the Azure Backup extension.
-        /// </summary>
-        public virtual IBackUpOperations BackUp
-        {
-            get { return this._backUp; }
-        }
-        
-        private IContainerOperation _container;
-        
-        /// <summary>
-        /// Definition of Container operations for the Azure Backup extension.
-        /// </summary>
-        public virtual IContainerOperation Container
-        {
-            get { return this._container; }
-        }
-        
-        private IDataSourceOperations _dataSource;
-        
-        /// <summary>
-        /// Definition of DataSource operations for the Azure Backup extension.
-        /// </summary>
-        public virtual IDataSourceOperations DataSource
-        {
-            get { return this._dataSource; }
-        }
-        
-        private IJobOperations _job;
-        
-        /// <summary>
-        /// Definition of Job operations for Azure backup extension.
-        /// </summary>
-        public virtual IJobOperations Job
-        {
-            get { return this._job; }
-        }
-        
-        private IOperationStatus _operationStatus;
-        
-        /// <summary>
-        /// Definition of Workflow operation for the Azure Backup extension.
-        /// </summary>
-        public virtual IOperationStatus OperationStatus
-        {
-            get { return this._operationStatus; }
-        }
-        
-        private IProtectableObjectOperations _protectableObject;
-        
-        /// <summary>
-        /// Definition of Protectable ObjectOperation operations for the Azure
-        /// Backup extension.
-        /// </summary>
-        public virtual IProtectableObjectOperations ProtectableObject
-        {
-            get { return this._protectableObject; }
-        }
-        
-        private IProtectionPolicyOperations _protectionPolicy;
-        
-        /// <summary>
-        /// Definition of Protection Policy operations for the Azure Backup
+        /// Definition of Vault-related operations for the Azure Backup
         /// extension.
         /// </summary>
-        public virtual IProtectionPolicyOperations ProtectionPolicy
+        public virtual IVaultOperations Vault
         {
-            get { return this._protectionPolicy; }
-        }
-        
-        private IRecoveryPointOperations _recoveryPoint;
-        
-        /// <summary>
-        /// Definition of Recovery Point operations for the Azure Backup
-        /// extension.
-        /// </summary>
-        public virtual IRecoveryPointOperations RecoveryPoint
-        {
-            get { return this._recoveryPoint; }
+            get { return this._vault; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the BackupServicesManagementClient
-        /// class.
+        /// Initializes a new instance of the
+        /// BackupVaultServicesManagementClient class.
         /// </summary>
-        public BackupServicesManagementClient()
+        public BackupVaultServicesManagementClient()
             : base()
         {
-            this._backUp = new BackUpOperations(this);
-            this._container = new ContainerOperation(this);
-            this._dataSource = new DataSourceOperations(this);
-            this._job = new JobOperations(this);
-            this._operationStatus = new OperationStatus(this);
-            this._protectableObject = new ProtectableObjectOperations(this);
-            this._protectionPolicy = new ProtectionPolicyOperations(this);
-            this._recoveryPoint = new RecoveryPointOperations(this);
+            this._vault = new VaultOperations(this);
             this._apiVersion = "2013-03-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
@@ -205,8 +126,8 @@ namespace Microsoft.Azure.Management.BackupServices
         }
         
         /// <summary>
-        /// Initializes a new instance of the BackupServicesManagementClient
-        /// class.
+        /// Initializes a new instance of the
+        /// BackupVaultServicesManagementClient class.
         /// </summary>
         /// <param name='resourceName'>
         /// Required.
@@ -223,7 +144,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Optional. Gets the URI used as the base for all cloud service
         /// requests.
         /// </param>
-        public BackupServicesManagementClient(string resourceName, string resourceGroupName, SubscriptionCloudCredentials credentials, Uri baseUri)
+        public BackupVaultServicesManagementClient(string resourceName, string resourceGroupName, SubscriptionCloudCredentials credentials, Uri baseUri)
             : this()
         {
             if (resourceName == null)
@@ -251,8 +172,8 @@ namespace Microsoft.Azure.Management.BackupServices
         }
         
         /// <summary>
-        /// Initializes a new instance of the BackupServicesManagementClient
-        /// class.
+        /// Initializes a new instance of the
+        /// BackupVaultServicesManagementClient class.
         /// </summary>
         /// <param name='resourceName'>
         /// Required.
@@ -265,7 +186,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Microsoft Azure subscription. The subscription ID forms part of
         /// the URI for every service call.
         /// </param>
-        public BackupServicesManagementClient(string resourceName, string resourceGroupName, SubscriptionCloudCredentials credentials)
+        public BackupVaultServicesManagementClient(string resourceName, string resourceGroupName, SubscriptionCloudCredentials credentials)
             : this()
         {
             if (resourceName == null)
@@ -289,23 +210,16 @@ namespace Microsoft.Azure.Management.BackupServices
         }
         
         /// <summary>
-        /// Initializes a new instance of the BackupServicesManagementClient
-        /// class.
+        /// Initializes a new instance of the
+        /// BackupVaultServicesManagementClient class.
         /// </summary>
         /// <param name='httpClient'>
         /// The Http client
         /// </param>
-        public BackupServicesManagementClient(HttpClient httpClient)
+        public BackupVaultServicesManagementClient(HttpClient httpClient)
             : base(httpClient)
         {
-            this._backUp = new BackUpOperations(this);
-            this._container = new ContainerOperation(this);
-            this._dataSource = new DataSourceOperations(this);
-            this._job = new JobOperations(this);
-            this._operationStatus = new OperationStatus(this);
-            this._protectableObject = new ProtectableObjectOperations(this);
-            this._protectionPolicy = new ProtectionPolicyOperations(this);
-            this._recoveryPoint = new RecoveryPointOperations(this);
+            this._vault = new VaultOperations(this);
             this._apiVersion = "2013-03-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
@@ -313,8 +227,8 @@ namespace Microsoft.Azure.Management.BackupServices
         }
         
         /// <summary>
-        /// Initializes a new instance of the BackupServicesManagementClient
-        /// class.
+        /// Initializes a new instance of the
+        /// BackupVaultServicesManagementClient class.
         /// </summary>
         /// <param name='resourceName'>
         /// Required.
@@ -334,7 +248,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <param name='httpClient'>
         /// The Http client
         /// </param>
-        public BackupServicesManagementClient(string resourceName, string resourceGroupName, SubscriptionCloudCredentials credentials, Uri baseUri, HttpClient httpClient)
+        public BackupVaultServicesManagementClient(string resourceName, string resourceGroupName, SubscriptionCloudCredentials credentials, Uri baseUri, HttpClient httpClient)
             : this(httpClient)
         {
             if (resourceName == null)
@@ -362,8 +276,8 @@ namespace Microsoft.Azure.Management.BackupServices
         }
         
         /// <summary>
-        /// Initializes a new instance of the BackupServicesManagementClient
-        /// class.
+        /// Initializes a new instance of the
+        /// BackupVaultServicesManagementClient class.
         /// </summary>
         /// <param name='resourceName'>
         /// Required.
@@ -379,7 +293,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <param name='httpClient'>
         /// The Http client
         /// </param>
-        public BackupServicesManagementClient(string resourceName, string resourceGroupName, SubscriptionCloudCredentials credentials, HttpClient httpClient)
+        public BackupVaultServicesManagementClient(string resourceName, string resourceGroupName, SubscriptionCloudCredentials credentials, HttpClient httpClient)
             : this(httpClient)
         {
             if (resourceName == null)
@@ -404,18 +318,18 @@ namespace Microsoft.Azure.Management.BackupServices
         
         /// <summary>
         /// Clones properties from current instance to another
-        /// BackupServicesManagementClient instance
+        /// BackupVaultServicesManagementClient instance
         /// </summary>
         /// <param name='client'>
-        /// Instance of BackupServicesManagementClient to clone to
+        /// Instance of BackupVaultServicesManagementClient to clone to
         /// </param>
-        protected override void Clone(ServiceClient<BackupServicesManagementClient> client)
+        protected override void Clone(ServiceClient<BackupVaultServicesManagementClient> client)
         {
             base.Clone(client);
             
-            if (client is BackupServicesManagementClient)
+            if (client is BackupVaultServicesManagementClient)
             {
-                BackupServicesManagementClient clonedClient = ((BackupServicesManagementClient)client);
+                BackupVaultServicesManagementClient clonedClient = ((BackupVaultServicesManagementClient)client);
                 
                 clonedClient._resourceName = this._resourceName;
                 clonedClient._resourceGroupName = this._resourceGroupName;

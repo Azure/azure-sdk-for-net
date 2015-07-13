@@ -20,12 +20,15 @@
     <Compile Include="Generated\BackUpOperationsExtensions.cs" />
     <Compile Include="Generated\BackupServicesManagementClient.cs" />
     <Compile Include="Generated\BackupServicesManagementClientExtensions.cs" />
+    <Compile Include="Generated\BackupVaultServicesManagementClient.cs" />
+    <Compile Include="Generated\BackupVaultServicesManagementClientExtensions.cs" />
     <Compile Include="Generated\ContainerOperation.cs" />
     <Compile Include="Generated\ContainerOperationExtensions.cs" />
     <Compile Include="Generated\DataSourceOperations.cs" />
     <Compile Include="Generated\DataSourceOperationsExtensions.cs" />
     <Compile Include="Generated\IBackUpOperations.cs" />
     <Compile Include="Generated\IBackupServicesManagementClient.cs" />
+    <Compile Include="Generated\IBackupVaultServicesManagementClient.cs" />
     <Compile Include="Generated\IContainerOperation.cs" />
     <Compile Include="Generated\IDataSourceOperations.cs" />
     <Compile Include="Generated\IJobOperations.cs" />
@@ -78,7 +81,6 @@
     <Compile Include="Generated\Models\RecoveryPointInfo.cs" />
     <Compile Include="Generated\Models\RecoveryPointInfoResponse.cs" />
     <Compile Include="Generated\Models\RecoveryPointListResponse.cs" />
-    <Compile Include="Generated\Models\RegisterContainerRequestInput.cs" />
     <Compile Include="Generated\Models\RemoveProtectionRequestInput.cs" />
     <Compile Include="Generated\Models\ResourceCertificateAndACSDetails.cs" />
     <Compile Include="Generated\Models\RetentionDurationType.cs" />
@@ -87,7 +89,6 @@
     <Compile Include="Generated\Models\SkuProperties.cs" />
     <Compile Include="Generated\Models\StorageDetails.cs" />
     <Compile Include="Generated\Models\StorageTypeProperties.cs" />
-    <Compile Include="Generated\Models\UnregisterContainerRequestInput.cs" />
     <Compile Include="Generated\Models\UpdateProtectionPolicyRequest.cs" />
     <Compile Include="Generated\Models\UpdateVaultStorageTypeRequest.cs" />
     <Compile Include="Generated\Models\VaultCredUploadCertRequest.cs" />

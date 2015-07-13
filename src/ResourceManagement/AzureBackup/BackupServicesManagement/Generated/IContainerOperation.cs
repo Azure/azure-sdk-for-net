@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <summary>
         /// Register the container.
         /// </summary>
-        /// <param name='parameters'>
+        /// <param name='containerName'>
         /// Container to be register.
         /// </param>
         /// <param name='customRequestHeaders'>
@@ -80,12 +80,12 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a Operation Response.
         /// </returns>
-        Task<OperationResponse> RegisterAsync(RegisterContainerRequestInput parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<OperationResponse> RegisterAsync(string containerName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
         /// Unregister the container.
         /// </summary>
-        /// <param name='parameters'>
+        /// <param name='containerName'>
         /// Container which we want to unregister.
         /// </param>
         /// <param name='customRequestHeaders'>
@@ -97,6 +97,6 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a Operation Response.
         /// </returns>
-        Task<OperationResponse> UnregisterAsync(UnregisterContainerRequestInput parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<OperationResponse> UnregisterAsync(string containerName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
     }
 }

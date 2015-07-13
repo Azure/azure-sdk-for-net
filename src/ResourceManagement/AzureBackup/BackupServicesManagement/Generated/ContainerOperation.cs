@@ -24,12 +24,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Hyak.Common;
-using Hyak.Common.Internals;
 using Microsoft.Azure.Management.BackupServices;
 using Microsoft.Azure.Management.BackupServices.Models;
 using Newtonsoft.Json.Linq;
@@ -368,7 +365,7 @@ namespace Microsoft.Azure.Management.BackupServices
             url = url + "BackupVault";
             url = url + "/";
             url = url + Uri.EscapeDataString(this.Client.ResourceName);
-            url = url + "/containers/refresh";
+            url = url + "/refreshContainers";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2014-09-01");
             if (queryParameters.Count > 0)
@@ -483,7 +480,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <summary>
         /// Register the container.
         /// </summary>
-        /// <param name='parameters'>
+        /// <param name='containerName'>
         /// Required. Container to be register.
         /// </param>
         /// <param name='customRequestHeaders'>
@@ -495,20 +492,12 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a Operation Response.
         /// </returns>
-        public async Task<OperationResponse> RegisterAsync(RegisterContainerRequestInput parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<OperationResponse> RegisterAsync(string containerName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
-            if (parameters == null)
+            if (containerName == null)
             {
-                throw new ArgumentNullException("parameters");
-            }
-            if (parameters.ContainerType == null)
-            {
-                throw new ArgumentNullException("parameters.ContainerType");
-            }
-            if (parameters.ContainerUniqueNameList == null)
-            {
-                throw new ArgumentNullException("parameters.ContainerUniqueNameList");
+                throw new ArgumentNullException("containerName");
             }
             
             // Tracing
@@ -518,7 +507,7 @@ namespace Microsoft.Azure.Management.BackupServices
             {
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("parameters", parameters);
+                tracingParameters.Add("containerName", containerName);
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
                 TracingAdapter.Enter(invocationId, this, "RegisterAsync", tracingParameters);
             }
@@ -538,7 +527,8 @@ namespace Microsoft.Azure.Management.BackupServices
             url = url + "BackupVault";
             url = url + "/";
             url = url + Uri.EscapeDataString(this.Client.ResourceName);
-            url = url + "/containers/register";
+            url = url + "//registeredContainers/";
+            url = url + Uri.EscapeDataString(containerName);
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2014-09-01");
             if (queryParameters.Count > 0)
@@ -563,7 +553,7 @@ namespace Microsoft.Azure.Management.BackupServices
             try
             {
                 httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Post;
+                httpRequest.Method = HttpMethod.Put;
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
@@ -573,32 +563,6 @@ namespace Microsoft.Azure.Management.BackupServices
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
                 await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Serialize Request
-                string requestContent = null;
-                JToken requestDoc = null;
-                
-                JObject registerContainerRequestInputValue = new JObject();
-                requestDoc = registerContainerRequestInputValue;
-                
-                if (parameters.ContainerUniqueNameList != null)
-                {
-                    if (parameters.ContainerUniqueNameList is ILazyCollection == false || ((ILazyCollection)parameters.ContainerUniqueNameList).IsInitialized)
-                    {
-                        JArray containerUniqueNameListArray = new JArray();
-                        foreach (string containerUniqueNameListItem in parameters.ContainerUniqueNameList)
-                        {
-                            containerUniqueNameListArray.Add(containerUniqueNameListItem);
-                        }
-                        registerContainerRequestInputValue["ContainerUniqueNameList"] = containerUniqueNameListArray;
-                    }
-                }
-                
-                registerContainerRequestInputValue["ContainerType"] = parameters.ContainerType;
-                
-                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
-                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -618,7 +582,7 @@ namespace Microsoft.Azure.Management.BackupServices
                     if (statusCode != HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             TracingAdapter.Error(invocationId, ex);
@@ -679,7 +643,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <summary>
         /// Unregister the container.
         /// </summary>
-        /// <param name='parameters'>
+        /// <param name='containerName'>
         /// Required. Container which we want to unregister.
         /// </param>
         /// <param name='customRequestHeaders'>
@@ -691,20 +655,12 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a Operation Response.
         /// </returns>
-        public async Task<OperationResponse> UnregisterAsync(UnregisterContainerRequestInput parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<OperationResponse> UnregisterAsync(string containerName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
-            if (parameters == null)
+            if (containerName == null)
             {
-                throw new ArgumentNullException("parameters");
-            }
-            if (parameters.ContainerType == null)
-            {
-                throw new ArgumentNullException("parameters.ContainerType");
-            }
-            if (parameters.ContainerUniqueName == null)
-            {
-                throw new ArgumentNullException("parameters.ContainerUniqueName");
+                throw new ArgumentNullException("containerName");
             }
             if (customRequestHeaders == null)
             {
@@ -718,7 +674,7 @@ namespace Microsoft.Azure.Management.BackupServices
             {
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("parameters", parameters);
+                tracingParameters.Add("containerName", containerName);
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
                 TracingAdapter.Enter(invocationId, this, "UnregisterAsync", tracingParameters);
             }
@@ -736,9 +692,8 @@ namespace Microsoft.Azure.Management.BackupServices
             url = url + "Microsoft.Backup";
             url = url + "/";
             url = url + "BackupVault";
-            url = url + "/";
-            url = url + Uri.EscapeDataString(this.Client.ResourceName);
-            url = url + "/containers";
+            url = url + "/registeredContainers/";
+            url = url + Uri.EscapeDataString(containerName);
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2014-09-01");
             if (queryParameters.Count > 0)
@@ -773,21 +728,6 @@ namespace Microsoft.Azure.Management.BackupServices
                 cancellationToken.ThrowIfCancellationRequested();
                 await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                 
-                // Serialize Request
-                string requestContent = null;
-                JToken requestDoc = null;
-                
-                JObject unregisterContainerRequestInputValue = new JObject();
-                requestDoc = unregisterContainerRequestInputValue;
-                
-                unregisterContainerRequestInputValue["ContainerUniqueName"] = parameters.ContainerUniqueName;
-                
-                unregisterContainerRequestInputValue["ContainerType"] = parameters.ContainerType;
-                
-                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
-                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
-                
                 // Send Request
                 HttpResponseMessage httpResponse = null;
                 try
@@ -806,7 +746,7 @@ namespace Microsoft.Azure.Management.BackupServices
                     if (statusCode != HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             TracingAdapter.Error(invocationId, ex);
