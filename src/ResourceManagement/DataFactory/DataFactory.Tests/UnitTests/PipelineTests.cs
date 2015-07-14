@@ -15,7 +15,6 @@
 // 
 
 using System;
-using System.Collections.Generic;
 using DataFactory.Tests.Framework;
 using DataFactory.Tests.Framework.JsonSamples;
 using Microsoft.Azure.Management.DataFactories;
@@ -37,22 +36,20 @@ namespace DataFactory.Tests.UnitTests
             } 
         }
         
-        [Fact]
+        [Theory, ClassData(typeof(PipelineJsonSamples))]
         [Trait(TraitName.TestType, TestType.Unit)]
         [Trait(TraitName.Function, TestType.Conversion)]
-        public void PipelineJsonConstsToWrappedObjectTest()
+        public void PipelineJsonConstsToWrappedObjectTest(JsonSampleInfo sampleInfo)
         {
-            IEnumerable<JsonSampleInfo> samples = JsonSampleCommon.GetJsonSamplesFromType<PipelineJsonSamples>();
-            this.TestPipelineJsonSamples(samples);
+            JsonSampleCommon.TestJsonSample(sampleInfo, this.TestPipelineJson);
         }
 
-        [Fact]
+        [Theory, ClassData(typeof(PipelineJsonSamples))]
         [Trait(TraitName.TestType, TestType.Unit)]
         [Trait(TraitName.Function, TestType.Conversion)]
-        public void PipelineValidateJsonConstsTest()
+        public void PipelineValidateJsonConstsTest(JsonSampleInfo sampleInfo)
         {
-            IEnumerable<JsonSampleInfo> samples = JsonSampleCommon.GetJsonSamplesFromType<PipelineJsonSamples>();
-            this.TestPipelineValidateSamples(samples);
+            JsonSampleCommon.TestJsonSample(sampleInfo, this.TestPipelineValidation);
         }
 
         [Theory, InlineData(@"
@@ -158,17 +155,6 @@ namespace DataFactory.Tests.UnitTests
             Assert.True(hiveActivity.GetDebugInfo == "Failure");
         }
 
-        private void TestPipelineJsonSamples(IEnumerable<JsonSampleInfo> samples)
-        {
-            JsonSampleCommon.TestJsonSamples(samples, this.TestPipelineJson);
-        }
-
-        private void TestPipelineValidateSamples(IEnumerable<JsonSampleInfo> samples)
-        {
-            Action<JsonSampleInfo> testSample = sampleInfo => this.TestPipelineValidation(sampleInfo.Json);
-            JsonSampleCommon.TestJsonSamples(samples, testSample);
-        }
-
         private void TestPipelineJson(JsonSampleInfo sampleInfo)
         {
             string json = sampleInfo.Json;
@@ -193,6 +179,11 @@ namespace DataFactory.Tests.UnitTests
         {
             Pipeline pipeline = this.ConvertToWrapper(json);
             this.Operations.ValidateObject(pipeline);
+        }
+
+        private void TestPipelineValidation(JsonSampleInfo sampleInfo)
+        {
+            this.TestPipelineValidation(sampleInfo.Json);
         }
 
         private Pipeline ConvertToWrapper(string json)

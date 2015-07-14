@@ -16,7 +16,7 @@
 
 namespace DataFactory.Tests.Framework.JsonSamples
 {
-    public class TableJsonSamples
+    public class TableJsonSamples : JsonSampleCollection<TableJsonSamples>
     {
         [JsonSample]
         public const string CustomTable = @"

@@ -16,7 +16,7 @@
 
 namespace DataFactory.Tests.Framework.JsonSamples
 {
-    public class CustomLinkedServiceJsonSamples
+    public class CustomLinkedServiceJsonSamples : JsonSampleCollection<CustomLinkedServiceJsonSamples>
     {
         [JsonSample(version: "RegisteredVersion")]
         public const string RegisteredTypeLinkedService = @"

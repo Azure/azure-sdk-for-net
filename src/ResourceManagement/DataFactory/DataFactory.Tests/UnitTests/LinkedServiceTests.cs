@@ -15,8 +15,6 @@
 // 
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using DataFactory.Tests.Framework;
 using DataFactory.Tests.Framework.JsonSamples;
 using DataFactory.Tests.UnitTests.TestClasses;
@@ -41,32 +39,28 @@ namespace DataFactory.Tests.UnitTests
 
         #region Tests
 
-        [Fact]
+        [Theory, ClassData(typeof(LinkedServiceJsonSamples))]
         [Trait(TraitName.TestType, TestType.Unit)]
         [Trait(TraitName.Function, TestType.Conversion)]
-        public void LinkedServiceJsonConstsToWrappedObjectTest()
+        public void LinkedServiceJsonConstsToWrappedObjectTest(JsonSampleInfo sampleInfo)
         {
-            IEnumerable<JsonSampleInfo> samples = JsonSampleCommon.GetJsonSamplesFromType<LinkedServiceJsonSamples>();
-            this.TestLinkedServiceJsonSamples(samples);
+            JsonSampleCommon.TestJsonSample(sampleInfo, this.TestLinkedServiceJson);
         }
 
-        [Fact]
+        [Theory, ClassData(typeof(LinkedServiceJsonSamples))]
         [Trait(TraitName.TestType, TestType.Unit)]
         [Trait(TraitName.Function, TestType.Conversion)]
-        public void LinkedServiceValidateJsonConstsTest()
+        public void LinkedServiceValidateJsonConstsTest(JsonSampleInfo sampleInfo)
         {
-            IEnumerable<JsonSampleInfo> samples = JsonSampleCommon.GetJsonSamplesFromType<LinkedServiceJsonSamples>();
-            this.TestLinkedServiceValidateSamples(samples);
+            JsonSampleCommon.TestJsonSample(sampleInfo, this.TestLinkedServiceValidation);
         }
 
-        [Fact]
+        [Theory, ClassData(typeof(CustomLinkedServiceJsonSamples))]
         [Trait(TraitName.TestType, TestType.Unit)]
         [Trait(TraitName.Function, TestType.Conversion)]
-        public void CustomLinkedServiceJsonConstsToWrappedObjectTest()
+        public void CustomLinkedServiceJsonConstsToWrappedObjectTest(JsonSampleInfo sampleInfo)
         {
-            IEnumerable<JsonSampleInfo> samples =
-                JsonSampleCommon.GetJsonSamplesFromType<CustomLinkedServiceJsonSamples>();
-            this.TestLinkedServiceJsonSamples(samples, true);
+            JsonSampleCommon.TestJsonSample(sampleInfo, this.TestLinkedServiceCustomJson);
         }
 
         [Theory, InlineData(@"{
@@ -90,16 +84,16 @@ namespace DataFactory.Tests.UnitTests
             Assert.Contains("is required", ex.Message);
         }
 
-        [Fact]
+        [Theory, ClassData(typeof(LinkedServiceJsonSamples))]
         [Trait(TraitName.TestType, TestType.Unit)]
         [Trait(TraitName.Function, TestType.Conversion)]
-        public void LinkedServiceWithExtraPropertiesTest()
+        public void LinkedServiceWithExtraPropertiesTest(JsonSampleInfo sampleInfo)
         {
-            IEnumerable<JsonSampleInfo> samples =
-                JsonSampleCommon.GetJsonSamplesFromType<LinkedServiceJsonSamples>()
-                    .Where(s => s.Version != null && s.Version.Equals("ExtraProperties"));
-
-            this.TestLinkedServiceJsonSamples(samples); 
+            if (sampleInfo.Version != null
+                && sampleInfo.Version.Equals("ExtraProperties", StringComparison.Ordinal))
+            {
+                JsonSampleCommon.TestJsonSample(sampleInfo, this.TestLinkedServiceJson);
+            }
         }
 
         [Theory, InlineData(@"
@@ -233,27 +227,6 @@ namespace DataFactory.Tests.UnitTests
 
         #region Test helpers
 
-        private void TestLinkedServiceJsonSamples(IEnumerable<JsonSampleInfo> samples, bool customTest = false)
-        {
-            Action<JsonSampleInfo> testSample;
-            if (customTest)
-            {
-                testSample = sampleInfo => this.TestLinkedServiceCustomJson(sampleInfo.Json);
-            }
-            else
-            {
-                testSample = sampleInfo => this.TestLinkedServiceJson(sampleInfo.Json);
-            }
-
-            JsonSampleCommon.TestJsonSamples(samples, testSample);       
-        }
-
-        private void TestLinkedServiceValidateSamples(IEnumerable<JsonSampleInfo> samples)
-        {
-            Action<JsonSampleInfo> testSample = sampleInfo => this.TestLinkedServiceValidation(sampleInfo.Json);
-            JsonSampleCommon.TestJsonSamples(samples, testSample);
-        }
-
         private LinkedService ConvertAndTestJson(string json, bool customTest = false)
         {
             LinkedService linkedService = this.ConvertToWrapper(json);
@@ -282,15 +255,25 @@ namespace DataFactory.Tests.UnitTests
             Assert.IsNotType<GenericLinkedService>(linkedService.Properties.TypeProperties);
         }
 
-        private void TestLinkedServiceCustomJson(string json)
+        private void TestLinkedServiceJson(JsonSampleInfo sampleInfo)
         {
-            this.ConvertAndTestJson(json, true); 
+            this.TestLinkedServiceJson(sampleInfo.Json);
+        }
+
+        private void TestLinkedServiceCustomJson(JsonSampleInfo sampleInfo)
+        {
+            this.ConvertAndTestJson(sampleInfo.Json, true); 
         }
 
         private void TestLinkedServiceValidation(string json)
         {
             LinkedService linkedService = this.ConvertToWrapper(json);
             this.Operations.ValidateObject(linkedService);
+        }
+
+        private void TestLinkedServiceValidation(JsonSampleInfo sampleInfo)
+        {
+            this.TestLinkedServiceValidation(sampleInfo.Json);
         }
 
         private LinkedService ConvertToWrapper(string json)

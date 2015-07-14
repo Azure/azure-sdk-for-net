@@ -15,8 +15,6 @@
 // 
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using DataFactory.Tests.Framework;
 using DataFactory.Tests.Framework.JsonSamples;
 using Microsoft.Azure.Management.DataFactories;
@@ -38,26 +36,20 @@ namespace DataFactory.Tests.UnitTests
             }
         }
 
-        [Fact]
+        [Theory, ClassData(typeof(TableJsonSamples))]
         [Trait(TraitName.TestType, TestType.Unit)]
         [Trait(TraitName.Function, TestType.Conversion)]
-        public void TableJsonConstsToWrappedObjectTest()
+        public void TableJsonConstsToWrappedObjectTest(JsonSampleInfo sampleInfo)
         {
-            IEnumerable<JsonSampleInfo> samples =
-                JsonSampleCommon.GetJsonSamplesFromType<TableJsonSamples>();
-
-            this.TestTableJsonSamples(samples);
+            JsonSampleCommon.TestJsonSample(sampleInfo, this.TestTableJson);
         }
 
-        [Fact]
+        [Theory, ClassData(typeof(TableJsonSamples))]
         [Trait(TraitName.TestType, TestType.Unit)]
         [Trait(TraitName.Function, TestType.Conversion)]
-        public void TableValidateJsonConstsTest()
+        public void TableValidateJsonConstsTest(JsonSampleInfo sampleInfo)
         {
-            IEnumerable<JsonSampleInfo> samples =
-                JsonSampleCommon.GetJsonSamplesFromType<TableJsonSamples>();
-
-            this.TestTableValidateSamples(samples);
+            JsonSampleCommon.TestJsonSample(sampleInfo, this.TestTableValidation);
         }
 
         [Theory, InlineData(@"{
@@ -78,16 +70,16 @@ namespace DataFactory.Tests.UnitTests
             Assert.Contains("is required", ex.Message);
         }
 
-        [Fact]
+        [Theory, ClassData(typeof(TableJsonSamples))]
         [Trait(TraitName.TestType, TestType.Unit)]
         [Trait(TraitName.Function, TestType.Conversion)]
-        public void TableWithExtraPropertiesTest()
+        public void TableWithExtraPropertiesTest(JsonSampleInfo sampleInfo)
         {
-            IEnumerable<JsonSampleInfo> samples =
-                JsonSampleCommon.GetJsonSamplesFromType<TableJsonSamples>()
-                    .Where(s => s.Version != null && s.Version.Equals(JsonSampleType.ExtraProperties));
-
-            this.TestTableJsonSamples(samples);
+            if (sampleInfo.Version != null 
+                && sampleInfo.Version.Equals(JsonSampleType.ExtraProperties, StringComparison.Ordinal))
+            {
+                JsonSampleCommon.TestJsonSample(sampleInfo, this.TestTableJson);
+            }
         }
 
         [Theory, InlineData(@"
@@ -113,17 +105,6 @@ namespace DataFactory.Tests.UnitTests
             Assert.IsType<GenericDataset>(table.Properties.TypeProperties);
         }
 
-        private void TestTableJsonSamples(IEnumerable<JsonSampleInfo> samples)
-        {
-            JsonSampleCommon.TestJsonSamples(samples, this.TestTableJson);
-        }
-
-        private void TestTableValidateSamples(IEnumerable<JsonSampleInfo> samples)
-        {
-            Action<JsonSampleInfo> testSample = sampleInfo => this.TestTableValidation(sampleInfo.Json);
-            JsonSampleCommon.TestJsonSamples(samples, testSample);
-        }
-
         private void TestTableJson(JsonSampleInfo info)
         {
             string json = info.Json;
@@ -140,10 +121,15 @@ namespace DataFactory.Tests.UnitTests
             }
         }
 
+        private void TestTableValidation(JsonSampleInfo sampleInfo)
+        {
+            this.TestTableValidation(sampleInfo.Json);
+        }
+        
         private void TestTableValidation(string json)
         {
             Table table = this.ConvertToWrapper(json);
-            this.Operations.Converter.ValidateWrappedObject(table);
+            this.Operations.ValidateObject(table);
         }
 
         private Table ConvertToWrapper(string json)
