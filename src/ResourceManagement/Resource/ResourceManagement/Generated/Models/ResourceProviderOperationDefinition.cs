@@ -23,11 +23,5 @@ namespace Microsoft.Azure.Management.Resources.Models
         [JsonProperty(PropertyName = "display")]
         public ResourceProviderOperationDisplayProperties Display { get; set; }
 
-        /// <summary>
-        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
-        /// </summary>
-        public virtual void Validate()
-        {
-        }
     }
 }

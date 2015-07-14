@@ -45,5 +45,12 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "properties.cookieBasedAffinity")]
         public ApplicationGatewayCookieBasedAffinity? CookieBasedAffinity { get; set; }
 
+        /// <summary>
+        /// Gets or sets Provisioning state of the backend http settings
+        /// resource Updating/Deleting/Failed
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.provisioningState")]
+        public string ProvisioningState { get; set; }
+
     }
 }

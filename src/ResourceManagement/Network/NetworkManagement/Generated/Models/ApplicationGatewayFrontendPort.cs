@@ -31,5 +31,12 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "properties.port")]
         public int? Port { get; set; }
 
+        /// <summary>
+        /// Gets or sets Provisioning state of the frontend port resource
+        /// Updating/Deleting/Failed
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.provisioningState")]
+        public string ProvisioningState { get; set; }
+
     }
 }

@@ -290,9 +290,6 @@
           "description": "Resource Id"
         }
       },
-      "required": [
-        "id"
-      ],
       "x-ms-external": true
     }
   },

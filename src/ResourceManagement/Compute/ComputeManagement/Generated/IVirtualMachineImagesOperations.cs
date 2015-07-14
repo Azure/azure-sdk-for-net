@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        Task<AzureOperationResponse<VirtualMachineImageResourceList>> ListOffersWithHttpMessagesAsync(string location, string publisherName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IList<VirtualMachineImageResource>>> ListOffersWithHttpMessagesAsync(string location, string publisherName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets a list of virtual machine image publishers.
         /// </summary>
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        Task<AzureOperationResponse<VirtualMachineImageResourceList>> ListPublishersWithHttpMessagesAsync(string location, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IList<VirtualMachineImageResource>>> ListPublishersWithHttpMessagesAsync(string location, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets a list of virtual machine image skus.
         /// </summary>
@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        Task<AzureOperationResponse<VirtualMachineImageResourceList>> ListSkusWithHttpMessagesAsync(string location, string publisherName, string offer, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IList<VirtualMachineImageResource>>> ListSkusWithHttpMessagesAsync(string location, string publisherName, string offer, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets a list of virtual machine images.
         /// </summary>
@@ -101,6 +101,6 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        Task<AzureOperationResponse<VirtualMachineImageResourceList>> ListWithHttpMessagesAsync(string location, string publisherName, string offer, string skus, Expression<Func<Resource, bool>> filter = default(Expression<Func<Resource, bool>>), int? top = default(int?), string orderby = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IList<VirtualMachineImageResource>>> ListWithHttpMessagesAsync(string location, string publisherName, string offer, string skus, Expression<Func<VirtualMachineImageResource, bool>> filter = default(Expression<Func<VirtualMachineImageResource, bool>>), int? top = default(int?), string orderby = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

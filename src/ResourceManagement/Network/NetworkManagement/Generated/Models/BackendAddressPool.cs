@@ -37,5 +37,12 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "properties.loadBalancingRules")]
         public IList<SubResource> LoadBalancingRules { get; set; }
 
+        /// <summary>
+        /// Provisioning state of the PublicIP resource
+        /// Updating/Deleting/Failed
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.provisioningState")]
+        public string ProvisioningState { get; set; }
+
     }
 }

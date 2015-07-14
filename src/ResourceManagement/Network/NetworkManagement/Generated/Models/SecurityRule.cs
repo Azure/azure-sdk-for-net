@@ -98,5 +98,12 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "properties.direction")]
         public SecurityRuleDirection? Direction { get; set; }
 
+        /// <summary>
+        /// Gets or sets Provisioning state of the PublicIP resource
+        /// Updating/Deleting/Failed
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.provisioningState")]
+        public string ProvisioningState { get; set; }
+
     }
 }

@@ -53,11 +53,5 @@ namespace Microsoft.Azure.Management.Compute.Models
         [JsonProperty(PropertyName = "statuses")]
         public IList<InstanceViewStatus> Statuses { get; set; }
 
-        /// <summary>
-        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
-        /// </summary>
-        public virtual void Validate()
-        {
-        }
     }
 }

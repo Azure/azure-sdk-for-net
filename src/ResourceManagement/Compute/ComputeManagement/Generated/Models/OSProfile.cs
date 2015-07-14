@@ -53,29 +53,5 @@ namespace Microsoft.Azure.Management.Compute.Models
         [JsonProperty(PropertyName = "secrets")]
         public IList<VaultSecretGroup> Secrets { get; set; }
 
-        /// <summary>
-        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
-        /// </summary>
-        public virtual void Validate()
-        {
-            if (this.WindowsConfiguration != null)
-            {
-                this.WindowsConfiguration.Validate();
-            }
-            if (this.LinuxConfiguration != null)
-            {
-                this.LinuxConfiguration.Validate();
-            }
-            if (this.Secrets != null)
-            {
-                foreach ( var element in this.Secrets)
-            {
-                if (element != null)
-            {
-                element.Validate();
-            }
-            }
-            }
-        }
     }
 }

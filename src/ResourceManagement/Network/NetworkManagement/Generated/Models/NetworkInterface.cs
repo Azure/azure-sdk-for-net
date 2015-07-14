@@ -55,29 +55,18 @@ namespace Microsoft.Azure.Management.Network.Models
         public bool? Primary { get; set; }
 
         /// <summary>
+        /// Gets or sets Provisioning state of the PublicIP resource
+        /// Updating/Deleting/Failed
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.provisioningState")]
+        public string ProvisioningState { get; set; }
+
+        /// <summary>
         /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
         /// </summary>
         public override void Validate()
         {
             base.Validate();
-            if (this.VirtualMachine != null)
-            {
-                this.VirtualMachine.Validate();
-            }
-            if (this.NetworkSecurityGroup != null)
-            {
-                this.NetworkSecurityGroup.Validate();
-            }
-            if (this.IpConfigurations != null)
-            {
-                foreach ( var element in this.IpConfigurations)
-            {
-                if (element != null)
-            {
-                element.Validate();
-            }
-            }
-            }
         }
     }
 }

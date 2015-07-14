@@ -52,23 +52,11 @@ namespace Microsoft.Azure.Management.Network.Models
         public SubResource SslCertificate { get; set; }
 
         /// <summary>
-        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
+        /// Gets or sets Provisioning state of the http listener resource
+        /// Updating/Deleting/Failed
         /// </summary>
-        public override void Validate()
-        {
-            base.Validate();
-            if (this.FrontendIpConfiguration != null)
-            {
-                this.FrontendIpConfiguration.Validate();
-            }
-            if (this.FrontendPort != null)
-            {
-                this.FrontendPort.Validate();
-            }
-            if (this.SslCertificate != null)
-            {
-                this.SslCertificate.Validate();
-            }
-        }
+        [JsonProperty(PropertyName = "properties.provisioningState")]
+        public string ProvisioningState { get; set; }
+
     }
 }

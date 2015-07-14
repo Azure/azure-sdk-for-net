@@ -482,6 +482,16 @@
     },
     "StorageAccountProperties": {
       "properties": {
+        "provisioningState": {
+          "type": "string",
+          "description": "Gets the status of the storage account at the time the operation was called.",
+          "enum": [
+            "Creating",
+            "ResolvingDNS",
+            "Succeeded"
+          ],
+          "x-ms-enum": "ProvisioningState"
+        },
         "accountType": {
           "type": "string",
           "description": "Gets the type of the storage account.",
@@ -672,9 +682,6 @@
           "description": "Resource Id"
         }
       },
-      "required": [
-        "id"
-      ],
       "x-ms-external": true
     }
   },

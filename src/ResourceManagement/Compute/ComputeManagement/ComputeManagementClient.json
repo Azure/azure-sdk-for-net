@@ -312,7 +312,10 @@
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/VirtualMachineImageResourceList"
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/VirtualMachineImageResource"
+              }
             }
           }
         }
@@ -345,7 +348,10 @@
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/VirtualMachineImageResourceList"
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/VirtualMachineImageResource"
+              }
             }
           }
         }
@@ -390,7 +396,10 @@
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/VirtualMachineImageResourceList"
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/VirtualMachineImageResource"
+              }
             }
           }
         }
@@ -461,11 +470,14 @@
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/VirtualMachineImageResourceList"
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/VirtualMachineImageResource"
+              }
             }
           }
         },
-        "x-ms-odata": "#/definitions/Resource"
+        "x-ms-odata": "#/definitions/VirtualMachineImageResource"
       }
     },
     "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types/{type}/versions/{version}": {
@@ -578,11 +590,14 @@
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/VirtualMachineImageResourceList"
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/VirtualMachineImageResource"
+              }
             }
           }
         },
-        "x-ms-odata": "#/definitions/Resource"
+        "x-ms-odata": "#/definitions/VirtualMachineImageResource"
       }
     },
     "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types": {
@@ -618,7 +633,10 @@
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/VirtualMachineImageResourceList"
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/VirtualMachineImageResource"
+              }
             }
           }
         }
@@ -672,13 +690,13 @@
           }
         ],
         "responses": {
-          "200": {
+          "201": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/VirtualMachineExtension"
             }
           },
-          "201": {
+          "200": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/VirtualMachineExtension"
@@ -900,14 +918,14 @@
           }
         ],
         "responses": {
+          "202": {
+            "description": ""
+          },
           "200": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/ComputeLongRunningOperationResult"
             }
-          },
-          "202": {
-            "description": ""
           }
         },
         "x-ms-long-running-operation": true
@@ -954,13 +972,13 @@
           }
         ],
         "responses": {
-          "200": {
+          "201": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/VirtualMachine"
             }
           },
-          "201": {
+          "200": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/VirtualMachine"
@@ -1000,10 +1018,10 @@
           }
         ],
         "responses": {
-          "204": {
+          "200": {
             "description": ""
           },
-          "200": {
+          "204": {
             "description": ""
           },
           "202": {
@@ -1553,26 +1571,54 @@
       "properties": {
         "properties": {
           "$ref": "#/definitions/VirtualMachineImageProperties"
+        },
+        "name": {
+          "type": "string",
+          "description": "Gets or sets the name of the resource."
+        },
+        "location": {
+          "type": "string",
+          "description": "Gets or sets the location of the resource."
+        },
+        "tags": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Gets or sets the tags attached to the resource."
         }
       },
       "allOf": [
         {
-          "$ref": "Resource"
+          "$ref": "SubResource"
         }
       ],
       "description": "Describes a Virtual Machine Image."
     },
-    "VirtualMachineImageResourceList": {
+    "VirtualMachineImageResource": {
       "properties": {
-        "Resources": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Resource"
+        "name": {
+          "type": "string",
+          "description": "Gets or sets the name of the resource."
+        },
+        "location": {
+          "type": "string",
+          "description": "Gets or sets the location of the resource."
+        },
+        "tags": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
           },
-          "description": "Gets a list of virtual machine image resources."
+          "description": "Gets or sets the tags attached to the resource."
         }
       },
-      "description": "A list of virtual machine image resource information."
+      "allOf": [
+        {
+          "$ref": "SubResource"
+        }
+      ],
+      "description": "Virtual machine image resource information."
     },
     "VirtualMachineExtensionImageProperties": {
       "properties": {
@@ -1603,11 +1649,26 @@
       "properties": {
         "properties": {
           "$ref": "#/definitions/VirtualMachineExtensionImageProperties"
+        },
+        "name": {
+          "type": "string",
+          "description": "Gets or sets the name of the resource."
+        },
+        "location": {
+          "type": "string",
+          "description": "Gets or sets the location of the resource."
+        },
+        "tags": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Gets or sets the tags attached to the resource."
         }
       },
       "allOf": [
         {
-          "$ref": "Resource"
+          "$ref": "SubResource"
         }
       ],
       "description": "Describes a Virtual Machine Extension Image."
@@ -2413,6 +2474,10 @@
           "$ref": "#/definitions/SubResource",
           "description": "Gets or sets the reference Id of the availailbity set to which this virtual machine belongs."
         },
+        "provisioningState": {
+          "type": "string",
+          "description": "Gets or sets the provisioning state, which only appears in the response."
+        },
         "instanceView": {
           "$ref": "#/definitions/VirtualMachineInstanceView",
           "description": "Gets the virtual machine instance view."
@@ -2534,9 +2599,6 @@
           "description": "Resource Id"
         }
       },
-      "required": [
-        "id"
-      ],
       "x-ms-external": true
     }
   },

@@ -39,22 +39,27 @@ namespace Compute.Tests
             handler.IsPassThrough = true;
             var client = TestBase.GetServiceClient<ComputeManagementClient>(factory, handler);
             client.LongRunningOperationRetryTimeout = 0;
+            client.SubscriptionId = factory.GetTestEnvironment().SubscriptionId;
             return client;
         }
 
         public static ResourceManagementClient GetResourceManagementClient(RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
-            var client = TestBase.GetServiceClient<ResourceManagementClient>(new CSMTestEnvironmentFactory(), handler);
+            var factory = new CSMTestEnvironmentFactory();
+            var client = TestBase.GetServiceClient<ResourceManagementClient>(factory, handler);
             client.LongRunningOperationRetryTimeout = 0;
+            client.SubscriptionId = factory.GetTestEnvironment().SubscriptionId;
             return client;
         }
 
         public static NetworkResourceProviderClient GetNetworkResourceProviderClient(RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
-            var client = TestBase.GetServiceClient<NetworkResourceProviderClient>(new CSMTestEnvironmentFactory(), handler);
+            var factory = new CSMTestEnvironmentFactory();
+            var client = TestBase.GetServiceClient<NetworkResourceProviderClient>(factory, handler);
             client.LongRunningOperationRetryTimeout = 0;
+            client.SubscriptionId = factory.GetTestEnvironment().SubscriptionId;
             return client;
         }
 

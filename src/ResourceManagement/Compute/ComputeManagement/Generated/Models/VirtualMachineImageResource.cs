@@ -9,7 +9,7 @@ namespace Microsoft.Azure.Management.Compute.Models
 
     /// <summary>
     /// </summary>
-    public partial class VirtualMachineImage : SubResource
+    public partial class VirtualMachineImageResource : SubResource
     {
         /// <summary>
         /// Gets or sets the name of the resource.
@@ -28,21 +28,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.plan")]
-        public PurchasePlan Plan { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.osDiskImage")]
-        public OSDiskImage OsDiskImage { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.dataDiskImages")]
-        public IList<DataDiskImage> DataDiskImages { get; set; }
 
     }
 }

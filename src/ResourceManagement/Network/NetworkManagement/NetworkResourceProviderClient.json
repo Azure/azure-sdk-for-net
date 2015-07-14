@@ -2553,6 +2553,10 @@
         "subnet": {
           "$ref": "#/definitions/SubResource",
           "description": "Gets or sets the reference of the subnet resource.A subnet from where appliation gateway gets its private address "
+        },
+        "provisioningState": {
+          "type": "string",
+          "description": "Gets or sets Provisioning state of the application gateway subnet resource Updating/Deleting/Failed"
         }
       },
       "description": "Properties of IP configuration of application gateway"
@@ -2591,6 +2595,10 @@
         "publicCertData": {
           "type": "string",
           "description": "Gets or sets the certificate public data "
+        },
+        "provisioningState": {
+          "type": "string",
+          "description": "Gets or sets Provisioning state of the ssl certificate resource Updating/Deleting/Failed"
         }
       },
       "description": "Properties of SSL certificates of application gateway"
@@ -2638,6 +2646,10 @@
         "publicIPAddress": {
           "$ref": "#/definitions/SubResource",
           "description": "Gets or sets the reference of the PublicIP resource"
+        },
+        "provisioningState": {
+          "type": "string",
+          "description": "Gets or sets Provisioning state of the PublicIP resource Updating/Deleting/Failed"
         }
       },
       "description": "Properties of Frontend IP configuration of application gateway"
@@ -2669,6 +2681,10 @@
           "type": "integer",
           "format": "int32",
           "description": "Gets or sets the frontend port"
+        },
+        "provisioningState": {
+          "type": "string",
+          "description": "Gets or sets Provisioning state of the frontend port resource Updating/Deleting/Failed"
         }
       },
       "description": "Properties of Frontend Port of application gateway"
@@ -2722,6 +2738,10 @@
             "$ref": "#/definitions/ApplicationGatewayBackendAddress"
           },
           "description": "Gets or sets the backend addresses"
+        },
+        "provisioningState": {
+          "type": "string",
+          "description": "Gets or sets Provisioning state of the backend address pool resource Updating/Deleting/Failed"
         }
       },
       "description": "Properties of Backend Address Pool of application gateway"
@@ -2771,6 +2791,10 @@
             "Disabled"
           ],
           "x-ms-enum": "ApplicationGatewayCookieBasedAffinity"
+        },
+        "provisioningState": {
+          "type": "string",
+          "description": "Gets or sets Provisioning state of the backend http settings resource Updating/Deleting/Failed"
         }
       },
       "description": "Properties of Backend address pool settings of application gateway"
@@ -2818,6 +2842,10 @@
         "sslCertificate": {
           "$ref": "#/definitions/SubResource",
           "description": "Gets or sets ssl certificate resource of application gateway "
+        },
+        "provisioningState": {
+          "type": "string",
+          "description": "Gets or sets Provisioning state of the http listener resource Updating/Deleting/Failed"
         }
       },
       "description": "Properties of Http listener of application gateway"
@@ -2864,6 +2892,10 @@
         "httpListener": {
           "$ref": "#/definitions/SubResource",
           "description": "Gets or sets http listener resource of application gateway "
+        },
+        "provisioningState": {
+          "type": "string",
+          "description": "Gets or sets Provisioning state of the request routing rule resource Updating/Deleting/Failed"
         }
       },
       "description": "Properties of Request routing rule of application gateway"
@@ -2961,6 +2993,10 @@
             "$ref": "#/definitions/ApplicationGatewayRequestRoutingRule"
           },
           "description": "Gets or sets request routing rules of application gateway resource"
+        },
+        "provisioningState": {
+          "type": "string",
+          "description": "Gets or sets Provisioning state of the ApplicationGateway resource Updating/Deleting/Failed"
         }
       },
       "description": "Properties of Application Gateway"
@@ -3034,6 +3070,10 @@
             "$ref": "#/definitions/SubResource"
           },
           "description": "Gets Load Balancing rules URIs that use this frontend IP"
+        },
+        "provisioningState": {
+          "type": "string",
+          "description": "Gets or sets Provisioning state of the PublicIP resource Updating/Deleting/Failed"
         }
       },
       "description": "Properties of Frontend IP Configuration of the load balancer"
@@ -3074,6 +3114,10 @@
             "$ref": "#/definitions/SubResource"
           },
           "description": "Gets Load Balancing rules that use this Backend Address Pool"
+        },
+        "provisioningState": {
+          "type": "string",
+          "description": "Provisioning state of the PublicIP resource Updating/Deleting/Failed"
         }
       },
       "description": "Properties of BackendAddressPool"
@@ -3150,6 +3194,10 @@
         "enableFloatingIP": {
           "type": "boolean",
           "description": "Configures a virtual machine's endpoint for the floating IP capability required to configure a SQL AlwaysOn availability Group. This setting is required when using the SQL Always ON availability Groups in SQL server. This setting can't be changed after you create the endpoint"
+        },
+        "provisioningState": {
+          "type": "string",
+          "description": "Gets or sets Provisioning state of the PublicIP resource Updating/Deleting/Failed"
         }
       },
       "description": "Properties of the load balancer"
@@ -3211,6 +3259,10 @@
         "requestPath": {
           "type": "string",
           "description": "Gets or sets the URI used for requesting health status from the VM. Path is required if a protocol is set to http. Otherwise, it is not allowed. There is no default value"
+        },
+        "provisioningState": {
+          "type": "string",
+          "description": "Gets or sets Provisioning state of the PublicIP resource Updating/Deleting/Failed"
         }
       }
     },
@@ -3272,6 +3324,10 @@
         "enableFloatingIP": {
           "type": "boolean",
           "description": "Configures a virtual machine's endpoint for the floating IP capability required to configure a SQL AlwaysOn availability Group. This setting is required when using the SQL Always ON availability Groups in SQL server. This setting can't be changed after you create the endpoint"
+        },
+        "provisioningState": {
+          "type": "string",
+          "description": "Gets or sets Provisioning state of the PublicIP resource Updating/Deleting/Failed"
         }
       },
       "description": "Properties of Inbound NAT rule"
@@ -3333,6 +3389,10 @@
             "$ref": "#/definitions/InboundNatRule"
           },
           "description": "Gets or sets list of inbound rules"
+        },
+        "provisioningState": {
+          "type": "string",
+          "description": "Gets or sets Provisioning state of the PublicIP resource Updating/Deleting/Failed"
         }
       },
       "description": "Properties of Load Balancer"
@@ -3391,6 +3451,10 @@
         "gatewayIpAddress": {
           "type": "string",
           "description": "IP address of local network gateway."
+        },
+        "provisioningState": {
+          "type": "string",
+          "description": "Gets or sets Provisioning state of the LocalNetworkGateway resource Updating/Deleting/Failed"
         }
       },
       "description": "LocalNetworkGateway properties"
@@ -3464,6 +3528,10 @@
             "$ref": "#/definitions/SubResource"
           },
           "description": "Gets or sets list of references of LoadBalancerInboundNatRules"
+        },
+        "provisioningState": {
+          "type": "string",
+          "description": "Gets or sets Provisioning state of the PublicIP resource Updating/Deleting/Failed"
         }
       },
       "description": "Properties of IPConfiguration"
@@ -3544,6 +3612,10 @@
         "primary": {
           "type": "boolean",
           "description": "Gets whether this is a primary NIC on a virtual machine"
+        },
+        "provisioningState": {
+          "type": "string",
+          "description": "Gets or sets Provisioning state of the PublicIP resource Updating/Deleting/Failed"
         }
       },
       "description": "NetworkInterface properties. "
@@ -3635,6 +3707,10 @@
             "Outbound"
           ],
           "x-ms-enum": "SecurityRuleDirection"
+        },
+        "provisioningState": {
+          "type": "string",
+          "description": "Gets or sets Provisioning state of the PublicIP resource Updating/Deleting/Failed"
         }
       }
     },
@@ -3688,6 +3764,10 @@
             "$ref": "#/definitions/SubResource"
           },
           "description": "Gets collection of references to subnets"
+        },
+        "provisioningState": {
+          "type": "string",
+          "description": "Gets or sets Provisioning state of the PublicIP resource Updating/Deleting/Failed"
         }
       },
       "description": "Network Security Group resource"
@@ -3769,6 +3849,10 @@
           "type": "integer",
           "format": "int32",
           "description": "Gets or sets the Idletimeout of the public IP address"
+        },
+        "provisioningState": {
+          "type": "string",
+          "description": "Gets or sets Provisioning state of the PublicIP resource Updating/Deleting/Failed"
         }
       },
       "description": "PublicIpAddress properties"
@@ -3838,6 +3922,10 @@
             "$ref": "#/definitions/SubResource"
           },
           "description": "Gets array of references to the network interface IP configurations using subnet"
+        },
+        "provisioningState": {
+          "type": "string",
+          "description": "Gets or sets Provisioning state of the PublicIP resource Updating/Deleting/Failed"
         }
       }
     },
@@ -3952,6 +4040,10 @@
         "publicIPAddress": {
           "$ref": "#/definitions/SubResource",
           "description": "Gets or sets the reference of the PublicIP resource"
+        },
+        "provisioningState": {
+          "type": "string",
+          "description": "Gets or sets Provisioning state of the PublicIP resource Updating/Deleting/Failed"
         }
       },
       "description": "Properties of VirtualNetworkGatewayIPConfiguration"
@@ -4006,6 +4098,10 @@
         "enableBgp": {
           "type": "boolean",
           "description": "EnableBgp Flag"
+        },
+        "provisioningState": {
+          "type": "string",
+          "description": "Gets or sets Provisioning state of the VirtualNetworkGateway resource Updating/Deleting/Failed"
         }
       },
       "description": "VirtualNeworkGateay properties"
@@ -4057,6 +4153,10 @@
         "sharedKey": {
           "type": "string",
           "description": "The Ipsec share key."
+        },
+        "provisioningState": {
+          "type": "string",
+          "description": "Gets or sets Provisioning state of the VirtualNetworkGatewayConnection resource Updating/Deleting/Failed"
         }
       },
       "description": "VirtualNeworkGatewayConnection properties"
@@ -4164,6 +4264,10 @@
             "$ref": "#/definitions/Subnet"
           },
           "description": "Gets or sets List of subnets in a VirtualNetwork"
+        },
+        "provisioningState": {
+          "type": "string",
+          "description": "Gets or sets Provisioning state of the PublicIP resource Updating/Deleting/Failed"
         }
       }
     },
@@ -4303,9 +4407,6 @@
           "description": "Resource Id"
         }
       },
-      "required": [
-        "id"
-      ],
       "x-ms-external": true
     }
   },

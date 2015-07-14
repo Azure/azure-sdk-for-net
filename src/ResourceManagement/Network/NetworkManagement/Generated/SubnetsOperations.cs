@@ -387,10 +387,6 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "subnetParameters");
             }
-            if (subnetParameters != null)
-            {
-                subnetParameters.Validate();
-            }
             if (this.Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");

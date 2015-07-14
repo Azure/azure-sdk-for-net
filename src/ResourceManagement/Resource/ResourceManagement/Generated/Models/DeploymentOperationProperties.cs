@@ -41,11 +41,5 @@ namespace Microsoft.Azure.Management.Resources.Models
         [JsonProperty(PropertyName = "targetResource")]
         public TargetResource TargetResource { get; set; }
 
-        /// <summary>
-        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
-        /// </summary>
-        public virtual void Validate()
-        {
-        }
     }
 }

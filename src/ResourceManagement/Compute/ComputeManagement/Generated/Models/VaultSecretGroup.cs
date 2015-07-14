@@ -25,15 +25,5 @@ namespace Microsoft.Azure.Management.Compute.Models
         [JsonProperty(PropertyName = "vaultCertificates")]
         public IList<VaultCertificate> VaultCertificates { get; set; }
 
-        /// <summary>
-        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
-        /// </summary>
-        public virtual void Validate()
-        {
-            if (this.SourceVault != null)
-            {
-                this.SourceVault.Validate();
-            }
-        }
     }
 }

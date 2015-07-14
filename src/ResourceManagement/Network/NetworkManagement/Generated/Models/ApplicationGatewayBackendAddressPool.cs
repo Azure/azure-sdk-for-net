@@ -37,5 +37,12 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "properties.backendAddresses")]
         public IList<ApplicationGatewayBackendAddress> BackendAddresses { get; set; }
 
+        /// <summary>
+        /// Gets or sets Provisioning state of the backend address pool
+        /// resource Updating/Deleting/Failed
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.provisioningState")]
+        public string ProvisioningState { get; set; }
+
     }
 }

@@ -56,6 +56,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         public SubResource AvailabilitySet { get; set; }
 
         /// <summary>
+        /// Gets or sets the provisioning state, which only appears in the
+        /// response.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.provisioningState")]
+        public string ProvisioningState { get; set; }
+
+        /// <summary>
         /// Gets the virtual machine instance view.
         /// </summary>
         [JsonProperty(PropertyName = "properties.instanceView")]
@@ -69,29 +76,13 @@ namespace Microsoft.Azure.Management.Compute.Models
             base.Validate();
             if (this.Resources != null)
             {
-                foreach ( var element in this.Resources)
-            {
-                if (element != null)
-            {
-                element.Validate();
-            }
-            }
-            }
-            if (this.StorageProfile != null)
-            {
-                this.StorageProfile.Validate();
-            }
-            if (this.OsProfile != null)
-            {
-                this.OsProfile.Validate();
-            }
-            if (this.AvailabilitySet != null)
-            {
-                this.AvailabilitySet.Validate();
-            }
-            if (this.InstanceView != null)
-            {
-                this.InstanceView.Validate();
+                foreach (var element in this.Resources)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
             }
         }
     }
