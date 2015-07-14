@@ -22,6 +22,7 @@ using DataFactory.Tests.Framework.JsonSamples;
 using Microsoft.Azure.Management.DataFactories;
 using Microsoft.Azure.Management.DataFactories.Models;
 using Xunit;
+using Xunit.Extensions;
 using Core = Microsoft.Azure.Management.DataFactories.Core;
 using CoreModel = Microsoft.Azure.Management.DataFactories.Core.Models;
 
@@ -59,21 +60,19 @@ namespace DataFactory.Tests.UnitTests
             this.TestTableValidateSamples(samples);
         }
 
-        [Fact]
-        [Trait(TraitName.TestType, TestType.Unit)]
-        [Trait(TraitName.Function, TestType.Conversion)]
-        public void TableMissingRequiredPropertiesThrowsExceptionTest()
-        {
-            // tableName is required
-            string invalidJson = @"{
+        [Theory, InlineData(@"{
     name: ""Test-BYOC-HDInsight-Table"",
     properties:
     {
         type: ""AzureSqlTable"",
         typeProperties: { }
     }
-}";
-
+}")]
+        [Trait(TraitName.TestType, TestType.Unit)]
+        [Trait(TraitName.Function, TestType.Conversion)]
+        public void TableMissingRequiredPropertiesThrowsExceptionTest(string invalidJson)
+        {
+            // tableName is required
             InvalidOperationException ex =
                 Assert.Throws<InvalidOperationException>(() => this.TestTableValidation(invalidJson));
             Assert.Contains("is required", ex.Message);
@@ -91,12 +90,7 @@ namespace DataFactory.Tests.UnitTests
             this.TestTableJsonSamples(samples);
         }
 
-        [Fact]
-        [Trait(TraitName.TestType, TestType.Unit)]
-        [Trait(TraitName.Function, TestType.Conversion)]
-        public void TableUnregisteredTypeTest()
-        {
-            string unregisteredTypeJson = @"
+        [Theory, InlineData(@"
 {
     name: ""Test-Unregistered-Table"",
     properties:
@@ -108,8 +102,11 @@ namespace DataFactory.Tests.UnitTests
             apiKey:""testApiKey""
         }
     }
-}";
-
+}")]
+        [Trait(TraitName.TestType, TestType.Unit)]
+        [Trait(TraitName.Function, TestType.Conversion)]
+        public void TableUnregisteredTypeTest(string unregisteredTypeJson)
+        {
             // If a table type has not been locally registered, 
             // typeProperties should be deserialized to a GenericTableInstance
             Table table = this.ConvertToWrapper(unregisteredTypeJson);

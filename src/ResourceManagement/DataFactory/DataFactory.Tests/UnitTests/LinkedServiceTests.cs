@@ -23,6 +23,7 @@ using DataFactory.Tests.UnitTests.TestClasses;
 using Microsoft.Azure.Management.DataFactories;
 using Microsoft.Azure.Management.DataFactories.Models;
 using Xunit;
+using Xunit.Extensions;
 using Core = Microsoft.Azure.Management.DataFactories.Core;
 using CoreModel = Microsoft.Azure.Management.DataFactories.Core.Models;
 
@@ -68,13 +69,7 @@ namespace DataFactory.Tests.UnitTests
             this.TestLinkedServiceJsonSamples(samples, true);
         }
 
-        [Fact]
-        [Trait(TraitName.TestType, TestType.Unit)]
-        [Trait(TraitName.Function, TestType.Conversion)]
-        public void LinkedServiceMissingRequiredPropertiesThrowsExceptionTest()
-        {
-            // clusterUri, userName and password are required
-            string invalidJson = @"{
+        [Theory, InlineData(@"{
     name: ""Test-BYOC-HDInsight-linkedService"",
     properties:
     {
@@ -84,9 +79,12 @@ namespace DataFactory.Tests.UnitTests
             linkedServiceName: ""MyStorageAssetName""
         }
     }
-}
-";
-
+}")]
+        [Trait(TraitName.TestType, TestType.Unit)]
+        [Trait(TraitName.Function, TestType.Conversion)]
+        public void LinkedServiceMissingRequiredPropertiesThrowsExceptionTest(string invalidJson)
+        {
+            // clusterUri, userName and password are required
             InvalidOperationException ex =
                 Assert.Throws<InvalidOperationException>(() => this.TestLinkedServiceValidation(invalidJson));
             Assert.Contains("is required", ex.Message);
@@ -104,12 +102,7 @@ namespace DataFactory.Tests.UnitTests
             this.TestLinkedServiceJsonSamples(samples); 
         }
 
-        [Fact]
-        [Trait(TraitName.TestType, TestType.Unit)]
-        [Trait(TraitName.Function, TestType.Conversion)]
-        public void LinkedServiceUnregisteredTypeTest()
-        {
-            string unregisteredTypeJson = @"
+        [Theory, InlineData(@"
 {
     name: ""Test-Unregistered-Linked-Service"",
     properties:
@@ -121,8 +114,11 @@ namespace DataFactory.Tests.UnitTests
             apiKey:""testApiKey""
         }
     }
-}";
-
+}")]
+        [Trait(TraitName.TestType, TestType.Unit)]
+        [Trait(TraitName.Function, TestType.Conversion)]
+        public void LinkedServiceUnregisteredTypeTest(string unregisteredTypeJson)
+        {
             // If a linked service type has not been locally registered, 
             // typeProperties should be deserialized to a GenericLinkedServiceInstance
             LinkedService linkedService = this.ConvertToWrapper(unregisteredTypeJson);
@@ -130,12 +126,7 @@ namespace DataFactory.Tests.UnitTests
         }
 
 #if NET45
-        [Fact]
-        [Trait(TraitName.TestType, TestType.Unit)]
-        [Trait(TraitName.Function, TestType.Conversion)]
-        public void ValidateLinkedServiceWithListProperty()
-        {
-            string json = @"
+        [Theory, InlineData(@"
 {
     name: ""Test-ML-LinkedService"",
     properties:
@@ -149,19 +140,17 @@ namespace DataFactory.Tests.UnitTests
             ]
         }
     }
-}";
-
+}")]
+        [Trait(TraitName.TestType, TestType.Unit)]
+        [Trait(TraitName.Function, TestType.Conversion)]
+        public void ValidateLinkedServiceWithListProperty(string json)
+        {
             this.Client.RegisterType<MyLinkedServiceTypeWithListProperty>(true);
             this.TestLinkedServiceJson(json);
             this.TestLinkedServiceValidation(json);
         }
 
-        [Fact]
-        [Trait(TraitName.TestType, TestType.Unit)]
-        [Trait(TraitName.Function, TestType.Conversion)]
-        public void ValidateLinkedServiceWithListPropertyThrowsForMissingRequiredProperty()
-        {
-            string json = @"
+        [Theory, InlineData(@"
 {
     name: ""Test-ML-LinkedService"",
     properties:
@@ -175,20 +164,18 @@ namespace DataFactory.Tests.UnitTests
             ]
         }
     }
-}";
-
+}")]
+        [Trait(TraitName.TestType, TestType.Unit)]
+        [Trait(TraitName.Function, TestType.Conversion)]
+        public void ValidateLinkedServiceWithListPropertyThrowsForMissingRequiredProperty(string json)
+        {
             this.Client.RegisterType<MyLinkedServiceTypeWithListProperty>(true);
             InvalidOperationException ex =
                 Assert.Throws<InvalidOperationException>(() => this.TestLinkedServiceValidation(json));
             Assert.Contains("is required", ex.Message);
         }
 
-        [Fact]
-        [Trait(TraitName.TestType, TestType.Unit)]
-        [Trait(TraitName.Function, TestType.Conversion)]
-        public void ValidateLinkedServiceWithDictionaryProperty()
-        {
-            string json = @"
+        [Theory, InlineData(@"
 {
     name: ""Test-ML-LinkedService"",
     properties:
@@ -206,19 +193,17 @@ namespace DataFactory.Tests.UnitTests
             }
         }
     }
-}";
-
+}")]
+        [Trait(TraitName.TestType, TestType.Unit)]
+        [Trait(TraitName.Function, TestType.Conversion)]
+        public void ValidateLinkedServiceWithDictionaryProperty(string json)
+        {
             this.Client.RegisterType<MyLinkedServiceTypeWithDictionaryProperty>(true);
             this.TestLinkedServiceJson(json);
             this.TestLinkedServiceValidation(json);
         }
 
-        [Fact]
-        [Trait(TraitName.TestType, TestType.Unit)]
-        [Trait(TraitName.Function, TestType.Conversion)]
-        public void ValidateLinkedServiceWithDictionaryPropertyThrowsForMissingRequiredProperty()
-        {
-            string json = @"
+        [Theory, InlineData(@"
 {
     name: ""Test-ML-LinkedService"",
     properties:
@@ -231,8 +216,11 @@ namespace DataFactory.Tests.UnitTests
             }
         }
     }
-}";
-
+}")]
+        [Trait(TraitName.TestType, TestType.Unit)]
+        [Trait(TraitName.Function, TestType.Conversion)]
+        public void ValidateLinkedServiceWithDictionaryPropertyThrowsForMissingRequiredProperty(string json)
+        {
             this.Client.RegisterType<MyLinkedServiceTypeWithDictionaryProperty>(true);
 
             InvalidOperationException ex =

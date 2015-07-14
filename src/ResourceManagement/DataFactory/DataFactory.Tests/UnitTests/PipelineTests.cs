@@ -16,12 +16,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using DataFactory.Tests.Framework;
 using DataFactory.Tests.Framework.JsonSamples;
 using Microsoft.Azure.Management.DataFactories;
 using Microsoft.Azure.Management.DataFactories.Models;
 using Xunit;
+using Xunit.Extensions;
 using Core = Microsoft.Azure.Management.DataFactories.Core;
 using CoreModel = Microsoft.Azure.Management.DataFactories.Core.Models;
     
@@ -55,13 +55,7 @@ namespace DataFactory.Tests.UnitTests
             this.TestPipelineValidateSamples(samples);
         }
 
-        [Fact]
-        [Trait(TraitName.TestType, TestType.Unit)]
-        [Trait(TraitName.Function, TestType.Conversion)]
-        public void PipelineActivityMissingRequiredPropertiesThrowsExceptionTest()
-        {
-            // copySource and copySink are required for a CopyActivity
-            string invalidJson = @"
+        [Theory, InlineData(@"
 {
     name: ""My HDInsight pipeline"",
     properties: 
@@ -83,8 +77,12 @@ namespace DataFactory.Tests.UnitTests
         isPaused: false
     }
 }
-";
-
+")]
+        [Trait(TraitName.TestType, TestType.Unit)]
+        [Trait(TraitName.Function, TestType.Conversion)]
+        public void PipelineActivityMissingRequiredPropertiesThrowsExceptionTest(string invalidJson)
+        {
+            // copySource and copySink are required for a CopyActivity
             InvalidOperationException ex =
                 Assert.Throws<InvalidOperationException>(() => this.TestPipelineValidation(invalidJson));
             Assert.Contains("is required", ex.Message);
@@ -104,12 +102,7 @@ namespace DataFactory.Tests.UnitTests
 //            this.TestPipelineJsonSamples(samples);
 //        }
 
-        [Fact]
-        [Trait(TraitName.TestType, TestType.Unit)]
-        [Trait(TraitName.Function, TestType.Conversion)]
-        public void PipelineUnregisteredActivityTypeTest()
-        {
-            string unregisteredTypeJson = @"
+        [Theory, InlineData(@"
 {
     name: ""My HDInsight pipeline"",
     properties: 
@@ -138,22 +131,24 @@ namespace DataFactory.Tests.UnitTests
         }
     }
 }
-";
-
+")]
+        [Trait(TraitName.TestType, TestType.Unit)]
+        [Trait(TraitName.Function, TestType.Conversion)]
+        public void PipelineUnregisteredActivityTypeTest(string unregisteredTypeJson)
+        {
             // If an activity type has not been locally registered, 
             // typeProperties should be deserialized to a CustomActivity
             Pipeline pipeline = this.ConvertToWrapper(unregisteredTypeJson);
             Assert.IsType<GenericActivity>(pipeline.Properties.Activities[0].TypeProperties);
         }
 
-        [Fact]
+        [Theory, InlineData(PipelineJsonSamples.HDInsightPipeline)]
         [Trait(TraitName.TestType, TestType.Unit)]
         [Trait(TraitName.Function, TestType.Conversion)]
-        public void PipelineGetDebugInfoTest()
+        public void PipelineGetDebugInfoTest(string pipelineJson)
         {
             // If an activity type has not been locally registered, 
             // typeProperties should be deserialized to a CustomActivity
-            string pipelineJson = PipelineJsonSamples.HDInsightPipeline;
             Assert.Contains("getDebugInfo", pipelineJson);
             Pipeline pipeline = this.ConvertToWrapper(PipelineJsonSamples.HDInsightPipeline);
 

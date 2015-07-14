@@ -8,6 +8,11 @@
   <Import Project="..\..\..\..\tools\Library.Settings.targets" />
   <Import Project="$(LibraryToolsFolder)\Test.Dependencies.target" />
   <ItemGroup>
+    <Reference Include="xunit.extensions">
+      <HintPath>$(LibraryNugetPackageFolder)\xunit.extensions.1.9.2\lib\net20\xunit.extensions.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Framework\Common.cs" />
     <Compile Include="Framework\CustomIsoDateTimeConverter.cs" />
     <Compile Include="Framework\DateTimeExtensions.cs" />
@@ -51,6 +56,7 @@
     <Compile Include="UnitTests\UnitTestBase.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
     <None Include="Resources\DA_CuratedWikiData.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
