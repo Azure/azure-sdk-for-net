@@ -38,7 +38,10 @@ namespace Compute.Tests
         {
             handler.IsPassThrough = true;
             var client = TestBase.GetServiceClient<ComputeManagementClient>(factory, handler);
-            client.LongRunningOperationRetryTimeout = 0;
+            if (HttpMockServer.Mode == HttpRecorderMode.Playback)
+            {
+                client.LongRunningOperationRetryTimeout = 0;
+            }
             client.SubscriptionId = factory.GetTestEnvironment().SubscriptionId;
             return client;
         }
@@ -48,7 +51,10 @@ namespace Compute.Tests
             handler.IsPassThrough = true;
             var factory = new CSMTestEnvironmentFactory();
             var client = TestBase.GetServiceClient<ResourceManagementClient>(factory, handler);
-            client.LongRunningOperationRetryTimeout = 0;
+            if (HttpMockServer.Mode == HttpRecorderMode.Playback)
+            {
+                client.LongRunningOperationRetryTimeout = 0;
+            }
             client.SubscriptionId = factory.GetTestEnvironment().SubscriptionId;
             return client;
         }
@@ -58,7 +64,10 @@ namespace Compute.Tests
             handler.IsPassThrough = true;
             var factory = new CSMTestEnvironmentFactory();
             var client = TestBase.GetServiceClient<NetworkResourceProviderClient>(factory, handler);
-            client.LongRunningOperationRetryTimeout = 0;
+            if (HttpMockServer.Mode == HttpRecorderMode.Playback)
+            {
+                client.LongRunningOperationRetryTimeout = 0;
+            }
             client.SubscriptionId = factory.GetTestEnvironment().SubscriptionId;
             return client;
         }
@@ -66,8 +75,13 @@ namespace Compute.Tests
         public static StorageManagementClient GetStorageManagementClient(RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
-            var client = TestBase.GetServiceClient<StorageManagementClient>(new CSMTestEnvironmentFactory(), handler);
-            client.LongRunningOperationRetryTimeout = 0;
+            var factory = new CSMTestEnvironmentFactory();
+            var client = TestBase.GetServiceClient<StorageManagementClient>(factory, handler);
+            if (HttpMockServer.Mode == HttpRecorderMode.Playback)
+            {
+                client.LongRunningOperationRetryTimeout = 0;
+            }
+            client.SubscriptionId = factory.GetTestEnvironment().SubscriptionId;
             return client;
         }
 
