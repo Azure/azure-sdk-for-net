@@ -41,8 +41,8 @@ namespace Compute.Tests
                 Settings = "{}",
                 ProtectedSettings = "{}"
             };
-            typeof(VirtualMachineExtension).GetProperty("Name").SetValue(vmExtension, "vmext01");
-            typeof(VirtualMachineExtension).GetProperty("Type").SetValue(vmExtension, "Microsoft.Compute/virtualMachines/extensions");
+            typeof(Resource).GetProperty("Name").SetValue(vmExtension, "vmext01");
+            typeof(Resource).GetProperty("Type").SetValue(vmExtension, "Microsoft.Compute/virtualMachines/extensions");
 
             return vmExtension;
         }

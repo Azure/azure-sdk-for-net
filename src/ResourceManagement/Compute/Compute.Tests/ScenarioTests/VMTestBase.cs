@@ -135,7 +135,7 @@ namespace Compute.Tests
                                 StringComparer.OrdinalIgnoreCase.Equals(t.Name, storageAccountName));
                 }
 
-                return storageAccountOutput;
+                return m_SrpClient.StorageAccounts.GetProperties(rgName, storageAccountName);
             }
             catch
             {
@@ -376,8 +376,8 @@ namespace Compute.Tests
                 }
             };
 
-            typeof(VirtualMachine).GetProperty("Name").SetValue(vm, TestUtilities.GenerateName("vm"));
-            typeof(VirtualMachine).GetProperty("Type").SetValue(vm, TestUtilities.GenerateName("Microsoft.Compute/virtualMachines"));
+            typeof(Resource).GetProperty("Name").SetValue(vm, TestUtilities.GenerateName("vm"));
+            typeof(Resource).GetProperty("Type").SetValue(vm, TestUtilities.GenerateName("Microsoft.Compute/virtualMachines"));
             return vm;
         }
 
