@@ -13,9 +13,7 @@
     <Reference Include="Avro">
       <HintPath>..\external\avro\flavor_release\Avro.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
     <Reference Include="protobuf-net">
       <HintPath>..\external\protobuf.net\r602\net30\protobuf-net.dll</HintPath>
     </Reference>
