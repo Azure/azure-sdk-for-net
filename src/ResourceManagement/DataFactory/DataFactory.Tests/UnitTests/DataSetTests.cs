@@ -30,7 +30,7 @@ namespace DataFactory.Tests.UnitTests
         private readonly TableConverter tableConverter = new TableConverter();
         private readonly LinkedServiceConverter linkedServiceConverter = new LinkedServiceConverter();
 
-        [Theory, ClassData(typeof(LinkedServiceJsonSamples)), ClassData(typeof(LinkedServiceJsonSamples))]
+        [Theory, ClassData(typeof(LinkedServiceJsonSamples)), ClassData(typeof(CustomLinkedServiceJsonSamples))]
         [Trait(TraitName.TestType, TestType.Unit)]
         [Trait(TraitName.Function, TestType.Conversion)]
         public void DataSetLinkedServiceJsonConstsTest(JsonSampleInfo sampleInfo)
