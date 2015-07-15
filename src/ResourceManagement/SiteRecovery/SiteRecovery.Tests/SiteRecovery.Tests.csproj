@@ -11,7 +11,10 @@
     <Compile Include="Helpers\RecordedDelegationHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScenarioTests\EnumerationTests.cs" />
-    <Compile Include="ScenarioTests\ProtectionTests.cs" />
+    <Compile Include="ScenarioTests\FailoverTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ScenarioTests\Utilities.cs" />
     <Compile Include="ScenarioTests\SiteRecoveryTestsBase.cs" />
     <Compile Include="Spec.TechSupport.SiteRecovery\SiteRecoveryManagementTestUtilities.cs" />
   </ItemGroup>
