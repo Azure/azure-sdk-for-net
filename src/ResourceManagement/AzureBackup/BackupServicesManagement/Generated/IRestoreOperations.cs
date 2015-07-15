@@ -29,12 +29,12 @@ using Microsoft.Azure.Management.BackupServices.Models;
 namespace Microsoft.Azure.Management.BackupServices
 {
     /// <summary>
-    /// Definition of BackUp operations for the Azure Backup extension.
+    /// Definition of Restore operations for the Azure Backup extension.
     /// </summary>
-    public partial interface IBackUpOperations
+    public partial interface IRestoreOperations
     {
         /// <summary>
-        /// BackUp the AzureBackUpItem.
+        /// Restore Azure BackUpItem.
         /// </summary>
         /// <param name='customRequestHeaders'>
         /// Request header parameters.
@@ -45,6 +45,6 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a Operation Response.
         /// </returns>
-        Task<OperationResponse> TriggerBackUpAsync(CustomRequestHeaders customRequestHeaders, string containerName, string itemName, CancellationToken cancellationToken);
+        Task<OperationResponse> TriggerResotreAsync(CustomRequestHeaders customRequestHeaders, string containerName, string itemName, string recoveryPointName, CSMRestoreRequest parameters, CancellationToken cancellationToken);
     }
 }

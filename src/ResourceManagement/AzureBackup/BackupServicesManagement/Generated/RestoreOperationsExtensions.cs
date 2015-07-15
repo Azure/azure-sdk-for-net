@@ -28,14 +28,14 @@ using Microsoft.Azure.Management.BackupServices.Models;
 
 namespace Microsoft.Azure.Management.BackupServices
 {
-    public static partial class BackUpOperationsExtensions
+    public static partial class RestoreOperationsExtensions
     {
         /// <summary>
-        /// BackUp the AzureBackUpItem.
+        /// Restore Azure BackUpItem.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.BackupServices.IBackUpOperations.
+        /// Microsoft.Azure.Management.BackupServices.IRestoreOperations.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
@@ -46,24 +46,30 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <param name='itemName'>
         /// Optional.
         /// </param>
+        /// <param name='recoveryPointName'>
+        /// Optional.
+        /// </param>
+        /// <param name='parameters'>
+        /// Optional.
+        /// </param>
         /// <returns>
         /// The definition of a Operation Response.
         /// </returns>
-        public static OperationResponse TriggerBackUp(this IBackUpOperations operations, CustomRequestHeaders customRequestHeaders, string containerName, string itemName)
+        public static OperationResponse TriggerResotre(this IRestoreOperations operations, CustomRequestHeaders customRequestHeaders, string containerName, string itemName, string recoveryPointName, CSMRestoreRequest parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IBackUpOperations)s).TriggerBackUpAsync(customRequestHeaders, containerName, itemName);
+                return ((IRestoreOperations)s).TriggerResotreAsync(customRequestHeaders, containerName, itemName, recoveryPointName, parameters);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// BackUp the AzureBackUpItem.
+        /// Restore Azure BackUpItem.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.BackupServices.IBackUpOperations.
+        /// Microsoft.Azure.Management.BackupServices.IRestoreOperations.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
@@ -74,12 +80,18 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <param name='itemName'>
         /// Optional.
         /// </param>
+        /// <param name='recoveryPointName'>
+        /// Optional.
+        /// </param>
+        /// <param name='parameters'>
+        /// Optional.
+        /// </param>
         /// <returns>
         /// The definition of a Operation Response.
         /// </returns>
-        public static Task<OperationResponse> TriggerBackUpAsync(this IBackUpOperations operations, CustomRequestHeaders customRequestHeaders, string containerName, string itemName)
+        public static Task<OperationResponse> TriggerResotreAsync(this IRestoreOperations operations, CustomRequestHeaders customRequestHeaders, string containerName, string itemName, string recoveryPointName, CSMRestoreRequest parameters)
         {
-            return operations.TriggerBackUpAsync(customRequestHeaders, containerName, itemName, CancellationToken.None);
+            return operations.TriggerResotreAsync(customRequestHeaders, containerName, itemName, recoveryPointName, parameters, CancellationToken.None);
         }
     }
 }

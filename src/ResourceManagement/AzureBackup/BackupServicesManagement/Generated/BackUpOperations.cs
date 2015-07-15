@@ -69,10 +69,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <param name='containerName'>
         /// Optional.
         /// </param>
-        /// <param name='dataSourceType'>
-        /// Optional.
-        /// </param>
-        /// <param name='dataSourceId'>
+        /// <param name='itemName'>
         /// Optional.
         /// </param>
         /// <param name='cancellationToken'>
@@ -81,7 +78,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a Operation Response.
         /// </returns>
-        public async Task<OperationResponse> TriggerBackUpAsync(CustomRequestHeaders customRequestHeaders, string containerName, string dataSourceType, string dataSourceId, CancellationToken cancellationToken)
+        public async Task<OperationResponse> TriggerBackUpAsync(CustomRequestHeaders customRequestHeaders, string containerName, string itemName, CancellationToken cancellationToken)
         {
             // Validate
             
@@ -94,8 +91,7 @@ namespace Microsoft.Azure.Management.BackupServices
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
                 tracingParameters.Add("containerName", containerName);
-                tracingParameters.Add("dataSourceType", dataSourceType);
-                tracingParameters.Add("dataSourceId", dataSourceId);
+                tracingParameters.Add("itemName", itemName);
                 TracingAdapter.Enter(invocationId, this, "TriggerBackUpAsync", tracingParameters);
             }
             
@@ -114,20 +110,15 @@ namespace Microsoft.Azure.Management.BackupServices
             url = url + "BackupVault";
             url = url + "/";
             url = url + Uri.EscapeDataString(this.Client.ResourceName);
-            url = url + "/containers/";
+            url = url + "/registeredContainers/";
             if (containerName != null)
             {
                 url = url + Uri.EscapeDataString(containerName);
             }
-            url = url + "/datasources/";
-            if (dataSourceType != null)
+            url = url + "/protectedItems/";
+            if (itemName != null)
             {
-                url = url + Uri.EscapeDataString(dataSourceType);
-            }
-            url = url + "/";
-            if (dataSourceId != null)
-            {
-                url = url + Uri.EscapeDataString(dataSourceId);
+                url = url + Uri.EscapeDataString(itemName);
             }
             url = url + "/backup";
             List<string> queryParameters = new List<string>();
