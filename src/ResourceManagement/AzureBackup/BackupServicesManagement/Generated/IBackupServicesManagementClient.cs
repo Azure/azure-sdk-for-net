@@ -146,5 +146,13 @@ namespace Microsoft.Azure.Management.BackupServices
         {
             get; 
         }
+        
+        /// <summary>
+        /// Definition of Restore operations for the Azure Backup extension.
+        /// </summary>
+        IRestoreOperations Restore
+        {
+            get; 
+        }
     }
 }

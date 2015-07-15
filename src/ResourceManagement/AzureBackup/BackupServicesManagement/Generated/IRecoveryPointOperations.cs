@@ -33,7 +33,8 @@ namespace Microsoft.Azure.Management.BackupServices
     public partial interface IRecoveryPointOperations
     {
         /// <summary>
-        /// Get the list of all Recovery Points.
+        /// Get the list of all container based on the given query filter
+        /// string.
         /// </summary>
         /// <param name='customRequestHeaders'>
         /// Request header parameters.
@@ -42,8 +43,8 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response model for the list RecoveryPoints operation.
+        /// The definition of a CSMRecoveryPointListOperationResponse.
         /// </returns>
-        Task<RecoveryPointListResponse> ListAsync(CustomRequestHeaders customRequestHeaders, string containerName, string dataSourceType, string dataSourceId, CancellationToken cancellationToken);
+        Task<CSMRecoveryPointListOperationResponse> ListAsync(CustomRequestHeaders customRequestHeaders, string containerName, string itemName, CancellationToken cancellationToken);
     }
 }

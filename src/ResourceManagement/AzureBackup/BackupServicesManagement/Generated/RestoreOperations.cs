@@ -24,6 +24,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Hyak.Common;
@@ -34,17 +36,17 @@ using Newtonsoft.Json.Linq;
 namespace Microsoft.Azure.Management.BackupServices
 {
     /// <summary>
-    /// Definition of Recovery Point operations for the Azure Backup extension.
+    /// Definition of Restore operations for the Azure Backup extension.
     /// </summary>
-    internal partial class RecoveryPointOperations : IServiceOperations<BackupServicesManagementClient>, IRecoveryPointOperations
+    internal partial class RestoreOperations : IServiceOperations<BackupServicesManagementClient>, IRestoreOperations
     {
         /// <summary>
-        /// Initializes a new instance of the RecoveryPointOperations class.
+        /// Initializes a new instance of the RestoreOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal RecoveryPointOperations(BackupServicesManagementClient client)
+        internal RestoreOperations(BackupServicesManagementClient client)
         {
             this._client = client;
         }
@@ -61,8 +63,7 @@ namespace Microsoft.Azure.Management.BackupServices
         }
         
         /// <summary>
-        /// Get the list of all container based on the given query filter
-        /// string.
+        /// Restore Azure BackUpItem.
         /// </summary>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
@@ -73,15 +74,36 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <param name='itemName'>
         /// Optional.
         /// </param>
+        /// <param name='recoveryPointName'>
+        /// Optional.
+        /// </param>
+        /// <param name='parameters'>
+        /// Optional.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The definition of a CSMRecoveryPointListOperationResponse.
+        /// The definition of a Operation Response.
         /// </returns>
-        public async Task<CSMRecoveryPointListOperationResponse> ListAsync(CustomRequestHeaders customRequestHeaders, string containerName, string itemName, CancellationToken cancellationToken)
+        public async Task<OperationResponse> TriggerResotreAsync(CustomRequestHeaders customRequestHeaders, string containerName, string itemName, string recoveryPointName, CSMRestoreRequest parameters, CancellationToken cancellationToken)
         {
             // Validate
+            if (parameters != null)
+            {
+                if (parameters.Properties == null)
+                {
+                    throw new ArgumentNullException("parameters.Properties");
+                }
+                if (parameters.Properties.RecoveryDSTypeSpecificInputs == null)
+                {
+                    throw new ArgumentNullException("parameters.Properties.RecoveryDSTypeSpecificInputs");
+                }
+                if (parameters.Properties.TypeOfRecovery == null)
+                {
+                    throw new ArgumentNullException("parameters.Properties.TypeOfRecovery");
+                }
+            }
             
             // Tracing
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -93,7 +115,9 @@ namespace Microsoft.Azure.Management.BackupServices
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
                 tracingParameters.Add("containerName", containerName);
                 tracingParameters.Add("itemName", itemName);
-                TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
+                tracingParameters.Add("recoveryPointName", recoveryPointName);
+                tracingParameters.Add("parameters", parameters);
+                TracingAdapter.Enter(invocationId, this, "TriggerResotreAsync", tracingParameters);
             }
             
             // Construct URL
@@ -121,7 +145,12 @@ namespace Microsoft.Azure.Management.BackupServices
             {
                 url = url + Uri.EscapeDataString(itemName);
             }
-            url = url + "/recoveryPoints";
+            url = url + "/recoveryPoints/";
+            if (recoveryPointName != null)
+            {
+                url = url + Uri.EscapeDataString(recoveryPointName);
+            }
+            url = url + "/restore";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2014-09-01");
             if (queryParameters.Count > 0)
@@ -146,7 +175,7 @@ namespace Microsoft.Azure.Management.BackupServices
             try
             {
                 httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Get;
+                httpRequest.Method = HttpMethod.Post;
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
@@ -155,6 +184,27 @@ namespace Microsoft.Azure.Management.BackupServices
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
                 await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                JToken requestDoc = null;
+                
+                if (parameters != null)
+                {
+                    JObject cSMRestoreRequestValue = new JObject();
+                    requestDoc = cSMRestoreRequestValue;
+                    
+                    JObject cSMRestoreRequestPropertiesValue = new JObject();
+                    cSMRestoreRequestValue["CSMRestoreRequestProperties"] = cSMRestoreRequestPropertiesValue;
+                    
+                    cSMRestoreRequestPropertiesValue["typeOfRecovery"] = cSMRestoreRequestPropertiesValue;
+                    
+                    cSMRestoreRequestPropertiesValue["recoveryDSTypeSpecificInputs"] = cSMRestoreRequestPropertiesValue;
+                }
+                
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -171,10 +221,10 @@ namespace Microsoft.Azure.Management.BackupServices
                         TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
+                    if (statusCode != HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             TracingAdapter.Error(invocationId, ex);
@@ -183,13 +233,13 @@ namespace Microsoft.Azure.Management.BackupServices
                     }
                     
                     // Create Result
-                    CSMRecoveryPointListOperationResponse result = null;
+                    OperationResponse result = null;
                     // Deserialize Response
-                    if (statusCode == HttpStatusCode.OK)
+                    if (statusCode == HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new CSMRecoveryPointListOperationResponse();
+                        result = new OperationResponse();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -198,95 +248,8 @@ namespace Microsoft.Azure.Management.BackupServices
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            CSMRecoveryPointListResponse cSMRecoveryPointListResponseInstance = new CSMRecoveryPointListResponse();
-                            result.CSMRecoveryPointListResponse = cSMRecoveryPointListResponseInstance;
-                            
-                            JToken valueArray = responseDoc["value"];
-                            if (valueArray != null && valueArray.Type != JTokenType.Null)
-                            {
-                                foreach (JToken valueValue in ((JArray)valueArray))
-                                {
-                                    CSMRecoveryPointResponse cSMRecoveryPointResponseInstance = new CSMRecoveryPointResponse();
-                                    cSMRecoveryPointListResponseInstance.Value.Add(cSMRecoveryPointResponseInstance);
-                                    
-                                    JToken propertiesValue = valueValue["properties"];
-                                    if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
-                                    {
-                                        CSMRecoveryPointProperties propertiesInstance = new CSMRecoveryPointProperties();
-                                        cSMRecoveryPointResponseInstance.Properties = propertiesInstance;
-                                        
-                                        JToken recoveryPointTypeValue = propertiesValue["recoveryPointType"];
-                                        if (recoveryPointTypeValue != null && recoveryPointTypeValue.Type != JTokenType.Null)
-                                        {
-                                            string recoveryPointTypeInstance = ((string)recoveryPointTypeValue);
-                                            propertiesInstance.RecoveryPointType = recoveryPointTypeInstance;
-                                        }
-                                        
-                                        JToken recoveryPointTimeValue = propertiesValue["recoveryPointTime"];
-                                        if (recoveryPointTimeValue != null && recoveryPointTimeValue.Type != JTokenType.Null)
-                                        {
-                                            DateTime recoveryPointTimeInstance = ((DateTime)recoveryPointTimeValue);
-                                            propertiesInstance.RecoveryPointTime = recoveryPointTimeInstance;
-                                        }
-                                        
-                                        JToken recoveryPointAdditionalInfoValue = propertiesValue["recoveryPointAdditionalInfo"];
-                                        if (recoveryPointAdditionalInfoValue != null && recoveryPointAdditionalInfoValue.Type != JTokenType.Null)
-                                        {
-                                            string recoveryPointAdditionalInfoInstance = ((string)recoveryPointAdditionalInfoValue);
-                                            propertiesInstance.RecoveryPointAdditionalInfo = recoveryPointAdditionalInfoInstance;
-                                        }
-                                    }
-                                    
-                                    JToken idValue = valueValue["id"];
-                                    if (idValue != null && idValue.Type != JTokenType.Null)
-                                    {
-                                        string idInstance = ((string)idValue);
-                                        cSMRecoveryPointResponseInstance.Id = idInstance;
-                                    }
-                                    
-                                    JToken nameValue = valueValue["name"];
-                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                    {
-                                        string nameInstance = ((string)nameValue);
-                                        cSMRecoveryPointResponseInstance.Name = nameInstance;
-                                    }
-                                    
-                                    JToken typeValue = valueValue["type"];
-                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
-                                    {
-                                        string typeInstance = ((string)typeValue);
-                                        cSMRecoveryPointResponseInstance.Type = typeInstance;
-                                    }
-                                }
-                            }
-                            
-                            JToken nextLinkValue = responseDoc["nextLink"];
-                            if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
-                            {
-                                string nextLinkInstance = ((string)nextLinkValue);
-                                cSMRecoveryPointListResponseInstance.NextLink = nextLinkInstance;
-                            }
-                            
-                            JToken idValue2 = responseDoc["id"];
-                            if (idValue2 != null && idValue2.Type != JTokenType.Null)
-                            {
-                                string idInstance2 = ((string)idValue2);
-                                cSMRecoveryPointListResponseInstance.Id = idInstance2;
-                            }
-                            
-                            JToken nameValue2 = responseDoc["name"];
-                            if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
-                            {
-                                string nameInstance2 = ((string)nameValue2);
-                                cSMRecoveryPointListResponseInstance.Name = nameInstance2;
-                            }
-                            
-                            JToken typeValue2 = responseDoc["type"];
-                            if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
-                            {
-                                string typeInstance2 = ((string)typeValue2);
-                                cSMRecoveryPointListResponseInstance.Type = typeInstance2;
-                            }
+                            Guid operationIdInstance = Guid.Parse(((string)responseDoc));
+                            result.OperationId = operationIdInstance;
                         }
                         
                     }
