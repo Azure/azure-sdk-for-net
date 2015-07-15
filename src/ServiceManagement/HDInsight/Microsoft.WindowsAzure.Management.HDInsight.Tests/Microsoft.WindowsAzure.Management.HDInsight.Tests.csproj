@@ -211,10 +211,6 @@
     <Reference Include="Moq">
       <HintPath>$(LibraryNugetPackageFolder)\Moq.4.0.10827\lib\NET40\Moq.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>$(LibraryNugetPackageFolder)\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Owin">
       <HintPath>$(LibraryNugetPackageFolder)\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
