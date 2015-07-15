@@ -71,7 +71,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities.RestSimulato
         /// </summary>
         /// <param name="path">The existing file to be appended.</param>
         /// <param name="data">Data to be appended</param>
-        /// <param name="bufferSize">The size of the buffer to be used.</param>
         /// <returns>Confirmation message</returns>
         public Task<IHttpResponseMessageAbstraction> Append(string path, Stream data)
         {

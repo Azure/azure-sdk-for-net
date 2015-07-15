@@ -20,22 +20,15 @@
         <reference file="Microsoft.WindowsAzure.Management.HDInsight.dll" />
         <reference file="Microsoft.WindowsAzure.Management.HDInsight.xml" />
       </group>
-      <group targetFramework="net40">
-        <reference file="Microsoft.WindowsAzure.Management.HDInsight.dll" />
-        <reference file="Microsoft.WindowsAzure.Management.HDInsight.xml" />
-      </group>
     </references>
     <dependencies>
       <dependency id="Microsoft.Hadoop.Client" />
     </dependencies>
   </metadata>
   <files>
-    <file src="HDInsight\**\*.cs" target="src" />
-    <file src="..\binaries\Microsoft.WindowsAzure.Management.HDInsight.dll" target="lib\net45" />
-    <file src="..\binaries\Microsoft.WindowsAzure.Management.HDInsight.pdb" target="lib\net45" />
-    <file src="..\binaries\Microsoft.WindowsAzure.Management.HDInsight.xml" target="lib\net45" />
-    <file src="..\binaries\net40\Microsoft.WindowsAzure.Management.HDInsight.dll" target="lib\net40" />
-    <file src="..\binaries\net40\Microsoft.WindowsAzure.Management.HDInsight.pdb" target="lib\net40" />
-    <file src="..\binaries\net40\Microsoft.WindowsAzure.Management.HDInsight.xml" target="lib\net40" />
+    <file src="ServiceManagement\HDInsight\Microsoft.WindowsAzure.Management.HDInsight\**\*.cs" target="src" />
+    <file src="..\binaries\net45\Microsoft.WindowsAzure.Management.HDInsight.dll" target="lib\net45" />
+    <file src="..\binaries\net45\Microsoft.WindowsAzure.Management.HDInsight.pdb" target="lib\net45" />
+    <file src="..\binaries\net45\Microsoft.WindowsAzure.Management.HDInsight.xml" target="lib\net45" />
   </files>
 </package>

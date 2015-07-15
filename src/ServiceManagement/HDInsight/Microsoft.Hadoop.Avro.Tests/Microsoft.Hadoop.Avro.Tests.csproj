@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <ProjectGuid>{1ED444F4-A5ED-43B7-87E1-4BBE111511C9}</ProjectGuid>
     <RootNamespace>Microsoft.Hadoop.Avro.Tests</RootNamespace>
@@ -8,8 +7,8 @@
     <SpecFlowTasksPath>$(LibraryNugetPackageFolder)\SpecFlow.1.9.0\tools\specflow.exe</SpecFlowTasksPath>
     <RestorePackages>true</RestorePackages>
   </PropertyGroup>
-  <Import Project="..\..\..\..\tools\Library.Settings.targets" />  
-  <Import Project="$(LibraryToolsFolder)\Test.Dependencies.target" />  
+  <Import Project="..\..\..\..\tools\Library.Settings.targets" />
+  <Import Project="$(LibraryToolsFolder)\Test.Dependencies.target" />
   <ItemGroup>
     <Reference Include="Avro">
       <HintPath>..\external\avro\flavor_release\Avro.dll</HintPath>
@@ -30,9 +29,6 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="CodeGenTests\GenerationVerification.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>GenerationVerification.feature.cs</LastGenOutput>
