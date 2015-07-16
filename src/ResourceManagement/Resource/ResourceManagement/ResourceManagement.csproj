@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{165EF660-235B-45AF-83CB-0D32BEF4C1A2}</ProjectGuid>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <LibraryGeneratedByAutoRest>true</LibraryGeneratedByAutoRest>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Microsoft.Azure.Management.Resources</RootNamespace>
     <AssemblyName>Microsoft.Azure.ResourceManager</AssemblyName>
@@ -22,16 +22,23 @@
     <None Include="Microsoft.Azure.Management.Resources.nuget.proj" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Reference Include="Microsoft.Rest.ClientRuntime, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Microsoft.Rest.ClientRuntime.1.0.2\lib\net45\Microsoft.Rest.ClientRuntime.dll</HintPath>
-      <Private>True</Private>
+  <ItemGroup Condition=" '$(LibraryFxTarget)' == 'net45' ">
+    <Reference Include="Microsoft.Rest.ClientRuntime">
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Rest.ClientRuntime.1.0.2\lib\net45\Microsoft.Rest.ClientRuntime.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Rest.ClientRuntime.Azure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Microsoft.Rest.ClientRuntime.Azure.1.0.11\lib\net45\Microsoft.Rest.ClientRuntime.Azure.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Microsoft.Rest.ClientRuntime.Azure">
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Rest.ClientRuntime.Azure.1.0.11\lib\net45\Microsoft.Rest.ClientRuntime.Azure.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup Condition=" '$(LibraryFxTarget)' == 'portable' ">
+    <Reference Include="Microsoft.Rest.ClientRuntime">
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Rest.ClientRuntime.1.0.2\lib\portable-net403+win8+wpa81\Microsoft.Rest.ClientRuntime.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Rest.ClientRuntime.Azure">
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Rest.ClientRuntime.Azure.1.0.11\lib\portable-net403+win+wpa81\Microsoft.Rest.ClientRuntime.Azure.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(LibraryFxTarget)' == 'portable' " />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(LibraryFxTarget)' != 'portable' " />
+  <Import Project="$(LibraryNugetPackageFolder)\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('$(LibraryNugetPackageFolder)\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
 </Project>
