@@ -20,9 +20,7 @@ Global
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{4500A2D3-C087-4FBC-BEBD-E630CD728788}.Net40-Debug|Any CPU.ActiveCfg = Net40-Debug|Any CPU
-		{4500A2D3-C087-4FBC-BEBD-E630CD728788}.Net40-Debug|Any CPU.Build.0 = Net40-Debug|Any CPU
 		{4500A2D3-C087-4FBC-BEBD-E630CD728788}.Net40-Release|Any CPU.ActiveCfg = Net40-Release|Any CPU
-		{4500A2D3-C087-4FBC-BEBD-E630CD728788}.Net40-Release|Any CPU.Build.0 = Net40-Release|Any CPU
 		{4500A2D3-C087-4FBC-BEBD-E630CD728788}.Net45-Debug|Any CPU.ActiveCfg = Net45-Debug|Any CPU
 		{4500A2D3-C087-4FBC-BEBD-E630CD728788}.Net45-Debug|Any CPU.Build.0 = Net45-Debug|Any CPU
 		{4500A2D3-C087-4FBC-BEBD-E630CD728788}.Net45-Release|Any CPU.ActiveCfg = Net45-Release|Any CPU
@@ -40,17 +38,13 @@ Global
 		{7BC81D11-FB6A-411B-B5CA-3A3EC263B258}.Portable-Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
 		{7BC81D11-FB6A-411B-B5CA-3A3EC263B258}.Portable-Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
 		{165EF660-235B-45AF-83CB-0D32BEF4C1A2}.Net40-Debug|Any CPU.ActiveCfg = Net40-Debug|Any CPU
-		{165EF660-235B-45AF-83CB-0D32BEF4C1A2}.Net40-Debug|Any CPU.Build.0 = Net40-Debug|Any CPU
 		{165EF660-235B-45AF-83CB-0D32BEF4C1A2}.Net40-Release|Any CPU.ActiveCfg = Net40-Release|Any CPU
-		{165EF660-235B-45AF-83CB-0D32BEF4C1A2}.Net40-Release|Any CPU.Build.0 = Net40-Release|Any CPU
 		{165EF660-235B-45AF-83CB-0D32BEF4C1A2}.Net45-Debug|Any CPU.ActiveCfg = Net45-Debug|Any CPU
 		{165EF660-235B-45AF-83CB-0D32BEF4C1A2}.Net45-Debug|Any CPU.Build.0 = Net45-Debug|Any CPU
 		{165EF660-235B-45AF-83CB-0D32BEF4C1A2}.Net45-Release|Any CPU.ActiveCfg = Net45-Release|Any CPU
 		{165EF660-235B-45AF-83CB-0D32BEF4C1A2}.Net45-Release|Any CPU.Build.0 = Net45-Release|Any CPU
 		{165EF660-235B-45AF-83CB-0D32BEF4C1A2}.Portable-Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
-		{165EF660-235B-45AF-83CB-0D32BEF4C1A2}.Portable-Debug|Any CPU.Build.0 = Portable-Debug|Any CPU
 		{165EF660-235B-45AF-83CB-0D32BEF4C1A2}.Portable-Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
-		{165EF660-235B-45AF-83CB-0D32BEF4C1A2}.Portable-Release|Any CPU.Build.0 = Portable-Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

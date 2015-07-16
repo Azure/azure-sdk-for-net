@@ -20,25 +20,25 @@
     <copyright>Copyright © Microsoft Corporation</copyright>
     <tags>Microsoft Azure Network management "Network" "Network management" REST HTTP client windowsazureofficial</tags>
     <references>
-      <group targetFramework="portable-net45+sl50+wp80+win">
+      <group targetFramework="portable-net403+win8+wpa81">
         <reference file="Microsoft.Azure.Management.Network.dll" />
       </group>
-      <group targetFramework="net40">
+      <group targetFramework="net45">
         <reference file="Microsoft.Azure.Management.Network.dll" />
       </group>
     </references>
     <dependencies>
-      <dependency id="Microsoft.Azure.Common" version="[3.0.9,3.0)" />
-      <dependency id="Microsoft.Azure.Management.Resources" version="2.12.0-preview" />
+      <dependency id="Microsoft.Rest.ClientRuntime.Azure" version="[1.0.11,2.0)" />
+      <dependency id="Microsoft.Azure.Management.Resources" version="2.18.2-preview" />
     </dependencies>
   </metadata>
   <files>
     <file src="ResourceManagement\Network\NetworkManagement\**\*.cs" target="src" />
-    <file src="..\binaries\portable\Microsoft.Azure.Management.Network.dll" target="lib\portable-net45+sl50+wp80+win" />
-    <file src="..\binaries\portable\Microsoft.Azure.Management.Network.pdb" target="lib\portable-net45+sl50+wp80+win" />
-    <file src="..\binaries\portable\Microsoft.Azure.Management.Network.xml" target="lib\portable-net45+sl50+wp80+win" />
-    <file src="..\binaries\net40\Microsoft.Azure.Management.Network.dll" target="lib\net40" />
-    <file src="..\binaries\net40\Microsoft.Azure.Management.Network.pdb" target="lib\net40" />
-    <file src="..\binaries\net40\Microsoft.Azure.Management.Network.xml" target="lib\net40" />
+    <file src="..\binaries\portable\Microsoft.Azure.Management.Network.dll" target="lib\portable-net403+win8+wpa81" />
+    <file src="..\binaries\portable\Microsoft.Azure.Management.Network.pdb" target="lib\portable-net403+win8+wpa81" />
+    <file src="..\binaries\portable\Microsoft.Azure.Management.Network.xml" target="lib\portable-net403+win8+wpa81" />
+    <file src="..\binaries\net45\Microsoft.Azure.Management.Network.dll" target="lib\net45" />
+    <file src="..\binaries\net45\Microsoft.Azure.Management.Network.pdb" target="lib\net45" />
+    <file src="..\binaries\net45\Microsoft.Azure.Management.Network.xml" target="lib\net45" />
   </files>
 </package>
