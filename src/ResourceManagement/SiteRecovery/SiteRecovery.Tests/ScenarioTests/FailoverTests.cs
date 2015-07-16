@@ -544,11 +544,10 @@ namespace SiteRecovery.Tests
         [Fact]
         public void E2ETestFailoverTest()
         {
-            // remove this
-            ////TestFailoverTest("PrimaryToRecovery");
+            //TestFailoverTest("PrimaryToRecovery");
 
             //// Test failover in reverse direction 
-             TestFailoverTest("RecoveryToPrimary");
+            //// TestFailoverTest("RecoveryToPrimary");
         }
 
         public void E2ATestFailoverTest()
@@ -568,17 +567,9 @@ namespace SiteRecovery.Tests
                 bool desiredPEFound = false;
                 foreach (var pc in responsePC.ProtectionContainers)
                 {
-                    // remove this
-                    if (pc.Name != "d58766f9-9759-41bb-9130-91223caccbbd_6764a068-4425-450f-9b0c-30e1e07cdb34")
-                    {
-                        continue;
-                    }
                     var responsePEs = client.ProtectionEntity.List(pc.Name, RequestHeaders);
                     foreach (var pe in responsePEs.ProtectionEntities)
                     {
-                        // remove this
-                        if ( pe == null)
-                        continue;
                         if (pe.Protected == true)
                         {
                             TestFailoverRequest request = new TestFailoverRequest();
