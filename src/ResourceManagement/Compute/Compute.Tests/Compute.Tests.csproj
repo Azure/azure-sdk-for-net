@@ -127,18 +127,22 @@
     <ProjectReference Include="..\..\Resource\ResourceManagement\ResourceManagement.csproj">
       <Project>{165ef660-235b-45af-83cb-0d32bef4c1a2}</Project>
       <Name>ResourceManagement</Name>
+      <Properties>SkipValidatePackageReferences=true</Properties>
     </ProjectReference>
     <ProjectReference Include="..\..\Storage\StorageManagement\StorageManagement.csproj">
       <Project>{a7f47b7f-319b-411f-bf33-f57899a430cb}</Project>
       <Name>StorageManagement</Name>
+      <Properties>SkipValidatePackageReferences=true</Properties>
     </ProjectReference>
     <ProjectReference Include="..\ComputeManagement\ComputeManagement.csproj">
       <Project>{4f41c7a2-7df6-4cc1-9f2d-66e8f05c2331}</Project>
       <Name>ComputeManagement</Name>
+      <Properties>SkipValidatePackageReferences=true</Properties>
     </ProjectReference>
     <ProjectReference Include="..\..\Network\NetworkManagement\NetworkManagement.csproj">
       <Project>{4500a2d3-c087-4fbc-bebd-e630cd728788}</Project>
       <Name>NetworkManagement</Name>
+      <Properties>SkipValidatePackageReferences=true</Properties>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -150,11 +154,11 @@
       <HintPath>..\..\..\..\packages\Microsoft.IdentityModel.Clients.ActiveDirectory.2.14.201151115\lib\net45\Microsoft.IdentityModel.Clients.ActiveDirectory.WindowsForms.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.Rest.ClientRuntime, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.Rest.ClientRuntime">
       <HintPath>..\..\..\..\packages\Microsoft.Rest.ClientRuntime.1.0.2\lib\net45\Microsoft.Rest.ClientRuntime.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.Rest.ClientRuntime.Azure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.Rest.ClientRuntime.Azure">
       <HintPath>..\..\..\..\packages\Microsoft.Rest.ClientRuntime.Azure.1.0.11\lib\net45\Microsoft.Rest.ClientRuntime.Azure.dll</HintPath>
       <Private>True</Private>
     </Reference>
