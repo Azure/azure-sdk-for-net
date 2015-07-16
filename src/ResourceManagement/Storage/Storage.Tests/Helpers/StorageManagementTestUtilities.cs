@@ -145,7 +145,7 @@ namespace Storage.Tests.Helpers
                 Assert.NotNull(account.PrimaryEndpoints.Table);
             }
 
-            Assert.Equal("Succeeded", account.ProvisioningState);
+            Assert.Equal(ProvisioningState.Succeeded, account.ProvisioningState);
             Assert.Null(account.LastGeoFailoverTime);
 
             switch (account.AccountType)
