@@ -15,7 +15,7 @@
 
 using System.Reflection;
 
-[assembly: AssemblyTitle("Microsoft.Azure.Management.RecoveryServices.Specification")]
+[assembly: AssemblyTitle("Microsoft.Azure.Management.RecoveryServicesARM.Specification")]
 [assembly: AssemblyDescription("Hydra specification for Recovery services Managmement")]
 [assembly: AssemblyCompany("Microsoft Corporation")]
 [assembly: AssemblyProduct("Windows Azure")]
