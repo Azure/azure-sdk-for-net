@@ -346,7 +346,7 @@ namespace Networks.Tests
             Assert.Equal(gw1.RequestRoutingRules.Count, gw2.RequestRoutingRules.Count);
         }
 
-        [Fact]
+        [Fact(Skip="TODO: Autorest")]
         public void ApplicationGatewayApiTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };            

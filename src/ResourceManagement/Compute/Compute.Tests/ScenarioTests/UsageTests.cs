@@ -37,7 +37,7 @@ namespace Compute.Tests
     /// </summary>
     public class UsageTests : VMTestBase
     {
-        [Fact]
+        [Fact(Skip = "TODO: AutoRest")]
         public void TestListUsages()
         {
             using (UndoContext context = UndoContext.Current)
