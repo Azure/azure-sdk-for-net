@@ -35,6 +35,7 @@ namespace ResourceGroups.Tests
         {
             handler.IsPassThrough = true;
             var client = this.GetResourceManagementClientWithHandler(handler);
+           
             if (HttpMockServer.Mode == HttpRecorderMode.Playback)
             {
                 client.LongRunningOperationRetryTimeout = 0;
