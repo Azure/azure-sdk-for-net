@@ -21,20 +21,44 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.SiteRecovery.Models;
 
 namespace Microsoft.Azure.Management.SiteRecovery.Models
 {
     /// <summary>
-    /// The definition of a Vm object.
+    /// The definition of a recovery plan XML data.
     /// </summary>
-    public partial class VirtualMachine : ProtectionEntity
+    public partial class RecoveryPlanXmlData
     {
+        private string _recoveryPlanXml;
+        
         /// <summary>
-        /// Initializes a new instance of the VirtualMachine class.
+        /// Required. Recovery plan XML.
         /// </summary>
-        public VirtualMachine()
+        public string RecoveryPlanXml
         {
+            get { return this._recoveryPlanXml; }
+            set { this._recoveryPlanXml = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the RecoveryPlanXmlData class.
+        /// </summary>
+        public RecoveryPlanXmlData()
+        {
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the RecoveryPlanXmlData class with
+        /// required arguments.
+        /// </summary>
+        public RecoveryPlanXmlData(string recoveryPlanXml)
+            : this()
+        {
+            if (recoveryPlanXml == null)
+            {
+                throw new ArgumentNullException("recoveryPlanXml");
+            }
+            this.RecoveryPlanXml = recoveryPlanXml;
         }
     }
 }

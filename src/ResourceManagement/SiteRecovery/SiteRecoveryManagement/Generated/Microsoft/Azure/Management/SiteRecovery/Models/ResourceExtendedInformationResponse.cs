@@ -21,19 +21,32 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.SiteRecovery.Models;
 
 namespace Microsoft.Azure.Management.SiteRecovery.Models
 {
     /// <summary>
-    /// The definition of a Vm object.
+    /// The response model for the resource extended information object
     /// </summary>
-    public partial class VirtualMachine : ProtectionEntity
+    public partial class ResourceExtendedInformationResponse : AzureOperationResponse
     {
+        private ResourceExtendedInformation _resourceExtendedInformation;
+        
         /// <summary>
-        /// Initializes a new instance of the VirtualMachine class.
+        /// Optional. The resource extended information object
         /// </summary>
-        public VirtualMachine()
+        public ResourceExtendedInformation ResourceExtendedInformation
+        {
+            get { return this._resourceExtendedInformation; }
+            set { this._resourceExtendedInformation = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the
+        /// ResourceExtendedInformationResponse class.
+        /// </summary>
+        public ResourceExtendedInformationResponse()
         {
         }
     }

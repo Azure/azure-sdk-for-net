@@ -21,19 +21,31 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.SiteRecovery.Models;
 
 namespace Microsoft.Azure.Management.SiteRecovery.Models
 {
     /// <summary>
-    /// The definition of a Vm object.
+    /// The response model for the upload certificate response
     /// </summary>
-    public partial class VirtualMachine : ProtectionEntity
+    public partial class UploadCertificateResponse : AzureOperationResponse
     {
+        private CertificateProperties _properties;
+        
         /// <summary>
-        /// Initializes a new instance of the VirtualMachine class.
+        /// Optional. The certificate properties
         /// </summary>
-        public VirtualMachine()
+        public CertificateProperties Properties
+        {
+            get { return this._properties; }
+            set { this._properties = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the UploadCertificateResponse class.
+        /// </summary>
+        public UploadCertificateResponse()
         {
         }
     }

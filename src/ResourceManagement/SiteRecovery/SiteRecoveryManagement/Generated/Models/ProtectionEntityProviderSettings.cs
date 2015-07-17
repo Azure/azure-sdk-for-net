@@ -21,19 +21,19 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.SiteRecovery.Models;
 
 namespace Microsoft.Azure.Management.SiteRecovery.Models
 {
     /// <summary>
-    /// The definition of a Vm object.
+    /// Protection entity provider settings.
     /// </summary>
-    public partial class VirtualMachine : ProtectionEntity
+    public partial class ProtectionEntityProviderSettings
     {
         /// <summary>
-        /// Initializes a new instance of the VirtualMachine class.
+        /// Initializes a new instance of the ProtectionEntityProviderSettings
+        /// class.
         /// </summary>
-        public VirtualMachine()
+        public ProtectionEntityProviderSettings()
         {
         }
     }

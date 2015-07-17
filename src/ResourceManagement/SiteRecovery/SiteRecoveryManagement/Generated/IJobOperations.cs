@@ -48,5 +48,42 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// The response model for the Job details object.
         /// </returns>
         Task<JobResponse> GetAsync(string jobId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Get the list of all jobs.
+        /// </summary>
+        /// <param name='parameters'>
+        /// Job query parameter.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response model for the list Jobs operation.
+        /// </returns>
+        Task<JobListResponse> ListAsync(JobQueryParameter parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Resume the job .
+        /// </summary>
+        /// <param name='jobId'>
+        /// Job ID.
+        /// </param>
+        /// <param name='resumeJobParameters'>
+        /// Resume job parameters.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response model for the Job details object.
+        /// </returns>
+        Task<JobResponse> ResumeAsync(string jobId, ResumeJobParams resumeJobParameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
     }
 }

@@ -88,6 +88,17 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._errors = value; }
         }
         
+        private string _scenarioName;
+        
+        /// <summary>
+        /// Required. Scenario name.
+        /// </summary>
+        public string ScenarioName
+        {
+            get { return this._scenarioName; }
+            set { this._scenarioName = value; }
+        }
+        
         private System.DateTime? _startTime;
         
         /// <summary>

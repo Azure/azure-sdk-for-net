@@ -21,19 +21,31 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.SiteRecovery.Models;
 
 namespace Microsoft.Azure.Management.SiteRecovery.Models
 {
     /// <summary>
-    /// The definition of a Vm object.
+    /// The response model for the recoveryplan object.
     /// </summary>
-    public partial class VirtualMachine : ProtectionEntity
+    public partial class RecoveryPlanResponse : AzureOperationResponse
     {
+        private RecoveryPlan _recoveryPlan;
+        
         /// <summary>
-        /// Initializes a new instance of the VirtualMachine class.
+        /// Optional. The recoveryplan object for the given recoveryplan ID.
         /// </summary>
-        public VirtualMachine()
+        public RecoveryPlan RecoveryPlan
+        {
+            get { return this._recoveryPlan; }
+            set { this._recoveryPlan = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the RecoveryPlanResponse class.
+        /// </summary>
+        public RecoveryPlanResponse()
         {
         }
     }

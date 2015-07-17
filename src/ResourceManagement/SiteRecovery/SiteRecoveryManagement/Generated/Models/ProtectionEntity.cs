@@ -167,12 +167,12 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._replicationProvider = value; }
         }
         
-        private string _replicationProviderSettings;
+        private ProtectionEntityProviderSettings _replicationProviderSettings;
         
         /// <summary>
         /// Required. The replication provider settings.
         /// </summary>
-        public string ReplicationProviderSettings
+        public ProtectionEntityProviderSettings ReplicationProviderSettings
         {
             get { return this._replicationProviderSettings; }
             set { this._replicationProviderSettings = value; }

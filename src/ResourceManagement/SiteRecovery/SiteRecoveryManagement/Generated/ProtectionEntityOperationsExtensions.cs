@@ -31,6 +31,64 @@ namespace Microsoft.Azure.Management.SiteRecovery
     public static partial class ProtectionEntityOperationsExtensions
     {
         /// <summary>
+        /// Commit failover of a protection entity.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IProtectionEntityOperations.
+        /// </param>
+        /// <param name='protectionContainerId'>
+        /// Required. Parent Protection Container ID.
+        /// </param>
+        /// <param name='protectionEntityId'>
+        /// Required. Protection entity ID.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Commit failover request.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// The response model for the Job details object.
+        /// </returns>
+        public static JobResponse CommitFailover(this IProtectionEntityOperations operations, string protectionContainerId, string protectionEntityId, CommitFailoverRequest parameters, CustomRequestHeaders customRequestHeaders)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IProtectionEntityOperations)s).CommitFailoverAsync(protectionContainerId, protectionEntityId, parameters, customRequestHeaders);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Commit failover of a protection entity.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IProtectionEntityOperations.
+        /// </param>
+        /// <param name='protectionContainerId'>
+        /// Required. Parent Protection Container ID.
+        /// </param>
+        /// <param name='protectionEntityId'>
+        /// Required. Protection entity ID.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Commit failover request.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// The response model for the Job details object.
+        /// </returns>
+        public static Task<JobResponse> CommitFailoverAsync(this IProtectionEntityOperations operations, string protectionContainerId, string protectionEntityId, CommitFailoverRequest parameters, CustomRequestHeaders customRequestHeaders)
+        {
+            return operations.CommitFailoverAsync(protectionContainerId, protectionEntityId, parameters, customRequestHeaders, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Disable Protection for the given protection enity.
         /// </summary>
         /// <param name='operations'>
@@ -50,9 +108,9 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The response model for the Job details object.
+        /// A standard service response for long running operations.
         /// </returns>
-        public static JobResponse DisableProtection(this IProtectionEntityOperations operations, string protectionContainerId, string protectionEntityId, DisableProtectionInput input, CustomRequestHeaders customRequestHeaders)
+        public static LongRunningOperationResponse DisableProtection(this IProtectionEntityOperations operations, string protectionContainerId, string protectionEntityId, DisableProtectionInput input, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -81,9 +139,9 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The response model for the Job details object.
+        /// A standard service response for long running operations.
         /// </returns>
-        public static Task<JobResponse> DisableProtectionAsync(this IProtectionEntityOperations operations, string protectionContainerId, string protectionEntityId, DisableProtectionInput input, CustomRequestHeaders customRequestHeaders)
+        public static Task<LongRunningOperationResponse> DisableProtectionAsync(this IProtectionEntityOperations operations, string protectionContainerId, string protectionEntityId, DisableProtectionInput input, CustomRequestHeaders customRequestHeaders)
         {
             return operations.DisableProtectionAsync(protectionContainerId, protectionEntityId, input, customRequestHeaders, CancellationToken.None);
         }
@@ -108,9 +166,9 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The response model for the Job details object.
+        /// A standard service response for long running operations.
         /// </returns>
-        public static JobResponse EnableProtection(this IProtectionEntityOperations operations, string protectionContainerId, string protectionEntityId, EnableProtectionInput input, CustomRequestHeaders customRequestHeaders)
+        public static LongRunningOperationResponse EnableProtection(this IProtectionEntityOperations operations, string protectionContainerId, string protectionEntityId, EnableProtectionInput input, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -139,9 +197,9 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The response model for the Job details object.
+        /// A standard service response for long running operations.
         /// </returns>
-        public static Task<JobResponse> EnableProtectionAsync(this IProtectionEntityOperations operations, string protectionContainerId, string protectionEntityId, EnableProtectionInput input, CustomRequestHeaders customRequestHeaders)
+        public static Task<LongRunningOperationResponse> EnableProtectionAsync(this IProtectionEntityOperations operations, string protectionContainerId, string protectionEntityId, EnableProtectionInput input, CustomRequestHeaders customRequestHeaders)
         {
             return operations.EnableProtectionAsync(protectionContainerId, protectionEntityId, input, customRequestHeaders, CancellationToken.None);
         }
@@ -245,6 +303,122 @@ namespace Microsoft.Azure.Management.SiteRecovery
         }
         
         /// <summary>
+        /// Planned failover of a protection entity.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IProtectionEntityOperations.
+        /// </param>
+        /// <param name='protectionContainerId'>
+        /// Required. Parent Protection Container ID.
+        /// </param>
+        /// <param name='protectionEntityId'>
+        /// Required. Protection entity ID.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Planned failover request.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// The response model for the Job details object.
+        /// </returns>
+        public static JobResponse PlannedFailover(this IProtectionEntityOperations operations, string protectionContainerId, string protectionEntityId, PlannedFailoverRequest parameters, CustomRequestHeaders customRequestHeaders)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IProtectionEntityOperations)s).PlannedFailoverAsync(protectionContainerId, protectionEntityId, parameters, customRequestHeaders);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Planned failover of a protection entity.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IProtectionEntityOperations.
+        /// </param>
+        /// <param name='protectionContainerId'>
+        /// Required. Parent Protection Container ID.
+        /// </param>
+        /// <param name='protectionEntityId'>
+        /// Required. Protection entity ID.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Planned failover request.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// The response model for the Job details object.
+        /// </returns>
+        public static Task<JobResponse> PlannedFailoverAsync(this IProtectionEntityOperations operations, string protectionContainerId, string protectionEntityId, PlannedFailoverRequest parameters, CustomRequestHeaders customRequestHeaders)
+        {
+            return operations.PlannedFailoverAsync(protectionContainerId, protectionEntityId, parameters, customRequestHeaders, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Reprotect operation for the given protection entity.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IProtectionEntityOperations.
+        /// </param>
+        /// <param name='protectionContainerId'>
+        /// Required. Parent Protection Container ID.
+        /// </param>
+        /// <param name='protectionEntityId'>
+        /// Required. Protection entity ID.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Reprotect request after failover.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// The response model for the Job details object.
+        /// </returns>
+        public static JobResponse Reprotect(this IProtectionEntityOperations operations, string protectionContainerId, string protectionEntityId, ReprotectRequest parameters, CustomRequestHeaders customRequestHeaders)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IProtectionEntityOperations)s).ReprotectAsync(protectionContainerId, protectionEntityId, parameters, customRequestHeaders);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Reprotect operation for the given protection entity.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IProtectionEntityOperations.
+        /// </param>
+        /// <param name='protectionContainerId'>
+        /// Required. Parent Protection Container ID.
+        /// </param>
+        /// <param name='protectionEntityId'>
+        /// Required. Protection entity ID.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Reprotect request after failover.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// The response model for the Job details object.
+        /// </returns>
+        public static Task<JobResponse> ReprotectAsync(this IProtectionEntityOperations operations, string protectionContainerId, string protectionEntityId, ReprotectRequest parameters, CustomRequestHeaders customRequestHeaders)
+        {
+            return operations.ReprotectAsync(protectionContainerId, protectionEntityId, parameters, customRequestHeaders, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Test failover of a protection entity.
         /// </summary>
         /// <param name='operations'>
@@ -264,9 +438,9 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The response model for the Job details object.
+        /// A standard service response for long running operations.
         /// </returns>
-        public static JobResponse TestFailover(this IProtectionEntityOperations operations, string protectionContainerId, string protectionEntityId, TestFailoverRequest parameters, CustomRequestHeaders customRequestHeaders)
+        public static LongRunningOperationResponse TestFailover(this IProtectionEntityOperations operations, string protectionContainerId, string protectionEntityId, TestFailoverRequest parameters, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -295,11 +469,69 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The response model for the Job details object.
+        /// A standard service response for long running operations.
         /// </returns>
-        public static Task<JobResponse> TestFailoverAsync(this IProtectionEntityOperations operations, string protectionContainerId, string protectionEntityId, TestFailoverRequest parameters, CustomRequestHeaders customRequestHeaders)
+        public static Task<LongRunningOperationResponse> TestFailoverAsync(this IProtectionEntityOperations operations, string protectionContainerId, string protectionEntityId, TestFailoverRequest parameters, CustomRequestHeaders customRequestHeaders)
         {
             return operations.TestFailoverAsync(protectionContainerId, protectionEntityId, parameters, customRequestHeaders, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Unplanned failover of a protection entity.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IProtectionEntityOperations.
+        /// </param>
+        /// <param name='protectionContainerId'>
+        /// Required. Parent Protection Container ID.
+        /// </param>
+        /// <param name='protectionEntityId'>
+        /// Required. Protection entity ID.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Planned failover request.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// The response model for the Job details object.
+        /// </returns>
+        public static JobResponse UnplannedFailover(this IProtectionEntityOperations operations, string protectionContainerId, string protectionEntityId, UnplannedFailoverRequest parameters, CustomRequestHeaders customRequestHeaders)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IProtectionEntityOperations)s).UnplannedFailoverAsync(protectionContainerId, protectionEntityId, parameters, customRequestHeaders);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Unplanned failover of a protection entity.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IProtectionEntityOperations.
+        /// </param>
+        /// <param name='protectionContainerId'>
+        /// Required. Parent Protection Container ID.
+        /// </param>
+        /// <param name='protectionEntityId'>
+        /// Required. Protection entity ID.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Planned failover request.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// The response model for the Job details object.
+        /// </returns>
+        public static Task<JobResponse> UnplannedFailoverAsync(this IProtectionEntityOperations operations, string protectionContainerId, string protectionEntityId, UnplannedFailoverRequest parameters, CustomRequestHeaders customRequestHeaders)
+        {
+            return operations.UnplannedFailoverAsync(protectionContainerId, protectionEntityId, parameters, customRequestHeaders, CancellationToken.None);
         }
     }
 }
