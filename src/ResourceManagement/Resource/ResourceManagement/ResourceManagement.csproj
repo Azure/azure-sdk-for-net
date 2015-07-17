@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{165EF660-235B-45AF-83CB-0D32BEF4C1A2}</ProjectGuid>
-    <LibraryGeneratedByAutoRest>true</LibraryGeneratedByAutoRest>
+    <AutoRestProjects>true</AutoRestProjects>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Microsoft.Azure.Management.Resources</RootNamespace>
     <AssemblyName>Microsoft.Azure.ResourceManager</AssemblyName>
@@ -18,25 +18,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Microsoft.Azure.Management.Resources.nuspec" />
+    <None Include="Microsoft.Azure.Management.Resources.nuspec">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Microsoft.Azure.Management.Resources.nuget.proj" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup Condition=" '$(LibraryFxTarget)' == 'net45' ">
-    <Reference Include="Microsoft.Rest.ClientRuntime">
-      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Rest.ClientRuntime.1.0.3\lib\net45\Microsoft.Rest.ClientRuntime.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Rest.ClientRuntime.Azure">
-      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Rest.ClientRuntime.Azure.1.0.12\lib\net45\Microsoft.Rest.ClientRuntime.Azure.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup Condition=" '$(LibraryFxTarget)' == 'portable' ">
-    <Reference Include="Microsoft.Rest.ClientRuntime">
-      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Rest.ClientRuntime.1.0.3\lib\portable-net403+win8+wpa81\Microsoft.Rest.ClientRuntime.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Rest.ClientRuntime.Azure">
-      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Rest.ClientRuntime.Azure.1.0.12\lib\portable-net403+win+wpa81\Microsoft.Rest.ClientRuntime.Azure.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(LibraryFxTarget)' == 'portable' " />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(LibraryFxTarget)' != 'portable' " />
