@@ -2,10 +2,10 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <!--
-    Microsoft.Azure.Management.RecoveryServices
+    Microsoft.Azure.Management.RecoveryServicesARM
     -->
-    <SdkNuGetPackage Include="Microsoft.Azure.Management.RecoveryServices">
-      <PackageVersion>0.6.1025-preview</PackageVersion>
+    <SdkNuGetPackage Include="Microsoft.Azure.Management.RecoveryServicesARM">
+      <PackageVersion>0.0.1-preview</PackageVersion>
       <Folder>$(MSBuildThisFileDirectory)</Folder>
     </SdkNuGetPackage>
   </ItemGroup>
