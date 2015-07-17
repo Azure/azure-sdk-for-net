@@ -29,7 +29,6 @@
     </references>
     <dependencies>
       <dependency id="Microsoft.Rest.ClientRuntime.Azure" version="[1.0.11,2.0)" />
-      <dependency id="Microsoft.Azure.Management.Resources" version="2.18.2-preview" />
     </dependencies>
   </metadata>
   <files>
