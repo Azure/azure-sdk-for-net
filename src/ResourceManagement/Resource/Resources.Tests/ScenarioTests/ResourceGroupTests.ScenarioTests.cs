@@ -140,7 +140,7 @@ namespace ResourceGroups.Tests
             var createResult = client.ResourceGroups.CreateOrUpdate(resourceGroupName, new ResourceGroup { Location = DefaultLocation });
             var getResult = client.ResourceGroups.Get(resourceGroupName);
             var deleteResult =
-                client.ResourceGroups.DeleteWithOperationResponseAsync(resourceGroupName).Result;
+                client.ResourceGroups.DeleteWithHttpMessagesAsync(resourceGroupName).Result;
             var listResult = client.ResourceGroups.List(null);
 
             Assert.Equal(HttpStatusCode.OK, deleteResult.Response.StatusCode);

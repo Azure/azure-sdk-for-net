@@ -27,9 +27,12 @@ namespace ResourceGroups.Tests
     {
         public ResourceManagementClient GetResourceManagementClient(RecordedDelegatingHandler handler)
         {
-            var token = new TokenCloudCredentials(Guid.NewGuid().ToString(), "abc123");
+            var subscriptionId = Guid.NewGuid().ToString();
+            var token = new TokenCloudCredentials(subscriptionId, "abc123");
             handler.IsPassThrough = false;
-            return new ResourceManagementClient(token, handler);
+            var client = new ResourceManagementClient(token, handler);
+            client.SubscriptionId = subscriptionId;
+            return client;
         }
         
         [Fact]
@@ -81,7 +84,7 @@ namespace ResourceGroups.Tests
             var handler = new RecordedDelegatingHandler();
             var client = GetResourceManagementClient(handler);
 
-            Assert.Throws<ArgumentNullException>(() => client.Providers.Get(null));
+            Assert.Throws<Microsoft.Rest.ValidationException>(() => client.Providers.Get(null));
         }
 
         [Fact]
@@ -150,7 +153,7 @@ namespace ResourceGroups.Tests
             var handler = new RecordedDelegatingHandler();
             var client = GetResourceManagementClient(handler);
 
-            Assert.Throws<ArgumentNullException>(() => client.Providers.Register(null));
+            Assert.Throws<Microsoft.Rest.ValidationException>(() => client.Providers.Register(null));
         }
 
         [Fact]
@@ -173,7 +176,7 @@ namespace ResourceGroups.Tests
             var handler = new RecordedDelegatingHandler();
             var client = GetResourceManagementClient(handler);
 
-            Assert.Throws<ArgumentNullException>(() => client.Providers.Unregister(null));
+            Assert.Throws<Microsoft.Rest.ValidationException>(() => client.Providers.Unregister(null));
         }
     }
 }

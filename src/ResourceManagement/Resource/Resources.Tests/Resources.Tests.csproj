@@ -18,16 +18,16 @@
     <Compile Include="ScenarioTests\TagTests.ScenarioTests.cs" />
     <Compile Include="ScenarioTests\ProviderTests.ScenarioTests.cs" />
     <Compile Include="InMemoryTests\ProviderTests.InMemory.cs" />
-    <!--<Compile Include="InMemoryTests\ResourceTests.InMemory.cs" />-->
+    <Compile Include="InMemoryTests\ResourceTests.InMemory.cs" />
     <Compile Include="ScenarioTests\ResourceTests.ScenarioTests.cs" />
-    <!--<Compile Include="ScenarioTests\ResourceGroupTests.ScenarioTests.cs" />-->
+    <Compile Include="ScenarioTests\ResourceGroupTests.ScenarioTests.cs" />
     <Compile Include="Helpers\RecordedDelegatingHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="InMemoryTests\DeploymentTests.InMemory.cs" />
     <Compile Include="InMemoryTests\ResourceGroupTests.InMemory.cs" />
     <Compile Include="ScenarioTests\DeploymentTests.ScenarioTests.cs" />
     <Compile Include="ScenarioTests\SubscriptionTests.ScenarioTests.cs" />
-    <!--<Compile Include="ScenarioTests\TenantTests.ScenarioTests.cs" />-->
+    <Compile Include="ScenarioTests\TenantTests.ScenarioTests.cs" />
     <Compile Include="SpecTestSupport.Resources\ResourcesManagementTestUtilities.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -169,11 +169,11 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Rest.ClientRuntime">
-      <HintPath>..\..\..\..\packages\Microsoft.Rest.ClientRuntime.1.0.2\lib\net45\Microsoft.Rest.ClientRuntime.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Microsoft.Rest.ClientRuntime.1.0.3\lib\net45\Microsoft.Rest.ClientRuntime.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Rest.ClientRuntime.Azure">
-      <HintPath>..\..\..\..\packages\Microsoft.Rest.ClientRuntime.Azure.1.0.11\lib\net45\Microsoft.Rest.ClientRuntime.Azure.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Microsoft.Rest.ClientRuntime.Azure.1.0.12\lib\net45\Microsoft.Rest.ClientRuntime.Azure.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="xunit">
