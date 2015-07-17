@@ -40,7 +40,7 @@ namespace Compute.Tests
         /// Delete VM
         /// Delete RG
         /// </summary>
-        [Fact]
+        [Fact(Skip = "TODO: AutoRest")]
         [Trait("Name", "TestVMScenarioOperations")]
         public void TestVMScenarioOperations()
         {

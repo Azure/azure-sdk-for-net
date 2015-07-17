@@ -31,7 +31,6 @@
     <Compile Include="Tests\CheckDnsAvailabilityTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
@@ -126,10 +125,11 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Rest.ClientRuntime">
-      <HintPath>..\..\..\..\packages\Microsoft.Rest.ClientRuntime.1.0.0\lib\net45\Microsoft.Rest.ClientRuntime.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Microsoft.Rest.ClientRuntime.1.0.3\lib\net45\Microsoft.Rest.ClientRuntime.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.Rest.ClientRuntime.Azure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Microsoft.Rest.ClientRuntime.Azure.1.0.6\lib\net45\Microsoft.Rest.ClientRuntime.Azure.dll</HintPath>
+    <Reference Include="Microsoft.Rest.ClientRuntime.Azure">
+      <HintPath>..\..\..\..\packages\Microsoft.Rest.ClientRuntime.Azure.1.0.12\lib\net45\Microsoft.Rest.ClientRuntime.Azure.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -147,10 +147,12 @@
     <ProjectReference Include="..\..\Resource\ResourceManagement\ResourceManagement.csproj">
       <Project>{165ef660-235b-45af-83cb-0d32bef4c1a2}</Project>
       <Name>ResourceManagement</Name>
+      <Properties>SkipValidatePackageReferences=true</Properties>
     </ProjectReference>
     <ProjectReference Include="..\NetworkManagement\NetworkManagement.csproj">
       <Project>{4500a2d3-c087-4fbc-bebd-e630cd728788}</Project>
       <Name>NetworkManagement</Name>
+      <Properties>SkipValidatePackageReferences=true</Properties>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

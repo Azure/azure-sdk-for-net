@@ -28,10 +28,11 @@ namespace ResourceGroups.Tests
     {
         public FeatureClient GetFeatureClient(RecordedDelegatingHandler handler)
         {
-            var token = new TokenCloudCredentials(Guid.NewGuid().ToString(), "abc123");
+            var subscriptionId = Guid.NewGuid().ToString();
+            var token = new TokenCloudCredentials(subscriptionId, "abc123");
             handler.IsPassThrough = false;
             var client = new FeatureClient(token, handler);
-
+            client.SubscriptionId = subscriptionId;
             HttpMockServer.Mode = HttpRecorderMode.Playback;
             return client;
         }

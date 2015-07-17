@@ -31,9 +31,12 @@ namespace ResourceGroups.Tests
     {
         public ResourceManagementClient GetResourceManagementClient(RecordedDelegatingHandler handler)
         {
-            var token = new TokenCloudCredentials(Guid.NewGuid().ToString(), "abc123");
+            var subscriptionId = Guid.NewGuid().ToString();
+            var token = new TokenCloudCredentials(subscriptionId, "abc123");
             handler.IsPassThrough = false;
-            return new ResourceManagementClient(token, handler);
+            var client = new ResourceManagementClient(token, handler);
+            client.SubscriptionId = subscriptionId;
+            return client;
         }
 
         [Fact]
@@ -91,9 +94,8 @@ namespace ResourceGroups.Tests
             var handler = new RecordedDelegatingHandler();
             var client = GetResourceManagementClient(handler);
 
-
-            Assert.Throws<ArgumentNullException>(() => client.ResourceGroups.CreateOrUpdate(null,  new ResourceGroup()));
-            Assert.Throws<ArgumentNullException>(() => client.ResourceGroups.CreateOrUpdate("foo",  null));
+            Assert.Throws<Microsoft.Rest.ValidationException>(() => client.ResourceGroups.CreateOrUpdate(null,  new ResourceGroup()));
+            Assert.Throws<Microsoft.Rest.ValidationException>(() => client.ResourceGroups.CreateOrUpdate("foo", null));
         }
 
         [Fact]
@@ -366,8 +368,7 @@ namespace ResourceGroups.Tests
                     SubsequentStatusCodeToReturn = HttpStatusCode.OK
                 };
             var client = GetResourceManagementClient(handler);
-
-
+            client.LongRunningOperationRetryTimeout = 0;
             client.ResourceGroups.Delete("foo");
         }
 
@@ -377,7 +378,7 @@ namespace ResourceGroups.Tests
             var handler = new RecordedDelegatingHandler();
             var client = GetResourceManagementClient(handler);
 
-            Assert.Throws<ArgumentNullException>(() => client.ResourceGroups.Delete(null));
+            Assert.Throws<Microsoft.Rest.ValidationException>(() => client.ResourceGroups.Delete(null));
             Assert.Throws<CloudException>(() => client.ResourceGroups.Delete("~`123"));
         }
     }

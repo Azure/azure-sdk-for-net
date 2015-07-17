@@ -120,7 +120,7 @@
           DestinationFolder="$(_BinariesDirectory)"/>
   </Target>
 
-  <Target Name="SyncPackageVersions" BeforeTargets="BeforeBuild">
+  <Target Name="SyncPackageVersions" BeforeTargets="BeforeBuild" Condition=" '$(SDKTestProject)' != 'true' ">
     <PropertyGroup>
       <PowerShellExe Condition=" '$(PowerShellExe)'=='' ">%WINDIR%\System32\WindowsPowerShell\v1.0\powershell.exe</PowerShellExe>   
       <NuSpecSyncScript>$(LibraryToolsFolder)\Sync-NuspecDependencies.ps1</NuSpecSyncScript>	 

@@ -33,7 +33,9 @@ namespace Microsoft.Azure.Test
         public static ResourceManagementClient GetResourceManagementClientWithHandler(RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
-            var client = TestBase.GetServiceClient<ResourceManagementClient>(new CSMTestEnvironmentFactory(), handler);
+            var env = new CSMTestEnvironmentFactory();
+            var client = TestBase.GetServiceClient<ResourceManagementClient>(env, handler);
+            client.SubscriptionId = env.GetTestEnvironment().SubscriptionId;
             if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == null ||
                 Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Playback")
             {

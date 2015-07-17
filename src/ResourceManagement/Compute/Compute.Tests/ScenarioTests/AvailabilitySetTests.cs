@@ -55,7 +55,7 @@ namespace Compute.Tests
         const int UDTooLow = 0;
         const int UDTooHi = 21;
 
-        [Fact]
+        [Fact(Skip = "TODO: AutoRest")]
         public void TestOperations()
         {
             using (var context = UndoContext.Current)

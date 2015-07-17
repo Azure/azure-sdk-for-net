@@ -47,6 +47,7 @@ namespace Storage.Tests.Helpers
 
         public static ResourceManagementClient GetResourceManagementClient(RecordedDelegatingHandler handler)
         {
+            var env = new CSMTestEnvironmentFactory();
             ResourceManagementClient resourcesClient;
             if (IsTestTenant)
             {
@@ -55,15 +56,16 @@ namespace Storage.Tests.Helpers
             else
             {
                 handler.IsPassThrough = true;
-                resourcesClient = TestBase.GetServiceClient<ResourceManagementClient>(new CSMTestEnvironmentFactory(), handler);
+                resourcesClient = TestBase.GetServiceClient<ResourceManagementClient>(env, handler);
             }
-
+            resourcesClient.SubscriptionId = env.GetTestEnvironment().SubscriptionId;
             resourcesClient.LongRunningOperationRetryTimeout = 0;
             return resourcesClient;
         }
 
         public static StorageManagementClient GetStorageManagementClient(RecordedDelegatingHandler handler)
         {
+            var env = new CSMTestEnvironmentFactory();
             StorageManagementClient storageClient;
             if (IsTestTenant)
             {
@@ -72,10 +74,11 @@ namespace Storage.Tests.Helpers
             else
             {
                 handler.IsPassThrough = true;
-                storageClient = TestBase.GetServiceClient<StorageManagementClient>(new CSMTestEnvironmentFactory(), handler);
+                storageClient = TestBase.GetServiceClient<StorageManagementClient>(env, handler);
             }
 
             storageClient.LongRunningOperationRetryTimeout = 0;
+            storageClient.SubscriptionId = env.GetTestEnvironment().SubscriptionId;
             return storageClient;
         }
 
@@ -145,7 +148,7 @@ namespace Storage.Tests.Helpers
                 Assert.NotNull(account.PrimaryEndpoints.Table);
             }
 
-            Assert.Equal("Succeeded", account.ProvisioningState);
+            Assert.Equal(ProvisioningState.Succeeded, account.ProvisioningState);
             Assert.Null(account.LastGeoFailoverTime);
 
             switch (account.AccountType)

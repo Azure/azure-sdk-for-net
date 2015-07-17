@@ -40,7 +40,7 @@ namespace Compute.Tests
         /// Capture VM
         /// Delete RG
         /// </summary>
-        [Fact]
+        [Fact(Skip = "TODO: AutoRest")]
         public void TestVMOperations()
         {
             using (var context = UndoContext.Current)
