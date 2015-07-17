@@ -115,31 +115,60 @@ namespace SiteRecovery.Tests
                     var responsePEs = client.ProtectionEntity.List(pc.Name, RequestHeaders);
                     foreach (var pe in responsePEs.ProtectionEntities)
                     {
-                        if (pe.CanFailover == true && pe.ReplicationProvider == replicationProvider)
+                        var protectedEntityProperties = pe.Properties;
+
+                        bool canFailover = false;
+                        foreach (var operation in protectedEntityProperties.AllowedOperations)
+                        {
+                            if (operation == ProtectionEntityOperation.Failover.ToString())
+                            {
+                                canFailover = true;
+                                break;
+                            }
+                        }
+
+                        if (
+                            canFailover == true && 
+                            protectedEntityProperties.ReplicationProvider == replicationProvider)
                         {
                             PlannedFailoverRequest request = new PlannedFailoverRequest();
-                            request.ReplicationProvider = pe.ReplicationProvider;
-                            if (pe.ActiveLocation == "Primary")
+                            request.ReplicationProvider = protectedEntityProperties.ReplicationProvider;
+                            if (protectedEntityProperties.ActiveLocation == "Primary")
                             {
                                 request.FailoverDirection = "PrimaryToRecovery";
-                                AzureFailoverInput blob = new AzureFailoverInput();
-                                blob.VaultLocation = VaultLocation;
-                                request.ReplicationProviderSettings = DataContractUtils.Serialize<AzureFailoverInput>(blob);
+                                if (replicationProvider == HyperVReplicaAzure)
+                                {
+                                    AzureFailoverInput blob = new AzureFailoverInput();
+                                    blob.VaultLocation = VaultLocation;
+                                    request.ReplicationProviderSettings = DataContractUtils.Serialize<AzureFailoverInput>(blob);
+                                }
                             }
                             else
                             {
                                 request.FailoverDirection = "RecoveryToPrimary";
-                                var blob = new AzureFailbackInput();
-                                blob.CreateRecoveryVmIfDoesntExist = false;
-                                blob.SkipDataSync = false;
-                                request.ReplicationProviderSettings = DataContractUtils.Serialize<AzureFailbackInput>(blob);
+                                if (replicationProvider == HyperVReplicaAzure)
+                                {
+                                    var blob = new AzureFailbackInput();
+                                    blob.CreateRecoveryVmIfDoesntExist = false;
+                                    blob.SkipDataSync = false;
+                                    request.ReplicationProviderSettings = DataContractUtils.Serialize<AzureFailbackInput>(blob);
+                                }
+                            }
+
+                            if (replicationProvider == HyperVReplica)
+                            {
+                                request.ReplicationProviderSettings = string.Empty;
                             }
 
                             response = client.ProtectionEntity.PlannedFailover(
-                                pe.ProtectionContainerId,
+                                protectedEntityProperties.ProtectionContainerId,
                                 pe.Name,
                                 request,
                                 RequestHeaders);
+
+                            Assert.Equal(OperationStatus.Succeeded, response.Status);
+                            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+
                             desiredPEFound = true;
                             break;
                         }
@@ -150,9 +179,6 @@ namespace SiteRecovery.Tests
                         break;
                     }
                 }
-
-                Assert.Equal(OperationStatus.Succeeded, response.Status);
-                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             }
         }
 
@@ -182,17 +208,31 @@ namespace SiteRecovery.Tests
                     var responsePEs = client.ProtectionEntity.List(pc.Name, RequestHeaders);
                     foreach (var pe in responsePEs.ProtectionEntities)
                     {
-                        if (pe.CanFailover == true && pe.ReplicationProvider == replicationProvider)
+                        var protectedEntityProperties = pe.Properties;
+
+                        bool canFailover = false;
+                        foreach (var operation in protectedEntityProperties.AllowedOperations)
+                        {
+                            if (operation == ProtectionEntityOperation.Failover.ToString())
+                            {
+                                canFailover = true;
+                                break;
+                            }
+                        }
+
+                        if (
+                            canFailover == true && 
+                            protectedEntityProperties.ReplicationProvider == replicationProvider)
                         {
                             UnplannedFailoverRequest request = new UnplannedFailoverRequest();
-                            request.ReplicationProvider = pe.ReplicationProvider;
-                            if (pe.ActiveLocation == "Primary")
+                            request.ReplicationProvider = protectedEntityProperties.ReplicationProvider;
+                            if (protectedEntityProperties.ActiveLocation == "Primary")
                             {
                                 request.FailoverDirection = "PrimaryToRecovery";
                             }
                             else
                             {
-                                if (pe.ReplicationProvider == HyperVReplicaAzure)
+                                if (protectedEntityProperties.ReplicationProvider == HyperVReplicaAzure)
                                 {
                                     Assert.True(true, "Test failover in reverse direction is not allowed for E2A");
                                     break;
@@ -200,15 +240,27 @@ namespace SiteRecovery.Tests
                                 request.FailoverDirection = "RecoveryToPrimary";
                             }
 
-                            AzureFailoverInput blob = new AzureFailoverInput();
-                            blob.VaultLocation = VaultLocation;
-                            request.ReplicationProviderSettings = DataContractUtils.Serialize<AzureFailoverInput>
-                                (blob);
+                            if (replicationProvider == HyperVReplicaAzure) 
+                            {
+                                AzureFailoverInput blob = new AzureFailoverInput();
+                                blob.VaultLocation = VaultLocation;
+                                request.ReplicationProviderSettings = DataContractUtils.Serialize<AzureFailoverInput>
+                                    (blob);
+                            } 
+                            else 
+                            {
+                                request.ReplicationProviderSettings = string.Empty;
+                            }
+
                             response = client.ProtectionEntity.UnplannedFailover(
-                                pe.ProtectionContainerId,
+                                protectedEntityProperties.ProtectionContainerId,
                                 pe.Name,
                                 request,
                                 RequestHeaders);
+
+                            Assert.Equal(OperationStatus.Succeeded, response.Status);
+                            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+
                             desiredPEFound = true;
                             break;
                         }
@@ -219,9 +271,6 @@ namespace SiteRecovery.Tests
                         break;
                     }
                 }
-
-                Assert.Equal(OperationStatus.Succeeded, response.Status);
-                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             }
         }
 
@@ -246,9 +295,21 @@ namespace SiteRecovery.Tests
 
                     foreach (var pe in responsePEs.ProtectionEntities)
                     {
-                        if (pe.CanReverseReplicate == true)
+                        var protectedEntityProperties = pe.Properties;
+
+                        bool canReverseReplicate = false;
+                        foreach (var operation in protectedEntityProperties.AllowedOperations)
                         {
-                            if (pe.ActiveLocation == "Primary")
+                            if (operation == ProtectionEntityOperation.ReverseReplicate.ToString())
+                            {
+                                canReverseReplicate = true;
+                                break;
+                            }
+                        }
+
+                        if (canReverseReplicate == true)
+                        {
+                            if (protectedEntityProperties.ActiveLocation == "Primary")
                             {
                                 request.FailoverDirection = "PrimaryToRecovery";
                             }
@@ -258,10 +319,14 @@ namespace SiteRecovery.Tests
                             }
 
                             response = client.ProtectionEntity.Reprotect(
-                                pe.ProtectionContainerId,
+                                protectedEntityProperties.ProtectionContainerId,
                                 pe.Name,
                                 request,
                                 RequestHeaders);
+
+                            Assert.Equal(OperationStatus.Succeeded, response.Status);
+                            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+
                             desiredPEFound = true;
                             break;
                         }
@@ -272,9 +337,6 @@ namespace SiteRecovery.Tests
                         break;
                     }
                 }
-
-                Assert.Equal(OperationStatus.Succeeded, response.Status);
-                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             }
         }
 
@@ -319,6 +381,7 @@ namespace SiteRecovery.Tests
                         var responsePEs = client.ProtectionEntity.List(pc.Name, RequestHeaders);
                         foreach (var pe in responsePEs.ProtectionEntities)
                         {
+                            var protectedEntityProperties = pe.Properties;
                             string activeLocation = string.Empty;
 
                             if (direction == "PrimaryToRecovery")
@@ -330,14 +393,24 @@ namespace SiteRecovery.Tests
                                 activeLocation = "Primary";
                             }
 
-                            if (
-                                pe.CanCommit == true && 
-                                pe.ActiveLocation == activeLocation && 
-                                pe.ReplicationProvider == replicationProvider)
+                            bool canCommit = false;
+                            foreach (var operation in protectedEntityProperties.AllowedOperations)
                             {
-                                input.ReplicationProvider = pe.ReplicationProvider;
+                                if (operation == ProtectionEntityOperation.Commit.ToString())
+                                {
+                                    canCommit = true;
+                                    break;
+                                }
+                            }
 
-                                if (direction == "RecoveryToPrimary")
+                            if (
+                                canCommit == true &&
+                                protectedEntityProperties.ActiveLocation == activeLocation &&
+                                protectedEntityProperties.ReplicationProvider == replicationProvider)
+                            {
+                                input.ReplicationProvider = protectedEntityProperties.ReplicationProvider;
+
+                                if (direction == "RecoveryToPrimary" && replicationProvider == HyperVReplicaAzure)
                                 {
                                     AzureCommitFailbackInput blob = new AzureCommitFailbackInput();
                                     blob.SkipDataSync = false;
@@ -350,10 +423,14 @@ namespace SiteRecovery.Tests
                                 }
 
                                 response = client.ProtectionEntity.CommitFailover(
-                                    pe.ProtectionContainerId,
+                                    protectedEntityProperties.ProtectionContainerId,
                                     pe.Name,
                                     input,
                                     RequestHeaders);
+
+                                Assert.Equal(OperationStatus.Succeeded, response.Status);
+                                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+
                                 desiredPEFound = true;
                                 break;
                             }
@@ -365,11 +442,8 @@ namespace SiteRecovery.Tests
                         break;
                     }
                 }
-
-                Assert.Equal(OperationStatus.Succeeded, response.Status);
-                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             }
-        }       
+        }
 
         ////public void E2AFailbackTest()
         ////{
@@ -432,119 +506,119 @@ namespace SiteRecovery.Tests
         ////    }
         ////}
 
-        //////public void SanE2ETest()
-        //////{
-        //////    using (UndoContext context = UndoContext.Current)
-        //////    {
-        //////        try
-        //////        {
-        //////            context.Start();
-        //////            var client = GetSiteRecoveryClient(CustomHttpHandler);
+        ////public void SanE2ETest()
+        ////{
+        ////    using (UndoContext context = UndoContext.Current)
+        ////    {
+        ////        try
+        ////        {
+        ////            context.Start();
+        ////            var client = GetSiteRecoveryClient(CustomHttpHandler);
 
-        //////            var requestHeaders = RequestHeaders;
-        //////            requestHeaders.AgentAuthenticationHeader = GenerateAgentAuthenticationHeader(requestHeaders.ClientRequestId);
+        ////            var requestHeaders = RequestHeaders;
+        ////            requestHeaders.AgentAuthenticationHeader = GenerateAgentAuthenticationHeader(requestHeaders.ClientRequestId);
 
-        //////            string containerId = "fc1e58ee-b96a-46fe-8afe-330f7ea545a1_d6a83495-5a6a-4ceb-9dc3-2829f6719032";
-        //////            string entityId = "a7b4f73c-7a02-4fa2-b895-ddfcfceb0d7d";
-        //////            string primaryServerId = "fc1e58ee-b96a-46fe-8afe-330f7ea545a1";
-        //////            string recoveryServerId = "e19be056-3a6b-4239-8d01-b0820bc1aeaf";
+        ////            string containerId = "fc1e58ee-b96a-46fe-8afe-330f7ea545a1_d6a83495-5a6a-4ceb-9dc3-2829f6719032";
+        ////            string entityId = "a7b4f73c-7a02-4fa2-b895-ddfcfceb0d7d";
+        ////            string primaryServerId = "fc1e58ee-b96a-46fe-8afe-330f7ea545a1";
+        ////            string recoveryServerId = "e19be056-3a6b-4239-8d01-b0820bc1aeaf";
 
-        //////            //var responseServer = client.Servers.List(requestHeaders);
+        ////            //var responseServer = client.Servers.List(requestHeaders);
 
-        //////            //var responsePE = client.ProtectionEntity.Get(containerId, entityId, RequestHeaders);
+        ////            //var responsePE = client.ProtectionEntity.Get(containerId, entityId, RequestHeaders);
 
-        //////            var responseStoragePoolPaired = client.StoragePoolMappings.List(primaryServerId, recoveryServerId, requestHeaders);
+        ////            var responseStoragePoolPaired = client.StoragePoolMappings.List(primaryServerId, recoveryServerId, requestHeaders);
 
-        //////            var responseStoragePrimary = client.Storages.List(primaryServerId, requestHeaders);
-        //////            AsrStorage storagePoolPrimary = null;
-        //////            foreach (var storage in responseStoragePrimary.Storages)
-        //////            {
-        //////                if (storage.Type == "Pool")
-        //////                {
-        //////                    if (storage.StoragePools.Count > 0)
-        //////                    {
-        //////                        storagePoolPrimary = storage;
-        //////                    }
-        //////                }
-        //////            }
+        ////            var responseStoragePrimary = client.Storages.List(primaryServerId, requestHeaders);
+        ////            AsrStorage storagePoolPrimary = null;
+        ////            foreach (var storage in responseStoragePrimary.Storages)
+        ////            {
+        ////                if (storage.Type == "Pool")
+        ////                {
+        ////                    if (storage.StoragePools.Count > 0)
+        ////                    {
+        ////                        storagePoolPrimary = storage;
+        ////                    }
+        ////                }
+        ////            }
 
-        //////            var responseStorageRecovery = client.Storages.List(recoveryServerId, requestHeaders);
-        //////            AsrStorage storagePoolRecovery = null;
-        //////            foreach (var storage in responseStorageRecovery.Storages)
-        //////            {
-        //////                if (storage.Type == "Pool")
-        //////                {
-        //////                    if (storage.StoragePools.Count > 0)
-        //////                    {
-        //////                        storagePoolRecovery = storage;
-        //////                    }
-        //////                }
-        //////            }
+        ////            var responseStorageRecovery = client.Storages.List(recoveryServerId, requestHeaders);
+        ////            AsrStorage storagePoolRecovery = null;
+        ////            foreach (var storage in responseStorageRecovery.Storages)
+        ////            {
+        ////                if (storage.Type == "Pool")
+        ////                {
+        ////                    if (storage.StoragePools.Count > 0)
+        ////                    {
+        ////                        storagePoolRecovery = storage;
+        ////                    }
+        ////                }
+        ////            }
 
-        //////            StoragePoolMappingInput storagePoolMappingInput = new StoragePoolMappingInput();
-        //////            storagePoolMappingInput.PrimaryServerId = primaryServerId;
-        //////            storagePoolMappingInput.RecoveryServerId = recoveryServerId;
-        //////            storagePoolMappingInput.PrimaryArrayId = storagePoolPrimary.ID;
-        //////            storagePoolMappingInput.RecoveryArrayId = storagePoolRecovery.ID;
-        //////            storagePoolMappingInput.PrimaryStoragePoolId = storagePoolPrimary.StoragePools[0].ID;
-        //////            storagePoolMappingInput.RecoveryStoragePoolId = storagePoolRecovery.StoragePools[0].ID;
-        //////            var responseStoragePoolPair = client.StoragePoolMappings.Create(storagePoolMappingInput, requestHeaders);
-        //////            var responseStoragePoolUnpair = client.StoragePoolMappings.Delete(storagePoolMappingInput, requestHeaders);
+        ////            StoragePoolMappingInput storagePoolMappingInput = new StoragePoolMappingInput();
+        ////            storagePoolMappingInput.PrimaryServerId = primaryServerId;
+        ////            storagePoolMappingInput.RecoveryServerId = recoveryServerId;
+        ////            storagePoolMappingInput.PrimaryArrayId = storagePoolPrimary.ID;
+        ////            storagePoolMappingInput.RecoveryArrayId = storagePoolRecovery.ID;
+        ////            storagePoolMappingInput.PrimaryStoragePoolId = storagePoolPrimary.StoragePools[0].ID;
+        ////            storagePoolMappingInput.RecoveryStoragePoolId = storagePoolRecovery.StoragePools[0].ID;
+        ////            var responseStoragePoolPair = client.StoragePoolMappings.Create(storagePoolMappingInput, requestHeaders);
+        ////            var responseStoragePoolUnpair = client.StoragePoolMappings.Delete(storagePoolMappingInput, requestHeaders);
 
-        //////            FailoverRequest request = new FailoverRequest();
+        ////            FailoverRequest request = new FailoverRequest();
 
-        //////            // Planned Failover RG
-        //////            request = new PlannedFailoverRequest();
-        //////            request.ReplicationProvider = "San";
-        //////            request.FailoverDirection = "PrimaryToRecovery";
-        //////            var response = client.ProtectionEntity.PlannedFailover(containerId, entityId, (PlannedFailoverRequest)request, requestHeaders);
-        //////            ValidateResponse(response);
-        //////            WaitForJobToComplete(client, response.Job.ID);
+        ////            // Planned Failover RG
+        ////            request = new PlannedFailoverRequest();
+        ////            request.ReplicationProvider = "San";
+        ////            request.FailoverDirection = "PrimaryToRecovery";
+        ////            var response = client.ProtectionEntity.PlannedFailover(containerId, entityId, (PlannedFailoverRequest)request, requestHeaders);
+        ////            ValidateResponse(response);
+        ////            WaitForJobToComplete(client, response.Job.ID);
 
-        //////            // Reverse protect RG
-        //////            request = new ReprotectRequest();
-        //////            request.ReplicationProvider = "San";
-        //////            request.FailoverDirection = "RecoveryToPrimary";
-        //////            response = client.ProtectionEntity.Reprotect(containerId, entityId, (ReprotectRequest)request, requestHeaders);
-        //////            ValidateResponse(response);
-        //////            WaitForJobToComplete(client, response.Job.ID);
+        ////            // Reverse protect RG
+        ////            request = new ReprotectRequest();
+        ////            request.ReplicationProvider = "San";
+        ////            request.FailoverDirection = "RecoveryToPrimary";
+        ////            response = client.ProtectionEntity.Reprotect(containerId, entityId, (ReprotectRequest)request, requestHeaders);
+        ////            ValidateResponse(response);
+        ////            WaitForJobToComplete(client, response.Job.ID);
 
-        //////            // UnPlanned Failover RG
-        //////            request = new UnplannedFailoverRequest();
-        //////            request.ReplicationProvider = "San";
-        //////            request.FailoverDirection = "RecoveryToPrimary";
-        //////            response = client.ProtectionEntity.UnplannedFailover(containerId, entityId, (UnplannedFailoverRequest)request, requestHeaders);
-        //////            ValidateResponse(response);
-        //////            WaitForJobToComplete(client, response.Job.ID);
+        ////            // UnPlanned Failover RG
+        ////            request = new UnplannedFailoverRequest();
+        ////            request.ReplicationProvider = "San";
+        ////            request.FailoverDirection = "RecoveryToPrimary";
+        ////            response = client.ProtectionEntity.UnplannedFailover(containerId, entityId, (UnplannedFailoverRequest)request, requestHeaders);
+        ////            ValidateResponse(response);
+        ////            WaitForJobToComplete(client, response.Job.ID);
 
-        //////            // Reverse protect RG
-        //////            request = new ReprotectRequest();
-        //////            request.ReplicationProvider = "San";
-        //////            request.FailoverDirection = "PrimaryToRecovery";
-        //////            response = client.ProtectionEntity.Reprotect(containerId, entityId, (ReprotectRequest)request, requestHeaders);
-        //////            ValidateResponse(response);
-        //////            WaitForJobToComplete(client, response.Job.ID);
+        ////            // Reverse protect RG
+        ////            request = new ReprotectRequest();
+        ////            request.ReplicationProvider = "San";
+        ////            request.FailoverDirection = "PrimaryToRecovery";
+        ////            response = client.ProtectionEntity.Reprotect(containerId, entityId, (ReprotectRequest)request, requestHeaders);
+        ////            ValidateResponse(response);
+        ////            WaitForJobToComplete(client, response.Job.ID);
 
-        //////            // Test Failover RG
-        //////            request = new TestFailoverRequest();
-        //////            request.ReplicationProvider = "San";
-        //////            request.FailoverDirection = "PrimaryToRecovery";
-        //////            ((TestFailoverRequest)request).NetworkType = "NoNetworkAttachAsInput";
-        //////            ((TestFailoverRequest)request).NetworkID = "xxx";
-        //////            response = client.ProtectionEntity.TestFailover(containerId, entityId, (TestFailoverRequest)request, requestHeaders);
-        //////            ValidateResponse(response);
-        //////        }
-        //////        catch
-        //////        {
-        //////            //skip
-        //////        }
-        //////    }
-        //////}
+        ////            // Test Failover RG
+        ////            request = new TestFailoverRequest();
+        ////            request.ReplicationProvider = "San";
+        ////            request.FailoverDirection = "PrimaryToRecovery";
+        ////            ((TestFailoverRequest)request).NetworkType = "NoNetworkAttachAsInput";
+        ////            ((TestFailoverRequest)request).NetworkID = "xxx";
+        ////            response = client.ProtectionEntity.TestFailover(containerId, entityId, (TestFailoverRequest)request, requestHeaders);
+        ////            ValidateResponse(response);
+        ////        }
+        ////        catch
+        ////        {
+        ////            //skip
+        ////        }
+        ////    }
+        ////}
 
         [Fact]
         public void E2ETestFailoverTest()
         {
-            //TestFailoverTest("PrimaryToRecovery");
+            TestFailoverTest("PrimaryToRecovery");
 
             //// Test failover in reverse direction 
             //// TestFailoverTest("RecoveryToPrimary");
@@ -570,37 +644,40 @@ namespace SiteRecovery.Tests
                     var responsePEs = client.ProtectionEntity.List(pc.Name, RequestHeaders);
                     foreach (var pe in responsePEs.ProtectionEntities)
                     {
-                        if (pe.Protected == true)
+                        var protectedEntityProperties = pe.Properties;
+                        if (protectedEntityProperties.ProtectionStatus == ProtectionEntityStatus.Protected.ToString())
                         {
                             TestFailoverRequest request = new TestFailoverRequest();
                             request.FailoverDirection = failoverDirection;
-                            request.ReplicationProvider = pe.ReplicationProvider;
-                            if (pe.ReplicationProvider == HyperVReplica)
+                            request.ReplicationProvider = protectedEntityProperties.ReplicationProvider;
+                            if (protectedEntityProperties.ReplicationProvider == HyperVReplicaAzure)
                             {
+                                if (failoverDirection == "RecoveryToPrimary")
+                                {
+                                    Assert.True(true, "Test failover in reverse direction is not allowed for E2A");
+                                    break;
+                                }
+
                                 AzureFailoverInput blob = new AzureFailoverInput();
                                 blob.VaultLocation = VaultLocation;
                                 request.ReplicationProviderSettings = DataContractUtils.Serialize<AzureFailoverInput>(blob);
                             }
                             else
                             {
-                                if (
-                                    pe.ReplicationProvider == HyperVReplicaAzure && 
-                                    failoverDirection == "RecoveryToPrimary")
-                                {
-                                    Assert.True(true, "Test failover in reverse direction is not allowed for E2A");
-                                    break;
-                                }
-
                                 request.ReplicationProviderSettings = "";
                             }
 
                             request.NetworkID = "ID";
                             request.NetworkType = "Type";
                             response = client.ProtectionEntity.TestFailover(
-                                pe.ProtectionContainerId,
+                                protectedEntityProperties.ProtectionContainerId,
                                 pe.Name,
                                 request,
                                 RequestHeaders);
+
+                            Assert.Equal(OperationStatus.Succeeded, response.Status);
+                            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+
                             desiredPEFound = true;
                             break;
                         }
@@ -611,10 +688,44 @@ namespace SiteRecovery.Tests
                         break;
                     }
                 }
-
-                Assert.Equal(OperationStatus.Succeeded, response.Status);
-                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             }
         }
+    }
+
+    /// <summary>
+    /// Represents allowed operations on a protection entity.
+    /// </summary>
+    public enum ProtectionEntityOperation
+    {
+        /// <summary>
+        /// Initiates failover on protection entity.
+        /// </summary>
+        Failover,
+
+        /// <summary>
+        /// Initiates reverse replication on protection entity.
+        /// </summary>
+        ReverseReplicate,
+
+        /// <summary>
+        /// Commits a failover operation.
+        /// </summary>
+        Commit
+    }
+
+    /// <summary>
+    /// Represents the protection status
+    /// </summary>
+    public enum ProtectionEntityStatus
+    {
+        /// <summary>
+        /// Entity in question is protected.
+        /// </summary>
+        Protected,
+
+        /// <summary>
+        /// Entity in question is not protected.
+        /// </summary>
+        Unprotected
     }
 }
