@@ -61,8 +61,239 @@ namespace Microsoft.Azure.Management.BackupServices
         }
         
         /// <summary>
-        /// Get the list of all container based on the given query filter
-        /// string.
+        /// Get the recovery point.
+        /// </summary>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <param name='containerName'>
+        /// Optional.
+        /// </param>
+        /// <param name='itemName'>
+        /// Optional.
+        /// </param>
+        /// <param name='recoveryPointName'>
+        /// Optional.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The definition of a CSMRecoveryPointOperationResponse.
+        /// </returns>
+        public async Task<CSMRecoveryPointOperationResponse> GetAsync(CustomRequestHeaders customRequestHeaders, string containerName, string itemName, string recoveryPointName, CancellationToken cancellationToken)
+        {
+            // Validate
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("customRequestHeaders", customRequestHeaders);
+                tracingParameters.Add("containerName", containerName);
+                tracingParameters.Add("itemName", itemName);
+                tracingParameters.Add("recoveryPointName", recoveryPointName);
+                TracingAdapter.Enter(invocationId, this, "GetAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/Subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(this.Client.ResourceGroupName);
+            url = url + "/providers/";
+            url = url + "Microsoft.Backup";
+            url = url + "/";
+            url = url + "BackupVault";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(this.Client.ResourceName);
+            url = url + "/registeredContainers/";
+            if (containerName != null)
+            {
+                url = url + Uri.EscapeDataString(containerName);
+            }
+            url = url + "/protectedItems/";
+            if (itemName != null)
+            {
+                url = url + Uri.EscapeDataString(itemName);
+            }
+            url = url + "/recoveryPoints/";
+            if (recoveryPointName != null)
+            {
+                url = url + Uri.EscapeDataString(recoveryPointName);
+            }
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-09-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("Accept-Language", "en-us");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    CSMRecoveryPointOperationResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new CSMRecoveryPointOperationResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken cSMRecoveryPointResponseValue = responseDoc["CSMRecoveryPointResponse"];
+                            if (cSMRecoveryPointResponseValue != null && cSMRecoveryPointResponseValue.Type != JTokenType.Null)
+                            {
+                                CSMRecoveryPointResponse cSMRecoveryPointResponseInstance = new CSMRecoveryPointResponse();
+                                result.Value = cSMRecoveryPointResponseInstance;
+                                
+                                JToken propertiesValue = cSMRecoveryPointResponseValue["properties"];
+                                if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                                {
+                                    CSMRecoveryPointProperties propertiesInstance = new CSMRecoveryPointProperties();
+                                    cSMRecoveryPointResponseInstance.Properties = propertiesInstance;
+                                    
+                                    JToken recoveryPointTypeValue = propertiesValue["recoveryPointType"];
+                                    if (recoveryPointTypeValue != null && recoveryPointTypeValue.Type != JTokenType.Null)
+                                    {
+                                        string recoveryPointTypeInstance = ((string)recoveryPointTypeValue);
+                                        propertiesInstance.RecoveryPointType = recoveryPointTypeInstance;
+                                    }
+                                    
+                                    JToken recoveryPointTimeValue = propertiesValue["recoveryPointTime"];
+                                    if (recoveryPointTimeValue != null && recoveryPointTimeValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime recoveryPointTimeInstance = ((DateTime)recoveryPointTimeValue);
+                                        propertiesInstance.RecoveryPointTime = recoveryPointTimeInstance;
+                                    }
+                                    
+                                    JToken recoveryPointAdditionalInfoValue = propertiesValue["recoveryPointAdditionalInfo"];
+                                    if (recoveryPointAdditionalInfoValue != null && recoveryPointAdditionalInfoValue.Type != JTokenType.Null)
+                                    {
+                                        string recoveryPointAdditionalInfoInstance = ((string)recoveryPointAdditionalInfoValue);
+                                        propertiesInstance.RecoveryPointAdditionalInfo = recoveryPointAdditionalInfoInstance;
+                                    }
+                                }
+                                
+                                JToken idValue = cSMRecoveryPointResponseValue["id"];
+                                if (idValue != null && idValue.Type != JTokenType.Null)
+                                {
+                                    string idInstance = ((string)idValue);
+                                    cSMRecoveryPointResponseInstance.Id = idInstance;
+                                }
+                                
+                                JToken nameValue = cSMRecoveryPointResponseValue["name"];
+                                if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                {
+                                    string nameInstance = ((string)nameValue);
+                                    cSMRecoveryPointResponseInstance.Name = nameInstance;
+                                }
+                                
+                                JToken typeValue = cSMRecoveryPointResponseValue["type"];
+                                if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                {
+                                    string typeInstance = ((string)typeValue);
+                                    cSMRecoveryPointResponseInstance.Type = typeInstance;
+                                }
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-client-request-id"))
+                    {
+                        customRequestHeaders.ClientRequestId = httpResponse.Headers.GetValues("x-ms-client-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Get the list of all recovery points.
         /// </summary>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
