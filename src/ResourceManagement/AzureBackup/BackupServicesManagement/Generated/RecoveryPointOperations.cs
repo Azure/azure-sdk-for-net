@@ -124,7 +124,11 @@ namespace Microsoft.Azure.Management.BackupServices
             {
                 url = url + Uri.EscapeDataString(itemName);
             }
-            url = url + "/recoveryPoints/recoveryPointName";
+            url = url + "/recoveryPoints/";
+            if (recoveryPointName != null)
+            {
+                url = url + Uri.EscapeDataString(recoveryPointName);
+            }
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2014-09-01");
             if (queryParameters.Count > 0)
