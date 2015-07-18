@@ -77,6 +77,7 @@
     <Compile Include="Generated\Models\CSMListResponse.cs" />
     <Compile Include="Generated\Models\CSMRecoveryPointListOperationResponse.cs" />
     <Compile Include="Generated\Models\CSMRecoveryPointListResponse.cs" />
+    <Compile Include="Generated\Models\CSMRecoveryPointOperationResponse.cs" />
     <Compile Include="Generated\Models\CSMRecoveryPointProperties.cs" />
     <Compile Include="Generated\Models\CSMRecoveryPointResponse.cs" />
     <Compile Include="Generated\Models\CSMRestoreRequest.cs" />

@@ -31,8 +31,65 @@ namespace Microsoft.Azure.Management.BackupServices
     public static partial class RecoveryPointOperationsExtensions
     {
         /// <summary>
-        /// Get the list of all container based on the given query filter
-        /// string.
+        /// Get the recovery point.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.BackupServices.IRecoveryPointOperations.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <param name='containerName'>
+        /// Optional.
+        /// </param>
+        /// <param name='itemName'>
+        /// Optional.
+        /// </param>
+        /// <param name='recoveryPointName'>
+        /// Optional.
+        /// </param>
+        /// <returns>
+        /// The definition of a CSMRecoveryPointOperationResponse.
+        /// </returns>
+        public static CSMRecoveryPointOperationResponse Get(this IRecoveryPointOperations operations, CustomRequestHeaders customRequestHeaders, string containerName, string itemName, string recoveryPointName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IRecoveryPointOperations)s).GetAsync(customRequestHeaders, containerName, itemName, recoveryPointName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Get the recovery point.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.BackupServices.IRecoveryPointOperations.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <param name='containerName'>
+        /// Optional.
+        /// </param>
+        /// <param name='itemName'>
+        /// Optional.
+        /// </param>
+        /// <param name='recoveryPointName'>
+        /// Optional.
+        /// </param>
+        /// <returns>
+        /// The definition of a CSMRecoveryPointOperationResponse.
+        /// </returns>
+        public static Task<CSMRecoveryPointOperationResponse> GetAsync(this IRecoveryPointOperations operations, CustomRequestHeaders customRequestHeaders, string containerName, string itemName, string recoveryPointName)
+        {
+            return operations.GetAsync(customRequestHeaders, containerName, itemName, recoveryPointName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Get the list of all recovery points.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -60,8 +117,7 @@ namespace Microsoft.Azure.Management.BackupServices
         }
         
         /// <summary>
-        /// Get the list of all container based on the given query filter
-        /// string.
+        /// Get the list of all recovery points.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
