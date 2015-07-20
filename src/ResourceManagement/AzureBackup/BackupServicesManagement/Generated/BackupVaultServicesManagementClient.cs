@@ -100,6 +100,16 @@ namespace Microsoft.Azure.Management.BackupServices
             set { this._resourceName = value; }
         }
         
+        private IContainerOperations _container;
+        
+        /// <summary>
+        /// Definition of Container operations for the Azure Backup extension.
+        /// </summary>
+        public virtual IContainerOperations Container
+        {
+            get { return this._container; }
+        }
+        
         private IVaultOperations _vault;
         
         /// <summary>
@@ -118,6 +128,7 @@ namespace Microsoft.Azure.Management.BackupServices
         public BackupVaultServicesManagementClient()
             : base()
         {
+            this._container = new ContainerOperations(this);
             this._vault = new VaultOperations(this);
             this._apiVersion = "2013-03-01";
             this._longRunningOperationInitialTimeout = -1;
@@ -219,6 +230,7 @@ namespace Microsoft.Azure.Management.BackupServices
         public BackupVaultServicesManagementClient(HttpClient httpClient)
             : base(httpClient)
         {
+            this._container = new ContainerOperations(this);
             this._vault = new VaultOperations(this);
             this._apiVersion = "2013-03-01";
             this._longRunningOperationInitialTimeout = -1;
