@@ -175,16 +175,6 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             get { return this._pipelines; }
         }
         
-        private IPipelineRunOperations _pipelineRuns;
-        
-        /// <summary>
-        /// Operations for managing pipeline runs.
-        /// </summary>
-        public virtual IPipelineRunOperations PipelineRuns
-        {
-            get { return this._pipelineRuns; }
-        }
-        
         private ITableOperations _tables;
         
         /// <summary>
@@ -210,7 +200,6 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             this._hubs = new HubOperations(this);
             this._linkedServices = new LinkedServiceOperations(this);
             this._pipelines = new PipelineOperations(this);
-            this._pipelineRuns = new PipelineRunOperations(this);
             this._tables = new TableOperations(this);
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
@@ -293,7 +282,6 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             this._hubs = new HubOperations(this);
             this._linkedServices = new LinkedServiceOperations(this);
             this._pipelines = new PipelineOperations(this);
-            this._pipelineRuns = new PipelineRunOperations(this);
             this._tables = new TableOperations(this);
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
@@ -481,11 +469,11 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                     {
                         result.Status = OperationStatus.Failed;
                     }
-                    if (statusCode == HttpStatusCode.NoContent)
+                    if (statusCode == HttpStatusCode.OK)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
-                    if (statusCode == HttpStatusCode.OK)
+                    if (statusCode == HttpStatusCode.NoContent)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }

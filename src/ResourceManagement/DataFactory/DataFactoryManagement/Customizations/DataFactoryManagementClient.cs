@@ -86,11 +86,6 @@ namespace Microsoft.Azure.Management.DataFactories
         public virtual IPipelineOperations Pipelines { get; private set; }
 
         /// <summary>
-        /// Operations for managing pipeline runs.
-        /// </summary>
-        public virtual IPipelineRunOperations PipelineRuns { get; private set; }
-
-        /// <summary>
         /// Operations for managing tables.
         /// </summary>
         public virtual ITableOperations Tables { get; private set; }
@@ -247,6 +242,14 @@ namespace Microsoft.Azure.Management.DataFactories
             }
         }
 
+        protected override DataFactoryManagementClient WithHandler(ServiceClient<DataFactoryManagementClient> newClient,
+            DelegatingHandler handler)
+        {
+            DataFactoryManagementClient client = base.WithHandler(newClient, handler);
+            client.InternalClient.HttpClient = client.HttpClient;
+            return client;
+        }
+
         private void Initialize()
         {
             this.InternalClient = new Core.DataFactoryManagementClient();
@@ -260,7 +263,6 @@ namespace Microsoft.Azure.Management.DataFactories
             this.Hubs = new HubOperations(this);
             this.LinkedServices = new LinkedServiceOperations(this);
             this.Pipelines = new PipelineOperations(this);
-            this.PipelineRuns = new PipelineRunOperations(this);
             this.Tables = new TableOperations(this);
             this.HttpClient.Timeout = this.InternalClient.HttpClient.Timeout;
             this.Credentials = this.InternalClient.Credentials;

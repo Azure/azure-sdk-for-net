@@ -26,15 +26,15 @@ using Microsoft.Azure.Management.TrafficManager.Models;
 namespace Microsoft.Azure.Management.TrafficManager.Models
 {
     /// <summary>
-    /// Parameters supplied to create or update a Profile.
+    /// Parameters supplied to create or update a Traffic Manager profile.
     /// </summary>
     public partial class ProfileCreateOrUpdateParameters
     {
         private Profile _profile;
         
         /// <summary>
-        /// Required. Gets or sets information about the Profile being created
-        /// or updated.
+        /// Required. Gets or sets parameters for the Traffic Manager profile
+        /// being created or updated.
         /// </summary>
         public Profile Profile
         {
