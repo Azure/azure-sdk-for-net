@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Common.Authentication.Factories
         public ClientFactory()
         {
             actions = new Dictionary<Type, IClientAction>();
-            UserAgents = new List<ProductInfoHeaderValue>();
+            UserAgents = new HashSet<ProductInfoHeaderValue>();
         }
 
         public virtual TClient CreateClient<TClient>(AzureContext context, AzureEnvironment.Endpoint endpoint) where TClient : ServiceClient<TClient>
@@ -181,6 +181,28 @@ namespace Microsoft.Azure.Common.Authentication.Factories
             }
         }
 
-        public List<ProductInfoHeaderValue> UserAgents { get; set; }
+        /// <summary>
+        /// Adds user agent to UserAgents collection.
+        /// </summary>
+        /// <param name="productName">Product name.</param>
+        /// <param name="productVersion">Product version.</param>
+        public void AddUserAgent(string productName, string productVersion) 
+        {
+            UserAgents.Add(new ProductInfoHeaderValue(productName, productVersion));
+        }
+
+        /// <summary>
+        /// Adds user agent to UserAgents collection with empty version.
+        /// </summary>
+        /// <param name="productName">Product name.</param>
+        public void AddUserAgent(string productName)
+        {
+            AddUserAgent(productName, "");
+        }
+
+        /// <summary>
+        /// Gets a hash set of user agents to be included in created clients.
+        /// </summary>
+        public HashSet<ProductInfoHeaderValue> UserAgents { get; private set; }
     }
 }

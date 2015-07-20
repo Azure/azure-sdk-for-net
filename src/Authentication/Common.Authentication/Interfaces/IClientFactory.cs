@@ -40,6 +40,22 @@ namespace Microsoft.Azure.Common.Authentication
 
         void RemoveAction(Type actionType);
 
-        List<ProductInfoHeaderValue> UserAgents { get; set; }
+        /// <summary>
+        /// Adds user agent to UserAgents collection with empty version.
+        /// </summary>
+        /// <param name="productName">Product name.</param>
+        void AddUserAgent(string productName);
+
+        /// <summary>
+        /// Adds user agent to UserAgents collection.
+        /// </summary>
+        /// <param name="productName">Product name.</param>
+        /// <param name="productVersion">Product version.</param>
+        void AddUserAgent(string productName, string productVersion);
+
+        /// <summary>
+        /// Gets a hash set of user agents to be included in created clients.
+        /// </summary>
+        HashSet<ProductInfoHeaderValue> UserAgents { get; }
     }
 }

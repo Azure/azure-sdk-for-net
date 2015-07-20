@@ -28,29 +28,29 @@ namespace Microsoft.Azure.Management.Network.Models
     /// <summary>
     /// Frontend IP configuration of application gateway
     /// </summary>
-    public partial class ApplicationGatewayFrontendIpConfiguration : ChildResource
+    public partial class ApplicationGatewayFrontendIPConfiguration : ChildResource
     {
-        private string _privateIpAddress;
+        private string _privateIPAddress;
         
         /// <summary>
         /// Optional. Gets or sets the privateIPAddress of the Network
         /// Interface IP Configuration
         /// </summary>
-        public string PrivateIpAddress
+        public string PrivateIPAddress
         {
-            get { return this._privateIpAddress; }
-            set { this._privateIpAddress = value; }
+            get { return this._privateIPAddress; }
+            set { this._privateIPAddress = value; }
         }
         
-        private string _privateIpAllocationMethod;
+        private string _privateIPAllocationMethod;
         
         /// <summary>
         /// Optional. Gets or sets PrivateIP allocation method (Static/Dynamic)
         /// </summary>
-        public string PrivateIpAllocationMethod
+        public string PrivateIPAllocationMethod
         {
-            get { return this._privateIpAllocationMethod; }
-            set { this._privateIpAllocationMethod = value; }
+            get { return this._privateIPAllocationMethod; }
+            set { this._privateIPAllocationMethod = value; }
         }
         
         private string _provisioningState;
@@ -65,15 +65,15 @@ namespace Microsoft.Azure.Management.Network.Models
             set { this._provisioningState = value; }
         }
         
-        private ResourceId _publicIpAddress;
+        private ResourceId _publicIPAddress;
         
         /// <summary>
         /// Optional. Gets or sets the reference of the PublicIP resource
         /// </summary>
-        public ResourceId PublicIpAddress
+        public ResourceId PublicIPAddress
         {
-            get { return this._publicIpAddress; }
-            set { this._publicIpAddress = value; }
+            get { return this._publicIPAddress; }
+            set { this._publicIPAddress = value; }
         }
         
         private ResourceId _subnet;
@@ -89,9 +89,9 @@ namespace Microsoft.Azure.Management.Network.Models
         
         /// <summary>
         /// Initializes a new instance of the
-        /// ApplicationGatewayFrontendIpConfiguration class.
+        /// ApplicationGatewayFrontendIPConfiguration class.
         /// </summary>
-        public ApplicationGatewayFrontendIpConfiguration()
+        public ApplicationGatewayFrontendIPConfiguration()
         {
         }
     }

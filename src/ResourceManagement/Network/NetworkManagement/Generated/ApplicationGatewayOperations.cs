@@ -199,51 +199,51 @@ namespace Microsoft.Azure.Management.Network
                     propertiesValue["operationalState"] = parameters.OperationalState;
                 }
                 
-                if (parameters.GatewayIpConfigurations != null)
+                if (parameters.GatewayIPConfigurations != null)
                 {
-                    if (parameters.GatewayIpConfigurations is ILazyCollection == false || ((ILazyCollection)parameters.GatewayIpConfigurations).IsInitialized)
+                    if (parameters.GatewayIPConfigurations is ILazyCollection == false || ((ILazyCollection)parameters.GatewayIPConfigurations).IsInitialized)
                     {
-                        JArray gatewayIpConfigurationsArray = new JArray();
-                        foreach (ApplicationGatewayIpConfiguration gatewayIpConfigurationsItem in parameters.GatewayIpConfigurations)
+                        JArray gatewayIPConfigurationsArray = new JArray();
+                        foreach (ApplicationGatewayIPConfiguration gatewayIPConfigurationsItem in parameters.GatewayIPConfigurations)
                         {
-                            JObject applicationGatewayIpConfigurationJsonFormatValue = new JObject();
-                            gatewayIpConfigurationsArray.Add(applicationGatewayIpConfigurationJsonFormatValue);
+                            JObject applicationGatewayIPConfigurationJsonFormatValue = new JObject();
+                            gatewayIPConfigurationsArray.Add(applicationGatewayIPConfigurationJsonFormatValue);
                             
                             JObject propertiesValue2 = new JObject();
-                            applicationGatewayIpConfigurationJsonFormatValue["properties"] = propertiesValue2;
+                            applicationGatewayIPConfigurationJsonFormatValue["properties"] = propertiesValue2;
                             
-                            if (gatewayIpConfigurationsItem.Subnet != null)
+                            if (gatewayIPConfigurationsItem.Subnet != null)
                             {
                                 JObject subnetValue = new JObject();
                                 propertiesValue2["subnet"] = subnetValue;
                                 
-                                if (gatewayIpConfigurationsItem.Subnet.Id != null)
+                                if (gatewayIPConfigurationsItem.Subnet.Id != null)
                                 {
-                                    subnetValue["id"] = gatewayIpConfigurationsItem.Subnet.Id;
+                                    subnetValue["id"] = gatewayIPConfigurationsItem.Subnet.Id;
                                 }
                             }
                             
-                            if (gatewayIpConfigurationsItem.ProvisioningState != null)
+                            if (gatewayIPConfigurationsItem.ProvisioningState != null)
                             {
-                                propertiesValue2["provisioningState"] = gatewayIpConfigurationsItem.ProvisioningState;
+                                propertiesValue2["provisioningState"] = gatewayIPConfigurationsItem.ProvisioningState;
                             }
                             
-                            if (gatewayIpConfigurationsItem.Name != null)
+                            if (gatewayIPConfigurationsItem.Name != null)
                             {
-                                applicationGatewayIpConfigurationJsonFormatValue["name"] = gatewayIpConfigurationsItem.Name;
+                                applicationGatewayIPConfigurationJsonFormatValue["name"] = gatewayIPConfigurationsItem.Name;
                             }
                             
-                            if (gatewayIpConfigurationsItem.Etag != null)
+                            if (gatewayIPConfigurationsItem.Etag != null)
                             {
-                                applicationGatewayIpConfigurationJsonFormatValue["etag"] = gatewayIpConfigurationsItem.Etag;
+                                applicationGatewayIPConfigurationJsonFormatValue["etag"] = gatewayIPConfigurationsItem.Etag;
                             }
                             
-                            if (gatewayIpConfigurationsItem.Id != null)
+                            if (gatewayIPConfigurationsItem.Id != null)
                             {
-                                applicationGatewayIpConfigurationJsonFormatValue["id"] = gatewayIpConfigurationsItem.Id;
+                                applicationGatewayIPConfigurationJsonFormatValue["id"] = gatewayIPConfigurationsItem.Id;
                             }
                         }
-                        propertiesValue["gatewayIpConfigurations"] = gatewayIpConfigurationsArray;
+                        propertiesValue["gatewayIPConfigurations"] = gatewayIPConfigurationsArray;
                     }
                 }
                 
@@ -299,72 +299,72 @@ namespace Microsoft.Azure.Management.Network
                     }
                 }
                 
-                if (parameters.FrontendIpConfigurations != null)
+                if (parameters.FrontendIPConfigurations != null)
                 {
-                    if (parameters.FrontendIpConfigurations is ILazyCollection == false || ((ILazyCollection)parameters.FrontendIpConfigurations).IsInitialized)
+                    if (parameters.FrontendIPConfigurations is ILazyCollection == false || ((ILazyCollection)parameters.FrontendIPConfigurations).IsInitialized)
                     {
-                        JArray frontendIpConfigurationsArray = new JArray();
-                        foreach (ApplicationGatewayFrontendIpConfiguration frontendIpConfigurationsItem in parameters.FrontendIpConfigurations)
+                        JArray frontendIPConfigurationsArray = new JArray();
+                        foreach (ApplicationGatewayFrontendIPConfiguration frontendIPConfigurationsItem in parameters.FrontendIPConfigurations)
                         {
-                            JObject applicationGatewayFrontendIpConfigurationJsonFormatValue = new JObject();
-                            frontendIpConfigurationsArray.Add(applicationGatewayFrontendIpConfigurationJsonFormatValue);
+                            JObject applicationGatewayFrontendIPConfigurationJsonFormatValue = new JObject();
+                            frontendIPConfigurationsArray.Add(applicationGatewayFrontendIPConfigurationJsonFormatValue);
                             
                             JObject propertiesValue4 = new JObject();
-                            applicationGatewayFrontendIpConfigurationJsonFormatValue["properties"] = propertiesValue4;
+                            applicationGatewayFrontendIPConfigurationJsonFormatValue["properties"] = propertiesValue4;
                             
-                            if (frontendIpConfigurationsItem.PrivateIpAddress != null)
+                            if (frontendIPConfigurationsItem.PrivateIPAddress != null)
                             {
-                                propertiesValue4["privateIPAddress"] = frontendIpConfigurationsItem.PrivateIpAddress;
+                                propertiesValue4["privateIPAddress"] = frontendIPConfigurationsItem.PrivateIPAddress;
                             }
                             
-                            if (frontendIpConfigurationsItem.PrivateIpAllocationMethod != null)
+                            if (frontendIPConfigurationsItem.PrivateIPAllocationMethod != null)
                             {
-                                propertiesValue4["privateIPAllocationMethod"] = frontendIpConfigurationsItem.PrivateIpAllocationMethod;
+                                propertiesValue4["privateIPAllocationMethod"] = frontendIPConfigurationsItem.PrivateIPAllocationMethod;
                             }
                             
-                            if (frontendIpConfigurationsItem.Subnet != null)
+                            if (frontendIPConfigurationsItem.Subnet != null)
                             {
                                 JObject subnetValue2 = new JObject();
                                 propertiesValue4["subnet"] = subnetValue2;
                                 
-                                if (frontendIpConfigurationsItem.Subnet.Id != null)
+                                if (frontendIPConfigurationsItem.Subnet.Id != null)
                                 {
-                                    subnetValue2["id"] = frontendIpConfigurationsItem.Subnet.Id;
+                                    subnetValue2["id"] = frontendIPConfigurationsItem.Subnet.Id;
                                 }
                             }
                             
-                            if (frontendIpConfigurationsItem.PublicIpAddress != null)
+                            if (frontendIPConfigurationsItem.PublicIPAddress != null)
                             {
                                 JObject publicIPAddressValue = new JObject();
                                 propertiesValue4["publicIPAddress"] = publicIPAddressValue;
                                 
-                                if (frontendIpConfigurationsItem.PublicIpAddress.Id != null)
+                                if (frontendIPConfigurationsItem.PublicIPAddress.Id != null)
                                 {
-                                    publicIPAddressValue["id"] = frontendIpConfigurationsItem.PublicIpAddress.Id;
+                                    publicIPAddressValue["id"] = frontendIPConfigurationsItem.PublicIPAddress.Id;
                                 }
                             }
                             
-                            if (frontendIpConfigurationsItem.ProvisioningState != null)
+                            if (frontendIPConfigurationsItem.ProvisioningState != null)
                             {
-                                propertiesValue4["provisioningState"] = frontendIpConfigurationsItem.ProvisioningState;
+                                propertiesValue4["provisioningState"] = frontendIPConfigurationsItem.ProvisioningState;
                             }
                             
-                            if (frontendIpConfigurationsItem.Name != null)
+                            if (frontendIPConfigurationsItem.Name != null)
                             {
-                                applicationGatewayFrontendIpConfigurationJsonFormatValue["name"] = frontendIpConfigurationsItem.Name;
+                                applicationGatewayFrontendIPConfigurationJsonFormatValue["name"] = frontendIPConfigurationsItem.Name;
                             }
                             
-                            if (frontendIpConfigurationsItem.Etag != null)
+                            if (frontendIPConfigurationsItem.Etag != null)
                             {
-                                applicationGatewayFrontendIpConfigurationJsonFormatValue["etag"] = frontendIpConfigurationsItem.Etag;
+                                applicationGatewayFrontendIPConfigurationJsonFormatValue["etag"] = frontendIPConfigurationsItem.Etag;
                             }
                             
-                            if (frontendIpConfigurationsItem.Id != null)
+                            if (frontendIPConfigurationsItem.Id != null)
                             {
-                                applicationGatewayFrontendIpConfigurationJsonFormatValue["id"] = frontendIpConfigurationsItem.Id;
+                                applicationGatewayFrontendIPConfigurationJsonFormatValue["id"] = frontendIPConfigurationsItem.Id;
                             }
                         }
-                        propertiesValue["frontendIpConfigurations"] = frontendIpConfigurationsArray;
+                        propertiesValue["frontendIPConfigurations"] = frontendIPConfigurationsArray;
                     }
                 }
                 
@@ -420,22 +420,22 @@ namespace Microsoft.Azure.Management.Network
                             JObject propertiesValue6 = new JObject();
                             applicationGatewayBackendAddressPoolJsonFormatValue["properties"] = propertiesValue6;
                             
-                            if (backendAddressPoolsItem.BackendIpConfigurations != null)
+                            if (backendAddressPoolsItem.BackendIPConfigurations != null)
                             {
-                                if (backendAddressPoolsItem.BackendIpConfigurations is ILazyCollection == false || ((ILazyCollection)backendAddressPoolsItem.BackendIpConfigurations).IsInitialized)
+                                if (backendAddressPoolsItem.BackendIPConfigurations is ILazyCollection == false || ((ILazyCollection)backendAddressPoolsItem.BackendIPConfigurations).IsInitialized)
                                 {
-                                    JArray backendIpConfigurationsArray = new JArray();
-                                    foreach (ResourceId backendIpConfigurationsItem in backendAddressPoolsItem.BackendIpConfigurations)
+                                    JArray backendIPConfigurationsArray = new JArray();
+                                    foreach (ResourceId backendIPConfigurationsItem in backendAddressPoolsItem.BackendIPConfigurations)
                                     {
                                         JObject resourceIdValue = new JObject();
-                                        backendIpConfigurationsArray.Add(resourceIdValue);
+                                        backendIPConfigurationsArray.Add(resourceIdValue);
                                         
-                                        if (backendIpConfigurationsItem.Id != null)
+                                        if (backendIPConfigurationsItem.Id != null)
                                         {
-                                            resourceIdValue["id"] = backendIpConfigurationsItem.Id;
+                                            resourceIdValue["id"] = backendIPConfigurationsItem.Id;
                                         }
                                     }
-                                    propertiesValue6["backendIpConfigurations"] = backendIpConfigurationsArray;
+                                    propertiesValue6["backendIPConfigurations"] = backendIPConfigurationsArray;
                                 }
                             }
                             
@@ -549,14 +549,14 @@ namespace Microsoft.Azure.Management.Network
                             JObject propertiesValue8 = new JObject();
                             applicationGatewayHttpListenerJsonFormatValue["properties"] = propertiesValue8;
                             
-                            if (httpListenersItem.FrontendIpConfiguration != null)
+                            if (httpListenersItem.FrontendIPConfiguration != null)
                             {
-                                JObject frontendIpConfigurationValue = new JObject();
-                                propertiesValue8["frontendIpConfiguration"] = frontendIpConfigurationValue;
+                                JObject frontendIPConfigurationValue = new JObject();
+                                propertiesValue8["frontendIPConfiguration"] = frontendIPConfigurationValue;
                                 
-                                if (httpListenersItem.FrontendIpConfiguration.Id != null)
+                                if (httpListenersItem.FrontendIPConfiguration.Id != null)
                                 {
-                                    frontendIpConfigurationValue["id"] = httpListenersItem.FrontendIpConfiguration.Id;
+                                    frontendIPConfigurationValue["id"] = httpListenersItem.FrontendIPConfiguration.Id;
                                 }
                             }
                             
@@ -812,22 +812,22 @@ namespace Microsoft.Azure.Management.Network
                                     applicationGatewayInstance.OperationalState = operationalStateInstance;
                                 }
                                 
-                                JToken gatewayIpConfigurationsArray2 = propertiesValue10["gatewayIpConfigurations"];
-                                if (gatewayIpConfigurationsArray2 != null && gatewayIpConfigurationsArray2.Type != JTokenType.Null)
+                                JToken gatewayIPConfigurationsArray2 = propertiesValue10["gatewayIPConfigurations"];
+                                if (gatewayIPConfigurationsArray2 != null && gatewayIPConfigurationsArray2.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken gatewayIpConfigurationsValue in ((JArray)gatewayIpConfigurationsArray2))
+                                    foreach (JToken gatewayIPConfigurationsValue in ((JArray)gatewayIPConfigurationsArray2))
                                     {
-                                        ApplicationGatewayIpConfiguration applicationGatewayIpConfigurationJsonFormatInstance = new ApplicationGatewayIpConfiguration();
-                                        applicationGatewayInstance.GatewayIpConfigurations.Add(applicationGatewayIpConfigurationJsonFormatInstance);
+                                        ApplicationGatewayIPConfiguration applicationGatewayIPConfigurationJsonFormatInstance = new ApplicationGatewayIPConfiguration();
+                                        applicationGatewayInstance.GatewayIPConfigurations.Add(applicationGatewayIPConfigurationJsonFormatInstance);
                                         
-                                        JToken propertiesValue11 = gatewayIpConfigurationsValue["properties"];
+                                        JToken propertiesValue11 = gatewayIPConfigurationsValue["properties"];
                                         if (propertiesValue11 != null && propertiesValue11.Type != JTokenType.Null)
                                         {
                                             JToken subnetValue3 = propertiesValue11["subnet"];
                                             if (subnetValue3 != null && subnetValue3.Type != JTokenType.Null)
                                             {
                                                 ResourceId subnetInstance = new ResourceId();
-                                                applicationGatewayIpConfigurationJsonFormatInstance.Subnet = subnetInstance;
+                                                applicationGatewayIPConfigurationJsonFormatInstance.Subnet = subnetInstance;
                                                 
                                                 JToken idValue = subnetValue3["id"];
                                                 if (idValue != null && idValue.Type != JTokenType.Null)
@@ -841,29 +841,29 @@ namespace Microsoft.Azure.Management.Network
                                             if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
                                             {
                                                 string provisioningStateInstance = ((string)provisioningStateValue);
-                                                applicationGatewayIpConfigurationJsonFormatInstance.ProvisioningState = provisioningStateInstance;
+                                                applicationGatewayIPConfigurationJsonFormatInstance.ProvisioningState = provisioningStateInstance;
                                             }
                                         }
                                         
-                                        JToken nameValue2 = gatewayIpConfigurationsValue["name"];
+                                        JToken nameValue2 = gatewayIPConfigurationsValue["name"];
                                         if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
                                         {
                                             string nameInstance2 = ((string)nameValue2);
-                                            applicationGatewayIpConfigurationJsonFormatInstance.Name = nameInstance2;
+                                            applicationGatewayIPConfigurationJsonFormatInstance.Name = nameInstance2;
                                         }
                                         
-                                        JToken etagValue = gatewayIpConfigurationsValue["etag"];
+                                        JToken etagValue = gatewayIPConfigurationsValue["etag"];
                                         if (etagValue != null && etagValue.Type != JTokenType.Null)
                                         {
                                             string etagInstance = ((string)etagValue);
-                                            applicationGatewayIpConfigurationJsonFormatInstance.Etag = etagInstance;
+                                            applicationGatewayIPConfigurationJsonFormatInstance.Etag = etagInstance;
                                         }
                                         
-                                        JToken idValue2 = gatewayIpConfigurationsValue["id"];
+                                        JToken idValue2 = gatewayIPConfigurationsValue["id"];
                                         if (idValue2 != null && idValue2.Type != JTokenType.Null)
                                         {
                                             string idInstance2 = ((string)idValue2);
-                                            applicationGatewayIpConfigurationJsonFormatInstance.Id = idInstance2;
+                                            applicationGatewayIPConfigurationJsonFormatInstance.Id = idInstance2;
                                         }
                                     }
                                 }
@@ -931,36 +931,36 @@ namespace Microsoft.Azure.Management.Network
                                     }
                                 }
                                 
-                                JToken frontendIpConfigurationsArray2 = propertiesValue10["frontendIpConfigurations"];
-                                if (frontendIpConfigurationsArray2 != null && frontendIpConfigurationsArray2.Type != JTokenType.Null)
+                                JToken frontendIPConfigurationsArray2 = propertiesValue10["frontendIPConfigurations"];
+                                if (frontendIPConfigurationsArray2 != null && frontendIPConfigurationsArray2.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken frontendIpConfigurationsValue in ((JArray)frontendIpConfigurationsArray2))
+                                    foreach (JToken frontendIPConfigurationsValue in ((JArray)frontendIPConfigurationsArray2))
                                     {
-                                        ApplicationGatewayFrontendIpConfiguration applicationGatewayFrontendIpConfigurationJsonFormatInstance = new ApplicationGatewayFrontendIpConfiguration();
-                                        applicationGatewayInstance.FrontendIpConfigurations.Add(applicationGatewayFrontendIpConfigurationJsonFormatInstance);
+                                        ApplicationGatewayFrontendIPConfiguration applicationGatewayFrontendIPConfigurationJsonFormatInstance = new ApplicationGatewayFrontendIPConfiguration();
+                                        applicationGatewayInstance.FrontendIPConfigurations.Add(applicationGatewayFrontendIPConfigurationJsonFormatInstance);
                                         
-                                        JToken propertiesValue13 = frontendIpConfigurationsValue["properties"];
+                                        JToken propertiesValue13 = frontendIPConfigurationsValue["properties"];
                                         if (propertiesValue13 != null && propertiesValue13.Type != JTokenType.Null)
                                         {
                                             JToken privateIPAddressValue = propertiesValue13["privateIPAddress"];
                                             if (privateIPAddressValue != null && privateIPAddressValue.Type != JTokenType.Null)
                                             {
                                                 string privateIPAddressInstance = ((string)privateIPAddressValue);
-                                                applicationGatewayFrontendIpConfigurationJsonFormatInstance.PrivateIpAddress = privateIPAddressInstance;
+                                                applicationGatewayFrontendIPConfigurationJsonFormatInstance.PrivateIPAddress = privateIPAddressInstance;
                                             }
                                             
                                             JToken privateIPAllocationMethodValue = propertiesValue13["privateIPAllocationMethod"];
                                             if (privateIPAllocationMethodValue != null && privateIPAllocationMethodValue.Type != JTokenType.Null)
                                             {
                                                 string privateIPAllocationMethodInstance = ((string)privateIPAllocationMethodValue);
-                                                applicationGatewayFrontendIpConfigurationJsonFormatInstance.PrivateIpAllocationMethod = privateIPAllocationMethodInstance;
+                                                applicationGatewayFrontendIPConfigurationJsonFormatInstance.PrivateIPAllocationMethod = privateIPAllocationMethodInstance;
                                             }
                                             
                                             JToken subnetValue4 = propertiesValue13["subnet"];
                                             if (subnetValue4 != null && subnetValue4.Type != JTokenType.Null)
                                             {
                                                 ResourceId subnetInstance2 = new ResourceId();
-                                                applicationGatewayFrontendIpConfigurationJsonFormatInstance.Subnet = subnetInstance2;
+                                                applicationGatewayFrontendIPConfigurationJsonFormatInstance.Subnet = subnetInstance2;
                                                 
                                                 JToken idValue4 = subnetValue4["id"];
                                                 if (idValue4 != null && idValue4.Type != JTokenType.Null)
@@ -974,7 +974,7 @@ namespace Microsoft.Azure.Management.Network
                                             if (publicIPAddressValue2 != null && publicIPAddressValue2.Type != JTokenType.Null)
                                             {
                                                 ResourceId publicIPAddressInstance = new ResourceId();
-                                                applicationGatewayFrontendIpConfigurationJsonFormatInstance.PublicIpAddress = publicIPAddressInstance;
+                                                applicationGatewayFrontendIPConfigurationJsonFormatInstance.PublicIPAddress = publicIPAddressInstance;
                                                 
                                                 JToken idValue5 = publicIPAddressValue2["id"];
                                                 if (idValue5 != null && idValue5.Type != JTokenType.Null)
@@ -988,29 +988,29 @@ namespace Microsoft.Azure.Management.Network
                                             if (provisioningStateValue3 != null && provisioningStateValue3.Type != JTokenType.Null)
                                             {
                                                 string provisioningStateInstance3 = ((string)provisioningStateValue3);
-                                                applicationGatewayFrontendIpConfigurationJsonFormatInstance.ProvisioningState = provisioningStateInstance3;
+                                                applicationGatewayFrontendIPConfigurationJsonFormatInstance.ProvisioningState = provisioningStateInstance3;
                                             }
                                         }
                                         
-                                        JToken nameValue4 = frontendIpConfigurationsValue["name"];
+                                        JToken nameValue4 = frontendIPConfigurationsValue["name"];
                                         if (nameValue4 != null && nameValue4.Type != JTokenType.Null)
                                         {
                                             string nameInstance4 = ((string)nameValue4);
-                                            applicationGatewayFrontendIpConfigurationJsonFormatInstance.Name = nameInstance4;
+                                            applicationGatewayFrontendIPConfigurationJsonFormatInstance.Name = nameInstance4;
                                         }
                                         
-                                        JToken etagValue3 = frontendIpConfigurationsValue["etag"];
+                                        JToken etagValue3 = frontendIPConfigurationsValue["etag"];
                                         if (etagValue3 != null && etagValue3.Type != JTokenType.Null)
                                         {
                                             string etagInstance3 = ((string)etagValue3);
-                                            applicationGatewayFrontendIpConfigurationJsonFormatInstance.Etag = etagInstance3;
+                                            applicationGatewayFrontendIPConfigurationJsonFormatInstance.Etag = etagInstance3;
                                         }
                                         
-                                        JToken idValue6 = frontendIpConfigurationsValue["id"];
+                                        JToken idValue6 = frontendIPConfigurationsValue["id"];
                                         if (idValue6 != null && idValue6.Type != JTokenType.Null)
                                         {
                                             string idInstance6 = ((string)idValue6);
-                                            applicationGatewayFrontendIpConfigurationJsonFormatInstance.Id = idInstance6;
+                                            applicationGatewayFrontendIPConfigurationJsonFormatInstance.Id = idInstance6;
                                         }
                                     }
                                 }
@@ -1075,15 +1075,15 @@ namespace Microsoft.Azure.Management.Network
                                         JToken propertiesValue15 = backendAddressPoolsValue["properties"];
                                         if (propertiesValue15 != null && propertiesValue15.Type != JTokenType.Null)
                                         {
-                                            JToken backendIpConfigurationsArray2 = propertiesValue15["backendIpConfigurations"];
-                                            if (backendIpConfigurationsArray2 != null && backendIpConfigurationsArray2.Type != JTokenType.Null)
+                                            JToken backendIPConfigurationsArray2 = propertiesValue15["backendIPConfigurations"];
+                                            if (backendIPConfigurationsArray2 != null && backendIPConfigurationsArray2.Type != JTokenType.Null)
                                             {
-                                                foreach (JToken backendIpConfigurationsValue in ((JArray)backendIpConfigurationsArray2))
+                                                foreach (JToken backendIPConfigurationsValue in ((JArray)backendIPConfigurationsArray2))
                                                 {
                                                     ResourceId resourceIdInstance = new ResourceId();
-                                                    applicationGatewayBackendAddressPoolJsonFormatInstance.BackendIpConfigurations.Add(resourceIdInstance);
+                                                    applicationGatewayBackendAddressPoolJsonFormatInstance.BackendIPConfigurations.Add(resourceIdInstance);
                                                     
-                                                    JToken idValue8 = backendIpConfigurationsValue["id"];
+                                                    JToken idValue8 = backendIPConfigurationsValue["id"];
                                                     if (idValue8 != null && idValue8.Type != JTokenType.Null)
                                                     {
                                                         string idInstance8 = ((string)idValue8);
@@ -1221,17 +1221,17 @@ namespace Microsoft.Azure.Management.Network
                                         JToken propertiesValue17 = httpListenersValue["properties"];
                                         if (propertiesValue17 != null && propertiesValue17.Type != JTokenType.Null)
                                         {
-                                            JToken frontendIpConfigurationValue2 = propertiesValue17["frontendIpConfiguration"];
-                                            if (frontendIpConfigurationValue2 != null && frontendIpConfigurationValue2.Type != JTokenType.Null)
+                                            JToken frontendIPConfigurationValue2 = propertiesValue17["frontendIPConfiguration"];
+                                            if (frontendIPConfigurationValue2 != null && frontendIPConfigurationValue2.Type != JTokenType.Null)
                                             {
-                                                ResourceId frontendIpConfigurationInstance = new ResourceId();
-                                                applicationGatewayHttpListenerJsonFormatInstance.FrontendIpConfiguration = frontendIpConfigurationInstance;
+                                                ResourceId frontendIPConfigurationInstance = new ResourceId();
+                                                applicationGatewayHttpListenerJsonFormatInstance.FrontendIPConfiguration = frontendIPConfigurationInstance;
                                                 
-                                                JToken idValue11 = frontendIpConfigurationValue2["id"];
+                                                JToken idValue11 = frontendIPConfigurationValue2["id"];
                                                 if (idValue11 != null && idValue11.Type != JTokenType.Null)
                                                 {
                                                     string idInstance11 = ((string)idValue11);
-                                                    frontendIpConfigurationInstance.Id = idInstance11;
+                                                    frontendIPConfigurationInstance.Id = idInstance11;
                                                 }
                                             }
                                             
@@ -2327,22 +2327,22 @@ namespace Microsoft.Azure.Management.Network
                                     applicationGatewayInstance.OperationalState = operationalStateInstance;
                                 }
                                 
-                                JToken gatewayIpConfigurationsArray = propertiesValue["gatewayIpConfigurations"];
-                                if (gatewayIpConfigurationsArray != null && gatewayIpConfigurationsArray.Type != JTokenType.Null)
+                                JToken gatewayIPConfigurationsArray = propertiesValue["gatewayIPConfigurations"];
+                                if (gatewayIPConfigurationsArray != null && gatewayIPConfigurationsArray.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken gatewayIpConfigurationsValue in ((JArray)gatewayIpConfigurationsArray))
+                                    foreach (JToken gatewayIPConfigurationsValue in ((JArray)gatewayIPConfigurationsArray))
                                     {
-                                        ApplicationGatewayIpConfiguration applicationGatewayIpConfigurationJsonFormatInstance = new ApplicationGatewayIpConfiguration();
-                                        applicationGatewayInstance.GatewayIpConfigurations.Add(applicationGatewayIpConfigurationJsonFormatInstance);
+                                        ApplicationGatewayIPConfiguration applicationGatewayIPConfigurationJsonFormatInstance = new ApplicationGatewayIPConfiguration();
+                                        applicationGatewayInstance.GatewayIPConfigurations.Add(applicationGatewayIPConfigurationJsonFormatInstance);
                                         
-                                        JToken propertiesValue2 = gatewayIpConfigurationsValue["properties"];
+                                        JToken propertiesValue2 = gatewayIPConfigurationsValue["properties"];
                                         if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
                                         {
                                             JToken subnetValue = propertiesValue2["subnet"];
                                             if (subnetValue != null && subnetValue.Type != JTokenType.Null)
                                             {
                                                 ResourceId subnetInstance = new ResourceId();
-                                                applicationGatewayIpConfigurationJsonFormatInstance.Subnet = subnetInstance;
+                                                applicationGatewayIPConfigurationJsonFormatInstance.Subnet = subnetInstance;
                                                 
                                                 JToken idValue = subnetValue["id"];
                                                 if (idValue != null && idValue.Type != JTokenType.Null)
@@ -2356,29 +2356,29 @@ namespace Microsoft.Azure.Management.Network
                                             if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
                                             {
                                                 string provisioningStateInstance = ((string)provisioningStateValue);
-                                                applicationGatewayIpConfigurationJsonFormatInstance.ProvisioningState = provisioningStateInstance;
+                                                applicationGatewayIPConfigurationJsonFormatInstance.ProvisioningState = provisioningStateInstance;
                                             }
                                         }
                                         
-                                        JToken nameValue2 = gatewayIpConfigurationsValue["name"];
+                                        JToken nameValue2 = gatewayIPConfigurationsValue["name"];
                                         if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
                                         {
                                             string nameInstance2 = ((string)nameValue2);
-                                            applicationGatewayIpConfigurationJsonFormatInstance.Name = nameInstance2;
+                                            applicationGatewayIPConfigurationJsonFormatInstance.Name = nameInstance2;
                                         }
                                         
-                                        JToken etagValue = gatewayIpConfigurationsValue["etag"];
+                                        JToken etagValue = gatewayIPConfigurationsValue["etag"];
                                         if (etagValue != null && etagValue.Type != JTokenType.Null)
                                         {
                                             string etagInstance = ((string)etagValue);
-                                            applicationGatewayIpConfigurationJsonFormatInstance.Etag = etagInstance;
+                                            applicationGatewayIPConfigurationJsonFormatInstance.Etag = etagInstance;
                                         }
                                         
-                                        JToken idValue2 = gatewayIpConfigurationsValue["id"];
+                                        JToken idValue2 = gatewayIPConfigurationsValue["id"];
                                         if (idValue2 != null && idValue2.Type != JTokenType.Null)
                                         {
                                             string idInstance2 = ((string)idValue2);
-                                            applicationGatewayIpConfigurationJsonFormatInstance.Id = idInstance2;
+                                            applicationGatewayIPConfigurationJsonFormatInstance.Id = idInstance2;
                                         }
                                     }
                                 }
@@ -2446,36 +2446,36 @@ namespace Microsoft.Azure.Management.Network
                                     }
                                 }
                                 
-                                JToken frontendIpConfigurationsArray = propertiesValue["frontendIpConfigurations"];
-                                if (frontendIpConfigurationsArray != null && frontendIpConfigurationsArray.Type != JTokenType.Null)
+                                JToken frontendIPConfigurationsArray = propertiesValue["frontendIPConfigurations"];
+                                if (frontendIPConfigurationsArray != null && frontendIPConfigurationsArray.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken frontendIpConfigurationsValue in ((JArray)frontendIpConfigurationsArray))
+                                    foreach (JToken frontendIPConfigurationsValue in ((JArray)frontendIPConfigurationsArray))
                                     {
-                                        ApplicationGatewayFrontendIpConfiguration applicationGatewayFrontendIpConfigurationJsonFormatInstance = new ApplicationGatewayFrontendIpConfiguration();
-                                        applicationGatewayInstance.FrontendIpConfigurations.Add(applicationGatewayFrontendIpConfigurationJsonFormatInstance);
+                                        ApplicationGatewayFrontendIPConfiguration applicationGatewayFrontendIPConfigurationJsonFormatInstance = new ApplicationGatewayFrontendIPConfiguration();
+                                        applicationGatewayInstance.FrontendIPConfigurations.Add(applicationGatewayFrontendIPConfigurationJsonFormatInstance);
                                         
-                                        JToken propertiesValue4 = frontendIpConfigurationsValue["properties"];
+                                        JToken propertiesValue4 = frontendIPConfigurationsValue["properties"];
                                         if (propertiesValue4 != null && propertiesValue4.Type != JTokenType.Null)
                                         {
                                             JToken privateIPAddressValue = propertiesValue4["privateIPAddress"];
                                             if (privateIPAddressValue != null && privateIPAddressValue.Type != JTokenType.Null)
                                             {
                                                 string privateIPAddressInstance = ((string)privateIPAddressValue);
-                                                applicationGatewayFrontendIpConfigurationJsonFormatInstance.PrivateIpAddress = privateIPAddressInstance;
+                                                applicationGatewayFrontendIPConfigurationJsonFormatInstance.PrivateIPAddress = privateIPAddressInstance;
                                             }
                                             
                                             JToken privateIPAllocationMethodValue = propertiesValue4["privateIPAllocationMethod"];
                                             if (privateIPAllocationMethodValue != null && privateIPAllocationMethodValue.Type != JTokenType.Null)
                                             {
                                                 string privateIPAllocationMethodInstance = ((string)privateIPAllocationMethodValue);
-                                                applicationGatewayFrontendIpConfigurationJsonFormatInstance.PrivateIpAllocationMethod = privateIPAllocationMethodInstance;
+                                                applicationGatewayFrontendIPConfigurationJsonFormatInstance.PrivateIPAllocationMethod = privateIPAllocationMethodInstance;
                                             }
                                             
                                             JToken subnetValue2 = propertiesValue4["subnet"];
                                             if (subnetValue2 != null && subnetValue2.Type != JTokenType.Null)
                                             {
                                                 ResourceId subnetInstance2 = new ResourceId();
-                                                applicationGatewayFrontendIpConfigurationJsonFormatInstance.Subnet = subnetInstance2;
+                                                applicationGatewayFrontendIPConfigurationJsonFormatInstance.Subnet = subnetInstance2;
                                                 
                                                 JToken idValue4 = subnetValue2["id"];
                                                 if (idValue4 != null && idValue4.Type != JTokenType.Null)
@@ -2489,7 +2489,7 @@ namespace Microsoft.Azure.Management.Network
                                             if (publicIPAddressValue != null && publicIPAddressValue.Type != JTokenType.Null)
                                             {
                                                 ResourceId publicIPAddressInstance = new ResourceId();
-                                                applicationGatewayFrontendIpConfigurationJsonFormatInstance.PublicIpAddress = publicIPAddressInstance;
+                                                applicationGatewayFrontendIPConfigurationJsonFormatInstance.PublicIPAddress = publicIPAddressInstance;
                                                 
                                                 JToken idValue5 = publicIPAddressValue["id"];
                                                 if (idValue5 != null && idValue5.Type != JTokenType.Null)
@@ -2503,29 +2503,29 @@ namespace Microsoft.Azure.Management.Network
                                             if (provisioningStateValue3 != null && provisioningStateValue3.Type != JTokenType.Null)
                                             {
                                                 string provisioningStateInstance3 = ((string)provisioningStateValue3);
-                                                applicationGatewayFrontendIpConfigurationJsonFormatInstance.ProvisioningState = provisioningStateInstance3;
+                                                applicationGatewayFrontendIPConfigurationJsonFormatInstance.ProvisioningState = provisioningStateInstance3;
                                             }
                                         }
                                         
-                                        JToken nameValue4 = frontendIpConfigurationsValue["name"];
+                                        JToken nameValue4 = frontendIPConfigurationsValue["name"];
                                         if (nameValue4 != null && nameValue4.Type != JTokenType.Null)
                                         {
                                             string nameInstance4 = ((string)nameValue4);
-                                            applicationGatewayFrontendIpConfigurationJsonFormatInstance.Name = nameInstance4;
+                                            applicationGatewayFrontendIPConfigurationJsonFormatInstance.Name = nameInstance4;
                                         }
                                         
-                                        JToken etagValue3 = frontendIpConfigurationsValue["etag"];
+                                        JToken etagValue3 = frontendIPConfigurationsValue["etag"];
                                         if (etagValue3 != null && etagValue3.Type != JTokenType.Null)
                                         {
                                             string etagInstance3 = ((string)etagValue3);
-                                            applicationGatewayFrontendIpConfigurationJsonFormatInstance.Etag = etagInstance3;
+                                            applicationGatewayFrontendIPConfigurationJsonFormatInstance.Etag = etagInstance3;
                                         }
                                         
-                                        JToken idValue6 = frontendIpConfigurationsValue["id"];
+                                        JToken idValue6 = frontendIPConfigurationsValue["id"];
                                         if (idValue6 != null && idValue6.Type != JTokenType.Null)
                                         {
                                             string idInstance6 = ((string)idValue6);
-                                            applicationGatewayFrontendIpConfigurationJsonFormatInstance.Id = idInstance6;
+                                            applicationGatewayFrontendIPConfigurationJsonFormatInstance.Id = idInstance6;
                                         }
                                     }
                                 }
@@ -2590,15 +2590,15 @@ namespace Microsoft.Azure.Management.Network
                                         JToken propertiesValue6 = backendAddressPoolsValue["properties"];
                                         if (propertiesValue6 != null && propertiesValue6.Type != JTokenType.Null)
                                         {
-                                            JToken backendIpConfigurationsArray = propertiesValue6["backendIpConfigurations"];
-                                            if (backendIpConfigurationsArray != null && backendIpConfigurationsArray.Type != JTokenType.Null)
+                                            JToken backendIPConfigurationsArray = propertiesValue6["backendIPConfigurations"];
+                                            if (backendIPConfigurationsArray != null && backendIPConfigurationsArray.Type != JTokenType.Null)
                                             {
-                                                foreach (JToken backendIpConfigurationsValue in ((JArray)backendIpConfigurationsArray))
+                                                foreach (JToken backendIPConfigurationsValue in ((JArray)backendIPConfigurationsArray))
                                                 {
                                                     ResourceId resourceIdInstance = new ResourceId();
-                                                    applicationGatewayBackendAddressPoolJsonFormatInstance.BackendIpConfigurations.Add(resourceIdInstance);
+                                                    applicationGatewayBackendAddressPoolJsonFormatInstance.BackendIPConfigurations.Add(resourceIdInstance);
                                                     
-                                                    JToken idValue8 = backendIpConfigurationsValue["id"];
+                                                    JToken idValue8 = backendIPConfigurationsValue["id"];
                                                     if (idValue8 != null && idValue8.Type != JTokenType.Null)
                                                     {
                                                         string idInstance8 = ((string)idValue8);
@@ -2736,17 +2736,17 @@ namespace Microsoft.Azure.Management.Network
                                         JToken propertiesValue8 = httpListenersValue["properties"];
                                         if (propertiesValue8 != null && propertiesValue8.Type != JTokenType.Null)
                                         {
-                                            JToken frontendIpConfigurationValue = propertiesValue8["frontendIpConfiguration"];
-                                            if (frontendIpConfigurationValue != null && frontendIpConfigurationValue.Type != JTokenType.Null)
+                                            JToken frontendIPConfigurationValue = propertiesValue8["frontendIPConfiguration"];
+                                            if (frontendIPConfigurationValue != null && frontendIPConfigurationValue.Type != JTokenType.Null)
                                             {
-                                                ResourceId frontendIpConfigurationInstance = new ResourceId();
-                                                applicationGatewayHttpListenerJsonFormatInstance.FrontendIpConfiguration = frontendIpConfigurationInstance;
+                                                ResourceId frontendIPConfigurationInstance = new ResourceId();
+                                                applicationGatewayHttpListenerJsonFormatInstance.FrontendIPConfiguration = frontendIPConfigurationInstance;
                                                 
-                                                JToken idValue11 = frontendIpConfigurationValue["id"];
+                                                JToken idValue11 = frontendIPConfigurationValue["id"];
                                                 if (idValue11 != null && idValue11.Type != JTokenType.Null)
                                                 {
                                                     string idInstance11 = ((string)idValue11);
-                                                    frontendIpConfigurationInstance.Id = idInstance11;
+                                                    frontendIPConfigurationInstance.Id = idInstance11;
                                                 }
                                             }
                                             
@@ -3157,22 +3157,22 @@ namespace Microsoft.Azure.Management.Network
                                             applicationGatewayJsonFormatInstance.OperationalState = operationalStateInstance;
                                         }
                                         
-                                        JToken gatewayIpConfigurationsArray = propertiesValue["gatewayIpConfigurations"];
-                                        if (gatewayIpConfigurationsArray != null && gatewayIpConfigurationsArray.Type != JTokenType.Null)
+                                        JToken gatewayIPConfigurationsArray = propertiesValue["gatewayIPConfigurations"];
+                                        if (gatewayIPConfigurationsArray != null && gatewayIPConfigurationsArray.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken gatewayIpConfigurationsValue in ((JArray)gatewayIpConfigurationsArray))
+                                            foreach (JToken gatewayIPConfigurationsValue in ((JArray)gatewayIPConfigurationsArray))
                                             {
-                                                ApplicationGatewayIpConfiguration applicationGatewayIpConfigurationJsonFormatInstance = new ApplicationGatewayIpConfiguration();
-                                                applicationGatewayJsonFormatInstance.GatewayIpConfigurations.Add(applicationGatewayIpConfigurationJsonFormatInstance);
+                                                ApplicationGatewayIPConfiguration applicationGatewayIPConfigurationJsonFormatInstance = new ApplicationGatewayIPConfiguration();
+                                                applicationGatewayJsonFormatInstance.GatewayIPConfigurations.Add(applicationGatewayIPConfigurationJsonFormatInstance);
                                                 
-                                                JToken propertiesValue2 = gatewayIpConfigurationsValue["properties"];
+                                                JToken propertiesValue2 = gatewayIPConfigurationsValue["properties"];
                                                 if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
                                                 {
                                                     JToken subnetValue = propertiesValue2["subnet"];
                                                     if (subnetValue != null && subnetValue.Type != JTokenType.Null)
                                                     {
                                                         ResourceId subnetInstance = new ResourceId();
-                                                        applicationGatewayIpConfigurationJsonFormatInstance.Subnet = subnetInstance;
+                                                        applicationGatewayIPConfigurationJsonFormatInstance.Subnet = subnetInstance;
                                                         
                                                         JToken idValue = subnetValue["id"];
                                                         if (idValue != null && idValue.Type != JTokenType.Null)
@@ -3186,29 +3186,29 @@ namespace Microsoft.Azure.Management.Network
                                                     if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
                                                     {
                                                         string provisioningStateInstance = ((string)provisioningStateValue);
-                                                        applicationGatewayIpConfigurationJsonFormatInstance.ProvisioningState = provisioningStateInstance;
+                                                        applicationGatewayIPConfigurationJsonFormatInstance.ProvisioningState = provisioningStateInstance;
                                                     }
                                                 }
                                                 
-                                                JToken nameValue2 = gatewayIpConfigurationsValue["name"];
+                                                JToken nameValue2 = gatewayIPConfigurationsValue["name"];
                                                 if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
                                                 {
                                                     string nameInstance2 = ((string)nameValue2);
-                                                    applicationGatewayIpConfigurationJsonFormatInstance.Name = nameInstance2;
+                                                    applicationGatewayIPConfigurationJsonFormatInstance.Name = nameInstance2;
                                                 }
                                                 
-                                                JToken etagValue = gatewayIpConfigurationsValue["etag"];
+                                                JToken etagValue = gatewayIPConfigurationsValue["etag"];
                                                 if (etagValue != null && etagValue.Type != JTokenType.Null)
                                                 {
                                                     string etagInstance = ((string)etagValue);
-                                                    applicationGatewayIpConfigurationJsonFormatInstance.Etag = etagInstance;
+                                                    applicationGatewayIPConfigurationJsonFormatInstance.Etag = etagInstance;
                                                 }
                                                 
-                                                JToken idValue2 = gatewayIpConfigurationsValue["id"];
+                                                JToken idValue2 = gatewayIPConfigurationsValue["id"];
                                                 if (idValue2 != null && idValue2.Type != JTokenType.Null)
                                                 {
                                                     string idInstance2 = ((string)idValue2);
-                                                    applicationGatewayIpConfigurationJsonFormatInstance.Id = idInstance2;
+                                                    applicationGatewayIPConfigurationJsonFormatInstance.Id = idInstance2;
                                                 }
                                             }
                                         }
@@ -3276,36 +3276,36 @@ namespace Microsoft.Azure.Management.Network
                                             }
                                         }
                                         
-                                        JToken frontendIpConfigurationsArray = propertiesValue["frontendIpConfigurations"];
-                                        if (frontendIpConfigurationsArray != null && frontendIpConfigurationsArray.Type != JTokenType.Null)
+                                        JToken frontendIPConfigurationsArray = propertiesValue["frontendIPConfigurations"];
+                                        if (frontendIPConfigurationsArray != null && frontendIPConfigurationsArray.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken frontendIpConfigurationsValue in ((JArray)frontendIpConfigurationsArray))
+                                            foreach (JToken frontendIPConfigurationsValue in ((JArray)frontendIPConfigurationsArray))
                                             {
-                                                ApplicationGatewayFrontendIpConfiguration applicationGatewayFrontendIpConfigurationJsonFormatInstance = new ApplicationGatewayFrontendIpConfiguration();
-                                                applicationGatewayJsonFormatInstance.FrontendIpConfigurations.Add(applicationGatewayFrontendIpConfigurationJsonFormatInstance);
+                                                ApplicationGatewayFrontendIPConfiguration applicationGatewayFrontendIPConfigurationJsonFormatInstance = new ApplicationGatewayFrontendIPConfiguration();
+                                                applicationGatewayJsonFormatInstance.FrontendIPConfigurations.Add(applicationGatewayFrontendIPConfigurationJsonFormatInstance);
                                                 
-                                                JToken propertiesValue4 = frontendIpConfigurationsValue["properties"];
+                                                JToken propertiesValue4 = frontendIPConfigurationsValue["properties"];
                                                 if (propertiesValue4 != null && propertiesValue4.Type != JTokenType.Null)
                                                 {
                                                     JToken privateIPAddressValue = propertiesValue4["privateIPAddress"];
                                                     if (privateIPAddressValue != null && privateIPAddressValue.Type != JTokenType.Null)
                                                     {
                                                         string privateIPAddressInstance = ((string)privateIPAddressValue);
-                                                        applicationGatewayFrontendIpConfigurationJsonFormatInstance.PrivateIpAddress = privateIPAddressInstance;
+                                                        applicationGatewayFrontendIPConfigurationJsonFormatInstance.PrivateIPAddress = privateIPAddressInstance;
                                                     }
                                                     
                                                     JToken privateIPAllocationMethodValue = propertiesValue4["privateIPAllocationMethod"];
                                                     if (privateIPAllocationMethodValue != null && privateIPAllocationMethodValue.Type != JTokenType.Null)
                                                     {
                                                         string privateIPAllocationMethodInstance = ((string)privateIPAllocationMethodValue);
-                                                        applicationGatewayFrontendIpConfigurationJsonFormatInstance.PrivateIpAllocationMethod = privateIPAllocationMethodInstance;
+                                                        applicationGatewayFrontendIPConfigurationJsonFormatInstance.PrivateIPAllocationMethod = privateIPAllocationMethodInstance;
                                                     }
                                                     
                                                     JToken subnetValue2 = propertiesValue4["subnet"];
                                                     if (subnetValue2 != null && subnetValue2.Type != JTokenType.Null)
                                                     {
                                                         ResourceId subnetInstance2 = new ResourceId();
-                                                        applicationGatewayFrontendIpConfigurationJsonFormatInstance.Subnet = subnetInstance2;
+                                                        applicationGatewayFrontendIPConfigurationJsonFormatInstance.Subnet = subnetInstance2;
                                                         
                                                         JToken idValue4 = subnetValue2["id"];
                                                         if (idValue4 != null && idValue4.Type != JTokenType.Null)
@@ -3319,7 +3319,7 @@ namespace Microsoft.Azure.Management.Network
                                                     if (publicIPAddressValue != null && publicIPAddressValue.Type != JTokenType.Null)
                                                     {
                                                         ResourceId publicIPAddressInstance = new ResourceId();
-                                                        applicationGatewayFrontendIpConfigurationJsonFormatInstance.PublicIpAddress = publicIPAddressInstance;
+                                                        applicationGatewayFrontendIPConfigurationJsonFormatInstance.PublicIPAddress = publicIPAddressInstance;
                                                         
                                                         JToken idValue5 = publicIPAddressValue["id"];
                                                         if (idValue5 != null && idValue5.Type != JTokenType.Null)
@@ -3333,29 +3333,29 @@ namespace Microsoft.Azure.Management.Network
                                                     if (provisioningStateValue3 != null && provisioningStateValue3.Type != JTokenType.Null)
                                                     {
                                                         string provisioningStateInstance3 = ((string)provisioningStateValue3);
-                                                        applicationGatewayFrontendIpConfigurationJsonFormatInstance.ProvisioningState = provisioningStateInstance3;
+                                                        applicationGatewayFrontendIPConfigurationJsonFormatInstance.ProvisioningState = provisioningStateInstance3;
                                                     }
                                                 }
                                                 
-                                                JToken nameValue4 = frontendIpConfigurationsValue["name"];
+                                                JToken nameValue4 = frontendIPConfigurationsValue["name"];
                                                 if (nameValue4 != null && nameValue4.Type != JTokenType.Null)
                                                 {
                                                     string nameInstance4 = ((string)nameValue4);
-                                                    applicationGatewayFrontendIpConfigurationJsonFormatInstance.Name = nameInstance4;
+                                                    applicationGatewayFrontendIPConfigurationJsonFormatInstance.Name = nameInstance4;
                                                 }
                                                 
-                                                JToken etagValue3 = frontendIpConfigurationsValue["etag"];
+                                                JToken etagValue3 = frontendIPConfigurationsValue["etag"];
                                                 if (etagValue3 != null && etagValue3.Type != JTokenType.Null)
                                                 {
                                                     string etagInstance3 = ((string)etagValue3);
-                                                    applicationGatewayFrontendIpConfigurationJsonFormatInstance.Etag = etagInstance3;
+                                                    applicationGatewayFrontendIPConfigurationJsonFormatInstance.Etag = etagInstance3;
                                                 }
                                                 
-                                                JToken idValue6 = frontendIpConfigurationsValue["id"];
+                                                JToken idValue6 = frontendIPConfigurationsValue["id"];
                                                 if (idValue6 != null && idValue6.Type != JTokenType.Null)
                                                 {
                                                     string idInstance6 = ((string)idValue6);
-                                                    applicationGatewayFrontendIpConfigurationJsonFormatInstance.Id = idInstance6;
+                                                    applicationGatewayFrontendIPConfigurationJsonFormatInstance.Id = idInstance6;
                                                 }
                                             }
                                         }
@@ -3420,15 +3420,15 @@ namespace Microsoft.Azure.Management.Network
                                                 JToken propertiesValue6 = backendAddressPoolsValue["properties"];
                                                 if (propertiesValue6 != null && propertiesValue6.Type != JTokenType.Null)
                                                 {
-                                                    JToken backendIpConfigurationsArray = propertiesValue6["backendIpConfigurations"];
-                                                    if (backendIpConfigurationsArray != null && backendIpConfigurationsArray.Type != JTokenType.Null)
+                                                    JToken backendIPConfigurationsArray = propertiesValue6["backendIPConfigurations"];
+                                                    if (backendIPConfigurationsArray != null && backendIPConfigurationsArray.Type != JTokenType.Null)
                                                     {
-                                                        foreach (JToken backendIpConfigurationsValue in ((JArray)backendIpConfigurationsArray))
+                                                        foreach (JToken backendIPConfigurationsValue in ((JArray)backendIPConfigurationsArray))
                                                         {
                                                             ResourceId resourceIdInstance = new ResourceId();
-                                                            applicationGatewayBackendAddressPoolJsonFormatInstance.BackendIpConfigurations.Add(resourceIdInstance);
+                                                            applicationGatewayBackendAddressPoolJsonFormatInstance.BackendIPConfigurations.Add(resourceIdInstance);
                                                             
-                                                            JToken idValue8 = backendIpConfigurationsValue["id"];
+                                                            JToken idValue8 = backendIPConfigurationsValue["id"];
                                                             if (idValue8 != null && idValue8.Type != JTokenType.Null)
                                                             {
                                                                 string idInstance8 = ((string)idValue8);
@@ -3566,17 +3566,17 @@ namespace Microsoft.Azure.Management.Network
                                                 JToken propertiesValue8 = httpListenersValue["properties"];
                                                 if (propertiesValue8 != null && propertiesValue8.Type != JTokenType.Null)
                                                 {
-                                                    JToken frontendIpConfigurationValue = propertiesValue8["frontendIpConfiguration"];
-                                                    if (frontendIpConfigurationValue != null && frontendIpConfigurationValue.Type != JTokenType.Null)
+                                                    JToken frontendIPConfigurationValue = propertiesValue8["frontendIPConfiguration"];
+                                                    if (frontendIPConfigurationValue != null && frontendIPConfigurationValue.Type != JTokenType.Null)
                                                     {
-                                                        ResourceId frontendIpConfigurationInstance = new ResourceId();
-                                                        applicationGatewayHttpListenerJsonFormatInstance.FrontendIpConfiguration = frontendIpConfigurationInstance;
+                                                        ResourceId frontendIPConfigurationInstance = new ResourceId();
+                                                        applicationGatewayHttpListenerJsonFormatInstance.FrontendIPConfiguration = frontendIPConfigurationInstance;
                                                         
-                                                        JToken idValue11 = frontendIpConfigurationValue["id"];
+                                                        JToken idValue11 = frontendIPConfigurationValue["id"];
                                                         if (idValue11 != null && idValue11.Type != JTokenType.Null)
                                                         {
                                                             string idInstance11 = ((string)idValue11);
-                                                            frontendIpConfigurationInstance.Id = idInstance11;
+                                                            frontendIPConfigurationInstance.Id = idInstance11;
                                                         }
                                                     }
                                                     
@@ -3986,22 +3986,22 @@ namespace Microsoft.Azure.Management.Network
                                             applicationGatewayJsonFormatInstance.OperationalState = operationalStateInstance;
                                         }
                                         
-                                        JToken gatewayIpConfigurationsArray = propertiesValue["gatewayIpConfigurations"];
-                                        if (gatewayIpConfigurationsArray != null && gatewayIpConfigurationsArray.Type != JTokenType.Null)
+                                        JToken gatewayIPConfigurationsArray = propertiesValue["gatewayIPConfigurations"];
+                                        if (gatewayIPConfigurationsArray != null && gatewayIPConfigurationsArray.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken gatewayIpConfigurationsValue in ((JArray)gatewayIpConfigurationsArray))
+                                            foreach (JToken gatewayIPConfigurationsValue in ((JArray)gatewayIPConfigurationsArray))
                                             {
-                                                ApplicationGatewayIpConfiguration applicationGatewayIpConfigurationJsonFormatInstance = new ApplicationGatewayIpConfiguration();
-                                                applicationGatewayJsonFormatInstance.GatewayIpConfigurations.Add(applicationGatewayIpConfigurationJsonFormatInstance);
+                                                ApplicationGatewayIPConfiguration applicationGatewayIPConfigurationJsonFormatInstance = new ApplicationGatewayIPConfiguration();
+                                                applicationGatewayJsonFormatInstance.GatewayIPConfigurations.Add(applicationGatewayIPConfigurationJsonFormatInstance);
                                                 
-                                                JToken propertiesValue2 = gatewayIpConfigurationsValue["properties"];
+                                                JToken propertiesValue2 = gatewayIPConfigurationsValue["properties"];
                                                 if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
                                                 {
                                                     JToken subnetValue = propertiesValue2["subnet"];
                                                     if (subnetValue != null && subnetValue.Type != JTokenType.Null)
                                                     {
                                                         ResourceId subnetInstance = new ResourceId();
-                                                        applicationGatewayIpConfigurationJsonFormatInstance.Subnet = subnetInstance;
+                                                        applicationGatewayIPConfigurationJsonFormatInstance.Subnet = subnetInstance;
                                                         
                                                         JToken idValue = subnetValue["id"];
                                                         if (idValue != null && idValue.Type != JTokenType.Null)
@@ -4015,29 +4015,29 @@ namespace Microsoft.Azure.Management.Network
                                                     if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
                                                     {
                                                         string provisioningStateInstance = ((string)provisioningStateValue);
-                                                        applicationGatewayIpConfigurationJsonFormatInstance.ProvisioningState = provisioningStateInstance;
+                                                        applicationGatewayIPConfigurationJsonFormatInstance.ProvisioningState = provisioningStateInstance;
                                                     }
                                                 }
                                                 
-                                                JToken nameValue2 = gatewayIpConfigurationsValue["name"];
+                                                JToken nameValue2 = gatewayIPConfigurationsValue["name"];
                                                 if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
                                                 {
                                                     string nameInstance2 = ((string)nameValue2);
-                                                    applicationGatewayIpConfigurationJsonFormatInstance.Name = nameInstance2;
+                                                    applicationGatewayIPConfigurationJsonFormatInstance.Name = nameInstance2;
                                                 }
                                                 
-                                                JToken etagValue = gatewayIpConfigurationsValue["etag"];
+                                                JToken etagValue = gatewayIPConfigurationsValue["etag"];
                                                 if (etagValue != null && etagValue.Type != JTokenType.Null)
                                                 {
                                                     string etagInstance = ((string)etagValue);
-                                                    applicationGatewayIpConfigurationJsonFormatInstance.Etag = etagInstance;
+                                                    applicationGatewayIPConfigurationJsonFormatInstance.Etag = etagInstance;
                                                 }
                                                 
-                                                JToken idValue2 = gatewayIpConfigurationsValue["id"];
+                                                JToken idValue2 = gatewayIPConfigurationsValue["id"];
                                                 if (idValue2 != null && idValue2.Type != JTokenType.Null)
                                                 {
                                                     string idInstance2 = ((string)idValue2);
-                                                    applicationGatewayIpConfigurationJsonFormatInstance.Id = idInstance2;
+                                                    applicationGatewayIPConfigurationJsonFormatInstance.Id = idInstance2;
                                                 }
                                             }
                                         }
@@ -4105,36 +4105,36 @@ namespace Microsoft.Azure.Management.Network
                                             }
                                         }
                                         
-                                        JToken frontendIpConfigurationsArray = propertiesValue["frontendIpConfigurations"];
-                                        if (frontendIpConfigurationsArray != null && frontendIpConfigurationsArray.Type != JTokenType.Null)
+                                        JToken frontendIPConfigurationsArray = propertiesValue["frontendIPConfigurations"];
+                                        if (frontendIPConfigurationsArray != null && frontendIPConfigurationsArray.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken frontendIpConfigurationsValue in ((JArray)frontendIpConfigurationsArray))
+                                            foreach (JToken frontendIPConfigurationsValue in ((JArray)frontendIPConfigurationsArray))
                                             {
-                                                ApplicationGatewayFrontendIpConfiguration applicationGatewayFrontendIpConfigurationJsonFormatInstance = new ApplicationGatewayFrontendIpConfiguration();
-                                                applicationGatewayJsonFormatInstance.FrontendIpConfigurations.Add(applicationGatewayFrontendIpConfigurationJsonFormatInstance);
+                                                ApplicationGatewayFrontendIPConfiguration applicationGatewayFrontendIPConfigurationJsonFormatInstance = new ApplicationGatewayFrontendIPConfiguration();
+                                                applicationGatewayJsonFormatInstance.FrontendIPConfigurations.Add(applicationGatewayFrontendIPConfigurationJsonFormatInstance);
                                                 
-                                                JToken propertiesValue4 = frontendIpConfigurationsValue["properties"];
+                                                JToken propertiesValue4 = frontendIPConfigurationsValue["properties"];
                                                 if (propertiesValue4 != null && propertiesValue4.Type != JTokenType.Null)
                                                 {
                                                     JToken privateIPAddressValue = propertiesValue4["privateIPAddress"];
                                                     if (privateIPAddressValue != null && privateIPAddressValue.Type != JTokenType.Null)
                                                     {
                                                         string privateIPAddressInstance = ((string)privateIPAddressValue);
-                                                        applicationGatewayFrontendIpConfigurationJsonFormatInstance.PrivateIpAddress = privateIPAddressInstance;
+                                                        applicationGatewayFrontendIPConfigurationJsonFormatInstance.PrivateIPAddress = privateIPAddressInstance;
                                                     }
                                                     
                                                     JToken privateIPAllocationMethodValue = propertiesValue4["privateIPAllocationMethod"];
                                                     if (privateIPAllocationMethodValue != null && privateIPAllocationMethodValue.Type != JTokenType.Null)
                                                     {
                                                         string privateIPAllocationMethodInstance = ((string)privateIPAllocationMethodValue);
-                                                        applicationGatewayFrontendIpConfigurationJsonFormatInstance.PrivateIpAllocationMethod = privateIPAllocationMethodInstance;
+                                                        applicationGatewayFrontendIPConfigurationJsonFormatInstance.PrivateIPAllocationMethod = privateIPAllocationMethodInstance;
                                                     }
                                                     
                                                     JToken subnetValue2 = propertiesValue4["subnet"];
                                                     if (subnetValue2 != null && subnetValue2.Type != JTokenType.Null)
                                                     {
                                                         ResourceId subnetInstance2 = new ResourceId();
-                                                        applicationGatewayFrontendIpConfigurationJsonFormatInstance.Subnet = subnetInstance2;
+                                                        applicationGatewayFrontendIPConfigurationJsonFormatInstance.Subnet = subnetInstance2;
                                                         
                                                         JToken idValue4 = subnetValue2["id"];
                                                         if (idValue4 != null && idValue4.Type != JTokenType.Null)
@@ -4148,7 +4148,7 @@ namespace Microsoft.Azure.Management.Network
                                                     if (publicIPAddressValue != null && publicIPAddressValue.Type != JTokenType.Null)
                                                     {
                                                         ResourceId publicIPAddressInstance = new ResourceId();
-                                                        applicationGatewayFrontendIpConfigurationJsonFormatInstance.PublicIpAddress = publicIPAddressInstance;
+                                                        applicationGatewayFrontendIPConfigurationJsonFormatInstance.PublicIPAddress = publicIPAddressInstance;
                                                         
                                                         JToken idValue5 = publicIPAddressValue["id"];
                                                         if (idValue5 != null && idValue5.Type != JTokenType.Null)
@@ -4162,29 +4162,29 @@ namespace Microsoft.Azure.Management.Network
                                                     if (provisioningStateValue3 != null && provisioningStateValue3.Type != JTokenType.Null)
                                                     {
                                                         string provisioningStateInstance3 = ((string)provisioningStateValue3);
-                                                        applicationGatewayFrontendIpConfigurationJsonFormatInstance.ProvisioningState = provisioningStateInstance3;
+                                                        applicationGatewayFrontendIPConfigurationJsonFormatInstance.ProvisioningState = provisioningStateInstance3;
                                                     }
                                                 }
                                                 
-                                                JToken nameValue4 = frontendIpConfigurationsValue["name"];
+                                                JToken nameValue4 = frontendIPConfigurationsValue["name"];
                                                 if (nameValue4 != null && nameValue4.Type != JTokenType.Null)
                                                 {
                                                     string nameInstance4 = ((string)nameValue4);
-                                                    applicationGatewayFrontendIpConfigurationJsonFormatInstance.Name = nameInstance4;
+                                                    applicationGatewayFrontendIPConfigurationJsonFormatInstance.Name = nameInstance4;
                                                 }
                                                 
-                                                JToken etagValue3 = frontendIpConfigurationsValue["etag"];
+                                                JToken etagValue3 = frontendIPConfigurationsValue["etag"];
                                                 if (etagValue3 != null && etagValue3.Type != JTokenType.Null)
                                                 {
                                                     string etagInstance3 = ((string)etagValue3);
-                                                    applicationGatewayFrontendIpConfigurationJsonFormatInstance.Etag = etagInstance3;
+                                                    applicationGatewayFrontendIPConfigurationJsonFormatInstance.Etag = etagInstance3;
                                                 }
                                                 
-                                                JToken idValue6 = frontendIpConfigurationsValue["id"];
+                                                JToken idValue6 = frontendIPConfigurationsValue["id"];
                                                 if (idValue6 != null && idValue6.Type != JTokenType.Null)
                                                 {
                                                     string idInstance6 = ((string)idValue6);
-                                                    applicationGatewayFrontendIpConfigurationJsonFormatInstance.Id = idInstance6;
+                                                    applicationGatewayFrontendIPConfigurationJsonFormatInstance.Id = idInstance6;
                                                 }
                                             }
                                         }
@@ -4249,15 +4249,15 @@ namespace Microsoft.Azure.Management.Network
                                                 JToken propertiesValue6 = backendAddressPoolsValue["properties"];
                                                 if (propertiesValue6 != null && propertiesValue6.Type != JTokenType.Null)
                                                 {
-                                                    JToken backendIpConfigurationsArray = propertiesValue6["backendIpConfigurations"];
-                                                    if (backendIpConfigurationsArray != null && backendIpConfigurationsArray.Type != JTokenType.Null)
+                                                    JToken backendIPConfigurationsArray = propertiesValue6["backendIPConfigurations"];
+                                                    if (backendIPConfigurationsArray != null && backendIPConfigurationsArray.Type != JTokenType.Null)
                                                     {
-                                                        foreach (JToken backendIpConfigurationsValue in ((JArray)backendIpConfigurationsArray))
+                                                        foreach (JToken backendIPConfigurationsValue in ((JArray)backendIPConfigurationsArray))
                                                         {
                                                             ResourceId resourceIdInstance = new ResourceId();
-                                                            applicationGatewayBackendAddressPoolJsonFormatInstance.BackendIpConfigurations.Add(resourceIdInstance);
+                                                            applicationGatewayBackendAddressPoolJsonFormatInstance.BackendIPConfigurations.Add(resourceIdInstance);
                                                             
-                                                            JToken idValue8 = backendIpConfigurationsValue["id"];
+                                                            JToken idValue8 = backendIPConfigurationsValue["id"];
                                                             if (idValue8 != null && idValue8.Type != JTokenType.Null)
                                                             {
                                                                 string idInstance8 = ((string)idValue8);
@@ -4395,17 +4395,17 @@ namespace Microsoft.Azure.Management.Network
                                                 JToken propertiesValue8 = httpListenersValue["properties"];
                                                 if (propertiesValue8 != null && propertiesValue8.Type != JTokenType.Null)
                                                 {
-                                                    JToken frontendIpConfigurationValue = propertiesValue8["frontendIpConfiguration"];
-                                                    if (frontendIpConfigurationValue != null && frontendIpConfigurationValue.Type != JTokenType.Null)
+                                                    JToken frontendIPConfigurationValue = propertiesValue8["frontendIPConfiguration"];
+                                                    if (frontendIPConfigurationValue != null && frontendIPConfigurationValue.Type != JTokenType.Null)
                                                     {
-                                                        ResourceId frontendIpConfigurationInstance = new ResourceId();
-                                                        applicationGatewayHttpListenerJsonFormatInstance.FrontendIpConfiguration = frontendIpConfigurationInstance;
+                                                        ResourceId frontendIPConfigurationInstance = new ResourceId();
+                                                        applicationGatewayHttpListenerJsonFormatInstance.FrontendIPConfiguration = frontendIPConfigurationInstance;
                                                         
-                                                        JToken idValue11 = frontendIpConfigurationValue["id"];
+                                                        JToken idValue11 = frontendIPConfigurationValue["id"];
                                                         if (idValue11 != null && idValue11.Type != JTokenType.Null)
                                                         {
                                                             string idInstance11 = ((string)idValue11);
-                                                            frontendIpConfigurationInstance.Id = idInstance11;
+                                                            frontendIPConfigurationInstance.Id = idInstance11;
                                                         }
                                                     }
                                                     
