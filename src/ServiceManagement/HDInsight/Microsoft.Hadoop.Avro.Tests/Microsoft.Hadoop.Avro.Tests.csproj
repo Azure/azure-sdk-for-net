@@ -37,18 +37,22 @@
     <ProjectReference Include="..\Microsoft.Hadoop.Avro.Tools\Microsoft.Hadoop.Avro.Tools.csproj">
       <Project>{ffd3590e-fefa-4057-902a-f6f3677b0bae}</Project>
       <Name>Microsoft.Hadoop.Avro.Tools</Name>
+      <Properties>SkipValidatePackageReferences=true</Properties>
     </ProjectReference>
     <ProjectReference Include="..\Microsoft.Hadoop.Avro\Microsoft.Hadoop.Avro.csproj">
       <Project>{EAB38A14-211F-4361-A06E-3EC1E07ABE33}</Project>
       <Name>Microsoft.Hadoop.Avro</Name>
+      <Properties>SkipValidatePackageReferences=true</Properties>
     </ProjectReference>
     <ProjectReference Include="..\Microsoft.Hadoop.Client\Microsoft.Hadoop.Client.csproj">
       <Project>{7C2E800C-09E5-484A-BB08-6C17578E7E45}</Project>
       <Name>Microsoft.Hadoop.Client</Name>
+      <Properties>SkipValidatePackageReferences=true</Properties>
     </ProjectReference>
     <ProjectReference Include="..\Microsoft.WindowsAzure.Management.HDInsight.Framework.Core\Microsoft.WindowsAzure.Management.HDInsight.Framework.Core.csproj">
       <Project>{55787775-8B25-436F-B9B9-C2B60EF80B20}</Project>
       <Name>Microsoft.WindowsAzure.Management.HDInsight.Framework.Core</Name>
+      <Properties>SkipValidatePackageReferences=true</Properties>
     </ProjectReference>
     <ProjectReference Include="..\Microsoft.WindowsAzure.Management.HDInsight.Tests\Microsoft.WindowsAzure.Management.HDInsight.Tests.csproj">
       <Project>{44E3641F-1854-4863-B29A-26A0AA0E2588}</Project>
@@ -57,10 +61,12 @@
     <ProjectReference Include="..\Microsoft.WindowsAzure.Management.HDInsight.TestUtilities\Microsoft.WindowsAzure.Management.HDInsight.TestUtilities.csproj">
       <Project>{7dd88c8b-37ea-4353-8ed7-6971118d5fc3}</Project>
       <Name>Microsoft.WindowsAzure.Management.HDInsight.TestUtilities</Name>
+      <Properties>SkipValidatePackageReferences=true</Properties>
     </ProjectReference>
     <ProjectReference Include="..\Microsoft.WindowsAzure.Management.HDInsight\Microsoft.WindowsAzure.Management.HDInsight.csproj">
       <Project>{CF2838EC-AF11-477B-A7E6-F59A70A0E67F}</Project>
       <Name>Microsoft.WindowsAzure.Management.HDInsight</Name>
+      <Properties>SkipValidatePackageReferences=true</Properties>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
