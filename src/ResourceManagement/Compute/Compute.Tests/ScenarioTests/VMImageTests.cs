@@ -93,7 +93,7 @@ namespace Compute.Tests
                     "MicrosoftWindowsServer",
                     "WindowsServer",
                     "2012-R2-Datacenter",
-                    top: 1);
+                    top: 0);
                 Assert.True(vmimages.Count == 0);
 
                 // Filter: top - Positive Test

@@ -103,8 +103,8 @@ namespace Compute.Tests
                 Assert.True(vmimageext.Location == "westus");
 
                 Assert.True(vmimageext.OperatingSystem == "Windows");
-                Assert.True(vmimageext.ComputeRole == "PaaS");
-                Assert.True(vmimageext.HandlerSchema == "");
+                Assert.True(vmimageext.ComputeRole == "IaaS");
+                Assert.True(vmimageext.HandlerSchema == null);
                 Assert.True(vmimageext.VmScaleSetEnabled == false);
                 Assert.True(vmimageext.SupportsMultipleExtensions == false);
             }
@@ -125,7 +125,7 @@ namespace Compute.Tests
                     parameters.PublisherName);
 
                 Assert.True(vmextimg.Count > 0);
-                Assert.True(vmextimg.Count(vmi => vmi.Name == "vmaccess") != 0);
+                Assert.True(vmextimg.Count(vmi => vmi.Name == "VMAccessAgent") != 0);
             }
         }
 

@@ -54,6 +54,11 @@ namespace Microsoft.Azure.Management.Storage
         public string ApiVersion { get; private set; }
 
         /// <summary>
+        /// Gets or sets the preferred language for the response.
+        /// </summary>
+        public string AcceptLanguage { get; set; }
+
+        /// <summary>
         /// The retry timeout for Long Running Operations.
         /// </summary>
         public int? LongRunningOperationRetryTimeout { get; set; }
@@ -168,6 +173,7 @@ namespace Microsoft.Azure.Management.Storage
             this.StorageAccounts = new StorageAccountsOperations(this);
             this.BaseUri = new Uri("https://management.azure.com");
             this.ApiVersion = "2015-05-01-preview";
+            this.AcceptLanguage = "en-US";
             if (this.Credentials != null)
             {
                 this.Credentials.InitializeServiceClient(this);

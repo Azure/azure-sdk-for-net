@@ -54,6 +54,11 @@ namespace Microsoft.Azure.Management.Network
         public string ApiVersion { get; private set; }
 
         /// <summary>
+        /// Gets or sets the preferred language for the response.
+        /// </summary>
+        public string AcceptLanguage { get; set; }
+
+        /// <summary>
         /// The retry timeout for Long Running Operations.
         /// </summary>
         public int? LongRunningOperationRetryTimeout { get; set; }
@@ -201,6 +206,7 @@ namespace Microsoft.Azure.Management.Network
             this.VirtualNetworks = new VirtualNetworksOperations(this);
             this.BaseUri = new Uri("https://management.azure.com");
             this.ApiVersion = "2015-05-01-preview";
+            this.AcceptLanguage = "en-US";
             if (this.Credentials != null)
             {
                 this.Credentials.InitializeServiceClient(this);
@@ -292,11 +298,24 @@ namespace Microsoft.Azure.Management.Network
             httpRequest.Method = new HttpMethod("GET");
             httpRequest.RequestUri = new Uri(url);
             // Set Headers
+            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            if (this.AcceptLanguage != null)
+            {
+                if (httpRequest.Headers.Contains("accept-language"))
+                {
+                    httpRequest.Headers.Remove("accept-language");
+                }
+                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.AcceptLanguage);
+            }
             if (customHeaders != null)
             {
                 foreach(var header in customHeaders)
                 {
-                    httpRequest.Headers.Add(header.Key, header.Value);
+                    if (httpRequest.Headers.Contains(header.Key))
+                    {
+                        httpRequest.Headers.Remove(header.Key);
+                    }
+                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
                 }
             }
 

@@ -56,6 +56,11 @@ namespace Microsoft.Azure.Management.Resources
         public string ApiVersion { get; private set; }
 
         /// <summary>
+        /// Gets or sets the preferred language for the response.
+        /// </summary>
+        public string AcceptLanguage { get; set; }
+
+        /// <summary>
         /// The retry timeout for Long Running Operations.
         /// </summary>
         public int? LongRunningOperationRetryTimeout { get; set; }
@@ -188,6 +193,7 @@ namespace Microsoft.Azure.Management.Resources
             this.Deployments = new DeploymentsOperations(this);
             this.BaseUri = new Uri("https://management.azure.com");
             this.ApiVersion = "2014-04-01-preview";
+            this.AcceptLanguage = "en-US";
             if (this.Credentials != null)
             {
                 this.Credentials.InitializeServiceClient(this);

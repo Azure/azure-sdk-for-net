@@ -113,7 +113,7 @@ namespace Compute.Tests
             Assert.True(vmExtExpected.VirtualMachineExtensionType == vmExtReturned.VirtualMachineExtensionType);
             Assert.True(vmExtExpected.AutoUpgradeMinorVersion == vmExtReturned.AutoUpgradeMinorVersion);
             Assert.True(vmExtExpected.TypeHandlerVersion == vmExtReturned.TypeHandlerVersion);
-            Assert.True(vmExtExpected.Settings == vmExtReturned.Settings);
+            Assert.True(vmExtExpected.Settings.ToString() == vmExtReturned.Settings.ToString());
         }
 
         private void ValidateVMExtensionInstanceView(VirtualMachineExtensionInstanceView vmExtInstanceView)

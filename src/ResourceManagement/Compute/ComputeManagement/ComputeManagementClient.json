@@ -743,10 +743,10 @@
           }
         ],
         "responses": {
-          "204": {
+          "200": {
             "description": ""
           },
-          "200": {
+          "204": {
             "description": ""
           },
           "202": {
@@ -918,14 +918,14 @@
           }
         ],
         "responses": {
-          "202": {
-            "description": ""
-          },
           "200": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/ComputeLongRunningOperationResult"
             }
+          },
+          "202": {
+            "description": ""
           }
         },
         "x-ms-long-running-operation": true
