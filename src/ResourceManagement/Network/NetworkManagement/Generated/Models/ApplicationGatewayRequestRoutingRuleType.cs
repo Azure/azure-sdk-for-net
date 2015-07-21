@@ -5,7 +5,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for ApplicationGatewayRequestRoutingRuleType
+    /// Defines values for ApplicationGatewayRequestRoutingRuleType.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
     public enum ApplicationGatewayRequestRoutingRuleType

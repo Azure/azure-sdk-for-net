@@ -13,12 +13,13 @@
 // limitations under the License.
 //
 
+using System.Linq;
 using System.Net;
 using Microsoft.Azure;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Test;
-using Xunit;
 using Microsoft.Azure.Test.HttpRecorder;
+using Xunit;
 
 namespace ResourceGroups.Tests
 {
@@ -55,7 +56,7 @@ namespace ResourceGroups.Tests
                 Assert.Equal(tagName, createResult.TagName);
                 
                 var listResult = client.Tags.List();
-                Assert.True(listResult.Value.Count > 0);
+                Assert.True(listResult.Count() > 0);
 
                 client.Tags.Delete(tagName);
             }
@@ -81,7 +82,7 @@ namespace ResourceGroups.Tests
                 Assert.Equal(tagValue, createValueResult.TagValueProperty);
 
                 var listResult = client.Tags.List();
-                Assert.True(listResult.Value.Count > 0);
+                Assert.True(listResult.Count() > 0);
 
                 client.Tags.DeleteValue(tagName, tagValue);
                 client.Tags.Delete(tagName);

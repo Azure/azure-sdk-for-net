@@ -19,6 +19,7 @@ using Microsoft.Azure.Management.Resources.Models;
 using Microsoft.Azure.Management.Storage;
 using Microsoft.Azure.Management.Storage.Models;
 using Microsoft.Azure.Test;
+using Microsoft.Rest;
 using ResourceGroups.Tests;
 using System;
 using System.Collections.Generic;
@@ -33,7 +34,7 @@ namespace Storage.Tests.Helpers
     public static class StorageManagementTestUtilities
     {
         public static bool IsTestTenant = false;
-        private static SubscriptionCloudCredentials Creds = null;
+        private static TokenCredentials Creds = null;
         private static Uri testUri = null;
 
         // These are used to create default accounts
@@ -82,7 +83,7 @@ namespace Storage.Tests.Helpers
             return storageClient;
         }
 
-        private static SubscriptionCloudCredentials GetCreds() 
+        private static TokenCredentials GetCreds() 
         {
             return Creds;
         }

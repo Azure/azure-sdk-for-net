@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Compute
             /// Lists virtual-machine-sizes available in a location for a subscription.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='location'>
             /// The location upon which virtual-machine-sizes is queried.
@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Compute
             /// Lists virtual-machine-sizes available in a location for a subscription.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='location'>
             /// The location upon which virtual-machine-sizes is queried.

@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Resources
             /// Cancel a currently running template deployment.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Resources
             /// Cancel a currently running template deployment.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.Resources
             /// Validate a deployment template.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Management.Resources
             /// Validate a deployment template.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
@@ -97,7 +97,7 @@ namespace Microsoft.Azure.Management.Resources
             /// Create a named template deployment using a template.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
@@ -117,7 +117,7 @@ namespace Microsoft.Azure.Management.Resources
             /// Create a named template deployment using a template.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
@@ -141,7 +141,7 @@ namespace Microsoft.Azure.Management.Resources
             /// Get a deployment.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group to get. The name is case insensitive.
@@ -158,7 +158,7 @@ namespace Microsoft.Azure.Management.Resources
             /// Get a deployment.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group to get. The name is case insensitive.
@@ -179,7 +179,7 @@ namespace Microsoft.Azure.Management.Resources
             /// Get a list of deployments.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group to filter by. The name is case insensitive.
@@ -190,7 +190,7 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='top'>
             /// Query parameters. If null is passed returns all deployments.
             /// </param>
-            public static DeploymentListResult List(this IDeploymentsOperations operations, string resourceGroupName, Expression<Func<DeploymentExtendedFilter, bool>> filter = default(Expression<Func<DeploymentExtendedFilter, bool>>), int? top = default(int?))
+            public static Page<DeploymentExtended> List(this IDeploymentsOperations operations, string resourceGroupName, Expression<Func<DeploymentExtendedFilter, bool>> filter = default(Expression<Func<DeploymentExtendedFilter, bool>>), int? top = default(int?))
             {
                 return Task.Factory.StartNew(s => ((IDeploymentsOperations)s).ListAsync(resourceGroupName, filter, top), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -199,7 +199,7 @@ namespace Microsoft.Azure.Management.Resources
             /// Get a list of deployments.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group to filter by. The name is case insensitive.
@@ -213,9 +213,9 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<DeploymentListResult> ListAsync( this IDeploymentsOperations operations, string resourceGroupName, Expression<Func<DeploymentExtendedFilter, bool>> filter = default(Expression<Func<DeploymentExtendedFilter, bool>>), int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Page<DeploymentExtended>> ListAsync( this IDeploymentsOperations operations, string resourceGroupName, Expression<Func<DeploymentExtendedFilter, bool>> filter = default(Expression<Func<DeploymentExtendedFilter, bool>>), int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<DeploymentListResult> result = await operations.ListWithHttpMessagesAsync(resourceGroupName, filter, top, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<Page<DeploymentExtended>> result = await operations.ListWithHttpMessagesAsync(resourceGroupName, filter, top, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -223,31 +223,31 @@ namespace Microsoft.Azure.Management.Resources
             /// Get a list of deployments.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
-            /// <param name='nextLink'>
+            /// <param name='nextPageLink'>
             /// NextLink from the previous successful call to List operation.
             /// </param>
-            public static DeploymentListResult ListNext(this IDeploymentsOperations operations, string nextLink)
+            public static Page<DeploymentExtended> ListNext(this IDeploymentsOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((IDeploymentsOperations)s).ListNextAsync(nextLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IDeploymentsOperations)s).ListNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
             /// Get a list of deployments.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
-            /// <param name='nextLink'>
+            /// <param name='nextPageLink'>
             /// NextLink from the previous successful call to List operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<DeploymentListResult> ListNextAsync( this IDeploymentsOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Page<DeploymentExtended>> ListNextAsync( this IDeploymentsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<DeploymentListResult> result = await operations.ListNextWithHttpMessagesAsync(nextLink, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<Page<DeploymentExtended>> result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

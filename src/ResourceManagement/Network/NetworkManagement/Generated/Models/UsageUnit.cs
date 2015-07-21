@@ -5,7 +5,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for UsageUnit
+    /// Defines values for UsageUnit.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
     public enum UsageUnit

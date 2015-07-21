@@ -5,7 +5,7 @@ namespace Microsoft.Azure.Management.Storage.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for Reason
+    /// Defines values for Reason.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
     public enum Reason

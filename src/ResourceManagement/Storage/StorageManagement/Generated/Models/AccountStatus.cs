@@ -5,7 +5,7 @@ namespace Microsoft.Azure.Management.Storage.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for AccountStatus
+    /// Defines values for AccountStatus.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
     public enum AccountStatus

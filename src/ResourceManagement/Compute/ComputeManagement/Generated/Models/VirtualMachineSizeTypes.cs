@@ -5,7 +5,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for VirtualMachineSizeTypes
+    /// Defines values for VirtualMachineSizeTypes.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
     public enum VirtualMachineSizeTypes

@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Resources
             /// Get all of the resources under a subscription.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// Query parameters. If null is passed returns all resource groups.
@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='top'>
             /// Query parameters. If null is passed returns all resource groups.
             /// </param>
-            public static ResourceListResult ListResources(this IResourceGroupsOperations operations, string resourceGroupName, Expression<Func<GenericResourceFilter, bool>> filter = default(Expression<Func<GenericResourceFilter, bool>>), int? top = default(int?))
+            public static Page<GenericResource> ListResources(this IResourceGroupsOperations operations, string resourceGroupName, Expression<Func<GenericResourceFilter, bool>> filter = default(Expression<Func<GenericResourceFilter, bool>>), int? top = default(int?))
             {
                 return Task.Factory.StartNew(s => ((IResourceGroupsOperations)s).ListResourcesAsync(resourceGroupName, filter, top), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Resources
             /// Get all of the resources under a subscription.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// Query parameters. If null is passed returns all resource groups.
@@ -50,9 +50,9 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<ResourceListResult> ListResourcesAsync( this IResourceGroupsOperations operations, string resourceGroupName, Expression<Func<GenericResourceFilter, bool>> filter = default(Expression<Func<GenericResourceFilter, bool>>), int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Page<GenericResource>> ListResourcesAsync( this IResourceGroupsOperations operations, string resourceGroupName, Expression<Func<GenericResourceFilter, bool>> filter = default(Expression<Func<GenericResourceFilter, bool>>), int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<ResourceListResult> result = await operations.ListResourcesWithHttpMessagesAsync(resourceGroupName, filter, top, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<Page<GenericResource>> result = await operations.ListResourcesWithHttpMessagesAsync(resourceGroupName, filter, top, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.Resources
             /// Checks whether resource group exists.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group to check. The name is case insensitive.
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.Resources
             /// Checks whether resource group exists.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group to check. The name is case insensitive.
@@ -92,7 +92,7 @@ namespace Microsoft.Azure.Management.Resources
             /// Create a resource group.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group to be created or updated.
@@ -110,7 +110,7 @@ namespace Microsoft.Azure.Management.Resources
             /// Create a resource group.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group to be created or updated.
@@ -133,7 +133,7 @@ namespace Microsoft.Azure.Management.Resources
             /// finished processing the request, call GetLongRunningOperationStatus.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group to be deleted. The name is case insensitive.
@@ -148,7 +148,7 @@ namespace Microsoft.Azure.Management.Resources
             /// finished processing the request, call GetLongRunningOperationStatus.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group to be deleted. The name is case insensitive.
@@ -166,7 +166,7 @@ namespace Microsoft.Azure.Management.Resources
             /// finished processing the request, call GetLongRunningOperationStatus.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group to be deleted. The name is case insensitive.
@@ -181,7 +181,7 @@ namespace Microsoft.Azure.Management.Resources
             /// finished processing the request, call GetLongRunningOperationStatus.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group to be deleted. The name is case insensitive.
@@ -198,7 +198,7 @@ namespace Microsoft.Azure.Management.Resources
             /// Get a resource group.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group to get. The name is case insensitive.
@@ -212,7 +212,7 @@ namespace Microsoft.Azure.Management.Resources
             /// Get a resource group.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group to get. The name is case insensitive.
@@ -233,7 +233,7 @@ namespace Microsoft.Azure.Management.Resources
             /// carried over.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group to be created or updated. The name is case
@@ -254,7 +254,7 @@ namespace Microsoft.Azure.Management.Resources
             /// carried over.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group to be created or updated. The name is case
@@ -276,7 +276,7 @@ namespace Microsoft.Azure.Management.Resources
             /// Gets a collection of resource groups.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='filter'>
             /// The filter to apply on the operation.
@@ -284,7 +284,7 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='top'>
             /// Query parameters. If null is passed returns all resource groups.
             /// </param>
-            public static ResourceGroupListResult List(this IResourceGroupsOperations operations, Expression<Func<ResourceGroupExtendedFilter, bool>> filter = default(Expression<Func<ResourceGroupExtendedFilter, bool>>), int? top = default(int?))
+            public static Page<ResourceGroupExtended> List(this IResourceGroupsOperations operations, Expression<Func<ResourceGroupExtendedFilter, bool>> filter = default(Expression<Func<ResourceGroupExtendedFilter, bool>>), int? top = default(int?))
             {
                 return Task.Factory.StartNew(s => ((IResourceGroupsOperations)s).ListAsync(filter, top), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -293,7 +293,7 @@ namespace Microsoft.Azure.Management.Resources
             /// Gets a collection of resource groups.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='filter'>
             /// The filter to apply on the operation.
@@ -304,9 +304,9 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<ResourceGroupListResult> ListAsync( this IResourceGroupsOperations operations, Expression<Func<ResourceGroupExtendedFilter, bool>> filter = default(Expression<Func<ResourceGroupExtendedFilter, bool>>), int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Page<ResourceGroupExtended>> ListAsync( this IResourceGroupsOperations operations, Expression<Func<ResourceGroupExtendedFilter, bool>> filter = default(Expression<Func<ResourceGroupExtendedFilter, bool>>), int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<ResourceGroupListResult> result = await operations.ListWithHttpMessagesAsync(filter, top, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<Page<ResourceGroupExtended>> result = await operations.ListWithHttpMessagesAsync(filter, top, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -314,31 +314,31 @@ namespace Microsoft.Azure.Management.Resources
             /// Get all of the resources under a subscription.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
-            /// <param name='nextLink'>
+            /// <param name='nextPageLink'>
             /// NextLink from the previous successful call to List operation.
             /// </param>
-            public static ResourceListResult ListResourcesNext(this IResourceGroupsOperations operations, string nextLink)
+            public static Page<GenericResource> ListResourcesNext(this IResourceGroupsOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((IResourceGroupsOperations)s).ListResourcesNextAsync(nextLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IResourceGroupsOperations)s).ListResourcesNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
             /// Get all of the resources under a subscription.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
-            /// <param name='nextLink'>
+            /// <param name='nextPageLink'>
             /// NextLink from the previous successful call to List operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<ResourceListResult> ListResourcesNextAsync( this IResourceGroupsOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Page<GenericResource>> ListResourcesNextAsync( this IResourceGroupsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<ResourceListResult> result = await operations.ListResourcesNextWithHttpMessagesAsync(nextLink, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<Page<GenericResource>> result = await operations.ListResourcesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -346,31 +346,31 @@ namespace Microsoft.Azure.Management.Resources
             /// Gets a collection of resource groups.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
-            /// <param name='nextLink'>
+            /// <param name='nextPageLink'>
             /// NextLink from the previous successful call to List operation.
             /// </param>
-            public static ResourceGroupListResult ListNext(this IResourceGroupsOperations operations, string nextLink)
+            public static Page<ResourceGroupExtended> ListNext(this IResourceGroupsOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((IResourceGroupsOperations)s).ListNextAsync(nextLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IResourceGroupsOperations)s).ListNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
             /// Gets a collection of resource groups.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
-            /// <param name='nextLink'>
+            /// <param name='nextPageLink'>
             /// NextLink from the previous successful call to List operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<ResourceGroupListResult> ListNextAsync( this IResourceGroupsOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Page<ResourceGroupExtended>> ListNextAsync( this IResourceGroupsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<ResourceGroupListResult> result = await operations.ListNextWithHttpMessagesAsync(nextLink, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<Page<ResourceGroupExtended>> result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

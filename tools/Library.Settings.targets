@@ -23,7 +23,7 @@
     <LibraryFxTarget Condition="'$(LibraryFxTarget)' == ''">net45</LibraryFxTarget>
   </PropertyGroup>
   
-  <Import Project="references.$(LibraryFxTarget).props" />  
+  <Import Project="references.$(LibraryFxTarget).props" Condition=" '$(AutoRestProjects)' != 'true' " />  
   
   <!--
   Shared Project properties
@@ -73,13 +73,16 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  
+
   <PropertyGroup Condition=" '$(LibraryFxTarget)' == 'portable' ">
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Profile102</TargetFrameworkProfile>
+    <TargetFrameworkVersion Condition=" '$(AutoRestProjects)' != 'true' ">v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion Condition=" '$(AutoRestProjects)'== 'true' ">v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile Condition=" '$(AutoRestProjects)' != 'true' ">Profile102</TargetFrameworkProfile>
+    <TargetFrameworkProfile Condition=" '$(AutoRestProjects)' == 'true' ">Profile111</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
   </PropertyGroup>
+  
   <PropertyGroup Condition=" '$(LibraryFxTarget)' == 'net40' ">
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile />

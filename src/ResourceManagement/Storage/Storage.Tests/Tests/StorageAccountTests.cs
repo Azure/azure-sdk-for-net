@@ -13,16 +13,16 @@
 // limitations under the License.
 //
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
 using Microsoft.Azure;
 using Microsoft.Azure.Management.Storage;
 using Microsoft.Azure.Management.Storage.Models;
 using Microsoft.Azure.Test;
 using ResourceGroups.Tests;
 using Storage.Tests.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using Xunit;
 
 namespace Storage.Tests
@@ -174,17 +174,17 @@ namespace Storage.Tests
                 var rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
 
                 var listAccountsRequest = storageMgmtClient.StorageAccounts.ListByResourceGroup(rgname);
-                Assert.Empty(listAccountsRequest.Value);
+                Assert.Empty(listAccountsRequest);
 
                 // Create storage accounts
                 string accountName1 = StorageManagementTestUtilities.CreateStorageAccount(storageMgmtClient, rgname);
                 string accountName2 = StorageManagementTestUtilities.CreateStorageAccount(storageMgmtClient, rgname);
 
                 listAccountsRequest = storageMgmtClient.StorageAccounts.ListByResourceGroup(rgname);
-                Assert.Equal(2, listAccountsRequest.Value.Count);
+                Assert.Equal(2, listAccountsRequest.Count());
 
-                StorageManagementTestUtilities.VerifyAccountProperties(listAccountsRequest.Value[0], true);
-                StorageManagementTestUtilities.VerifyAccountProperties(listAccountsRequest.Value[1], true);
+                StorageManagementTestUtilities.VerifyAccountProperties(listAccountsRequest.First(), true);
+                StorageManagementTestUtilities.VerifyAccountProperties(listAccountsRequest.ToArray()[1], true);
             }
         }
 
@@ -211,11 +211,11 @@ namespace Storage.Tests
 
                 var listAccountsRequest = storageMgmtClient.StorageAccounts.List();
 
-                StorageAccount account1 = listAccountsRequest.Value.First(
+                StorageAccount account1 = listAccountsRequest.First(
                     t => StringComparer.OrdinalIgnoreCase.Equals(t.Name, accountName1));
                 StorageManagementTestUtilities.VerifyAccountProperties(account1, true);
 
-                StorageAccount account2 = listAccountsRequest.Value.First(
+                StorageAccount account2 = listAccountsRequest.First(
                     t => StringComparer.OrdinalIgnoreCase.Equals(t.Name, accountName2));
                 StorageManagementTestUtilities.VerifyAccountProperties(account2, true);
             }

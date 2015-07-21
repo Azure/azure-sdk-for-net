@@ -94,7 +94,7 @@ namespace Networks.Tests
                 var getSubnetListResponse = networkResourceProviderClient.Subnets.List(resourceGroupName, vnetName);
 
                 // Verify ListSubnets
-                Assert.True(AreSubnetsEqual(getVnetResponse.Subnets, getSubnetListResponse.Value));
+                Assert.True(AreSubnetsEqual(getVnetResponse.Subnets, getSubnetListResponse));
 
                 // Delete the subnet "subnet1"
                 networkResourceProviderClient.Subnets.Delete(resourceGroupName, vnetName, subnet2Name);
@@ -102,8 +102,8 @@ namespace Networks.Tests
                 // Verify that the deletion was successful
                 getSubnetListResponse = networkResourceProviderClient.Subnets.List(resourceGroupName, vnetName);
 
-                Assert.Equal(1, getSubnetListResponse.Value.Count);
-                Assert.Equal(subnet1Name, getSubnetListResponse.Value[0].Name);
+                Assert.Equal(1, getSubnetListResponse.Count());
+                Assert.Equal(subnet1Name, getSubnetListResponse.First().Name);
 
                 #endregion
             }

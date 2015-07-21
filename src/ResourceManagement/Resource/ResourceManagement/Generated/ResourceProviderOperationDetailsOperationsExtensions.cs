@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Resources
             /// Gets a list of resource providers.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceProviderNamespace'>
             /// Resource identity.
@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Resources
             /// Gets a list of resource providers.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceProviderNamespace'>
             /// Resource identity.
