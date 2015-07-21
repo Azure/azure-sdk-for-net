@@ -19,7 +19,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
     /// <summary>
     /// Contains Registerd ComputeType JSON samples. Samples added here will automatically be hit by the serialization unit tests. 
     /// </summary>
-    public class RegisteredComputeTypeJsonSamples
+    public class RegisteredComputeTypeJsonSamples : JsonSampleCollection<RegisteredComputeTypeJsonSamples>
     {
         [JsonSample]
         public const string AmazonEMRCompute_ServiceBusTransport = @"

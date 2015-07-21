@@ -19,7 +19,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
     /// <summary>
     /// Contains Hub JSON samples. Samples added here will automatically be hit by the serialization unit tests. 
     /// </summary>
-    public class HubJsonSamples
+    public class HubJsonSamples : JsonSampleCollection<HubJsonSamples>
     {
         [JsonSample]
         public const string AzureHubWithDefault = @"
