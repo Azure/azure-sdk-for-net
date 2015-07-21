@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Resources
             /// Delete a subscription resource tag value.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='tagName'>
             /// The name of the tag.
@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Resources
             /// Delete a subscription resource tag value.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='tagName'>
             /// The name of the tag.
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.Resources
             /// Create a subscription resource tag value.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='tagName'>
             /// The name of the tag.
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.Resources
             /// Create a subscription resource tag value.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='tagName'>
             /// The name of the tag.
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.Management.Resources
             /// Create a subscription resource tag.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='tagName'>
             /// The name of the tag.
@@ -105,7 +105,7 @@ namespace Microsoft.Azure.Management.Resources
             /// Create a subscription resource tag.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='tagName'>
             /// The name of the tag.
@@ -123,7 +123,7 @@ namespace Microsoft.Azure.Management.Resources
             /// Delete a subscription resource tag.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='tagName'>
             /// The name of the tag.
@@ -137,7 +137,7 @@ namespace Microsoft.Azure.Management.Resources
             /// Delete a subscription resource tag.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='tagName'>
             /// The name of the tag.
@@ -154,9 +154,9 @@ namespace Microsoft.Azure.Management.Resources
             /// Get a list of subscription resource tags.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
-            public static TagsListResult List(this ITagsOperations operations)
+            public static Page<TagDetails> List(this ITagsOperations operations)
             {
                 return Task.Factory.StartNew(s => ((ITagsOperations)s).ListAsync(), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -165,14 +165,14 @@ namespace Microsoft.Azure.Management.Resources
             /// Get a list of subscription resource tags.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<TagsListResult> ListAsync( this ITagsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Page<TagDetails>> ListAsync( this ITagsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<TagsListResult> result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<Page<TagDetails>> result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -180,31 +180,31 @@ namespace Microsoft.Azure.Management.Resources
             /// Get a list of subscription resource tags.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
-            /// <param name='nextLink'>
+            /// <param name='nextPageLink'>
             /// NextLink from the previous successful call to List operation.
             /// </param>
-            public static TagsListResult ListNext(this ITagsOperations operations, string nextLink)
+            public static Page<TagDetails> ListNext(this ITagsOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((ITagsOperations)s).ListNextAsync(nextLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ITagsOperations)s).ListNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
             /// Get a list of subscription resource tags.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
-            /// <param name='nextLink'>
+            /// <param name='nextPageLink'>
             /// NextLink from the previous successful call to List operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<TagsListResult> ListNextAsync( this ITagsOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Page<TagDetails>> ListNextAsync( this ITagsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<TagsListResult> result = await operations.ListNextWithHttpMessagesAsync(nextLink, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<Page<TagDetails>> result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

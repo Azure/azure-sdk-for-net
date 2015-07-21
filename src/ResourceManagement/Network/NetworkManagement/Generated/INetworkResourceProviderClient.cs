@@ -7,6 +7,7 @@ namespace Microsoft.Azure.Management.Network
     using System.Threading.Tasks;
     using Newtonsoft.Json;
     using Microsoft.Rest;
+    using System.Linq;
     using Microsoft.Azure;
     using Models;
 
@@ -30,10 +31,9 @@ namespace Microsoft.Azure.Management.Network
         JsonSerializerSettings DeserializationSettings { get; }        
 
         /// <summary>
-        /// Subscription credentials which uniquely identify Microsoft Azure
-        /// subscription.
+        /// Management credentials for Azure.
         /// </summary>
-        SubscriptionCloudCredentials Credentials { get; }
+        ServiceClientCredentials Credentials { get; }
 
         /// <summary>
         /// Gets subscription credentials which uniquely identify Microsoft
@@ -94,10 +94,10 @@ namespace Microsoft.Azure.Management.Network
         /// regular expression: ^[a-z][a-z0-9-]{1,61}[a-z0-9]$.
         /// </param>
         /// <param name='customHeaders'>
-        /// Headers that will be added to request.
+        /// The headers that will be added to request.
         /// </param>        
         /// <param name='cancellationToken'>
-        /// Cancellation token.
+        /// The cancellation token.
         /// </param>
         Task<AzureOperationResponse<DnsNameAvailabilityResult>> CheckDnsNameAvailabilityWithHttpMessagesAsync(string location, string domainNameLabel = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 

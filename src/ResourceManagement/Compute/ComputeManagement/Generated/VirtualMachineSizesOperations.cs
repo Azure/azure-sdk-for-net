@@ -11,8 +11,9 @@ namespace Microsoft.Azure.Management.Compute
     using System.Threading.Tasks;
     using Microsoft.Rest;
     using Newtonsoft.Json;
-    using Microsoft.Azure.OData;
+    using System.Linq;
     using System.Linq.Expressions;
+    using Microsoft.Azure.OData;
     using Microsoft.Azure;
     using Models;
 
@@ -151,6 +152,10 @@ namespace Microsoft.Azure.Management.Compute
             var result = new AzureOperationResponse<VirtualMachineSizeListResult>();
             result.Request = httpRequest;
             result.Response = httpResponse;
+            if (httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
             // Deserialize Response
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {

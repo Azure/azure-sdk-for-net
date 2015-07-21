@@ -5,7 +5,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for SecurityRuleProtocol
+    /// Defines values for SecurityRuleProtocol.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
     public enum SecurityRuleProtocol

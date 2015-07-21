@@ -5,7 +5,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for VirtualNetworkGatewayConnectionType
+    /// Defines values for VirtualNetworkGatewayConnectionType.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
     public enum VirtualNetworkGatewayConnectionType

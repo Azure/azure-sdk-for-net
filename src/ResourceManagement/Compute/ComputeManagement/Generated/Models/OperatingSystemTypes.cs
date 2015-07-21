@@ -5,7 +5,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for OperatingSystemTypes
+    /// Defines values for OperatingSystemTypes.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
     public enum OperatingSystemTypes

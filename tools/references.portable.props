@@ -29,20 +29,4 @@
       <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Bcl.1.1.9\lib\portable-net40+sl5+win8+wp8+wpa81\System.Threading.Tasks.dll</HintPath>
     </Reference>
   </ItemGroup>
-
-  <!--Use the <Choose> so that VS project system can display correctly 
-  in the solution explorer based on the condition-->
-  <Choose>
-    <When Condition=" '$(AutoRestProjects)' == 'true' ">
-      <ItemGroup>
-        <Reference Include="Microsoft.Rest.ClientRuntime">
-          <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Rest.ClientRuntime.1.0.3\lib\portable-net403+win8+wpa81\Microsoft.Rest.ClientRuntime.dll</HintPath>
-        </Reference>
-        <Reference Include="Microsoft.Rest.ClientRuntime.Azure">
-          <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Rest.ClientRuntime.Azure.1.0.12\lib\portable-net403+win+wpa81\Microsoft.Rest.ClientRuntime.Azure.dll</HintPath>
-        </Reference>
-      </ItemGroup>
-    </When>
-  </Choose>
-  
 </Project>

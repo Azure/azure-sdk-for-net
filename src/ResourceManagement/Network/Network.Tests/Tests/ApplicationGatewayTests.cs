@@ -1,19 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
+using System.Security.Cryptography.X509Certificates;
+using Microsoft.Azure;
+using Microsoft.Azure.Management.Network;
+using Microsoft.Azure.Management.Network.Models;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
 using Microsoft.Azure.Test;
 using Networks.Tests.Helpers;
 using ResourceGroups.Tests;
 using Xunit;
-using Microsoft.Azure;
-using System;
-using Microsoft.Azure.Management.Network;
-using System.Security.Cryptography.X509Certificates;
-using Microsoft.Azure.Management.Network.Models;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
 
 namespace Networks.Tests
 {
@@ -154,12 +152,12 @@ namespace Networks.Tests
                             Name = httpListenerName,
                             FrontendPort = new SubResource()
                             {
-                                Id = GetChildAppGwResourceId(networkResourceProviderClient.Credentials.SubscriptionId,
+                                Id = GetChildAppGwResourceId(networkResourceProviderClient.SubscriptionId,
                                     resourceGroupName, appGwName, "frontendPorts", frontendPortName)
                             },
                             FrontendIpConfiguration = new SubResource()
                             {
-                                Id = GetChildAppGwResourceId(networkResourceProviderClient.Credentials.SubscriptionId,
+                                Id = GetChildAppGwResourceId(networkResourceProviderClient.SubscriptionId,
                                     resourceGroupName, appGwName, "frontendIPConfigurations", frontendIpConfigName)
                             },
                             SslCertificate = null,
@@ -174,17 +172,17 @@ namespace Networks.Tests
                             RuleType = ApplicationGatewayRequestRoutingRuleType.Basic,
                             HttpListener = new SubResource()
                             {
-                                Id = GetChildAppGwResourceId(networkResourceProviderClient.Credentials.SubscriptionId,
+                                Id = GetChildAppGwResourceId(networkResourceProviderClient.SubscriptionId,
                                     resourceGroupName, appGwName, "httpListeners", httpListenerName)
                             },
                             BackendAddressPool = new SubResource()
                             {
-                                Id = GetChildAppGwResourceId(networkResourceProviderClient.Credentials.SubscriptionId,
+                                Id = GetChildAppGwResourceId(networkResourceProviderClient.SubscriptionId,
                                     resourceGroupName, appGwName, "backendAddressPools", backendAddressPoolName)
                             },
                             BackendHttpSettings = new SubResource()
                             {
-                                Id = GetChildAppGwResourceId(networkResourceProviderClient.Credentials.SubscriptionId,
+                                Id = GetChildAppGwResourceId(networkResourceProviderClient.SubscriptionId,
                                     resourceGroupName, appGwName, "backendHttpSettingsCollection", backendHttpSettingsName)
                             }
                         }
@@ -286,17 +284,17 @@ namespace Networks.Tests
                             Name = httpListenerName,
                             FrontendPort = new SubResource()
                             {
-                                Id = GetChildAppGwResourceId(networkResourceProviderClient.Credentials.SubscriptionId,
+                                Id = GetChildAppGwResourceId(networkResourceProviderClient.SubscriptionId,
                                     resourceGroupName, appGwName, "frontendPorts", frontendPortName)
                             },
                             FrontendIpConfiguration = new SubResource()
                             {
-                                Id = GetChildAppGwResourceId(networkResourceProviderClient.Credentials.SubscriptionId,
+                                Id = GetChildAppGwResourceId(networkResourceProviderClient.SubscriptionId,
                                     resourceGroupName, appGwName, "frontendIPConfigurations", frontendIpConfigName)
                             },
                             SslCertificate = new SubResource()
                             {
-                                Id = GetChildAppGwResourceId(networkResourceProviderClient.Credentials.SubscriptionId,
+                                Id = GetChildAppGwResourceId(networkResourceProviderClient.SubscriptionId,
                                     resourceGroupName, appGwName, "sslCertificates", sslCertName)
                             },
                             Protocol = ApplicationGatewayProtocol.Http
@@ -310,17 +308,17 @@ namespace Networks.Tests
                             RuleType = ApplicationGatewayRequestRoutingRuleType.Basic,
                             HttpListener = new SubResource()
                             {
-                                Id = GetChildAppGwResourceId(networkResourceProviderClient.Credentials.SubscriptionId,
+                                Id = GetChildAppGwResourceId(networkResourceProviderClient.SubscriptionId,
                                     resourceGroupName, appGwName, "httpListeners", httpListenerName)
                             },
                             BackendAddressPool = new SubResource()
                             {
-                                Id = GetChildAppGwResourceId(networkResourceProviderClient.Credentials.SubscriptionId,
+                                Id = GetChildAppGwResourceId(networkResourceProviderClient.SubscriptionId,
                                     resourceGroupName, appGwName, "backendAddressPools", backendAddressPoolName)
                             },
                             BackendHttpSettings = new SubResource()
                             {
-                                Id = GetChildAppGwResourceId(networkResourceProviderClient.Credentials.SubscriptionId,
+                                Id = GetChildAppGwResourceId(networkResourceProviderClient.SubscriptionId,
                                     resourceGroupName, appGwName, "backendHttpSettingsCollection", backendHttpSettingsName)
                             }
                         }
@@ -382,11 +380,11 @@ namespace Networks.Tests
 
                 // List AppGw
                 var listAppGw = networkResourceProviderClient.ApplicationGateways.List(resourceGroupName);
-                Assert.Equal(1, listAppGw.Value.Count);
+                Assert.Equal(1, listAppGw.Count());
 
                 // List all AppGw
                 var listAllAppGw = networkResourceProviderClient.ApplicationGateways.ListAll();
-                Assert.Equal(1, listAllAppGw.Value.Count);
+                Assert.Equal(1, listAllAppGw.Count());
 
                 //Add one more gateway
                 // Put AppGw
@@ -402,11 +400,11 @@ namespace Networks.Tests
 
                 // List AppGw
                 listAppGw = networkResourceProviderClient.ApplicationGateways.List(resourceGroupName);
-                Assert.Equal(2, listAppGw.Value.Count);
+                Assert.Equal(2, listAppGw.Count());
 
                 // List all AppGw
                 listAllAppGw = networkResourceProviderClient.ApplicationGateways.ListAll();
-                Assert.Equal(2, listAllAppGw.Value.Count);
+                Assert.Equal(2, listAllAppGw.Count());
 
                 //Start AppGw
                 networkResourceProviderClient.ApplicationGateways.Start(resourceGroupName, appGwName);
@@ -425,7 +423,7 @@ namespace Networks.Tests
 
                 // Verify Delete
                 listAppGw = networkResourceProviderClient.ApplicationGateways.List(resourceGroupName);
-                Assert.Null(listAppGw.Value);
+                Assert.Null(listAppGw);
             }
         }        
     }

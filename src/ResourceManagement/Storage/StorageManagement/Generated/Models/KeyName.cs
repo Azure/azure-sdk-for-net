@@ -5,7 +5,7 @@ namespace Microsoft.Azure.Management.Storage.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for KeyName
+    /// Defines values for KeyName.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
     public enum KeyName

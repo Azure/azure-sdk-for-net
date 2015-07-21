@@ -13,6 +13,7 @@ namespace Microsoft.Azure.Management.Network
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Linq;
     using Microsoft.Azure;
     using Models;
 
@@ -36,10 +37,9 @@ namespace Microsoft.Azure.Management.Network
         public JsonSerializerSettings DeserializationSettings { get; private set; }        
 
         /// <summary>
-        /// Subscription credentials which uniquely identify Microsoft Azure
-        /// subscription.
+        /// Management credentials for Azure.
         /// </summary>
-        public SubscriptionCloudCredentials Credentials { get; private set; }
+        public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
         /// Gets subscription credentials which uniquely identify Microsoft
@@ -145,13 +145,13 @@ namespace Microsoft.Azure.Management.Network
         /// Initializes a new instance of the NetworkResourceProviderClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. Subscription credentials which uniquely identify Microsoft Azure subscription.
+        /// Required. Management credentials for Azure.
         /// </param>
         /// <param name='handlers'>
         /// Optional. The set of delegating handlers to insert in the http
         /// client pipeline.
         /// </param>
-        public NetworkResourceProviderClient(SubscriptionCloudCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        public NetworkResourceProviderClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (credentials == null)
             {
@@ -167,13 +167,13 @@ namespace Microsoft.Azure.Management.Network
         /// Optional. The base URI of the service.
         /// </param>
         /// <param name='credentials'>
-        /// Required. Subscription credentials which uniquely identify Microsoft Azure subscription.
+        /// Required. Management credentials for Azure.
         /// </param>
         /// <param name='handlers'>
         /// Optional. The set of delegating handlers to insert in the http
         /// client pipeline.
         /// </param>
-        public NetworkResourceProviderClient(Uri baseUri, SubscriptionCloudCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        public NetworkResourceProviderClient(Uri baseUri, ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (baseUri == null)
             {
@@ -207,10 +207,6 @@ namespace Microsoft.Azure.Management.Network
             this.BaseUri = new Uri("https://management.azure.com");
             this.ApiVersion = "2015-05-01-preview";
             this.AcceptLanguage = "en-US";
-            if (this.Credentials != null)
-            {
-                this.Credentials.InitializeServiceClient(this);
-            }
             SerializationSettings = new JsonSerializerSettings
             {
                 Formatting = Formatting.Indented,
@@ -357,6 +353,10 @@ namespace Microsoft.Azure.Management.Network
             var result = new AzureOperationResponse<DnsNameAvailabilityResult>();
             result.Request = httpRequest;
             result.Response = httpResponse;
+            if (httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
             // Deserialize Response
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {

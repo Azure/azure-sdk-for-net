@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.Network
             /// Lists compute usages for a subscription.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='location'>
             /// The location upon which resource usage is queried.
@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Network
             /// Lists compute usages for a subscription.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='location'>
             /// The location upon which resource usage is queried.

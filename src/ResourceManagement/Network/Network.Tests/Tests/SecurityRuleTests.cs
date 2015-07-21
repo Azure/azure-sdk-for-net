@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Net;
+using System.Linq;
 using Microsoft.Azure.Management.Network;
 using Microsoft.Azure.Management.Network.Models;
 using Microsoft.Azure.Management.Resources;
@@ -117,23 +118,23 @@ namespace Networks.Tests
                 // List all SecurityRules
                 var getsecurityRules = networkResourceProviderClient.SecurityRules.List(resourceGroupName, networkSecurityGroupName);
 
-                Assert.Equal(2, getsecurityRules.Value.Count);
-                this.CompareSecurityRule(getNsgResponse.SecurityRules[0], getsecurityRules.Value[0]);
-                this.CompareSecurityRule(getNsgResponse.SecurityRules[1], getsecurityRules.Value[1]);
+                Assert.Equal(2, getsecurityRules.Count());
+                this.CompareSecurityRule(getNsgResponse.SecurityRules[0], getsecurityRules.First());
+                this.CompareSecurityRule(getNsgResponse.SecurityRules[1], getsecurityRules.ToArray()[1]);
 
                 // Delete a SecurityRule
                 networkResourceProviderClient.SecurityRules.Delete(resourceGroupName, networkSecurityGroupName, securityRule2);
 
                 getsecurityRules = networkResourceProviderClient.SecurityRules.List(resourceGroupName, networkSecurityGroupName);
 
-                Assert.Equal(1, getsecurityRules.Value.Count);
+                Assert.Equal(1, getsecurityRules.Count());
 
                 // Delete NSG
                 networkResourceProviderClient.NetworkSecurityGroups.Delete(resourceGroupName, networkSecurityGroupName);
 
                 // List NSG
                 var listNsgResponse = networkResourceProviderClient.NetworkSecurityGroups.List(resourceGroupName);
-                Assert.Equal(0, listNsgResponse.Value.Count);
+                Assert.Equal(0, listNsgResponse.Count());
             }
         }
 

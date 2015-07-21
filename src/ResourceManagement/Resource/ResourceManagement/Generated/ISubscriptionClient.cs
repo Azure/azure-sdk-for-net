@@ -7,6 +7,7 @@ namespace Microsoft.Azure.Subscriptions
     using System.Threading.Tasks;
     using Newtonsoft.Json;
     using Microsoft.Rest;
+    using System.Linq;
     using Microsoft.Azure;
     using Models;
 
@@ -30,10 +31,9 @@ namespace Microsoft.Azure.Subscriptions
         JsonSerializerSettings DeserializationSettings { get; }        
 
         /// <summary>
-        /// Subscription credentials which uniquely identify Microsoft Azure
-        /// subscription.
+        /// Management credentials for Azure.
         /// </summary>
-        SubscriptionCloudCredentials Credentials { get; }
+        ServiceClientCredentials Credentials { get; }
 
         /// <summary>
         /// Gets subscription credentials which uniquely identify Microsoft

@@ -5,7 +5,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for DiskCreateOptionTypes
+    /// Defines values for DiskCreateOptionTypes.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
     public enum DiskCreateOptionTypes

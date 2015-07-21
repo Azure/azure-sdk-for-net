@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Compute
             /// Gets a virtual machine image.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='location'>
             /// </param>
@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.Compute
             /// Gets a virtual machine image.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='location'>
             /// </param>
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.Compute
             /// Gets a list of virtual machine image offers.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='location'>
             /// </param>
@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Management.Compute
             /// Gets a list of virtual machine image offers.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='location'>
             /// </param>
@@ -96,7 +96,7 @@ namespace Microsoft.Azure.Management.Compute
             /// Gets a list of virtual machine image publishers.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='location'>
             /// </param>
@@ -109,7 +109,7 @@ namespace Microsoft.Azure.Management.Compute
             /// Gets a list of virtual machine image publishers.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='location'>
             /// </param>
@@ -126,7 +126,7 @@ namespace Microsoft.Azure.Management.Compute
             /// Gets a list of virtual machine image skus.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='location'>
             /// </param>
@@ -143,7 +143,7 @@ namespace Microsoft.Azure.Management.Compute
             /// Gets a list of virtual machine image skus.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='location'>
             /// </param>
@@ -164,7 +164,7 @@ namespace Microsoft.Azure.Management.Compute
             /// Gets a list of virtual machine images.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='location'>
             /// </param>
@@ -190,7 +190,7 @@ namespace Microsoft.Azure.Management.Compute
             /// Gets a list of virtual machine images.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='location'>
             /// </param>

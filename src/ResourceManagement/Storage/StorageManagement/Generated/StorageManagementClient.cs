@@ -13,6 +13,7 @@ namespace Microsoft.Azure.Management.Storage
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Linq;
     using Microsoft.Azure;
     using Models;
 
@@ -36,10 +37,9 @@ namespace Microsoft.Azure.Management.Storage
         public JsonSerializerSettings DeserializationSettings { get; private set; }        
 
         /// <summary>
-        /// Subscription credentials which uniquely identify Microsoft Azure
-        /// subscription.
+        /// Management credentials for Azure.
         /// </summary>
-        public SubscriptionCloudCredentials Credentials { get; private set; }
+        public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
         /// Gets subscription credentials which uniquely identify Microsoft
@@ -123,13 +123,13 @@ namespace Microsoft.Azure.Management.Storage
         /// Initializes a new instance of the StorageManagementClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. Subscription credentials which uniquely identify Microsoft Azure subscription.
+        /// Required. Management credentials for Azure.
         /// </param>
         /// <param name='handlers'>
         /// Optional. The set of delegating handlers to insert in the http
         /// client pipeline.
         /// </param>
-        public StorageManagementClient(SubscriptionCloudCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        public StorageManagementClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (credentials == null)
             {
@@ -145,13 +145,13 @@ namespace Microsoft.Azure.Management.Storage
         /// Optional. The base URI of the service.
         /// </param>
         /// <param name='credentials'>
-        /// Required. Subscription credentials which uniquely identify Microsoft Azure subscription.
+        /// Required. Management credentials for Azure.
         /// </param>
         /// <param name='handlers'>
         /// Optional. The set of delegating handlers to insert in the http
         /// client pipeline.
         /// </param>
-        public StorageManagementClient(Uri baseUri, SubscriptionCloudCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        public StorageManagementClient(Uri baseUri, ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (baseUri == null)
             {
@@ -174,10 +174,6 @@ namespace Microsoft.Azure.Management.Storage
             this.BaseUri = new Uri("https://management.azure.com");
             this.ApiVersion = "2015-05-01-preview";
             this.AcceptLanguage = "en-US";
-            if (this.Credentials != null)
-            {
-                this.Credentials.InitializeServiceClient(this);
-            }
             SerializationSettings = new JsonSerializerSettings
             {
                 Formatting = Formatting.Indented,

@@ -13,16 +13,16 @@
 // limitations under the License.
 //
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
 using Microsoft.Azure;
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
 using Microsoft.Azure.Test;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using Xunit;
 
 namespace Compute.Tests
@@ -91,7 +91,7 @@ namespace Compute.Tests
             resourcesClient = ComputeManagementTestUtilities.GetResourceManagementClient(handler);
             computeClient = ComputeManagementTestUtilities.GetComputeManagementClient(handler);
 
-            subId = computeClient.Credentials.SubscriptionId;
+            subId = computeClient.SubscriptionId;
             location = ComputeManagementTestUtilities.DefaultLocation;
 
             resourceGroupName = TestUtilities.GenerateName(testPrefix);
