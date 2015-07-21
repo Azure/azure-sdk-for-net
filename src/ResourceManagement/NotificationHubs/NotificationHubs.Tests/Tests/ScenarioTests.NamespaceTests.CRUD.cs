@@ -66,7 +66,7 @@ namespace NotificationHubs.Tests.ScenarioTests
                 Assert.Equal(createNamespaceResponse.Value.Name, namespaceName);
 
                 TestUtilities.Wait(TimeSpan.FromSeconds(5));
-
+                
                 //Get the created namespace
                 var getNamespaceResponse = NotificationHubsManagementClient.Namespaces.Get(resourceGroup, namespaceName);
                 Assert.Null(getNamespaceResponse);

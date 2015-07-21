@@ -29,6 +29,7 @@ namespace NotificationHubs.Tests.ScenarioTests
         private ManagementClient _managmentClient;
         private ResourceManagementClient _resourceManagementClient;
         private NotificationHubsManagementClient _notificationHubsManagementClient;
+        private RecordedDelegatingHandler handler = new RecordedDelegatingHandler();
 
         public string Location { get; set; }
         public string ResourceGroupName { get; set; }
@@ -40,7 +41,7 @@ namespace NotificationHubs.Tests.ScenarioTests
             {
                 if (_managmentClient == null)
                 {
-                    _managmentClient = NotificationHubsManagementHelper.GetManagementClient();
+                    _managmentClient = NotificationHubsManagementHelper.GetManagementClient(handler);
                 }
                 return _managmentClient;
             }
@@ -52,7 +53,7 @@ namespace NotificationHubs.Tests.ScenarioTests
             {
                 if (_resourceManagementClient == null)
                 {
-                    _resourceManagementClient = NotificationHubsManagementHelper.GetResourceManagementClient();
+                    _resourceManagementClient = NotificationHubsManagementHelper.GetResourceManagementClient(handler);
                 }
                 return _resourceManagementClient;
             }
@@ -64,7 +65,7 @@ namespace NotificationHubs.Tests.ScenarioTests
             {
                 if (_notificationHubsManagementClient == null)
                 {
-                    _notificationHubsManagementClient = NotificationHubsManagementHelper.GetNotificationHubsManagementClient();
+                    _notificationHubsManagementClient = NotificationHubsManagementHelper.GetNotificationHubsManagementClient(handler);
                 }
                 return _notificationHubsManagementClient;
             }

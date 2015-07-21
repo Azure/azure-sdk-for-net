@@ -38,19 +38,19 @@ namespace NotificationHubs.Tests.TestHelper
         internal const string AuthorizationRulesPrefix = "HydraNH-Authrules";
         internal const string DefaultNamespaceAuthorizationRule = "RootManageSharedAccessKey";
 
-        public static NotificationHubsManagementClient GetNotificationHubsManagementClient()
+        public static NotificationHubsManagementClient GetNotificationHubsManagementClient(RecordedDelegatingHandler handler)
         {
-            return TestBase.GetServiceClient<NotificationHubsManagementClient>(new CSMTestEnvironmentFactory());
+            return TestBase.GetServiceClient<NotificationHubsManagementClient>(new CSMTestEnvironmentFactory()).WithHandler(handler);
         }
 
-        public static ResourceManagementClient GetResourceManagementClient()
+        public static ResourceManagementClient GetResourceManagementClient(RecordedDelegatingHandler handler)
         {
-            return TestBase.GetServiceClient<ResourceManagementClient>(new CSMTestEnvironmentFactory());
+            return TestBase.GetServiceClient<ResourceManagementClient>(new CSMTestEnvironmentFactory()).WithHandler(handler);
         }
 
-        public static ManagementClient GetManagementClient()
+        public static ManagementClient GetManagementClient(RecordedDelegatingHandler handler)
         {
-            return TestBase.GetServiceClient<ManagementClient>();
+            return TestBase.GetServiceClient<ManagementClient>().WithHandler(handler);
         }
 
         public static void RefreshAccessToken(this NotificationHubsManagementClient notificationHubsManagementClient)
