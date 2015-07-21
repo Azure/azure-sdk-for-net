@@ -99,7 +99,19 @@ namespace DataFactory.Tests.Framework.JsonSamples
         published: ""True"",
         structure:  
         [ 
-            { name: ""somecol"", type: ""String"" }
+            { name: ""Id"", type: ""Guid"" },
+            { name: ""Username"", type: ""String"" },
+            { name: ""Alias"", type: ""String"" },
+            { name: ""CreatedTime"", type: ""DateTime"", culture:""en-US"", format: ""MM/dd/yyyy"" },
+            { name: ""TotalCount1"", type: ""Int16"" },
+            { name: ""TotalCount2"", type: ""Intt32"" },
+            { name: ""TotalCount3"", type: ""Int64"" },
+            { name: ""somevalue1"", type: ""Decimal"" },
+            { name: ""somevalue2"", type: ""Single"" },
+            { name: ""somevalue3"", type: ""Timespan"" },
+            { name: ""somevalue4"", type: ""DateTimeOffset"" },
+            { name: ""somevalue5"", type: ""Enum"" },
+            { name: ""somevalue6"", type: ""Boolean"" }
         ],
         typeProperties: 
         {            
