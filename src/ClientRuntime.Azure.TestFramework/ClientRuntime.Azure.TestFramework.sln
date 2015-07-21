@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientRuntime.Azure.TestFramework", "TestFramework\ClientRuntime.Azure.TestFramework.csproj", "{F144A258-3C38-447A-993E-967F74A1A76C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientRuntime.Azure.TestFramework.Tests", "TestFramework.Tests\ClientRuntime.Azure.TestFramework.Tests.csproj", "{87DE439E-2F37-4A45-B3BE-E33747FB9401}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Net45-Debug|Any CPU = Net45-Debug|Any CPU
+		Net45-Release|Any CPU = Net45-Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F144A258-3C38-447A-993E-967F74A1A76C}.Net45-Debug|Any CPU.ActiveCfg = Net45-Debug|Any CPU
+		{F144A258-3C38-447A-993E-967F74A1A76C}.Net45-Debug|Any CPU.Build.0 = Net45-Debug|Any CPU
+		{F144A258-3C38-447A-993E-967F74A1A76C}.Net45-Release|Any CPU.ActiveCfg = Net45-Release|Any CPU
+		{F144A258-3C38-447A-993E-967F74A1A76C}.Net45-Release|Any CPU.Build.0 = Net45-Release|Any CPU
+		{87DE439E-2F37-4A45-B3BE-E33747FB9401}.Net45-Debug|Any CPU.ActiveCfg = Net45-Debug|Any CPU
+		{87DE439E-2F37-4A45-B3BE-E33747FB9401}.Net45-Debug|Any CPU.Build.0 = Net45-Debug|Any CPU
+		{87DE439E-2F37-4A45-B3BE-E33747FB9401}.Net45-Release|Any CPU.ActiveCfg = Net45-Release|Any CPU
+		{87DE439E-2F37-4A45-B3BE-E33747FB9401}.Net45-Release|Any CPU.Build.0 = Net45-Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
