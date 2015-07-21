@@ -19,24 +19,24 @@ Note: This client library is for Virtual Machines under Azure Resource Manager.<
     <copyright>Copyright © Microsoft Corporation</copyright>
     <tags>Microsoft Azure resource management virtual machine compute REST HTTP client core common azureofficial windowsazureofficial</tags>
     <references>
-      <group targetFramework="portable-net45+sl50+wp80+win">
+      <group targetFramework="portable-net403+win8+wpa81">
         <reference file="Microsoft.Azure.Management.Compute.dll" />
       </group>
-      <group targetFramework="net40">
+      <group targetFramework="net45">
         <reference file="Microsoft.Azure.Management.Compute.dll" />
       </group>
     </references>
     <dependencies>
-      <dependency id="Microsoft.Azure.Common" version="[2.1.0,3.0)" />
+      <dependency id="Microsoft.Rest.ClientRuntime.Azure" version="[1.0.12,2.0)" />
     </dependencies>
   </metadata>
   <files>
     <file src="ResourceManagement\Compute\ComputeManagement\**\*.cs" target="src" />
-    <file src="..\binaries\portable\Microsoft.Azure.Management.Compute.dll" target="lib\portable-net45+sl50+wp80+win" />
-    <file src="..\binaries\portable\Microsoft.Azure.Management.Compute.pdb" target="lib\portable-net45+sl50+wp80+win" />
-    <file src="..\binaries\portable\Microsoft.Azure.Management.Compute.xml" target="lib\portable-net45+sl50+wp80+win" />
-    <file src="..\binaries\net40\Microsoft.Azure.Management.Compute.dll" target="lib\net40" />
-    <file src="..\binaries\net40\Microsoft.Azure.Management.Compute.pdb" target="lib\net40" />
-    <file src="..\binaries\net40\Microsoft.Azure.Management.Compute.xml" target="lib\net40" />
+    <file src="..\binaries\portable\Microsoft.Azure.Management.Compute.dll" target="lib\portable-net403+win8+wpa81" />
+    <file src="..\binaries\portable\Microsoft.Azure.Management.Compute.pdb" target="lib\portable-net403+win8+wpa81" />
+    <file src="..\binaries\portable\Microsoft.Azure.Management.Compute.xml" target="lib\portable-net403+win8+wpa81" />
+    <file src="..\binaries\net45\Microsoft.Azure.Management.Compute.dll" target="lib\net45" />
+    <file src="..\binaries\net45\Microsoft.Azure.Management.Compute.pdb" target="lib\net45" />
+    <file src="..\binaries\net45\Microsoft.Azure.Management.Compute.xml" target="lib\net45" />
   </files>
 </package>

@@ -14,7 +14,7 @@ namespace Networks.Tests
 {
     public class SubnetTests
     {
-        [Fact]
+        [Fact(Skip = "TODO: Autorest")]
         public void SubnetApiTest()
         {
             var handler = new RecordedDelegatingHandler {StatusCodeToReturn = HttpStatusCode.OK};

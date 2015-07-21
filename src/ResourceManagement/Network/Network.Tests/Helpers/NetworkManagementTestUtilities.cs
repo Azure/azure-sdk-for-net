@@ -18,7 +18,9 @@ namespace Networks.Tests.Helpers
         public static NetworkResourceProviderClient GetNetworkResourceProviderClient(RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
-            var client = TestBase.GetServiceClient<NetworkResourceProviderClient>(new CSMTestEnvironmentFactory(), handler);
+            var env = new CSMTestEnvironmentFactory();
+            var client = TestBase.GetServiceClient<NetworkResourceProviderClient>(env, handler);
+            client.SubscriptionId = env.GetTestEnvironment().SubscriptionId;
             if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == null ||
                 Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Playback")
             {

@@ -175,7 +175,7 @@ namespace Compute.Tests
 
         // See recording instructions in HyakSpec\ReadMe.txt. The key vault URLs produced by the script are plugged
         // into SecretVaultHelper, below.
-        [Fact]
+        [Fact(Skip = "TODO: AutoRest")]
         public void TestVMWithWindowsOSProfile()
         {
             using (var context = UndoContext.Current)
@@ -215,7 +215,7 @@ namespace Compute.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "TODO: AutoRest")]
         public void TestVMWithLinuxOSProfile()
         {
             using (var context = UndoContext.Current)

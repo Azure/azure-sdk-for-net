@@ -49,7 +49,7 @@ namespace ResourceGroups.Tests
                 var client = GetSubscriptionClient(handler);
                 client.SetRetryPolicy(new RetryPolicy<HttpStatusCodeErrorDetectionStrategy>(1));
 
-                var tenants = client.Tenants.ListWithOperationResponseAsync().Result;
+                var tenants = client.Tenants.ListWithHttpMessagesAsync().ConfigureAwait(false).GetAwaiter().GetResult();
 
                 Assert.NotNull(tenants);
                 Assert.Equal(HttpStatusCode.OK, tenants.Response.StatusCode);

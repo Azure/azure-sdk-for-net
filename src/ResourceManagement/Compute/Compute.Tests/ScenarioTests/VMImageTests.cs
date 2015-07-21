@@ -79,7 +79,7 @@ namespace Compute.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "TODO: AutoRest")]
         public void TestVMImageListFilters()
         {
             using (var context = UndoContext.Current)

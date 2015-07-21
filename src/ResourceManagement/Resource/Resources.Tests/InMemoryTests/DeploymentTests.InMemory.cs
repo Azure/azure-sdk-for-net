@@ -32,9 +32,12 @@ namespace ResourceGroups.Tests
     {
         public ResourceManagementClient GetResourceManagementClient(RecordedDelegatingHandler handler)
         {
-            var token = new TokenCloudCredentials(Guid.NewGuid().ToString(), "abc123");
+            var subscriptionId = Guid.NewGuid().ToString();
+            var token = new TokenCloudCredentials(subscriptionId, "abc123");
             handler.IsPassThrough = false;
-            return new ResourceManagementClient(token, handler);
+            var client = new ResourceManagementClient(token, handler);
+            client.SubscriptionId = subscriptionId;
+            return client;
         }
 
         [Fact]
@@ -649,8 +652,8 @@ namespace ResourceGroups.Tests
             var client = GetResourceManagementClient(handler);
 
 
-            Assert.Throws<ArgumentNullException>(() => client.Deployments.Cancel(null, "bar"));
-            Assert.Throws<ArgumentNullException>(() => client.Deployments.Cancel("foo", null));
+            Assert.Throws<Microsoft.Rest.ValidationException>(() => client.Deployments.Cancel(null, "bar"));
+            Assert.Throws<Microsoft.Rest.ValidationException>(() => client.Deployments.Cancel("foo", null));
         }
 
         [Fact]
