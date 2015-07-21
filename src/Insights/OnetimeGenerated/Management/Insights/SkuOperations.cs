@@ -19,10 +19,6 @@
 // Changes to this file may cause incorrect behavior and will be lost if the
 // code is regenerated.
 
-// IMPORTANT: This code was machine generated and then modified by humans.
-// Updating this file with the machine generated one might overwrite important changes. 
-// Please review and revert unintended changes carefully.
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -104,8 +100,15 @@ namespace Microsoft.Azure.Management.Insights
             }
 
             // Construct URL
-            string url = "/" + Uri.EscapeDataString(resourceId) + "?";
-            url = url + "api-version=" + Uri.EscapeDataString(apiVersion);
+            string url = "";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(resourceId);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=" + Uri.EscapeDataString(apiVersion));
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -273,8 +276,15 @@ namespace Microsoft.Azure.Management.Insights
             }
 
             // Construct URL
-            string url = "/" + Uri.EscapeDataString(resourceId) + "?";
-            url = url + "api-version=" + Uri.EscapeDataString(apiVersion);
+            string url = "";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(resourceId);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=" + Uri.EscapeDataString(apiVersion));
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -371,6 +381,20 @@ namespace Microsoft.Azure.Management.Insights
                                         skuInstance.Tier = tierInstance;
                                     }
 
+                                    JToken sizeValue = skuValue["size"];
+                                    if (sizeValue != null && sizeValue.Type != JTokenType.Null)
+                                    {
+                                        string sizeInstance = ((string)sizeValue);
+                                        skuInstance.Size = sizeInstance;
+                                    }
+
+                                    JToken familyValue = skuValue["family"];
+                                    if (familyValue != null && familyValue.Type != JTokenType.Null)
+                                    {
+                                        string familyInstance = ((string)familyValue);
+                                        skuInstance.Family = familyInstance;
+                                    }
+
                                     JToken capacityValue = skuValue["capacity"];
                                     if (capacityValue != null && capacityValue.Type != JTokenType.Null)
                                     {
@@ -449,8 +473,16 @@ namespace Microsoft.Azure.Management.Insights
             }
 
             // Construct URL
-            string url = "/" + Uri.EscapeDataString(resourceId) + "/skus?";
-            url = url + "api-version=" + Uri.EscapeDataString(apiVersion);
+            string url = "";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(resourceId);
+            url = url + "/skus";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=" + Uri.EscapeDataString(apiVersion));
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -529,6 +561,13 @@ namespace Microsoft.Azure.Management.Insights
                                     SkuDefinition skuDefinitionInstance = new SkuDefinition();
                                     result.Value.Add(skuDefinitionInstance);
 
+                                    JToken resourceTypeValue = valueValue["resourceType"];
+                                    if (resourceTypeValue != null && resourceTypeValue.Type != JTokenType.Null)
+                                    {
+                                        string resourceTypeInstance = ((string)resourceTypeValue);
+                                        skuDefinitionInstance.ResourceType = resourceTypeInstance;
+                                    }
+
                                     JToken skuValue = valueValue["sku"];
                                     if (skuValue != null && skuValue.Type != JTokenType.Null)
                                     {
@@ -547,6 +586,20 @@ namespace Microsoft.Azure.Management.Insights
                                         {
                                             string tierInstance = ((string)tierValue);
                                             skuInstance.Tier = tierInstance;
+                                        }
+
+                                        JToken sizeValue = skuValue["size"];
+                                        if (sizeValue != null && sizeValue.Type != JTokenType.Null)
+                                        {
+                                            string sizeInstance = ((string)sizeValue);
+                                            skuInstance.Size = sizeInstance;
+                                        }
+
+                                        JToken familyValue = skuValue["family"];
+                                        if (familyValue != null && familyValue.Type != JTokenType.Null)
+                                        {
+                                            string familyInstance = ((string)familyValue);
+                                            skuInstance.Family = familyInstance;
                                         }
                                     }
 
@@ -582,20 +635,6 @@ namespace Microsoft.Azure.Management.Insights
                                         {
                                             SupportedScaleType scaleTypeInstance = ((SupportedScaleType)Enum.Parse(typeof(SupportedScaleType), ((string)scaleTypeValue), true));
                                             capacityInstance.ScaleType = scaleTypeInstance;
-                                        }
-                                    }
-
-                                    JToken displayValue = valueValue["display"];
-                                    if (displayValue != null && displayValue.Type != JTokenType.Null)
-                                    {
-                                        Display displayInstance = new Display();
-                                        skuDefinitionInstance.Display = displayInstance;
-
-                                        JToken titleValue = displayValue["title"];
-                                        if (titleValue != null && titleValue.Type != JTokenType.Null)
-                                        {
-                                            string titleInstance = ((string)titleValue);
-                                            displayInstance.Title = titleInstance;
                                         }
                                     }
                                 }
@@ -678,8 +717,15 @@ namespace Microsoft.Azure.Management.Insights
             }
 
             // Construct URL
-            string url = "/" + Uri.EscapeDataString(resourceId) + "?";
-            url = url + "api-version=" + Uri.EscapeDataString(apiVersion);
+            string url = "";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(resourceId);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=" + Uri.EscapeDataString(apiVersion));
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -849,8 +895,15 @@ namespace Microsoft.Azure.Management.Insights
             }
 
             // Construct URL
-            string url = "/" + Uri.EscapeDataString(resourceId) + "?";
-            url = url + "api-version=" + Uri.EscapeDataString(apiVersion);
+            string url = "";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(resourceId);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=" + Uri.EscapeDataString(apiVersion));
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -900,6 +953,16 @@ namespace Microsoft.Azure.Management.Insights
                     if (parameters.Sku.Tier != null)
                     {
                         skuValue["tier"] = parameters.Sku.Tier;
+                    }
+
+                    if (parameters.Sku.Size != null)
+                    {
+                        skuValue["size"] = parameters.Sku.Size;
+                    }
+
+                    if (parameters.Sku.Family != null)
+                    {
+                        skuValue["family"] = parameters.Sku.Family;
                     }
 
                     skuValue["capacity"] = parameters.Sku.Capacity;

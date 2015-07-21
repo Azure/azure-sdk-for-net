@@ -58,7 +58,6 @@
     <Compile Include="Generated\Management\Insights\Models\DatabaseBackupOption.cs" />
     <Compile Include="Generated\Management\Insights\Models\DatabaseConsistencyOption.cs" />
     <Compile Include="Generated\Management\Insights\Models\DatabaseServerCredential.cs" />
-    <Compile Include="Generated\Management\Insights\Models\Display.cs" />
     <Compile Include="Generated\Management\Insights\Models\Sku.cs" />
     <Compile Include="Generated\Management\Insights\Models\SkuDefinition.cs" />
     <Compile Include="Generated\Management\Insights\Models\SkuGetProperties.cs" />
