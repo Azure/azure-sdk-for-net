@@ -5,7 +5,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for ComputeOperationStatus
+    /// Defines values for ComputeOperationStatus.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
     public enum ComputeOperationStatus

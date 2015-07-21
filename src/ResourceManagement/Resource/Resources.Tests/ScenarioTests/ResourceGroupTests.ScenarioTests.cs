@@ -21,9 +21,9 @@ using Microsoft.Azure;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
 using Microsoft.Azure.Test;
+using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.TransientFaultHandling;
 using Xunit;
-using Microsoft.Azure.Test.HttpRecorder;
 
 namespace ResourceGroups.Tests
 {
@@ -73,7 +73,7 @@ namespace ResourceGroups.Tests
 
             Assert.Throws<CloudException>(() => client.ResourceGroups.ListResources(resourceGroupName));
 
-            Assert.False(listGroupsResult.Value.Any(rg => rg.Name == resourceGroupName));
+            Assert.False(listGroupsResult.Any(rg => rg.Name == resourceGroupName));
             TestUtilities.EndTest();
         }
 
@@ -92,7 +92,7 @@ namespace ResourceGroups.Tests
                             Tags = new Dictionary<string, string>() { { "department", "finance" }, { "tagname", "tagvalue" } },
                         });
                 var listResult = client.ResourceGroups.List();
-                var listedGroup = listResult.Value.FirstOrDefault((g) => string.Equals(g.Name, groupName, StringComparison.Ordinal));
+                var listedGroup = listResult.FirstOrDefault((g) => string.Equals(g.Name, groupName, StringComparison.Ordinal));
                 Assert.NotNull(listedGroup);
                 Assert.Equal("finance", listedGroup.Tags["department"]);
                 Assert.Equal("tagvalue", listedGroup.Tags["tagname"]);
@@ -145,7 +145,7 @@ namespace ResourceGroups.Tests
             var listResult = client.ResourceGroups.List(null);
 
             Assert.Equal(HttpStatusCode.OK, deleteResult.Response.StatusCode);
-            Assert.False(listResult.Value.Any(rg => rg.Name == resourceGroupName && rg.Properties.ProvisioningState != "Deleting"));
+            Assert.False(listResult.Any(rg => rg.Name == resourceGroupName && rg.Properties.ProvisioningState != "Deleting"));
             TestUtilities.EndTest();
         }
     }

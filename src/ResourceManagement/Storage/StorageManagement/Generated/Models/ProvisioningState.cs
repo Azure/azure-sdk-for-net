@@ -5,7 +5,7 @@ namespace Microsoft.Azure.Management.Storage.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for ProvisioningState
+    /// Defines values for ProvisioningState.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
     public enum ProvisioningState

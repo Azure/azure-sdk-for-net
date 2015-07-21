@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.Network
             /// Checks whether a domain name in the cloudapp.net zone is available for use.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='location'>
             /// The location of the domain name
@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Network
             /// Checks whether a domain name in the cloudapp.net zone is available for use.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='location'>
             /// The location of the domain name

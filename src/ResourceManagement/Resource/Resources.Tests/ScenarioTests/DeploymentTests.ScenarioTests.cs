@@ -13,18 +13,16 @@
 // limitations under the License.
 //
 
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Net;
+using System.Runtime.Serialization.Formatters;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
 using Microsoft.Azure.Test;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Runtime.Serialization.Formatters;
-using System.Threading;
 using Xunit;
 
 namespace ResourceGroups.Tests
@@ -131,17 +129,17 @@ namespace ResourceGroups.Tests
                 var deploymentListResult = client.Deployments.List(groupName, null);
                 var deploymentGetResult = client.Deployments.Get(groupName, deploymentName);
 
-                Assert.NotEmpty(deploymentListResult.Value);
+                Assert.NotEmpty(deploymentListResult);
                 Assert.Equal(deploymentName, deploymentGetResult.Name);
-                Assert.Equal(deploymentName, deploymentListResult.Value[0].Name);
+                Assert.Equal(deploymentName, deploymentListResult.First().Name);
                 Assert.Equal(GoodWebsiteTemplateUri, deploymentGetResult.Properties.TemplateLink.Uri);
-                Assert.Equal(GoodWebsiteTemplateUri, deploymentListResult.Value[0].Properties.TemplateLink.Uri);
+                Assert.Equal(GoodWebsiteTemplateUri, deploymentListResult.First().Properties.TemplateLink.Uri);
                 Assert.NotNull(deploymentGetResult.Properties.ProvisioningState);
-                Assert.NotNull(deploymentListResult.Value[0].Properties.ProvisioningState);
+                Assert.NotNull(deploymentListResult.First().Properties.ProvisioningState);
                 Assert.NotNull(deploymentGetResult.Properties.CorrelationId);
-                Assert.NotNull(deploymentListResult.Value[0].Properties.CorrelationId);
+                Assert.NotNull(deploymentListResult.First().Properties.CorrelationId);
                 Assert.True(deploymentGetResult.Properties.Parameters.ToString().Contains("mctest0101"));
-                Assert.True(deploymentListResult.Value[0].Properties.Parameters.ToString().Contains("mctest0101"));
+                Assert.True(deploymentListResult.First().Properties.Parameters.ToString().Contains("mctest0101"));
             }
         }
 
@@ -307,10 +305,10 @@ namespace ResourceGroups.Tests
                 TestUtilities.Wait(30000);
                 var operations = client.DeploymentOperations.List(groupName, deploymentName, null);
 
-                Assert.True(operations.Value.Any());
-                Assert.NotNull(operations.Value[0].Id);
-                Assert.NotNull(operations.Value[0].OperationId);
-                Assert.NotNull(operations.Value[0].Properties);
+                Assert.True(operations.Any());
+                Assert.NotNull(operations.First().Id);
+                Assert.NotNull(operations.First().OperationId);
+                Assert.NotNull(operations.First().Properties);
             }
         }
 
@@ -344,23 +342,23 @@ namespace ResourceGroups.Tests
                 client.Deployments.CreateOrUpdate(groupName, deploymentName, parameters);
 
                 var deploymentListResult = client.Deployments.List(groupName, d => d.ProvisioningState == "Running");
-                if (null == deploymentListResult.Value || deploymentListResult.Value.Count < 1)
+                if (null == deploymentListResult|| deploymentListResult.Count() == 0)
                 {
                     deploymentListResult = client.Deployments.List(groupName, d => d.ProvisioningState == "Accepted");
                 }
                 var deploymentGetResult = client.Deployments.Get(groupName, deploymentName);
 
-                Assert.NotEmpty(deploymentListResult.Value);
+                Assert.NotEmpty(deploymentListResult);
                 Assert.Equal(deploymentName, deploymentGetResult.Name);
-                Assert.Equal(deploymentName, deploymentListResult.Value[0].Name);
+                Assert.Equal(deploymentName, deploymentListResult.First().Name);
                 Assert.Equal(GoodWebsiteTemplateUri, deploymentGetResult.Properties.TemplateLink.Uri);
-                Assert.Equal(GoodWebsiteTemplateUri, deploymentListResult.Value[0].Properties.TemplateLink.Uri);
+                Assert.Equal(GoodWebsiteTemplateUri, deploymentListResult.First().Properties.TemplateLink.Uri);
                 Assert.NotNull(deploymentGetResult.Properties.ProvisioningState);
-                Assert.NotNull(deploymentListResult.Value[0].Properties.ProvisioningState);
+                Assert.NotNull(deploymentListResult.First().Properties.ProvisioningState);
                 Assert.NotNull(deploymentGetResult.Properties.CorrelationId);
-                Assert.NotNull(deploymentListResult.Value[0].Properties.CorrelationId);
+                Assert.NotNull(deploymentListResult.First().Properties.CorrelationId);
                 Assert.True(deploymentGetResult.Properties.Parameters.ToString().Contains("mctest0101"));
-                Assert.True(deploymentListResult.Value[0].Properties.Parameters.ToString().Contains("mctest0101"));
+                Assert.True(deploymentListResult.First().Properties.Parameters.ToString().Contains("mctest0101"));
             }
         }
 
@@ -399,7 +397,7 @@ namespace ResourceGroups.Tests
                 TestUtilities.Wait(30000);
                 var operations = client.DeploymentOperations.List(groupName, deploymentName, null);
 
-                Assert.True(operations.Value.Any());
+                Assert.True(operations.Any());
             }
         }
     }

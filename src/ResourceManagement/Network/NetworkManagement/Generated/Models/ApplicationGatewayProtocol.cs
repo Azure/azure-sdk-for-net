@@ -5,7 +5,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for ApplicationGatewayProtocol
+    /// Defines values for ApplicationGatewayProtocol.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
     public enum ApplicationGatewayProtocol

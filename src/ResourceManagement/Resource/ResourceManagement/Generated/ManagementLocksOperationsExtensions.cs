@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Resources
             /// Create or update a management lock at the resource group level.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The resource group name.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Resources
             /// Create or update a management lock at the resource group level.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The resource group name.
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.Resources
             /// below resource.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -94,7 +94,7 @@ namespace Microsoft.Azure.Management.Resources
             /// below resource.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -130,7 +130,7 @@ namespace Microsoft.Azure.Management.Resources
             /// Deletes the management lock of a resource or any level below resource.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -159,7 +159,7 @@ namespace Microsoft.Azure.Management.Resources
             /// Deletes the management lock of a resource or any level below resource.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -191,7 +191,7 @@ namespace Microsoft.Azure.Management.Resources
             /// Create or update a management lock at the subscription level.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='lockName'>
             /// The name of lock.
@@ -208,7 +208,7 @@ namespace Microsoft.Azure.Management.Resources
             /// Create or update a management lock at the subscription level.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='lockName'>
             /// The name of lock.
@@ -229,7 +229,7 @@ namespace Microsoft.Azure.Management.Resources
             /// Deletes the management lock of a subscription.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='lockName'>
             /// The name of lock.
@@ -243,7 +243,7 @@ namespace Microsoft.Azure.Management.Resources
             /// Deletes the management lock of a subscription.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='lockName'>
             /// The name of lock.
@@ -260,7 +260,7 @@ namespace Microsoft.Azure.Management.Resources
             /// Gets the management lock of a scope.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='lockName'>
             /// Name of the management lock.
@@ -274,7 +274,7 @@ namespace Microsoft.Azure.Management.Resources
             /// Gets the management lock of a scope.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='lockName'>
             /// Name of the management lock.
@@ -292,7 +292,7 @@ namespace Microsoft.Azure.Management.Resources
             /// Deletes the management lock of a resource group.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroup'>
             /// The resource group names.
@@ -309,7 +309,7 @@ namespace Microsoft.Azure.Management.Resources
             /// Deletes the management lock of a resource group.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroup'>
             /// The resource group names.
@@ -329,7 +329,7 @@ namespace Microsoft.Azure.Management.Resources
             /// Gets all the management locks of a resource group.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// Resource group name.
@@ -337,7 +337,7 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='filter'>
             /// The filter to apply on the operation.
             /// </param>
-            public static ManagementLockListResult ListAtResourceGroupLevel(this IManagementLocksOperations operations, string resourceGroupName, Expression<Func<ManagementLockObject, bool>> filter = default(Expression<Func<ManagementLockObject, bool>>))
+            public static Page<ManagementLockObject> ListAtResourceGroupLevel(this IManagementLocksOperations operations, string resourceGroupName, Expression<Func<ManagementLockObject, bool>> filter = default(Expression<Func<ManagementLockObject, bool>>))
             {
                 return Task.Factory.StartNew(s => ((IManagementLocksOperations)s).ListAtResourceGroupLevelAsync(resourceGroupName, filter), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -346,7 +346,7 @@ namespace Microsoft.Azure.Management.Resources
             /// Gets all the management locks of a resource group.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// Resource group name.
@@ -357,9 +357,9 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<ManagementLockListResult> ListAtResourceGroupLevelAsync( this IManagementLocksOperations operations, string resourceGroupName, Expression<Func<ManagementLockObject, bool>> filter = default(Expression<Func<ManagementLockObject, bool>>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Page<ManagementLockObject>> ListAtResourceGroupLevelAsync( this IManagementLocksOperations operations, string resourceGroupName, Expression<Func<ManagementLockObject, bool>> filter = default(Expression<Func<ManagementLockObject, bool>>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<ManagementLockListResult> result = await operations.ListAtResourceGroupLevelWithHttpMessagesAsync(resourceGroupName, filter, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<Page<ManagementLockObject>> result = await operations.ListAtResourceGroupLevelWithHttpMessagesAsync(resourceGroupName, filter, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -367,7 +367,7 @@ namespace Microsoft.Azure.Management.Resources
             /// Gets all the management locks of a resource or any level below resource.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
@@ -387,7 +387,7 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='filter'>
             /// The filter to apply on the operation.
             /// </param>
-            public static ManagementLockListResult ListAtResourceLevel(this IManagementLocksOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, Expression<Func<ManagementLockObject, bool>> filter = default(Expression<Func<ManagementLockObject, bool>>))
+            public static Page<ManagementLockObject> ListAtResourceLevel(this IManagementLocksOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, Expression<Func<ManagementLockObject, bool>> filter = default(Expression<Func<ManagementLockObject, bool>>))
             {
                 return Task.Factory.StartNew(s => ((IManagementLocksOperations)s).ListAtResourceLevelAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, filter), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -396,7 +396,7 @@ namespace Microsoft.Azure.Management.Resources
             /// Gets all the management locks of a resource or any level below resource.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
@@ -419,9 +419,9 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<ManagementLockListResult> ListAtResourceLevelAsync( this IManagementLocksOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, Expression<Func<ManagementLockObject, bool>> filter = default(Expression<Func<ManagementLockObject, bool>>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Page<ManagementLockObject>> ListAtResourceLevelAsync( this IManagementLocksOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, Expression<Func<ManagementLockObject, bool>> filter = default(Expression<Func<ManagementLockObject, bool>>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<ManagementLockListResult> result = await operations.ListAtResourceLevelWithHttpMessagesAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, filter, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<Page<ManagementLockObject>> result = await operations.ListAtResourceLevelWithHttpMessagesAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, filter, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -429,12 +429,12 @@ namespace Microsoft.Azure.Management.Resources
             /// Get a list of management locks at resource level or below.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='nextLink'>
             /// NextLink from the previous successful call to List operation.
             /// </param>
-            public static ManagementLockListResult ListNext(this IManagementLocksOperations operations, string nextLink)
+            public static Page<ManagementLockObject> ListNext(this IManagementLocksOperations operations, string nextLink)
             {
                 return Task.Factory.StartNew(s => ((IManagementLocksOperations)s).ListNextAsync(nextLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -443,7 +443,7 @@ namespace Microsoft.Azure.Management.Resources
             /// Get a list of management locks at resource level or below.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='nextLink'>
             /// NextLink from the previous successful call to List operation.
@@ -451,9 +451,9 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<ManagementLockListResult> ListNextAsync( this IManagementLocksOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Page<ManagementLockObject>> ListNextAsync( this IManagementLocksOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<ManagementLockListResult> result = await operations.ListNextWithHttpMessagesAsync(nextLink, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<Page<ManagementLockObject>> result = await operations.ListNextWithHttpMessagesAsync(nextLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -461,12 +461,12 @@ namespace Microsoft.Azure.Management.Resources
             /// Gets all the management locks of a subscription.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='filter'>
             /// The filter to apply on the operation.
             /// </param>
-            public static ManagementLockListResult ListAtSubscriptionLevel(this IManagementLocksOperations operations, Expression<Func<ManagementLockObject, bool>> filter = default(Expression<Func<ManagementLockObject, bool>>))
+            public static Page<ManagementLockObject> ListAtSubscriptionLevel(this IManagementLocksOperations operations, Expression<Func<ManagementLockObject, bool>> filter = default(Expression<Func<ManagementLockObject, bool>>))
             {
                 return Task.Factory.StartNew(s => ((IManagementLocksOperations)s).ListAtSubscriptionLevelAsync(filter), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -475,7 +475,7 @@ namespace Microsoft.Azure.Management.Resources
             /// Gets all the management locks of a subscription.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='filter'>
             /// The filter to apply on the operation.
@@ -483,9 +483,9 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<ManagementLockListResult> ListAtSubscriptionLevelAsync( this IManagementLocksOperations operations, Expression<Func<ManagementLockObject, bool>> filter = default(Expression<Func<ManagementLockObject, bool>>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Page<ManagementLockObject>> ListAtSubscriptionLevelAsync( this IManagementLocksOperations operations, Expression<Func<ManagementLockObject, bool>> filter = default(Expression<Func<ManagementLockObject, bool>>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<ManagementLockListResult> result = await operations.ListAtSubscriptionLevelWithHttpMessagesAsync(filter, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<Page<ManagementLockObject>> result = await operations.ListAtSubscriptionLevelWithHttpMessagesAsync(filter, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -493,31 +493,31 @@ namespace Microsoft.Azure.Management.Resources
             /// Gets all the management locks of a resource group.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
-            /// <param name='nextLink'>
+            /// <param name='nextPageLink'>
             /// NextLink from the previous successful call to List operation.
             /// </param>
-            public static ManagementLockListResult ListAtResourceGroupLevelNext(this IManagementLocksOperations operations, string nextLink)
+            public static Page<ManagementLockObject> ListAtResourceGroupLevelNext(this IManagementLocksOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((IManagementLocksOperations)s).ListAtResourceGroupLevelNextAsync(nextLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IManagementLocksOperations)s).ListAtResourceGroupLevelNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
             /// Gets all the management locks of a resource group.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
-            /// <param name='nextLink'>
+            /// <param name='nextPageLink'>
             /// NextLink from the previous successful call to List operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<ManagementLockListResult> ListAtResourceGroupLevelNextAsync( this IManagementLocksOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Page<ManagementLockObject>> ListAtResourceGroupLevelNextAsync( this IManagementLocksOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<ManagementLockListResult> result = await operations.ListAtResourceGroupLevelNextWithHttpMessagesAsync(nextLink, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<Page<ManagementLockObject>> result = await operations.ListAtResourceGroupLevelNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -525,31 +525,31 @@ namespace Microsoft.Azure.Management.Resources
             /// Gets all the management locks of a resource or any level below resource.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
-            /// <param name='nextLink'>
+            /// <param name='nextPageLink'>
             /// NextLink from the previous successful call to List operation.
             /// </param>
-            public static ManagementLockListResult ListAtResourceLevelNext(this IManagementLocksOperations operations, string nextLink)
+            public static Page<ManagementLockObject> ListAtResourceLevelNext(this IManagementLocksOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((IManagementLocksOperations)s).ListAtResourceLevelNextAsync(nextLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IManagementLocksOperations)s).ListAtResourceLevelNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
             /// Gets all the management locks of a resource or any level below resource.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
-            /// <param name='nextLink'>
+            /// <param name='nextPageLink'>
             /// NextLink from the previous successful call to List operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<ManagementLockListResult> ListAtResourceLevelNextAsync( this IManagementLocksOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Page<ManagementLockObject>> ListAtResourceLevelNextAsync( this IManagementLocksOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<ManagementLockListResult> result = await operations.ListAtResourceLevelNextWithHttpMessagesAsync(nextLink, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<Page<ManagementLockObject>> result = await operations.ListAtResourceLevelNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -557,31 +557,31 @@ namespace Microsoft.Azure.Management.Resources
             /// Get a list of management locks at resource level or below.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
-            /// <param name='nextLink'>
+            /// <param name='nextPageLink'>
             /// NextLink from the previous successful call to List operation.
             /// </param>
-            public static ManagementLockListResult ListNextNext(this IManagementLocksOperations operations, string nextLink)
+            public static Page<ManagementLockObject> ListNextNext(this IManagementLocksOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((IManagementLocksOperations)s).ListNextNextAsync(nextLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IManagementLocksOperations)s).ListNextNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
             /// Get a list of management locks at resource level or below.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
-            /// <param name='nextLink'>
+            /// <param name='nextPageLink'>
             /// NextLink from the previous successful call to List operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<ManagementLockListResult> ListNextNextAsync( this IManagementLocksOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Page<ManagementLockObject>> ListNextNextAsync( this IManagementLocksOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<ManagementLockListResult> result = await operations.ListNextNextWithHttpMessagesAsync(nextLink, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<Page<ManagementLockObject>> result = await operations.ListNextNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -589,31 +589,31 @@ namespace Microsoft.Azure.Management.Resources
             /// Gets all the management locks of a subscription.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
-            /// <param name='nextLink'>
+            /// <param name='nextPageLink'>
             /// NextLink from the previous successful call to List operation.
             /// </param>
-            public static ManagementLockListResult ListAtSubscriptionLevelNext(this IManagementLocksOperations operations, string nextLink)
+            public static Page<ManagementLockObject> ListAtSubscriptionLevelNext(this IManagementLocksOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((IManagementLocksOperations)s).ListAtSubscriptionLevelNextAsync(nextLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IManagementLocksOperations)s).ListAtSubscriptionLevelNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
             /// Gets all the management locks of a subscription.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
-            /// <param name='nextLink'>
+            /// <param name='nextPageLink'>
             /// NextLink from the previous successful call to List operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<ManagementLockListResult> ListAtSubscriptionLevelNextAsync( this IManagementLocksOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Page<ManagementLockObject>> ListAtSubscriptionLevelNextAsync( this IManagementLocksOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<ManagementLockListResult> result = await operations.ListAtSubscriptionLevelNextWithHttpMessagesAsync(nextLink, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<Page<ManagementLockObject>> result = await operations.ListAtSubscriptionLevelNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

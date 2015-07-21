@@ -13,10 +13,11 @@
 // limitations under the License.
 //
 
-using Microsoft.Azure.Subscriptions;
-using Microsoft.Azure.Test.HttpRecorder;
-using Microsoft.Azure.Test;
+using System.Linq;
 using System.Net;
+using Microsoft.Azure.Subscriptions;
+using Microsoft.Azure.Test;
+using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.TransientFaultHandling;
 using Xunit;
 
@@ -54,9 +55,9 @@ namespace ResourceGroups.Tests
                 Assert.NotNull(tenants);
                 Assert.Equal(HttpStatusCode.OK, tenants.Response.StatusCode);
                 Assert.NotNull(tenants.Body);
-                Assert.NotEqual(0, tenants.Body.Value.Count);
-                Assert.NotNull(tenants.Body.Value[0].Id);
-                Assert.NotNull(tenants.Body.Value[0].TenantId);
+                Assert.NotEqual(0, tenants.Body.Count());
+                Assert.NotNull(tenants.Body.First().Id);
+                Assert.NotNull(tenants.Body.First().TenantId);
             }
         }
     }

@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.Network
             /// The delete subnet operation deletes the specified subnet.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Network
             /// The delete subnet operation deletes the specified subnet.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.Network
             /// The delete subnet operation deletes the specified subnet.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -78,7 +78,7 @@ namespace Microsoft.Azure.Management.Network
             /// The delete subnet operation deletes the specified subnet.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -101,7 +101,7 @@ namespace Microsoft.Azure.Management.Network
             /// The Get subnet operation retreives information about the specified subnet.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -121,7 +121,7 @@ namespace Microsoft.Azure.Management.Network
             /// The Get subnet operation retreives information about the specified subnet.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -146,7 +146,7 @@ namespace Microsoft.Azure.Management.Network
             /// network
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -170,7 +170,7 @@ namespace Microsoft.Azure.Management.Network
             /// network
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -198,7 +198,7 @@ namespace Microsoft.Azure.Management.Network
             /// network
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -222,7 +222,7 @@ namespace Microsoft.Azure.Management.Network
             /// network
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -249,7 +249,7 @@ namespace Microsoft.Azure.Management.Network
             /// The List subnets opertion retrieves all the subnets in a virtual network.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -257,7 +257,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='virtualNetworkName'>
             /// The name of the virtual network.
             /// </param>
-            public static SubnetListResult List(this ISubnetsOperations operations, string resourceGroupName, string virtualNetworkName)
+            public static Page<Subnet> List(this ISubnetsOperations operations, string resourceGroupName, string virtualNetworkName)
             {
                 return Task.Factory.StartNew(s => ((ISubnetsOperations)s).ListAsync(resourceGroupName, virtualNetworkName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -266,7 +266,7 @@ namespace Microsoft.Azure.Management.Network
             /// The List subnets opertion retrieves all the subnets in a virtual network.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -277,9 +277,9 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<SubnetListResult> ListAsync( this ISubnetsOperations operations, string resourceGroupName, string virtualNetworkName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Page<Subnet>> ListAsync( this ISubnetsOperations operations, string resourceGroupName, string virtualNetworkName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<SubnetListResult> result = await operations.ListWithHttpMessagesAsync(resourceGroupName, virtualNetworkName, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<Page<Subnet>> result = await operations.ListWithHttpMessagesAsync(resourceGroupName, virtualNetworkName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -287,31 +287,31 @@ namespace Microsoft.Azure.Management.Network
             /// The List subnets opertion retrieves all the subnets in a virtual network.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
-            /// <param name='nextLink'>
+            /// <param name='nextPageLink'>
             /// NextLink from the previous successful call to List operation.
             /// </param>
-            public static SubnetListResult ListNext(this ISubnetsOperations operations, string nextLink)
+            public static Page<Subnet> ListNext(this ISubnetsOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((ISubnetsOperations)s).ListNextAsync(nextLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISubnetsOperations)s).ListNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
             /// The List subnets opertion retrieves all the subnets in a virtual network.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
-            /// <param name='nextLink'>
+            /// <param name='nextPageLink'>
             /// NextLink from the previous successful call to List operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<SubnetListResult> ListNextAsync( this ISubnetsOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Page<Subnet>> ListNextAsync( this ISubnetsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<SubnetListResult> result = await operations.ListNextWithHttpMessagesAsync(nextLink, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<Page<Subnet>> result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

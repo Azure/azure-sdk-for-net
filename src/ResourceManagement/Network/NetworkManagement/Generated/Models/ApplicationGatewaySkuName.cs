@@ -5,7 +5,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for ApplicationGatewaySkuName
+    /// Defines values for ApplicationGatewaySkuName.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
     public enum ApplicationGatewaySkuName

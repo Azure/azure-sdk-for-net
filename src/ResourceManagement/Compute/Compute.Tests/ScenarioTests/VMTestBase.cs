@@ -13,7 +13,11 @@
 // limitations under the License.
 //
 
-using Compute.Tests;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Net;
 using Microsoft.Azure;
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
@@ -24,12 +28,8 @@ using Microsoft.Azure.Management.Resources.Models;
 using Microsoft.Azure.Management.Storage;
 using Microsoft.Azure.Management.Storage.Models;
 using Microsoft.Azure.Test;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+
 using Xunit;
-using System.Diagnostics;
 
 namespace Compute.Tests
 {
@@ -63,7 +63,7 @@ namespace Compute.Tests
                         m_SrpClient = ComputeManagementTestUtilities.GetStorageManagementClient(handler);
                         m_NrpClient = ComputeManagementTestUtilities.GetNetworkResourceProviderClient(handler);
 
-                        m_subId = m_CrpClient.Credentials.SubscriptionId;
+                        m_subId = m_CrpClient.SubscriptionId;
                         m_location = ComputeManagementTestUtilities.DefaultLocation;
                     }
                 }
@@ -130,7 +130,7 @@ namespace Compute.Tests
                     ComputeManagementTestUtilities.WaitSeconds(10);
                     var stos = m_SrpClient.StorageAccounts.ListByResourceGroup(rgName);
                     created =
-                        stos.Value.Any(
+                        stos.Any(
                             t =>
                                 StringComparer.OrdinalIgnoreCase.Equals(t.Name, storageAccountName));
                 }

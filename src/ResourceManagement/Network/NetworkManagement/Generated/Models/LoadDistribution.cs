@@ -5,7 +5,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for LoadDistribution
+    /// Defines values for LoadDistribution.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
     public enum LoadDistribution

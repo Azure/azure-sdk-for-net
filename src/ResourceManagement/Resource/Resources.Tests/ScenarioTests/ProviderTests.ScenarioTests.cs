@@ -16,14 +16,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using Microsoft.Azure;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
-using Xunit;
-using System.Net.Http;
-using System.Net;
 using Microsoft.Azure.Test;
-using System.Threading;
+using Xunit;
 
 namespace ResourceGroups.Tests
 {
@@ -83,9 +82,9 @@ namespace ResourceGroups.Tests
             Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
 
             // Validate result
-            Assert.True(result.Value.Any());
+            Assert.True(result.Any());
             var websiteProvider =
-                result.Value.First(
+                result.First(
                     p => p.NamespaceProperty.Equals(ProviderName, StringComparison.InvariantCultureIgnoreCase));
             Assert.Equal(ProviderName, websiteProvider.NamespaceProperty);
             Assert.True("Registered" == websiteProvider.RegistrationState ||
@@ -178,8 +177,8 @@ namespace ResourceGroups.Tests
 
             Assert.NotNull(operations);
             Assert.NotEmpty(operations.Value);
-            Assert.NotEmpty(operations.Value[0].Name);
-            Assert.NotNull(operations.Value[0].Display);
+            Assert.NotEmpty(operations.Value.First().Name);
+            Assert.NotNull(operations.Value.First().Display);
             IEnumerable<ResourceProviderOperationDefinition> definitions =
                 operations.Value.Where(op => string.Equals(op.Name, "Microsoft.Insights/AlertRules/Write", StringComparison.InvariantCultureIgnoreCase));
             Assert.NotNull(definitions);

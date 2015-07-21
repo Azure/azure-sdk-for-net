@@ -5,7 +5,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for ProtocolTypes
+    /// Defines values for ProtocolTypes.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
     public enum ProtocolTypes
