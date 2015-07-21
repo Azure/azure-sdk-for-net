@@ -31,6 +31,52 @@ namespace Microsoft.Azure.Management.BackupServices
     public static partial class ContainerOperationsExtensions
     {
         /// <summary>
+        /// Enable the container reregistration.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.BackupServices.IContainerOperations.
+        /// </param>
+        /// <param name='containerId'>
+        /// Required. MARS container ID.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// The definition of a Operation Response.
+        /// </returns>
+        public static OperationResponse EnableMarsContainerReregistration(this IContainerOperations operations, string containerId, CustomRequestHeaders customRequestHeaders)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IContainerOperations)s).EnableMarsContainerReregistrationAsync(containerId, customRequestHeaders);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Enable the container reregistration.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.BackupServices.IContainerOperations.
+        /// </param>
+        /// <param name='containerId'>
+        /// Required. MARS container ID.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// The definition of a Operation Response.
+        /// </returns>
+        public static Task<OperationResponse> EnableMarsContainerReregistrationAsync(this IContainerOperations operations, string containerId, CustomRequestHeaders customRequestHeaders)
+        {
+            return operations.EnableMarsContainerReregistrationAsync(containerId, customRequestHeaders, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Get the list of all container based on the given query filter
         /// string.
         /// </summary>
