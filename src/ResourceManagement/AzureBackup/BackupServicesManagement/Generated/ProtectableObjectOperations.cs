@@ -62,9 +62,9 @@ namespace Microsoft.Azure.Management.BackupServices
         }
         
         /// <summary>
-        /// Get the list of all Protectable Objects.
+        /// Get the list of all items
         /// </summary>
-        /// <param name='parameters'>
+        /// <param name='csmparameters'>
         /// Optional. Protectable objects query parameter.
         /// </param>
         /// <param name='customRequestHeaders'>
@@ -74,9 +74,9 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response model for the list ProtectableObject operation.
+        /// The definition of a CSMItemListOperationResponse.
         /// </returns>
-        public async Task<ProtectableObjectListResponse> ListAsync(POQueryParameter parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<CSMItemListOperationResponse> ListCSMAsync(CSMItemQueryObject csmparameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
             
@@ -87,9 +87,9 @@ namespace Microsoft.Azure.Management.BackupServices
             {
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("parameters", parameters);
+                tracingParameters.Add("csmparameters", csmparameters);
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
-                TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "ListCSMAsync", tracingParameters);
             }
             
             // Construct URL
@@ -107,17 +107,11 @@ namespace Microsoft.Azure.Management.BackupServices
             url = url + "BackupVault";
             url = url + "/";
             url = url + Uri.EscapeDataString(this.Client.ResourceName);
-            url = url + "/protectableobjects";
+            url = url + "/items";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2014-09-01");
-            if (parameters != null && parameters.Status != null)
-            {
-                queryParameters.Add("Status=" + Uri.EscapeDataString(parameters.Status));
-            }
-            if (parameters != null && parameters.Type != null)
-            {
-                queryParameters.Add("Type=" + Uri.EscapeDataString(parameters.Type));
-            }
+            queryParameters.Add("Status -eq csmparameters.Status}");
+            queryParameters.Add("Type -eq csmparameters.Type}");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -177,13 +171,13 @@ namespace Microsoft.Azure.Management.BackupServices
                     }
                     
                     // Create Result
-                    ProtectableObjectListResponse result = null;
+                    CSMItemListOperationResponse result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new ProtectableObjectListResponse();
+                        result = new CSMItemListOperationResponse();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -192,115 +186,101 @@ namespace Microsoft.Azure.Management.BackupServices
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            ProtectableObjectResponse protectableObjectInstance = new ProtectableObjectResponse();
-                            result.ProtectableObject = protectableObjectInstance;
+                            CSMItemListResponse cSMItemListResponseInstance = new CSMItemListResponse();
+                            result.CSMItemListResponse = cSMItemListResponseInstance;
                             
-                            JToken objectsArray = responseDoc["Objects"];
-                            if (objectsArray != null && objectsArray.Type != JTokenType.Null)
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
                             {
-                                foreach (JToken objectsValue in ((JArray)objectsArray))
+                                foreach (JToken valueValue in ((JArray)valueArray))
                                 {
-                                    ProtectableObjectInfo protectableObjectInfoInstance = new ProtectableObjectInfo();
-                                    protectableObjectInstance.Objects.Add(protectableObjectInfoInstance);
+                                    CSMItemResponse cSMItemResponseInstance = new CSMItemResponse();
+                                    cSMItemListResponseInstance.Value.Add(cSMItemResponseInstance);
                                     
-                                    JToken friendlyNameValue = objectsValue["FriendlyName"];
-                                    if (friendlyNameValue != null && friendlyNameValue.Type != JTokenType.Null)
+                                    JToken propertiesValue = valueValue["properties"];
+                                    if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                     {
-                                        string friendlyNameInstance = ((string)friendlyNameValue);
-                                        protectableObjectInfoInstance.FriendlyName = friendlyNameInstance;
+                                        CSMItemProperties propertiesInstance = new CSMItemProperties();
+                                        cSMItemResponseInstance.Properties = propertiesInstance;
+                                        
+                                        JToken friendlyNameValue = propertiesValue["friendlyName"];
+                                        if (friendlyNameValue != null && friendlyNameValue.Type != JTokenType.Null)
+                                        {
+                                            string friendlyNameInstance = ((string)friendlyNameValue);
+                                            propertiesInstance.FriendlyName = friendlyNameInstance;
+                                        }
+                                        
+                                        JToken itemTypeValue = propertiesValue["itemType"];
+                                        if (itemTypeValue != null && itemTypeValue.Type != JTokenType.Null)
+                                        {
+                                            string itemTypeInstance = ((string)itemTypeValue);
+                                            propertiesInstance.ItemType = itemTypeInstance;
+                                        }
+                                        
+                                        JToken statusValue = propertiesValue["status"];
+                                        if (statusValue != null && statusValue.Type != JTokenType.Null)
+                                        {
+                                            string statusInstance = ((string)statusValue);
+                                            propertiesInstance.Status = statusInstance;
+                                        }
+                                        
+                                        JToken containerIdValue = propertiesValue["containerId"];
+                                        if (containerIdValue != null && containerIdValue.Type != JTokenType.Null)
+                                        {
+                                            string containerIdInstance = ((string)containerIdValue);
+                                            propertiesInstance.ContainerId = containerIdInstance;
+                                        }
                                     }
                                     
-                                    JToken typeValue = objectsValue["Type"];
-                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                    JToken idValue = valueValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
                                     {
-                                        string typeInstance = ((string)typeValue);
-                                        protectableObjectInfoInstance.Type = typeInstance;
+                                        string idInstance = ((string)idValue);
+                                        cSMItemResponseInstance.Id = idInstance;
                                     }
                                     
-                                    JToken protectionStatusValue = objectsValue["ProtectionStatus"];
-                                    if (protectionStatusValue != null && protectionStatusValue.Type != JTokenType.Null)
-                                    {
-                                        string protectionStatusInstance = ((string)protectionStatusValue);
-                                        protectableObjectInfoInstance.ProtectionStatus = protectionStatusInstance;
-                                    }
-                                    
-                                    JToken containerNameValue = objectsValue["ContainerName"];
-                                    if (containerNameValue != null && containerNameValue.Type != JTokenType.Null)
-                                    {
-                                        string containerNameInstance = ((string)containerNameValue);
-                                        protectableObjectInfoInstance.ContainerName = containerNameInstance;
-                                    }
-                                    
-                                    JToken containerFriendlyNameValue = objectsValue["ContainerFriendlyName"];
-                                    if (containerFriendlyNameValue != null && containerFriendlyNameValue.Type != JTokenType.Null)
-                                    {
-                                        string containerFriendlyNameInstance = ((string)containerFriendlyNameValue);
-                                        protectableObjectInfoInstance.ContainerFriendlyName = containerFriendlyNameInstance;
-                                    }
-                                    
-                                    JToken containerTypeValue = objectsValue["ContainerType"];
-                                    if (containerTypeValue != null && containerTypeValue.Type != JTokenType.Null)
-                                    {
-                                        string containerTypeInstance = ((string)containerTypeValue);
-                                        protectableObjectInfoInstance.ContainerType = containerTypeInstance;
-                                    }
-                                    
-                                    JToken parentContainerNameValue = objectsValue["ParentContainerName"];
-                                    if (parentContainerNameValue != null && parentContainerNameValue.Type != JTokenType.Null)
-                                    {
-                                        string parentContainerNameInstance = ((string)parentContainerNameValue);
-                                        protectableObjectInfoInstance.ParentContainerName = parentContainerNameInstance;
-                                    }
-                                    
-                                    JToken parentContainerFriendlyNameValue = objectsValue["ParentContainerFriendlyName"];
-                                    if (parentContainerFriendlyNameValue != null && parentContainerFriendlyNameValue.Type != JTokenType.Null)
-                                    {
-                                        string parentContainerFriendlyNameInstance = ((string)parentContainerFriendlyNameValue);
-                                        protectableObjectInfoInstance.ParentContainerFriendlyName = parentContainerFriendlyNameInstance;
-                                    }
-                                    
-                                    JToken parentContainerTypeValue = objectsValue["ParentContainerType"];
-                                    if (parentContainerTypeValue != null && parentContainerTypeValue.Type != JTokenType.Null)
-                                    {
-                                        string parentContainerTypeInstance = ((string)parentContainerTypeValue);
-                                        protectableObjectInfoInstance.ParentContainerType = parentContainerTypeInstance;
-                                    }
-                                    
-                                    JToken instanceIdValue = objectsValue["InstanceId"];
-                                    if (instanceIdValue != null && instanceIdValue.Type != JTokenType.Null)
-                                    {
-                                        string instanceIdInstance = ((string)instanceIdValue);
-                                        protectableObjectInfoInstance.InstanceId = instanceIdInstance;
-                                    }
-                                    
-                                    JToken nameValue = objectsValue["Name"];
+                                    JToken nameValue = valueValue["name"];
                                     if (nameValue != null && nameValue.Type != JTokenType.Null)
                                     {
                                         string nameInstance = ((string)nameValue);
-                                        protectableObjectInfoInstance.Name = nameInstance;
+                                        cSMItemResponseInstance.Name = nameInstance;
                                     }
                                     
-                                    JToken operationInProgressValue = objectsValue["OperationInProgress"];
-                                    if (operationInProgressValue != null && operationInProgressValue.Type != JTokenType.Null)
+                                    JToken typeValue = valueValue["type"];
+                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
                                     {
-                                        bool operationInProgressInstance = ((bool)operationInProgressValue);
-                                        protectableObjectInfoInstance.OperationInProgress = operationInProgressInstance;
+                                        string typeInstance = ((string)typeValue);
+                                        cSMItemResponseInstance.Type = typeInstance;
                                     }
                                 }
                             }
                             
-                            JToken resultCountValue = responseDoc["ResultCount"];
-                            if (resultCountValue != null && resultCountValue.Type != JTokenType.Null)
+                            JToken nextLinkValue = responseDoc["nextLink"];
+                            if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
                             {
-                                int resultCountInstance = ((int)resultCountValue);
-                                protectableObjectInstance.ResultCount = resultCountInstance;
+                                string nextLinkInstance = ((string)nextLinkValue);
+                                cSMItemListResponseInstance.NextLink = nextLinkInstance;
                             }
                             
-                            JToken skiptokenValue = responseDoc["Skiptoken"];
-                            if (skiptokenValue != null && skiptokenValue.Type != JTokenType.Null)
+                            JToken idValue2 = responseDoc["id"];
+                            if (idValue2 != null && idValue2.Type != JTokenType.Null)
                             {
-                                string skiptokenInstance = ((string)skiptokenValue);
-                                protectableObjectInstance.Skiptoken = skiptokenInstance;
+                                string idInstance2 = ((string)idValue2);
+                                cSMItemListResponseInstance.Id = idInstance2;
+                            }
+                            
+                            JToken nameValue2 = responseDoc["name"];
+                            if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                            {
+                                string nameInstance2 = ((string)nameValue2);
+                                cSMItemListResponseInstance.Name = nameInstance2;
+                            }
+                            
+                            JToken typeValue2 = responseDoc["type"];
+                            if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
+                            {
+                                string typeInstance2 = ((string)typeValue2);
+                                cSMItemListResponseInstance.Type = typeInstance2;
                             }
                         }
                         

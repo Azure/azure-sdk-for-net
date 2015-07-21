@@ -44,13 +44,13 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The definition of a BMSOperationStatusResponse.
+        /// The definition of a CSMOperationResult.
         /// </returns>
-        public static OperationResultResponse Get(this IOperationStatus operations, string operationId, CustomRequestHeaders customRequestHeaders)
+        public static CSMOperationResult CSMGet(this IOperationStatus operations, string operationId, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IOperationStatus)s).GetAsync(operationId, customRequestHeaders);
+                return ((IOperationStatus)s).CSMGetAsync(operationId, customRequestHeaders);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -69,11 +69,11 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The definition of a BMSOperationStatusResponse.
+        /// The definition of a CSMOperationResult.
         /// </returns>
-        public static Task<OperationResultResponse> GetAsync(this IOperationStatus operations, string operationId, CustomRequestHeaders customRequestHeaders)
+        public static Task<CSMOperationResult> CSMGetAsync(this IOperationStatus operations, string operationId, CustomRequestHeaders customRequestHeaders)
         {
-            return operations.GetAsync(operationId, customRequestHeaders, CancellationToken.None);
+            return operations.CSMGetAsync(operationId, customRequestHeaders, CancellationToken.None);
         }
     }
 }

@@ -46,8 +46,8 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The definition of a BMSOperationStatusResponse.
+        /// The definition of a CSMOperationResult.
         /// </returns>
-        Task<OperationResultResponse> GetAsync(string operationId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<CSMOperationResult> CSMGetAsync(string operationId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
     }
 }

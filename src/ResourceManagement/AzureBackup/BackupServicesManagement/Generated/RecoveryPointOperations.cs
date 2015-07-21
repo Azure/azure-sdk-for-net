@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a CSMRecoveryPointOperationResponse.
         /// </returns>
-        public async Task<CSMRecoveryPointOperationResponse> GetAsync(CustomRequestHeaders customRequestHeaders, string containerName, string itemName, string recoveryPointName, CancellationToken cancellationToken)
+        public async Task<CSMRecoveryPointGetOperationResponse> GetAsync(CustomRequestHeaders customRequestHeaders, string containerName, string itemName, string recoveryPointName, CancellationToken cancellationToken)
         {
             // Validate
             
@@ -190,13 +190,13 @@ namespace Microsoft.Azure.Management.BackupServices
                     }
                     
                     // Create Result
-                    CSMRecoveryPointOperationResponse result = null;
+                    CSMRecoveryPointGetOperationResponse result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new CSMRecoveryPointOperationResponse();
+                        result = new CSMRecoveryPointGetOperationResponse();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -205,17 +205,17 @@ namespace Microsoft.Azure.Management.BackupServices
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            JToken cSMRecoveryPointResponseValue = responseDoc["CSMRecoveryPointResponse"];
-                            if (cSMRecoveryPointResponseValue != null && cSMRecoveryPointResponseValue.Type != JTokenType.Null)
+                            JToken valueValue = responseDoc["value"];
+                            if (valueValue != null && valueValue.Type != JTokenType.Null)
                             {
-                                CSMRecoveryPointResponse cSMRecoveryPointResponseInstance = new CSMRecoveryPointResponse();
-                                result.Value = cSMRecoveryPointResponseInstance;
+                                CSMRecoveryPointResponse valueInstance = new CSMRecoveryPointResponse();
+                                result.Value = valueInstance;
                                 
-                                JToken propertiesValue = cSMRecoveryPointResponseValue["properties"];
+                                JToken propertiesValue = valueValue["properties"];
                                 if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                 {
                                     CSMRecoveryPointProperties propertiesInstance = new CSMRecoveryPointProperties();
-                                    cSMRecoveryPointResponseInstance.Properties = propertiesInstance;
+                                    valueInstance.Properties = propertiesInstance;
                                     
                                     JToken recoveryPointTypeValue = propertiesValue["recoveryPointType"];
                                     if (recoveryPointTypeValue != null && recoveryPointTypeValue.Type != JTokenType.Null)
@@ -239,25 +239,25 @@ namespace Microsoft.Azure.Management.BackupServices
                                     }
                                 }
                                 
-                                JToken idValue = cSMRecoveryPointResponseValue["id"];
+                                JToken idValue = valueValue["id"];
                                 if (idValue != null && idValue.Type != JTokenType.Null)
                                 {
                                     string idInstance = ((string)idValue);
-                                    cSMRecoveryPointResponseInstance.Id = idInstance;
+                                    valueInstance.Id = idInstance;
                                 }
                                 
-                                JToken nameValue = cSMRecoveryPointResponseValue["name"];
+                                JToken nameValue = valueValue["name"];
                                 if (nameValue != null && nameValue.Type != JTokenType.Null)
                                 {
                                     string nameInstance = ((string)nameValue);
-                                    cSMRecoveryPointResponseInstance.Name = nameInstance;
+                                    valueInstance.Name = nameInstance;
                                 }
                                 
-                                JToken typeValue = cSMRecoveryPointResponseValue["type"];
+                                JToken typeValue = valueValue["type"];
                                 if (typeValue != null && typeValue.Type != JTokenType.Null)
                                 {
                                     string typeInstance = ((string)typeValue);
-                                    cSMRecoveryPointResponseInstance.Type = typeInstance;
+                                    valueInstance.Type = typeInstance;
                                 }
                             }
                         }

@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a CSMRecoveryPointOperationResponse.
         /// </returns>
-        Task<CSMRecoveryPointOperationResponse> GetAsync(CustomRequestHeaders customRequestHeaders, string containerName, string itemName, string recoveryPointName, CancellationToken cancellationToken);
+        Task<CSMRecoveryPointGetOperationResponse> GetAsync(CustomRequestHeaders customRequestHeaders, string containerName, string itemName, string recoveryPointName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Get the list of all recovery points.

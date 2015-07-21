@@ -194,12 +194,12 @@ namespace Microsoft.Azure.Management.BackupServices
                     JObject cSMRestoreRequestValue = new JObject();
                     requestDoc = cSMRestoreRequestValue;
                     
-                    JObject cSMRestoreRequestPropertiesValue = new JObject();
-                    cSMRestoreRequestValue["CSMRestoreRequestProperties"] = cSMRestoreRequestPropertiesValue;
+                    JObject propertiesValue = new JObject();
+                    cSMRestoreRequestValue["properties"] = propertiesValue;
                     
-                    cSMRestoreRequestPropertiesValue["typeOfRecovery"] = cSMRestoreRequestPropertiesValue;
+                    propertiesValue["typeOfRecovery"] = parameters.Properties.TypeOfRecovery;
                     
-                    cSMRestoreRequestPropertiesValue["recoveryDSTypeSpecificInputs"] = cSMRestoreRequestPropertiesValue;
+                    propertiesValue["recoveryDSTypeSpecificInputs"] = parameters.Properties.RecoveryDSTypeSpecificInputs;
                 }
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
