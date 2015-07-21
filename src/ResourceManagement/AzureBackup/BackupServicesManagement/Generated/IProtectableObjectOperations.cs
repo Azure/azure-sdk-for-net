@@ -34,9 +34,9 @@ namespace Microsoft.Azure.Management.BackupServices
     public partial interface IProtectableObjectOperations
     {
         /// <summary>
-        /// Get the list of all Protectable Objects.
+        /// Get the list of all items
         /// </summary>
-        /// <param name='parameters'>
+        /// <param name='csmparameters'>
         /// Protectable objects query parameter.
         /// </param>
         /// <param name='customRequestHeaders'>
@@ -46,8 +46,8 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response model for the list ProtectableObject operation.
+        /// The definition of a CSMItemListOperationResponse.
         /// </returns>
-        Task<ProtectableObjectListResponse> ListAsync(POQueryParameter parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<CSMItemListOperationResponse> ListCSMAsync(CSMItemQueryObject csmparameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
     }
 }

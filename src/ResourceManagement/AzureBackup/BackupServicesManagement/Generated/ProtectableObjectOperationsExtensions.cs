@@ -31,49 +31,49 @@ namespace Microsoft.Azure.Management.BackupServices
     public static partial class ProtectableObjectOperationsExtensions
     {
         /// <summary>
-        /// Get the list of all Protectable Objects.
+        /// Get the list of all items
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.Azure.Management.BackupServices.IProtectableObjectOperations.
         /// </param>
-        /// <param name='parameters'>
+        /// <param name='csmparameters'>
         /// Optional. Protectable objects query parameter.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The response model for the list ProtectableObject operation.
+        /// The definition of a CSMItemListOperationResponse.
         /// </returns>
-        public static ProtectableObjectListResponse List(this IProtectableObjectOperations operations, POQueryParameter parameters, CustomRequestHeaders customRequestHeaders)
+        public static CSMItemListOperationResponse ListCSM(this IProtectableObjectOperations operations, CSMItemQueryObject csmparameters, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IProtectableObjectOperations)s).ListAsync(parameters, customRequestHeaders);
+                return ((IProtectableObjectOperations)s).ListCSMAsync(csmparameters, customRequestHeaders);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// Get the list of all Protectable Objects.
+        /// Get the list of all items
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.Azure.Management.BackupServices.IProtectableObjectOperations.
         /// </param>
-        /// <param name='parameters'>
+        /// <param name='csmparameters'>
         /// Optional. Protectable objects query parameter.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The response model for the list ProtectableObject operation.
+        /// The definition of a CSMItemListOperationResponse.
         /// </returns>
-        public static Task<ProtectableObjectListResponse> ListAsync(this IProtectableObjectOperations operations, POQueryParameter parameters, CustomRequestHeaders customRequestHeaders)
+        public static Task<CSMItemListOperationResponse> ListCSMAsync(this IProtectableObjectOperations operations, CSMItemQueryObject csmparameters, CustomRequestHeaders customRequestHeaders)
         {
-            return operations.ListAsync(parameters, customRequestHeaders, CancellationToken.None);
+            return operations.ListCSMAsync(csmparameters, customRequestHeaders, CancellationToken.None);
         }
     }
 }
