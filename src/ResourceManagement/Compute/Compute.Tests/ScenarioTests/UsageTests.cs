@@ -13,6 +13,7 @@
 // limitations under the License.
 //
 
+using System;
 using Microsoft.Azure;
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
@@ -65,6 +66,10 @@ namespace Compute.Tests
                     ValidateListUsageResponse(luResponse);
 
                     m_CrpClient.VirtualMachines.Delete(rgName, inputVM.Name);
+                }
+                catch (Exception e)
+                {
+                    Assert.Null(e);
                 }
                 finally
                 {

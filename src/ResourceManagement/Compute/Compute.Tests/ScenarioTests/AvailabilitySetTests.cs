@@ -240,7 +240,7 @@ namespace Compute.Tests
                         {"testTag", "1"},
                     },
             };
-            typeof(Resource).GetProperty("ProvisioningState").SetValue(inputAvailabilitySet, "InProgress");
+            typeof(AvailabilitySet).GetProperty("ProvisioningState").SetValue(inputAvailabilitySet, "InProgress");
 
             // function to test the limits available.       
             inputAvailabilitySet.PlatformFaultDomainCount = FDTooLow;

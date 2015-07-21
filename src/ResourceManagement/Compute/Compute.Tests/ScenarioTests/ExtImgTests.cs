@@ -50,7 +50,7 @@ namespace Compute.Tests
         // 2- Put a VM Image Extension
         //PUT http://localhost:449/providers/Microsoft.Compute/locations/westus/publishers/Microsoft.Windows/artifacttypes/vmextension/types/vmaccess/versions/1.1.0?api-version=2014-12-01-preview HTTP/1.1
         //{
-        // "name": "1.1.0",
+        // "name": "2.0",
         //  "location": "westus",
 
         //  "properties": {
@@ -75,8 +75,8 @@ namespace Compute.Tests
         private class VirtualMachineExtensionImageGetParameters
         {
             public string Location = "westus";
-            public string PublisherName = "Microsoft.Windows";
-            public string Type = "vmaccess";
+            public string PublisherName = "Microsoft.Compute";
+            public string Type = "VMAccessAgent";
             public string FilterExpression = "";
         }
 
@@ -97,14 +97,14 @@ namespace Compute.Tests
                     parameters.Location,
                     parameters.PublisherName,
                     parameters.Type,
-                    "1.1.0");
+                    "2.0");
 
-                Assert.True(vmimageext.Name == "1.1.0");
+                Assert.True(vmimageext.Name == "2.0");
                 Assert.True(vmimageext.Location == "westus");
 
                 Assert.True(vmimageext.OperatingSystem == "Windows");
-                Assert.True(vmimageext.ComputeRole == "PaaS");
-                Assert.True(vmimageext.HandlerSchema == "");
+                Assert.True(vmimageext.ComputeRole == "IaaS");
+                Assert.True(vmimageext.HandlerSchema == null);
                 Assert.True(vmimageext.VmScaleSetEnabled == false);
                 Assert.True(vmimageext.SupportsMultipleExtensions == false);
             }
@@ -125,7 +125,7 @@ namespace Compute.Tests
                     parameters.PublisherName);
 
                 Assert.True(vmextimg.Count > 0);
-                Assert.True(vmextimg.Count(vmi => vmi.Name == "vmaccess") != 0);
+                Assert.True(vmextimg.Count(vmi => vmi.Name == "VMAccessAgent") != 0);
             }
         }
 
@@ -145,7 +145,7 @@ namespace Compute.Tests
                     parameters.Type);
 
                 Assert.True(vmextimg.Count > 0);
-                Assert.True(vmextimg.Count(vmi => vmi.Name == "1.1.0") != 0);
+                Assert.True(vmextimg.Count(vmi => vmi.Name == "2.0") != 0);
             }
         }
 
@@ -167,7 +167,7 @@ namespace Compute.Tests
                     parameters.Type,
                     f => f.Name.StartsWith("1.1"));
                 Assert.True(vmextimg.Count > 0);
-                Assert.True(vmextimg.Count(vmi => vmi.Name == "1.1.0") != 0);
+                Assert.True(vmextimg.Count(vmi => vmi.Name == "2.0") != 0);
 
                 // Filter: startswith - Negative Test
                 parameters.FilterExpression = "$filter=startswith(name,'1.0')";
@@ -177,7 +177,7 @@ namespace Compute.Tests
                     parameters.Type,
                     f => f.Name.StartsWith("1.0"));
                 Assert.True(vmextimg.Count == 0);
-                Assert.True(vmextimg.Count(vmi => vmi.Name == "1.1.0") == 0);
+                Assert.True(vmextimg.Count(vmi => vmi.Name == "2.0") == 0);
 
                 // Filter: top - Positive Test
                 parameters.FilterExpression = "$top=1";
@@ -187,7 +187,7 @@ namespace Compute.Tests
                     parameters.Type,
                     top: 1);
                 Assert.True(vmextimg.Count == 1);
-                Assert.True(vmextimg.Count(vmi => vmi.Name == "1.1.0") != 0);
+                Assert.True(vmextimg.Count(vmi => vmi.Name == "2.0") != 0);
 
                 // Filter: top - Negative Test
                 parameters.FilterExpression = "$top=0";
