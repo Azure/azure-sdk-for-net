@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<RuleSet Name='Project Level Rule Overrides'
+         Description='This rule set contains project level overrides for this project.'
+         ToolsVersion='10.0'>
+  <Rules AnalyzerId='Microsoft.Analyzers.ManagedCodeAnalysis' RuleNamespace='Microsoft.Rules.Managed'>
+
+	<!-- CA2218	== Microsoft.Usage:Override GetHashCode on overriding Equals -->
+    <Rule Id='CA2218' Action='None' />
+  
+  </Rules>
+</RuleSet>
