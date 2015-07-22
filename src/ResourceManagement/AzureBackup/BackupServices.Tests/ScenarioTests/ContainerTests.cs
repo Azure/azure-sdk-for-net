@@ -153,5 +153,41 @@ namespace BackupServices.Tests
                 Assert.True(containerDeleted, "Container still exists after unregistration");
             }
         }
+
+        [Fact]
+        void EnableContainerReregistrationSetsReregisterFlag()
+        {
+            using (UndoContext undoContext = UndoContext.Current)
+            {
+                undoContext.Start();
+
+                BackupVaultServicesManagementClient client = GetServiceClient<BackupVaultServicesManagementClient>();
+                string containerId = ConfigurationManager.AppSettings["ContainerId"];
+                string friendlyName = ConfigurationManager.AppSettings["ContainerFriendlyName"];
+
+                EnableReregistrationRequest request = new EnableReregistrationRequest()
+                {
+                    ContainerReregistrationState = new ContainerReregistrationState()
+                    {
+                        EnableReregistration = true,
+                    },
+                };
+
+                OperationResponse response = client.Container.EnableMarsContainerReregistration(containerId, request, GetCustomRequestHeaders());
+                // Response Validation
+                Assert.NotNull(response);
+                Assert.True(response.StatusCode == HttpStatusCode.NoContent, "Status code should be NoContent");
+
+                // Basic Validation
+                ListMarsContainerOperationResponse getResponse = client.Container.ListMarsContainersByTypeAndFriendlyName(MarsContainerType.Machine, friendlyName, GetCustomRequestHeaders());
+                Assert.True(getResponse.ListMarsContainerResponse.Value.Any(marsContainer =>
+                {
+                    return marsContainer.ContainerType == MarsContainerType.Machine.ToString() &&
+                           marsContainer.Properties != null &&
+                           string.Equals(marsContainer.Properties.FriendlyName, friendlyName, StringComparison.OrdinalIgnoreCase) &&
+                           marsContainer.Properties.CanReRegister == true;
+                }), "Reregistration doesn't appear to have been enabled for the input container");
+            }
+        }
     }
 }

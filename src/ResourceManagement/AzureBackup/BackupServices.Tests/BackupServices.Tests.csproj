@@ -40,6 +40,9 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="SessionRecords\BackupServices.Tests.ContainerTests\EnableContainerReregistrationSetsReregisterFlag.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\BackupServices.Tests.ContainerTests\ListMarsContainersByTypeAndFriendlyNameReturnsSameContainer.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
