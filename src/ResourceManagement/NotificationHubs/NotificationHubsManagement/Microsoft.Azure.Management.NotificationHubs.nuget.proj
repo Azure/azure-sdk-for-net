@@ -5,7 +5,7 @@
     Microsoft.Azure.Management.ApiManagement
     -->
     <SdkNuGetPackage Include="Microsoft.Azure.Management.NotificationHubs">
-      <PackageVersion>1.0</PackageVersion>
+      <PackageVersion>0.1.0-preview</PackageVersion>
       <Folder>$(MSBuildThisFileDirectory)</Folder>
     </SdkNuGetPackage>
   </ItemGroup>
