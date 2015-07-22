@@ -52,6 +52,18 @@ namespace Microsoft.Azure.Management.Compute.Models
             set { this._createOption = value; }
         }
         
+        private int? _diskSizeGB;
+        
+        /// <summary>
+        /// Optional. Gets or sets the initial disk size in GB for blank data
+        /// disks, and the new desired size for existing OS and Data disks.
+        /// </summary>
+        public int? DiskSizeGB
+        {
+            get { return this._diskSizeGB; }
+            set { this._diskSizeGB = value; }
+        }
+        
         private string _name;
         
         /// <summary>
