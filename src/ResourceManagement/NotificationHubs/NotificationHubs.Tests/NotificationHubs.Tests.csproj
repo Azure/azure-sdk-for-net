@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">  
   <PropertyGroup>
     <ProjectGuid>{0ED772D0-2E8C-4E55-B1EE-5B75FA80A896}</ProjectGuid>
     <RootNamespace>NotificationHubs.Tests</RootNamespace>
@@ -31,8 +30,6 @@
     <Compile Include="Tests\ScenarioTests.NotificationHubTests.CheckAvailability.cs" />
     <Compile Include="Tests\ScenarioTests.NotificationHubTests.CRUD.cs" />
     <Compile Include="Tests\ScenarioTests.NotificationHubTests.CRUDAuthorizationRules.cs" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Tests\ScenarioTests.NamespaceTests.CheckAvailability.cs" />
   </ItemGroup>
 </Project>
