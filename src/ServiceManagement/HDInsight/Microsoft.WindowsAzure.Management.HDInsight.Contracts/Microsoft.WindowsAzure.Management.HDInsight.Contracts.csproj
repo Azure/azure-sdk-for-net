@@ -13,9 +13,23 @@
   </PropertyGroup>
   <Import Project="..\..\..\..\tools\Library.Settings.targets" />
   <ItemGroup>
+    <Compile Include="..\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="DataContractSerDeUtils.cs" />
     <Compile Include="ErrorDetails.cs" />
     <Compile Include="HttpUserChangeRequest.cs" />
+    <Compile Include="Iaas\Jan2015\Constants.cs" />
+    <Compile Include="Iaas\Jan2015\Credentials\ConnectivityCredential.cs" />
+    <Compile Include="Iaas\Jan2015\Credentials\SSHConnectivityCredential.cs" />
+    <Compile Include="Iaas\Jan2015\Credentials\SSHFullConnectivityCredential.cs" />
+    <Compile Include="Iaas\Jan2015\Credentials\WebConnectivityCredential.cs" />
+    <Compile Include="Iaas\Jan2015\Endpoints\ConnectivityEndpoint.cs" />
+    <Compile Include="Iaas\Jan2015\Endpoints\SSHConnectivityEndpoint.cs" />
+    <Compile Include="Iaas\Jan2015\Endpoints\WebConnectivityEndpoint.cs" />
+    <Compile Include="Iaas\Jan2015\IaasCluster.cs" />
+    <Compile Include="Iaas\Jan2015\IaasClusterDocumentTypes.cs" />
+    <Compile Include="Iaas\Jan2015\IaasClusterError.cs" />
     <Compile Include="March2013\ASVAccount.cs" />
     <Compile Include="March2013\AzureClusterDeploymentAction.cs" />
     <Compile Include="March2013\ClusterContainer.cs" />
@@ -63,6 +77,7 @@
     <Compile Include="May2014\Components\CustomActions\ScriptCustomAction.cs" />
     <Compile Include="May2014\Components\GatewayComponent.cs" />
     <Compile Include="May2014\Components\HadoopCoreComponent.cs" />
+    <Compile Include="May2014\Components\SparkComponent.cs" />
     <Compile Include="May2014\Components\StormComponent.cs" />
     <Compile Include="May2014\Components\ZookeeperComponent.cs" />
     <Compile Include="May2014\Networking\AddressAssignment.cs" />
