@@ -91,16 +91,6 @@ namespace Microsoft.Hadoop.Avro.Tests
             base.TestCleanup();
         }
 
-        [TestMethod]
-        [TestCategory("Integration")]
-        [TestCategory("Scenario")]
-        [TestCategory("Nightly")]
-        public void CreateHiveTableBackedByAvro_ReadAvroGeneratedByHive_UsingReflection_DeflateCodec()
-        {
-            this.dataProvider = new LargeClassReflectionDataProvider(Codec.Deflate);
-            this.RoundtripAvroDataToHive();
-        }
-
         private void RoundtripAvroDataToHive()
         {
             this.UploadFiles();

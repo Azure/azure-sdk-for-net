@@ -16,6 +16,7 @@ namespace Microsoft.Hadoop.Avro.Tests
 {
     using System;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Linq.Expressions;
@@ -103,9 +104,12 @@ namespace Microsoft.Hadoop.Avro.Tests
         [DataMember]
         public Guid PrimitiveGuid;
 
+        [DataMember]
+        public Guid PrimitiveGuid2;
+
         public static ClassOfGuid Create(bool nullablesAreNulls)
         {
-            return new ClassOfGuid { PrimitiveGuid = Utilities.GetRandom<Guid>(nullablesAreNulls), };
+            return new ClassOfGuid { PrimitiveGuid = Utilities.GetRandom<Guid>(nullablesAreNulls), PrimitiveGuid2 = Utilities.GetRandom<Guid>(nullablesAreNulls) };
         }
 
         public override bool Equals(object obj)
@@ -119,12 +123,12 @@ namespace Microsoft.Hadoop.Avro.Tests
             {
                 return false;
             }
-            return this.PrimitiveGuid == other.PrimitiveGuid;
+            return this.PrimitiveGuid == other.PrimitiveGuid && this.PrimitiveGuid2 == other.PrimitiveGuid2;
         }
 
         public override int GetHashCode()
         {
-            return this.PrimitiveGuid.GetHashCode();
+            return this.PrimitiveGuid.GetHashCode() ^ this.PrimitiveGuid2.GetHashCode();
         }
 
     }
@@ -1181,6 +1185,62 @@ namespace Microsoft.Hadoop.Avro.Tests
             return new ClassOfListOfGuid
             {
                 ListOfGuid = Utilities.GetRandom<List<Guid>>(nullablesAreNulls),
+            };
+        }
+    }
+
+    [DataContract]
+    [KnownType(typeof(int))]
+    [KnownType(typeof(string))]
+    [KnownType(typeof(Guid))]
+    [KnownType(typeof(ClassOfInt))]
+    [KnownType(typeof(List<ClassOfInt>))]
+    [KnownType(typeof(Collection<ClassOfInt>))]
+    [KnownType(typeof(IList<ClassOfInt>))]
+    [KnownType(typeof(Dictionary<string, ClassOfInt>))]
+    public class ClassOfObjectDictionary : IEquatable<ClassOfObjectDictionary>
+    {
+        [DataMember]
+        internal Dictionary<string, object> PatchSet;
+
+        public override bool Equals(object obj)
+        {
+            return this.Equals(obj as ClassOfObjectDictionary);
+        }
+
+        public bool Equals(ClassOfObjectDictionary other)
+        {
+            if (other == null)
+            {
+                return false;
+            }
+
+            return Utilities.GeneratedTypesEquality(this, other);
+        }
+
+        public override int GetHashCode()
+        {
+            return this.PatchSet.GetHashCode();
+        }
+
+        public static ClassOfObjectDictionary Create()
+        {
+            var list = new List<ClassOfInt>();
+            list.Add(ClassOfInt.Create(false));
+            var dictionary = new Dictionary<string, ClassOfInt>();
+            dictionary.Add("TestKey", ClassOfInt.Create(false));
+
+            return new ClassOfObjectDictionary
+            {
+                PatchSet = new Dictionary<string, object>()
+                {
+                     { "Name", "OData" },
+                     { "Age", 15 },
+                     { "Key", new Guid() },
+                     { "ClassOfIntReference", ClassOfInt.Create(false) },
+                     { "ClassOfIntReferenceArray", list },
+                     { "ClassOfIntReferenceMap", dictionary }
+                },
             };
         }
     }

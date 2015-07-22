@@ -1,1 +1,0 @@
-﻿This is a general read me file.
