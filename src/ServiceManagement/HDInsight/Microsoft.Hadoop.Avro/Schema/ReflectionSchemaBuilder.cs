@@ -361,7 +361,7 @@ namespace Microsoft.Hadoop.Avro.Schema
             }
 
             var knownTypeSchemas = new List<TypeSchema>(applicable.Count);
-            applicable.ForEach(t => knownTypeSchemas.Add(this.BuildComplexTypeSchema(t, schemas, currentDepth)));
+            applicable.ForEach(t => knownTypeSchemas.Add(TryBuildPrimitiveTypeSchema(t) ?? this.BuildComplexTypeSchema(t, schemas, currentDepth)));
             return new UnionSchema(knownTypeSchemas, type);
         }
 

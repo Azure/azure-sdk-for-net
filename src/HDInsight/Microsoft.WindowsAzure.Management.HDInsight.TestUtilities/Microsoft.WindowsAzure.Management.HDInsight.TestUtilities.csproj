@@ -163,8 +163,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config">
-      <SubType>Designer</SubType>
     <None Include="app.config" />
     <None Include="creds\certs\emrcert.cer">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

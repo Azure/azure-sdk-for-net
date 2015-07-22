@@ -44,7 +44,20 @@ namespace Microsoft.Hadoop.Avro.Serializers
         protected override Expression BuildSerializerSafe(Expression encoder, Expression value)
         {
             // Indexing schemas according to their position.
-            var schemas = this.itemSchemas.Select((s, index) => new IndexedSchema { Schema = s, Index = index }).ToList();
+            // according to avro spec http://avro.apache.org/docs/current/spec.html#Unions
+            // Unions may not contain more than one schema with the same type, except for the named types record, fixed and enum. 
+            // For example, unions containing two array types or two map types are not permitted, but two types with different names are permitted
+            int schemaIndex = 0;
+
+            var schemas = new List<IndexedSchema>(this.itemSchemas.Count);
+            foreach (var typeSchema in this.itemSchemas)
+            {
+                // use FirstOrDefault rather than SingleOrDefault because we need to add all schema to the list.
+                var existingSchema = schemas.FirstOrDefault(s => UnionSchema.IsSameTypeAs(s.Schema, typeSchema));
+                var index = existingSchema != null ? existingSchema.Index : schemaIndex++;
+                var indexSchema = new IndexedSchema {Schema = typeSchema, Index = index};
+                schemas.Add(indexSchema);
+            }
 
             // Nullable schemas.
             if (schemas.Count == 2 && schemas.Select(s => s.Schema).OfType<NullSchema>().Any())
@@ -134,7 +147,8 @@ namespace Microsoft.Hadoop.Avro.Serializers
 
         private Expression BuildUnionSerializer(Expression encoder, Expression value, IList<IndexedSchema> schemas)
         {
-            Expression elseBranch = Expression.Throw(Expression.Constant(new SerializationException(string.Format(CultureInfo.InvariantCulture, "Object type does match any item schema of the union."))));
+            Expression<Func<object, Exception>> messageFunc = objectType => new SerializationException(string.Format("Object type {0} does not match any item schema of the union: {1}", objectType == null ? null : objectType.GetType(), string.Join(",", schemas.Select(s => s.Schema.RuntimeType))));
+            Expression elseBranch = Expression.Throw(Expression.Invoke(messageFunc, value));
             ConditionalExpression conditions = null;
             for (int i = schemas.Count - 1; i >= 0; i--)
             {

@@ -20,6 +20,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="AvroEnum.cs" />
     <Compile Include="AvroFixedAttribute.cs" />
     <Compile Include="AvroNull.cs" />
