@@ -43,6 +43,9 @@
     <None Include="SessionRecords\Network.Tests.Tests.RouteTests\RoutesApiTest.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\Network.Tests.Tests.RouteTests\RoutesHopTypeTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\Networks.Tests.ApplicationGatewayTests\ApplicationGatewayApiTest.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

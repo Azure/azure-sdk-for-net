@@ -16,7 +16,7 @@
 
 namespace DataFactory.Tests.Framework.JsonSamples
 {
-    public class TableInvalidDateTimeJsonSamples
+    public class TableInvalidDateTimeJsonSamples : JsonSampleCollection<TableInvalidDateTimeJsonSamples>
     {
         [JsonSample]
         public const string HDISTable = @"

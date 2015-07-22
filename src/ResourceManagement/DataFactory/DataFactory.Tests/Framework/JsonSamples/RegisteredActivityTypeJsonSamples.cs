@@ -19,7 +19,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
     /// <summary>
     /// Contains Registerd ActivityType JSON samples. Samples added here will automatically be hit by the serialization unit tests. 
     /// </summary>
-    public class RegisteredActivityTypeJsonSamples
+    public class RegisteredActivityTypeJsonSamples : JsonSampleCollection<RegisteredActivityTypeJsonSamples>
     {
         [JsonSample]
         public const string DotNetActivity = @"

@@ -15,13 +15,12 @@
 // 
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using DataFactory.Tests.Framework;
 using DataFactory.Tests.Framework.JsonSamples;
 using Microsoft.Azure.Management.DataFactories;
 using Microsoft.Azure.Management.DataFactories.Models;
 using Xunit;
+using Xunit.Extensions;
 using Core = Microsoft.Azure.Management.DataFactories.Core;
 using CoreModel = Microsoft.Azure.Management.DataFactories.Core.Models;
 
@@ -37,66 +36,53 @@ namespace DataFactory.Tests.UnitTests
             }
         }
 
-        [Fact]
+        [Theory, ClassData(typeof(TableJsonSamples))]
         [Trait(TraitName.TestType, TestType.Unit)]
         [Trait(TraitName.Function, TestType.Conversion)]
-        public void TableJsonConstsToWrappedObjectTest()
+        public void TableJsonConstsToWrappedObjectTest(JsonSampleInfo sampleInfo)
         {
-            IEnumerable<JsonSampleInfo> samples =
-                JsonSampleCommon.GetJsonSamplesFromType<TableJsonSamples>();
-
-            this.TestTableJsonSamples(samples);
+            JsonSampleCommon.TestJsonSample(sampleInfo, this.TestTableJson);
         }
 
-        [Fact]
+        [Theory, ClassData(typeof(TableJsonSamples))]
         [Trait(TraitName.TestType, TestType.Unit)]
         [Trait(TraitName.Function, TestType.Conversion)]
-        public void TableValidateJsonConstsTest()
+        public void TableValidateJsonConstsTest(JsonSampleInfo sampleInfo)
         {
-            IEnumerable<JsonSampleInfo> samples =
-                JsonSampleCommon.GetJsonSamplesFromType<TableJsonSamples>();
-
-            this.TestTableValidateSamples(samples);
+            JsonSampleCommon.TestJsonSample(sampleInfo, this.TestTableValidation);
         }
 
-        [Fact]
-        [Trait(TraitName.TestType, TestType.Unit)]
-        [Trait(TraitName.Function, TestType.Conversion)]
-        public void TableMissingRequiredPropertiesThrowsExceptionTest()
-        {
-            // tableName is required
-            string invalidJson = @"{
+        [Theory, InlineData(@"{
     name: ""Test-BYOC-HDInsight-Table"",
     properties:
     {
         type: ""AzureSqlTable"",
         typeProperties: { }
     }
-}";
-
+}")]
+        [Trait(TraitName.TestType, TestType.Unit)]
+        [Trait(TraitName.Function, TestType.Conversion)]
+        public void TableMissingRequiredPropertiesThrowsExceptionTest(string invalidJson)
+        {
+            // tableName is required
             InvalidOperationException ex =
                 Assert.Throws<InvalidOperationException>(() => this.TestTableValidation(invalidJson));
             Assert.Contains("is required", ex.Message);
         }
 
-        [Fact]
+        [Theory, ClassData(typeof(TableJsonSamples))]
         [Trait(TraitName.TestType, TestType.Unit)]
         [Trait(TraitName.Function, TestType.Conversion)]
-        public void TableWithExtraPropertiesTest()
+        public void TableWithExtraPropertiesTest(JsonSampleInfo sampleInfo)
         {
-            IEnumerable<JsonSampleInfo> samples =
-                JsonSampleCommon.GetJsonSamplesFromType<TableJsonSamples>()
-                    .Where(s => s.Version != null && s.Version.Equals(JsonSampleType.ExtraProperties));
-
-            this.TestTableJsonSamples(samples);
+            if (sampleInfo.Version != null 
+                && sampleInfo.Version.Equals(JsonSampleType.ExtraProperties, StringComparison.Ordinal))
+            {
+                JsonSampleCommon.TestJsonSample(sampleInfo, this.TestTableJson);
+            }
         }
 
-        [Fact]
-        [Trait(TraitName.TestType, TestType.Unit)]
-        [Trait(TraitName.Function, TestType.Conversion)]
-        public void TableUnregisteredTypeTest()
-        {
-            string unregisteredTypeJson = @"
+        [Theory, InlineData(@"
 {
     name: ""Test-Unregistered-Table"",
     properties:
@@ -108,23 +94,15 @@ namespace DataFactory.Tests.UnitTests
             apiKey:""testApiKey""
         }
     }
-}";
-
+}")]
+        [Trait(TraitName.TestType, TestType.Unit)]
+        [Trait(TraitName.Function, TestType.Conversion)]
+        public void TableUnregisteredTypeTest(string unregisteredTypeJson)
+        {
             // If a table type has not been locally registered, 
             // typeProperties should be deserialized to a GenericTableInstance
             Table table = this.ConvertToWrapper(unregisteredTypeJson);
             Assert.IsType<GenericDataset>(table.Properties.TypeProperties);
-        }
-
-        private void TestTableJsonSamples(IEnumerable<JsonSampleInfo> samples)
-        {
-            JsonSampleCommon.TestJsonSamples(samples, this.TestTableJson);
-        }
-
-        private void TestTableValidateSamples(IEnumerable<JsonSampleInfo> samples)
-        {
-            Action<JsonSampleInfo> testSample = sampleInfo => this.TestTableValidation(sampleInfo.Json);
-            JsonSampleCommon.TestJsonSamples(samples, testSample);
         }
 
         private void TestTableJson(JsonSampleInfo info)
@@ -143,10 +121,15 @@ namespace DataFactory.Tests.UnitTests
             }
         }
 
+        private void TestTableValidation(JsonSampleInfo sampleInfo)
+        {
+            this.TestTableValidation(sampleInfo.Json);
+        }
+        
         private void TestTableValidation(string json)
         {
             Table table = this.ConvertToWrapper(json);
-            this.Operations.Converter.ValidateWrappedObject(table);
+            this.Operations.ValidateObject(table);
         }
 
         private Table ConvertToWrapper(string json)
