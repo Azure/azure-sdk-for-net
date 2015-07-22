@@ -27,7 +27,7 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="HDInsight\**\*.cs" target="src" />
+    <file src="ServiceManagement\HDInsight\Microsoft.WindowsAzure.Management.HDInsight\**\*.cs" target="src" />
     <file src="..\binaries\net45\Microsoft.WindowsAzure.Management.HDInsight.dll" target="lib\net45" />
     <file src="..\binaries\net45\Microsoft.WindowsAzure.Management.HDInsight.pdb" target="lib\net45" />
     <file src="..\binaries\net45\Microsoft.WindowsAzure.Management.HDInsight.xml" target="lib\net45" />
