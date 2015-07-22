@@ -21,6 +21,7 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.NotificationHubs.Models;
 
 namespace Microsoft.Azure.Management.NotificationHubs.Models
@@ -28,7 +29,7 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
     /// <summary>
     /// The response of the CreateOrUpdate Namespace.
     /// </summary>
-    public partial class NamespaceCreateOrUpdateResponse
+    public partial class NamespaceCreateOrUpdateResponse : AzureOperationResponse
     {
         private NamespaceResource _value;
         

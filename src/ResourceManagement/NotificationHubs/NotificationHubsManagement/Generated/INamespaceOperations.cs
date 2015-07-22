@@ -50,10 +50,10 @@ namespace Microsoft.Azure.Management.NotificationHubs
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The response of the CreateOrUpdate Api Management service long
+        /// running operation.
         /// </returns>
-        Task<AzureOperationResponse> BeginDeleteAsync(string resourceGroupName, string namespaceName, CancellationToken cancellationToken);
+        Task<NamespaceLongRunningResponse> BeginDeleteAsync(string resourceGroupName, string namespaceName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Checks the availability of the given service namespace across all
@@ -133,10 +133,10 @@ namespace Microsoft.Azure.Management.NotificationHubs
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The response of the CreateOrUpdate Api Management service long
+        /// running operation.
         /// </returns>
-        Task<AzureOperationResponse> DeleteAsync(string resourceGroupName, string namespaceName, CancellationToken cancellationToken);
+        Task<NamespaceLongRunningResponse> DeleteAsync(string resourceGroupName, string namespaceName, CancellationToken cancellationToken);
         
         /// <summary>
         /// The delete a namespace authorization rule operation
@@ -204,8 +204,8 @@ namespace Microsoft.Azure.Management.NotificationHubs
         /// status of the delete operation. After calling the operation, you
         /// can call Get namespace Delete Operation Status to determine
         /// whether the operation has succeeded, failed, or is still in
-        /// progress. This method differs GetLongRunningOperationStatus in
-        /// providing NotificationHub service resource description.
+        /// progress. This method differs from GetLongRunningOperationStatus
+        /// in providing NotificationHub service resource description.
         /// </summary>
         /// <param name='operationStatusLink'>
         /// Location value returned by the Begin operation.

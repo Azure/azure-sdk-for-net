@@ -51,10 +51,10 @@ namespace Microsoft.Azure.Management.NotificationHubs
         /// Required. The namespace name.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The response of the CreateOrUpdate Api Management service long
+        /// running operation.
         /// </returns>
-        public static AzureOperationResponse BeginDelete(this INamespaceOperations operations, string resourceGroupName, string namespaceName)
+        public static NamespaceLongRunningResponse BeginDelete(this INamespaceOperations operations, string resourceGroupName, string namespaceName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -80,10 +80,10 @@ namespace Microsoft.Azure.Management.NotificationHubs
         /// Required. The namespace name.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The response of the CreateOrUpdate Api Management service long
+        /// running operation.
         /// </returns>
-        public static Task<AzureOperationResponse> BeginDeleteAsync(this INamespaceOperations operations, string resourceGroupName, string namespaceName)
+        public static Task<NamespaceLongRunningResponse> BeginDeleteAsync(this INamespaceOperations operations, string resourceGroupName, string namespaceName)
         {
             return operations.BeginDeleteAsync(resourceGroupName, namespaceName, CancellationToken.None);
         }
@@ -268,10 +268,10 @@ namespace Microsoft.Azure.Management.NotificationHubs
         /// Required. The name of the namespace.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The response of the CreateOrUpdate Api Management service long
+        /// running operation.
         /// </returns>
-        public static AzureOperationResponse Delete(this INamespaceOperations operations, string resourceGroupName, string namespaceName)
+        public static NamespaceLongRunningResponse Delete(this INamespaceOperations operations, string resourceGroupName, string namespaceName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -294,10 +294,10 @@ namespace Microsoft.Azure.Management.NotificationHubs
         /// Required. The name of the namespace.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The response of the CreateOrUpdate Api Management service long
+        /// running operation.
         /// </returns>
-        public static Task<AzureOperationResponse> DeleteAsync(this INamespaceOperations operations, string resourceGroupName, string namespaceName)
+        public static Task<NamespaceLongRunningResponse> DeleteAsync(this INamespaceOperations operations, string resourceGroupName, string namespaceName)
         {
             return operations.DeleteAsync(resourceGroupName, namespaceName, CancellationToken.None);
         }
@@ -465,8 +465,8 @@ namespace Microsoft.Azure.Management.NotificationHubs
         /// status of the delete operation. After calling the operation, you
         /// can call Get namespace Delete Operation Status to determine
         /// whether the operation has succeeded, failed, or is still in
-        /// progress. This method differs GetLongRunningOperationStatus in
-        /// providing NotificationHub service resource description.
+        /// progress. This method differs from GetLongRunningOperationStatus
+        /// in providing NotificationHub service resource description.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -493,8 +493,8 @@ namespace Microsoft.Azure.Management.NotificationHubs
         /// status of the delete operation. After calling the operation, you
         /// can call Get namespace Delete Operation Status to determine
         /// whether the operation has succeeded, failed, or is still in
-        /// progress. This method differs GetLongRunningOperationStatus in
-        /// providing NotificationHub service resource description.
+        /// progress. This method differs from GetLongRunningOperationStatus
+        /// in providing NotificationHub service resource description.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the

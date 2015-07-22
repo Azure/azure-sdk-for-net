@@ -33,11 +33,11 @@ namespace NotificationHubs.Tests.ScenarioTests
     public partial class ScenarioTests : TestBase
     {
         [Fact]
-        public void CreateGetUpdateDeleteAuthorizationRules()
+        public void NotificationHubCreateGetUpdateDeleteAuthorizationRules()
         {
             using (var context = UndoContext.Current)
             {
-                context.Start("ScenarioTests", "CreateGetUpdateDeleteAuthorizationRules");
+                context.Start("ScenarioTests", "NotificationHubCreateGetUpdateDeleteAuthorizationRules");
 
                 var location = this.ManagmentClient.TryGetLocation(NotificationHubsManagementHelper.DefaultLocation);
                 var resourceGroup = this.ResourceManagementClient.TryGetResourceGroup(location);

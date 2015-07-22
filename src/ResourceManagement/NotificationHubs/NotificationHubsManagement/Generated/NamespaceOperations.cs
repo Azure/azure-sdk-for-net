@@ -82,10 +82,10 @@ namespace Microsoft.Azure.Management.NotificationHubs
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The response of the CreateOrUpdate Api Management service long
+        /// running operation.
         /// </returns>
-        public async Task<AzureOperationResponse> BeginDeleteAsync(string resourceGroupName, string namespaceName, CancellationToken cancellationToken)
+        public async Task<NamespaceLongRunningResponse> BeginDeleteAsync(string resourceGroupName, string namespaceName, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -182,9 +182,9 @@ namespace Microsoft.Azure.Management.NotificationHubs
                     }
                     
                     // Create Result
-                    AzureOperationResponse result = null;
+                    NamespaceLongRunningResponse result = null;
                     // Deserialize Response
-                    result = new AzureOperationResponse();
+                    result = new NamespaceLongRunningResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("Location"))
                     {
@@ -192,7 +192,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
                     }
                     if (httpResponse.Headers.Contains("Retry-After"))
                     {
-                        result.RetryAfter = httpResponse.Headers.GetValues("Retry-After").FirstOrDefault();
+                        result.RetryAfter = int.Parse(httpResponse.Headers.GetValues("Retry-After").FirstOrDefault(), CultureInfo.InvariantCulture);
                     }
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -1046,10 +1046,10 @@ namespace Microsoft.Azure.Management.NotificationHubs
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The response of the CreateOrUpdate Api Management service long
+        /// running operation.
         /// </returns>
-        public async Task<AzureOperationResponse> DeleteAsync(string resourceGroupName, string namespaceName, CancellationToken cancellationToken)
+        public async Task<NamespaceLongRunningResponse> DeleteAsync(string resourceGroupName, string namespaceName, CancellationToken cancellationToken)
         {
             NotificationHubsManagementClient client = this.Client;
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -1064,7 +1064,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
             }
             
             cancellationToken.ThrowIfCancellationRequested();
-            AzureOperationResponse response = await client.Namespaces.BeginDeleteAsync(resourceGroupName, namespaceName, cancellationToken).ConfigureAwait(false);
+            NamespaceLongRunningResponse response = await client.Namespaces.BeginDeleteAsync(resourceGroupName, namespaceName, cancellationToken).ConfigureAwait(false);
             if (response.Status == OperationStatus.Succeeded)
             {
                 return response;
@@ -1764,8 +1764,8 @@ namespace Microsoft.Azure.Management.NotificationHubs
         /// status of the delete operation. After calling the operation, you
         /// can call Get namespace Delete Operation Status to determine
         /// whether the operation has succeeded, failed, or is still in
-        /// progress. This method differs GetLongRunningOperationStatus in
-        /// providing NotificationHub service resource description.
+        /// progress. This method differs from GetLongRunningOperationStatus
+        /// in providing NotificationHub service resource description.
         /// </summary>
         /// <param name='operationStatusLink'>
         /// Required. Location value returned by the Begin operation.

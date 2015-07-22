@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.NotificationHubs.Models;
 
 namespace Microsoft.Azure.Management.NotificationHubs.Models
@@ -30,7 +31,7 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
     /// <summary>
     /// The response of the List NotificationHub operation.
     /// </summary>
-    public partial class NotificationHubListResponse
+    public partial class NotificationHubListResponse : AzureOperationResponse
     {
         private string _nextLink;
         

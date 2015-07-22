@@ -34,8 +34,7 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
         private NamespaceResource _value;
         
         /// <summary>
-        /// Optional. Gets or sets namespace resource description after
-        /// affected by the long running operation.
+        /// Optional. Gets or sets namespace resource description.
         /// </summary>
         public NamespaceResource Value
         {

@@ -33,11 +33,11 @@ namespace NotificationHubs.Tests.ScenarioTests
     public partial class ScenarioTests : TestBase
     {
         [Fact]
-        public void CreateGetUpdateDelete()
+        public void NotificationHubCreateGetUpdateDelete()
         {
             using (var context = UndoContext.Current)
             {
-                context.Start("ScenarioTests", "CreateGetUpdateDelete");
+                context.Start("ScenarioTests", "NotificationHubCreateGetUpdateDelete");
 
                 //precreate a namespace
                 TryCreateNamespace();

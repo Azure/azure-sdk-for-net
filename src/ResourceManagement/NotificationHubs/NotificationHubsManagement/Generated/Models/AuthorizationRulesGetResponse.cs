@@ -21,6 +21,7 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.NotificationHubs.Models;
 
 namespace Microsoft.Azure.Management.NotificationHubs.Models
@@ -28,7 +29,7 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
     /// <summary>
     /// The response of the Get Namespace operation.
     /// </summary>
-    public partial class AuthorizationRulesGetResponse
+    public partial class AuthorizationRulesGetResponse : AzureOperationResponse
     {
         private AuthorizationRulesResource _value;
         

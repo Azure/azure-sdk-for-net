@@ -21,6 +21,7 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.NotificationHubs.Models;
 
 namespace Microsoft.Azure.Management.NotificationHubs.Models
@@ -28,7 +29,7 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
     /// <summary>
     /// Response of the CreateOrUpdate operation on the NotificationHub
     /// </summary>
-    public partial class NotificationHubCreateOrUpdateResponse
+    public partial class NotificationHubCreateOrUpdateResponse : AzureOperationResponse
     {
         private NotificationHubResource _value;
         

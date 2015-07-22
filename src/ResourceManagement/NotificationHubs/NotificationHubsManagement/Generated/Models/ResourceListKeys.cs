@@ -21,13 +21,14 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 
 namespace Microsoft.Azure.Management.NotificationHubs.Models
 {
     /// <summary>
     /// Namespace/NotificationHub Connection String
     /// </summary>
-    public partial class ResourceListKeys
+    public partial class ResourceListKeys : AzureOperationResponse
     {
         private string _primaryConnectionString;
         
