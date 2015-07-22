@@ -19,8 +19,8 @@ using System.Net;
 using Microsoft.Azure;
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
-using Microsoft.Azure.Test;
 using Xunit;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
 namespace Compute.Tests
 {
@@ -86,11 +86,10 @@ namespace Compute.Tests
         [Fact]
         public void TestExtImgGet()
         {
-            using (var context = UndoContext.Current)
+            using (MockContext context = MockContext.Start())
             {
-                context.Start();
                 ComputeManagementClient _pirClient =
-                    ComputeManagementTestUtilities.GetComputeManagementClient(new CSMTestEnvironmentFactory(),
+                    ComputeManagementTestUtilities.GetComputeManagementClient(
                         new RecordedDelegatingHandler {StatusCodeToReturn = HttpStatusCode.OK});
 
                 var vmimageext = _pirClient.VirtualMachineExtensionImages.Get(
@@ -113,11 +112,10 @@ namespace Compute.Tests
         [Fact]
         public void TestExtImgListTypes()
         {
-            using (var context = UndoContext.Current)
+            using (MockContext context = MockContext.Start())
             {
-                context.Start();
                 ComputeManagementClient _pirClient =
-                    ComputeManagementTestUtilities.GetComputeManagementClient(new CSMTestEnvironmentFactory(),
+                    ComputeManagementTestUtilities.GetComputeManagementClient(
                         new RecordedDelegatingHandler {StatusCodeToReturn = HttpStatusCode.OK});
 
                 var vmextimg = _pirClient.VirtualMachineExtensionImages.ListTypes(
@@ -132,11 +130,10 @@ namespace Compute.Tests
         [Fact]
         public void TestExtImgListVersionsNoFilter()
         {
-            using (var context = UndoContext.Current)
+            using (MockContext context = MockContext.Start())
             {
-                context.Start();
                 ComputeManagementClient _pirClient =
-                    ComputeManagementTestUtilities.GetComputeManagementClient(new CSMTestEnvironmentFactory(),
+                    ComputeManagementTestUtilities.GetComputeManagementClient(
                         new RecordedDelegatingHandler {StatusCodeToReturn = HttpStatusCode.OK});
 
                 var vmextimg = _pirClient.VirtualMachineExtensionImages.ListVersions(
@@ -152,11 +149,10 @@ namespace Compute.Tests
         [Fact(Skip="TODO: AutoRest")]
         public void TestExtImgListVersionsFilters()
         {
-            using (var context = UndoContext.Current)
+            using (MockContext context = MockContext.Start())
             {
-                context.Start();
                 ComputeManagementClient _pirClient =
-                    ComputeManagementTestUtilities.GetComputeManagementClient(new CSMTestEnvironmentFactory(),
+                    ComputeManagementTestUtilities.GetComputeManagementClient(
                         new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
                 // Filter: startswith - Positive Test

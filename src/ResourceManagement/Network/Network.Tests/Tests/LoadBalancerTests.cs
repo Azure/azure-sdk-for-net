@@ -762,7 +762,7 @@ namespace Networks.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip="Skipped due to Page<T> null enumerator fix. Open the test once CLientRuntime.Azure version 1.0.16-preview will be referenced")]
         public void CreateEmptyLoadBalancer()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };

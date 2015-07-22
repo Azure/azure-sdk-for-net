@@ -18,8 +18,8 @@ using System.Linq;
 using System.Net;
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
-using Microsoft.Azure.Test;
 using Xunit;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
 namespace Compute.Tests
 {
@@ -30,9 +30,8 @@ namespace Compute.Tests
         [Fact]
         public void TestVMImageGet()
         {
-            using (var context = UndoContext.Current)
+            using (MockContext context = MockContext.Start())
             {
-                context.Start();
                 ComputeManagementClient _pirClient = ComputeManagementTestUtilities.GetComputeManagementClient();
 
                 var vmimage = _pirClient.VirtualMachineImages.Get(
@@ -62,9 +61,8 @@ namespace Compute.Tests
         [Fact]
         public void TestVMImageListNoFilter()
         {
-            using (var context = UndoContext.Current)
+            using (MockContext context = MockContext.Start())
             {
-                context.Start();
                 ComputeManagementClient _pirClient = ComputeManagementTestUtilities.GetComputeManagementClient();
 
                 var vmimages = _pirClient.VirtualMachineImages.List(
@@ -82,9 +80,8 @@ namespace Compute.Tests
         [Fact(Skip = "TODO: AutoRest")]
         public void TestVMImageListFilters()
         {
-            using (var context = UndoContext.Current)
+            using (MockContext context = MockContext.Start())
             {
-                context.Start();
                 ComputeManagementClient _pirClient = ComputeManagementTestUtilities.GetComputeManagementClient();
 
                 // Filter: top - Negative Test
@@ -167,9 +164,9 @@ namespace Compute.Tests
         [Fact]
         public void TestVMImageListPublishers()
         {
-            using (var context = UndoContext.Current)
+            using (MockContext context = MockContext.Start())
             {
-                context.Start();
+                
                 ComputeManagementClient _pirClient = ComputeManagementTestUtilities.GetComputeManagementClient();
 
                 var publishers = _pirClient.VirtualMachineImages.ListPublishers(
@@ -183,9 +180,9 @@ namespace Compute.Tests
         [Fact]
         public void TestVMImageListOffers()
         {
-            using (var context = UndoContext.Current)
+            using (MockContext context = MockContext.Start())
             {
-                context.Start();
+                
                 ComputeManagementClient _pirClient = ComputeManagementTestUtilities.GetComputeManagementClient();
 
                 var offers = _pirClient.VirtualMachineImages.ListOffers(
@@ -200,9 +197,9 @@ namespace Compute.Tests
         [Fact]
         public void TestVMImageListSkus()
         {
-            using (var context = UndoContext.Current)
+            using (MockContext context = MockContext.Start())
             {
-                context.Start();
+                
                 ComputeManagementClient _pirClient = ComputeManagementTestUtilities.GetComputeManagementClient();
 
                 var skus = _pirClient.VirtualMachineImages.ListSkus(
