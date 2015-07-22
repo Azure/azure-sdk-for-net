@@ -12,6 +12,7 @@
 // 
 // See the Apache Version 2.0 License for specific language governing
 // permissions and limitations under the License.
+
 namespace Microsoft.WindowsAzure.Management.HDInsight.Tests
 {
     using System.Collections.ObjectModel;
@@ -30,7 +31,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests
     internal class TestPocoClientFlowThrough : DisposableObject, IHDInsightManagementPocoClient
     {
         private IHDInsightManagementPocoClient underlying;
-        public ClusterCreateParameters LastCreateRequest { get; private set; }
+        public ClusterCreateParametersV2 LastCreateRequest { get; private set; }
 
         public TestPocoClientFlowThrough(IHDInsightManagementPocoClient underlying)
         {
@@ -64,7 +65,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests
             return underlying.ListContainer(dnsName, location);
         }
         
-        public Task CreateContainer(ClusterCreateParameters details)
+        public Task CreateContainer(ClusterCreateParametersV2 details)
         {
             this.LastCreateRequest = details;
             return underlying.CreateContainer(details);
@@ -105,6 +106,16 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests
         public Task<Guid> DisableHttp(string dnsName, string location)
         {
             return underlying.DisableHttp(dnsName, location);
+        }
+
+        public Task<Guid> EnableRdp(string dnsName, string location, string rdpUserName, string rdpPassword, DateTime expiry)
+        {
+            return underlying.EnableRdp(dnsName, location, rdpUserName, rdpPassword, expiry);
+        }
+
+        public Task<Guid> DisableRdp(string dnsName, string location)
+        {
+            return underlying.DisableRdp(dnsName, location);
         }
 
         public Task<bool> IsComplete(string dnsName, string location, Guid operationId)

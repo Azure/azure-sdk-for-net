@@ -47,28 +47,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.Scenario
         }
         
         [TestMethod]
-        [TestCategory(TestRunMode.Nightly)]
-        [TestCategory("Scenario")]
-        [TestCategory("LongRunning")]
-    //    [Timeout(35 * 60 * 1000)] // ms
-        public void CreateDeleteContainer_SyncClientWithTimeouts_AgainstAzure()
-        {
-            this.ApplyIndividualTestMockingOnly();
-            CreateDeleteContainer_SyncClientWithTimeouts();
-        }
-
-        [TestMethod]
-        [TestCategory(TestRunMode.Nightly)]
-        [TestCategory("Scenario")]
-        [TestCategory("LongRunning")]
-        [Timeout(35 * 60 * 1000)] // ms
-        public void CreateDeleteContainer_BasicClusterAsyncClient_AgainstAzure()
-        {
-            this.ApplyIndividualTestMockingOnly();
-            CreateDeleteContainer_BasicClusterAsyncClient();
-        }
-
-        [TestMethod]
         [TestCategory("CheckIn")]
         [TestCategory("Scenario")]
         [Timeout(30 * 1000)] // ms

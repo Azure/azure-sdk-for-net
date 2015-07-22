@@ -30,7 +30,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         IHDInsightSubscriptionCredentials Credentials { get; }
 
         /// <summary>
-        /// Gets or sets the polling interval for the CreateCluster\DeleteCluster operations.
+        /// Gets or sets the polling interval for the CreateCluster\DeleteCluster and user change operations.
         /// </summary>
         TimeSpan PollingInterval { get; set; }
 

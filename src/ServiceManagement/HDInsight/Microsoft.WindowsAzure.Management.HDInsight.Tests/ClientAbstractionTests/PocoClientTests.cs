@@ -56,57 +56,9 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
             base.TestCleanup();
         }
 
-
-        [TestMethod]
-        [TestCategory("Integration")]
-        [TestCategory("Scenario")]
-        [TestCategory("Production")]
-        [TestCategory(TestRunMode.Nightly)]
-        [TestCategory("PocoClient")]
-        public async Task ICanPerformA_ListContainers_Using_PocoClient_AgainstAzure()
-        {
-            this.ApplyIndividualTestMockingOnly();
-            await ICanPerformA_ListContainers_Using_PocoClientAbstraction();
-        }
-
-
         internal IRetryPolicy GetRetryPolicy()
         {
             return RetryPolicyFactory.CreateExponentialRetryPolicy(TimeSpan.FromSeconds(0), TimeSpan.FromSeconds(1), TimeSpan.FromMilliseconds(100), 3, 0.2);
-        }
-
-        [TestMethod]
-        [TestCategory("Integration")]
-        // [TestCategory("CheckIn")]
-        [TestCategory("PocoClient")]
-        public async Task ICanPerformA_ListContainers_Using_PocoClientAbstraction()
-        {
-            IHDInsightCertificateCredential credentials = IntegrationTestBase.GetValidCredentials();
-            using (var client = ServiceLocator.Instance.Locate<IHDInsightManagementPocoClientFactory>().Create(credentials, GetAbstractionContext(), false))
-            {
-                var containers =
-                    from container in await client.ListContainers()
-                    where container.Name.Equals(TestCredentials.WellKnownCluster.DnsName, StringComparison.OrdinalIgnoreCase)
-                    select container;
-                Assert.AreEqual(1, containers.Count());
-
-                var result = await client.ListContainer(TestCredentials.WellKnownCluster.DnsName);
-                Assert.IsNotNull(result);
-                Assert.AreEqual("West US", result.Location);
-                Assert.AreEqual("sa-po-svc", result.HttpUserName);
-            }
-        }
-
-        [TestMethod]
-        [TestCategory("Integration")]
-        [TestCategory("Scenario")]
-        [TestCategory("Production")]
-        [TestCategory(TestRunMode.Nightly)]
-        [TestCategory("PocoClient")]
-        public async Task ICanPerformA_ListNonExistingContainer_Using_PocoClientAbstraction_AgainstAzure()
-        {
-            this.ApplyIndividualTestMockingOnly();
-            await ICanPerformA_ListNonExistingContainer_Using_PocoClientAbstraction();
         }
 
         [TestMethod]
@@ -125,19 +77,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
       
         [TestMethod]
         [TestCategory("Integration")]
-        [TestCategory("Scenario")]
-        [TestCategory("Production")]
-        [TestCategory(TestRunMode.Nightly)]
-        [TestCategory("PocoClient")]
-        [ExpectedException(typeof(HDInsightClusterDoesNotExistException))]
-        public async Task ICanPerformA_DeleteNonExistingContainer_Using_PocoClientAbstraction_AgainstAzure()
-        {
-            this.ApplyIndividualTestMockingOnly();
-            await ICanPerformA_DeleteNonExistingContainer_Using_PocoClientAbstraction();
-        }
-
-        [TestMethod]
-        [TestCategory("Integration")]
         [TestCategory("CheckIn")]
         [TestCategory("PocoClient")]
         [ExpectedException(typeof(HDInsightClusterDoesNotExistException))]
@@ -147,18 +86,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
             await ServiceLocator.Instance.Locate<IHDInsightManagementPocoClientFactory>()
                                    .Create(credentials, GetAbstractionContext(), false)
                                    .DeleteContainer(GetRandomClusterName());
-        }
-
-        [TestMethod]
-        [TestCategory("Integration")]
-        [TestCategory("Scenario")]
-        [TestCategory("Production")]
-        [TestCategory(TestRunMode.Nightly)]
-        [ExpectedException(typeof(HttpLayerException))]
-        public async Task ICanPerformA_DeleteNonExistingContainerInternal_Using_PocoClientAbstraction_AgainstAzure()
-        {
-            this.ApplyIndividualTestMockingOnly();
-            await ICanPerformA_DeleteNonExistingContainerInternal_Using_PocoClientAbstraction();
         }
 
         [TestMethod]
@@ -176,19 +103,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
 
         [TestMethod]
         [TestCategory("Integration")]
-        [TestCategory("Scenario")]
-        [TestCategory("Production")]
-        [TestCategory(TestRunMode.Nightly)]
-        [TestCategory("PocoClient")]
-        [ExpectedException(typeof(HttpLayerException))]
-        public async Task ICanPerformA_DeleteContainerInvalidLocationInternal_Using_PocoClientAbstraction_AgainstAzure()
-        {
-            this.ApplyIndividualTestMockingOnly();
-            await ICanPerformA_DeleteContainerInvalidLocationInternal_Using_PocoClientAbstraction();
-        }
-
-        [TestMethod]
-        [TestCategory("Integration")]
         [TestCategory("CheckIn")]
         [TestCategory("PocoClient")]
         [ExpectedException(typeof(HttpLayerException))]
@@ -199,19 +113,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
                                    .Create(credentials, GetAbstractionContext(), false)
                                    .DeleteContainer(TestCredentials.WellKnownCluster.DnsName, "Nowhere");
         }
-
-        [TestMethod]
-        [TestCategory("Integration")]
-        [TestCategory("Scenario")]
-        [TestCategory("Production")]
-        [TestCategory(TestRunMode.Nightly)]
-        [TestCategory("PocoClient")]
-        public async Task ICanNotPerformA_DeleteContainer_WithAnInvalidCertificate_AgainstAzure()
-        {
-            this.ApplyIndividualTestMockingOnly();
-            await this.ICanNotPerformA_DeleteContainer_WithAnInvalidCertificate_PocoClientAbstraction();
-        }
-
+        
         [TestMethod]
         [TestCategory("Integration")]
         [TestCategory("NegativeTest")]
@@ -234,18 +136,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
             {
                 Assert.IsTrue(ex.RequestStatusCode == HttpStatusCode.Forbidden);
             }
-        }
-
-        [TestMethod]
-        [TestCategory("Integration")]
-        [TestCategory("Scenario")]
-        [TestCategory("Production")]
-        [TestCategory(TestRunMode.Nightly)]
-        [TestCategory("PocoClient")]
-        public async Task ICanNotPerformA_GetContainer_WithAnInvalidCertificate_AgainstAzure()
-        {
-            this.ApplyIndividualTestMockingOnly();
-            await this.ICanNotPerformA_GetContainer_WithAnInvalidCertificate_PocoClientAbstraction();
         }
 
         [TestMethod]
@@ -274,29 +164,19 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
 
         [TestMethod]
         [TestCategory("Integration")]
-        [TestCategory("Scenario")]
-        [TestCategory("Production")]
-        [TestCategory(TestRunMode.Nightly)]
-        [TestCategory("PocoClient")]
-        public async Task ICanNotPerformA_CreateCreateContainer_WithAnInvalidCertificate_AgainstAzure()
-        {
-            this.ApplyIndividualTestMockingOnly();
-            await this.ICanNotPerformA_CreateCreateContainer_WithAnInvalidCertificate_PocoClientAbstraction();
-        }
-
-        [TestMethod]
-        [TestCategory("Integration")]
         [TestCategory("NegativeTest")]
         [TestCategory("CheckIn")]
         [TestCategory("PocoClient")]
-        [Timeout(5 * 60 * 1000)] // ms
+        [Timeout(5*60*1000)] // ms
         public async Task ICanNotPerformA_CreateCreateContainer_WithAnInvalidCertificate_PocoClientAbstraction()
         {
             var creds = GetInvalidCertificateCredentials();
             var cluster = GetRandomCluster();
             try
             {
-                using (var client = ServiceLocator.Instance.Locate<IHDInsightManagementPocoClientFactory>().Create(creds, GetAbstractionContext(), false))
+                using (
+                    var client = ServiceLocator.Instance.Locate<IHDInsightManagementPocoClientFactory>()
+                        .Create(creds, GetAbstractionContext(), false))
                 {
                     await client.CreateContainer(cluster);
                 }
@@ -306,18 +186,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
             {
                 Assert.IsTrue(ex.RequestStatusCode == HttpStatusCode.Forbidden);
             }
-        }
-
-        [TestMethod]
-        [TestCategory("Integration")]
-        [TestCategory("Scenario")]
-        [TestCategory("Production")]
-        [TestCategory(TestRunMode.Nightly)]
-        [TestCategory("PocoClient")]
-        public async Task ICanNotPerformA_DeleteContainer_WithAnInvalidSubscriptionId_AgainstAzure()
-        {
-            this.ApplyIndividualTestMockingOnly();
-            await this.ICanNotPerformA_DeleteContainer_WithAnInvalidSubscriptionId_PocoClientAbstraction();
         }
 
         [TestMethod]
@@ -346,18 +214,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
 
         [TestMethod]
         [TestCategory("Integration")]
-        [TestCategory("Scenario")]
-        [TestCategory("Production")]
-        [TestCategory(TestRunMode.Nightly)]
-        [TestCategory("PocoClient")]
-        public async Task ICanNotPerformA_GetContainer_WithAnInvalidSubscriptionId_AgainstAzure()
-        {
-            this.ApplyIndividualTestMockingOnly();
-            await this.ICanNotPerformA_GetContainer_WithAnInvalidSubscriptionId_PocoClientAbstraction();
-        }
-
-        [TestMethod]
-        [TestCategory("Integration")]
         [TestCategory("NegativeTest")]
         [TestCategory("CheckIn")]
         [TestCategory("PocoClient")]
@@ -379,19 +235,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
                 Assert.IsTrue(ex.RequestStatusCode == HttpStatusCode.Forbidden);
             }
         }
-
-        [TestMethod]
-        [TestCategory("Integration")]
-        [TestCategory("Scenario")]
-        [TestCategory("Production")]
-        [TestCategory(TestRunMode.Nightly)]
-        [TestCategory("PocoClient")]
-        public async Task ICanNotPerformA_CreateCreateContainer_WithAnInvalidSubscriptionId_AgainstAzure()
-        {
-            this.ApplyIndividualTestMockingOnly();
-            await this.ICanNotPerformA_CreateCreateContainer_WithAnInvalidSubscriptionId_PocoClientAbstraction();
-        }
-
+        
         [TestMethod]
         [TestCategory("Integration")]
         [TestCategory("NegativeTest")]
@@ -418,18 +262,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
 
         [TestMethod]
         [TestCategory("Integration")]
-        [TestCategory("Scenario")]
-        [TestCategory("Production")]
-        [TestCategory(TestRunMode.Nightly)]
-        [TestCategory("PocoClient")]
-        public async Task ICanPerformA_BasicCreateDeleteContainers_Using_PocoClient_AgainstAzure()
-        {
-            this.ApplyIndividualTestMockingOnly();
-            await ICanPerformA_BasicCreateDeleteContainers_Using_PocoClientAbstraction();
-        }
-
-        [TestMethod]
-        [TestCategory("Integration")]
         [TestCategory("CheckIn")]
         [TestCategory("PocoClient")]
         [Timeout(5 * 60 * 1000)] // ms
@@ -437,19 +269,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
         {
             var cluster = GetRandomCluster();
             await ValidateCreateClusterSucceeds(cluster);
-        }
-
-        [TestMethod]
-        [TestCategory("Integration")]
-        [TestCategory("Scenario")]
-        [TestCategory("Production")]
-        [TestCategory(TestRunMode.Nightly)]
-        [TestCategory("PocoClient")]
-        [TestCategory("RestAsvClient")]
-        public async Task ICanPerformA_BasicCreateDeleteContainersOnUnregisteredLocation_Using_PocoClient_AgainstAzure()
-        {
-            this.ApplyIndividualTestMockingOnly();
-            await ICanPerformA_BasicCreateDeleteContainersOnUnregisteredLocation_Using_PocoClient();
         }
 
         [TestMethod]
@@ -483,18 +302,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
             cluster.DefaultStorageAccountKey = storageAccount.DefaultStorageAccount.Key;
             cluster.DefaultStorageContainer = storageAccount.DefaultStorageAccount.Container;
             await ValidateCreateClusterSucceeds(cluster);
-        }
-
-        [TestMethod]
-        [TestCategory("Integration")]
-        [TestCategory("Scenario")]
-        [TestCategory("Production")]
-        [TestCategory(TestRunMode.Nightly)]
-        [TestCategory("PocoClient")]
-        public async Task ICanPerformA_AdvancedCreateDeleteContainers_Using_PocoClient_AgainstAzure()
-        {
-            this.ApplyIndividualTestMockingOnly();
-            await ICanPerformA_AdvancedCreateDeleteContainers_Using_PocoClient();
         }
 
         [TestMethod]
@@ -664,6 +471,24 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
         [TestCategory("Integration")]
         [TestCategory("CheckIn")]
         [TestCategory("PocoClient")]
+        [Timeout(5 * 60 * 1000)] // ms
+        public async Task ICanCreateACluster_WithSparkConfigurationOptions()
+        {
+            var cluster = GetRandomCluster();
+            cluster.SparkConfiguration.Add(new KeyValuePair<string, string>("spark.shuffle.memoryFraction", "0.3"));
+            cluster.Location = cluster.Location.ToUpperInvariant();
+            Action<ClusterDetails> validateConfigOptions = (testCluster) =>
+            {
+                ValidateClusterConfiguration(testCluster, cluster);
+            };
+
+            await ValidateCreateClusterSucceeds(cluster, validateConfigOptions);
+        }
+
+        [TestMethod]
+        [TestCategory("Integration")]
+        [TestCategory("CheckIn")]
+        [TestCategory("PocoClient")]
         [TestCategory("Defect")]
         public void ICanResolveProductionStorageAccountsWithName()
         {
@@ -739,7 +564,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
             }
         }
 
-        internal static void ValidateClusterConfiguration(ClusterDetails testCluster, ClusterCreateParameters cluster)
+        internal static void ValidateClusterConfiguration(ClusterDetails testCluster, ClusterCreateParametersV2 cluster)
         {
             var remoteCreds = new BasicAuthCredential()
             {
@@ -777,12 +602,12 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
             }
         }
 
-        private async Task ValidateCreateClusterSucceeds(ClusterCreateParameters cluster)
+        private async Task ValidateCreateClusterSucceeds(ClusterCreateParametersV2 cluster)
         {
             await ValidateCreateClusterSucceeds(cluster, null);
         }
 
-        private async Task ValidateCreateClusterSucceeds(ClusterCreateParameters cluster, Action<ClusterDetails> postCreateValidation)
+        private async Task ValidateCreateClusterSucceeds(ClusterCreateParametersV2 cluster, Action<ClusterDetails> postCreateValidation)
         {
             IHDInsightCertificateCredential credentials = IntegrationTestBase.GetValidCredentials();
             using (var client = ServiceLocator.Instance.Locate<IHDInsightManagementPocoClientFactory>().Create(credentials, GetAbstractionContext(), false))
@@ -824,18 +649,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
 
         [TestMethod]
         [TestCategory("Integration")]
-        [TestCategory("Scenario")]
-        [TestCategory("Production")]
-        [TestCategory(TestRunMode.Nightly)]
-        [TestCategory("PocoClient")]
-        public async Task NegativeTest_InvalidAsvConfig_Using_PocoClient_AgainstAzure()
-        {
-            this.ApplyIndividualTestMockingOnly();
-            await NegativeTest_InvalidAsvConfig_Using_PocoClientAbstraction();
-        }
-
-        [TestMethod]
-        [TestCategory("Integration")]
         [TestCategory("CheckIn")]
         [TestCategory("PocoClient")]
         public async Task NegativeTest_InvalidAsvConfig_Using_PocoClientAbstraction()
@@ -861,63 +674,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
             }
 
             Assert.Fail("ASV Validation should have failed.");
-
-            try
-            {
-                await ServiceLocator.Instance.Locate<IHDInsightManagementPocoClientFactory>().Create(credentials, GetAbstractionContext(), false).CreateContainer(cluster);
-            }
-            catch (AggregateException e)
-            {
-                Assert.IsNotNull(e.InnerException);
-                Assert.IsNotNull(e.InnerException as ConfigurationErrorsException);
-                Console.WriteLine("THIS TEST SUCCEDED because the expected negative result was found");
-                Console.WriteLine("ASV Validation failed. Details: {0}", e.ToString());
-                return;
-            }
-            catch (Exception e)
-            {
-                Assert.Fail("Expected exception 'ConfigurationErrorsException'; found '{0}'. Message:{1}", e.GetType(), e.Message);
-            }
-
-            Assert.Fail("ASV Validation should have failed.");
-            await ServiceLocator.Instance.Locate<IHDInsightManagementPocoClientFactory>().Create(credentials, GetAbstractionContext(), false).CreateContainer(cluster);
-        }
-
-        [TestMethod]
-        [TestCategory("Integration")]
-        [TestCategory("Scenario")]
-        [TestCategory("Production")]
-        [TestCategory(TestRunMode.Nightly)]
-        [TestCategory("PocoClient")]
-        public async Task NegativeTest_InvalidAsvContainer_Using_PocoClient_AgainstAzure()
-        {
-            this.ApplyIndividualTestMockingOnly();
-            var cluster = GetRandomCluster();
-            IHDInsightCertificateCredential credentials = IntegrationTestBase.GetValidCredentials();
-            await ServiceLocator.Instance.Locate<IHDInsightManagementPocoClientFactory>().Create(credentials, GetAbstractionContext(), false).CreateContainer(cluster);
-
-            var storageCreds = new WindowsAzureStorageAccountCredentials()
-            {
-                Key = cluster.DefaultStorageAccountKey,
-                Name = cluster.DefaultStorageAccountName
-            };
-            var storageAbstraction = ServiceLocator.Instance.Locate<IWabStorageAbstractionFactory>().Create(storageCreds);
-            var listContainerPath = new Uri(Constants.WabsProtocolSchemeName + storageCreds.Name);
-            var containers = await storageAbstraction.List(listContainerPath, false);
-            var containerExists = containers.Any(path => path.UserInfo == cluster.DefaultStorageContainer);
-            Assert.IsTrue(containerExists);
-        }
-
-        [TestMethod]
-        [TestCategory("Integration")]
-        [TestCategory("Scenario")]
-        [TestCategory("Production")]
-        [TestCategory(TestRunMode.Nightly)]
-        [TestCategory("PocoClient")]
-        public async Task NegativeTest_InvalidLocation_Using_PocoClient_AgainstAzure()
-        {
-            this.ApplyIndividualTestMockingOnly();
-            await NegativeTest_InvalidLocation_Using_PocoClient();
         }
 
         [TestMethod]
@@ -943,18 +699,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
             {
                 Assert.Fail("Expected exception 'InvalidOperationException'; found '{0}'. Message:{1}", e.GetType(), e.Message);
             }
-        }
-
-        [TestMethod]
-        [TestCategory("Integration")]
-        [TestCategory("Scenario")]
-        [TestCategory("Production")]
-        [TestCategory(TestRunMode.Nightly)]
-        [TestCategory("PocoClient")]
-        public async Task NegativeTest_RepeatedAsvConfig_Using_PocoClient_AgainstAzure()
-        {
-            this.ApplyIndividualTestMockingOnly();
-            await this.NegativeTest_RepeatedAsvConfig_Using_PocoClientAbstraction();
         }
 
         [TestMethod]
@@ -987,19 +731,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
 
         [TestMethod]
         [TestCategory("Integration")]
-        [TestCategory("Scenario")]
-        [TestCategory("Production")]
-        [TestCategory(TestRunMode.Nightly)]
-        [TestCategory("PocoClient")]
-        [ExpectedException(typeof(ConfigurationErrorsException))]
-        public async Task NegativeTest_InvalidAsv_Using_PocoClient_AgainstAzure()
-        {
-            this.ApplyIndividualTestMockingOnly();
-            await this.NegativeTest_InvalidAsv_Using_PocoClient();
-        }
-
-        [TestMethod]
-        [TestCategory("Integration")]
         [TestCategory("CheckIn")]
         [TestCategory("PocoClient")]
         [ExpectedException(typeof(ConfigurationErrorsException))]
@@ -1009,19 +740,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
             var cluster = GetRandomCluster();
             cluster.AdditionalStorageAccounts.Add(new WabStorageAccountConfiguration(IntegrationTestBase.TestCredentials.Environments[0].AdditionalStorageAccounts[0].Name, IntegrationTestBase.TestCredentials.Environments[0].DefaultStorageAccount.Key));
             await ServiceLocator.Instance.Locate<IHDInsightManagementPocoClientFactory>().Create(credentials, GetAbstractionContext(), false).CreateContainer(cluster);
-        }
-
-        [TestMethod]
-        [TestCategory("Integration")]
-        [TestCategory("Scenario")]
-        [TestCategory("Production")]
-        [TestCategory(TestRunMode.Nightly)]
-        [TestCategory("PocoClient")]
-        [ExpectedException(typeof(ConfigurationErrorsException))]
-        public async Task NegativeTest_ExistingCluster_Using_PocoClient_AgainstAzure()
-        {
-            this.ApplyIndividualTestMockingOnly();
-            await this.NegativeTest_InvalidAsv_Using_PocoClient();
         }
 
         [TestMethod]
@@ -1044,7 +762,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
             }
         }
 
-        private async Task ValidateCreateClusterFailsWithError(ClusterCreateParameters cluster)
+        private async Task ValidateCreateClusterFailsWithError(ClusterCreateParametersV2 cluster)
         {
             IHDInsightCertificateCredential credentials = IntegrationTestBase.GetValidCredentials();
             var client = ServiceLocator.Instance.Locate<IHDInsightManagementPocoClientFactory>().Create(credentials, GetAbstractionContext(), false);
@@ -1057,18 +775,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
 
             await client.DeleteContainer(cluster.Name);
             await client.WaitForClusterNull(cluster.Name, cluster.Location, TimeSpan.FromMinutes(10), GetAbstractionContext().CancellationToken);
-        }
-
-        [TestMethod]
-        [TestCategory("Integration")]
-        [TestCategory("Scenario")]
-        [TestCategory("Production")]
-        [TestCategory(TestRunMode.Nightly)]
-        [TestCategory("PocoClient")]
-        public async Task NegativeTest_InvalidMetastore_Using_AgainstAzure()
-        {
-            this.ApplyIndividualTestMockingOnly();
-            await this.NegativeTest_InvalidMetastore_Using_PocoClient();
         }
 
         [TestMethod]
@@ -1104,52 +810,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
 
             await this.ValidateCreateClusterSucceeds(cluster);
         }
-
-        [TestMethod]
-        [TestCategory("Integration")]
-        [TestCategory("Scenario")]
-        [TestCategory("Production")]
-        [TestCategory(TestRunMode.Nightly)]
-        [TestCategory("PocoClient")]
-        public async Task PositiveTest_OnlyOneMetastore_Using_AgainstAzure()
-        {
-            this.ApplyIndividualTestMockingOnly();
-            this.EnableHttpSpy();
-            try
-            {
-                await this.PositiveTest_OnlyOneMetastore_Using_PocoClient();
-            }
-            catch
-            {
-
-            }
-
-            var httpCalls = this.GetHttpCalls();
-            StringBuilder sbLog = new StringBuilder();
-            foreach (var call in httpCalls)
-            {
-                sbLog.Append(Environment.NewLine);
-                sbLog.AppendFormat("Request {0} {1}", call.Item1.Method, call.Item1.RequestUri);
-                sbLog.Append(Environment.NewLine);
-                sbLog.Append(string.Join(Environment.NewLine, call.Item1.RequestHeaders));
-                sbLog.Append(Environment.NewLine);
-                sbLog.Append(call.Item1.Content);
-                sbLog.Append(Environment.NewLine);
-                sbLog.Append(call.Item1.RequestUri);
-                sbLog.Append(Environment.NewLine);
-                sbLog.Append("Response");
-                sbLog.Append(Environment.NewLine);
-                sbLog.Append(call.Item2.StatusCode);
-                sbLog.Append(Environment.NewLine);
-                sbLog.Append(FormatHeaders(call.Item2.Headers));
-                sbLog.Append(Environment.NewLine);
-                sbLog.Append(call.Item2.Content);
-                sbLog.Append(Environment.NewLine);
-                sbLog.Append(Environment.NewLine);
-            }
-
-            var log = sbLog.ToString();
-        }
+        
         private string FormatHeaders(IHttpResponseHeadersAbstraction httpResponseHeadersAbstraction)
         {
             StringBuilder sbLog = new StringBuilder();

@@ -30,6 +30,12 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         Collection<string> ListAvailableLocations();
 
         /// <summary>
+        /// Queries the locations where HDInsight deployments for the specified OS type have been enabled for the subscription.
+        /// </summary>
+        /// <returns>List of Windows Azure locations.</returns>
+        Collection<string> ListAvailableLocations(OSType osType);
+
+        /// <summary>
         /// Queries the locations where HDInsight has been enabled for the subscription.
         /// </summary>
         /// <returns>List of Windows Azure locations.</returns>
@@ -67,6 +73,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         /// </summary>
         /// <param name="cluster">Request object that encapsulates all the configurations.</param>
         /// <returns>Object that represents the HDInsight Cluster created.</returns>
+        [Obsolete("ClusterCreateParameters is deprecated. Please use ClusterCreateParametersV2 for creating clusters in HdInsight.")]
         ClusterDetails CreateCluster(ClusterCreateParameters cluster);
 
         /// <summary>
@@ -75,7 +82,23 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         /// <param name="cluster">Request object that encapsulates all the configurations.</param>
         /// <param name="timeout">Timeout interval for the operation.</param>
         /// <returns>Object that represents the HDInsight Cluster created.</returns>
+        [Obsolete("ClusterCreateParameters is deprecated. Please use ClusterCreateParametersV2 for creating clusters in HdInsight.")]
         ClusterDetails CreateCluster(ClusterCreateParameters cluster, TimeSpan timeout);
+
+        /// <summary>
+        /// Submits a request to create an HDInsight cluster and waits for it to complete.
+        /// </summary>
+        /// <param name="cluster">Request object that encapsulates all the configurations.</param>
+        /// <returns>Object that represents the HDInsight Cluster created.</returns>
+        ClusterDetails CreateCluster(ClusterCreateParametersV2 cluster);
+
+        /// <summary>
+        /// Submits a request to create an HDInsight cluster and waits for it to complete.
+        /// </summary>
+        /// <param name="cluster">Request object that encapsulates all the configurations.</param>
+        /// <param name="timeout">Timeout interval for the operation.</param>
+        /// <returns>Object that represents the HDInsight Cluster created.</returns>
+        ClusterDetails CreateCluster(ClusterCreateParametersV2 cluster, TimeSpan timeout);
 
         /// <summary>
         /// Submits a request to delete an HDInsight cluster and waits for it to complete.
@@ -141,5 +164,22 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         /// The location of the cluster.
         /// </param>
         void DisableHttp(string dnsName, string location);
+
+        /// <summary>
+        /// Enables Rdp access on the HDInsight cluster.
+        /// </summary>
+        /// <param name="dnsName">The Dns name of the cluster</param>
+        /// <param name="location">The location of the cluster</param>
+        /// <param name="rdpUserName">Rdp username of the cluster</param>
+        /// <param name="rdpPassword">Rdp password of the cluseter</param>
+        /// <param name="expiry">The UTC time when the Rdp access on the cluster will expire</param>
+        void EnableRdp(string dnsName, string location, string rdpUserName, string rdpPassword, DateTime expiry);
+
+        /// <summary>
+        /// Disables the Rdp access on the HDInsight cluster
+        /// </summary>
+        /// <param name="dnsName">The Dns name of the cluster</param>
+        /// <param name="location">The location of the cluster</param>
+        void DisableRdp(string dnsName, string location);
     }
 }

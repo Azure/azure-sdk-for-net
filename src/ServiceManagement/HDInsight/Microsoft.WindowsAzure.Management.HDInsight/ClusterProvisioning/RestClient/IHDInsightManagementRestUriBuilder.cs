@@ -62,6 +62,14 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.RestCl
         Uri GetEnableDisableHttpUri(string dnsName, string location);
 
         /// <summary>
+        /// Gets the Uri for a request to enable or disable Rdp Services.
+        /// </summary>
+        /// <param name="dnsName">The Dns name of the cluster</param>
+        /// <param name="location">The region of the cluster</param>
+        /// <returns>The Uri for a request to enable or disable Rdp Services</returns>
+        Uri GetEnableDisableRdpUri(string dnsName, string location);
+
+        /// <summary>
         /// Gets the Uri for a request to get Operation status.
         /// </summary>
         /// <param name="dnsName">DnsName of the cluster.</param>

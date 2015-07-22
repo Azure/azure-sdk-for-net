@@ -86,7 +86,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
         /// <returns>
         /// A task that can be used to wait for the creation request to complete.
         /// </returns>
-        Task CreateContainer(ClusterCreateParameters details);
+        Task CreateContainer(ClusterCreateParametersV2 details);
 
         /// <summary>
         /// Deletes an HDInsight container (cluster).
@@ -185,6 +185,25 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
         /// A task that can be used to wait for the request to complete.
         /// </returns>
         Task<Guid> DisableHttp(string dnsName, string location);
+
+        /// <summary>
+        /// Enables Rdp user on the HDInsight cluster.
+        /// </summary>
+        /// <param name="dnsName">The DNS name of the cluster</param>
+        /// <param name="location">The location of the cluster</param>
+        /// <param name="rdpUserName">The username of the rdp user on the cluster</param>
+        /// <param name="rdpPassword">The password of the rdo user on the cluster</param>
+        /// <param name="expiry">The time when the rdp access will expire on the cluster</param>
+        /// <returns>A task that can be used to wait for the request to complete</returns>
+        Task<Guid> EnableRdp(string dnsName, string location, string rdpUserName, string rdpPassword, DateTime expiry);
+
+        /// <summary>
+        /// Disables the Rdp user on the HDInsight cluster.
+        /// </summary>
+        /// <param name="dnsName">The DNS name of the cluster</param>
+        /// <param name="location">The location of the cluster</param>
+        /// <returns>A task that can be used to wait for the request to complete</returns>
+        Task<Guid> DisableRdp(string dnsName, string location);
 
         /// <summary>
         /// Queries an operation status to check whether it is complete.

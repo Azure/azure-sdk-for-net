@@ -205,7 +205,21 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
             string jobName = string.Format("yarnlogs-{0}", Guid.NewGuid());
             string statusFolderName = string.Format("/{0}", jobName);
             string optionalContainerArguments = !string.IsNullOrEmpty(containerId) ? string.Format(" -containerId {0} -nodeAddress {1}", containerId, nodeId) : string.Empty;
-            string command = string.Format("!cmd.exe /c yarn logs -applicationId {0} -appOwner {1}{2};", applicationId, applicationUser, optionalContainerArguments);
+            
+            string command = "";
+            if (this.Cluster.OSType == OSType.Windows)
+            {
+                command = string.Format("!cmd.exe /c yarn logs -applicationId {0} -appOwner {1}{2};", applicationId, applicationUser, optionalContainerArguments);
+            }
+            else if (this.Cluster.OSType == OSType.Linux)
+            {
+                command = string.Format("!yarn logs -applicationId {0} -appOwner {1}{2};", applicationId, applicationUser, optionalContainerArguments);
+            }
+            else
+            {
+                throw new NotSupportedException(String.Format("This functionality is not supported on clusters with OS Type: {0}", this.Cluster.OSType));
+            }
+
             string queryFileName = string.Format("/{0}.hql", jobName);
 
             Uri queryFileUri = new Uri(string.Format(CultureInfo.InvariantCulture, "{0}{1}@{2}{3}", Constants.WabsProtocolSchemeName, this.DefaultStorageCredentials.ContainerName, this.DefaultStorageCredentials.Name, queryFileName));

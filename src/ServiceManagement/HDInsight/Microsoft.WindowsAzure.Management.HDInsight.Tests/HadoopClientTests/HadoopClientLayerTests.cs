@@ -105,6 +105,29 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.HadoopClientTests
 
         [TestMethod]
         [TestCategory("CheckIn")]
+        public async Task CanAddLogWriterToHDInsightClient_OldSchema()
+        {
+            var stringLogWriter = new StringLogWriter();
+            IHadoopClientExtensions.GetPollingInterval = () => 0;
+            var creds = IntegrationTestBase.GetValidCredentials();
+            var subscriptionCreds = new HDInsightCertificateCredential(creds.SubscriptionId, creds.Certificate);
+            var hdInsightClient = HDInsightClient.Connect(subscriptionCreds);
+            hdInsightClient.AddLogWriter(stringLogWriter);
+            var firstCluster = GetRandomClusterOldSchema();
+
+            await hdInsightClient.CreateClusterAsync(firstCluster);
+            var firstClusterFromServer = hdInsightClient.GetCluster(firstCluster.Name);
+
+            Assert.IsNotNull(firstClusterFromServer);
+            var expectedMessage = string.Format(
+                CultureInfo.InvariantCulture, "Creating cluster '{0}' in location {1}", firstCluster.Name, firstCluster.Location);
+
+            Assert.IsTrue(
+                stringLogWriter.Lines.Any(message => message.IndexOf(expectedMessage, StringComparison.Ordinal) > -1));
+        }
+
+        [TestMethod]
+        [TestCategory("CheckIn")]
         public void CanAddLogWriterToHadoopClient()
         {
             IHadoopClientExtensions.GetPollingInterval = () => 0;
@@ -203,6 +226,28 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.HadoopClientTests
 
             var firstCluster = GetRandomCluster();
             var secondCluster = GetRandomCluster();
+
+            await hadoopClient.CreateClusterAsync(firstCluster);
+            await hadoopClient.CreateClusterAsync(secondCluster);
+            var firstClusterFromServer = hadoopClient.GetCluster(firstCluster.Name);
+            var secondClusterFromServer = hadoopClient.GetCluster(secondCluster.Name);
+
+            Assert.IsNotNull(firstClusterFromServer);
+            Assert.IsNotNull(secondClusterFromServer);
+        }
+
+
+        [TestMethod]
+        [TestCategory("CheckIn")]
+        public async Task CanCreateClustersInParallel_MixedSchema()
+        {
+            IHadoopClientExtensions.GetPollingInterval = () => 0;
+            var creds = IntegrationTestBase.GetValidCredentials();
+            var subscriptionCreds = new HDInsightCertificateCredential(creds.SubscriptionId, creds.Certificate);
+            var hadoopClient = HDInsightClient.Connect(subscriptionCreds);
+
+            var firstCluster = GetRandomCluster();
+            var secondCluster = GetRandomClusterOldSchema();
 
             await hadoopClient.CreateClusterAsync(firstCluster);
             await hadoopClient.CreateClusterAsync(secondCluster);

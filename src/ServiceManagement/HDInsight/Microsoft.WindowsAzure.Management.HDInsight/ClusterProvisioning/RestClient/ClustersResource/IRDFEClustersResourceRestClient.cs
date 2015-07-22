@@ -77,5 +77,14 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.RestCl
         [CustomHeader("x-ms-version", "2012-08-01")]
         Task<PassthroughResponse> CheckOperation(string subscriptionId, string cloudServiceName, string resourceNamespace, string dnsName, string operationId, CancellationToken cancellationToken);
 
+        [HttpRestInvoke("POST",
+            "{subscriptionId}/cloudservices/{cloudServiceName}/resources/{resourceNamespace}/~/clusters/{clusterDnsName}/roles?action={actionType}"
+            )]
+        [ExpectedStatusCodeValidator(new[] {HttpStatusCode.OK, HttpStatusCode.Accepted,})]
+        [CustomHeader("x-ms-version", "2012-08-01")]
+        Task<PassthroughResponse> EnableDisableRdp(string subscriptionId, string cloudServiceName,
+            string resourceNamespace, string clusterDnsName, string actionType, ClusterRoleCollection roleCollection,
+            CancellationToken cancellationToken);
+
     }
 }

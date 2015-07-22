@@ -12,9 +12,9 @@
 // 
 // See the Apache Version 2.0 License for specific language governing
 // permissions and limitations under the License.
+
 namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities
 {
-    using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Xml;
@@ -108,7 +108,8 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities
 
         private string GetConfigPath()
         {
-            return null;
+            return "creds/creds.xml";
+            //return Environment.GetEnvironmentVariable("MS_HADOOP_TEST_AZURECONFIG");
         }
     }
 }

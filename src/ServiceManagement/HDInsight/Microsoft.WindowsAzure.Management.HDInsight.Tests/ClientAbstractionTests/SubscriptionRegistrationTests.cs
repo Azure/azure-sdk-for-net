@@ -72,18 +72,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
 
         [TestMethod]
         [TestCategory("Integration")]
-        [TestCategory("Scenario")]
-        [TestCategory("Production")]
-        [TestCategory(TestRunMode.Nightly)]
-        [TestCategory("SubscriptionRegistrationClient")]
-        public async Task ICanPerformA_RepeatedSubscriptionRegistration_Using_SubscriptionRegistrationAbstraction_AgainstAzure()
-        {
-            this.ApplyIndividualTestMockingOnly();
-            await ICanPerformA_RepeatedSubscriptionRegistration_Using_SubscriptionRegistrationAbstraction();
-        }
-
-        [TestMethod]
-        [TestCategory("Integration")]
         [TestCategory("CheckIn")]
         [TestCategory("SubscriptionRegistrationClient")]
         public async Task ICannotPerformA_RepeatedUnregistration_Using_SubscriptionRegistrationAbstraction()
@@ -110,19 +98,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
 
             Assert.IsFalse(await client.ValidateSubscriptionLocation(location));
         }
-
-        [TestMethod]
-        [TestCategory("Integration")]
-        [TestCategory("Scenario")]
-        [TestCategory("Production")]
-        [TestCategory(TestRunMode.Nightly)]
-        [TestCategory("SubscriptionRegistrationClient")]
-        public async Task ICannotPerformA_RepeatedUnregistration_Using_SubscriptionRegistrationAbstraction_AgainstAzure()
-        {
-            this.ApplyIndividualTestMockingOnly();
-            await ICannotPerformA_RepeatedUnregistration_Using_SubscriptionRegistrationAbstraction();
-        }
-
+        
         [TestMethod]
         [TestCategory("Integration")]
         [TestCategory("CheckIn")]
@@ -143,18 +119,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
             }
 
             Assert.IsTrue(await client.ValidateSubscriptionLocation("East US 2"));
-        }
-
-        [TestMethod]
-        [TestCategory("Integration")]
-        [TestCategory("Scenario")]
-        [TestCategory("Production")]
-        [TestCategory(TestRunMode.Nightly)]
-        [TestCategory("SubscriptionRegistrationClient")]
-        public async Task ICannotPerformA_UnregisterIfClustersExist_Using_SubscriptionRegistrationAbstraction_AgainstAzure()
-        {
-            this.ApplyIndividualTestMockingOnly();
-            await ICannotPerformA_UnregisterIfClustersExist_Using_SubscriptionRegistrationAbstraction();
         }
 
         [TestMethod]
@@ -207,19 +171,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
                 Assert.IsTrue(e.RequestContent.Contains("The cloud service with name"));
                 Assert.IsTrue(e.RequestContent.Contains("was not found."));
             }
-        }
-
-        [TestMethod]
-        [TestCategory("Integration")]
-        [TestCategory("RestClient")]
-        [TestCategory("SubscriptionRegistrationClient")]
-        [TestCategory("Production")]
-        [TestCategory(TestRunMode.Nightly)]
-        [TestCategory("Scenario")]
-        public async Task ICannotPerformA_CreateContainersOnUnregisterdSubscription_Using_RestClient_AgainstAzure()
-        {
-            this.ApplyIndividualTestMockingOnly();
-            await ICannotPerformA_CreateContainersOnUnregisterdSubscription_Using_RestClient();
         }
     }
 }

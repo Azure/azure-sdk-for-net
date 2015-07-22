@@ -68,7 +68,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         /// <returns>
         /// A string that can be used as the payload in a rest call.
         /// </returns>
-        string SerializeClusterCreateRequest(ClusterCreateParameters cluster);
+        string SerializeClusterCreateRequest(ClusterCreateParametersV2 cluster);
 
         /// <summary>
         /// Serializes a create cluster request into a string that can be used as the 
@@ -80,7 +80,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         /// <returns>
         /// A string that can be used as the payload in a rest call.
         /// </returns>
-        string SerializeClusterCreateRequestV3(ClusterCreateParameters cluster);
+        string SerializeClusterCreateRequestV3(ClusterCreateParametersV2 cluster);
 
         /// <summary>
         /// Converts an HDInsight version string to a Version object.

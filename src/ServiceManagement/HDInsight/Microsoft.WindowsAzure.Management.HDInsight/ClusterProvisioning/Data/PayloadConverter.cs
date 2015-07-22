@@ -92,7 +92,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         /// </summary>
         public const string System = "http://schemas.datacontract.org/2004/07/System";
 
-        internal static string SerializeConnectivityRequest(UserChangeRequestOperationType type, string username, string password, DateTimeOffset experation)
+        internal static string SerializeHttpConnectivityRequest(UserChangeRequestOperationType type, string username, string password, DateTimeOffset experation)
         {
             Help.DoNothing(experation);
             if (username.IsNull())
@@ -111,6 +111,44 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
                      .Operation(type.ToString())
                      .Username(username)
                      .Password(password)
+                   .d
+                   .End();
+
+            return dynaXml.ToString();
+        }
+
+        /// <summary>
+        /// Serializes a connectivity request.
+        /// </summary>
+        /// <param name="type">Operation type.</param>
+        /// <param name="userName">User name.</param>
+        /// <param name="password">Password for service.</param>
+        /// <param name="expiration">Date when this service access expires.</param>
+        /// <returns>A Serialized connectivity request.</returns>
+        internal static string SerializeRdpConnectivityRequest(UserChangeRequestOperationType type, string userName, string password, DateTimeOffset expiration)
+        {
+            if (userName.IsNull())
+            {
+                userName = string.Empty;
+            }
+            if (password.IsNull())
+            {
+                password = string.Empty;
+            }
+            dynamic dynaXml = DynaXmlBuilder.Create(false, Formatting.None);
+
+            dynaXml.xmlns(May2013)
+                   .xmlns.a(System)
+                   .RdpUserChangeRequest
+                   .b
+                     .Operation(type.ToString())
+                     .Username(userName)
+                     .Password(password)
+                     .ExpirationDate
+                     .b
+                       .xmlns.a.DateTime(expiration.DateTime.ToString("o", CultureInfo.InvariantCulture))
+                       .xmlns.a.OffsetMinutes(expiration.Offset.TotalMinutes)
+                     .d
                    .d
                    .End();
 
