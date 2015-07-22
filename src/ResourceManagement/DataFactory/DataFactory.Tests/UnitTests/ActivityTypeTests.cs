@@ -14,13 +14,12 @@
 // limitations under the License.
 // 
 
-using System;
-using System.Collections.Generic;
 using DataFactory.Tests.Framework;
 using DataFactory.Tests.Framework.JsonSamples;
 using Microsoft.Azure.Management.DataFactories;
 using Microsoft.Azure.Management.DataFactories.Registration.Models;
 using Xunit;
+using Xunit.Extensions;
 using Core = Microsoft.Azure.Management.DataFactories.Core;
 using CoreRegistrationModel = Microsoft.Azure.Management.DataFactories.Core.Registration.Models;
 
@@ -36,25 +35,17 @@ namespace DataFactory.Tests.UnitTests
             }
         }
 
-        [Fact]
+        [Theory, ClassData(typeof(RegisteredActivityTypeJsonSamples))]
         [Trait(TraitName.TestType, TestType.Unit)]
         [Trait(TraitName.Function, TestType.Conversion)]
-        public void ActivityTypeJsonConstsToWrappedObjectTest()
+        public void ActivityTypeJsonConstsToWrappedObjectTest(JsonSampleInfo sampleInfo)
         {
-            IEnumerable<JsonSampleInfo> samples =
-                JsonSampleCommon.GetJsonSamplesFromType<RegisteredActivityTypeJsonSamples>();
-
-            this.TestActivityTypeJsonSamples(samples);
+            JsonSampleCommon.TestJsonSample(sampleInfo, this.TestActivityTypeJson);
         }
 
-        private void TestActivityTypeJsonSamples(IEnumerable<JsonSampleInfo> samples)
+        private void TestActivityTypeJson(JsonSampleInfo sampleInfo)
         {
-            Action<JsonSampleInfo> testSample = sampleInfo => this.TestActivityTypeJson(sampleInfo.Json);
-            JsonSampleCommon.TestJsonSamples(samples, testSample);
-        }
-
-        private void TestActivityTypeJson(string json)
-        {
+            string json = sampleInfo.Json;
             ActivityType activityType = this.ConvertToWrapper(json);
             CoreRegistrationModel.ActivityType actual = this.Operations.Converter.ToCoreType(activityType);
 

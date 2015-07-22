@@ -21,51 +21,30 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure.Management.BackupServices.Models;
 
-namespace Microsoft.Azure.Management.DataFactories.Common.Models
+namespace Microsoft.Azure.Management.BackupServices.Models
 {
     /// <summary>
-    /// Data element defines the semantics of each column of a table.
+    /// The definition of a BackupBaseResponse.
     /// </summary>
-    public partial class DataElement
+    public partial class BackupBaseResponse : BackupBaseObject
     {
-        private string _culture;
+        private string _id;
         
         /// <summary>
-        /// Optional. Culture of the data element.
+        /// Optional. ID
         /// </summary>
-        public string Culture
+        public string Id
         {
-            get { return this._culture; }
-            set { this._culture = value; }
-        }
-        
-        private string _description;
-        
-        /// <summary>
-        /// Optional. Description of the data element.
-        /// </summary>
-        public string Description
-        {
-            get { return this._description; }
-            set { this._description = value; }
-        }
-        
-        private string _format;
-        
-        /// <summary>
-        /// Optional. Format of the data element.
-        /// </summary>
-        public string Format
-        {
-            get { return this._format; }
-            set { this._format = value; }
+            get { return this._id; }
+            set { this._id = value; }
         }
         
         private string _name;
         
         /// <summary>
-        /// Optional. Name of the data element.
+        /// Optional. Name
         /// </summary>
         public string Name
         {
@@ -76,7 +55,7 @@ namespace Microsoft.Azure.Management.DataFactories.Common.Models
         private string _type;
         
         /// <summary>
-        /// Optional. Type of the data element.
+        /// Optional. Type
         /// </summary>
         public string Type
         {
@@ -85,9 +64,9 @@ namespace Microsoft.Azure.Management.DataFactories.Common.Models
         }
         
         /// <summary>
-        /// Initializes a new instance of the DataElement class.
+        /// Initializes a new instance of the BackupBaseResponse class.
         /// </summary>
-        public DataElement()
+        public BackupBaseResponse()
         {
         }
     }
