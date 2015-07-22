@@ -34,6 +34,26 @@ namespace Microsoft.Azure.Management.BackupServices
     public partial interface IContainerOperations
     {
         /// <summary>
+        /// Enable the container reregistration.
+        /// </summary>
+        /// <param name='containerId'>
+        /// MARS container ID.
+        /// </param>
+        /// <param name='enableReregistrationRequest'>
+        /// Enable Reregistration Request.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The definition of a Operation Response.
+        /// </returns>
+        Task<OperationResponse> EnableMarsContainerReregistrationAsync(string containerId, EnableReregistrationRequest enableReregistrationRequest, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// Get the list of all container based on the given query filter
         /// string.
         /// </summary>
