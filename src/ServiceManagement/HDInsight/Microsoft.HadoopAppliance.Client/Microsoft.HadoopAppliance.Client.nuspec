@@ -27,7 +27,7 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="HDInsight\**\*.cs" target="src" />
+    <file src="ServiceManagement\HDInsight\Microsoft.HadoopAppliance.Client\**\*.cs" target="src" />
     <file src="..\binaries\net45\Microsoft.HadoopAppliance.Client.dll" target="lib\net45" />
     <file src="..\binaries\net45\Microsoft.HadoopAppliance.Client.pdb" target="lib\net45" />
     <file src="..\binaries\net45\Microsoft.HadoopAppliance.Client.xml" target="lib\net45" />
