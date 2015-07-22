@@ -762,7 +762,7 @@ namespace Networks.Tests
             }
         }
 
-        [Fact(Skip="Skipped due to Page<T> null enumerator fix. Open the test once CLientRuntime.Azure version 1.0.16-preview will be referenced")]
+        [Fact]
         public void CreateEmptyLoadBalancer()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -811,7 +811,11 @@ namespace Networks.Tests
 
                 // Verify Delete
                 var listLoadBalancer = networkResourceProviderClient.LoadBalancers.List(resourceGroupName);
-                Assert.Null(listLoadBalancer);
+
+                Assert.NotNull(listLoadBalancer);
+
+                Assert.Equal(0, listLoadBalancer.Count());
+                Assert.True(string.IsNullOrEmpty(listLoadBalancer.NextPageLink));
             }
         }
 

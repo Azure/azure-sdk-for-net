@@ -15,7 +15,7 @@
     <releaseNotes>Experimental prerelease</releaseNotes>
     <copyright>Copyright 2015</copyright>
     <dependencies>
-      <dependency id="Microsoft.Rest.ClientRuntime.Azure" version="[1.0.15-preview, 1.0.15-preview)" />
+      <dependency id="Microsoft.Rest.ClientRuntime.Azure" version="[1.0.16-preview, 1.0.16-preview)" />
     </dependencies>
   </metadata>
   <files>

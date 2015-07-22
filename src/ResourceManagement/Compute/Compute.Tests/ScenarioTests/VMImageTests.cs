@@ -32,7 +32,8 @@ namespace Compute.Tests
         {
             using (MockContext context = MockContext.Start())
             {
-                ComputeManagementClient _pirClient = ComputeManagementTestUtilities.GetComputeManagementClient();
+                ComputeManagementClient _pirClient = ComputeManagementTestUtilities.GetComputeManagementClient(
+                    new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
                 var vmimage = _pirClient.VirtualMachineImages.Get(
                     ComputeManagementTestUtilities.DefaultLocation,
@@ -63,7 +64,8 @@ namespace Compute.Tests
         {
             using (MockContext context = MockContext.Start())
             {
-                ComputeManagementClient _pirClient = ComputeManagementTestUtilities.GetComputeManagementClient();
+                ComputeManagementClient _pirClient = ComputeManagementTestUtilities.GetComputeManagementClient(
+                    new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
                 var vmimages = _pirClient.VirtualMachineImages.List(
                     ComputeManagementTestUtilities.DefaultLocation, 
@@ -82,7 +84,8 @@ namespace Compute.Tests
         {
             using (MockContext context = MockContext.Start())
             {
-                ComputeManagementClient _pirClient = ComputeManagementTestUtilities.GetComputeManagementClient();
+                ComputeManagementClient _pirClient = ComputeManagementTestUtilities.GetComputeManagementClient(
+                    new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
                 // Filter: top - Negative Test
                 var vmimages = _pirClient.VirtualMachineImages.List(
@@ -166,8 +169,9 @@ namespace Compute.Tests
         {
             using (MockContext context = MockContext.Start())
             {
-                
-                ComputeManagementClient _pirClient = ComputeManagementTestUtilities.GetComputeManagementClient();
+
+                ComputeManagementClient _pirClient = ComputeManagementTestUtilities.GetComputeManagementClient(
+                    new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
                 var publishers = _pirClient.VirtualMachineImages.ListPublishers(
                     ComputeManagementTestUtilities.DefaultLocation);
@@ -182,8 +186,8 @@ namespace Compute.Tests
         {
             using (MockContext context = MockContext.Start())
             {
-                
-                ComputeManagementClient _pirClient = ComputeManagementTestUtilities.GetComputeManagementClient();
+                ComputeManagementClient _pirClient = ComputeManagementTestUtilities.GetComputeManagementClient(
+                    new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
                 var offers = _pirClient.VirtualMachineImages.ListOffers(
                     ComputeManagementTestUtilities.DefaultLocation,
@@ -199,8 +203,9 @@ namespace Compute.Tests
         {
             using (MockContext context = MockContext.Start())
             {
-                
-                ComputeManagementClient _pirClient = ComputeManagementTestUtilities.GetComputeManagementClient();
+
+                ComputeManagementClient _pirClient = ComputeManagementTestUtilities.GetComputeManagementClient(
+                    new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
                 var skus = _pirClient.VirtualMachineImages.ListSkus(
                     ComputeManagementTestUtilities.DefaultLocation,

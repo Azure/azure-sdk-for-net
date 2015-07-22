@@ -28,7 +28,8 @@ namespace Compute.Tests
         {
             using (MockContext context = MockContext.Start())
             {
-                var computeClient = ComputeManagementTestUtilities.GetComputeManagementClient();
+                var computeClient = ComputeManagementTestUtilities.GetComputeManagementClient(
+                    new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                 string location = ComputeManagementTestUtilities.DefaultLocation.Replace(" ", "");
 
                 var virtualMachineSizeListResponse = computeClient.VirtualMachineSizes.List(location);
