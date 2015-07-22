@@ -67,14 +67,6 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         }
         
         /// <summary>
-        /// End a test, flushing mocks as appropriate
-        /// </summary>
-        public static void EndTest()
-        {
-            HttpMockServer.Flush();
-        }
-
-        /// <summary>
         /// Wait for the specified number of milliseconds unless we are in mock playback mode
         /// </summary>
         /// <param name="milliseconds">The number of milliseconds to wait</param>

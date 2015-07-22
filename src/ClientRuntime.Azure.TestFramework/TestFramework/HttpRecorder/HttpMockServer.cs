@@ -34,13 +34,10 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework.HttpRecorder
             RecordsDirectory = "SessionRecords";
         }
 
-        private HttpMockServer() { }
-
-        public static void Initialize(Type callerIdentity, string testIdentity)
+        private HttpMockServer() 
         {
-            Initialize(callerIdentity, testIdentity, GetCurrentMode());
         }
-
+        
         public static void Initialize(string callerIdentity, string testIdentity)
         {
             Initialize(callerIdentity, testIdentity, GetCurrentMode());

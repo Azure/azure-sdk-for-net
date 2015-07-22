@@ -349,6 +349,7 @@ namespace HttpRecorder.Tests
             HttpMockServer.Flush();
 
             Assert.True(File.Exists(Path.Combine(Path.GetTempPath(), this.GetType().Name, TestUtilities.GetCurrentMethodName(1) + ".json")));
+            HttpMockServer.RecordsDirectory = currentDir;
         }
 
         [Fact]
@@ -389,6 +390,8 @@ namespace HttpRecorder.Tests
             {
                 Directory.Delete(outputDir, true);
             }
+
+            HttpMockServer.RecordsDirectory = "SessionRecords";
         }
     }
 }
