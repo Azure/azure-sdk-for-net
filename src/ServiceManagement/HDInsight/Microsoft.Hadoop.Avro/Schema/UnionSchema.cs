@@ -102,8 +102,8 @@ namespace Microsoft.Hadoop.Avro.Schema
 
         /// <summary>
         /// according to avro spec http://avro.apache.org/docs/current/spec.html#Unions
-        //  Unions may not contain more than one schema with the same type, except for the named types record, fixed and enum. 
-        //  For example, unions containing two array types or two map types are not permitted, but two types with different names are permitted                            
+        ///  Unions may not contain more than one schema with the same type, except for the named types record, fixed and enum. 
+        ///  For example, unions containing two array types or two map types are not permitted, but two types with different names are permitted                            
         /// </summary>
         /// <param name="existingSchema">the schema that's already processed.</param>
         /// <param name="typeSchema">the schema to check whether it's duplicate according to avro union spec.</param>

@@ -5,8 +5,8 @@
     Microsoft.WindowsAzure.Management.HDInsight
     -->
     <SdkNuGetPackage Include="Microsoft.Hadoop.Avro">
-      <PackageVersion>1.4.6</PackageVersion>
       <Folder>$(MSBuildThisFileDirectory)</Folder>
+      <PackageVersion>$(SDKNuGetPackageVersion)</PackageVersion>
     </SdkNuGetPackage>
   </ItemGroup>
 </Project>

@@ -63,7 +63,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities
                 cloudServiceList.Add(cloudService);
             }
 
-            return this.Request.CreateResponse(HttpStatusCode.Accepted, cloudServiceList);;
+            return this.Request.CreateResponse(HttpStatusCode.Accepted, cloudServiceList);
         }
 
         [System.Web.Http.Route("~/{subscriptionId}/cloudservices/{cloudServiceName}/resources/{resourceNamespace}/clusters/{dnsName}")]
@@ -243,7 +243,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities
             }
             clusterWorkerRole.InstanceCount = instanceCount;
 
-            return new PassthroughResponse { Data = new Operation { OperationId = Guid.NewGuid().ToString(), Status = OperationStatus.InProgress, } };
+            return new PassthroughResponse { Data = new Contracts.May2014.Operation { OperationId = Guid.NewGuid().ToString(), Status = Contracts.May2014.OperationStatus.InProgress, } };
         }
 
         private PassthroughResponse EnableRdp(ClusterRoleCollection roleCollection, string subscriptionId,
@@ -288,7 +288,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities
             }
 
             cluster.ClusterRoleCollection = roleCollection;
-            return new PassthroughResponse { Data = new Operation { OperationId = Guid.NewGuid().ToString(), Status = OperationStatus.InProgress, } };
+            return new PassthroughResponse { Data = new Contracts.May2014.Operation { OperationId = Guid.NewGuid().ToString(), Status = Contracts.May2014.OperationStatus.InProgress, } };
         }
 
         private PassthroughResponse DisableRdp(ClusterRoleCollection roleCollection, string subscriptionId,
@@ -300,7 +300,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities
                 throw new ArgumentNullException(string.Format(ClustersTestConstants.ClusterDoesNotExistException, dnsName, subscriptionId));
             }
             cluster.ClusterRoleCollection = roleCollection;
-            return new PassthroughResponse { Data = new Operation { OperationId = Guid.NewGuid().ToString(), Status = OperationStatus.InProgress, } };
+            return new PassthroughResponse { Data = new Contracts.May2014.Operation { OperationId = Guid.NewGuid().ToString(), Status = Contracts.May2014.OperationStatus.InProgress, } };
         }
 
         private Cluster GetCluster(string dnsName, string cloudserviceName, string subscriptionId)

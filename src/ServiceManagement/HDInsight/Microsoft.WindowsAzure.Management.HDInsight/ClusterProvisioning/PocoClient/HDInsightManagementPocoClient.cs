@@ -92,7 +92,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
             var result = clusters.FirstOrDefault(cluster => cluster.Name.Equals(dnsName, StringComparison.OrdinalIgnoreCase));
             return result;
         }
-        
+
         public async Task<ClusterDetails> ListContainer(string dnsName, string location)
         {
             var clusters = await this.ListContainers();
@@ -130,7 +130,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
                     "Your subscription cannot create customized clusters, please contact Support"));
             }
 
-            if (!new[] {"ExtraLarge", "Large"}.Contains(details.HeadNodeSize, StringComparer.OrdinalIgnoreCase)
+            if (!new[] { "ExtraLarge", "Large" }.Contains(details.HeadNodeSize, StringComparer.OrdinalIgnoreCase)
                 || !string.Equals(details.DataNodeSize, "Large", StringComparison.OrdinalIgnoreCase)
                 || details.ZookeeperNodeSize.IsNotNullOrEmpty())
             {
@@ -249,7 +249,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
         {
             var client = ServiceLocator.Instance.Locate<IHDInsightManagementPocoClientFactory>()
                 .Create(this.credentials, this.Context, false);
-            var operationId =  await client.EnableDisableProtocol(UserChangeRequestUserType.Rdp,
+            var operationId = await client.EnableDisableProtocol(UserChangeRequestUserType.Rdp,
                 UserChangeRequestOperationType.Disable, dnsName, location, string.Empty, string.Empty, DateTime.MinValue);
             return operationId;
         }
@@ -268,6 +268,13 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
             var responseObject = overrideHandlers.PayloadConverter.DeserializeConnectivityStatus(response.Content);
             return responseObject.Data;
         }
+
+        /// <inheritdoc />
+        public Task<Data.Rdfe.Operation> GetRdfeOperationStatus(Guid operationId)
+        {
+            throw new NotImplementedException();
+        }
+
 
         private bool HasClusterCreateCapability(IEnumerable<KeyValuePair<string, string>> capabilities)
         {

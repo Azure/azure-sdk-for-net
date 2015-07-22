@@ -278,7 +278,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
                     !string.IsNullOrEmpty(clusterCreateParameters.RdpPassword) ||
                     clusterCreateParameters.RdpAccessExpiry.IsNotNull())
                 {
-                    if(string.IsNullOrEmpty(clusterCreateParameters.RdpUsername))
+                    if (string.IsNullOrEmpty(clusterCreateParameters.RdpUsername))
                     {
                         throw new ArgumentException(
                             "clusterCreateParameters.RdpUsername cannot be null or empty in case either RdpPassword or RdpAccessExpiry is specified",
@@ -332,7 +332,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
                 var wireCreateParameters = PayloadConverterClusters.CreateWireClusterCreateParametersFromUserType(clusterCreateParameters);
                 var rdfeResourceInputFromWireInput = PayloadConverterClusters.CreateRdfeResourceInputFromWireInput(wireCreateParameters, SchemaVersionUtils.GetSchemaVersion(this.capabilities));
 
-                await
+                var resp = await
                     this.rdfeClustersRestClient.CreateCluster(
                         this.credentials.SubscriptionId.ToString(),
                         this.GetCloudServiceName(clusterCreateParameters.Location),
@@ -340,6 +340,22 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
                         clusterCreateParameters.Name,
                         rdfeResourceInputFromWireInput,
                         this.Context.CancellationToken);
+
+                // Retrieve the request id (or operation id) from the PUT Response. The request id will be used to poll on operation status.
+                IEnumerable<String> requestIds;
+                if (resp.Headers.TryGetValues("x-ms-request-id", out requestIds))
+                {
+                    Guid operationId;
+                    if (!Guid.TryParse(requestIds.First(), out operationId))
+                    {
+                        throw new InvalidOperationException("Could not retrieve a valid operation id for the PUT (cluster create) operation.");
+                    }
+
+                    // Wait for the operation specified by the request id to complete (succeed or fail).
+                    TimeSpan interval = TimeSpan.FromSeconds(1);
+                    TimeSpan timeout = TimeSpan.FromMinutes(5);
+                    await this.WaitForRdfeOperationToComplete(operationId, interval, timeout, Context.CancellationToken);
+                }
             }
             catch (InvalidExpectedStatusCodeException iEx)
             {
@@ -537,7 +553,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
 
                 this.LogMessage("Sending passthrough request to RDFE", Severity.Informational, Verbosity.Detailed);
 
-                var resp = this.SafeGetDataFromPassthroughResponse<Operation>(
+                var resp = this.SafeGetDataFromPassthroughResponse<Contracts.May2014.Operation>(
                     await this.rdfeClustersRestClient.ChangeClusterSize(
                     this.credentials.SubscriptionId.ToString(),
                     cloudServiceName,
@@ -547,7 +563,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
                     clusterRoleCollection,
                     this.Context.CancellationToken));
                 var operationId = Guid.Parse(resp.OperationId);
-                if (resp.Status.Equals(OperationStatus.Failed))
+                if (resp.Status.Equals(Contracts.May2014.OperationStatus.Failed))
                 {
                     var message = string.Format("ChangeClusterSize operation with operation ID {0} failed with the following response:\n{1}", operationId, resp.ErrorDetails.ErrorMessage);
                     this.LogMessage(message, Severity.Error, Verbosity.Detailed);
@@ -640,7 +656,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
 
                 this.LogMessage("Sending passthrough request to RDFE", Severity.Informational, Verbosity.Detailed);
 
-                var resp = this.SafeGetDataFromPassthroughResponse<Operation>(
+                var resp = this.SafeGetDataFromPassthroughResponse<Contracts.May2014.Operation>(
                     await this.rdfeClustersRestClient.EnableDisableRdp(
                         this.credentials.SubscriptionId.ToString(),
                         cloudServiceName,
@@ -649,7 +665,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
                         EnableRdpAction,
                         clusterRoleCollection, this.Context.CancellationToken));
                 var operationId = Guid.Parse(resp.OperationId);
-                if (resp.Status.Equals(OperationStatus.Failed))
+                if (resp.Status.Equals(Contracts.May2014.OperationStatus.Failed))
                 {
                     var message = string.Format("EnableRdp operation with operation ID {0} failed with the following response:\n{1}", operationId, resp.ErrorDetails.ErrorMessage);
                     this.LogMessage(message, Severity.Error, Verbosity.Detailed);
@@ -682,7 +698,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
 
                 var remoteDesktopSettings = new RemoteDesktopSettings
                 {
-                    IsEnabled = false,    
+                    IsEnabled = false,
                 };
 
                 foreach (var role in clusterRoleCollection)
@@ -692,7 +708,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
 
                 this.LogMessage("Sending passthrough request to RDFE", Severity.Informational, Verbosity.Detailed);
 
-                var resp = this.SafeGetDataFromPassthroughResponse<Operation>(
+                var resp = this.SafeGetDataFromPassthroughResponse<Contracts.May2014.Operation>(
                     await this.rdfeClustersRestClient.EnableDisableRdp(
                     this.credentials.SubscriptionId.ToString(),
                     cloudServiceName,
@@ -701,7 +717,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
                     EnableRdpAction,
                     clusterRoleCollection, this.Context.CancellationToken));
                 var operationId = Guid.Parse(resp.OperationId);
-                if (resp.Status.Equals(OperationStatus.Failed))
+                if (resp.Status.Equals(Contracts.May2014.OperationStatus.Failed))
                 {
                     var message = string.Format("EnableRdp operation with operation ID {0} failed with the following response:\n{1}", operationId, resp.ErrorDetails.ErrorMessage);
                     this.LogMessage(message, Severity.Error, Verbosity.Detailed);
@@ -781,7 +797,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
                         operationId.ToString(),
                         this.Context.CancellationToken);
 
-                var operationStatus = (Operation)response.Data;
+                var operationStatus = (Contracts.May2014.Operation)response.Data;
 
                 PayloadErrorDetails payloadErrorDetails = null;
                 if (response.Error != null)
@@ -806,6 +822,15 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
                 string content = iEx.Response.Content != null ? iEx.Response.Content.ReadAsStringAsync().Result : string.Empty;
                 throw new HttpLayerException(iEx.ReceivedStatusCode, content);
             }
+        }
+
+        /// <inheritdoc />
+        public async Task<Data.Rdfe.Operation> GetRdfeOperationStatus(Guid operationId)
+        {
+            return await this.rdfeClustersRestClient.GetRdfeOperationStatus(
+                    this.credentials.SubscriptionId.ToString(),
+                    operationId.ToString(),
+                    this.Context.CancellationToken);
         }
 
         private static UserChangeRequestOperationStatus ConvertOperationStatusToUserChangeOperationState(string operationStatus)
@@ -1062,7 +1087,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
 
                 var cloudServiceName = this.GetCloudServiceName(clusterResult.ClusterDetails.Location);
 
-                var resp = this.SafeGetDataFromPassthroughResponse<Operation>(
+                var resp = this.SafeGetDataFromPassthroughResponse<Contracts.May2014.Operation>(
                     await this.rdfeClustersRestClient.UpdateComponent(
                     this.credentials.SubscriptionId.ToString(),
                     cloudServiceName,

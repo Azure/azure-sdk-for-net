@@ -115,7 +115,9 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.HadoopClientTests
             hdInsightClient.AddLogWriter(stringLogWriter);
             var firstCluster = GetRandomClusterOldSchema();
 
+#pragma warning disable 618
             await hdInsightClient.CreateClusterAsync(firstCluster);
+#pragma warning restore 618
             var firstClusterFromServer = hdInsightClient.GetCluster(firstCluster.Name);
 
             Assert.IsNotNull(firstClusterFromServer);
@@ -250,7 +252,9 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.HadoopClientTests
             var secondCluster = GetRandomClusterOldSchema();
 
             await hadoopClient.CreateClusterAsync(firstCluster);
+#pragma warning disable 618
             await hadoopClient.CreateClusterAsync(secondCluster);
+#pragma warning restore 618
             var firstClusterFromServer = hadoopClient.GetCluster(firstCluster.Name);
             var secondClusterFromServer = hadoopClient.GetCluster(secondCluster.Name);
 
@@ -727,7 +731,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.HadoopClientTests
                 var mockClient = new Mock<IHDInsightManagementRestClient>();
                 var callCount = 0;
                 mockClient.Setup(x => x.ListCloudServices())
-                          .Returns(() => 
+                          .Returns(() =>
                           {
                               callCount++;
                               return underlying.ListCloudServices();

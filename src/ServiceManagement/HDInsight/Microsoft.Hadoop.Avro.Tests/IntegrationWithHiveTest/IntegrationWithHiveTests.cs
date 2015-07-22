@@ -50,6 +50,11 @@ namespace Microsoft.Hadoop.Avro.Tests
                 return client.CreateCluster(randomCluster);
             });
 
+        public IntegrationWithHiveTests()
+        {
+            this.dataProvider = null;
+        }
+
         [ClassInitialize]
         public static void SuiteInitialize(TestContext context)
         {

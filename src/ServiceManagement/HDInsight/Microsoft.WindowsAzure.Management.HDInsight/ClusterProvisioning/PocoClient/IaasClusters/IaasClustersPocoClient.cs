@@ -20,7 +20,9 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
     using System.Globalization;
     using System.Linq;
     using System.Net;
+    using System.Net.Http;
     using System.Text.RegularExpressions;
+    using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.Data;
     using Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.Data.Rdfe;
@@ -153,7 +155,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
                 var iaasCluster = PayloadConverterIaasClusters.ConvertToIaasCluster(clusterCreateParameters, this.credentials.SubscriptionId.ToString());
                 var rdfeResource = PayloadConverterIaasClusters.CreateRdfeResource(iaasCluster, schemaVersion);
 
-                await
+                var resp = await
                     this.rdfeRestClient.CreateCluster(
                         this.credentials.SubscriptionId.ToString(),
                         this.GetCloudServiceName(clusterCreateParameters.Location),
@@ -161,6 +163,21 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
                         clusterCreateParameters.Name,
                         rdfeResource,
                         this.Context.CancellationToken);
+
+                IEnumerable<String> requestIds;
+                if (resp.Headers.TryGetValues("x-ms-request-id", out requestIds))
+                {
+                    Guid operationId;
+                    if (!Guid.TryParse(requestIds.First(), out operationId))
+                    {
+                        throw new InvalidOperationException("Could not retrieve a valid operation id for the PUT (cluster create) operation.");
+                    }
+
+                    // Wait for the operation specified by the request id to complete (succeed or fail).
+                    TimeSpan interval = TimeSpan.FromSeconds(1);
+                    TimeSpan timeout = TimeSpan.FromMinutes(5);
+                    await this.WaitForRdfeOperationToComplete(operationId, interval, timeout, Context.CancellationToken);
+                }
             }
             catch (InvalidExpectedStatusCodeException iEx)
             {
@@ -318,6 +335,15 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
             }
         }
 
+        /// <inheritdoc />
+        public async Task<Operation> GetRdfeOperationStatus(Guid operationId)
+        {
+            return await this.rdfeRestClient.GetRdfeOperationStatus(
+                    this.credentials.SubscriptionId.ToString(),
+                    operationId.ToString(),
+                    this.Context.CancellationToken);
+        }
+
         public void Dispose()
         {
             //nothing to dispose here.
@@ -329,25 +355,25 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
         #region Not Supported Operations
 
         /// <inheritdoc />
-        public async Task<Guid> ChangeClusterSize(string dnsName, string location, int newSize)
+        public Task<Guid> ChangeClusterSize(string dnsName, string location, int newSize)
         {
             throw new NotSupportedException(UnSupportedOperationMessage);
         }
 
         /// <inheritdoc />
-        public async Task<Guid> EnableDisableProtocol(UserChangeRequestUserType protocol, UserChangeRequestOperationType operation, string dnsName, string location, string userName, string password, DateTimeOffset expiration)
+        public Task<Guid> EnableDisableProtocol(UserChangeRequestUserType protocol, UserChangeRequestOperationType operation, string dnsName, string location, string userName, string password, DateTimeOffset expiration)
         {
             throw new NotSupportedException(UnSupportedOperationMessage);
         }
 
         /// <inheritdoc />
-        public async Task<Guid> EnableHttp(string dnsName, string location, string httpUserName, string httpPassword)
+        public Task<Guid> EnableHttp(string dnsName, string location, string httpUserName, string httpPassword)
         {
             throw new NotSupportedException(UnSupportedOperationMessage);
         }
 
         /// <inheritdoc />
-        public async Task<Guid> DisableHttp(string dnsName, string location)
+        public Task<Guid> DisableHttp(string dnsName, string location)
         {
             throw new NotSupportedException(UnSupportedOperationMessage);
         }
@@ -363,13 +389,13 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
         }
 
         /// <inheritdoc />
-        public async Task<UserChangeRequestStatus> GetStatus(string dnsName, string location, Guid operationId)
+        public Task<UserChangeRequestStatus> GetStatus(string dnsName, string location, Guid operationId)
         {
             throw new NotSupportedException(UnSupportedOperationMessage);
         }
 
         /// <inheritdoc />
-        public async Task<bool> IsComplete(string dnsName, string location, Guid operationId)
+        public Task<bool> IsComplete(string dnsName, string location, Guid operationId)
         {
             throw new NotSupportedException(UnSupportedOperationMessage);
         }
@@ -554,7 +580,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
                     // Ignore all exceptions. We don't want ListContainers to fail on customers for whatever reason.
                     // If there is an issue with obtaining details about the cluster, mark the cluster in Error state with a generic error message
 
-                    clusterDetails.State = ClusterState.Error;
+                    clusterDetails.State = HDInsight.ClusterState.Error;
                     if (clusterDetails.Error != null && string.IsNullOrEmpty(clusterDetails.Error.Message))
                     {
                         clusterDetails.Error.Message = "Unexpected error occurred. Could not retrieve details about the cluster.";

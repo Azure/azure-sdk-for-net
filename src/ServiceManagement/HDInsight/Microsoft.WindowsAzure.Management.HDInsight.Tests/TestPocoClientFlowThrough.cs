@@ -22,6 +22,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests
     using System.Text;
     using System.Threading.Tasks;
     using Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning;
+    using Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.Data.Rdfe;
     using Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoClient;
     using Microsoft.WindowsAzure.Management.HDInsight;
     using Microsoft.WindowsAzure.Management.HDInsight.Framework.Core;
@@ -64,7 +65,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests
         {
             return underlying.ListContainer(dnsName, location);
         }
-        
+
         public Task CreateContainer(ClusterCreateParametersV2 details)
         {
             this.LastCreateRequest = details;
@@ -128,9 +129,14 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests
             return underlying.GetStatus(dnsName, location, operationId);
         }
 
+        public Task<Operation> GetRdfeOperationStatus(Guid operationId)
+        {
+            return underlying.GetRdfeOperationStatus(operationId);
+        }
+
         public ILogger Logger
         {
             get { return underlying.Logger; }
-        }               
+        }
     }
 }

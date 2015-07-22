@@ -10,6 +10,8 @@
 
 namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.RestClient.IaasClusters
 {
+    using System.Net;
+    using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.Data;
@@ -46,9 +48,9 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.RestCl
         }
 
         [System.Runtime.CompilerServices.MethodImplAttribute(72)]
-        public virtual Task CreateCluster(string subscriptionId, string cloudServiceName, string resourceNamespace, string dnsName, RDFEResource cluster, CancellationToken cancellationToken)
+        public virtual Task<HttpResponseMessage> CreateCluster(string subscriptionId, string cloudServiceName, string resourceNamespace, string dnsName, RDFEResource cluster, CancellationToken cancellationToken)
         {
-            return ((Task)(base.CreateAndInvokeRestRequestForParentMethodAsync(subscriptionId, cloudServiceName, resourceNamespace, dnsName, cluster, cancellationToken)));
+            return ((Task<HttpResponseMessage>)(base.CreateAndInvokeRestRequestForParentMethodAsync<HttpResponseMessage>(subscriptionId, cloudServiceName, resourceNamespace, dnsName, cluster, cancellationToken)));
         }
 
         [System.Runtime.CompilerServices.MethodImplAttribute(72)]
@@ -61,6 +63,12 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.RestCl
         public virtual Task<PassthroughResponse> GetCluster(string subscriptionId, string cloudServiceName, string resourceNamespace, string dnsName, CancellationToken token)
         {
             return ((Task<PassthroughResponse>)(base.CreateAndInvokeRestRequestForParentMethodAsync<PassthroughResponse>(subscriptionId, cloudServiceName, resourceNamespace, dnsName, token)));
+        }
+
+        [System.Runtime.CompilerServices.MethodImplAttribute(72)]
+        public virtual Task<Operation> GetRdfeOperationStatus(string subscriptionId, string operationId, CancellationToken cancellationToken)
+        {
+            return ((Task<Operation>)(base.CreateAndInvokeRestRequestForParentMethodAsync<Operation>(subscriptionId, operationId, cancellationToken)));
         }
     }
 }

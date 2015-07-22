@@ -16,6 +16,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.RestCl
 {
     using System;
     using System.Net;
+    using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.Data;
@@ -52,7 +53,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.RestCl
         [HttpRestInvoke("PUT", "{subscriptionId}/cloudservices/{cloudServiceName}/resources/{resourceNamespace}/clusters/{dnsName}")]
         [ExpectedStatusCodeValidator(new[] { HttpStatusCode.Created, HttpStatusCode.Accepted, HttpStatusCode.OK })]
         [CustomHeader("x-ms-version", "2012-08-01")]
-        Task CreateCluster(string subscriptionId, string cloudServiceName, string resourceNamespace, string dnsName, RDFEResource cluster, CancellationToken cancellationToken);
+        Task<HttpResponseMessage> CreateCluster(string subscriptionId, string cloudServiceName, string resourceNamespace, string dnsName, RDFEResource cluster, CancellationToken cancellationToken);
 
         [HttpRestInvoke("DELETE", "{subscriptionId}/cloudservices/{cloudServiceName}/resources/{resourceNamespace}/clusters/{dnsName}")]
         [CustomHeader("x-ms-version", "2012-08-01")]
@@ -86,5 +87,9 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.RestCl
             string resourceNamespace, string clusterDnsName, string actionType, ClusterRoleCollection roleCollection,
             CancellationToken cancellationToken);
 
+        [HttpRestInvoke("GET", "{subscriptionId}/operations/{operationId}")]
+        [ExpectedStatusCodeValidator(new[] { HttpStatusCode.OK, HttpStatusCode.Accepted })]
+        [CustomHeader("x-ms-version", "2012-08-01")]
+        Task<Data.Rdfe.Operation> GetRdfeOperationStatus(string subscriptionId, string operationId, CancellationToken cancellationToken);
     }
 }

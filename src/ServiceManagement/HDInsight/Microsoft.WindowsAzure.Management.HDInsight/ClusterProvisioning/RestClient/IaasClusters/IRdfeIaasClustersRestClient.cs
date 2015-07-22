@@ -16,6 +16,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.RestCl
 {
     using System;
     using System.Net;
+    using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.Data;
@@ -50,7 +51,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.RestCl
         [HttpRestInvoke("PUT", "{subscriptionId}/cloudservices/{cloudServiceName}/resources/{resourceNamespace}/iaasclusters/{dnsName}")]
         [ExpectedStatusCodeValidator(new[] { HttpStatusCode.Created, HttpStatusCode.Accepted, HttpStatusCode.OK })]
         [CustomHeader("x-ms-version", "2014-09-01")]
-        Task CreateCluster(string subscriptionId, string cloudServiceName, string resourceNamespace, string dnsName, RDFEResource cluster, CancellationToken cancellationToken);
+        Task<HttpResponseMessage> CreateCluster(string subscriptionId, string cloudServiceName, string resourceNamespace, string dnsName, RDFEResource cluster, CancellationToken cancellationToken);
 
         [HttpRestInvoke("DELETE", "{subscriptionId}/cloudservices/{cloudServiceName}/resources/{resourceNamespace}/iaasclusters/{dnsName}")]
         [CustomHeader("x-ms-version", "2014-09-01")]
@@ -60,5 +61,10 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.RestCl
         [ExpectedStatusCodeValidator(new[] { HttpStatusCode.OK, HttpStatusCode.Accepted })]
         [CustomHeader("x-ms-version", "2014-09-01")]
         Task<PassthroughResponse> GetCluster(string subscriptionId, string cloudServiceName, string resourceNamespace, string dnsName, CancellationToken token);
+
+        [HttpRestInvoke("GET", "{subscriptionId}/operations/{operationId}")]
+        [ExpectedStatusCodeValidator(new[] { HttpStatusCode.OK, HttpStatusCode.Accepted })]
+        [CustomHeader("x-ms-version", "2014-09-01")]
+        Task<Operation> GetRdfeOperationStatus(string subscriptionId, string operationId, CancellationToken cancellationToken);
     }
 }

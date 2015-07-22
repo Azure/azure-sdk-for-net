@@ -279,7 +279,9 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.Scenario
             TestValidAdvancedClusterOldAPI(
                 client.ListClusters,
                 client.GetCluster,
+#pragma warning disable 618
                 client.CreateCluster,
+#pragma warning restore 618
                 client.DeleteCluster);
         }
 
@@ -315,7 +317,9 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.Scenario
             TestValidAdvancedClusterOldAPI(
                 () => client.ListClustersAsync().WaitForResult(),
                 dnsName => client.GetClusterAsync(dnsName).WaitForResult(),
+#pragma warning disable 618
                 cluster => client.CreateClusterAsync(cluster).WaitForResult(),
+#pragma warning restore 618
                 dnsName => client.DeleteClusterAsync(dnsName).WaitForResult());
         }
 
@@ -379,7 +383,9 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.Scenario
                 GetRandomClusterOldSchema(),
                 () => client.ListClustersAsync().WaitForResult(),
                 dnsName => client.GetClusterAsync(dnsName).WaitForResult(),
+#pragma warning disable 618
                 cluster => client.CreateClusterAsync(cluster).WaitForResult(),
+#pragma warning restore 618
                 dnsName => client.DeleteClusterAsync(dnsName).WaitForResult());
         }
 
@@ -481,7 +487,9 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.Scenario
             var client = HDInsightClient.Connect(new HDInsightCertificateCredential(credentials.SubscriptionId, credentials.Certificate));
             client.PollingInterval = TimeSpan.FromMilliseconds(100);
 
+#pragma warning disable 618
             client.CreateCluster(clusterRequest);
+#pragma warning restore 618
             var retCluster = client.GetCluster(clusterRequest.Name);
             Assert.AreEqual(retCluster.State, ClusterState.Unknown);
             client.DeleteCluster(clusterRequest.Name);
@@ -746,7 +754,9 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.Scenario
             var clusterRequest = GetRandomClusterOldSchema();
             IHDInsightCertificateCredential credentials = IntegrationTestBase.GetValidCredentials();
             var client = HDInsightClient.Connect(new HDInsightCertificateCredential(credentials.SubscriptionId, credentials.Certificate));
+#pragma warning disable 618
             client.CreateCluster(clusterRequest);
+#pragma warning restore 618
         }
         
         [TestMethod]
