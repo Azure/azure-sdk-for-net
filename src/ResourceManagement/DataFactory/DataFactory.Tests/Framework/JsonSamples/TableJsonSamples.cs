@@ -191,6 +191,32 @@ namespace DataFactory.Tests.Framework.JsonSamples
 }";
 
         [JsonSample]
+        public const string AzureSqlDataWarehouseTable = @"
+{
+    name: ""Test"",
+    properties:
+    {
+        type: ""AzureSqlDWTable"",
+        linkedServiceName: ""MyLinkedServiceName"",
+        published: ""False"",
+        structure:  
+        [ 
+            { name: ""somecol"", type: ""String"" }
+        ],
+        typeProperties:
+        {            
+            tableName: ""mytablename""            
+        },
+        availability: 
+        {
+            interval: 1, 
+            frequency: ""Hour"",
+        },
+    }
+}
+";
+
+        [JsonSample]
         public const string ExternalTable = @"
 {
     name: ""External"",

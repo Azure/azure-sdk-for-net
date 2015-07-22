@@ -242,6 +242,63 @@ namespace DataFactory.Tests.Framework.JsonSamples
 ";
 
         [JsonSample]
+        public const string CopySqlDWToSqlDW = @"
+{
+    name: ""MyPipelineName"",
+    properties: 
+    {
+        description : ""Copy from SQLDW to SQLDW"",
+        hubName: ""MyHDIHub"",
+        activities:
+        [
+            {
+                type: ""Copy"",
+                name: ""TestActivity"",
+                description: ""Test activity description"", 
+                typeProperties:
+                {
+                    source:
+                    {
+                        type: ""SqlDWSource"",
+                        sourceRetryCount: ""2"",
+                        sourceRetryWait: ""00:00:01"",
+                        sqlReaderQuery: ""$EncryptedString$MyEncryptedQuery""
+                    },
+                    sink:
+                    {
+                        type: ""SqlDWSink"",
+                        writeBatchSize: 1000000,
+                        writeBatchTimeout: ""01:00:00""
+                    },
+                },
+                inputs: 
+                [ 
+                    {
+                        name: ""InputSqlDWDA""
+                    }
+                ],
+                outputs: 
+                [ 
+                    {
+                        name: ""OutputSqlDWDA""
+                    }
+                ],
+                linkedServiceName: ""MyLinkedServiceName"",
+                policy:
+                {
+                    concurrency: 3,
+                    executionPriorityOrder: ""NewestFirst"",
+                    retry: 3,
+                    timeout: ""00:00:05"",
+                    delay: ""00:00:01""
+                }
+            }
+        ]
+    }
+}
+";
+
+        [JsonSample]
         public const string CopyAzureTableToSql = @"
 {
     name: ""MyPipelineName"",
