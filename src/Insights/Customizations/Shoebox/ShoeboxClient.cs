@@ -96,7 +96,7 @@ namespace Microsoft.Azure.Insights
                 filter.StartTime, filter.EndTime);
 
             // Create a task for each query. Each query will correspond to one metric
-            IEnumerable<Task<Metric>> queryTasks = queries.Select(async kvp => await GetMetricAsync(kvp.Key, kvp.Value, filter, location, invocationId).ConfigureAwait(false));
+            IEnumerable<Task<Metric>> queryTasks = queries.Select(async kvp => await GetMetricByNameAsync(kvp.Key, kvp.Value, filter, location, invocationId).ConfigureAwait(false));
 
             // Execute the queries in parallel and collect the results
             IList<Metric> metrics = await Task.Factory.ContinueWhenAll(queryTasks.ToArray(), tasks => new List<Metric>(tasks.Select(t => t.Result))).ConfigureAwait(false);
@@ -184,7 +184,7 @@ namespace Microsoft.Azure.Insights
                 }
                 else
                 {
-                    if (lastMetricValue.Timestamp.Ticks == GetTimestamp(entity))
+                    if (lastMetricValue.Timestamp.Ticks == GetTimestampFromIndexTimestampMetricName(entity))
                     {
                         Aggregate(lastMetricValue, entity);
                     }
@@ -222,10 +222,18 @@ namespace Microsoft.Azure.Insights
             };
         }
 
-        private static long GetTimestamp(DynamicTableEntity entity)
+        private static long GetTimestampFromIndexTimestampMetricName(DynamicTableEntity entity)
         {
             int index = entity.RowKey.IndexOf('_');
             long reverseTimestamp = long.Parse(entity.RowKey.Substring(0, index));
+
+            return DateTime.MaxValue.Ticks - reverseTimestamp;
+        }
+
+        private static long GetTimestampFromIndexMetricNameTimestamp(DynamicTableEntity entity)
+        {
+            string[] splitByUnderscore = entity.RowKey.Split(doubleUnderscore, StringSplitOptions.RemoveEmptyEntries);
+            long reverseTimestamp = long.Parse(splitByUnderscore[1]);
 
             return DateTime.MaxValue.Ticks - reverseTimestamp;
         }
@@ -287,7 +295,7 @@ namespace Microsoft.Azure.Insights
 
         // Gets the named metric by calling the provided query on each table that overlaps the given time range
         // Note: Does not populate Metric fields unrelated to query (i.e. "display name", resourceUri, and properties)
-        private static async Task<Metric> GetMetricAsync(string name, TableQuery query, MetricFilter filter, MetricLocation location, string invocationId)
+        private static async Task<Metric> GetMetricByNameAsync(string name, TableQuery query, MetricFilter filter, MetricLocation location, string invocationId)
         {
             Metric metric = new Metric()
             {
@@ -329,7 +337,7 @@ namespace Microsoft.Azure.Insights
                 }
                 else
                 {
-                    if (lastMetricValue.Timestamp.Ticks == GetTimestamp(entity))
+                    if (lastMetricValue.Timestamp.Ticks == GetTimestampFromIndexMetricNameTimestamp(entity))
                     {
                         Aggregate(lastMetricValue, entity);
                     }
