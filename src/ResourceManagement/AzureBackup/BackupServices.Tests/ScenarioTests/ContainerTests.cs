@@ -165,10 +165,18 @@ namespace BackupServices.Tests
                 string containerId = ConfigurationManager.AppSettings["ContainerId"];
                 string friendlyName = ConfigurationManager.AppSettings["ContainerFriendlyName"];
 
-                OperationResponse response = client.Container.EnableMarsContainerReregistration(containerId, GetCustomRequestHeaders());
+                EnableReregistrationRequest request = new EnableReregistrationRequest()
+                {
+                    ContainerReregistrationState = new ContainerReregistrationState()
+                    {
+                        EnableReregistration = true,
+                    },
+                };
+
+                OperationResponse response = client.Container.EnableMarsContainerReregistration(containerId, request, GetCustomRequestHeaders());
                 // Response Validation
                 Assert.NotNull(response);
-                Assert.True(response.StatusCode == HttpStatusCode.OK, "Status code should be OK");
+                Assert.True(response.StatusCode == HttpStatusCode.NoContent, "Status code should be NoContent");
 
                 // Basic Validation
                 ListMarsContainerOperationResponse getResponse = client.Container.ListMarsContainersByTypeAndFriendlyName(MarsContainerType.Machine, friendlyName, GetCustomRequestHeaders());

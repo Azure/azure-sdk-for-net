@@ -40,17 +40,20 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <param name='containerId'>
         /// Required. MARS container ID.
         /// </param>
+        /// <param name='enableReregistrationRequest'>
+        /// Required. Enable Reregistration Request.
+        /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
         /// The definition of a Operation Response.
         /// </returns>
-        public static OperationResponse EnableMarsContainerReregistration(this IContainerOperations operations, string containerId, CustomRequestHeaders customRequestHeaders)
+        public static OperationResponse EnableMarsContainerReregistration(this IContainerOperations operations, string containerId, EnableReregistrationRequest enableReregistrationRequest, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IContainerOperations)s).EnableMarsContainerReregistrationAsync(containerId, customRequestHeaders);
+                return ((IContainerOperations)s).EnableMarsContainerReregistrationAsync(containerId, enableReregistrationRequest, customRequestHeaders);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -65,15 +68,18 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <param name='containerId'>
         /// Required. MARS container ID.
         /// </param>
+        /// <param name='enableReregistrationRequest'>
+        /// Required. Enable Reregistration Request.
+        /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
         /// The definition of a Operation Response.
         /// </returns>
-        public static Task<OperationResponse> EnableMarsContainerReregistrationAsync(this IContainerOperations operations, string containerId, CustomRequestHeaders customRequestHeaders)
+        public static Task<OperationResponse> EnableMarsContainerReregistrationAsync(this IContainerOperations operations, string containerId, EnableReregistrationRequest enableReregistrationRequest, CustomRequestHeaders customRequestHeaders)
         {
-            return operations.EnableMarsContainerReregistrationAsync(containerId, customRequestHeaders, CancellationToken.None);
+            return operations.EnableMarsContainerReregistrationAsync(containerId, enableReregistrationRequest, customRequestHeaders, CancellationToken.None);
         }
         
         /// <summary>

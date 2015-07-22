@@ -24,6 +24,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Hyak.Common;
@@ -66,6 +68,9 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <param name='containerId'>
         /// Required. MARS container ID.
         /// </param>
+        /// <param name='enableReregistrationRequest'>
+        /// Required. Enable Reregistration Request.
+        /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
@@ -75,12 +80,16 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a Operation Response.
         /// </returns>
-        public async Task<OperationResponse> EnableMarsContainerReregistrationAsync(string containerId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<OperationResponse> EnableMarsContainerReregistrationAsync(string containerId, EnableReregistrationRequest enableReregistrationRequest, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
             if (containerId == null)
             {
                 throw new ArgumentNullException("containerId");
+            }
+            if (enableReregistrationRequest == null)
+            {
+                throw new ArgumentNullException("enableReregistrationRequest");
             }
             
             // Tracing
@@ -91,6 +100,7 @@ namespace Microsoft.Azure.Management.BackupServices
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("containerId", containerId);
+                tracingParameters.Add("enableReregistrationRequest", enableReregistrationRequest);
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
                 TracingAdapter.Enter(invocationId, this, "EnableMarsContainerReregistrationAsync", tracingParameters);
             }
@@ -142,10 +152,30 @@ namespace Microsoft.Azure.Management.BackupServices
                 
                 // Set Headers
                 httpRequest.Headers.Add("Accept-Language", "en-us");
+                httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
                 await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                JToken requestDoc = null;
+                
+                JObject enableReregistrationRequestValue = new JObject();
+                requestDoc = enableReregistrationRequestValue;
+                
+                if (enableReregistrationRequest.ContainerReregistrationState != null)
+                {
+                    JObject propertiesValue = new JObject();
+                    enableReregistrationRequestValue["properties"] = propertiesValue;
+                    
+                    propertiesValue["enableReRegister"] = enableReregistrationRequest.ContainerReregistrationState.EnableReregistration;
+                }
+                
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -162,10 +192,10 @@ namespace Microsoft.Azure.Management.BackupServices
                         TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
+                    if (statusCode != HttpStatusCode.NoContent)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             TracingAdapter.Error(invocationId, ex);
@@ -176,7 +206,7 @@ namespace Microsoft.Azure.Management.BackupServices
                     // Create Result
                     OperationResponse result = null;
                     // Deserialize Response
-                    if (statusCode == HttpStatusCode.OK)
+                    if (statusCode == HttpStatusCode.NoContent)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -195,10 +225,6 @@ namespace Microsoft.Azure.Management.BackupServices
                         
                     }
                     result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-client-request-id"))
-                    {
-                        customRequestHeaders.ClientRequestId = httpResponse.Headers.GetValues("x-ms-client-request-id").FirstOrDefault();
-                    }
                     
                     if (shouldTrace)
                     {

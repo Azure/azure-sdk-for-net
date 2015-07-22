@@ -31,8 +31,10 @@
     <Compile Include="Generated\Models\BackupBaseObject.cs" />
     <Compile Include="Generated\Models\BackupBaseResponse.cs" />
     <Compile Include="Generated\Models\BackupListResponse.cs" />
+    <Compile Include="Generated\Models\ContainerReregistrationState.cs" />
     <Compile Include="Generated\Models\CustomerType.cs" />
     <Compile Include="Generated\Models\CustomRequestHeaders.cs" />
+    <Compile Include="Generated\Models\EnableReregistrationRequest.cs" />
     <Compile Include="Generated\Models\GetResourceStorageConfigResponse.cs" />
     <Compile Include="Generated\Models\ListMarsContainerOperationResponse.cs" />
     <Compile Include="Generated\Models\ListMarsContainerResponse.cs" />
