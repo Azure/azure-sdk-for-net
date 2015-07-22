@@ -9,6 +9,7 @@ using Microsoft.Rest;
 using System.Net.Http;
 using Newtonsoft.Json.Linq;
 using Microsoft.Azure.Authentication;
+using System.Threading;
 
 namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
 {
@@ -38,15 +39,13 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         {
             string connectionString = Environment.GetEnvironmentVariable(TestCSMOrgIdConnectionStringKey);
             TestEnvironment testEnv = new TestEnvironment(TestUtilities.ParseConnectionString(connectionString));
-            string token = null;
             CredManCache credCache = new CredManCache("SpecTestSupport");
 
             if (HttpMockServer.Mode == HttpRecorderMode.Playback)
             {
-                token = TestEnvironment.RawTokenDefault;
                 testEnv.UserName = TestEnvironment.UserIdDefault;
                 SetEnvironmentSubscriptionId(testEnv, connectionString);
-                testEnv.Credentials = new TokenCredentials(token);
+                testEnv.Credentials = new TokenCredentials(TestEnvironment.RawTokenDefault);
             }
             else //Record or None
             {
@@ -62,7 +61,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
 
                     if (parsedConnection.ContainsKey(TestEnvironment.RawToken))
                     {
-                        token = parsedConnection[TestEnvironment.RawToken];
+                        var token = parsedConnection[TestEnvironment.RawToken];
                         testEnv.Credentials = new TokenCredentials(token);
                     }
                     else
@@ -99,7 +98,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                 //Getting subscriptions from server
                 var subscriptions = ListSubscriptions(
                     testEnv.BaseUri.ToString(),
-                    token);
+                    testEnv.Credentials);
                 
                 if (subscriptions.Count == 0)
                 {
@@ -176,16 +175,15 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             }
         }
 
-        public static List<SubscriptionInfo> ListSubscriptions(string baseuri, string accessToken)
+        public static List<SubscriptionInfo> ListSubscriptions(string baseuri, ServiceClientCredentials credentials)
         {
             var request = new HttpRequestMessage
             {
                 RequestUri = new Uri(string.Format("{0}/subscriptions?api-version=2014-04-01-preview", baseuri))
             };
 
-            request.Headers.Add("Authorization", string.Format("Bearer {0}", accessToken));
-
             HttpClient client = new HttpClient();
+            credentials.ProcessHttpRequestAsync(request, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
             HttpResponseMessage response = client.SendAsync(request).Result;
             response.EnsureSuccessStatusCode();
 

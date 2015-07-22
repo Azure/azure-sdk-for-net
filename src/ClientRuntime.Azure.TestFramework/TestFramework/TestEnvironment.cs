@@ -158,6 +158,11 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                 if (connection.ContainsKey(TestEnvironment.UserIdKey))
                 {
                     this.UserName = connection[TestEnvironment.UserIdKey];
+                    var splitUser = this.UserName.Split( new []{'@'}, StringSplitOptions.RemoveEmptyEntries);
+                    if (splitUser.Length == 2)
+                    {
+                        this.UserDomain = splitUser[1];
+                    }
                 }
                 if (connection.ContainsKey(TestEnvironment.ServicePrincipalKey))
                 {

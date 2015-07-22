@@ -111,7 +111,8 @@ namespace ResourceGroups.Tests
                             Uri = GoodWebsiteTemplateUri,
                         },
                         Parameters =
-                            @"{ 'siteName': {'value': 'mctest0101'},'hostingPlanName': {'value': 'mctest0101'},'siteMode': {'value': 'Limited'},'computeMode': {'value': 'Shared'},'siteLocation': {'value': 'North Europe'},'sku': {'value': 'Free'},'workerSize': {'value': '0'}}",
+                        JObject.Parse(
+                            @"{ 'siteName': {'value': 'mctest0101'},'hostingPlanName': {'value': 'mctest0101'},'siteMode': {'value': 'Limited'},'computeMode': {'value': 'Shared'},'siteLocation': {'value': 'North Europe'},'sku': {'value': 'Free'},'workerSize': {'value': '0'}}"),
                         Mode = DeploymentMode.Incremental,
                     }
                 };
@@ -162,7 +163,7 @@ namespace ResourceGroups.Tests
                             Uri = GoodWebsiteTemplateUri,
                         },
                         Parameters =
-                            @"{ 'siteName': {'value': 'mctest0101'},'hostingPlanName': {'value': 'mctest0101'},'siteMode': {'value': 'Limited'},'computeMode': {'value': 'Shared'},'siteLocation': {'value': 'North Europe'},'sku': {'value': 'Free'},'workerSize': {'value': '0'}}",
+                        JObject.Parse(@"{ 'siteName': {'value': 'mctest0101'},'hostingPlanName': {'value': 'mctest0101'},'siteMode': {'value': 'Limited'},'computeMode': {'value': 'Shared'},'siteLocation': {'value': 'North Europe'},'sku': {'value': 'Free'},'workerSize': {'value': '0'}}"),
                         Mode = DeploymentMode.Incremental,
                     }
                 };
@@ -198,7 +199,7 @@ namespace ResourceGroups.Tests
                     {
                         Template = File.ReadAllText("ScenarioTests\\good-website.js"),
                         Parameters =
-                            @"{ 'siteName': {'value': 'mctest0101'},'hostingPlanName': {'value': 'mctest0101'},'siteMode': {'value': 'Limited'},'computeMode': {'value': 'Shared'},'siteLocation': {'value': 'North Europe'},'sku': {'value': 'Free'},'workerSize': {'value': '0'}}",
+                        JObject.Parse(@"{ 'siteName': {'value': 'mctest0101'},'hostingPlanName': {'value': 'mctest0101'},'siteMode': {'value': 'Limited'},'computeMode': {'value': 'Shared'},'siteLocation': {'value': 'North Europe'},'sku': {'value': 'Free'},'workerSize': {'value': '0'}}"),
                         Mode = DeploymentMode.Incremental,
                     }
                 };
@@ -237,7 +238,7 @@ namespace ResourceGroups.Tests
                             Uri = BadTemplateUri,
                         },
                         Parameters =
-                            @"{ 'siteName': {'value': 'mctest0101'},'hostingPlanName': {'value': 'mctest0101'},'siteMode': {'value': 'Limited'},'computeMode': {'value': 'Shared'},'siteLocation': {'value': 'North Europe'},'sku': {'value': 'Free'},'workerSize': {'value': '0'}}",
+                        JObject.Parse(@"{ 'siteName': {'value': 'mctest0101'},'hostingPlanName': {'value': 'mctest0101'},'siteMode': {'value': 'Limited'},'computeMode': {'value': 'Shared'},'siteLocation': {'value': 'North Europe'},'sku': {'value': 'Free'},'workerSize': {'value': '0'}}"),
                         Mode = DeploymentMode.Incremental,
                     }
                 };
@@ -326,7 +327,7 @@ namespace ResourceGroups.Tests
                             Uri = GoodWebsiteTemplateUri,
                         },
                         Parameters =
-                            @"{ 'siteName': {'value': 'mctest0101'},'hostingPlanName': {'value': 'mctest0101'},'siteMode': {'value': 'Limited'},'computeMode': {'value': 'Shared'},'siteLocation': {'value': 'North Europe'},'sku': {'value': 'Free'},'workerSize': {'value': '0'}}",
+                        JObject.Parse(@"{ 'siteName': {'value': 'mctest0101'},'hostingPlanName': {'value': 'mctest0101'},'siteMode': {'value': 'Limited'},'computeMode': {'value': 'Shared'},'siteLocation': {'value': 'North Europe'},'sku': {'value': 'Free'},'workerSize': {'value': '0'}}"),
                         Mode = DeploymentMode.Incremental,
                     }
                 };
@@ -376,9 +377,10 @@ namespace ResourceGroups.Tests
                             Uri = GoodWebsiteTemplateUri,
                         },
                         Parameters =
+                        JObject.Parse(
                             "{ 'siteName': {'value': '" + resourceName + "'},'hostingPlanName': {'value': '" +
                             resourceName +
-                            "'},'siteMode': {'value': 'Limited'},'computeMode': {'value': 'Shared'},'siteLocation': {'value': 'North Europe'},'sku': {'value': 'Free'},'workerSize': {'value': '0'}}",
+                            "'},'siteMode': {'value': 'Limited'},'computeMode': {'value': 'Shared'},'siteLocation': {'value': 'North Europe'},'sku': {'value': 'Free'},'workerSize': {'value': '0'}}"),
                         Mode = DeploymentMode.Incremental,
                     }
                 };
