@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The definition of a CSMRecoveryPointOperationResponse.
+        /// The definition of a CSMRecoveryPointGetOperationResponse.
         /// </returns>
         Task<CSMRecoveryPointGetOperationResponse> GetAsync(CustomRequestHeaders customRequestHeaders, string containerName, string itemName, string recoveryPointName, CancellationToken cancellationToken);
         

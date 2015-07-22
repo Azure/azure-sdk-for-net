@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The definition of a CSMRecoveryPointOperationResponse.
+        /// The definition of a CSMRecoveryPointGetOperationResponse.
         /// </returns>
         public async Task<CSMRecoveryPointGetOperationResponse> GetAsync(CustomRequestHeaders customRequestHeaders, string containerName, string itemName, string recoveryPointName, CancellationToken cancellationToken)
         {
@@ -205,60 +205,56 @@ namespace Microsoft.Azure.Management.BackupServices
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            JToken valueValue = responseDoc["value"];
-                            if (valueValue != null && valueValue.Type != JTokenType.Null)
+                            CSMRecoveryPointResponse cSMRecoveryPointResponseInstance = new CSMRecoveryPointResponse();
+                            result.CSMRecoveryPointResponse = cSMRecoveryPointResponseInstance;
+                            
+                            JToken propertiesValue = responseDoc["properties"];
+                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                             {
-                                CSMRecoveryPointResponse valueInstance = new CSMRecoveryPointResponse();
-                                result.Value = valueInstance;
+                                CSMRecoveryPointProperties propertiesInstance = new CSMRecoveryPointProperties();
+                                cSMRecoveryPointResponseInstance.Properties = propertiesInstance;
                                 
-                                JToken propertiesValue = valueValue["properties"];
-                                if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                                JToken recoveryPointTypeValue = propertiesValue["recoveryPointType"];
+                                if (recoveryPointTypeValue != null && recoveryPointTypeValue.Type != JTokenType.Null)
                                 {
-                                    CSMRecoveryPointProperties propertiesInstance = new CSMRecoveryPointProperties();
-                                    valueInstance.Properties = propertiesInstance;
-                                    
-                                    JToken recoveryPointTypeValue = propertiesValue["recoveryPointType"];
-                                    if (recoveryPointTypeValue != null && recoveryPointTypeValue.Type != JTokenType.Null)
-                                    {
-                                        string recoveryPointTypeInstance = ((string)recoveryPointTypeValue);
-                                        propertiesInstance.RecoveryPointType = recoveryPointTypeInstance;
-                                    }
-                                    
-                                    JToken recoveryPointTimeValue = propertiesValue["recoveryPointTime"];
-                                    if (recoveryPointTimeValue != null && recoveryPointTimeValue.Type != JTokenType.Null)
-                                    {
-                                        DateTime recoveryPointTimeInstance = ((DateTime)recoveryPointTimeValue);
-                                        propertiesInstance.RecoveryPointTime = recoveryPointTimeInstance;
-                                    }
-                                    
-                                    JToken recoveryPointAdditionalInfoValue = propertiesValue["recoveryPointAdditionalInfo"];
-                                    if (recoveryPointAdditionalInfoValue != null && recoveryPointAdditionalInfoValue.Type != JTokenType.Null)
-                                    {
-                                        string recoveryPointAdditionalInfoInstance = ((string)recoveryPointAdditionalInfoValue);
-                                        propertiesInstance.RecoveryPointAdditionalInfo = recoveryPointAdditionalInfoInstance;
-                                    }
+                                    string recoveryPointTypeInstance = ((string)recoveryPointTypeValue);
+                                    propertiesInstance.RecoveryPointType = recoveryPointTypeInstance;
                                 }
                                 
-                                JToken idValue = valueValue["id"];
-                                if (idValue != null && idValue.Type != JTokenType.Null)
+                                JToken recoveryPointTimeValue = propertiesValue["recoveryPointTime"];
+                                if (recoveryPointTimeValue != null && recoveryPointTimeValue.Type != JTokenType.Null)
                                 {
-                                    string idInstance = ((string)idValue);
-                                    valueInstance.Id = idInstance;
+                                    DateTime recoveryPointTimeInstance = ((DateTime)recoveryPointTimeValue);
+                                    propertiesInstance.RecoveryPointTime = recoveryPointTimeInstance;
                                 }
                                 
-                                JToken nameValue = valueValue["name"];
-                                if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                JToken recoveryPointAdditionalInfoValue = propertiesValue["recoveryPointAdditionalInfo"];
+                                if (recoveryPointAdditionalInfoValue != null && recoveryPointAdditionalInfoValue.Type != JTokenType.Null)
                                 {
-                                    string nameInstance = ((string)nameValue);
-                                    valueInstance.Name = nameInstance;
+                                    string recoveryPointAdditionalInfoInstance = ((string)recoveryPointAdditionalInfoValue);
+                                    propertiesInstance.RecoveryPointAdditionalInfo = recoveryPointAdditionalInfoInstance;
                                 }
-                                
-                                JToken typeValue = valueValue["type"];
-                                if (typeValue != null && typeValue.Type != JTokenType.Null)
-                                {
-                                    string typeInstance = ((string)typeValue);
-                                    valueInstance.Type = typeInstance;
-                                }
+                            }
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                cSMRecoveryPointResponseInstance.Id = idInstance;
+                            }
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                string nameInstance = ((string)nameValue);
+                                cSMRecoveryPointResponseInstance.Name = nameInstance;
+                            }
+                            
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            {
+                                string typeInstance = ((string)typeValue);
+                                cSMRecoveryPointResponseInstance.Type = typeInstance;
                             }
                         }
                         
