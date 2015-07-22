@@ -29,6 +29,17 @@ namespace Microsoft.Azure.Management.DataFactories.Common.Models
     /// </summary>
     public partial class DataElement
     {
+        private string _culture;
+        
+        /// <summary>
+        /// Optional. Culture of the data element.
+        /// </summary>
+        public string Culture
+        {
+            get { return this._culture; }
+            set { this._culture = value; }
+        }
+        
         private string _description;
         
         /// <summary>
@@ -38,6 +49,17 @@ namespace Microsoft.Azure.Management.DataFactories.Common.Models
         {
             get { return this._description; }
             set { this._description = value; }
+        }
+        
+        private string _format;
+        
+        /// <summary>
+        /// Optional. Format of the data element.
+        /// </summary>
+        public string Format
+        {
+            get { return this._format; }
+            set { this._format = value; }
         }
         
         private string _name;

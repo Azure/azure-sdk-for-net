@@ -1,0 +1,20 @@
+{
+  "blueprint": "hadoop",
+  "default_password": "admin",
+  "configurations": [
+    {
+      "core-site":{
+        "fs.defaultFS": "wasb://#DefaultContainerName@#DefaultStorageAccountName.blob.core.windows.net",
+        "fs.azure.account.key.#DefaultStorageAccountName.blob.core.windows.net": "#DefaultStorageAccountKey"
+      }
+    }
+  ],
+  "host_groups": [
+    {
+      "name": "headnode"
+    },
+    {
+      "name": "workernode"
+    }
+  ]
+}

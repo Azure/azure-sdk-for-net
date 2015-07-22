@@ -16,7 +16,7 @@
 
 namespace DataFactory.Tests.Framework.JsonSamples
 {
-    public class PipelineJsonSamples
+    public class PipelineJsonSamples : JsonSampleCollection<PipelineJsonSamples>
     {
         [JsonSample(JsonSampleType.Unregistered)]
         public const string ActivityTypePipeline = @"

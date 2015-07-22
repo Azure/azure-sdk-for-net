@@ -19,7 +19,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
     /// <summary>
     /// Contains InternalLinkedService JSON samples. Samples added here will automatically be hit by the serialization unit tests. 
     /// </summary>
-    public class LinkedServiceJsonSamples
+    public class LinkedServiceJsonSamples : JsonSampleCollection<LinkedServiceJsonSamples>
     {
         [JsonSample]
         public const string HDInsightBYOCLinkedService = @"
