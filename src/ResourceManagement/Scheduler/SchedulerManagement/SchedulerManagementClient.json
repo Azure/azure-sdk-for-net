@@ -1,0 +1,1437 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "SchedulerManagementClient",
+        "version": "2014-08-01-preview"
+    },
+    "host": "management.azure.com",
+    "schemes": [
+        "https"
+    ],
+    "consumes": [
+        "application/json",
+        "text/json"
+    ],
+    "produces": [
+        "application/json",
+        "text/json"
+    ],
+    "paths": {
+        "/subscriptions/{subscriptionId}/providers/Microsoft.Scheduler/jobCollections": {
+            "get": {
+                "tags": [
+                    "JobCollections"
+                ],
+                "operationId": "JobCollections_ListBySubscription",
+                "description": "Gets all job collections under specified subscription.",
+                "parameters": [
+                    {
+                        "name": "subscriptionId",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "The subscription identifier."
+                    },
+                    {
+                        "name": "api-version",
+                        "in": "query",
+                        "required": true,
+                        "type": "string",
+                        "description": "The api version."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The job collections have been successfully returned.",
+                        "schema": {
+                            "$ref": "#/definitions/JobCollectionListResult"
+                        }
+                    }
+                }
+            }
+        },
+        "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Scheduler/jobCollections": {
+            "get": {
+                "tags": [
+                    "JobCollections"
+                ],
+                "operationId": "JobCollections_ListByResourceGroup",
+                "description": "Gets all job collections under specified resource group.",
+                "parameters": [
+                    {
+                        "name": "subscriptionId",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "The subscription identifier."
+                    },
+                    {
+                        "name": "resourceGroupName",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "The resource group name."
+                    },
+                    {
+                        "name": "api-version",
+                        "in": "query",
+                        "required": true,
+                        "type": "string",
+                        "description": "The api version."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The job collections have been successfully returned.",
+                        "schema": {
+                            "$ref": "#/definitions/JobCollectionListResult"
+                        }
+                    }
+                }
+            }
+        },
+        "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Scheduler/jobCollections/{jobCollectionName}": {
+            "get": {
+                "tags": [
+                    "JobCollections"
+                ],
+                "operationId": "JobCollections_Get",
+                "description": "Gets a job collection.",
+                "parameters": [
+                    {
+                        "name": "subscriptionId",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "The subscription identifier."
+                    },
+                    {
+                        "name": "resourceGroupName",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "The resource group name."
+                    },
+                    {
+                        "name": "jobCollectionName",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "The job collection name."
+                    },
+                    {
+                        "name": "api-version",
+                        "in": "query",
+                        "required": true,
+                        "type": "string",
+                        "description": "The api version."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The job collection has been successfully returned.",
+                        "schema": {
+                            "$ref": "#/definitions/JobCollectionDefinition"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "JobCollections"
+                ],
+                "operationId": "JobCollections_CreateOrUpdate",
+                "description": "Provisions a new job collection or updates an existing job collection.",
+                "parameters": [
+                    {
+                        "name": "subscriptionId",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "The subscription identifier."
+                    },
+                    {
+                        "name": "resourceGroupName",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "The resource group name."
+                    },
+                    {
+                        "name": "jobCollectionName",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "The job collection name."
+                    },
+                    {
+                        "name": "api-version",
+                        "in": "query",
+                        "required": true,
+                        "type": "string",
+                        "description": "The api version."
+                    },
+                    {
+                        "name": "jobCollection",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/JobCollectionDefinition"
+                        },
+                        "description": "The job collection definition."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The job collection has been successfully updated.",
+                        "schema": {
+                            "$ref": "#/definitions/JobCollectionDefinition"
+                        }
+                    },
+                    "201": {
+                        "description": "The job collection has been successfully created.",
+                        "schema": {
+                            "$ref": "#/definitions/JobCollectionDefinition"
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "JobCollections"
+                ],
+                "operationId": "JobCollections_Patch",
+                "description": "Patches an existing job collection.",
+                "parameters": [
+                    {
+                        "name": "subscriptionId",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "The subscription identifier."
+                    },
+                    {
+                        "name": "resourceGroupName",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "The resource group name."
+                    },
+                    {
+                        "name": "jobCollectionName",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "The job collection name."
+                    },
+                    {
+                        "name": "api-version",
+                        "in": "query",
+                        "required": true,
+                        "type": "string",
+                        "description": "The api version."
+                    },
+                    {
+                        "name": "jobCollection",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/JobCollectionDefinition"
+                        },
+                        "description": "The job collection definition."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The job collection has been successfully patched.",
+                        "schema": {
+                            "$ref": "#/definitions/JobCollectionDefinition"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "JobCollections"
+                ],
+                "operationId": "JobCollections_Delete",
+                "description": "Deletes a job collection.",
+                "parameters": [
+                    {
+                        "name": "subscriptionId",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "The subscription identifier."
+                    },
+                    {
+                        "name": "resourceGroupName",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "The resource group name."
+                    },
+                    {
+                        "name": "jobCollectionName",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "The job collection name."
+                    },
+                    {
+                        "name": "api-version",
+                        "in": "query",
+                        "required": true,
+                        "type": "string",
+                        "description": "The api version."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The job collection has been successfully deleted."
+                    }
+                }
+            }
+        },
+        "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Scheduler/jobCollections/{jobCollectionName}/enable": {
+            "post": {
+                "tags": [
+                    "JobCollections"
+                ],
+                "operationId": "JobCollections_Enable",
+                "description": "Enables all of the jobs in the job collection.",
+                "parameters": [
+                    {
+                        "name": "subscriptionId",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "The subscription identifier."
+                    },
+                    {
+                        "name": "resourceGroupName",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "The resource group name."
+                    },
+                    {
+                        "name": "jobCollectionName",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "The job collection name."
+                    },
+                    {
+                        "name": "api-version",
+                        "in": "query",
+                        "required": true,
+                        "type": "string",
+                        "description": "The api version."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "All of the jobs in the job collection have been successfully enabled."
+                    }
+                }
+            }
+        },
+        "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Scheduler/jobCollections/{jobCollectionName}/disable": {
+            "post": {
+                "tags": [
+                    "JobCollections"
+                ],
+                "operationId": "JobCollections_Disable",
+                "description": "Disables all of the jobs in the job collection.",
+                "parameters": [
+                    {
+                        "name": "subscriptionId",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "The subscription identifier."
+                    },
+                    {
+                        "name": "resourceGroupName",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "The resource group name."
+                    },
+                    {
+                        "name": "jobCollectionName",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "The job collection name."
+                    },
+                    {
+                        "name": "api-version",
+                        "in": "query",
+                        "required": true,
+                        "type": "string",
+                        "description": "The api version."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "All of the jobs in the job collection have been successfully disabled."
+                    }
+                }
+            }
+        },
+        "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Scheduler/jobCollections/{jobCollectionName}/jobs/{jobName}": {
+            "get": {
+                "tags": [
+                    "Jobs"
+                ],
+                "operationId": "Jobs_Get",
+                "description": "Gets a job.",
+                "parameters": [
+                    {
+                        "name": "subscriptionId",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "The subscription identifier."
+                    },
+                    {
+                        "name": "resourceGroupName",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "The resource group name."
+                    },
+                    {
+                        "name": "jobCollectionName",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "The job collection name."
+                    },
+                    {
+                        "name": "jobName",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "The job name."
+                    },
+                    {
+                        "name": "api-version",
+                        "in": "query",
+                        "required": true,
+                        "type": "string",
+                        "description": "The api version."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The job has been successfully returned.",
+                        "schema": {
+                            "$ref": "#/definitions/JobDefinition"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Jobs"
+                ],
+                "operationId": "Jobs_CreateOrUpdate",
+                "description": "Provisions a new job or updates an existing job.",
+                "parameters": [
+                    {
+                        "name": "subscriptionId",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "The subscription identifier."
+                    },
+                    {
+                        "name": "resourceGroupName",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "The resource group name."
+                    },
+                    {
+                        "name": "jobCollectionName",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "The job collection name."
+                    },
+                    {
+                        "name": "jobName",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "The job name."
+                    },
+                    {
+                        "name": "api-version",
+                        "in": "query",
+                        "required": true,
+                        "type": "string",
+                        "description": "The api version."
+                    },
+                    {
+                        "name": "job",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/JobDefinition"
+                        },
+                        "description": "The job definition."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The job has been successfully updated.",
+                        "schema": {
+                            "$ref": "#/definitions/JobDefinition"
+                        }
+                    },
+                    "201": {
+                        "description": "The job has been successfully created.",
+                        "schema": {
+                            "$ref": "#/definitions/JobDefinition"
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Jobs"
+                ],
+                "operationId": "Jobs_Patch",
+                "description": "Patches an existing job.",
+                "parameters": [
+                    {
+                        "name": "subscriptionId",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "The subscription identifier."
+                    },
+                    {
+                        "name": "resourceGroupName",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "The resource group name."
+                    },
+                    {
+                        "name": "jobCollectionName",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "The job collection name."
+                    },
+                    {
+                        "name": "jobName",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "The job name."
+                    },
+                    {
+                        "name": "api-version",
+                        "in": "query",
+                        "required": true,
+                        "type": "string",
+                        "description": "The api version."
+                    },
+                    {
+                        "name": "job",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/JobDefinition"
+                        },
+                        "description": "The job definition."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The job has been successfully patched.",
+                        "schema": {
+                            "$ref": "#/definitions/JobDefinition"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Jobs"
+                ],
+                "operationId": "Jobs_Delete",
+                "description": "Deletes a job.",
+                "parameters": [
+                    {
+                        "name": "subscriptionId",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "The subscription identifier."
+                    },
+                    {
+                        "name": "resourceGroupName",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "The resource group name."
+                    },
+                    {
+                        "name": "jobCollectionName",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "The job collection name."
+                    },
+                    {
+                        "name": "jobName",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "The job name."
+                    },
+                    {
+                        "name": "api-version",
+                        "in": "query",
+                        "required": true,
+                        "type": "string",
+                        "description": "The api version."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The job has been successfully deleted."
+                    }
+                }
+            }
+        },
+        "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Scheduler/jobCollections/{jobCollectionName}/jobs/{jobName}/run": {
+            "post": {
+                "tags": [
+                    "Jobs"
+                ],
+                "operationId": "Jobs_Run",
+                "description": "Runs a job.",
+                "parameters": [
+                    {
+                        "name": "subscriptionId",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "The subscription identifier."
+                    },
+                    {
+                        "name": "resourceGroupName",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "The resource group name."
+                    },
+                    {
+                        "name": "jobCollectionName",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "The job collection name."
+                    },
+                    {
+                        "name": "jobName",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "The job name."
+                    },
+                    {
+                        "name": "api-version",
+                        "in": "query",
+                        "required": true,
+                        "type": "string",
+                        "description": "The api version."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The job has been successfully run."
+                    }
+                }
+            }
+        },
+        "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Scheduler/jobCollections/{jobCollectionName}/jobs": {
+            "get": {
+                "tags": [
+                    "Jobs"
+                ],
+                "operationId": "Jobs_List",
+                "description": "Lists all jobs under the specified job collection.",
+                "parameters": [
+                    {
+                        "name": "subscriptionId",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "The subscription identifier."
+                    },
+                    {
+                        "name": "resourceGroupName",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "The resource group name."
+                    },
+                    {
+                        "name": "jobCollectionName",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "The job collection name."
+                    },
+                    {
+                        "name": "api-version",
+                        "in": "query",
+                        "required": true,
+                        "type": "string",
+                        "description": "The api version."
+                    },
+                    {
+                        "name": "$top",
+                        "in": "query",
+                        "required": false,
+                        "type": "integer",
+                        "description": "The number of jobs to request, in the of range [1..100]."
+                    },
+                    {
+                        "name": "$skip",
+                        "in": "query",
+                        "required": false,
+                        "type": "integer",
+                        "description": "The (0-based) index of the job history list from which to begin requesting entries."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The job has been successfully returned.",
+                        "schema": {
+                            "$ref": "#/definitions/JobListResult"
+                        }
+                    }
+                },
+                "x-ms-pageable": true
+            }
+        },
+        "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Scheduler/jobCollections/{jobCollectionName}/jobs/{jobName}/history": {
+            "get": {
+                "tags": [
+                    "Jobs"
+                ],
+                "operationId": "Jobs_ListJobHistory",
+                "description": "Lists job history.",
+                "parameters": [
+                    {
+                        "name": "subscriptionId",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "The subscription identifier."
+                    },
+                    {
+                        "name": "resourceGroupName",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "The resource group name."
+                    },
+                    {
+                        "name": "jobCollectionName",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "The job collection name."
+                    },
+                    {
+                        "name": "jobName",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "The job name."
+                    },
+                    {
+                        "name": "api-version",
+                        "in": "query",
+                        "required": true,
+                        "type": "string",
+                        "description": "The api version."
+                    },
+                    {
+                        "name": "$top",
+                        "in": "query",
+                        "required": false,
+                        "type": "integer",
+                        "description": "the number of job history to request, in the of range [1..100]."
+                    },
+                    {
+                        "name": "$skip",
+                        "in": "query",
+                        "required": false,
+                        "type": "integer",
+                        "description": "The (0-based) index of the job history list from which to begin requesting entries."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The job histories have been successfully returned.",
+                        "schema": {
+                            "$ref": "#/definitions/JobHistoryListResult"
+                        }
+                    }
+                },
+                "x-ms-pageable": true
+            }
+        }
+    },
+    "definitions": {
+        "JobCollectionListResult": {
+            "properties": {
+                "value": {
+                    "type": "array",
+                    "readonly": true,
+                    "items": {
+                        "$ref": "#/definitions/JobCollectionDefinition"
+                    },
+                    "description": "Gets the job collections."
+                },
+                "nextLink": {
+                    "type": "string",
+                    "description": "Gets or sets the URL to get the next set of job collections."
+                }
+            }
+        },
+        "JobListResult": {
+            "properties": {
+                "value": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/JobDefinition"
+                    },
+                    "description": "Gets or sets all jobs under job collection."
+                },
+                "nextLink": {
+                    "type": "string",
+                    "description": "Gets or sets the URL to get the next set of jobs."
+                }
+            }
+        },
+        "JobHistoryListResult": {
+            "properties": {
+                "value": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/JobHistoryDefinition"
+                    },
+                    "description": "Gets or sets the job histories under job."
+                },
+                "nextLink": {
+                    "type": "string",
+                    "description": "Gets or sets the URL to get the next set of job histories."
+                }
+            }
+        },
+        "JobCollectionDefinition": {
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "readonly": true,
+                    "description": "Gets the job collection identifier."
+                },
+                "type": {
+                    "type": "string",
+                    "readonly": true,
+                    "description": "Gets the job collection resource type."
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Gets or sets the job collection name."
+                },
+                "location": {
+                    "type": "string",
+                    "description": "Gets or sets the storage account location."
+                },
+                "tags": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "Gets or sets the tags."
+                },
+                "properties": {
+                    "$ref": "#/definitions/JobCollectionProperties",
+                    "description": "Gets or sets the job collection properties."
+                }
+            }
+        },
+        "JobCollectionProperties": {
+            "properties": {
+                "sku": {
+                    "$ref": "#/definitions/Sku",
+                    "description": "Gets or sets the SKU."
+                },
+                "state": {
+                    "type": "string",
+                    "description": "Gets or sets the state.",
+                    "enum": [
+                        "Enabled",
+                        "Disabled",
+                        "Suspended",
+                        "Deleted"
+                    ],
+                    "x-ms-enum": "JobCollectionState"
+                },
+                "quota": {
+                    "$ref": "#/definitions/JobCollectionQuota",
+                    "description": "Gets or sets the job collection quota."
+                }
+            }
+        },
+        "Sku": {
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Gets or set the SKU.",
+                    "enum": [
+                        "Standard",
+                        "Free",
+                        "Premium"
+                    ],
+                    "x-ms-enum": "SkuDefinition"
+                }
+            }
+        },
+        "JobCollectionQuota": {
+            "properties": {
+                "maxJobCount": {
+                    "type": "integer",
+                    "description": "Gets or set the maximum job count."
+                },
+                "maxJobOccurrence": {
+                    "type": "integer",
+                    "description": "Gets or sets the maximum job occurrence."
+                },
+                "maxRecurrence": {
+                    "$ref": "#/definitions/JobMaxRecurrence",
+                    "description": "Gets or set the maximum recurrence."
+                }
+            }
+        },
+        "JobDefinition": {
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "readonly": true,
+                    "description": "Gets the job identifier."
+                },
+                "type": {
+                    "type": "string",
+                    "readonly": true,
+                    "description": "Gets the job resource type."
+                },
+                "name": {
+                    "type": "string",
+                    "readonly": true,
+                    "description": "Gets the job name."
+                },
+                "properties": {
+                    "$ref": "#/definitions/JobProperties",
+                    "description": "Gets or sets the job properties."
+                }
+            }
+        },
+        "JobProperties": {
+            "properties": {
+                "startTime": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Gets or sets the job start time."
+                },
+                "action": {
+                    "$ref": "#/definitions/JobAction",
+                    "description": "Gets or sets the job action."
+                },
+                "recurrence": {
+                    "$ref": "#/definitions/JobRecurrence",
+                    "description": "Gets or sets the job recurrence."
+                },
+                "state": {
+                    "type": "string",
+                    "description": "Gets or set the job state.",
+                    "enum": [
+                        "Enabled",
+                        "Disabled",
+                        "Faulted",
+                        "Completed"
+                    ],
+                    "x-ms-enum": "JobState"
+                },
+                "status": {
+                    "$ref": "#/definitions/JobStatus",
+                    "readonly": true,
+                    "description": "Gets the job status."
+                }
+            }
+        },
+        "JobHistoryDefinition": {
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "readonly": true,
+                    "description": "Gets the job history identifier."
+                },
+                "type": {
+                    "type": "string",
+                    "readonly": true,
+                    "description": "Gets the job history resource type."
+                },
+                "name": {
+                    "type": "string",
+                    "readonly": true,
+                    "description": "Gets the job history name."
+                },
+                "properties": {
+                    "$ref": "#/definitions/JobHistoryDefinitionProperties",
+                    "readonly": true,
+                    "description": "Gets or sets the job history properties."
+                }
+            }
+        },
+        "JobHistoryDefinitionProperties": {
+            "properties": {
+                "startTime": {
+                    "type": "string",
+                    "format": "date-time",
+                    "readonly": true,
+                    "description": "Gets the start time for this job."
+                },
+                "endTime": {
+                    "type": "string",
+                    "format": "date-time",
+                    "readonly": true,
+                    "description": "Gets the end time for this job."
+                },
+                "expectedExecutionTime": {
+                    "type": "string",
+                    "format": "date-time",
+                    "readonly": true,
+                    "description": "Gets the expected execution time for this job."
+                },
+                "actionName": {
+                    "type": "string",
+                    "readonly": true,
+                    "description": "Gets the job history action name.",
+                    "enum": [
+                        "MainAction",
+                        "ErrorAction"
+                    ],
+                    "x-ms-enum": "JobHistoryActionName"
+                },
+                "status": {
+                    "type": "string",
+                    "readonly": true,
+                    "description": "Gets the job history status.",
+                    "enum": [
+                        "Completed",
+                        "Failed",
+                        "Cancelled",
+                        "CallbackNotFound",
+                        "Postponed"
+                    ],
+                    "x-ms-enum": "JobExecutionStatus"
+                },
+                "message": {
+                    "type": "string",
+                    "readonly": true,
+                    "description": "Gets the message for the job history."
+                },
+                "retryCount": {
+                    "type": "integer",
+                    "readonly": true,
+                    "description": "Gets the retry count for job."
+                },
+                "repeatCount": {
+                    "type": "integer",
+                    "readonly": true,
+                    "description": "Gets the repeat count for the job."
+                }
+            }
+        },
+        "JobAction": {
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "description": "Gets or sets the job action type.",
+                    "enum": [
+                        "Http",
+                        "Https",
+                        "StorageQueue"
+                    ],
+                    "x-ms-enum": "JobActionType"
+                },
+                "request": {
+                    "$ref": "#/definitions/HttpRequest",
+                    "description": "Gets or sets the http requests."
+                },
+                "queueMessage": {
+                    "$ref": "#/definitions/StorageQueueMessage",
+                    "description": "Gets or sets the storage queue message."
+                },
+                "retryPolicy": {
+                    "$ref": "#/definitions/RetryPolicy",
+                    "description": "Gets or sets the retry policy."
+                },
+                "errorAction": {
+                    "$ref": "#/definitions/JobErrorAction",
+                    "description": "Gets or sets the error action."
+                }
+            }
+        },
+        "JobErrorAction": {
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "description": "Gets or sets the job error action type.",
+                    "enum": [
+                        "Http",
+                        "Https",
+                        "StorageQueue"
+                    ],
+                    "x-ms-enum": "JobActionType"
+                },
+                "request": {
+                    "$ref": "#/definitions/HttpRequest",
+                    "description": "Gets or sets the http requests."
+                },
+                "queueMessage": {
+                    "$ref": "#/definitions/StorageQueueMessage",
+                    "description": "Gets or sets the storage queue message."
+                },
+                "retryPolicy": {
+                    "$ref": "#/definitions/RetryPolicy",
+                    "description": "Gets or sets the retry policy."
+                }
+            }
+        },
+        "HttpRequest": {
+            "properties": {
+                "httpAuthentication": {
+                    "$ref": "#/definitions/HttpAuthentication",
+                    "description": "Gets or sets the http authentication."
+                },
+                "uri": {
+                    "type": "string",
+                    "description": "Gets or sets the Uri for the request."
+                },
+                "method": {
+                    "type": "string",
+                    "description": "Gets or sets the method of the request."
+                },
+                "body": {
+                    "type": "string",
+                    "description": "Gets or sets the request body."
+                },
+                "headers": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "Gets or sets the headers for the request."
+                }
+            }
+        },
+        "ClientCertAuthentication": {
+            "properties": {
+                "password": {
+                    "type": "string",
+                    "description": "Gets or sets the password."
+                },
+                "pfx": {
+                    "type": "string",
+                    "description": "Gets or sets the pfx."
+                },
+                "certificateThumbprint": {
+                    "type": "string",
+                    "description": "Gets or sets the certificate thumbprint."
+                },
+                "certificateExpirationDate": {
+                    "type": "string",
+                    "formate": "date-time",
+                    "description": "Gets or sets the certificate expiration date."
+                },
+                "certificateSubjectName": {
+                    "type": "string",
+                    "description": "Gets or sets the certificate subject name."
+                }
+            },
+            "allOf": [
+                {
+                    "$ref": "#/definitions/HttpAuthentication"
+                }
+            ]
+        },
+        "BasicAuthentication": {
+            "properties": {
+                "username": {
+                    "type": "string",
+                    "description": "Gets or sets the username."
+                },
+                "password": {
+                    "type": "string",
+                    "description": "Gets or sets the password."
+                }
+            },
+            "allOf": [
+                {
+                    "$ref": "#/definitions/HttpAuthentication"
+                }
+            ]
+        },
+        "OAuthAuthentication": {
+            "properties": {
+                "secret": {
+                    "type": "string",
+                    "description": "Gets or sets the secret."
+                },
+                "tenant": {
+                    "type": "string",
+                    "description": "Gets or sets the tenant."
+                },
+                "audience": {
+                    "type": "string",
+                    "description": "Gets or sets the audience."
+                },
+                "clientId": {
+                    "type": "string",
+                    "description": "Gets or sets the client identifier."
+                }
+            },
+            "allOf": [
+                {
+                    "$ref": "#/definitions/HttpAuthentication"
+                }
+            ]
+        },
+        "HttpAuthentication": {
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "description": "Gets or sets the http authentication type.",
+                    "enum": [
+                        "NotSpecified",
+                        "ClientCertificate",
+                        "ActiveDirectoryOAuth",
+                        "Basic"
+                    ],
+                    "x-ms-enum": "HttpAuthenticationType"
+                }
+            }
+        },
+        "StorageQueueMessage": {
+            "properties": {
+                "storageAccount": {
+                    "type": "string",
+                    "description": "Gets or sets the Storage Account Name for the request."
+                },
+                "queueName": {
+                    "type": "string",
+                    "description": "Gets or sets the Queue Name for the request."
+                },
+                "sasToken": {
+                    "type": "string",
+                    "description": "Gets or sets the SAS Key for the request."
+                },
+                "message": {
+                    "type": "string",
+                    "description": "Gets or sets the message for the request."
+                }
+            }
+        },
+        "RetryPolicy": {
+            "properties": {
+                "retryType": {
+                    "type": "string",
+                    "description": "Gets or sets the retry strategy to be used.",
+                    "enum": [
+                        "None",
+                        "Fixed"
+                    ],
+                    "x-ms-enum": "RetryType"
+                },
+                "retryInterval": {
+                    "type": "integer",
+                    "description": "Gets or sets the retry interval between retries."
+                },
+                "retryCount": {
+                    "type": "integer",
+                    "description": "Gets or sets the number of times a retry should be attempted."
+                }
+            }
+        },
+        "JobMaxRecurrence": {
+            "properties": {
+                "frequency": {
+                    "type": "string",
+                    "description": "Gets or sets the frequency of recurrence (second, minute, hour, day, week, month).",
+                    "enum": [
+                        "Minute",
+                        "Hour",
+                        "Day",
+                        "Week",
+                        "Month"
+                    ],
+                    "x-ms-enum": "RecurrenceFrequency"
+                },
+                "interval": {
+                    "type": "integer",
+                    "description": "Gets or sets the interval between retries."
+                }
+            }
+        },
+        "JobRecurrence": {
+            "properties": {
+                "frequency": {
+                    "type": "string",
+                    "description": "Gets or sets the frequency of recurrence (second, minute, hour, day, week, month).",
+                    "enum": [
+                        "Minute",
+                        "Hour",
+                        "Day",
+                        "Week",
+                        "Month"
+                    ],
+                    "x-ms-enum": "RecurrenceFrequency"
+                },
+                "interval": {
+                    "type": "integer",
+                    "description": "Gets or sets the interval between retries."
+                },
+                "count": {
+                    "type": "integer",
+                    "description": "Gets or sets the maximum number of times that the job should run."
+                },
+                "endTime": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Gets or sets the time at which the job will complete."
+                },
+                "schedule": {
+                    "$ref": "#/definitions/JobRecurrenceSchedule"
+                }
+            }
+        },
+        "JobRecurrenceSchedule": {
+            "properties": {
+                "weekDays": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "enum": [
+                            "Monday",
+                            "Tuesday",
+                            "Wednesday",
+                            "Thursday",
+                            "Friday",
+                            "Saturday",
+                            "Sunday"
+                        ],
+                        "x-ms-enum": "DayOfWeek"
+                    },
+                    "description": "Gets or sets the days of the week that the job should execute on."
+                },
+                "hours": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    },
+                    "description": "Gets or sets the hours of the day that the job should execute at."
+                },
+                "minutes": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    },
+                    "description": "Gets or sets the minutes of the hour that the job should execute at."
+                },
+                "monthDays": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    },
+                    "description": "Gets or sets the days of the month that the job should execute on. Must be between 1 and 31."
+                },
+                "monthlyOccurrences": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/JobRecurrenceScheduleMonthlyOccurrence"
+                    },
+                    "description": "Gets or sets the occurrences of days within a month."
+                }
+            }
+        },
+        "JobRecurrenceScheduleMonthlyOccurrence": {
+            "properties": {
+                "day": {
+                    "type": "string",
+                    "description": "Gets or sets the day. Must be one of monday, tuesday, wednesday, thursday, friday, saturday, sunday.",
+                    "enum": [
+                        "Monday",
+                        "Tuesday",
+                        "Wednesday",
+                        "Thursday",
+                        "Friday",
+                        "Saturday",
+                        "Sunday"
+                    ],
+                    "x-ms-enum": "JobScheduleDay"
+                },
+                "Occurrence": {
+                    "type": "integer",
+                    "description": "Gets or sets the occurrence. Must be between -5 and 5."
+                }
+            }
+        },
+        "JobStatus": {
+            "properties": {
+                "executionCount": {
+                    "type": "integer",
+                    "readonly": true,
+                    "description": "Gets the number of times this job has executed."
+                },
+                "failureCount": {
+                    "type": "integer",
+                    "readonly": true,
+                    "description": "Gets the number of times this job has failed."
+                },
+                "faultedCount": {
+                    "type": "integer",
+                    "readonly": true,
+                    "description": "Gets the number of faulted occurrences (occurrences that were retried and failed as many times as the retry policy states)."
+                },
+                "lastExecutionTime": {
+                    "type": "string",
+                    "format": "date-time",
+                    "readonly": true,
+                    "description": "Gets the time the last occurrence executed in ISO-8601 format.  Could be empty if job has not run yet."
+                },
+                "nextExecutionTime": {
+                    "type": "string",
+                    "format": "date-time",
+                    "readonly": true,
+                    "description": "Gets the time of the next occurrence in ISO-8601 format. Could be empty if the job is completed."
+                }
+            }
+        }
+    }
+}
