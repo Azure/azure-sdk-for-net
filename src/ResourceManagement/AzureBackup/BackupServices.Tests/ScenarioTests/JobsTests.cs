@@ -56,52 +56,52 @@ namespace BackupServices.Tests
             }
         }
 
-        [Fact]
-        public void CancelJobTest()
-        {
-            using (UndoContext context = UndoContext.Current)
-            {
-                context.Start();
-                var client = GetServiceClient<BackupServicesManagementClient>();
+        //[Fact]
+        //public void CancelJobTest()
+        //{
+        //    using (UndoContext context = UndoContext.Current)
+        //    {
+        //        context.Start();
+        //        var client = GetServiceClient<BackupServicesManagementClient>();
 
-                string containerName = ConfigurationManager.AppSettings["ContainerName"];
-                string dataSourceType = ConfigurationManager.AppSettings["DataSourceType"];
-                string dataSourceId = ConfigurationManager.AppSettings["DataSourceId"];
+        //        string containerName = ConfigurationManager.AppSettings["ContainerName"];
+        //        string dataSourceType = ConfigurationManager.AppSettings["DataSourceType"];
+        //        string dataSourceId = ConfigurationManager.AppSettings["DataSourceId"];
 
-                var backupResponse = client.BackUp.TriggerBackUpAsync(GetCustomRequestHeaders(), containerName, dataSourceType, dataSourceId).Result;
+        //        var backupResponse = client.BackUp.TriggerBackUpAsync(GetCustomRequestHeaders(), containerName, dataSourceType, dataSourceId).Result;
 
-                var opStatus = client.OperationStatus.GetAsync(backupResponse.OperationId.ToString(), GetCustomRequestHeaders()).Result;
-                while (opStatus.OperationStatus != "Completed")
-                {
-                    opStatus = client.OperationStatus.GetAsync(backupResponse.OperationId.ToString(), GetCustomRequestHeaders()).Result;
-                }
+        //        var opStatus = client.OperationStatus.GetAsync(backupResponse.OperationId.ToString(), GetCustomRequestHeaders()).Result;
+        //        while (opStatus.OperationStatus != "Completed")
+        //        {
+        //            opStatus = client.OperationStatus.GetAsync(backupResponse.OperationId.ToString(), GetCustomRequestHeaders()).Result;
+        //        }
 
-                var queryParams = new CSMJobQueryObject()
-                {
-                    StartTime = DateTime.UtcNow.AddDays(-1).ToString("yyyy-MM-dd hh:mm:ss tt"),
-                    EndTime = DateTime.UtcNow.ToString("yyyy-MM-dd hh:mm:ss tt"),
-                    Status = "InProgress",
-                    Operation = "Backup"
-                };
+        //        var queryParams = new CSMJobQueryObject()
+        //        {
+        //            StartTime = DateTime.UtcNow.AddDays(-1).ToString("yyyy-MM-dd hh:mm:ss tt"),
+        //            EndTime = DateTime.UtcNow.ToString("yyyy-MM-dd hh:mm:ss tt"),
+        //            Status = "InProgress",
+        //            Operation = "Backup"
+        //        };
 
-                var jobResponse = client.Job.ListAsync(queryParams, GetCustomRequestHeaders()).Result.List.Value;
-                var opId = client.Job.StopAsync(jobResponse[0].Name, GetCustomRequestHeaders()).Result;
+        //        var jobResponse = client.Job.ListAsync(queryParams, GetCustomRequestHeaders()).Result.List.Value;
+        //        var opId = client.Job.StopAsync(jobResponse[0].Name, GetCustomRequestHeaders()).Result;
 
-                // TODO: Wait till the WF completes
-                opStatus = client.OperationStatus.GetAsync(opId.OperationId.ToString(), GetCustomRequestHeaders()).Result;
-                while(opStatus.OperationStatus != "Completed")
-                {
-                    opStatus = client.OperationStatus.GetAsync(opId.OperationId.ToString(), GetCustomRequestHeaders()).Result;
-                }
-                var response = client.Job.GetAsync(jobResponse[0].Name, GetCustomRequestHeaders()).Result.Value;
-                // TODO: Remove this hack once backend is upgraded.
-                while(response.JobDetailedProperties.Status.CompareTo("InProgress") == 0)
-                {
-                    response = client.Job.GetAsync(jobResponse[0].Name, GetCustomRequestHeaders()).Result.Value;
-                }
-                Assert.True((response.JobDetailedProperties.Status.CompareTo("Cancelled") == 0) || (response.JobDetailedProperties.Status.CompareTo("Cancelling") == 0));
-            }
-        }
+        //        // TODO: Wait till the WF completes
+        //        opStatus = client.OperationStatus.GetAsync(opId.OperationId.ToString(), GetCustomRequestHeaders()).Result;
+        //        while(opStatus.OperationStatus != "Completed")
+        //        {
+        //            opStatus = client.OperationStatus.GetAsync(opId.OperationId.ToString(), GetCustomRequestHeaders()).Result;
+        //        }
+        //        var response = client.Job.GetAsync(jobResponse[0].Name, GetCustomRequestHeaders()).Result.Value;
+        //        // TODO: Remove this hack once backend is upgraded.
+        //        while(response.JobDetailedProperties.Status.CompareTo("InProgress") == 0)
+        //        {
+        //            response = client.Job.GetAsync(jobResponse[0].Name, GetCustomRequestHeaders()).Result.Value;
+        //        }
+        //        Assert.True((response.JobDetailedProperties.Status.CompareTo("Cancelled") == 0) || (response.JobDetailedProperties.Status.CompareTo("Cancelling") == 0));
+        //    }
+        //}
 
         private void ValidateJobResponse(CSMJobResponse response)
         {

@@ -36,8 +36,8 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <summary>
         /// Get details of a particular job.
         /// </summary>
-        /// <param name='jobId'>
-        /// Request header parameters.
+        /// <param name='name'>
+        /// Name of the job whose details should be retrieved.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Request header parameters.
@@ -46,9 +46,9 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response model for the list jobs operation.
+        /// Response model for job details operation
         /// </returns>
-        Task<JobByIdResponse> GetAsync(string jobId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<CSMJobDetails> GetAsync(string name, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
         /// Get the list of all jobs queried by specified filters.
@@ -63,15 +63,15 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response model for the list jobs operation.
+        /// Powershell response object
         /// </returns>
-        Task<JobListResponse> ListAsync(JobQueryParameter parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<CSMJobList> ListAsync(CSMJobQueryObject parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
         /// Trigger cancellation of a job.
         /// </summary>
-        /// <param name='jobId'>
-        /// Id of the job whose details should be retrieved.
+        /// <param name='name'>
+        /// Name of the job which should be stopped.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Custom request headers to make the call.
@@ -82,6 +82,6 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a Operation Response.
         /// </returns>
-        Task<OperationResponse> StopAsync(string jobId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<OperationResponse> StopAsync(string name, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
     }
 }
