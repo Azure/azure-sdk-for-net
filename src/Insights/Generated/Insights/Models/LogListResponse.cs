@@ -21,44 +21,32 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
+using Microsoft.Azure.Insights.Models;
 
-namespace Microsoft.Azure.Management.Insights.Models
+namespace Microsoft.Azure.Insights.Models
 {
-    public enum Units
+    /// <summary>
+    /// The List Log values operation response.
+    /// </summary>
+    public partial class LogListResponse : AzureOperationResponse
     {
-        /// <summary>
-        /// Count (how many).
-        /// </summary>
-        Count = 0,
+        private LogCollection _logCollection;
         
         /// <summary>
-        /// Unit in bytes.
+        /// Optional. Gets or sets the retrieved log value sets.
         /// </summary>
-        Bytes = 1,
+        public LogCollection LogCollection
+        {
+            get { return this._logCollection; }
+            set { this._logCollection = value; }
+        }
         
         /// <summary>
-        /// Unit in seconds.
+        /// Initializes a new instance of the LogListResponse class.
         /// </summary>
-        Seconds = 2,
-        
-        /// <summary>
-        /// Unit as a percentage.
-        /// </summary>
-        Percent = 3,
-        
-        /// <summary>
-        /// How many per second.
-        /// </summary>
-        CountPerSecond = 4,
-        
-        /// <summary>
-        /// How many bytes per second.
-        /// </summary>
-        BytesPerSecond = 5,
-        
-        /// <summary>
-        /// Unit in milli-seconds.
-        /// </summary>
-        MilliSeconds = 6,
+        public LogListResponse()
+        {
+        }
     }
 }

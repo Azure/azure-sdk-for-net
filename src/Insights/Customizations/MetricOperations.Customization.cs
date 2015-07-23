@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Insights
                 result = new MetricListResponse()
                 {
                     RequestId = Guid.NewGuid().ToString("D"),
-                    StatusCode =  HttpStatusCode.OK,
+                    StatusCode = HttpStatusCode.OK,
                     MetricCollection = new MetricCollection()
                     {
                         Value = new Metric[0]
@@ -136,6 +136,7 @@ namespace Microsoft.Azure.Insights
             IMetricRetriever proxyRetriever = new ProxyMetricRetriever(this);
             IMetricRetriever shoeboxRetriever = new ShoeboxMetricRetriever();
             IMetricRetriever storageRetriever = new StorageMetricRetriever();
+            IMetricRetriever blobShoeboxMetricRetriever = new BlobShoeboxMetricRetriever();
             IMetricRetriever emptyRetriever = EmptyMetricRetriever.Instance;
 
             // Create the selector function here so it has access to the retrievers, filter, and providerName
@@ -146,19 +147,29 @@ namespace Microsoft.Azure.Insights
                     return emptyRetriever;
                 }
 
-                if (!IsSasMetric(d, filter.TimeGrain))
+                if (isStorageProvider)
                 {
-                    return proxyRetriever;
+                    return storageRetriever;
                 }
 
-                return isStorageProvider ? storageRetriever : shoeboxRetriever;
+                if (IsBlobSasMetric(d, filter.TimeGrain))
+                {
+                    return blobShoeboxMetricRetriever;
+                }
+
+                if (IsTableSasMetric(d, filter.TimeGrain))
+                {
+                    return shoeboxRetriever;
+                }
+
+                return proxyRetriever;
             };
 
             // Group definitions by retriever so we can make one request to each retriever
             IEnumerable<IGrouping<IMetricRetriever, MetricDefinition>> groups = definitions.GroupBy(retrieverSelector);
 
             // Get Metrics from each retriever (group)
-            IEnumerable<Task<MetricListResponse>> locationTasks = groups.Select(g => 
+            IEnumerable<Task<MetricListResponse>> locationTasks = groups.Select(g =>
                 g.Key.GetMetricsAsync(resourceUri, GetFilterStringForDefinitions(filter, g), g, invocationId));
 
             // Aggregate metrics from all groups
@@ -166,7 +177,7 @@ namespace Microsoft.Azure.Insights
             MetricListResponse[] results = (await Task.Factory.ContinueWhenAll(locationTasks.ToArray(), tasks => tasks.Select(t => t.Result))).ToArray();
             IEnumerable<Metric> metrics = results.Aggregate<MetricListResponse, IEnumerable<Metric>>(
                 new List<Metric>(), (list, response) => list.Union(response.MetricCollection.Value));
-            
+
             this.LogMetricCountFromResponses(invocationId, metrics.Count());
 
             // Fill in values (resourceUri, displayName, unit) from definitions
@@ -178,7 +189,7 @@ namespace Microsoft.Azure.Insights
                 filterString,
                 definitions.Where(d => !metrics.Any(m => string.Equals(m.Name.Value, d.Name.Value, StringComparison.OrdinalIgnoreCase))),
                 invocationId)).MetricCollection.Value;
-            
+
             // Create response (merge and wrap metrics)
             result = new MetricListResponse()
             {
@@ -200,7 +211,7 @@ namespace Microsoft.Azure.Insights
             // Find start index of provider name
             string knownStart = "/subscriptions/" + this.Client.Credentials.SubscriptionId + "/resourceGroups/";
             int endOfResourceGroup = resourceId.IndexOf('/', knownStart.Length);
-            
+
             // skip /providers/
             // plus 1 to start index to skip first '/', plus 1 to result to skip last '/'
             int startOfProviderName = resourceId.IndexOf('/', endOfResourceGroup + 1) + 1;
@@ -233,7 +244,7 @@ namespace Microsoft.Azure.Insights
                 return true;
             }
 
-            foreach (FilterDimension dimension in metric.Dimensions)
+            foreach (MetricFilterDimension dimension in metric.Dimensions)
             {
                 // find dimension in definition
                 Dimension d = definition.Dimensions.FirstOrDefault(dim => string.Equals(dim.Name.Value, dimension.Name));
@@ -290,14 +301,14 @@ namespace Microsoft.Azure.Insights
                 MetricDefinition definition = definitions.FirstOrDefault(md => string.Equals(md.Name.Value, metric.Name.Value, StringComparison.OrdinalIgnoreCase));
 
                 metric.ResourceId = resourceUri;
-                metric.Name.LocalizedValue = (definition != null && !string.IsNullOrEmpty(definition.Name.LocalizedValue)) 
-                    ? definition.Name.LocalizedValue 
+                metric.Name.LocalizedValue = (definition != null && !string.IsNullOrEmpty(definition.Name.LocalizedValue))
+                    ? definition.Name.LocalizedValue
                     : metric.Name.Value;
                 metric.Unit = definition == null ? Unit.Count : definition.Unit;
             }
         }
 
-        private static bool IsSasMetric(MetricDefinition definition, TimeSpan timeGrain)
+        private static bool IsTableSasMetric(MetricDefinition definition, TimeSpan timeGrain)
         {
             MetricAvailability availability = definition.MetricAvailabilities.FirstOrDefault(a => a.TimeGrain.Equals(timeGrain));
 
@@ -315,7 +326,30 @@ namespace Microsoft.Azure.Insights
                     "MetricDefinition for {0} does not contain an availability with timegrain {1}",
                     definition.Name.Value, timeGrain));
             }
-                
+
+            // Definition has no availablilities (metrics are not configured for this resource), return empty metrics (non-SAS)
+            return false;
+        }
+
+        private static bool IsBlobSasMetric(MetricDefinition definition, TimeSpan timeGrain)
+        {
+            MetricAvailability availability = definition.MetricAvailabilities.FirstOrDefault(a => a.TimeGrain.Equals(timeGrain));
+
+            // Definition has requested availability, Location is null (non-SAS) or contains SAS key
+            if (availability != null)
+            {
+                return availability.BlobLocation != null;
+            }
+
+            // Definition has availabilities, but none with the requested timegrain (Bad request)
+            if (definition.MetricAvailabilities.Any())
+            {
+                throw new InvalidOperationException(string.Format(
+                    CultureInfo.InvariantCulture,
+                    "MetricDefinition for {0} does not contain an availability with timegrain {1}",
+                    definition.Name.Value, timeGrain));
+            }
+
             // Definition has no availablilities (metrics are not configured for this resource), return empty metrics (non-SAS)
             return false;
         }

@@ -24,41 +24,40 @@ using System.Linq;
 
 namespace Microsoft.Azure.Management.Insights.Models
 {
-    public enum Units
+    /// <summary>
+    /// Part of MultiTenantDiagnosticSettings. Child of MetricSettings.
+    /// Specifies the retention policy for the specific metric.
+    /// </summary>
+    public partial class RetentionPolicy
     {
-        /// <summary>
-        /// Count (how many).
-        /// </summary>
-        Count = 0,
+        private int _days;
         
         /// <summary>
-        /// Unit in bytes.
+        /// Optional. Gets or sets the number of days for the retention.
         /// </summary>
-        Bytes = 1,
+        public int Days
+        {
+            get { return this._days; }
+            set { this._days = value; }
+        }
+        
+        private bool _enabled;
         
         /// <summary>
-        /// Unit in seconds.
+        /// Optional. Gets or sets a value indicating whether the retention
+        /// policy is enabled.
         /// </summary>
-        Seconds = 2,
+        public bool Enabled
+        {
+            get { return this._enabled; }
+            set { this._enabled = value; }
+        }
         
         /// <summary>
-        /// Unit as a percentage.
+        /// Initializes a new instance of the RetentionPolicy class.
         /// </summary>
-        Percent = 3,
-        
-        /// <summary>
-        /// How many per second.
-        /// </summary>
-        CountPerSecond = 4,
-        
-        /// <summary>
-        /// How many bytes per second.
-        /// </summary>
-        BytesPerSecond = 5,
-        
-        /// <summary>
-        /// Unit in milli-seconds.
-        /// </summary>
-        MilliSeconds = 6,
+        public RetentionPolicy()
+        {
+        }
     }
 }

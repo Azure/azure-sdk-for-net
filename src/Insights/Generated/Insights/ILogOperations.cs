@@ -20,45 +20,28 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.Azure.Insights.Models;
 
-namespace Microsoft.Azure.Management.Insights.Models
+namespace Microsoft.Azure.Insights
 {
-    public enum Units
+    /// <summary>
+    /// Operations for logs.
+    /// </summary>
+    public partial interface ILogOperations
     {
         /// <summary>
-        /// Count (how many).
+        /// The List Log operation lists the logs for the resource.
         /// </summary>
-        Count = 0,
-        
-        /// <summary>
-        /// Unit in bytes.
-        /// </summary>
-        Bytes = 1,
-        
-        /// <summary>
-        /// Unit in seconds.
-        /// </summary>
-        Seconds = 2,
-        
-        /// <summary>
-        /// Unit as a percentage.
-        /// </summary>
-        Percent = 3,
-        
-        /// <summary>
-        /// How many per second.
-        /// </summary>
-        CountPerSecond = 4,
-        
-        /// <summary>
-        /// How many bytes per second.
-        /// </summary>
-        BytesPerSecond = 5,
-        
-        /// <summary>
-        /// Unit in milli-seconds.
-        /// </summary>
-        MilliSeconds = 6,
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The List Log values operation response.
+        /// </returns>
+        Task<LogListResponse> GetLogsAsync(string resourceUri, string filterString, IEnumerable<LogDefinition> definitions, CancellationToken cancellationToken);
     }
 }

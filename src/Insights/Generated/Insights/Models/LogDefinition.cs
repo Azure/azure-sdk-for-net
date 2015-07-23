@@ -26,15 +26,14 @@ using Microsoft.Azure.Insights.Models;
 namespace Microsoft.Azure.Insights.Models
 {
     /// <summary>
-    /// Metric availability specifies the time grain (aggregation interval or
-    /// frequency) and the retention period for that time grain.
+    /// Log definition class specifies the metadata for a log.
     /// </summary>
-    public partial class MetricAvailability
+    public partial class LogDefinition
     {
         private BlobLocation _blobLocation;
         
         /// <summary>
-        /// Optional. Gets or sets the location info for this availability.
+        /// Optional. Gets or sets the location of the blob.
         /// </summary>
         public BlobLocation BlobLocation
         {
@@ -42,23 +41,33 @@ namespace Microsoft.Azure.Insights.Models
             set { this._blobLocation = value; }
         }
         
-        private MetricLocation _location;
+        private LocalizableString _category;
         
         /// <summary>
-        /// Optional. Gets or sets the location where the data for this metric
-        /// availability is stored.
+        /// Optional. Gets or sets the category of the log.
         /// </summary>
-        public MetricLocation Location
+        public LocalizableString Category
         {
-            get { return this._location; }
-            set { this._location = value; }
+            get { return this._category; }
+            set { this._category = value; }
+        }
+        
+        private string _resourceUri;
+        
+        /// <summary>
+        /// Optional. Gets or sets the resource identifier of the resource that
+        /// has emitted the log.
+        /// </summary>
+        public string ResourceUri
+        {
+            get { return this._resourceUri; }
+            set { this._resourceUri = value; }
         }
         
         private TimeSpan _retention;
         
         /// <summary>
-        /// Optional. Gets or sets the retention period for the metric at the
-        /// specified timegrain.
+        /// Optional. Gets or sets the retention.
         /// </summary>
         public TimeSpan Retention
         {
@@ -66,22 +75,10 @@ namespace Microsoft.Azure.Insights.Models
             set { this._retention = value; }
         }
         
-        private TimeSpan _timeGrain;
-        
         /// <summary>
-        /// Optional. Gets or sets the time grain specifies the aggregation
-        /// interval for the metric.
+        /// Initializes a new instance of the LogDefinition class.
         /// </summary>
-        public TimeSpan TimeGrain
-        {
-            get { return this._timeGrain; }
-            set { this._timeGrain = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the MetricAvailability class.
-        /// </summary>
-        public MetricAvailability()
+        public LogDefinition()
         {
         }
     }

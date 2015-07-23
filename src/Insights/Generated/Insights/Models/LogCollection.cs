@@ -20,45 +20,35 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
+using Microsoft.Azure.Insights.Models;
 
-namespace Microsoft.Azure.Management.Insights.Models
+namespace Microsoft.Azure.Insights.Models
 {
-    public enum Units
+    /// <summary>
+    /// The collection of log value sets.
+    /// </summary>
+    public partial class LogCollection
     {
-        /// <summary>
-        /// Count (how many).
-        /// </summary>
-        Count = 0,
+        private IList<Log> _value;
         
         /// <summary>
-        /// Unit in bytes.
+        /// Optional. Gets or sets the value of the collection.
         /// </summary>
-        Bytes = 1,
+        public IList<Log> Value
+        {
+            get { return this._value; }
+            set { this._value = value; }
+        }
         
         /// <summary>
-        /// Unit in seconds.
+        /// Initializes a new instance of the LogCollection class.
         /// </summary>
-        Seconds = 2,
-        
-        /// <summary>
-        /// Unit as a percentage.
-        /// </summary>
-        Percent = 3,
-        
-        /// <summary>
-        /// How many per second.
-        /// </summary>
-        CountPerSecond = 4,
-        
-        /// <summary>
-        /// How many bytes per second.
-        /// </summary>
-        BytesPerSecond = 5,
-        
-        /// <summary>
-        /// Unit in milli-seconds.
-        /// </summary>
-        MilliSeconds = 6,
+        public LogCollection()
+        {
+            this.Value = new LazyList<Log>();
+        }
     }
 }

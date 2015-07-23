@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Insights
                 {
                     this.Client.Cache[resourceUri] = definitions;
                 }
-                    
+
                 // wrap and return definitions
                 result = new MetricDefinitionListResponse()
                 {
@@ -122,7 +122,7 @@ namespace Microsoft.Azure.Insights
                 tracingParameters.Add("resourceUri", resourceUri);
                 tracingParameters.Add("filterString", filterString);
 
-                
+
                 TracingAdapter.Enter(invocationId, this, "GetMetricDefinitionsAsync", tracingParameters);
             }
         }

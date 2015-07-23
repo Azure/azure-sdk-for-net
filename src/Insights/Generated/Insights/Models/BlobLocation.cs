@@ -20,45 +20,46 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
+using Microsoft.Azure.Insights.Models;
 
-namespace Microsoft.Azure.Management.Insights.Models
+namespace Microsoft.Azure.Insights.Models
 {
-    public enum Units
+    /// <summary>
+    /// Details the location of the Metrics and contains the SAS Key.
+    /// </summary>
+    public partial class BlobLocation
     {
-        /// <summary>
-        /// Count (how many).
-        /// </summary>
-        Count = 0,
+        private string _blobEndpoint;
         
         /// <summary>
-        /// Unit in bytes.
+        /// Optional. Gets or sets the table endpoint.
         /// </summary>
-        Bytes = 1,
+        public string BlobEndpoint
+        {
+            get { return this._blobEndpoint; }
+            set { this._blobEndpoint = value; }
+        }
+        
+        private IList<BlobInfo> _blobInfo;
         
         /// <summary>
-        /// Unit in seconds.
+        /// Optional. Gets or sets the table info.
         /// </summary>
-        Seconds = 2,
+        public IList<BlobInfo> BlobInfo
+        {
+            get { return this._blobInfo; }
+            set { this._blobInfo = value; }
+        }
         
         /// <summary>
-        /// Unit as a percentage.
+        /// Initializes a new instance of the BlobLocation class.
         /// </summary>
-        Percent = 3,
-        
-        /// <summary>
-        /// How many per second.
-        /// </summary>
-        CountPerSecond = 4,
-        
-        /// <summary>
-        /// How many bytes per second.
-        /// </summary>
-        BytesPerSecond = 5,
-        
-        /// <summary>
-        /// Unit in milli-seconds.
-        /// </summary>
-        MilliSeconds = 6,
+        public BlobLocation()
+        {
+            this.BlobInfo = new LazyList<BlobInfo>();
+        }
     }
 }

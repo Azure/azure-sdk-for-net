@@ -156,7 +156,7 @@ namespace Microsoft.Azure.Insights.Customizations.Shoebox
             List<Metric> metrics = new List<Metric>();
 
             // Get supported metric dimension
-            FilterDimension filterDimension = metricDimension.Dimensions == null
+            MetricFilterDimension filterDimension = metricDimension.Dimensions == null
                 ? null
                 : metricDimension.Dimensions.FirstOrDefault(fd =>
                     string.Equals(fd.Name, StorageConstants.Dimensions.ApiDimensionName, StringComparison.OrdinalIgnoreCase));

@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Insights.Customizations.Shoebox
             return tableName.IndexOf("Transaction", StringComparison.OrdinalIgnoreCase) >= 0;
         }
 
-        internal static bool IsBlobMetricsTable(string tableName)
+        internal static bool IsBlobsMetricsTable(string tableName)
         {
             return tableName.IndexOf("Blob", StringComparison.OrdinalIgnoreCase) >= 0;
         }

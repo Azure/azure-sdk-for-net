@@ -107,11 +107,24 @@ namespace Microsoft.Azure.Insights
             }
 
             // Construct URL
-            string url = "/" + Uri.EscapeDataString(resourceUri) + "/metrics?";
-            url = url + "api-version=2014-04-01";
+            string url = "";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(resourceUri);
+            url = url + "/metrics";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-04-01");
+            List<string> odataFilter = new List<string>();
             if (filterString != null)
             {
-                url = url + "&$filter=" + Uri.EscapeDataString(filterString);
+                odataFilter.Add(Uri.EscapeDataString(filterString));
+            }
+            if (odataFilter.Count > 0)
+            {
+                queryParameters.Add("$filter=" + string.Join(null, odataFilter));
+            }
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
             }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.

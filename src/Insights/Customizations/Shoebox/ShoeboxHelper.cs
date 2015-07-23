@@ -92,7 +92,7 @@ namespace Microsoft.Azure.Insights
                 .Aggregate((a, b) => a + " or " + b);
         }
 
-        private static string GenerateDimensionFilterString(IEnumerable<FilterDimension> dimensions)
+        private static string GenerateDimensionFilterString(IEnumerable<MetricFilterDimension> dimensions)
         {
             return IsNullOrEmpty(dimensions) ? null : dimensions.Select(d => string.Format(CultureInfo.InvariantCulture, "dimensionName.value eq '{0}'{1}",
                 d.Name,
