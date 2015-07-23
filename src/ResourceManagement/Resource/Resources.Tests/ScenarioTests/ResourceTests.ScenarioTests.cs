@@ -23,6 +23,7 @@ using Microsoft.Azure.Test;
 using Microsoft.Rest.TransientFaultHandling;
 using Xunit;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using Newtonsoft.Json.Linq;
 
 namespace ResourceGroups.Tests
 {
@@ -155,7 +156,7 @@ namespace ResourceGroups.Tests
                     new GenericResource
                     {
                         Location = websiteLocation,
-                        Properties = "{'name':'" + resourceName + "','siteMode':'Limited','computeMode':'Shared', 'sku':'Free', 'workerSize': 0}",
+                        Properties = JObject.Parse("{'name':'" + resourceName + "','siteMode':'Limited','computeMode':'Shared', 'sku':'Free', 'workerSize': 0}"),
                     }
                 );
 
@@ -211,7 +212,7 @@ namespace ResourceGroups.Tests
                     {
                         Tags = new Dictionary<string, string> { { tagName, "" } },
                         Location = websiteLocation,
-                        Properties = "{'name':'" + resourceName + "','siteMode':'Limited','computeMode':'Shared', 'sku':'Free', 'workerSize': 0}"
+                        Properties = JObject.Parse("{'name':'" + resourceName + "','siteMode':'Limited','computeMode':'Shared', 'sku':'Free', 'workerSize': 0}")
                     });
                 client.Resources.CreateOrUpdate(
                     groupName,
@@ -223,7 +224,7 @@ namespace ResourceGroups.Tests
                     new GenericResource
                     {
                         Location = websiteLocation,
-                        Properties = "{'name':'" + resourceNameNoTags + "','siteMode':'Limited','computeMode':'Shared', 'sku':'Free', 'workerSize': 0}"
+                        Properties = JObject.Parse("{'name':'" + resourceNameNoTags + "','siteMode':'Limited','computeMode':'Shared', 'sku':'Free', 'workerSize': 0}")
                     });
 
                 var listResult = client.ResourceGroups.ListResources(groupName, r => r.Tagname == tagName);
@@ -273,7 +274,7 @@ namespace ResourceGroups.Tests
                     {
                         Tags = new Dictionary<string, string> { { tagName, tagValue } },
                         Location = websiteLocation,
-                        Properties = "{'name':'" + resourceName + "','siteMode':'Limited','computeMode':'Shared', 'sku':'Free', 'workerSize': 0}"
+                        Properties = JObject.Parse("{'name':'" + resourceName + "','siteMode':'Limited','computeMode':'Shared', 'sku':'Free', 'workerSize': 0}")
                     }
                 );
                 client.Resources.CreateOrUpdate(
@@ -286,7 +287,7 @@ namespace ResourceGroups.Tests
                     new GenericResource
                     {
                         Location = websiteLocation,
-                        Properties = "{'name':'" + resourceNameNoTags + "','siteMode':'Limited','computeMode':'Shared', 'sku':'Free', 'workerSize': 0}"
+                        Properties = JObject.Parse("{'name':'" + resourceNameNoTags + "','siteMode':'Limited','computeMode':'Shared', 'sku':'Free', 'workerSize': 0}")
                     }
                 );
 
@@ -333,7 +334,7 @@ namespace ResourceGroups.Tests
                     new GenericResource
                     {
                         Location = location,
-                        Properties = "{'name':'" + resourceName + "','siteMode':'Limited','computeMode':'Shared', 'sku':'Free', 'workerSize': 0}"
+                        Properties = JObject.Parse("{'name':'" + resourceName + "','siteMode':'Limited','computeMode':'Shared', 'sku':'Free', 'workerSize': 0}")
                     }
                 );
 
@@ -374,7 +375,7 @@ namespace ResourceGroups.Tests
                     {
                         Location = location,
                         Tags = new Dictionary<string, string>() { { "department", "finance" }, { "tagname", "tagvalue" } },
-                        Properties = "{'name':'" + resourceName + "','siteMode':'Limited','computeMode':'Shared', 'sku':'Free', 'workerSize': 0}"
+                        Properties = JObject.Parse("{'name':'" + resourceName + "','siteMode':'Limited','computeMode':'Shared', 'sku':'Free', 'workerSize': 0}")
                     }
                 );
 
