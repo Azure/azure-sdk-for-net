@@ -24,6 +24,7 @@ using Microsoft.Azure.Test;
 using Microsoft.Rest.TransientFaultHandling;
 using Xunit;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using Newtonsoft.Json.Linq;
 
 namespace ResourceGroups.Tests
 {
@@ -60,7 +61,7 @@ namespace ResourceGroups.Tests
                     new GenericResource
                     {
                         Location = location,
-                        Properties = "{'name':'" + resourceName + "','siteMode': 'Standard','computeMode':'Shared'}"
+                        Properties = JObject.Parse("{'name':'" + resourceName + "','siteMode': 'Standard','computeMode':'Shared'}")
                     });
 
                 client.ResourceGroups.Delete(resourceGroupName);

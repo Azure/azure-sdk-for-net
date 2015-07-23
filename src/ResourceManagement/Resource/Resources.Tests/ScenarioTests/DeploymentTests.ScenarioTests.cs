@@ -59,11 +59,6 @@ namespace ResourceGroups.Tests
                         {"value", true},
                     }}
                 };
-            var serializedDictionary = JsonConvert.SerializeObject(dictionary, new JsonSerializerSettings
-            {
-                TypeNameAssemblyFormat = FormatterAssemblyStyle.Simple,
-                TypeNameHandling = TypeNameHandling.None
-            });
 
             using (MockContext context = MockContext.Start())
             {
@@ -76,7 +71,7 @@ namespace ResourceGroups.Tests
                         {
                             Uri = DummyTemplateUri
                         },
-                        Parameters = serializedDictionary,
+                        Parameters = dictionary,
                         Mode = DeploymentMode.Incremental,
                     }
                 };
@@ -268,11 +263,6 @@ namespace ResourceGroups.Tests
                         {"value", true},
                     }}
                 };
-            var serializedDictionary = JsonConvert.SerializeObject(dictionary, new JsonSerializerSettings
-            {
-                TypeNameAssemblyFormat = FormatterAssemblyStyle.Simple,
-                TypeNameHandling = TypeNameHandling.None
-            });
 
             using (MockContext context = MockContext.Start())
             {
@@ -285,7 +275,7 @@ namespace ResourceGroups.Tests
                         {
                             Uri = DummyTemplateUri
                         },
-                        Parameters = serializedDictionary,
+                        Parameters = dictionary,
                         Mode = DeploymentMode.Incremental,
                     }
                 };
