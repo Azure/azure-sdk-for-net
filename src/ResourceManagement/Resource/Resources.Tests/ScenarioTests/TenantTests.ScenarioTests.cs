@@ -17,9 +17,9 @@ using System.Linq;
 using System.Net;
 using Microsoft.Azure.Subscriptions;
 using Microsoft.Azure.Test;
-using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.TransientFaultHandling;
 using Xunit;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
 namespace ResourceGroups.Tests
 {
@@ -29,10 +29,6 @@ namespace ResourceGroups.Tests
         {
             handler.IsPassThrough = true;
             var client = this.GetSubscriptionClientWithHandler(handler);
-            if (HttpMockServer.Mode == HttpRecorderMode.Playback)
-            {
-                client.LongRunningOperationRetryTimeout = 0;
-            }
 
             return client;
         }
@@ -44,9 +40,8 @@ namespace ResourceGroups.Tests
 
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (UndoContext context = UndoContext.Current)
+            using (MockContext context = MockContext.Start())
             {
-                context.Start();
                 var client = GetSubscriptionClient(handler);
                 client.SetRetryPolicy(new RetryPolicy<HttpStatusCodeErrorDetectionStrategy>(1));
 

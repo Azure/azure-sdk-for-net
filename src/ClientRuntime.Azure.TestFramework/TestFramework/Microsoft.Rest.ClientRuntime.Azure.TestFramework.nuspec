@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata minClientVersion="2.5">
+    <id>Microsoft.Rest.ClientRuntime.Azure.TestFramework</id>
+    <releaseNotes>__BASELINE_RELEASE_NOTES__</releaseNotes>
+    <version>$version$</version>
+    <authors>Microsoft</authors>
+    <owners>azure-sdk, Microsoft</owners>
+    <licenseUrl>https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/Azure/azure-sdk-for-net</projectUrl>
+    <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <summary>Test framework for AutoRest generated Azure management clients.</summary>
+    <description>Test utilities for xunit test suites for AutoRest generated Azure clients</description>
+    <copyright>Copyright 2015</copyright>
+    <dependencies>
+      <dependency id="Microsoft.Rest.ClientRuntime.Azure" version="[1.0.16-preview,2.0)" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="ClientRuntime.Azure.TestFramework\TestFramework\**\*.cs" target="src\ClientRuntime.Azure.TestFramework" />
+    <file src="ClientRuntime.Azure.TestFramework\TestFramework\Properties\*.resx" target="src\ClientRuntime.Azure.TestFramework\Properties" />
+    <file src="..\binaries\net45\Microsoft.Rest.ClientRuntime.Azure.TestFramework.dll" target="lib\net45" />
+    <file src="..\binaries\net45\Microsoft.Rest.ClientRuntime.Azure.TestFramework.pdb" target="lib\net45" />
+    <file src="..\binaries\net45\Microsoft.Rest.ClientRuntime.Azure.TestFramework.xml" target="lib\net45" />
+  </files>
+</package>

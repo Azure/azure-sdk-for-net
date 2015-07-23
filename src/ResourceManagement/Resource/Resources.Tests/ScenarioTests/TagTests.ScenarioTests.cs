@@ -18,8 +18,9 @@ using System.Net;
 using Microsoft.Azure;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Test;
-using Microsoft.Azure.Test.HttpRecorder;
 using Xunit;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework.HttpRecorder;
 
 namespace ResourceGroups.Tests
 {
@@ -43,11 +44,9 @@ namespace ResourceGroups.Tests
         public void CreateListAndDeleteSubscriptionTag()
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
-            
-            using (UndoContext context = UndoContext.Current)
-            {
-                context.Start();
 
+            using (MockContext context = MockContext.Start())
+            {
                 string tagName = TestUtilities.GenerateName("csmtg");
 
                 var client = GetResourceManagementClient(handler);
@@ -67,10 +66,8 @@ namespace ResourceGroups.Tests
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (UndoContext context = UndoContext.Current)
+            using (MockContext context = MockContext.Start())
             {
-                context.Start();
-
                 string tagName = TestUtilities.GenerateName("csmtg");
                 string tagValue = TestUtilities.GenerateName("csmtgv");
 
@@ -94,10 +91,8 @@ namespace ResourceGroups.Tests
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (UndoContext context = UndoContext.Current)
+            using (MockContext context = MockContext.Start())
             {
-                context.Start();
-
                 string tagName = TestUtilities.GenerateName("csmtg");
                 string tagValue = TestUtilities.GenerateName("csmtgv");
 
