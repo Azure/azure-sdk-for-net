@@ -19,80 +19,64 @@ using DataFactory.Tests.Framework.JsonSamples;
 using Microsoft.Azure.Management.DataFactories.Conversion;
 using Microsoft.Azure.Management.DataFactories.Runtime;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
 using Xunit;
+using Xunit.Extensions;
 using Core = Microsoft.Azure.Management.DataFactories.Core;
 
 namespace DataFactory.Tests.UnitTests
 {
     public class DataSetTests : UnitTestBase
     {
-        private TableConverter tableConverter = new TableConverter();
-        private LinkedServiceConverter linkedServiceConverter = new LinkedServiceConverter();
+        private readonly TableConverter tableConverter = new TableConverter();
+        private readonly LinkedServiceConverter linkedServiceConverter = new LinkedServiceConverter();
 
-        [Fact]
+        [Theory, ClassData(typeof(LinkedServiceJsonSamples)), ClassData(typeof(CustomLinkedServiceJsonSamples))]
         [Trait(TraitName.TestType, TestType.Unit)]
         [Trait(TraitName.Function, TestType.Conversion)]
-        public void DataSetLinkedServiceJsonConstsTest()
+        public void DataSetLinkedServiceJsonConstsTest(JsonSampleInfo sampleInfo)
         {
-            IEnumerable<JsonSampleInfo> samples = JsonSampleCommon.GetJsonSamplesFromType<LinkedServiceJsonSamples>();
-            this.TestLinkedServiceJsonSamples(samples);
+            JsonSampleCommon.TestJsonSample(sampleInfo, this.TestLinkedServiceJsonSample);
         }
 
-        [Fact]
+        [Theory, ClassData(typeof(TableJsonSamples))]
         [Trait(TraitName.TestType, TestType.Unit)]
         [Trait(TraitName.Function, TestType.Conversion)]
-        public void DataSetCustomLinkedServiceJsonConstsTest()
+        public void DataSetTableJsonConstsTest(JsonSampleInfo sampleInfo)
         {
-            IEnumerable<JsonSampleInfo> samples = JsonSampleCommon.GetJsonSamplesFromType<CustomLinkedServiceJsonSamples>();
-            this.TestLinkedServiceJsonSamples(samples);
+            JsonSampleCommon.TestJsonSample(sampleInfo, this.TestTableJsonSample);
         }
 
-        [Fact]
-        [Trait(TraitName.TestType, TestType.Unit)]
-        [Trait(TraitName.Function, TestType.Conversion)]
-        public void DataSetTableJsonConstsTest()
+        private void TestLinkedServiceJsonSample(JsonSampleInfo sampleInfo)
         {
-            IEnumerable<JsonSampleInfo> samples = JsonSampleCommon.GetJsonSamplesFromType<TableJsonSamples>();
-            this.TestTableJsonSamples(samples);
-        }
+            Core.Models.LinkedService linkedService =
+                Core.DataFactoryManagementClient.DeserializeInternalLinkedServiceJson(sampleInfo.Json);
 
-        private void TestTableJsonSamples(IEnumerable<JsonSampleInfo> samples)
-        {
-            TestJsonSamples(samples, "table", json =>
+            var expectedDataSet = new DataSet()
             {
-                Core.Models.Table table = Core.DataFactoryManagementClient.DeserializeInternalTableJson(json);
+                LinkedService = this.linkedServiceConverter.ToWrapperType(linkedService)
+            };
 
-                return new DataSet()
-                {
-                    Table = this.tableConverter.ToWrapperType(table)
-                };
-            });
+            this.TestDataSetJsonSample("linkedService", expectedDataSet, sampleInfo);
         }
 
-        private void TestLinkedServiceJsonSamples(IEnumerable<JsonSampleInfo> samples)
+        private void TestTableJsonSample(JsonSampleInfo sampleInfo)
         {
-            TestJsonSamples(samples, "linkedService", json =>
-            {
-                Core.Models.LinkedService linkedService = Core.DataFactoryManagementClient.DeserializeInternalLinkedServiceJson(json);
+            Core.Models.Table table =
+                Core.DataFactoryManagementClient.DeserializeInternalTableJson(sampleInfo.Json);
 
-                return new DataSet()
-                {
-                    LinkedService = this.linkedServiceConverter.ToWrapperType(linkedService)
-                };
-            });
+            var expectedDataSet = new DataSet()
+            {
+                Table = this.tableConverter.ToWrapperType(table)
+            };
+
+            this.TestDataSetJsonSample("table", expectedDataSet, sampleInfo);
         }
 
-        private void TestJsonSamples(IEnumerable<JsonSampleInfo> samples, string token, Func<string, DataSet> getDataSet)
+        private void TestDataSetJsonSample(string token, DataSet expectedDataSet, JsonSampleInfo sampleInfo)
         {
-            foreach (JsonSampleInfo sample in samples)
-            {
-                DataSet expectedDataSet = getDataSet(sample.Json);
-                DataSet actualDataSet = JsonConvert.DeserializeObject<DataSet>(string.Concat("{ \"", token, "\" : ", sample.Json, "}"));
-
-                Common.ValidateAreSame(expectedDataSet, actualDataSet);
-            }
+            DataSet actualDataSet =
+                JsonConvert.DeserializeObject<DataSet>(string.Concat("{ \"", token, "\" : ", sampleInfo.Json, "}"));
+            Common.ValidateAreSame(expectedDataSet, actualDataSet); 
         }
     }
 }
