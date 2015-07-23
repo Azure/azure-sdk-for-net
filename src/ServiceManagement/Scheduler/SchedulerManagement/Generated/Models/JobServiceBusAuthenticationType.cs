@@ -25,19 +25,12 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.Scheduler.Models
 {
     /// <summary>
-    /// Type of action. Can be one of http, https, storageQueue,
-    /// serviceBusQueue, serviceBusTopic.
+    /// Type of service bus authentication
     /// </summary>
-    public enum JobActionType
+    public enum JobServiceBusAuthenticationType
     {
-        Http = 0,
+        NotSpecified = 0,
         
-        Https = 1,
-        
-        StorageQueue = 2,
-        
-        ServiceBusQueue = 3,
-        
-        ServiceBusTopic = 4,
+        SharedAccessKey = 1,
     }
 }
