@@ -61,6 +61,16 @@ namespace DataFactory.Tests.UnitTests
             this.TestRegisteringTypeWithReservedNameThrowsException<T>();
         }
 
+        [Theory]
+        [PropertyData("ReservedTypes")]
+        [Trait(TraitName.TestType, TestType.Unit)]
+        [Trait(TraitName.Function, TestType.Registration)]
+        public void ReservedTableTypeIsRegisteredTest<T>(Type type, T registeredType)
+            where T : TableTypeProperties
+        {
+            this.TestReservedTypeIsRegistered<T>();
+        }
+
         [Fact]
         [Trait(TraitName.TestType, TestType.Unit)]
         [Trait(TraitName.Function, TestType.Registration)]

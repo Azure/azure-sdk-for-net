@@ -55,6 +55,16 @@ namespace DataFactory.Tests.UnitTests
         [PropertyData("ReservedTypes")]
         [Trait(TraitName.TestType, TestType.Unit)]
         [Trait(TraitName.Function, TestType.Registration)]
+        public void ReservedLinkedServiceTypeIsRegisteredTest<T>(Type type, T registeredType)
+            where T : LinkedServiceTypeProperties
+        {
+            this.TestReservedTypeIsRegistered<T>();
+        }
+
+        [Theory]
+        [PropertyData("ReservedTypes")]
+        [Trait(TraitName.TestType, TestType.Unit)]
+        [Trait(TraitName.Function, TestType.Registration)]
         public void RegisteringLinkedServiceTypeWithReservedNameThrowsException<T>(Type type, T registeredType)
             where T : TypeProperties
         {
