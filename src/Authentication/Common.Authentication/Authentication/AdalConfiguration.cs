@@ -55,6 +55,7 @@ namespace Microsoft.Azure.Common.Authentication
             ClientRedirectUri = PowerShellRedirectUri;
             ValidateAuthority = true;
             AdEndpoint = string.Empty;
+            ResourceClientUri = "https://management.core.windows.net/";
         }
     }
 }
