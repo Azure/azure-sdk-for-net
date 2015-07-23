@@ -30,19 +30,34 @@ namespace Microsoft.Azure.Management.DataFactories.Common.Models
     public static partial class PropertyDataType
     {
         /// <summary>
-        /// Enum value not specified.
-        /// </summary>
-        public const string NotSpecified = "NotSpecified";
-        
-        /// <summary>
         /// String type.
         /// </summary>
         public const string String = "String";
         
         /// <summary>
-        /// Int type.
+        /// Int16 type.
         /// </summary>
-        public const string Int = "Int";
+        public const string Int16 = "Int16";
+        
+        /// <summary>
+        /// Int32 type.
+        /// </summary>
+        public const string Int32 = "Int32";
+        
+        /// <summary>
+        /// Int64 type.
+        /// </summary>
+        public const string Int64 = "Int64";
+        
+        /// <summary>
+        /// Single type.
+        /// </summary>
+        public const string Single = "Single";
+        
+        /// <summary>
+        /// Double type.
+        /// </summary>
+        public const string Double = "Double";
         
         /// <summary>
         /// Decimal type.
@@ -65,8 +80,23 @@ namespace Microsoft.Azure.Management.DataFactories.Common.Models
         public const string Enum = "Enum";
         
         /// <summary>
-        /// Date type.
+        /// DateTime type.
         /// </summary>
-        public const string Date = "Date";
+        public const string DateTime = "DateTime";
+        
+        /// <summary>
+        /// DateTimeOffset type.
+        /// </summary>
+        public const string DateTimeOffset = "DateTimeOffset";
+        
+        /// <summary>
+        /// Timespan type.
+        /// </summary>
+        public const string Timespan = "Timespan";
+        
+        /// <summary>
+        /// Byte[] type.
+        /// </summary>
+        public const string ByteArray = "Byte[]";
     }
 }

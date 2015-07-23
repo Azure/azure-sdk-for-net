@@ -268,6 +268,16 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                 {
                                     dataElementValue["type"] = structureItem.Type;
                                 }
+                                
+                                if (structureItem.Culture != null)
+                                {
+                                    dataElementValue["culture"] = structureItem.Culture;
+                                }
+                                
+                                if (structureItem.Format != null)
+                                {
+                                    dataElementValue["format"] = structureItem.Format;
+                                }
                             }
                             propertiesValue["structure"] = structureArray;
                         }
@@ -502,6 +512,20 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                         {
                                             string typeInstance2 = ((string)typeValue2);
                                             dataElementInstance.Type = typeInstance2;
+                                        }
+                                        
+                                        JToken cultureValue = structureValue["culture"];
+                                        if (cultureValue != null && cultureValue.Type != JTokenType.Null)
+                                        {
+                                            string cultureInstance = ((string)cultureValue);
+                                            dataElementInstance.Culture = cultureInstance;
+                                        }
+                                        
+                                        JToken formatValue = structureValue["format"];
+                                        if (formatValue != null && formatValue.Type != JTokenType.Null)
+                                        {
+                                            string formatInstance = ((string)formatValue);
+                                            dataElementInstance.Format = formatInstance;
                                         }
                                     }
                                 }
@@ -950,6 +974,20 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                             string typeInstance2 = ((string)typeValue2);
                                             dataElementInstance.Type = typeInstance2;
                                         }
+                                        
+                                        JToken cultureValue = structureValue["culture"];
+                                        if (cultureValue != null && cultureValue.Type != JTokenType.Null)
+                                        {
+                                            string cultureInstance = ((string)cultureValue);
+                                            dataElementInstance.Culture = cultureInstance;
+                                        }
+                                        
+                                        JToken formatValue = structureValue["format"];
+                                        if (formatValue != null && formatValue.Type != JTokenType.Null)
+                                        {
+                                            string formatInstance = ((string)formatValue);
+                                            dataElementInstance.Format = formatInstance;
+                                        }
                                     }
                                 }
                                 
@@ -1312,11 +1350,11 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                     {
                         result.Status = OperationStatus.Failed;
                     }
-                    if (statusCode == HttpStatusCode.OK)
+                    if (statusCode == HttpStatusCode.NoContent)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
-                    if (statusCode == HttpStatusCode.NoContent)
+                    if (statusCode == HttpStatusCode.OK)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
@@ -1790,6 +1828,20 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                             string typeInstance2 = ((string)typeValue2);
                                             dataElementInstance.Type = typeInstance2;
                                         }
+                                        
+                                        JToken cultureValue = structureValue["culture"];
+                                        if (cultureValue != null && cultureValue.Type != JTokenType.Null)
+                                        {
+                                            string cultureInstance = ((string)cultureValue);
+                                            dataElementInstance.Culture = cultureInstance;
+                                        }
+                                        
+                                        JToken formatValue = structureValue["format"];
+                                        if (formatValue != null && formatValue.Type != JTokenType.Null)
+                                        {
+                                            string formatInstance = ((string)formatValue);
+                                            dataElementInstance.Format = formatInstance;
+                                        }
                                     }
                                 }
                                 
@@ -2148,6 +2200,20 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                         {
                                             string typeInstance2 = ((string)typeValue2);
                                             dataElementInstance.Type = typeInstance2;
+                                        }
+                                        
+                                        JToken cultureValue = structureValue["culture"];
+                                        if (cultureValue != null && cultureValue.Type != JTokenType.Null)
+                                        {
+                                            string cultureInstance = ((string)cultureValue);
+                                            dataElementInstance.Culture = cultureInstance;
+                                        }
+                                        
+                                        JToken formatValue = structureValue["format"];
+                                        if (formatValue != null && formatValue.Type != JTokenType.Null)
+                                        {
+                                            string formatInstance = ((string)formatValue);
+                                            dataElementInstance.Format = formatInstance;
                                         }
                                     }
                                 }
@@ -2575,6 +2641,20 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                                     string typeInstance2 = ((string)typeValue2);
                                                     dataElementInstance.Type = typeInstance2;
                                                 }
+                                                
+                                                JToken cultureValue = structureValue["culture"];
+                                                if (cultureValue != null && cultureValue.Type != JTokenType.Null)
+                                                {
+                                                    string cultureInstance = ((string)cultureValue);
+                                                    dataElementInstance.Culture = cultureInstance;
+                                                }
+                                                
+                                                JToken formatValue = structureValue["format"];
+                                                if (formatValue != null && formatValue.Type != JTokenType.Null)
+                                                {
+                                                    string formatInstance = ((string)formatValue);
+                                                    dataElementInstance.Format = formatInstance;
+                                                }
                                             }
                                         }
                                         
@@ -2950,6 +3030,20 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                                 {
                                                     string typeInstance2 = ((string)typeValue2);
                                                     dataElementInstance.Type = typeInstance2;
+                                                }
+                                                
+                                                JToken cultureValue = structureValue["culture"];
+                                                if (cultureValue != null && cultureValue.Type != JTokenType.Null)
+                                                {
+                                                    string cultureInstance = ((string)cultureValue);
+                                                    dataElementInstance.Culture = cultureInstance;
+                                                }
+                                                
+                                                JToken formatValue = structureValue["format"];
+                                                if (formatValue != null && formatValue.Type != JTokenType.Null)
+                                                {
+                                                    string formatInstance = ((string)formatValue);
+                                                    dataElementInstance.Format = formatInstance;
                                                 }
                                             }
                                         }
