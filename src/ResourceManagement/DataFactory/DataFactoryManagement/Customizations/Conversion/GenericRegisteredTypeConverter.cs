@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
         {
             this.EnsureIsAssignableRegisteredType<T>();
 
-            string typeName = typeof(T).Name;
+            string typeName = DataFactoryUtilities.GetResourceTypeName(typeof(T));
             if (ReservedTypes.ContainsKey(typeName))
             {
                 return true;
