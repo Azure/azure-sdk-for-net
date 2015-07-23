@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.DataFactories
                     msg = string.Format(CultureInfo.InvariantCulture, "'{0}' may not be null or empty", name);
                 }
 
-                throw new ArgumentNullException(name, msg);
+                throw new ArgumentException(name, msg);
             }
         }
 #else
