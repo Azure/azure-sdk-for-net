@@ -67,7 +67,8 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                     else
                     {
                         string password = null;
-                        if(!parsedConnection.TryGetValue(TestEnvironment.AADPasswordKey, out password))
+                        if(testEnv.UserName != null && 
+                           !parsedConnection.TryGetValue(TestEnvironment.AADPasswordKey, out password))
                         {
                             credCache.TryGetValue(testEnv.UserName, out password);
                         }
@@ -76,13 +77,13 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                         {
                             ServiceClientTracing.Information("Using AAD auth with username and password combination");
                             testEnv.Credentials = new UserTokenCredentials(testEnv.ClientId,
-                                testEnv.UserDomain, testEnv.UserName, password, testEnv.AsAzureEnvironment());
+                                testEnv.Tenant, testEnv.UserName, password, testEnv.AsAzureEnvironment());
                         }
                         else if (testEnv.ServicePrincipal != null && password != null)
                         {
                             ServiceClientTracing.Information("Using AAD auth with service principal and password combination");
                             testEnv.Credentials = new ApplicationTokenCredentials(testEnv.ServicePrincipal,
-                                testEnv.UserDomain, password, testEnv.AsAzureEnvironment());
+                                testEnv.Tenant, password, testEnv.AsAzureEnvironment());
                         }
                     }
                 }//end-of-if connectionString present
@@ -92,7 +93,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                     //will authenticate the user if the connection string is nullOrEmpty and the mode is not playback
                     ServiceClientTracing.Information("Using AAD auth with pop-up dialog using default environment...");
                     testEnv.Credentials = new UserTokenCredentials(testEnv.ClientId,
-                        testEnv.UserDomain, testEnv.AsAzureEnvironment());
+                        testEnv.Tenant, testEnv.AsAzureEnvironment());
                 }
 
                 //Getting subscriptions from server

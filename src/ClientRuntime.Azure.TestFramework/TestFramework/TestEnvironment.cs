@@ -161,7 +161,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                     var splitUser = this.UserName.Split( new []{'@'}, StringSplitOptions.RemoveEmptyEntries);
                     if (splitUser.Length == 2)
                     {
-                        this.UserDomain = splitUser[1];
+                        this.Tenant = splitUser[1];
                     }
                 }
                 if (connection.ContainsKey(TestEnvironment.ServicePrincipalKey))
@@ -288,9 +288,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         public string ClientId { get; set; }
 
         public string SubscriptionId { get; set; }
-
-        public string UserDomain { get; set; }
-
+        
         public IDictionary<string, string> RawParameters { get; set; }
 
         public bool UsesCustomUri()
