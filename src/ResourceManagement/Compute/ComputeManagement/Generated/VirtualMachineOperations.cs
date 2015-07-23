@@ -506,6 +506,11 @@ namespace Microsoft.Azure.Management.Compute
                         }
                         
                         osDiskValue["createOption"] = parameters.StorageProfile.OSDisk.CreateOption;
+                        
+                        if (parameters.StorageProfile.OSDisk.DiskSizeGB != null)
+                        {
+                            osDiskValue["diskSizeGB"] = parameters.StorageProfile.OSDisk.DiskSizeGB.Value;
+                        }
                     }
                     
                     if (parameters.StorageProfile.DataDisks != null)
@@ -519,11 +524,6 @@ namespace Microsoft.Azure.Management.Compute
                                 dataDisksArray.Add(dataDiskValue);
                                 
                                 dataDiskValue["lun"] = dataDisksItem.Lun;
-                                
-                                if (dataDisksItem.DiskSizeGB != null)
-                                {
-                                    dataDiskValue["diskSizeGB"] = dataDisksItem.DiskSizeGB.Value;
-                                }
                                 
                                 dataDiskValue["name"] = dataDisksItem.Name;
                                 
@@ -552,6 +552,11 @@ namespace Microsoft.Azure.Management.Compute
                                 }
                                 
                                 dataDiskValue["createOption"] = dataDisksItem.CreateOption;
+                                
+                                if (dataDisksItem.DiskSizeGB != null)
+                                {
+                                    dataDiskValue["diskSizeGB"] = dataDisksItem.DiskSizeGB.Value;
+                                }
                             }
                             storageProfileValue["dataDisks"] = dataDisksArray;
                         }
@@ -1529,6 +1534,13 @@ namespace Microsoft.Azure.Management.Compute
                                             string createOptionInstance = ((string)createOptionValue);
                                             osDiskInstance.CreateOption = createOptionInstance;
                                         }
+                                        
+                                        JToken diskSizeGBValue = osDiskValue2["diskSizeGB"];
+                                        if (diskSizeGBValue != null && diskSizeGBValue.Type != JTokenType.Null)
+                                        {
+                                            int diskSizeGBInstance = ((int)diskSizeGBValue);
+                                            osDiskInstance.DiskSizeGB = diskSizeGBInstance;
+                                        }
                                     }
                                     
                                     JToken dataDisksArray2 = storageProfileValue2["dataDisks"];
@@ -1544,13 +1556,6 @@ namespace Microsoft.Azure.Management.Compute
                                             {
                                                 int lunInstance = ((int)lunValue);
                                                 dataDiskInstance.Lun = lunInstance;
-                                            }
-                                            
-                                            JToken diskSizeGBValue = dataDisksValue["diskSizeGB"];
-                                            if (diskSizeGBValue != null && diskSizeGBValue.Type != JTokenType.Null)
-                                            {
-                                                int diskSizeGBInstance = ((int)diskSizeGBValue);
-                                                dataDiskInstance.DiskSizeGB = diskSizeGBInstance;
                                             }
                                             
                                             JToken nameValue3 = dataDisksValue["name"];
@@ -1600,6 +1605,13 @@ namespace Microsoft.Azure.Management.Compute
                                             {
                                                 string createOptionInstance2 = ((string)createOptionValue2);
                                                 dataDiskInstance.CreateOption = createOptionInstance2;
+                                            }
+                                            
+                                            JToken diskSizeGBValue2 = dataDisksValue["diskSizeGB"];
+                                            if (diskSizeGBValue2 != null && diskSizeGBValue2.Type != JTokenType.Null)
+                                            {
+                                                int diskSizeGBInstance2 = ((int)diskSizeGBValue2);
+                                                dataDiskInstance.DiskSizeGB = diskSizeGBInstance2;
                                             }
                                         }
                                     }
@@ -4014,6 +4026,13 @@ namespace Microsoft.Azure.Management.Compute
                                             string createOptionInstance = ((string)createOptionValue);
                                             osDiskInstance.CreateOption = createOptionInstance;
                                         }
+                                        
+                                        JToken diskSizeGBValue = osDiskValue["diskSizeGB"];
+                                        if (diskSizeGBValue != null && diskSizeGBValue.Type != JTokenType.Null)
+                                        {
+                                            int diskSizeGBInstance = ((int)diskSizeGBValue);
+                                            osDiskInstance.DiskSizeGB = diskSizeGBInstance;
+                                        }
                                     }
                                     
                                     JToken dataDisksArray = storageProfileValue["dataDisks"];
@@ -4029,13 +4048,6 @@ namespace Microsoft.Azure.Management.Compute
                                             {
                                                 int lunInstance = ((int)lunValue);
                                                 dataDiskInstance.Lun = lunInstance;
-                                            }
-                                            
-                                            JToken diskSizeGBValue = dataDisksValue["diskSizeGB"];
-                                            if (diskSizeGBValue != null && diskSizeGBValue.Type != JTokenType.Null)
-                                            {
-                                                int diskSizeGBInstance = ((int)diskSizeGBValue);
-                                                dataDiskInstance.DiskSizeGB = diskSizeGBInstance;
                                             }
                                             
                                             JToken nameValue3 = dataDisksValue["name"];
@@ -4085,6 +4097,13 @@ namespace Microsoft.Azure.Management.Compute
                                             {
                                                 string createOptionInstance2 = ((string)createOptionValue2);
                                                 dataDiskInstance.CreateOption = createOptionInstance2;
+                                            }
+                                            
+                                            JToken diskSizeGBValue2 = dataDisksValue["diskSizeGB"];
+                                            if (diskSizeGBValue2 != null && diskSizeGBValue2.Type != JTokenType.Null)
+                                            {
+                                                int diskSizeGBInstance2 = ((int)diskSizeGBValue2);
+                                                dataDiskInstance.DiskSizeGB = diskSizeGBInstance2;
                                             }
                                         }
                                     }
@@ -5331,6 +5350,13 @@ namespace Microsoft.Azure.Management.Compute
                                             string createOptionInstance = ((string)createOptionValue);
                                             osDiskInstance.CreateOption = createOptionInstance;
                                         }
+                                        
+                                        JToken diskSizeGBValue = osDiskValue["diskSizeGB"];
+                                        if (diskSizeGBValue != null && diskSizeGBValue.Type != JTokenType.Null)
+                                        {
+                                            int diskSizeGBInstance = ((int)diskSizeGBValue);
+                                            osDiskInstance.DiskSizeGB = diskSizeGBInstance;
+                                        }
                                     }
                                     
                                     JToken dataDisksArray = storageProfileValue["dataDisks"];
@@ -5346,13 +5372,6 @@ namespace Microsoft.Azure.Management.Compute
                                             {
                                                 int lunInstance = ((int)lunValue);
                                                 dataDiskInstance.Lun = lunInstance;
-                                            }
-                                            
-                                            JToken diskSizeGBValue = dataDisksValue["diskSizeGB"];
-                                            if (diskSizeGBValue != null && diskSizeGBValue.Type != JTokenType.Null)
-                                            {
-                                                int diskSizeGBInstance = ((int)diskSizeGBValue);
-                                                dataDiskInstance.DiskSizeGB = diskSizeGBInstance;
                                             }
                                             
                                             JToken nameValue3 = dataDisksValue["name"];
@@ -5402,6 +5421,13 @@ namespace Microsoft.Azure.Management.Compute
                                             {
                                                 string createOptionInstance2 = ((string)createOptionValue2);
                                                 dataDiskInstance.CreateOption = createOptionInstance2;
+                                            }
+                                            
+                                            JToken diskSizeGBValue2 = dataDisksValue["diskSizeGB"];
+                                            if (diskSizeGBValue2 != null && diskSizeGBValue2.Type != JTokenType.Null)
+                                            {
+                                                int diskSizeGBInstance2 = ((int)diskSizeGBValue2);
+                                                dataDiskInstance.DiskSizeGB = diskSizeGBInstance2;
                                             }
                                         }
                                     }
@@ -6642,6 +6668,13 @@ namespace Microsoft.Azure.Management.Compute
                                                     string createOptionInstance = ((string)createOptionValue);
                                                     osDiskInstance.CreateOption = createOptionInstance;
                                                 }
+                                                
+                                                JToken diskSizeGBValue = osDiskValue["diskSizeGB"];
+                                                if (diskSizeGBValue != null && diskSizeGBValue.Type != JTokenType.Null)
+                                                {
+                                                    int diskSizeGBInstance = ((int)diskSizeGBValue);
+                                                    osDiskInstance.DiskSizeGB = diskSizeGBInstance;
+                                                }
                                             }
                                             
                                             JToken dataDisksArray = storageProfileValue["dataDisks"];
@@ -6657,13 +6690,6 @@ namespace Microsoft.Azure.Management.Compute
                                                     {
                                                         int lunInstance = ((int)lunValue);
                                                         dataDiskInstance.Lun = lunInstance;
-                                                    }
-                                                    
-                                                    JToken diskSizeGBValue = dataDisksValue["diskSizeGB"];
-                                                    if (diskSizeGBValue != null && diskSizeGBValue.Type != JTokenType.Null)
-                                                    {
-                                                        int diskSizeGBInstance = ((int)diskSizeGBValue);
-                                                        dataDiskInstance.DiskSizeGB = diskSizeGBInstance;
                                                     }
                                                     
                                                     JToken nameValue3 = dataDisksValue["name"];
@@ -6713,6 +6739,13 @@ namespace Microsoft.Azure.Management.Compute
                                                     {
                                                         string createOptionInstance2 = ((string)createOptionValue2);
                                                         dataDiskInstance.CreateOption = createOptionInstance2;
+                                                    }
+                                                    
+                                                    JToken diskSizeGBValue2 = dataDisksValue["diskSizeGB"];
+                                                    if (diskSizeGBValue2 != null && diskSizeGBValue2.Type != JTokenType.Null)
+                                                    {
+                                                        int diskSizeGBInstance2 = ((int)diskSizeGBValue2);
+                                                        dataDiskInstance.DiskSizeGB = diskSizeGBInstance2;
                                                     }
                                                 }
                                             }
@@ -7959,6 +7992,13 @@ namespace Microsoft.Azure.Management.Compute
                                                     string createOptionInstance = ((string)createOptionValue);
                                                     osDiskInstance.CreateOption = createOptionInstance;
                                                 }
+                                                
+                                                JToken diskSizeGBValue = osDiskValue["diskSizeGB"];
+                                                if (diskSizeGBValue != null && diskSizeGBValue.Type != JTokenType.Null)
+                                                {
+                                                    int diskSizeGBInstance = ((int)diskSizeGBValue);
+                                                    osDiskInstance.DiskSizeGB = diskSizeGBInstance;
+                                                }
                                             }
                                             
                                             JToken dataDisksArray = storageProfileValue["dataDisks"];
@@ -7974,13 +8014,6 @@ namespace Microsoft.Azure.Management.Compute
                                                     {
                                                         int lunInstance = ((int)lunValue);
                                                         dataDiskInstance.Lun = lunInstance;
-                                                    }
-                                                    
-                                                    JToken diskSizeGBValue = dataDisksValue["diskSizeGB"];
-                                                    if (diskSizeGBValue != null && diskSizeGBValue.Type != JTokenType.Null)
-                                                    {
-                                                        int diskSizeGBInstance = ((int)diskSizeGBValue);
-                                                        dataDiskInstance.DiskSizeGB = diskSizeGBInstance;
                                                     }
                                                     
                                                     JToken nameValue3 = dataDisksValue["name"];
@@ -8030,6 +8063,13 @@ namespace Microsoft.Azure.Management.Compute
                                                     {
                                                         string createOptionInstance2 = ((string)createOptionValue2);
                                                         dataDiskInstance.CreateOption = createOptionInstance2;
+                                                    }
+                                                    
+                                                    JToken diskSizeGBValue2 = dataDisksValue["diskSizeGB"];
+                                                    if (diskSizeGBValue2 != null && diskSizeGBValue2.Type != JTokenType.Null)
+                                                    {
+                                                        int diskSizeGBInstance2 = ((int)diskSizeGBValue2);
+                                                        dataDiskInstance.DiskSizeGB = diskSizeGBInstance2;
                                                     }
                                                 }
                                             }
@@ -9469,6 +9509,13 @@ namespace Microsoft.Azure.Management.Compute
                                                     string createOptionInstance = ((string)createOptionValue);
                                                     osDiskInstance.CreateOption = createOptionInstance;
                                                 }
+                                                
+                                                JToken diskSizeGBValue = osDiskValue["diskSizeGB"];
+                                                if (diskSizeGBValue != null && diskSizeGBValue.Type != JTokenType.Null)
+                                                {
+                                                    int diskSizeGBInstance = ((int)diskSizeGBValue);
+                                                    osDiskInstance.DiskSizeGB = diskSizeGBInstance;
+                                                }
                                             }
                                             
                                             JToken dataDisksArray = storageProfileValue["dataDisks"];
@@ -9484,13 +9531,6 @@ namespace Microsoft.Azure.Management.Compute
                                                     {
                                                         int lunInstance = ((int)lunValue);
                                                         dataDiskInstance.Lun = lunInstance;
-                                                    }
-                                                    
-                                                    JToken diskSizeGBValue = dataDisksValue["diskSizeGB"];
-                                                    if (diskSizeGBValue != null && diskSizeGBValue.Type != JTokenType.Null)
-                                                    {
-                                                        int diskSizeGBInstance = ((int)diskSizeGBValue);
-                                                        dataDiskInstance.DiskSizeGB = diskSizeGBInstance;
                                                     }
                                                     
                                                     JToken nameValue3 = dataDisksValue["name"];
@@ -9540,6 +9580,13 @@ namespace Microsoft.Azure.Management.Compute
                                                     {
                                                         string createOptionInstance2 = ((string)createOptionValue2);
                                                         dataDiskInstance.CreateOption = createOptionInstance2;
+                                                    }
+                                                    
+                                                    JToken diskSizeGBValue2 = dataDisksValue["diskSizeGB"];
+                                                    if (diskSizeGBValue2 != null && diskSizeGBValue2.Type != JTokenType.Null)
+                                                    {
+                                                        int diskSizeGBInstance2 = ((int)diskSizeGBValue2);
+                                                        dataDiskInstance.DiskSizeGB = diskSizeGBInstance2;
                                                     }
                                                 }
                                             }
