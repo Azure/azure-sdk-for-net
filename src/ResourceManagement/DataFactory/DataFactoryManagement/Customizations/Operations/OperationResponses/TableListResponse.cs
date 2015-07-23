@@ -49,11 +49,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         public TableListResponse(string nextLink)
             : this()
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException("nextLink");
-            }
-
+            Ensure.IsNotNull(nextLink, "nextLink");
             this.NextLink = nextLink;
         }
 
