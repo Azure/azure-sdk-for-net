@@ -6,19 +6,15 @@
       <DataCollector friendlyName="Code Coverage" uri="datacollector://Microsoft/CodeCoverage/2.0" assemblyQualifiedName="Microsoft.VisualStudio.Coverage.DynamicCoverageDataCollector, Microsoft.VisualStudio.TraceCollector, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
         <Configuration>
           <CodeCoverage>
-            <!--
-Additional paths to search for .pdb (symbol) files. Symbols must be found for modules to be instrumented.
-If .pdb files are in the same folder as the .dll or .exe files, they are automatically found. Otherwise, specify them here.
-Note that searching for symbols increases code coverage runtime. So keep this small and local.
--->
+            <!-- Additional paths to search for .pdb (symbol) files. Symbols must be found for modules to be instrumented.
+              If .pdb files are in the same folder as the .dll or .exe files, they are automatically found. Otherwise, specify them here.
+              Note that searching for symbols increases code coverage runtime. So keep this small and local. -->
 
-            <!--
-About include/exclude lists:
-Empty "Include" clauses imply all; empty "Exclude" clauses imply none.
-Each element in the list is a regular expression (ECMAScript syntax). See http://msdn.microsoft.com/library/2k3te2cs.aspx.
-An item must first match at least one entry in the include list to be included.
-Included items must then not match any entries in the exclude list to remain included.
--->
+            <!-- About include/exclude lists:
+              Empty "Include" clauses imply all; empty "Exclude" clauses imply none.
+              Each element in the list is a regular expression (ECMAScript syntax). See http://msdn.microsoft.com/library/2k3te2cs.aspx.
+              An item must first match at least one entry in the include list to be included.
+              Included items must then not match any entries in the exclude list to remain included. -->
 
             <!-- Match assembly file paths: -->
             <ModulePaths>
