@@ -20,17 +20,24 @@ using Microsoft.Azure.Management.DataFactories.Models;
 
 namespace Microsoft.Azure.Management.DataFactories
 {
-    internal static class DataFactoryUtilities
+    internal static class DataFactoryOperationUtilities
     {
-        public static string GetResourceTypeName(Type type)
+        public static OperationStatus ToOperationStatus(this string provisioningState)
         {
-#if NET45
-            AdfTypeNameAttribute typeNameAttribute = type.GetCustomAttribute<AdfTypeNameAttribute>(true);
-#else
-            AdfTypeNameAttribute typeNameAttribute =
-                type.GetCustomAttributes(typeof(AdfTypeNameAttribute), true).FirstOrDefault() as AdfTypeNameAttribute;
-#endif
-            return typeNameAttribute == null ? type.Name : typeNameAttribute.TypeName;
+            switch (provisioningState)
+            {
+                case DataFactoryConstants.ProvisioningStateSucceeded:
+                    return OperationStatus.Succeeded;
+
+                default:
+                    return OperationStatus.Failed;
+            }
+        }
+
+        public static void CopyRuntimeProperties(AzureOperationResponse source, AzureOperationResponse target)
+        {
+            target.RequestId = source.RequestId;
+            target.StatusCode = source.StatusCode;
         }
     }
 }
