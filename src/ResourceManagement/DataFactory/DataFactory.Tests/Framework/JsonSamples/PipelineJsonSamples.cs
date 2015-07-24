@@ -795,7 +795,8 @@ namespace DataFactory.Tests.Framework.JsonSamples
                         sourceRetryWait: ""00:00:01"",
                         blobColumnSeparators: ""My column separators"",
                         treatEmptyAsNull: ""False"",
-                        nullValues: ""My null values""
+                        nullValues: ""My null values"",
+                        recursive: ""True""
                     },
                     sink: 
                     {
@@ -809,6 +810,52 @@ namespace DataFactory.Tests.Framework.JsonSamples
                 [ 
                     {
                         name: ""RawBlob""
+                    }
+                ],
+                outputs: 
+                [ 
+                    {
+                        name: ""ProcessedFileSink""
+                    }
+                ],
+                linkedServiceName: ""MyLinkedServiceName""
+            }
+        ]
+    }
+}
+";
+        [JsonSample]
+        public const string CopyFileSystemSourceToFileSystemSink = @"
+{
+    name: ""MyPipelineName"",
+    properties:
+    {
+        description : ""Copy from File to File"",
+        hubName: ""MyHDIHub"",
+        activities:
+        [
+            {
+                type: ""Copy"",
+                name: ""MyActivityName"",
+                typeProperties:
+                {
+                    source: 
+                    {
+                        type: ""FileSystemSource"",
+                        recursive: ""False""
+                    },
+                    sink: 
+                    {
+                        type: ""FileSystemSink"",
+                        writeBatchSize: 1000000,
+                        writeBatchTimeout: ""01:00:00"",
+                        copyBehavior: ""FlattenHierarchy""                                                
+                    }
+                },
+                inputs: 
+                [ 
+                    {
+                        name: ""RawFileSource""
                     }
                 ],
                 outputs: 

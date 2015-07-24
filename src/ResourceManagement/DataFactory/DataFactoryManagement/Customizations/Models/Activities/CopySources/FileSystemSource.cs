@@ -20,5 +20,9 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     /// </summary>
     public class FileSystemSource : CopySource
     {
+        /// <summary>
+        /// Optional. If true, files under the folder path will be read recursively.
+        /// </summary>
+        public bool? Recursive { get; set; }
     }
 }
