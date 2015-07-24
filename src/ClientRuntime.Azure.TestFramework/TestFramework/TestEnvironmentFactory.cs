@@ -8,7 +8,7 @@ using Microsoft.Rest.ClientRuntime.Azure.TestFramework.HttpRecorder;
 using Microsoft.Rest;
 using System.Net.Http;
 using Newtonsoft.Json.Linq;
-using Microsoft.Azure.Authentication;
+using Microsoft.Rest.Azure.Authentication;
 using System.Threading;
 
 namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
@@ -77,7 +77,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                         {
                             ServiceClientTracing.Information("Using AAD auth with username and password combination");
                             testEnv.Credentials = new UserTokenCredentials(testEnv.ClientId,
-                                testEnv.Tenant, testEnv.UserName, password, testEnv.AsAzureEnvironment());
+                                testEnv.Tenant, testEnv.UserName, password, testEnv.AsAzureEnvironment(), null);
                         }
                         else if (testEnv.ServicePrincipal != null && password != null)
                         {
@@ -93,7 +93,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                     //will authenticate the user if the connection string is nullOrEmpty and the mode is not playback
                     ServiceClientTracing.Information("Using AAD auth with pop-up dialog using default environment...");
                     testEnv.Credentials = new UserTokenCredentials(testEnv.ClientId,
-                        testEnv.Tenant, testEnv.AsAzureEnvironment());
+                        testEnv.Tenant, new Uri("urn:ietf:wg:oauth:2.0:oob"), testEnv.AsAzureEnvironment());
                 }
 
                 //Getting subscriptions from server
