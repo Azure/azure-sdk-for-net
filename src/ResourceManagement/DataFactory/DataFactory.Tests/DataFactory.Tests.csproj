@@ -54,6 +54,7 @@
     <Compile Include="UnitTests\TestClasses\MyLinkedServiceTypeWithListProperty.cs" />
     <Compile Include="UnitTests\TestClasses\MyTableType.cs" />
     <Compile Include="UnitTests\RegistrationTestUtilities.cs" />
+    <Compile Include="UnitTests\TypeRegistrationTestBase.cs" />
     <Compile Include="UnitTests\UnitTestBase.cs" />
   </ItemGroup>
   <ItemGroup>
