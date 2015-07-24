@@ -33,7 +33,6 @@
             "description": "Id of the subscription."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           }
         ],
@@ -56,11 +55,9 @@
         "description": "Gets a list of the subscriptionIds.",
         "parameters": [
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -84,11 +81,9 @@
         "description": "Gets a list of the tenantIds.",
         "parameters": [
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],

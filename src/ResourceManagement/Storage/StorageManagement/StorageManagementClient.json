@@ -35,11 +35,9 @@
             "description": "The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only.  "
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -85,11 +83,9 @@
             "description": "The parameters to provide for the created account."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -128,11 +124,9 @@
             "description": "The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only.  "
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -167,11 +161,9 @@
             "description": "The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only.  "
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -215,11 +207,9 @@
             "description": "The parameters to update on the account. Note that only one property can be changed at a time using this API. "
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -256,11 +246,9 @@
             "description": "The name of the storage account."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -283,11 +271,9 @@
         "description": "Lists all the storage accounts available under the subscription. Note that storage keys are not returned; use the ListKeys operation for this.",
         "parameters": [
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -318,11 +304,9 @@
             "description": "The name of the resource group within the user’s subscription."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -369,11 +353,9 @@
             "description": "Specifies name of the key which should be regenerated."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -382,6 +364,31 @@
             "description": "",
             "schema": {
               "$ref": "#/definitions/StorageAccountKeys"
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/Microsoft.Storage/usages": {
+      "get": {
+        "tags": [
+          "Usage"
+        ],
+        "operationId": "Usage_List",
+        "description": "Gets the current usage count and the limit for the resources under the subscription.",
+        "parameters": [
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/UsageListResult"
             }
           }
         }
@@ -640,6 +647,63 @@
           "x-ms-enum": "KeyName"
         }
       }
+    },
+    "UsageName": {
+      "properties": {
+        "value": {
+          "type": "string",
+          "description": "Gets a string describing the resource name."
+        },
+        "localizedValue": {
+          "type": "string",
+          "description": "Gets a localized string describing the resource name."
+        }
+      },
+      "description": "The Usage Names."
+    },
+    "Usage": {
+      "properties": {
+        "unit": {
+          "type": "string",
+          "description": "Gets the unit of measurement.",
+          "enum": [
+            "Count",
+            "Bytes",
+            "Seconds",
+            "Percent",
+            "CountsPerSecond",
+            "BytesPerSecond"
+          ],
+          "x-ms-enum": "UsageUnit"
+        },
+        "currentValue": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Gets the current count of the allocated resources in the subscription."
+        },
+        "limit": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Gets the maximum count of the resources that can be allocated in the subscription."
+        },
+        "name": {
+          "$ref": "#/definitions/UsageName",
+          "description": "Gets the name of the type of usage."
+        }
+      },
+      "description": "Describes Storage Resource Usage."
+    },
+    "UsageListResult": {
+      "properties": {
+        "value": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Usage"
+          },
+          "description": "Gets or sets the list Storage Resource Usages."
+        }
+      },
+      "description": "The List Usages operation response."
     },
     "Resource": {
       "properties": {

@@ -5,9 +5,10 @@ namespace Microsoft.Azure.Subscriptions.Models
     using Newtonsoft.Json;
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
-    using Microsoft.Azure;
+    using Microsoft.Rest.Azure;
 
     /// <summary>
+    /// Subscription information.
     /// </summary>
     public partial class Subscription
     {

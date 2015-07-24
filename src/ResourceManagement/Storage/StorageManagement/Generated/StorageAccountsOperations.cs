@@ -12,9 +12,12 @@ namespace Microsoft.Azure.Management.Storage
     using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
-    using Microsoft.Azure;
+    using Microsoft.Rest.Azure;
     using Models;
 
+    /// <summary>
+    /// StorageAccountsOperations operations.
+    /// </summary>
     internal partial class StorageAccountsOperations : IServiceOperations<StorageManagementClient>, IStorageAccountsOperations
     {
         /// <summary>

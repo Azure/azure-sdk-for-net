@@ -5,9 +5,10 @@ namespace Microsoft.Azure.Management.Compute.Models
     using Newtonsoft.Json;
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
-    using Microsoft.Azure;
+    using Microsoft.Rest.Azure;
 
     /// <summary>
+    /// Describes a Virtual Machine Image.
     /// </summary>
     public partial class VirtualMachineImage : SubResource
     {

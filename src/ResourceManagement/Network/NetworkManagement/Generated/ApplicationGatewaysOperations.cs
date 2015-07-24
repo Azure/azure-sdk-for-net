@@ -12,9 +12,12 @@ namespace Microsoft.Azure.Management.Network
     using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
-    using Microsoft.Azure;
+    using Microsoft.Rest.Azure;
     using Models;
 
+    /// <summary>
+    /// ApplicationGatewaysOperations operations.
+    /// </summary>
     internal partial class ApplicationGatewaysOperations : IServiceOperations<NetworkResourceProviderClient>, IApplicationGatewaysOperations
     {
         /// <summary>

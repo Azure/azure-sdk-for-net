@@ -5,9 +5,10 @@ namespace Microsoft.Azure.Management.Compute.Models
     using Newtonsoft.Json;
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
-    using Microsoft.Azure;
+    using Microsoft.Rest.Azure;
 
     /// <summary>
+    /// SSH configuration for Linux based VMs running on Azure
     /// </summary>
     public partial class SshConfiguration
     {

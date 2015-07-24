@@ -15,8 +15,8 @@ namespace Microsoft.Azure.Management.Resources
     using Newtonsoft.Json;
     using System.Linq;
     using System.Linq.Expressions;
-    using Microsoft.Azure.OData;
-    using Microsoft.Azure;
+    using Microsoft.Rest.Azure.OData;
+    using Microsoft.Rest.Azure;
     using Models;
 
     /// <summary>

@@ -40,11 +40,9 @@
             "description": "The name of the applicationgateway."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -83,11 +81,9 @@
             "description": "The name of the applicationgateway."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -131,11 +127,9 @@
             "description": "Parameters supplied to the create/delete ApplicationGateway operation"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -172,11 +166,9 @@
             "description": "The name of the resource group."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -200,11 +192,9 @@
         "description": "The List applicationgateway opertion retrieves all the applicationgateways in a subscription.",
         "parameters": [
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -242,11 +232,9 @@
             "description": "The name of the application gateway."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -281,11 +269,9 @@
             "description": "The name of the application gateway."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -323,11 +309,9 @@
             "description": "The name of the loadBalancer."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -366,11 +350,9 @@
             "description": "The name of the loadBalancer."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -414,11 +396,9 @@
             "description": "Parameters supplied to the create/delete LoadBalancer operation"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -448,11 +428,9 @@
         "description": "The List loadBalancer opertion retrieves all the loadbalancers in a subscription.",
         "parameters": [
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -483,11 +461,9 @@
             "description": "The name of the resource group."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -534,11 +510,9 @@
             "description": "Parameters supplied to the Begin Create or update Local Network Gateway operation through Network resource provider."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -580,11 +554,9 @@
             "description": "The name of the local network gateway."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -621,11 +593,9 @@
             "description": "The name of the local network gateway."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -659,11 +629,9 @@
             "description": "The name of the resource group."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -701,11 +669,9 @@
             "description": "The name of the network interface."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -744,11 +710,9 @@
             "description": "The name of the network interface."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -792,11 +756,9 @@
             "description": "Parameters supplied to the create/update NetworkInterface operation"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -826,11 +788,9 @@
         "description": "The List networkInterfaces opertion retrieves all the networkInterfaces in a subscription.",
         "parameters": [
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -861,11 +821,9 @@
             "description": "The name of the resource group."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -903,11 +861,9 @@
             "description": "The name of the network security group."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -946,11 +902,9 @@
             "description": "The name of the network security group."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -994,11 +948,9 @@
             "description": "Parameters supplied to the create/update Network Security Group operation"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -1028,11 +980,9 @@
         "description": "The list NetworkSecurityGroups returns all network security groups in a subscription",
         "parameters": [
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -1063,11 +1013,9 @@
             "description": "The name of the resource group."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -1105,11 +1053,9 @@
             "description": "The name of the subnet."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -1148,11 +1094,9 @@
             "description": "The name of the subnet."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -1196,11 +1140,9 @@
             "description": "Parameters supplied to the create/update PublicIPAddress operation"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -1230,11 +1172,9 @@
         "description": "The List publicIpAddress opertion retrieves all the publicIpAddresses in a subscription.",
         "parameters": [
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -1265,11 +1205,9 @@
             "description": "The name of the resource group."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -1314,11 +1252,9 @@
             "description": "The name of the security rule."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -1364,11 +1300,9 @@
             "description": "The name of the security rule."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -1419,11 +1353,9 @@
             "description": "Parameters supplied to the create/update network security rule operation"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -1467,11 +1399,9 @@
             "description": "The name of the network security group."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -1516,11 +1446,9 @@
             "description": "The name of the subnet."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -1566,11 +1494,9 @@
             "description": "The name of the subnet."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -1621,11 +1547,9 @@
             "description": "Parameters supplied to the create/update Subnet operation"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -1669,11 +1593,9 @@
             "description": "The name of the virtual network."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -1704,11 +1626,9 @@
             "description": "The location upon which resource usage is queried."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -1754,11 +1674,9 @@
             "description": "Parameters supplied to the Begin Create or update Virtual Network Gateway connection operation through Network resource provider."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -1800,11 +1718,9 @@
             "description": "The name of the virtual network gateway connection."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -1841,11 +1757,9 @@
             "description": "The name of the virtual network gateway connection."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -1886,11 +1800,9 @@
             "description": "The virtual network gateway connection shared key name."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -1934,11 +1846,9 @@
             "description": "Parameters supplied to the Begin Set Virtual Network Gateway conection Shared key operation throughNetwork resource provider."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -1975,11 +1885,9 @@
             "description": "The name of the resource group."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -2026,11 +1934,9 @@
             "description": "Parameters supplied to the Begin Reset Virtual Network Gateway connection shared key operation through Network resource provider."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -2080,11 +1986,9 @@
             "description": "Parameters supplied to the Begin Create or update Virtual Network Gateway operation through Network resource provider."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -2126,11 +2030,9 @@
             "description": "The name of the virtual network gateway."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -2167,11 +2069,9 @@
             "description": "The name of the virtual network gateway."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -2205,11 +2105,9 @@
             "description": "The name of the resource group."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -2256,11 +2154,9 @@
             "description": "Parameters supplied to the Begin Reset Virtual Network Gateway operation through Network resource provider."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -2301,11 +2197,9 @@
             "description": "The name of the virtual network."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -2344,11 +2238,9 @@
             "description": "The name of the virtual network."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -2392,11 +2284,9 @@
             "description": "Parameters supplied to the create/update Virtual Network operation"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -2426,11 +2316,9 @@
         "description": "The list VirtualNetwork returns all Virtual Networks in a subscription",
         "parameters": [
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -2461,11 +2349,9 @@
             "description": "The name of the resource group."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -2500,11 +2386,9 @@
             "description": "The domain name to be verified. It must conform to the following regular expression: ^[a-z][a-z0-9-]{1,61}[a-z0-9]$."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],

@@ -7,10 +7,11 @@ namespace Microsoft.Azure.Management.Resources
     using System.Threading.Tasks;
     using Microsoft.Rest;
     using System.Linq;
-    using Microsoft.Azure;
+    using Microsoft.Rest.Azure;
     using Models;
 
     /// <summary>
+    /// FeaturesOperations operations.
     /// </summary>
     public partial interface IFeaturesOperations
     {

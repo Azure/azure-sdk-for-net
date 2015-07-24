@@ -12,9 +12,12 @@ namespace Microsoft.Azure.Subscriptions
     using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
-    using Microsoft.Azure;
+    using Microsoft.Rest.Azure;
     using Models;
 
+    /// <summary>
+    /// TenantsOperations operations.
+    /// </summary>
     internal partial class TenantsOperations : IServiceOperations<SubscriptionClient>, ITenantsOperations
     {
         /// <summary>

@@ -7,10 +7,11 @@ namespace Microsoft.Azure.Management.Network
     using System.Threading.Tasks;
     using Microsoft.Rest;
     using System.Linq;
-    using Microsoft.Azure;
+    using Microsoft.Rest.Azure;
     using Models;
 
     /// <summary>
+    /// ApplicationGatewaysOperations operations.
     /// </summary>
     public partial interface IApplicationGatewaysOperations
     {

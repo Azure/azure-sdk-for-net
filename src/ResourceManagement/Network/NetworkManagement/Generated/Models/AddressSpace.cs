@@ -5,9 +5,11 @@ namespace Microsoft.Azure.Management.Network.Models
     using Newtonsoft.Json;
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
-    using Microsoft.Azure;
+    using Microsoft.Rest.Azure;
 
     /// <summary>
+    /// AddressSpace contains an array of IP address ranges that can be used
+    /// by subnets
     /// </summary>
     public partial class AddressSpace
     {
