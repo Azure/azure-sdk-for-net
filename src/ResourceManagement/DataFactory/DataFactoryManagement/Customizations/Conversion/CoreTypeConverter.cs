@@ -144,7 +144,7 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
                 return;
             }
                 
-            if (ImplementsIDictionary(property) || !ShouldValidateMembers(property))
+            if (!ShouldValidateMembers(property))
             {
                 return;
             }
@@ -177,10 +177,7 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
 #if NET45
         private void ValidateList(IList list)
         {
-            if (list == null)
-            {
-                throw new ArgumentNullException("list", "Some properties of the type cannot be cast to IList.");
-            }
+            Ensure.IsNotNull(list, "list", "Some properties of the type cannot be cast to IList.");
 
             Type type = list.GetType().GetTypeInfo().GenericTypeArguments[0];
             if (!ShouldValidateMembers(type))
@@ -201,10 +198,7 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
 
         private void ValidateDictionary(IDictionary list)
         {
-            if (list == null)
-            {
-                throw new ArgumentNullException("list", "Some properties of the type cannot be cast to IDictionary.");
-            }
+            Ensure.IsNotNull(list, "list", "Some properties of the type cannot be cast to IDictionary.");
 
             Type type = list.GetType().GetTypeInfo().GenericTypeArguments[1];
             if (!ShouldValidateMembers(type))
