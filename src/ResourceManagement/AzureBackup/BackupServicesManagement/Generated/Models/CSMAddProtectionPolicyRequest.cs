@@ -26,14 +26,14 @@ using Microsoft.Azure.Management.BackupServices.Models;
 namespace Microsoft.Azure.Management.BackupServices.Models
 {
     /// <summary>
-    /// The definition of a UpdateProtectionPolicy Request.
+    /// The definition of a CSM AddProtectionPolicy Request.
     /// </summary>
-    public partial class UpdateProtectionPolicyRequest : ManagementBaseObject
+    public partial class CSMAddProtectionPolicyRequest : CSMBaseRequest
     {
         private string _policyName;
         
         /// <summary>
-        /// Optional. Protection policy name
+        /// Optional. Protection policy name.
         /// </summary>
         public string PolicyName
         {
@@ -41,22 +41,22 @@ namespace Microsoft.Azure.Management.BackupServices.Models
             set { this._policyName = value; }
         }
         
-        private BackupSchedule _schedule;
+        private CSMAddProtectionPolicyRequestProperties _properties;
         
         /// <summary>
-        /// Optional. Schedule of ProtectionPolicy.
+        /// Optional. properties of add protection policy.
         /// </summary>
-        public BackupSchedule Schedule
+        public CSMAddProtectionPolicyRequestProperties Properties
         {
-            get { return this._schedule; }
-            set { this._schedule = value; }
+            get { return this._properties; }
+            set { this._properties = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the UpdateProtectionPolicyRequest
+        /// Initializes a new instance of the CSMAddProtectionPolicyRequest
         /// class.
         /// </summary>
-        public UpdateProtectionPolicyRequest()
+        public CSMAddProtectionPolicyRequest()
         {
         }
     }

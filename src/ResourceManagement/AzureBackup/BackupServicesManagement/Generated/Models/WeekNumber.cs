@@ -21,42 +21,37 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.BackupServices.Models;
 
 namespace Microsoft.Azure.Management.BackupServices.Models
 {
     /// <summary>
-    /// The definition of a ProtectionPolicy Info object.
+    /// Week Number Of the Month.
     /// </summary>
-    public partial class ProtectionPolicyInfo : ManagementResponseObject
+    public enum WeekNumber
     {
-        private BackupSchedule _schedule;
+        /// <summary>
+        /// First Week Number of the Month.
+        /// </summary>
+        First = 0,
         
         /// <summary>
-        /// Optional. Schedule of ProtectionPolicy.
+        /// Second Week Number of the Month.
         /// </summary>
-        public BackupSchedule Schedule
-        {
-            get { return this._schedule; }
-            set { this._schedule = value; }
-        }
-        
-        private string _workloadType;
+        Second = 1,
         
         /// <summary>
-        /// Optional. WorkloadType of ProtectionPolicy.
+        /// Third Week Number of the Month.
         /// </summary>
-        public string WorkloadType
-        {
-            get { return this._workloadType; }
-            set { this._workloadType = value; }
-        }
+        Third = 2,
         
         /// <summary>
-        /// Initializes a new instance of the ProtectionPolicyInfo class.
+        /// Fourth Week Number of the Month.
         /// </summary>
-        public ProtectionPolicyInfo()
-        {
-        }
+        Fourth = 3,
+        
+        /// <summary>
+        /// Last Week Number of the Month.
+        /// </summary>
+        Last = 4,
     }
 }

@@ -29,16 +29,19 @@ using Microsoft.Azure.Management.BackupServices.Models;
 
 namespace Microsoft.Azure.Management.BackupServices
 {
-    public static partial class ProtectionPolicyOperationsExtensions
+    public static partial class CSMProtectionPolicyOperationsExtensions
     {
         /// <summary>
         /// Create new Protection Policy.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.BackupServices.IProtectionPolicyOperations.
+        /// Microsoft.Azure.Management.BackupServices.ICSMProtectionPolicyOperations.
         /// </param>
-        /// <param name='addProtectionPolicyRequest'>
+        /// <param name='policyName'>
+        /// Required. The protection policy Name to be updated.
+        /// </param>
+        /// <param name='cSMAddProtectionPolicyRequest'>
         /// Required. The protection policy creation request.
         /// </param>
         /// <param name='customRequestHeaders'>
@@ -48,11 +51,11 @@ namespace Microsoft.Azure.Management.BackupServices
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static AzureOperationResponse Add(this IProtectionPolicyOperations operations, AddProtectionPolicyRequest addProtectionPolicyRequest, CustomRequestHeaders customRequestHeaders)
+        public static AzureOperationResponse Add(this ICSMProtectionPolicyOperations operations, string policyName, CSMAddProtectionPolicyRequest cSMAddProtectionPolicyRequest, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IProtectionPolicyOperations)s).AddAsync(addProtectionPolicyRequest, customRequestHeaders);
+                return ((ICSMProtectionPolicyOperations)s).AddAsync(policyName, cSMAddProtectionPolicyRequest, customRequestHeaders);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -62,9 +65,12 @@ namespace Microsoft.Azure.Management.BackupServices
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.BackupServices.IProtectionPolicyOperations.
+        /// Microsoft.Azure.Management.BackupServices.ICSMProtectionPolicyOperations.
         /// </param>
-        /// <param name='addProtectionPolicyRequest'>
+        /// <param name='policyName'>
+        /// Required. The protection policy Name to be updated.
+        /// </param>
+        /// <param name='cSMAddProtectionPolicyRequest'>
         /// Required. The protection policy creation request.
         /// </param>
         /// <param name='customRequestHeaders'>
@@ -74,9 +80,9 @@ namespace Microsoft.Azure.Management.BackupServices
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<AzureOperationResponse> AddAsync(this IProtectionPolicyOperations operations, AddProtectionPolicyRequest addProtectionPolicyRequest, CustomRequestHeaders customRequestHeaders)
+        public static Task<AzureOperationResponse> AddAsync(this ICSMProtectionPolicyOperations operations, string policyName, CSMAddProtectionPolicyRequest cSMAddProtectionPolicyRequest, CustomRequestHeaders customRequestHeaders)
         {
-            return operations.AddAsync(addProtectionPolicyRequest, customRequestHeaders, CancellationToken.None);
+            return operations.AddAsync(policyName, cSMAddProtectionPolicyRequest, customRequestHeaders, CancellationToken.None);
         }
         
         /// <summary>
@@ -84,10 +90,10 @@ namespace Microsoft.Azure.Management.BackupServices
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.BackupServices.IProtectionPolicyOperations.
+        /// Microsoft.Azure.Management.BackupServices.ICSMProtectionPolicyOperations.
         /// </param>
-        /// <param name='protectionPolicyId'>
-        /// Required. The protection policy ID to be deleted.
+        /// <param name='policyName'>
+        /// Required. The protection policy Name to be deleted.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
@@ -96,11 +102,11 @@ namespace Microsoft.Azure.Management.BackupServices
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static AzureOperationResponse Delete(this IProtectionPolicyOperations operations, string protectionPolicyId, CustomRequestHeaders customRequestHeaders)
+        public static AzureOperationResponse Delete(this ICSMProtectionPolicyOperations operations, string policyName, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IProtectionPolicyOperations)s).DeleteAsync(protectionPolicyId, customRequestHeaders);
+                return ((ICSMProtectionPolicyOperations)s).DeleteAsync(policyName, customRequestHeaders);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -110,10 +116,10 @@ namespace Microsoft.Azure.Management.BackupServices
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.BackupServices.IProtectionPolicyOperations.
+        /// Microsoft.Azure.Management.BackupServices.ICSMProtectionPolicyOperations.
         /// </param>
-        /// <param name='protectionPolicyId'>
-        /// Required. The protection policy ID to be deleted.
+        /// <param name='policyName'>
+        /// Required. The protection policy Name to be deleted.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
@@ -122,9 +128,9 @@ namespace Microsoft.Azure.Management.BackupServices
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<AzureOperationResponse> DeleteAsync(this IProtectionPolicyOperations operations, string protectionPolicyId, CustomRequestHeaders customRequestHeaders)
+        public static Task<AzureOperationResponse> DeleteAsync(this ICSMProtectionPolicyOperations operations, string policyName, CustomRequestHeaders customRequestHeaders)
         {
-            return operations.DeleteAsync(protectionPolicyId, customRequestHeaders, CancellationToken.None);
+            return operations.DeleteAsync(policyName, customRequestHeaders, CancellationToken.None);
         }
         
         /// <summary>
@@ -132,19 +138,19 @@ namespace Microsoft.Azure.Management.BackupServices
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.BackupServices.IProtectionPolicyOperations.
+        /// Microsoft.Azure.Management.BackupServices.ICSMProtectionPolicyOperations.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The response model for the list ProtectionPolicies operation.
+        /// The definition of a CSMProtectionPolicyListOperationResponse.
         /// </returns>
-        public static ProtectionPolicyListResponse List(this IProtectionPolicyOperations operations, CustomRequestHeaders customRequestHeaders)
+        public static CSMProtectionPolicyListOperationResponse List(this ICSMProtectionPolicyOperations operations, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IProtectionPolicyOperations)s).ListAsync(customRequestHeaders);
+                return ((ICSMProtectionPolicyOperations)s).ListAsync(customRequestHeaders);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -154,15 +160,15 @@ namespace Microsoft.Azure.Management.BackupServices
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.BackupServices.IProtectionPolicyOperations.
+        /// Microsoft.Azure.Management.BackupServices.ICSMProtectionPolicyOperations.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The response model for the list ProtectionPolicies operation.
+        /// The definition of a CSMProtectionPolicyListOperationResponse.
         /// </returns>
-        public static Task<ProtectionPolicyListResponse> ListAsync(this IProtectionPolicyOperations operations, CustomRequestHeaders customRequestHeaders)
+        public static Task<CSMProtectionPolicyListOperationResponse> ListAsync(this ICSMProtectionPolicyOperations operations, CustomRequestHeaders customRequestHeaders)
         {
             return operations.ListAsync(customRequestHeaders, CancellationToken.None);
         }
@@ -172,12 +178,12 @@ namespace Microsoft.Azure.Management.BackupServices
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.BackupServices.IProtectionPolicyOperations.
+        /// Microsoft.Azure.Management.BackupServices.ICSMProtectionPolicyOperations.
         /// </param>
-        /// <param name='protectionPolicyId'>
-        /// Required. The protection policy ID to be updated.
+        /// <param name='policyName'>
+        /// Required. The protection policy Name to be updated.
         /// </param>
-        /// <param name='updateProtectionPolicyRequest'>
+        /// <param name='cSMUpdateProtectionPolicyRequest'>
         /// Required. The protection policy creation request.
         /// </param>
         /// <param name='customRequestHeaders'>
@@ -186,11 +192,11 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a Operation Response.
         /// </returns>
-        public static OperationResponse Update(this IProtectionPolicyOperations operations, string protectionPolicyId, UpdateProtectionPolicyRequest updateProtectionPolicyRequest, CustomRequestHeaders customRequestHeaders)
+        public static OperationResponse Update(this ICSMProtectionPolicyOperations operations, string policyName, CSMUpdateProtectionPolicyRequest cSMUpdateProtectionPolicyRequest, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IProtectionPolicyOperations)s).UpdateAsync(protectionPolicyId, updateProtectionPolicyRequest, customRequestHeaders);
+                return ((ICSMProtectionPolicyOperations)s).UpdateAsync(policyName, cSMUpdateProtectionPolicyRequest, customRequestHeaders);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -200,12 +206,12 @@ namespace Microsoft.Azure.Management.BackupServices
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.BackupServices.IProtectionPolicyOperations.
+        /// Microsoft.Azure.Management.BackupServices.ICSMProtectionPolicyOperations.
         /// </param>
-        /// <param name='protectionPolicyId'>
-        /// Required. The protection policy ID to be updated.
+        /// <param name='policyName'>
+        /// Required. The protection policy Name to be updated.
         /// </param>
-        /// <param name='updateProtectionPolicyRequest'>
+        /// <param name='cSMUpdateProtectionPolicyRequest'>
         /// Required. The protection policy creation request.
         /// </param>
         /// <param name='customRequestHeaders'>
@@ -214,9 +220,9 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a Operation Response.
         /// </returns>
-        public static Task<OperationResponse> UpdateAsync(this IProtectionPolicyOperations operations, string protectionPolicyId, UpdateProtectionPolicyRequest updateProtectionPolicyRequest, CustomRequestHeaders customRequestHeaders)
+        public static Task<OperationResponse> UpdateAsync(this ICSMProtectionPolicyOperations operations, string policyName, CSMUpdateProtectionPolicyRequest cSMUpdateProtectionPolicyRequest, CustomRequestHeaders customRequestHeaders)
         {
-            return operations.UpdateAsync(protectionPolicyId, updateProtectionPolicyRequest, customRequestHeaders, CancellationToken.None);
+            return operations.UpdateAsync(policyName, cSMUpdateProtectionPolicyRequest, customRequestHeaders, CancellationToken.None);
         }
     }
 }

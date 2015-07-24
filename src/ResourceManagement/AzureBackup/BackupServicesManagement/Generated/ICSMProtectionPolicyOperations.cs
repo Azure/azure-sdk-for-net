@@ -33,12 +33,15 @@ namespace Microsoft.Azure.Management.BackupServices
     /// Definition of Protection Policy operations for the Azure Backup
     /// extension.
     /// </summary>
-    public partial interface IProtectionPolicyOperations
+    public partial interface ICSMProtectionPolicyOperations
     {
         /// <summary>
         /// Create new Protection Policy.
         /// </summary>
-        /// <param name='addProtectionPolicyRequest'>
+        /// <param name='policyName'>
+        /// The protection policy Name to be updated.
+        /// </param>
+        /// <param name='cSMAddProtectionPolicyRequest'>
         /// The protection policy creation request.
         /// </param>
         /// <param name='customRequestHeaders'>
@@ -51,13 +54,13 @@ namespace Microsoft.Azure.Management.BackupServices
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<AzureOperationResponse> AddAsync(AddProtectionPolicyRequest addProtectionPolicyRequest, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> AddAsync(string policyName, CSMAddProtectionPolicyRequest cSMAddProtectionPolicyRequest, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
         /// Delete a Protection Policy.
         /// </summary>
-        /// <param name='protectionPolicyId'>
-        /// The protection policy ID to be deleted.
+        /// <param name='policyName'>
+        /// The protection policy Name to be deleted.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Request header parameters.
@@ -69,7 +72,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<AzureOperationResponse> DeleteAsync(string protectionPolicyId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> DeleteAsync(string policyName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
         /// Get the list of all Protection Policy.
@@ -81,17 +84,17 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response model for the list ProtectionPolicies operation.
+        /// The definition of a CSMProtectionPolicyListOperationResponse.
         /// </returns>
-        Task<ProtectionPolicyListResponse> ListAsync(CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<CSMProtectionPolicyListOperationResponse> ListAsync(CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
         /// Update Protection Policy.
         /// </summary>
-        /// <param name='protectionPolicyId'>
-        /// The protection policy ID to be updated.
+        /// <param name='policyName'>
+        /// The protection policy Name to be updated.
         /// </param>
-        /// <param name='updateProtectionPolicyRequest'>
+        /// <param name='cSMUpdateProtectionPolicyRequest'>
         /// The protection policy creation request.
         /// </param>
         /// <param name='customRequestHeaders'>
@@ -103,6 +106,6 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a Operation Response.
         /// </returns>
-        Task<OperationResponse> UpdateAsync(string protectionPolicyId, UpdateProtectionPolicyRequest updateProtectionPolicyRequest, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<OperationResponse> UpdateAsync(string policyName, CSMUpdateProtectionPolicyRequest cSMUpdateProtectionPolicyRequest, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
     }
 }
