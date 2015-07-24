@@ -26,48 +26,48 @@ using Microsoft.Azure.Management.BackupServices.Models;
 namespace Microsoft.Azure.Management.BackupServices.Models
 {
     /// <summary>
-    /// The definition of a RetentionPolicy object.
+    /// The definition of a CSMMonthlyRetentionSchedule object.
     /// </summary>
-    public partial class RetentionPolicy
+    public partial class CSMMonthlyRetentionSchedule : CSMRetentionScheduleBase
     {
-        private int _retentionDuration;
+        private CSMDailyRetentionFormat _retentionScheduleDaily;
         
         /// <summary>
-        /// Required. RetentionDuration of ProtectionPolicy.
+        /// Optional. Daily Retention Format for monthly retention policy.
         /// </summary>
-        public int RetentionDuration
+        public CSMDailyRetentionFormat RetentionScheduleDaily
         {
-            get { return this._retentionDuration; }
-            set { this._retentionDuration = value; }
+            get { return this._retentionScheduleDaily; }
+            set { this._retentionScheduleDaily = value; }
         }
         
-        private RetentionDurationType _retentionType;
+        private RetentionScheduleFormat _retentionScheduleType;
         
         /// <summary>
-        /// Required. RetentionType of ProtectionPolicy.
+        /// Optional. Retention ScheduleType for monthly retention policy.
         /// </summary>
-        public RetentionDurationType RetentionType
+        public RetentionScheduleFormat RetentionScheduleType
         {
-            get { return this._retentionType; }
-            set { this._retentionType = value; }
+            get { return this._retentionScheduleType; }
+            set { this._retentionScheduleType = value; }
+        }
+        
+        private CSMWeeklyRetentionFormat _retentionScheduleWeekly;
+        
+        /// <summary>
+        /// Optional. Weekly Retention format for monthly retention policy.
+        /// </summary>
+        public CSMWeeklyRetentionFormat RetentionScheduleWeekly
+        {
+            get { return this._retentionScheduleWeekly; }
+            set { this._retentionScheduleWeekly = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the RetentionPolicy class.
+        /// Initializes a new instance of the CSMMonthlyRetentionSchedule class.
         /// </summary>
-        public RetentionPolicy()
+        public CSMMonthlyRetentionSchedule()
         {
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the RetentionPolicy class with
-        /// required arguments.
-        /// </summary>
-        public RetentionPolicy(RetentionDurationType retentionType, int retentionDuration)
-            : this()
-        {
-            this.RetentionType = retentionType;
-            this.RetentionDuration = retentionDuration;
         }
     }
 }

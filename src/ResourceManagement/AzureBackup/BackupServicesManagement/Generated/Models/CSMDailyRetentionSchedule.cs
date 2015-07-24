@@ -21,32 +21,19 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure;
 using Microsoft.Azure.Management.BackupServices.Models;
 
 namespace Microsoft.Azure.Management.BackupServices.Models
 {
     /// <summary>
-    /// The response model for the list ProtectionPolicies operation.
+    /// The definition of a CSMDailyRetentionSchedule object.
     /// </summary>
-    public partial class ProtectionPolicyListResponse : AzureOperationResponse
+    public partial class CSMDailyRetentionSchedule : CSMRetentionScheduleBase
     {
-        private ProtectionPolicyInfoResponse _protectionPolicies;
-        
         /// <summary>
-        /// Optional. The list of ProtectionPolicies for a resource id.
+        /// Initializes a new instance of the CSMDailyRetentionSchedule class.
         /// </summary>
-        public ProtectionPolicyInfoResponse ProtectionPolicies
-        {
-            get { return this._protectionPolicies; }
-            set { this._protectionPolicies = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the ProtectionPolicyListResponse
-        /// class.
-        /// </summary>
-        public ProtectionPolicyListResponse()
+        public CSMDailyRetentionSchedule()
         {
         }
     }

@@ -22,14 +22,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Azure.Management.BackupServices.Models;
 
 namespace Microsoft.Azure.Management.BackupServices.Models
 {
     /// <summary>
-    /// The definition of a BackupSchedule object.
+    /// The definition of CSM BackupSchedule object.
     /// </summary>
-    public partial class BackupSchedule
+    public partial class CSMBackupSchedule
     {
         private string _backupType;
         
@@ -40,17 +39,6 @@ namespace Microsoft.Azure.Management.BackupServices.Models
         {
             get { return this._backupType; }
             set { this._backupType = value; }
-        }
-        
-        private RetentionPolicy _retentionPolicy;
-        
-        /// <summary>
-        /// Required. RetentionPolicy of ProtectionPolicy.
-        /// </summary>
-        public RetentionPolicy RetentionPolicy
-        {
-            get { return this._retentionPolicy; }
-            set { this._retentionPolicy = value; }
         }
         
         private string _scheduleRun;
@@ -86,24 +74,37 @@ namespace Microsoft.Azure.Management.BackupServices.Models
             set { this._scheduleRunTimes = value; }
         }
         
-        private DateTime _scheduleStartTime;
-        
         /// <summary>
-        /// Optional. ScheduleStartTime of ProtectionPolicy.
+        /// Initializes a new instance of the CSMBackupSchedule class.
         /// </summary>
-        public DateTime ScheduleStartTime
-        {
-            get { return this._scheduleStartTime; }
-            set { this._scheduleStartTime = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the BackupSchedule class.
-        /// </summary>
-        public BackupSchedule()
+        public CSMBackupSchedule()
         {
             this.ScheduleRunDays = new List<DayOfWeek>();
             this.ScheduleRunTimes = new List<DateTime>();
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the CSMBackupSchedule class with
+        /// required arguments.
+        /// </summary>
+        public CSMBackupSchedule(string backupType, string scheduleRun, IList<DateTime> scheduleRunTimes)
+            : this()
+        {
+            if (backupType == null)
+            {
+                throw new ArgumentNullException("backupType");
+            }
+            if (scheduleRun == null)
+            {
+                throw new ArgumentNullException("scheduleRun");
+            }
+            if (scheduleRunTimes == null)
+            {
+                throw new ArgumentNullException("scheduleRunTimes");
+            }
+            this.BackupType = backupType;
+            this.ScheduleRun = scheduleRun;
+            this.ScheduleRunTimes = scheduleRunTimes;
         }
     }
 }
