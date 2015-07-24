@@ -76,11 +76,7 @@ namespace DataFactory.Tests.UnitTests
         [Trait(TraitName.Function, TestType.Registration)]
         public void RegisteringTableTypeTwiceWithoutForceThrowsException()
         {
-            this.Client.RegisterType<MyTableType>(true);
-
-            InvalidOperationException ex =
-                Assert.Throws<InvalidOperationException>(() => this.Client.RegisterType<MyTableType>());
-            Assert.True(ex.Message.Contains("is already registered"));
+            this.RegisteringTypeTwiceWithoutForceThrowsException<MyTableType>();
         }
 
         [Theory, PropertyData("ReservedTypes")]
