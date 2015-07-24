@@ -13,6 +13,7 @@
     <Compile Include="Helpers\HDInsightManagementTestUtilities.cs" />
     <Compile Include="Helpers\RecordedDelegatingHandler.cs" />
     <Compile Include="ScenarioTests\CreateClusterTests.cs" />
+    <Compile Include="ScenarioTests\DataLakeTests.cs" />
     <Compile Include="ScenarioTests\GetCapabilitiesTests.cs" />
     <Compile Include="ScenarioTests\RdpTests.cs" />
     <Compile Include="ScenarioTests\GetConfigurationTests.cs" />
@@ -23,6 +24,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />   
+    <None Include="Resources\CertFile.pfx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="packages.config" />
     <None Include="SessionRecords\HDInsight.Tests.CreateClusterTests\TestCreateDuplicateCluster.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -33,6 +38,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\HDInsight.Tests.CreateClusterTests\TestPaasCreateGetDeleteCluster.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\HDInsight.Tests.DataLakeTests\TestCreateDataLakeClusterUsingClusterCreateParametersExtended.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\HDInsight.Tests.DataLakeTests\TestCreateDataLakeClusterUsingClusterParameters.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\HDInsight.Tests.GetCapabilitiesTests\TestGetCapabilities.json">

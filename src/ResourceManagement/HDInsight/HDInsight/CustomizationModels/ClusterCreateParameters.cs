@@ -168,6 +168,11 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         public string SshPublicKey { get; set; }
 
         /// <summary>
+        /// Gets or sets the prinicipal to be used for getting OAuth2 token to access Azure DataLake (ADL)
+        /// </summary>
+        public Principal Principal { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the ClusterCreateParameters class.
         /// </summary>
         public ClusterCreateParameters()

@@ -308,25 +308,54 @@ namespace Microsoft.Azure.Management.HDInsight
             Dictionary<string, string> gatewayConfig;
             configurations.TryGetValue(ConfigurationKey.Gateway, out gatewayConfig);
 
-            if (gatewayConfig != null)
+            if (gatewayConfig == null)
             {
-                return configurations;
-            }
-            gatewayConfig = new Dictionary<string, string>();
+                gatewayConfig = new Dictionary<string, string>();
 
-            if (!string.IsNullOrEmpty(clusterCreateParameters.UserName))
-            {
-                gatewayConfig.Add("restAuthCredential.isEnabled", "true");
-                gatewayConfig.Add("restAuthCredential.username", clusterCreateParameters.UserName);
-                gatewayConfig.Add("restAuthCredential.password", clusterCreateParameters.Password);
-            }
-            else
-            {
-                gatewayConfig.Add("restAuthCredential.isEnabled", "false");
-            }
+                if (!string.IsNullOrEmpty(clusterCreateParameters.UserName))
+                {
+                    gatewayConfig.Add("restAuthCredential.isEnabled", "true");
+                    gatewayConfig.Add("restAuthCredential.username", clusterCreateParameters.UserName);
+                    gatewayConfig.Add("restAuthCredential.password", clusterCreateParameters.Password);
+                }
+                else
+                {
+                    gatewayConfig.Add("restAuthCredential.isEnabled", "false");
+                }
 
-            configurations.Add(ConfigurationKey.Gateway, gatewayConfig);
+                configurations.Add(ConfigurationKey.Gateway, gatewayConfig);
+            }
             
+            //datalake configs
+            var datalakeConfigExists = true;
+            Dictionary<string, string> datalakeConfig;
+            configurations.TryGetValue(ConfigurationKey.Datalake, out datalakeConfig);
+
+            if (datalakeConfig == null)
+            {
+                datalakeConfigExists = false;
+            }
+
+            //Add/override datalake config if principal is provided by user
+            if (clusterCreateParameters.Principal != null)
+            {
+                datalakeConfig = new Dictionary<string, string>();
+                ServicePrincipal servicePrincipalObj = (ServicePrincipal)clusterCreateParameters.Principal;
+                datalakeConfig.Add("serviceAccountClientCredential.appPrincipalId", servicePrincipalObj.AppPrincipalId.ToString());
+                datalakeConfig.Add("serviceAccountClientCredential.aadTenantId", servicePrincipalObj.AADTenantId.ToString());
+                datalakeConfig.Add("serviceAccountClientCredential.certificate", servicePrincipalObj.ClientCertificate);
+                datalakeConfig.Add("serviceAccountClientCredential.certificatePassword", servicePrincipalObj.ClientCertificatePassword);
+                datalakeConfig.Add("serviceAccountClientCredential.resourceUri", servicePrincipalObj.ResourceUri.ToString());
+
+                if (!datalakeConfigExists)
+                {
+                    configurations.Add(ConfigurationKey.Datalake, datalakeConfig);
+                }
+                else
+                {
+                    configurations[ConfigurationKey.Datalake] = datalakeConfig;
+                }
+            }
 
             return configurations;
         }
