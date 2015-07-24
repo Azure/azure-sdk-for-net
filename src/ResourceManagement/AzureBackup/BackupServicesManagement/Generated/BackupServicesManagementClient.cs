@@ -120,6 +120,17 @@ namespace Microsoft.Azure.Management.BackupServices
             get { return this._container; }
         }
         
+        private ICSMProtectionPolicyOperations _cSMProtectionPolicy;
+        
+        /// <summary>
+        /// Definition of Protection Policy operations for the Azure Backup
+        /// extension.
+        /// </summary>
+        public virtual ICSMProtectionPolicyOperations CSMProtectionPolicy
+        {
+            get { return this._cSMProtectionPolicy; }
+        }
+        
         private IDataSourceOperations _dataSource;
         
         /// <summary>
@@ -161,17 +172,6 @@ namespace Microsoft.Azure.Management.BackupServices
             get { return this._protectableObject; }
         }
         
-        private IProtectionPolicyOperations _protectionPolicy;
-        
-        /// <summary>
-        /// Definition of Protection Policy operations for the Azure Backup
-        /// extension.
-        /// </summary>
-        public virtual IProtectionPolicyOperations ProtectionPolicy
-        {
-            get { return this._protectionPolicy; }
-        }
-        
         private IRecoveryPointOperations _recoveryPoint;
         
         /// <summary>
@@ -202,11 +202,11 @@ namespace Microsoft.Azure.Management.BackupServices
         {
             this._backUp = new BackUpOperations(this);
             this._container = new ContainerOperation(this);
+            this._cSMProtectionPolicy = new CSMProtectionPolicyOperations(this);
             this._dataSource = new DataSourceOperations(this);
             this._job = new JobOperations(this);
             this._operationStatus = new OperationStatus(this);
             this._protectableObject = new ProtectableObjectOperations(this);
-            this._protectionPolicy = new ProtectionPolicyOperations(this);
             this._recoveryPoint = new RecoveryPointOperations(this);
             this._restore = new RestoreOperations(this);
             this._apiVersion = "2013-03-01";
@@ -311,11 +311,11 @@ namespace Microsoft.Azure.Management.BackupServices
         {
             this._backUp = new BackUpOperations(this);
             this._container = new ContainerOperation(this);
+            this._cSMProtectionPolicy = new CSMProtectionPolicyOperations(this);
             this._dataSource = new DataSourceOperations(this);
             this._job = new JobOperations(this);
             this._operationStatus = new OperationStatus(this);
             this._protectableObject = new ProtectableObjectOperations(this);
-            this._protectionPolicy = new ProtectionPolicyOperations(this);
             this._recoveryPoint = new RecoveryPointOperations(this);
             this._restore = new RestoreOperations(this);
             this._apiVersion = "2013-03-01";
