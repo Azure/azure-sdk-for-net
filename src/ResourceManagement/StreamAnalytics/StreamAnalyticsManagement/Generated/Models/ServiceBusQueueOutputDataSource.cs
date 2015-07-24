@@ -21,23 +21,33 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure.Management.StreamAnalytics.Models;
 
 namespace Microsoft.Azure.Management.StreamAnalytics.Models
 {
     /// <summary>
-    /// Indicates the policy to apply to events that arrive out of order in the
-    /// input event stream.
+    /// The Service Bus Queue data source as output.
     /// </summary>
-    public static partial class EventsOutOfOrderPolicy
+    public partial class ServiceBusQueueOutputDataSource : OutputDataSource
     {
-        /// <summary>
-        /// Adjust the event's time to current.
-        /// </summary>
-        public const string Adjust = "adjust";
+        private ServiceBusQueueOutputDataSourceProperties _properties;
         
         /// <summary>
-        /// Drop the event which is out of order.
+        /// Optional. Gets or sets the properties of the Service Bus Queue data
+        /// source as output.
         /// </summary>
-        public const string Drop = "drop";
+        public ServiceBusQueueOutputDataSourceProperties Properties
+        {
+            get { return this._properties; }
+            set { this._properties = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the ServiceBusQueueOutputDataSource
+        /// class.
+        /// </summary>
+        public ServiceBusQueueOutputDataSource()
+        {
+        }
     }
 }
