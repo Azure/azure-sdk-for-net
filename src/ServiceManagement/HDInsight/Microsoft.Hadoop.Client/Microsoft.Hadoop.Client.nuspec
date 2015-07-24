@@ -18,14 +18,29 @@
     <references>
       <group targetFramework="net45">
         <reference file="Microsoft.Hadoop.Client.dll" />
-        <reference file="Microsoft.Hadoop.Client.xml" />
+        <reference file="Microsoft.WindowsAzure.Management.HDInsight.Framework.Core.dll" />
+        <reference file="Microsoft.WindowsAzure.Management.HDInsight.Framework.dll" />
+        <reference file="Microsoft.HDInsight.Net.Http.Formatting.dll" />
       </group>
     </references>
+    <dependencies>
+      <dependency id="WindowsAzure.Storage" version="3.0.3.0" />
+      <dependency id="Newtonsoft.Json" version="6.0.4" />
+    </dependencies>
   </metadata>
   <files>
     <file src="ServiceManagement\HDInsight\Microsoft.Hadoop.Client\**\*.cs" target="src" />
     <file src="..\binaries\net45\Microsoft.Hadoop.Client.dll" target="lib\net45" />
     <file src="..\binaries\net45\Microsoft.Hadoop.Client.pdb" target="lib\net45" />
     <file src="..\binaries\net45\Microsoft.Hadoop.Client.xml" target="lib\net45" />
+    <file src="..\binaries\net45\Microsoft.WindowsAzure.Management.HDInsight.Framework.dll" target="lib\net45" />
+    <file src="..\binaries\net45\Microsoft.WindowsAzure.Management.HDInsight.Framework.pdb" target="lib\net45" />
+    <file src="..\binaries\net45\Microsoft.WindowsAzure.Management.HDInsight.Framework.xml" target="lib\net45" />
+    <file src="..\binaries\net45\Microsoft.WindowsAzure.Management.HDInsight.Framework.Core.dll" target="lib\net45" />
+    <file src="..\binaries\net45\Microsoft.WindowsAzure.Management.HDInsight.Framework.Core.pdb" target="lib\net45" />
+    <file src="..\binaries\net45\Microsoft.WindowsAzure.Management.HDInsight.Framework.Core.xml" target="lib\net45" />
+    <file src="..\binaries\net45\Microsoft.HDInsight.Net.Http.Formatting.dll" target="lib\net45" />
+    <file src="..\binaries\net45\Microsoft.HDInsight.Net.Http.Formatting.pdb" target="lib\net45" />
+    <file src="..\binaries\net45\Microsoft.HDInsight.Net.Http.Formatting.xml" target="lib\net45" />
   </files>
 </package>

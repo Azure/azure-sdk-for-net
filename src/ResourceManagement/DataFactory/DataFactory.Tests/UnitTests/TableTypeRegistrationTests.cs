@@ -15,17 +15,17 @@
 // 
 
 using System;
-using System.Globalization;
-using System.Reflection;
+using System.Collections.Generic;
 using DataFactory.Tests.Framework;
 using DataFactory.Tests.UnitTests.TestClasses;
 using Microsoft.Azure.Management.DataFactories;
 using Microsoft.Azure.Management.DataFactories.Models;
 using Xunit;
+using Xunit.Extensions;
 
 namespace DataFactory.Tests.UnitTests
 {
-    public class TableTypeRegistrationTests : UnitTestBase
+    public class TableTypeRegistrationTests : TypeRegistrationTestBase<TableTypeProperties, GenericDataset>
     {
         private TableOperations Operations
         {
@@ -35,31 +35,40 @@ namespace DataFactory.Tests.UnitTests
             }
         }
 
-        [Fact]
-        [Trait(TraitName.TestType, TestType.Unit)]
-        [Trait(TraitName.Function, TestType.Registration)]
-        public void CanRegisterTableType()
+        public static IEnumerable<object[]> ReservedTypes
         {
-            this.Client.RegisterType<MyTableType>(true);
-
-            Assert.True(
-                this.Client.TypeIsRegistered<MyTableType>(),
-                string.Format(
-                    CultureInfo.InvariantCulture,
-                    "Type '{0}' was not successfully registered.",
-                    typeof(MyTableType).Name));
+            get
+            {
+                return ReservedTypesList.Value;
+            }
         }
 
         [Fact]
         [Trait(TraitName.TestType, TestType.Unit)]
         [Trait(TraitName.Function, TestType.Registration)]
-        public void RegisteringTableTypeWithReservedNameThrowsException()
+        public void CanRegisterTableType()
         {
-            InvalidOperationException ex =
-                Assert.Throws<InvalidOperationException>(
-                    () => this.Client.RegisterType<AzureSqlTableDataset>());
+            this.TestCanRegisterType<MyTableType>();
+        }
 
-            Assert.True(ex.Message.Contains("cannot be locally registered because it has the same name"));
+        [Theory]
+        [PropertyData("ReservedTypes")]
+        [Trait(TraitName.TestType, TestType.Unit)]
+        [Trait(TraitName.Function, TestType.Registration)]
+        public void RegisteringTableTypeWithReservedNameThrowsException<T>(Type type, T registeredType)
+            where T : TypeProperties
+        {
+            this.TestRegisteringTypeWithReservedNameThrowsException<T>();
+        }
+
+        [Theory]
+        [PropertyData("ReservedTypes")]
+        [Trait(TraitName.TestType, TestType.Unit)]
+        [Trait(TraitName.Function, TestType.Registration)]
+        public void ReservedTableTypeIsRegisteredTest<T>(Type type, T registeredType)
+            where T : TableTypeProperties
+        {
+            this.TestReservedTypeIsRegistered<T>();
         }
 
         [Fact]
@@ -67,33 +76,15 @@ namespace DataFactory.Tests.UnitTests
         [Trait(TraitName.Function, TestType.Registration)]
         public void RegisteringTableTypeTwiceWithoutForceThrowsException()
         {
-            this.Client.RegisterType<MyTableType>(true);
-
-            InvalidOperationException ex =
-                Assert.Throws<InvalidOperationException>(() => this.Client.RegisterType<MyTableType>());
-            Assert.True(ex.Message.Contains("is already registered"));
+            this.RegisteringTypeTwiceWithoutForceThrowsException<MyTableType>();
         }
 
-        [Fact]
+        [Theory, PropertyData("ReservedTypes")]
         [Trait(TraitName.TestType, TestType.Unit)]
         [Trait(TraitName.Function, TestType.Registration)]
-        public void CanGetRegisteredActivityCaseInsensitive()
+        public void CanGetRegisteredActivityCaseInsensitive<T>(Type type, T registeredType)
         {
-            AdfTypeNameAttribute att = typeof(AzureBlobDataset).GetCustomAttribute<AdfTypeNameAttribute>(true);
-            Assert.NotNull(att);
-
-            // Get the type named used for de/ser
-            string typeName = att.TypeName;
-            Assert.NotNull(typeName);
-            Assert.NotEmpty(typeName);
-
-            // Ensure that the type name is not already all lowercase
-            string typeNameLower = typeName.ToLowerInvariant();
-            Assert.NotEqual(typeName, typeNameLower, StringComparer.Ordinal);
-
-            Type type;
-            Assert.True(this.Operations.Converter.TryGetRegisteredType(typeNameLower, out type));
-            Assert.Equal(typeof(AzureBlobDataset), type);
+            this.TestCanGetRegisteredTypeCaseInsensitive(this.Operations.Converter, typeof(T));
         }
     }
 }

@@ -15,7 +15,6 @@
 
 using System;
 using System.Globalization;
-using System.Reflection;
 
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
@@ -68,33 +67,18 @@ namespace Microsoft.Azure.Management.DataFactories.Models
             Type genericTypePropertiesType = typeof(TGenericTypeProperties);
             if (type == genericTypePropertiesType)
             {
-                if (typeName == null)
-                {
-                    throw new ArgumentException(
-                        string.Format(
+                Ensure.IsNotNullOrEmpty(typeName, "typeName", string.Format(
                             CultureInfo.InvariantCulture,
                             "'typeName' cannot be null if 'properties' is a {0} instance. The setter "
                             + "for 'typeProperties' cannot be used if its value is GenericLinkedService, GenericTable or GenericActivity.",
                             genericTypePropertiesType.Name));
-                }
 
                 this.Type = typeName;
             }
             else
             {
-                this.Type = GetTypeName(type, typeName);
+                this.Type = DataFactoryUtilities.GetResourceTypeName(type);
             }
-        }
-
-        private static string GetTypeName(Type type, string actualTypeName)
-        {
-            if (type == typeof(TGenericTypeProperties))
-            {
-                Ensure.IsNotNullOrEmpty(actualTypeName, "actualTypeName");
-                return actualTypeName;
-            }
-
-            return DataFactoryUtilities.GetResourceTypeName(type);
         }
     }
 }

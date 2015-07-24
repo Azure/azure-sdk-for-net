@@ -31,6 +31,7 @@
     <Compile Include="Customizations\Models\Tables\Compression\GZipCompression.cs" />
     <Compile Include="Customizations\Models\Tables\Compression\Compression.cs" />
     <Compile Include="Customizations\Models\IGenericTypeProperties.cs" />
+    <Compile Include="Customizations\Operations\DataFactoryOperationUtilities.cs" />
     <Compile Include="Customizations\Operations\DataSliceRuns\DataSliceRunOperations.cs" />
     <Compile Include="Customizations\Operations\DataSliceRuns\DataSliceRunOperationsExtensions.cs" />
     <Compile Include="Customizations\Operations\DataSliceRuns\IDataSliceRunOperations.cs" />
@@ -63,7 +64,6 @@
     <Compile Include="Customizations\Conversion\AdfRegisteredTypeConverter.cs" />
     <Compile Include="Customizations\Conversion\ComputeTypeConverter.cs" />
     <Compile Include="Customizations\Conversion\ConversionCommon.cs" />
-    <Compile Include="Customizations\Conversion\CoreRegistrationConverter.cs" />
     <Compile Include="Customizations\Conversion\CoreTypeConverter.cs" />
     <Compile Include="Customizations\Conversion\ITypeRegistrationOperations.cs" />
     <Compile Include="Customizations\Conversion\JObjectExtensions.cs" />

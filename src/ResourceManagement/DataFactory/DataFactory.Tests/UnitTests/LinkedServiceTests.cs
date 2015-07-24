@@ -119,6 +119,44 @@ namespace DataFactory.Tests.UnitTests
             Assert.IsType<GenericLinkedService>(linkedService.Properties.TypeProperties);
         }
 
+        [Fact]
+        [Trait(TraitName.TestType, TestType.Unit)]
+        [Trait(TraitName.Function, TestType.Conversion)]
+        public void CreatingGenericLinkedServiceWithoutTypeNameThrowsExceptionTest()
+        {
+            string expectedError =
+                "cannot be used if its value is GenericLinkedService, GenericTable or GenericActivity";
+
+            var genericLinkedService = new GenericLinkedService();
+            ArgumentException ex =
+                Assert.Throws<ArgumentException>(() => new LinkedServiceProperties(genericLinkedService));
+            
+            Assert.Contains(expectedError, ex.Message);
+
+            ex = Assert.Throws<ArgumentException>(
+                () =>
+                    {
+                        var ls = new LinkedServiceProperties(genericLinkedService, "somename");
+                        ls.TypeProperties = genericLinkedService;
+                    });
+
+            Assert.Contains(expectedError, ex.Message);
+        }
+
+        [Fact]
+        [Trait(TraitName.TestType, TestType.Unit)]
+        [Trait(TraitName.Function, TestType.Conversion)]
+        public void CanSetNonGenericTypePropertiesWithoutTypeName()
+        {
+            var storageLinkedService = new AzureStorageLinkedService();
+            Assert.DoesNotThrow(
+                () =>
+                    {
+                        var ls = new LinkedServiceProperties(storageLinkedService);
+                        ls.TypeProperties = storageLinkedService;
+                    });
+        }
+
 #if NET45
         [Theory, InlineData(@"
 {
