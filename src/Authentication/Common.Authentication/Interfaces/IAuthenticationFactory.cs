@@ -13,6 +13,7 @@
 // ----------------------------------------------------------------------------------
 
 using Microsoft.Azure.Common.Authentication.Models;
+using Microsoft.Rest;
 using System.Security;
 
 namespace Microsoft.Azure.Common.Authentication
@@ -33,5 +34,7 @@ namespace Microsoft.Azure.Common.Authentication
             AzureEnvironment.Endpoint resourceId = AzureEnvironment.Endpoint.ActiveDirectoryServiceEndpointResourceId);
 
         SubscriptionCloudCredentials GetSubscriptionCloudCredentials(AzureContext context);
+        
+        ServiceClientCredentials GetServiceClientCredentials(AzureContext context);
     }
 }

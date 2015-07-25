@@ -18,6 +18,9 @@ using System;
 using System.Linq;
 using System.Security;
 using Hyak.Common;
+using Microsoft.Rest;
+using Microsoft.Rest.Azure.Authentication;
+using Microsoft.IdentityModel.Clients.ActiveDirectory;
 
 namespace Microsoft.Azure.Common.Authentication.Factories
 {
@@ -32,7 +35,12 @@ namespace Microsoft.Azure.Common.Authentication.Factories
 
         public ITokenProvider TokenProvider { get; set; }
 
-        public IAccessToken Authenticate(AzureAccount account, AzureEnvironment environment, string tenant, SecureString password, ShowDialog promptBehavior,
+        public IAccessToken Authenticate(
+            AzureAccount account, 
+            AzureEnvironment environment, 
+            string tenant, 
+            SecureString password, 
+            ShowDialog promptBehavior,
             AzureEnvironment.Endpoint resourceId = AzureEnvironment.Endpoint.ActiveDirectoryServiceEndpointResourceId)
         {
             var configuration = GetAdalConfiguration(environment, tenant, resourceId);
@@ -108,6 +116,80 @@ namespace Microsoft.Azure.Common.Authentication.Factories
                 AdDomain = tenantId, 
                 ValidateAuthority = !environment.OnPremise
             };
+        }
+
+        public ServiceClientCredentials GetServiceClientCredentials(AzureContext context)
+        {
+            if (context.Subscription == null)
+            {
+                throw new ApplicationException(Resources.InvalidDefaultSubscription);
+            }
+
+            if (context.Account == null)
+            {
+                throw new ArgumentException(Resources.AccountNotFound);
+            }
+
+            if (context.Account.Type == AzureAccount.AccountType.Certificate)
+            {
+                throw new NotSupportedException(AzureAccount.AccountType.Certificate.ToString());
+            }
+
+            if (context.Account.Type == AzureAccount.AccountType.AccessToken)
+            {
+                return new TokenCredentials(context.Account.GetProperty(AzureAccount.Property.AccessToken));
+            }
+
+            var tenant = context.Subscription.GetPropertyAsArray(AzureSubscription.Property.Tenants)
+                  .Intersect(context.Account.GetPropertyAsArray(AzureAccount.Property.Tenants))
+                  .FirstOrDefault();
+
+            if (tenant == null)
+            {
+                throw new ArgumentException(Resources.TenantNotFound);
+            }
+
+            try
+            {
+                TracingAdapter.Information(Resources.UPNAuthenticationTrace,
+                    context.Account.Id, context.Environment.Name, tenant);
+
+                // TODO: When we will refactor the code, need to add tracing
+                /*TracingAdapter.Information(Resources.UPNAuthenticationTokenTrace,
+                    token.LoginType, token.TenantId, token.UserId);*/
+
+                var env = new ActiveDirectoryEnvironment
+                {
+                    AuthenticationEndpoint = context.Environment.GetEndpointAsUri(AzureEnvironment.Endpoint.ActiveDirectory),
+                    TokenAudience = context.Environment.GetEndpointAsUri(AzureEnvironment.Endpoint.ActiveDirectoryServiceEndpointResourceId),
+                    ValidateAuthority = !context.Environment.OnPremise
+                };
+
+                if(context.Account.Type == AzureAccount.AccountType.User)
+                {
+                    return new UserTokenCredentials(
+                            AdalConfiguration.PowerShellClientId,
+                            tenant,
+                            AdalConfiguration.PowerShellRedirectUri,
+                            env,
+                            new PlatformParameters(PromptBehavior.Never, null), 
+                            AzureSession.TokenCache);
+                }
+                else if (context.Account.Type == AzureAccount.AccountType.ServicePrincipal)
+                {
+                    return new Microsoft.Rest.Azure.Authentication.ApplicationTokenCredentials(
+                            context.Account.Id,
+                            tenant,
+                            UserTokenProvider.ConvertToString(ServicePrincipalKeyStore.GetKey(context.Account.Id, tenant)),
+                            env);
+                }
+                throw new NotSupportedException(context.Account.Type.ToString());
+            }
+            catch (Exception ex)
+            {
+                TracingAdapter.Information(Resources.AdalAuthException, ex.Message);
+                throw new ArgumentException(Resources.InvalidSubscriptionState, ex);
+            }
         }
     }
 }
