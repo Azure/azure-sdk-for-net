@@ -198,6 +198,18 @@ namespace Microsoft.Azure.Management.Sql
             get { return this._recommendedIndexes; }
         }
         
+        private IReplicationLinkOperations _databaseReplicationLinks;
+        
+        /// <summary>
+        /// Represents all the operations for operating on Azure SQL Database
+        /// Replication Links.  Contains operations to: Delete and Retrieve
+        /// replication links.
+        /// </summary>
+        public virtual IReplicationLinkOperations DatabaseReplicationLinks
+        {
+            get { return this._databaseReplicationLinks; }
+        }
+        
         private ISecureConnectionPolicyOperations _secureConnection;
         
         /// <summary>
@@ -282,6 +294,7 @@ namespace Microsoft.Azure.Management.Sql
             this._firewallRules = new FirewallRuleOperations(this);
             this._recommendedElasticPools = new RecommendedElasticPoolOperations(this);
             this._recommendedIndexes = new RecommendedIndexOperations(this);
+            this._databaseReplicationLinks = new ReplicationLinkOperations(this);
             this._secureConnection = new SecureConnectionPolicyOperations(this);
             this._servers = new ServerOperations(this);
             this._serverUpgrades = new ServerUpgradeOperations(this);
@@ -362,6 +375,7 @@ namespace Microsoft.Azure.Management.Sql
             this._firewallRules = new FirewallRuleOperations(this);
             this._recommendedElasticPools = new RecommendedElasticPoolOperations(this);
             this._recommendedIndexes = new RecommendedIndexOperations(this);
+            this._databaseReplicationLinks = new ReplicationLinkOperations(this);
             this._secureConnection = new SecureConnectionPolicyOperations(this);
             this._servers = new ServerOperations(this);
             this._serverUpgrades = new ServerUpgradeOperations(this);
