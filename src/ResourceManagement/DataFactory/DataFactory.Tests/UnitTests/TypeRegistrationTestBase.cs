@@ -63,6 +63,13 @@ namespace DataFactory.Tests.UnitTests
                     typeof(T).Name));
         }
 
+        protected void TestReservedTypeIsRegistered<T>() where T : TRegistered
+        {
+            Assert.True(
+                this.Client.TypeIsRegistered<T>(),
+                string.Format(CultureInfo.InvariantCulture, "Reserved type '{0}' is not registered.", typeof(T).Name));
+        }
+
         protected void TestRegisteringTypeTwiceThrowsExceptionCaseInsensitive
             <TUserRegistered, TUserRegisteredDifferentCase>()
             where TUserRegistered : TRegistered

@@ -21,23 +21,31 @@
 
 using System;
 using System.Linq;
+using Microsoft.WindowsAzure.Scheduler.Models;
 
 namespace Microsoft.WindowsAzure.Scheduler.Models
 {
     /// <summary>
-    /// Type of action. Can be one of http, https, storageQueue,
-    /// serviceBusQueue, serviceBusTopic.
+    /// Service bus topic message action type
     /// </summary>
-    public enum JobActionType
+    public partial class JobServiceBusTopicMessage : JobServiceBusMessage
     {
-        Http = 0,
+        private string _topicPath;
         
-        Https = 1,
+        /// <summary>
+        /// Required. Gets or sets the service bus topic path.
+        /// </summary>
+        public string TopicPath
+        {
+            get { return this._topicPath; }
+            set { this._topicPath = value; }
+        }
         
-        StorageQueue = 2,
-        
-        ServiceBusQueue = 3,
-        
-        ServiceBusTopic = 4,
+        /// <summary>
+        /// Initializes a new instance of the JobServiceBusTopicMessage class.
+        /// </summary>
+        public JobServiceBusTopicMessage()
+        {
+        }
     }
 }
