@@ -25,7 +25,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Rest.ClientRuntime">
-      <HintPath>..\..\..\..\packages\Microsoft.Rest.ClientRuntime.1.1.0\lib\net45\Microsoft.Rest.ClientRuntime.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Microsoft.Rest.ClientRuntime.1.1.1\lib\net45\Microsoft.Rest.ClientRuntime.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Rest.ClientRuntime.Azure">
@@ -40,7 +40,7 @@
           <HintPath>$(LibraryNugetPackageFolder)\Newtonsoft.Json.6.0.4\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
         </Reference>
         <Reference Include="Microsoft.Rest.ClientRuntime">
-          <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Rest.ClientRuntime.1.1.0\lib\portable-net45+win8+wpa81\Microsoft.Rest.ClientRuntime.dll</HintPath>
+          <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Rest.ClientRuntime.1.1.1\lib\portable-net45+win8+wpa81\Microsoft.Rest.ClientRuntime.dll</HintPath>
         </Reference>
         <Reference Include="Microsoft.Rest.ClientRuntime.Azure">
           <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Rest.ClientRuntime.Azure.1.0.18-preview\lib\portable-net45+win8+wpa81\Microsoft.Rest.ClientRuntime.Azure.dll</HintPath>
@@ -58,7 +58,7 @@
           <HintPath>$(LibraryNugetPackageFolder)\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
         </Reference>
         <Reference Include="Microsoft.Rest.ClientRuntime">
-          <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Rest.ClientRuntime.1.1.0\lib\net45\Microsoft.Rest.ClientRuntime.dll</HintPath>
+          <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Rest.ClientRuntime.1.1.1\lib\net45\Microsoft.Rest.ClientRuntime.dll</HintPath>
         </Reference>
         <Reference Include="Microsoft.Rest.ClientRuntime.Azure">
           <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Rest.ClientRuntime.Azure.1.0.13\lib\net45\Microsoft.Rest.ClientRuntime.Azure.dll</HintPath>
