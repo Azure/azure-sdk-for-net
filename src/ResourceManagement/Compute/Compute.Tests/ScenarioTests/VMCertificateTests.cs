@@ -22,7 +22,7 @@ using System.Net;
 using Xunit;
 using System;
 using System.Collections.Generic;
-using Microsoft.Azure;
+using Microsoft.Rest.Azure;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
 namespace Compute.Tests

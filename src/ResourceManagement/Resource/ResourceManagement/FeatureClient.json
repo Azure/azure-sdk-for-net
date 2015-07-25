@@ -26,11 +26,9 @@
         "description": "Gets a list of previewed features for all the providers in the current subscription.",
         "parameters": [
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -61,11 +59,9 @@
             "description": "The namespace of the resource provider."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -103,11 +99,9 @@
             "description": "Previewed feature name in the resource provider."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -144,11 +138,9 @@
             "description": "Previewed feature name in the resource provider."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],

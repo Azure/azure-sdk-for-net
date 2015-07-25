@@ -11,15 +11,16 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework.HttpRecorder;
-using Microsoft.Azure.Authentication;
+using Microsoft.Rest.Azure.Authentication;
 
 namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
 {
     public static partial class TestUtilities
     {
-        public static AzureEnvironment AsAzureEnvironment(this TestEnvironment env)
+        public static ActiveDirectoryEnvironment AsAzureEnvironment(this TestEnvironment env)
         {
-            return new AzureEnvironment { 
+            return new ActiveDirectoryEnvironment
+            { 
                 AuthenticationEndpoint = env.Endpoints.AADAuthUri,
                 TokenAudience = env.Endpoints.AADTokenAudienceUri,
                 ValidateAuthority = false

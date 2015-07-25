@@ -8,7 +8,7 @@ namespace Microsoft.Azure.Management.Storage
     using Newtonsoft.Json;
     using Microsoft.Rest;
     using System.Linq;
-    using Microsoft.Azure;
+    using Microsoft.Rest.Azure;
     using Models;
 
     /// <summary>
@@ -59,6 +59,8 @@ namespace Microsoft.Azure.Management.Storage
 
 
         IStorageAccountsOperations StorageAccounts { get; }
+
+        IUsageOperations Usage { get; }
 
     }
 }

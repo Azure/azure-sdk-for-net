@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Storage
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
-    using Microsoft.Azure;
+    using Microsoft.Rest.Azure;
     using Models;
 
     /// <summary>
@@ -64,6 +64,8 @@ namespace Microsoft.Azure.Management.Storage
         public int? LongRunningOperationRetryTimeout { get; set; }
 
         public virtual IStorageAccountsOperations StorageAccounts { get; private set; }
+
+        public virtual IUsageOperations Usage { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the StorageManagementClient class.
@@ -171,6 +173,7 @@ namespace Microsoft.Azure.Management.Storage
         private void Initialize()
         {
             this.StorageAccounts = new StorageAccountsOperations(this);
+            this.Usage = new UsageOperations(this);
             this.BaseUri = new Uri("https://management.azure.com");
             this.ApiVersion = "2015-05-01-preview";
             this.AcceptLanguage = "en-US";

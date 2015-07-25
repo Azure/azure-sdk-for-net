@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Subscriptions
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
-    using Microsoft.Azure;
+    using Microsoft.Rest.Azure;
     using Models;
 
     /// <summary>

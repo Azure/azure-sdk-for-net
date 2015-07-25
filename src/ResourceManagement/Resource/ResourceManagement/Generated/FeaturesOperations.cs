@@ -12,9 +12,12 @@ namespace Microsoft.Azure.Management.Resources
     using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
-    using Microsoft.Azure;
+    using Microsoft.Rest.Azure;
     using Models;
 
+    /// <summary>
+    /// FeaturesOperations operations.
+    /// </summary>
     internal partial class FeaturesOperations : IServiceOperations<FeatureClient>, IFeaturesOperations
     {
         /// <summary>
