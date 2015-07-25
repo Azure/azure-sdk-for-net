@@ -1,0 +1,287 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/df602c9c-7aa0-407d-a6fb-eb20c8bd1192/resourceGroups/flowrg/providers/Microsoft.Logic/workflows?api-version=2015-02-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGY2MDJjOWMtN2FhMC00MDdkLWE2ZmItZWIyMGM4YmQxMTkyL3Jlc291cmNlR3JvdXBzL2Zsb3dyZy9wcm92aWRlcnMvTWljcm9zb2Z0LkxvZ2ljL3dvcmtmbG93cz9hcGktdmVyc2lvbj0yMDE1LTAyLTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Logic.LogicManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"createdTime\": \"2015-07-16T06:09:18.5529838Z\",\r\n        \"changedTime\": \"2015-07-16T06:09:18.5539838Z\",\r\n        \"state\": \"Enabled\",\r\n        \"version\": \"08587645799271129448\",\r\n        \"accessEndpoint\": \"https://westus.logic.azure.com/subscriptions/df602c9c-7aa0-407d-a6fb-eb20c8bd1192/resourceGroups/flowrg/providers/Microsoft.Logic/workflows/logicwf1893\",\r\n        \"sku\": {\r\n          \"name\": \"Basic\"\r\n        },\r\n        \"definition\": {\r\n          \"$schema\": \"http://schema.management.azure.com/providers/Microsoft.Logic/schemas/2014-12-01-preview/workflowdefinition.json#\",\r\n          \"contentVersion\": \"1.0.0.0\",\r\n          \"parameters\": {},\r\n          \"triggers\": {},\r\n          \"actions\": {\r\n            \"httpAction\": {\r\n              \"type\": \"Http\",\r\n              \"inputs\": {\r\n                \"method\": \"GET\",\r\n                \"uri\": \"invalidUri\"\r\n              },\r\n              \"conditions\": []\r\n            }\r\n          },\r\n          \"outputs\": {}\r\n        },\r\n        \"parameters\": {}\r\n      },\r\n      \"id\": \"/subscriptions/df602c9c-7aa0-407d-a6fb-eb20c8bd1192/resourceGroups/flowrg/providers/Microsoft.Logic/workflows/logicwf1893\",\r\n      \"name\": \"logicwf1893\",\r\n      \"type\": \"Microsoft.Logic/workflows\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"createdTime\": \"2015-07-16T06:18:07.0938519Z\",\r\n        \"changedTime\": \"2015-07-16T06:18:07.0948519Z\",\r\n        \"state\": \"Enabled\",\r\n        \"version\": \"08587645793985301192\",\r\n        \"accessEndpoint\": \"https://westus.logic.azure.com/subscriptions/df602c9c-7aa0-407d-a6fb-eb20c8bd1192/resourceGroups/flowrg/providers/Microsoft.Logic/workflows/logicwf2698\",\r\n        \"sku\": {\r\n          \"name\": \"Basic\"\r\n        },\r\n        \"definition\": {\r\n          \"$schema\": \"http://schema.management.azure.com/providers/Microsoft.Logic/schemas/2014-12-01-preview/workflowdefinition.json#\",\r\n          \"contentVersion\": \"1.0.0.0\",\r\n          \"parameters\": {},\r\n          \"triggers\": {},\r\n          \"actions\": {\r\n            \"httpAction\": {\r\n              \"type\": \"Http\",\r\n              \"inputs\": {\r\n                \"method\": \"GET\",\r\n                \"uri\": \"invalidUri\"\r\n              },\r\n              \"conditions\": []\r\n            }\r\n          },\r\n          \"outputs\": {}\r\n        },\r\n        \"parameters\": {}\r\n      },\r\n      \"id\": \"/subscriptions/df602c9c-7aa0-407d-a6fb-eb20c8bd1192/resourceGroups/flowrg/providers/Microsoft.Logic/workflows/logicwf2698\",\r\n      \"name\": \"logicwf2698\",\r\n      \"type\": \"Microsoft.Logic/workflows\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"createdTime\": \"2015-07-16T06:17:56.5021954Z\",\r\n        \"changedTime\": \"2015-07-16T06:17:56.5031954Z\",\r\n        \"state\": \"Enabled\",\r\n        \"version\": \"08587645794091610011\",\r\n        \"accessEndpoint\": \"https://westus.logic.azure.com/subscriptions/df602c9c-7aa0-407d-a6fb-eb20c8bd1192/resourceGroups/flowrg/providers/Microsoft.Logic/workflows/logicwf6306\",\r\n        \"sku\": {\r\n          \"name\": \"Basic\"\r\n        },\r\n        \"definition\": {\r\n          \"$schema\": \"http://schema.management.azure.com/providers/Microsoft.Logic/schemas/2014-12-01-preview/workflowdefinition.json#\",\r\n          \"contentVersion\": \"1.0.0.0\",\r\n          \"parameters\": {},\r\n          \"triggers\": {},\r\n          \"actions\": {\r\n            \"httpAction\": {\r\n              \"type\": \"Http\",\r\n              \"inputs\": {\r\n                \"method\": \"GET\",\r\n                \"uri\": \"invalidUri\"\r\n              },\r\n              \"conditions\": []\r\n            }\r\n          },\r\n          \"outputs\": {}\r\n        },\r\n        \"parameters\": {}\r\n      },\r\n      \"id\": \"/subscriptions/df602c9c-7aa0-407d-a6fb-eb20c8bd1192/resourceGroups/flowrg/providers/Microsoft.Logic/workflows/logicwf6306\",\r\n      \"name\": \"logicwf6306\",\r\n      \"type\": \"Microsoft.Logic/workflows\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"createdTime\": \"2015-07-16T06:17:47.0586777Z\",\r\n        \"changedTime\": \"2015-07-16T06:17:47.0596777Z\",\r\n        \"state\": \"Enabled\",\r\n        \"version\": \"08587645794185434273\",\r\n        \"accessEndpoint\": \"https://westus.logic.azure.com/subscriptions/df602c9c-7aa0-407d-a6fb-eb20c8bd1192/resourceGroups/flowrg/providers/Microsoft.Logic/workflows/logicwf7200\",\r\n        \"sku\": {\r\n          \"name\": \"Basic\"\r\n        },\r\n        \"definition\": {\r\n          \"$schema\": \"http://schema.management.azure.com/providers/Microsoft.Logic/schemas/2014-12-01-preview/workflowdefinition.json#\",\r\n          \"contentVersion\": \"1.0.0.0\",\r\n          \"parameters\": {},\r\n          \"triggers\": {},\r\n          \"actions\": {\r\n            \"httpAction\": {\r\n              \"type\": \"Http\",\r\n              \"inputs\": {\r\n                \"method\": \"GET\",\r\n                \"uri\": \"invalidUri\"\r\n              },\r\n              \"conditions\": []\r\n            }\r\n          },\r\n          \"outputs\": {}\r\n        },\r\n        \"parameters\": {}\r\n      },\r\n      \"id\": \"/subscriptions/df602c9c-7aa0-407d-a6fb-eb20c8bd1192/resourceGroups/flowrg/providers/Microsoft.Logic/workflows/logicwf7200\",\r\n      \"name\": \"logicwf7200\",\r\n      \"type\": \"Microsoft.Logic/workflows\",\r\n      \"location\": \"westus\"\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "3551"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "westus:35839e37-d5da-4e8b-b5cc-6063bb4dc392"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14996"
+        ],
+        "x-ms-correlation-request-id": [
+          "fa5d3d29-f631-4196-923b-a444ec3a3a46"
+        ],
+        "x-ms-routing-request-id": [
+          "EASTUS:20150716T063038Z:fa5d3d29-f631-4196-923b-a444ec3a3a46"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 16 Jul 2015 06:30:37 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/df602c9c-7aa0-407d-a6fb-eb20c8bd1192/resourceGroups/flowrg/providers/Microsoft.Logic/workflows?api-version=2015-02-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGY2MDJjOWMtN2FhMC00MDdkLWE2ZmItZWIyMGM4YmQxMTkyL3Jlc291cmNlR3JvdXBzL2Zsb3dyZy9wcm92aWRlcnMvTWljcm9zb2Z0LkxvZ2ljL3dvcmtmbG93cz9hcGktdmVyc2lvbj0yMDE1LTAyLTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Logic.LogicManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": []\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "12"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14995"
+        ],
+        "x-ms-request-id": [
+          "9122661f-e642-48bc-a06f-3cd47d4c5652"
+        ],
+        "x-ms-correlation-request-id": [
+          "9122661f-e642-48bc-a06f-3cd47d4c5652"
+        ],
+        "x-ms-routing-request-id": [
+          "EASTUS:20150716T063044Z:9122661f-e642-48bc-a06f-3cd47d4c5652"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 16 Jul 2015 06:30:43 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/df602c9c-7aa0-407d-a6fb-eb20c8bd1192/resourceGroups/flowrg/providers/Microsoft.Logic/workflows/logicwf1893?api-version=2015-02-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGY2MDJjOWMtN2FhMC00MDdkLWE2ZmItZWIyMGM4YmQxMTkyL3Jlc291cmNlR3JvdXBzL2Zsb3dyZy9wcm92aWRlcnMvTWljcm9zb2Z0LkxvZ2ljL3dvcmtmbG93cy9sb2dpY3dmMTg5Mz9hcGktdmVyc2lvbj0yMDE1LTAyLTAxLXByZXZpZXc=",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Logic.LogicManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "westus:fefdab59-de8f-49fe-8ec7-6dcf7236364b"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1196"
+        ],
+        "x-ms-correlation-request-id": [
+          "d8ed1f5f-e063-442f-8718-5fbabf9f2833"
+        ],
+        "x-ms-routing-request-id": [
+          "EASTUS:20150716T063040Z:d8ed1f5f-e063-442f-8718-5fbabf9f2833"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 16 Jul 2015 06:30:39 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/df602c9c-7aa0-407d-a6fb-eb20c8bd1192/resourceGroups/flowrg/providers/Microsoft.Logic/workflows/logicwf2698?api-version=2015-02-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGY2MDJjOWMtN2FhMC00MDdkLWE2ZmItZWIyMGM4YmQxMTkyL3Jlc291cmNlR3JvdXBzL2Zsb3dyZy9wcm92aWRlcnMvTWljcm9zb2Z0LkxvZ2ljL3dvcmtmbG93cy9sb2dpY3dmMjY5OD9hcGktdmVyc2lvbj0yMDE1LTAyLTAxLXByZXZpZXc=",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Logic.LogicManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "westus:b54859b9-0dc6-4d18-bdd7-fa28daf5b55c"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1195"
+        ],
+        "x-ms-correlation-request-id": [
+          "f46a0492-8b35-420b-90d5-ef99c9fcff6e"
+        ],
+        "x-ms-routing-request-id": [
+          "EASTUS:20150716T063041Z:f46a0492-8b35-420b-90d5-ef99c9fcff6e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 16 Jul 2015 06:30:40 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/df602c9c-7aa0-407d-a6fb-eb20c8bd1192/resourceGroups/flowrg/providers/Microsoft.Logic/workflows/logicwf6306?api-version=2015-02-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGY2MDJjOWMtN2FhMC00MDdkLWE2ZmItZWIyMGM4YmQxMTkyL3Jlc291cmNlR3JvdXBzL2Zsb3dyZy9wcm92aWRlcnMvTWljcm9zb2Z0LkxvZ2ljL3dvcmtmbG93cy9sb2dpY3dmNjMwNj9hcGktdmVyc2lvbj0yMDE1LTAyLTAxLXByZXZpZXc=",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Logic.LogicManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "westus:d7c8a45e-4ad9-4ccd-82a5-f8f8e713900e"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1194"
+        ],
+        "x-ms-correlation-request-id": [
+          "a8efe017-c333-4767-af96-5962d47b8fad"
+        ],
+        "x-ms-routing-request-id": [
+          "EASTUS:20150716T063042Z:a8efe017-c333-4767-af96-5962d47b8fad"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 16 Jul 2015 06:30:41 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/df602c9c-7aa0-407d-a6fb-eb20c8bd1192/resourceGroups/flowrg/providers/Microsoft.Logic/workflows/logicwf7200?api-version=2015-02-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGY2MDJjOWMtN2FhMC00MDdkLWE2ZmItZWIyMGM4YmQxMTkyL3Jlc291cmNlR3JvdXBzL2Zsb3dyZy9wcm92aWRlcnMvTWljcm9zb2Z0LkxvZ2ljL3dvcmtmbG93cy9sb2dpY3dmNzIwMD9hcGktdmVyc2lvbj0yMDE1LTAyLTAxLXByZXZpZXc=",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Logic.LogicManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "westus:ed774619-6296-404b-8cef-29dea340ab4e"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1193"
+        ],
+        "x-ms-correlation-request-id": [
+          "bfa2e01d-fe43-4297-8edf-cfb06a8f4322"
+        ],
+        "x-ms-routing-request-id": [
+          "EASTUS:20150716T063044Z:bfa2e01d-fe43-4297-8edf-cfb06a8f4322"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 16 Jul 2015 06:30:43 GMT"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "df602c9c-7aa0-407d-a6fb-eb20c8bd1192"
+  }
+}

@@ -1,0 +1,1 @@
+D:\github\autorest\binaries\net45\AutoRest.exe -Input D:\github\azure-rest-api-specs\arm-logic\2015-02-01-preview\swagger\logic.json -Namespace Microsoft.Azure.Management.Logic -Header MICROSOFT_APACHE -CodeGenerator Azure.CSharp -AddCredentials
