@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Common.Authentication
         // These constants define the default values to use for AD authentication
         // against RDFE
         //
-        private const string PowerShellClientId = "1950a258-227b-4e31-a9cf-717495945fc2";          
+        public const string PowerShellClientId = "1950a258-227b-4e31-a9cf-717495945fc2";          
 
         public static readonly Uri PowerShellRedirectUri = new Uri("urn:ietf:wg:oauth:2.0:oob");
 
