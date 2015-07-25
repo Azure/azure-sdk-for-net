@@ -51,6 +51,7 @@
     <Compile Include="Generated\Models\ResourceExtendedInformation.cs" />
     <Compile Include="Generated\Models\ResourceExtendedInformationArgs.cs" />
     <Compile Include="Generated\Models\ResourceExtendedInformationResponse.cs" />
+    <Compile Include="Generated\Models\ResumeJobParams.cs" />
     <Compile Include="Generated\Models\RpPlannedFailoverRequest.cs" />
     <Compile Include="Generated\Models\RpTestFailoverRequest.cs" />
     <Compile Include="Generated\Models\RpUnplannedFailoverRequest.cs" />
@@ -139,10 +140,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Microsoft.Azure.Management.RecoveryServices.nuget.proj">
+    <None Include="Microsoft.Azure.Management.RecoveryServicesARM.nuget.proj">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Microsoft.Azure.Management.RecoveryServices.nuspec" />
+    <None Include="Microsoft.Azure.Management.RecoveryServicesARM.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

@@ -15,7 +15,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ScenarioTests\Utilities.cs" />
+    <Compile Include="ScenarioTests\RPTests.cs" />
     <Compile Include="ScenarioTests\SiteRecoveryTestsBase.cs" />
+    <Compile Include="ScenarioTests\Utilities.cs" />
     <Compile Include="Spec.TechSupport.SiteRecovery\SiteRecoveryManagementTestUtilities.cs" />
   </ItemGroup>
   <ItemGroup>

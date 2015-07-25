@@ -203,6 +203,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 JobProperties propertiesInstance = new JobProperties();
                                 jobInstance.Properties = propertiesInstance;
                                 
+                                JToken scenarioNameValue = propertiesValue["scenarioName"];
+                                if (scenarioNameValue != null && scenarioNameValue.Type != JTokenType.Null)
+                                {
+                                    string scenarioNameInstance = ((string)scenarioNameValue);
+                                    propertiesInstance.ScenarioName = scenarioNameInstance;
+                                }
+                                
                                 JToken activityIdValue = propertiesValue["activityId"];
                                 if (activityIdValue != null && activityIdValue.Type != JTokenType.Null)
                                 {
@@ -768,6 +775,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 JobProperties propertiesInstance = new JobProperties();
                                 jobInstance.Properties = propertiesInstance;
                                 
+                                JToken scenarioNameValue = propertiesValue["scenarioName"];
+                                if (scenarioNameValue != null && scenarioNameValue.Type != JTokenType.Null)
+                                {
+                                    string scenarioNameInstance = ((string)scenarioNameValue);
+                                    propertiesInstance.ScenarioName = scenarioNameInstance;
+                                }
+                                
                                 JToken activityIdValue = propertiesValue["activityId"];
                                 if (activityIdValue != null && activityIdValue.Type != JTokenType.Null)
                                 {
@@ -1314,6 +1328,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                             {
                                 JobProperties propertiesInstance = new JobProperties();
                                 jobInstance.Properties = propertiesInstance;
+                                
+                                JToken scenarioNameValue = propertiesValue["scenarioName"];
+                                if (scenarioNameValue != null && scenarioNameValue.Type != JTokenType.Null)
+                                {
+                                    string scenarioNameInstance = ((string)scenarioNameValue);
+                                    propertiesInstance.ScenarioName = scenarioNameInstance;
+                                }
                                 
                                 JToken activityIdValue = propertiesValue["activityId"];
                                 if (activityIdValue != null && activityIdValue.Type != JTokenType.Null)
@@ -2424,6 +2445,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 JobProperties propertiesInstance = new JobProperties();
                                 jobInstance.Properties = propertiesInstance;
                                 
+                                JToken scenarioNameValue = propertiesValue["scenarioName"];
+                                if (scenarioNameValue != null && scenarioNameValue.Type != JTokenType.Null)
+                                {
+                                    string scenarioNameInstance = ((string)scenarioNameValue);
+                                    propertiesInstance.ScenarioName = scenarioNameInstance;
+                                }
+                                
                                 JToken activityIdValue = propertiesValue["activityId"];
                                 if (activityIdValue != null && activityIdValue.Type != JTokenType.Null)
                                 {
@@ -3030,6 +3058,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 JobProperties propertiesInstance = new JobProperties();
                                 jobInstance.Properties = propertiesInstance;
                                 
+                                JToken scenarioNameValue = propertiesValue["scenarioName"];
+                                if (scenarioNameValue != null && scenarioNameValue.Type != JTokenType.Null)
+                                {
+                                    string scenarioNameInstance = ((string)scenarioNameValue);
+                                    propertiesInstance.ScenarioName = scenarioNameInstance;
+                                }
+                                
                                 JToken activityIdValue = propertiesValue["activityId"];
                                 if (activityIdValue != null && activityIdValue.Type != JTokenType.Null)
                                 {
@@ -3621,6 +3656,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 JobProperties propertiesInstance = new JobProperties();
                                 jobInstance.Properties = propertiesInstance;
                                 
+                                JToken scenarioNameValue = propertiesValue["scenarioName"];
+                                if (scenarioNameValue != null && scenarioNameValue.Type != JTokenType.Null)
+                                {
+                                    string scenarioNameInstance = ((string)scenarioNameValue);
+                                    propertiesInstance.ScenarioName = scenarioNameInstance;
+                                }
+                                
                                 JToken activityIdValue = propertiesValue["activityId"];
                                 if (activityIdValue != null && activityIdValue.Type != JTokenType.Null)
                                 {
@@ -4168,6 +4210,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                             {
                                 JobProperties propertiesInstance = new JobProperties();
                                 jobInstance.Properties = propertiesInstance;
+                                
+                                JToken scenarioNameValue = propertiesValue["scenarioName"];
+                                if (scenarioNameValue != null && scenarioNameValue.Type != JTokenType.Null)
+                                {
+                                    string scenarioNameInstance = ((string)scenarioNameValue);
+                                    propertiesInstance.ScenarioName = scenarioNameInstance;
+                                }
                                 
                                 JToken activityIdValue = propertiesValue["activityId"];
                                 if (activityIdValue != null && activityIdValue.Type != JTokenType.Null)
@@ -4733,6 +4782,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                             {
                                 JobProperties propertiesInstance = new JobProperties();
                                 jobInstance.Properties = propertiesInstance;
+                                
+                                JToken scenarioNameValue = propertiesValue["scenarioName"];
+                                if (scenarioNameValue != null && scenarioNameValue.Type != JTokenType.Null)
+                                {
+                                    string scenarioNameInstance = ((string)scenarioNameValue);
+                                    propertiesInstance.ScenarioName = scenarioNameInstance;
+                                }
                                 
                                 JToken activityIdValue = propertiesValue["activityId"];
                                 if (activityIdValue != null && activityIdValue.Type != JTokenType.Null)

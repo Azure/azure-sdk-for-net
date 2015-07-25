@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata minClientVersion="2.5">
-    <id>Microsoft.Azure.Management.RecoveryServices</id>
+    <id>Microsoft.Azure.Management.RecoveryServicesARM</id>
     <title>Microsoft Azure Recovery Services Management Library</title>
     <releaseNotes>__BASELINE_RELEASE_NOTES__</releaseNotes>
     <version>$version$</version>
