@@ -121,5 +121,57 @@ namespace Microsoft.Azure.Management.SiteRecovery
         {
             return operations.ListAsync(parameters, customRequestHeaders, CancellationToken.None);
         }
+        
+        /// <summary>
+        /// Resume the job .
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IJobOperations.
+        /// </param>
+        /// <param name='jobId'>
+        /// Required. Job ID.
+        /// </param>
+        /// <param name='resumeJobParameters'>
+        /// Optional. Resume job parameters.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// The response model for the Job details object.
+        /// </returns>
+        public static JobResponse Resume(this IJobOperations operations, string jobId, ResumeJobParams resumeJobParameters, CustomRequestHeaders customRequestHeaders)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IJobOperations)s).ResumeAsync(jobId, resumeJobParameters, customRequestHeaders);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Resume the job .
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IJobOperations.
+        /// </param>
+        /// <param name='jobId'>
+        /// Required. Job ID.
+        /// </param>
+        /// <param name='resumeJobParameters'>
+        /// Optional. Resume job parameters.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// The response model for the Job details object.
+        /// </returns>
+        public static Task<JobResponse> ResumeAsync(this IJobOperations operations, string jobId, ResumeJobParams resumeJobParameters, CustomRequestHeaders customRequestHeaders)
+        {
+            return operations.ResumeAsync(jobId, resumeJobParameters, customRequestHeaders, CancellationToken.None);
+        }
     }
 }

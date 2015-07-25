@@ -108,9 +108,9 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The response model for the Job details object.
+        /// A standard service response for long running operations.
         /// </returns>
-        public static JobResponse DisableProtection(this IProtectionEntityOperations operations, string protectionContainerId, string protectionEntityId, DisableProtectionInput input, CustomRequestHeaders customRequestHeaders)
+        public static LongRunningOperationResponse DisableProtection(this IProtectionEntityOperations operations, string protectionContainerId, string protectionEntityId, DisableProtectionInput input, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -139,9 +139,9 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The response model for the Job details object.
+        /// A standard service response for long running operations.
         /// </returns>
-        public static Task<JobResponse> DisableProtectionAsync(this IProtectionEntityOperations operations, string protectionContainerId, string protectionEntityId, DisableProtectionInput input, CustomRequestHeaders customRequestHeaders)
+        public static Task<LongRunningOperationResponse> DisableProtectionAsync(this IProtectionEntityOperations operations, string protectionContainerId, string protectionEntityId, DisableProtectionInput input, CustomRequestHeaders customRequestHeaders)
         {
             return operations.DisableProtectionAsync(protectionContainerId, protectionEntityId, input, customRequestHeaders, CancellationToken.None);
         }
@@ -166,9 +166,9 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The response model for the Job details object.
+        /// A standard service response for long running operations.
         /// </returns>
-        public static JobResponse EnableProtection(this IProtectionEntityOperations operations, string protectionContainerId, string protectionEntityId, EnableProtectionInput input, CustomRequestHeaders customRequestHeaders)
+        public static LongRunningOperationResponse EnableProtection(this IProtectionEntityOperations operations, string protectionContainerId, string protectionEntityId, EnableProtectionInput input, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -197,9 +197,9 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The response model for the Job details object.
+        /// A standard service response for long running operations.
         /// </returns>
-        public static Task<JobResponse> EnableProtectionAsync(this IProtectionEntityOperations operations, string protectionContainerId, string protectionEntityId, EnableProtectionInput input, CustomRequestHeaders customRequestHeaders)
+        public static Task<LongRunningOperationResponse> EnableProtectionAsync(this IProtectionEntityOperations operations, string protectionContainerId, string protectionEntityId, EnableProtectionInput input, CustomRequestHeaders customRequestHeaders)
         {
             return operations.EnableProtectionAsync(protectionContainerId, protectionEntityId, input, customRequestHeaders, CancellationToken.None);
         }
@@ -438,9 +438,9 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The response model for the Job details object.
+        /// A standard service response for long running operations.
         /// </returns>
-        public static JobResponse TestFailover(this IProtectionEntityOperations operations, string protectionContainerId, string protectionEntityId, TestFailoverRequest parameters, CustomRequestHeaders customRequestHeaders)
+        public static LongRunningOperationResponse TestFailover(this IProtectionEntityOperations operations, string protectionContainerId, string protectionEntityId, TestFailoverRequest parameters, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -469,9 +469,9 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The response model for the Job details object.
+        /// A standard service response for long running operations.
         /// </returns>
-        public static Task<JobResponse> TestFailoverAsync(this IProtectionEntityOperations operations, string protectionContainerId, string protectionEntityId, TestFailoverRequest parameters, CustomRequestHeaders customRequestHeaders)
+        public static Task<LongRunningOperationResponse> TestFailoverAsync(this IProtectionEntityOperations operations, string protectionContainerId, string protectionEntityId, TestFailoverRequest parameters, CustomRequestHeaders customRequestHeaders)
         {
             return operations.TestFailoverAsync(protectionContainerId, protectionEntityId, parameters, customRequestHeaders, CancellationToken.None);
         }

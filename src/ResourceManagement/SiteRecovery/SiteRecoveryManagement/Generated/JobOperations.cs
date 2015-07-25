@@ -24,6 +24,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Hyak.Common;
@@ -197,6 +199,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                             {
                                 JobProperties propertiesInstance = new JobProperties();
                                 jobInstance.Properties = propertiesInstance;
+                                
+                                JToken scenarioNameValue = propertiesValue["scenarioName"];
+                                if (scenarioNameValue != null && scenarioNameValue.Type != JTokenType.Null)
+                                {
+                                    string scenarioNameInstance = ((string)scenarioNameValue);
+                                    propertiesInstance.ScenarioName = scenarioNameInstance;
+                                }
                                 
                                 JToken activityIdValue = propertiesValue["activityId"];
                                 if (activityIdValue != null && activityIdValue.Type != JTokenType.Null)
@@ -744,6 +753,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         JobProperties propertiesInstance = new JobProperties();
                                         jobInstance.Properties = propertiesInstance;
                                         
+                                        JToken scenarioNameValue = propertiesValue["scenarioName"];
+                                        if (scenarioNameValue != null && scenarioNameValue.Type != JTokenType.Null)
+                                        {
+                                            string scenarioNameInstance = ((string)scenarioNameValue);
+                                            propertiesInstance.ScenarioName = scenarioNameInstance;
+                                        }
+                                        
                                         JToken activityIdValue = propertiesValue["activityId"];
                                         if (activityIdValue != null && activityIdValue.Type != JTokenType.Null)
                                         {
@@ -1120,6 +1136,583 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             jobInstance.Tags.Add(tagsKey3, tagsValue3);
                                         }
                                     }
+                                }
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Resume the job .
+        /// </summary>
+        /// <param name='jobId'>
+        /// Required. Job ID.
+        /// </param>
+        /// <param name='resumeJobParameters'>
+        /// Optional. Resume job parameters.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response model for the Job details object.
+        /// </returns>
+        public async Task<JobResponse> ResumeAsync(string jobId, ResumeJobParams resumeJobParameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (jobId == null)
+            {
+                throw new ArgumentNullException("jobId");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("jobId", jobId);
+                tracingParameters.Add("resumeJobParameters", resumeJobParameters);
+                tracingParameters.Add("customRequestHeaders", customRequestHeaders);
+                TracingAdapter.Enter(invocationId, this, "ResumeAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/Subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(this.Client.ResourceGroupName);
+            url = url + "/providers/";
+            url = url + "Microsoft.SiteRecovery";
+            url = url + "/";
+            url = url + "SiteRecoveryVault";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(this.Client.ResourceName);
+            url = url + "/jobs/";
+            url = url + Uri.EscapeDataString(jobId);
+            url = url + "/Resume";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-06-10");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Post;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
+                httpRequest.Headers.Add("x-ms-version", "2015-01-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                JToken requestDoc = null;
+                
+                if (resumeJobParameters != null)
+                {
+                    JObject resumeJobParamsValue = new JObject();
+                    requestDoc = resumeJobParamsValue;
+                    
+                    if (resumeJobParameters.Comments != null)
+                    {
+                        resumeJobParamsValue["Comments"] = resumeJobParameters.Comments;
+                    }
+                }
+                
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    JobResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new JobResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            Job jobInstance = new Job();
+                            result.Job = jobInstance;
+                            
+                            JToken propertiesValue = responseDoc["properties"];
+                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                            {
+                                JobProperties propertiesInstance = new JobProperties();
+                                jobInstance.Properties = propertiesInstance;
+                                
+                                JToken scenarioNameValue = propertiesValue["scenarioName"];
+                                if (scenarioNameValue != null && scenarioNameValue.Type != JTokenType.Null)
+                                {
+                                    string scenarioNameInstance = ((string)scenarioNameValue);
+                                    propertiesInstance.ScenarioName = scenarioNameInstance;
+                                }
+                                
+                                JToken activityIdValue = propertiesValue["activityId"];
+                                if (activityIdValue != null && activityIdValue.Type != JTokenType.Null)
+                                {
+                                    string activityIdInstance = ((string)activityIdValue);
+                                    propertiesInstance.ActivityId = activityIdInstance;
+                                }
+                                
+                                JToken startTimeValue = propertiesValue["startTime"];
+                                if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
+                                {
+                                    DateTime startTimeInstance = ((DateTime)startTimeValue);
+                                    propertiesInstance.StartTime = startTimeInstance;
+                                }
+                                
+                                JToken endTimeValue = propertiesValue["endTime"];
+                                if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
+                                {
+                                    DateTime endTimeInstance = ((DateTime)endTimeValue);
+                                    propertiesInstance.EndTime = endTimeInstance;
+                                }
+                                
+                                JToken displayNameValue = propertiesValue["displayName"];
+                                if (displayNameValue != null && displayNameValue.Type != JTokenType.Null)
+                                {
+                                    string displayNameInstance = ((string)displayNameValue);
+                                    propertiesInstance.DisplayName = displayNameInstance;
+                                }
+                                
+                                JToken targetObjectIdValue = propertiesValue["targetObjectId"];
+                                if (targetObjectIdValue != null && targetObjectIdValue.Type != JTokenType.Null)
+                                {
+                                    string targetObjectIdInstance = ((string)targetObjectIdValue);
+                                    propertiesInstance.TargetObjectId = targetObjectIdInstance;
+                                }
+                                
+                                JToken targetObjectTypeValue = propertiesValue["targetObjectType"];
+                                if (targetObjectTypeValue != null && targetObjectTypeValue.Type != JTokenType.Null)
+                                {
+                                    string targetObjectTypeInstance = ((string)targetObjectTypeValue);
+                                    propertiesInstance.TargetObjectType = targetObjectTypeInstance;
+                                }
+                                
+                                JToken targetObjectNameValue = propertiesValue["targetObjectName"];
+                                if (targetObjectNameValue != null && targetObjectNameValue.Type != JTokenType.Null)
+                                {
+                                    string targetObjectNameInstance = ((string)targetObjectNameValue);
+                                    propertiesInstance.TargetObjectName = targetObjectNameInstance;
+                                }
+                                
+                                JToken allowedActionsArray = propertiesValue["allowedActions"];
+                                if (allowedActionsArray != null && allowedActionsArray.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken allowedActionsValue in ((JArray)allowedActionsArray))
+                                    {
+                                        propertiesInstance.AllowedActions.Add(((string)allowedActionsValue));
+                                    }
+                                }
+                                
+                                JToken stateValue = propertiesValue["state"];
+                                if (stateValue != null && stateValue.Type != JTokenType.Null)
+                                {
+                                    string stateInstance = ((string)stateValue);
+                                    propertiesInstance.State = stateInstance;
+                                }
+                                
+                                JToken stateDescriptionValue = propertiesValue["stateDescription"];
+                                if (stateDescriptionValue != null && stateDescriptionValue.Type != JTokenType.Null)
+                                {
+                                    string stateDescriptionInstance = ((string)stateDescriptionValue);
+                                    propertiesInstance.StateDescription = stateDescriptionInstance;
+                                }
+                                
+                                JToken tasksArray = propertiesValue["tasks"];
+                                if (tasksArray != null && tasksArray.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken tasksValue in ((JArray)tasksArray))
+                                    {
+                                        AsrTask asrTaskInstance = new AsrTask();
+                                        propertiesInstance.Tasks.Add(asrTaskInstance);
+                                        
+                                        JToken startTimeValue2 = tasksValue["startTime"];
+                                        if (startTimeValue2 != null && startTimeValue2.Type != JTokenType.Null)
+                                        {
+                                            DateTime startTimeInstance2 = ((DateTime)startTimeValue2);
+                                            asrTaskInstance.StartTime = startTimeInstance2;
+                                        }
+                                        
+                                        JToken endTimeValue2 = tasksValue["endTime"];
+                                        if (endTimeValue2 != null && endTimeValue2.Type != JTokenType.Null)
+                                        {
+                                            DateTime endTimeInstance2 = ((DateTime)endTimeValue2);
+                                            asrTaskInstance.EndTime = endTimeInstance2;
+                                        }
+                                        
+                                        JToken actionsArray = tasksValue["actions"];
+                                        if (actionsArray != null && actionsArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken actionsValue in ((JArray)actionsArray))
+                                            {
+                                                asrTaskInstance.Actions.Add(((string)actionsValue));
+                                            }
+                                        }
+                                        
+                                        JToken taskTypeValue = tasksValue["taskType"];
+                                        if (taskTypeValue != null && taskTypeValue.Type != JTokenType.Null)
+                                        {
+                                            string taskTypeInstance = ((string)taskTypeValue);
+                                            asrTaskInstance.TaskType = taskTypeInstance;
+                                        }
+                                        
+                                        JToken taskNameValue = tasksValue["taskName"];
+                                        if (taskNameValue != null && taskNameValue.Type != JTokenType.Null)
+                                        {
+                                            string taskNameInstance = ((string)taskNameValue);
+                                            asrTaskInstance.TaskName = taskNameInstance;
+                                        }
+                                        
+                                        JToken stateValue2 = tasksValue["state"];
+                                        if (stateValue2 != null && stateValue2.Type != JTokenType.Null)
+                                        {
+                                            string stateInstance2 = ((string)stateValue2);
+                                            asrTaskInstance.State = stateInstance2;
+                                        }
+                                        
+                                        JToken stateDescriptionValue2 = tasksValue["stateDescription"];
+                                        if (stateDescriptionValue2 != null && stateDescriptionValue2.Type != JTokenType.Null)
+                                        {
+                                            string stateDescriptionInstance2 = ((string)stateDescriptionValue2);
+                                            asrTaskInstance.StateDescription = stateDescriptionInstance2;
+                                        }
+                                        
+                                        JToken extendedDetailsValue = tasksValue["extendedDetails"];
+                                        if (extendedDetailsValue != null && extendedDetailsValue.Type != JTokenType.Null)
+                                        {
+                                            string extendedDetailsInstance = ((string)extendedDetailsValue);
+                                            asrTaskInstance.ExtendedDetails = extendedDetailsInstance;
+                                        }
+                                        
+                                        JToken idValue = tasksValue["id"];
+                                        if (idValue != null && idValue.Type != JTokenType.Null)
+                                        {
+                                            string idInstance = ((string)idValue);
+                                            asrTaskInstance.Id = idInstance;
+                                        }
+                                        
+                                        JToken nameValue = tasksValue["name"];
+                                        if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                        {
+                                            string nameInstance = ((string)nameValue);
+                                            asrTaskInstance.Name = nameInstance;
+                                        }
+                                        
+                                        JToken typeValue = tasksValue["type"];
+                                        if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                        {
+                                            string typeInstance = ((string)typeValue);
+                                            asrTaskInstance.Type = typeInstance;
+                                        }
+                                        
+                                        JToken locationValue = tasksValue["location"];
+                                        if (locationValue != null && locationValue.Type != JTokenType.Null)
+                                        {
+                                            string locationInstance = ((string)locationValue);
+                                            asrTaskInstance.Location = locationInstance;
+                                        }
+                                        
+                                        JToken tagsSequenceElement = ((JToken)tasksValue["tags"]);
+                                        if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                                        {
+                                            foreach (JProperty property in tagsSequenceElement)
+                                            {
+                                                string tagsKey = ((string)property.Name);
+                                                string tagsValue = ((string)property.Value);
+                                                asrTaskInstance.Tags.Add(tagsKey, tagsValue);
+                                            }
+                                        }
+                                    }
+                                }
+                                
+                                JToken errorsArray = propertiesValue["errors"];
+                                if (errorsArray != null && errorsArray.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken errorsValue in ((JArray)errorsArray))
+                                    {
+                                        ErrorDetails errorDetailsInstance = new ErrorDetails();
+                                        propertiesInstance.Errors.Add(errorDetailsInstance);
+                                        
+                                        JToken serviceErrorDetailsValue = errorsValue["serviceErrorDetails"];
+                                        if (serviceErrorDetailsValue != null && serviceErrorDetailsValue.Type != JTokenType.Null)
+                                        {
+                                            ServiceError serviceErrorDetailsInstance = new ServiceError();
+                                            errorDetailsInstance.ServiceErrorDetails = serviceErrorDetailsInstance;
+                                            
+                                            JToken codeValue = serviceErrorDetailsValue["Code"];
+                                            if (codeValue != null && codeValue.Type != JTokenType.Null)
+                                            {
+                                                string codeInstance = ((string)codeValue);
+                                                serviceErrorDetailsInstance.Code = codeInstance;
+                                            }
+                                            
+                                            JToken messageValue = serviceErrorDetailsValue["Message"];
+                                            if (messageValue != null && messageValue.Type != JTokenType.Null)
+                                            {
+                                                string messageInstance = ((string)messageValue);
+                                                serviceErrorDetailsInstance.Message = messageInstance;
+                                            }
+                                            
+                                            JToken possibleCausesValue = serviceErrorDetailsValue["PossibleCauses"];
+                                            if (possibleCausesValue != null && possibleCausesValue.Type != JTokenType.Null)
+                                            {
+                                                string possibleCausesInstance = ((string)possibleCausesValue);
+                                                serviceErrorDetailsInstance.PossibleCauses = possibleCausesInstance;
+                                            }
+                                            
+                                            JToken recommendedActionValue = serviceErrorDetailsValue["RecommendedAction"];
+                                            if (recommendedActionValue != null && recommendedActionValue.Type != JTokenType.Null)
+                                            {
+                                                string recommendedActionInstance = ((string)recommendedActionValue);
+                                                serviceErrorDetailsInstance.RecommendedAction = recommendedActionInstance;
+                                            }
+                                            
+                                            JToken activityIdValue2 = serviceErrorDetailsValue["ActivityId"];
+                                            if (activityIdValue2 != null && activityIdValue2.Type != JTokenType.Null)
+                                            {
+                                                string activityIdInstance2 = ((string)activityIdValue2);
+                                                serviceErrorDetailsInstance.ActivityId = activityIdInstance2;
+                                            }
+                                        }
+                                        
+                                        JToken providerErrorDetailsValue = errorsValue["providerErrorDetails"];
+                                        if (providerErrorDetailsValue != null && providerErrorDetailsValue.Type != JTokenType.Null)
+                                        {
+                                            ProviderError providerErrorDetailsInstance = new ProviderError();
+                                            errorDetailsInstance.ProviderErrorDetails = providerErrorDetailsInstance;
+                                            
+                                            JToken errorCodeValue = providerErrorDetailsValue["errorCode"];
+                                            if (errorCodeValue != null && errorCodeValue.Type != JTokenType.Null)
+                                            {
+                                                int errorCodeInstance = ((int)errorCodeValue);
+                                                providerErrorDetailsInstance.ErrorCode = errorCodeInstance;
+                                            }
+                                            
+                                            JToken errorMessageValue = providerErrorDetailsValue["errorMessage"];
+                                            if (errorMessageValue != null && errorMessageValue.Type != JTokenType.Null)
+                                            {
+                                                string errorMessageInstance = ((string)errorMessageValue);
+                                                providerErrorDetailsInstance.ErrorMessage = errorMessageInstance;
+                                            }
+                                            
+                                            JToken errorIdValue = providerErrorDetailsValue["errorId"];
+                                            if (errorIdValue != null && errorIdValue.Type != JTokenType.Null)
+                                            {
+                                                string errorIdInstance = ((string)errorIdValue);
+                                                providerErrorDetailsInstance.ErrorId = errorIdInstance;
+                                            }
+                                            
+                                            JToken workflowIdValue = providerErrorDetailsValue["workflowId"];
+                                            if (workflowIdValue != null && workflowIdValue.Type != JTokenType.Null)
+                                            {
+                                                string workflowIdInstance = ((string)workflowIdValue);
+                                                providerErrorDetailsInstance.WorkflowId = workflowIdInstance;
+                                            }
+                                            
+                                            JToken creationTimeUtcValue = providerErrorDetailsValue["creationTimeUtc"];
+                                            if (creationTimeUtcValue != null && creationTimeUtcValue.Type != JTokenType.Null)
+                                            {
+                                                DateTime creationTimeUtcInstance = ((DateTime)creationTimeUtcValue);
+                                                providerErrorDetailsInstance.CreationTimeUtc = creationTimeUtcInstance;
+                                            }
+                                            
+                                            JToken errorLevelValue = providerErrorDetailsValue["errorLevel"];
+                                            if (errorLevelValue != null && errorLevelValue.Type != JTokenType.Null)
+                                            {
+                                                string errorLevelInstance = ((string)errorLevelValue);
+                                                providerErrorDetailsInstance.ErrorLevel = errorLevelInstance;
+                                            }
+                                            
+                                            JToken affectedObjectsSequenceElement = ((JToken)providerErrorDetailsValue["affectedObjects"]);
+                                            if (affectedObjectsSequenceElement != null && affectedObjectsSequenceElement.Type != JTokenType.Null)
+                                            {
+                                                foreach (JProperty property2 in affectedObjectsSequenceElement)
+                                                {
+                                                    string affectedObjectsKey = ((string)property2.Name);
+                                                    string affectedObjectsValue = ((string)property2.Value);
+                                                    providerErrorDetailsInstance.AffectedObjects.Add(affectedObjectsKey, affectedObjectsValue);
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken taskIdValue = errorsValue["taskId"];
+                                        if (taskIdValue != null && taskIdValue.Type != JTokenType.Null)
+                                        {
+                                            string taskIdInstance = ((string)taskIdValue);
+                                            errorDetailsInstance.TaskId = taskIdInstance;
+                                        }
+                                    }
+                                }
+                                
+                                JToken idValue2 = propertiesValue["id"];
+                                if (idValue2 != null && idValue2.Type != JTokenType.Null)
+                                {
+                                    string idInstance2 = ((string)idValue2);
+                                    propertiesInstance.Id = idInstance2;
+                                }
+                                
+                                JToken nameValue2 = propertiesValue["name"];
+                                if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                {
+                                    string nameInstance2 = ((string)nameValue2);
+                                    propertiesInstance.Name = nameInstance2;
+                                }
+                                
+                                JToken typeValue2 = propertiesValue["type"];
+                                if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
+                                {
+                                    string typeInstance2 = ((string)typeValue2);
+                                    propertiesInstance.Type = typeInstance2;
+                                }
+                                
+                                JToken locationValue2 = propertiesValue["location"];
+                                if (locationValue2 != null && locationValue2.Type != JTokenType.Null)
+                                {
+                                    string locationInstance2 = ((string)locationValue2);
+                                    propertiesInstance.Location = locationInstance2;
+                                }
+                                
+                                JToken tagsSequenceElement2 = ((JToken)propertiesValue["tags"]);
+                                if (tagsSequenceElement2 != null && tagsSequenceElement2.Type != JTokenType.Null)
+                                {
+                                    foreach (JProperty property3 in tagsSequenceElement2)
+                                    {
+                                        string tagsKey2 = ((string)property3.Name);
+                                        string tagsValue2 = ((string)property3.Value);
+                                        propertiesInstance.Tags.Add(tagsKey2, tagsValue2);
+                                    }
+                                }
+                            }
+                            
+                            JToken idValue3 = responseDoc["id"];
+                            if (idValue3 != null && idValue3.Type != JTokenType.Null)
+                            {
+                                string idInstance3 = ((string)idValue3);
+                                jobInstance.Id = idInstance3;
+                            }
+                            
+                            JToken nameValue3 = responseDoc["name"];
+                            if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
+                            {
+                                string nameInstance3 = ((string)nameValue3);
+                                jobInstance.Name = nameInstance3;
+                            }
+                            
+                            JToken typeValue3 = responseDoc["type"];
+                            if (typeValue3 != null && typeValue3.Type != JTokenType.Null)
+                            {
+                                string typeInstance3 = ((string)typeValue3);
+                                jobInstance.Type = typeInstance3;
+                            }
+                            
+                            JToken locationValue3 = responseDoc["location"];
+                            if (locationValue3 != null && locationValue3.Type != JTokenType.Null)
+                            {
+                                string locationInstance3 = ((string)locationValue3);
+                                jobInstance.Location = locationInstance3;
+                            }
+                            
+                            JToken tagsSequenceElement3 = ((JToken)responseDoc["tags"]);
+                            if (tagsSequenceElement3 != null && tagsSequenceElement3.Type != JTokenType.Null)
+                            {
+                                foreach (JProperty property4 in tagsSequenceElement3)
+                                {
+                                    string tagsKey3 = ((string)property4.Name);
+                                    string tagsValue3 = ((string)property4.Value);
+                                    jobInstance.Tags.Add(tagsKey3, tagsValue3);
                                 }
                             }
                         }

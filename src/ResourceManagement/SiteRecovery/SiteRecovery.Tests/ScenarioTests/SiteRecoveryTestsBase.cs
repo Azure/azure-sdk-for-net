@@ -37,11 +37,15 @@ namespace SiteRecovery.Tests
 {
     public class SiteRecoveryTestsBase : TestBase
     {
-        public static string VaultKey;
-        public static string VaultLocation = "Southeast Asia";
         public static string MyCloudService;
         public static string MyVaultName;
-        public static string MyResourceGroupName; 
+        public static string MyResourceGroupName;
+        public static string VaultKey;
+        public static string VaultLocation = "Southeast Asia";
+        public static readonly string HyperVReplicaAzure = "HyperVReplicaAzure";
+        public static readonly string HyperVReplica = "HyperVReplica";
+
+
 
         protected static CustomRequestHeaders RequestHeaders = new CustomRequestHeaders
         {
