@@ -37,20 +37,20 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// Reference to the
         /// Microsoft.Azure.Management.SiteRecovery.IRecoveryPlanOperations.
         /// </param>
-        /// <param name='recoveryPlanId'>
-        /// Required. RecoveryPlan ID.
+        /// <param name='name'>
+        /// Required. RecoveryPlan Name.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The response model for the Job details object.
+        /// A standard service response for long running operations.
         /// </returns>
-        public static JobResponse Commit(this IRecoveryPlanOperations operations, string recoveryPlanId, CustomRequestHeaders customRequestHeaders)
+        public static LongRunningOperationResponse BeginCommit(this IRecoveryPlanOperations operations, string name, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IRecoveryPlanOperations)s).CommitAsync(recoveryPlanId, customRequestHeaders);
+                return ((IRecoveryPlanOperations)s).BeginCommitAsync(name, customRequestHeaders);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -62,18 +62,18 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// Reference to the
         /// Microsoft.Azure.Management.SiteRecovery.IRecoveryPlanOperations.
         /// </param>
-        /// <param name='recoveryPlanId'>
-        /// Required. RecoveryPlan ID.
+        /// <param name='name'>
+        /// Required. RecoveryPlan Name.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The response model for the Job details object.
+        /// A standard service response for long running operations.
         /// </returns>
-        public static Task<JobResponse> CommitAsync(this IRecoveryPlanOperations operations, string recoveryPlanId, CustomRequestHeaders customRequestHeaders)
+        public static Task<LongRunningOperationResponse> BeginCommitAsync(this IRecoveryPlanOperations operations, string name, CustomRequestHeaders customRequestHeaders)
         {
-            return operations.CommitAsync(recoveryPlanId, customRequestHeaders, CancellationToken.None);
+            return operations.BeginCommitAsync(name, customRequestHeaders, CancellationToken.None);
         }
         
         /// <summary>
@@ -83,20 +83,20 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// Reference to the
         /// Microsoft.Azure.Management.SiteRecovery.IRecoveryPlanOperations.
         /// </param>
-        /// <param name='parameters'>
+        /// <param name='input'>
         /// Required. Create recovery plan input parameters.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The response model for the Job details object.
+        /// A standard service response for long running operations.
         /// </returns>
-        public static JobResponse CreateRecoveryPlan(this IRecoveryPlanOperations operations, RecoveryPlanXmlData parameters, CustomRequestHeaders customRequestHeaders)
+        public static LongRunningOperationResponse BeginCreateRecoveryPlan(this IRecoveryPlanOperations operations, RecoveryPlanXmlData input, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IRecoveryPlanOperations)s).CreateRecoveryPlanAsync(parameters, customRequestHeaders);
+                return ((IRecoveryPlanOperations)s).BeginCreateRecoveryPlanAsync(input, customRequestHeaders);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -108,18 +108,18 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// Reference to the
         /// Microsoft.Azure.Management.SiteRecovery.IRecoveryPlanOperations.
         /// </param>
-        /// <param name='parameters'>
+        /// <param name='input'>
         /// Required. Create recovery plan input parameters.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The response model for the Job details object.
+        /// A standard service response for long running operations.
         /// </returns>
-        public static Task<JobResponse> CreateRecoveryPlanAsync(this IRecoveryPlanOperations operations, RecoveryPlanXmlData parameters, CustomRequestHeaders customRequestHeaders)
+        public static Task<LongRunningOperationResponse> BeginCreateRecoveryPlanAsync(this IRecoveryPlanOperations operations, RecoveryPlanXmlData input, CustomRequestHeaders customRequestHeaders)
         {
-            return operations.CreateRecoveryPlanAsync(parameters, customRequestHeaders, CancellationToken.None);
+            return operations.BeginCreateRecoveryPlanAsync(input, customRequestHeaders, CancellationToken.None);
         }
         
         /// <summary>
@@ -129,20 +129,20 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// Reference to the
         /// Microsoft.Azure.Management.SiteRecovery.IRecoveryPlanOperations.
         /// </param>
-        /// <param name='recoveryPlanId'>
-        /// Required. RecoveryPlan ID.
+        /// <param name='name'>
+        /// Required. RecoveryPlan Name.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The response model for the Job details object.
+        /// A standard service response for long running operations.
         /// </returns>
-        public static JobResponse Delete(this IRecoveryPlanOperations operations, string recoveryPlanId, CustomRequestHeaders customRequestHeaders)
+        public static LongRunningOperationResponse BeginDelete(this IRecoveryPlanOperations operations, string name, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IRecoveryPlanOperations)s).DeleteAsync(recoveryPlanId, customRequestHeaders);
+                return ((IRecoveryPlanOperations)s).BeginDeleteAsync(name, customRequestHeaders);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -154,18 +154,404 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// Reference to the
         /// Microsoft.Azure.Management.SiteRecovery.IRecoveryPlanOperations.
         /// </param>
-        /// <param name='recoveryPlanId'>
-        /// Required. RecoveryPlan ID.
+        /// <param name='name'>
+        /// Required. RecoveryPlan Name.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The response model for the Job details object.
+        /// A standard service response for long running operations.
         /// </returns>
-        public static Task<JobResponse> DeleteAsync(this IRecoveryPlanOperations operations, string recoveryPlanId, CustomRequestHeaders customRequestHeaders)
+        public static Task<LongRunningOperationResponse> BeginDeleteAsync(this IRecoveryPlanOperations operations, string name, CustomRequestHeaders customRequestHeaders)
         {
-            return operations.DeleteAsync(recoveryPlanId, customRequestHeaders, CancellationToken.None);
+            return operations.BeginDeleteAsync(name, customRequestHeaders, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// PlannedFailover for the recovery plan.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IRecoveryPlanOperations.
+        /// </param>
+        /// <param name='name'>
+        /// Required. RecoveryPlan Name.
+        /// </param>
+        /// <param name='input'>
+        /// Required. Input to do planned failover of a recovery plan.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static LongRunningOperationResponse BeginRecoveryPlanPlannedFailover(this IRecoveryPlanOperations operations, string name, RpPlannedFailoverRequest input, CustomRequestHeaders customRequestHeaders)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IRecoveryPlanOperations)s).BeginRecoveryPlanPlannedFailoverAsync(name, input, customRequestHeaders);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// PlannedFailover for the recovery plan.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IRecoveryPlanOperations.
+        /// </param>
+        /// <param name='name'>
+        /// Required. RecoveryPlan Name.
+        /// </param>
+        /// <param name='input'>
+        /// Required. Input to do planned failover of a recovery plan.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static Task<LongRunningOperationResponse> BeginRecoveryPlanPlannedFailoverAsync(this IRecoveryPlanOperations operations, string name, RpPlannedFailoverRequest input, CustomRequestHeaders customRequestHeaders)
+        {
+            return operations.BeginRecoveryPlanPlannedFailoverAsync(name, input, customRequestHeaders, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// TestFailover for the recovery plan.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IRecoveryPlanOperations.
+        /// </param>
+        /// <param name='name'>
+        /// Required. RecoveryPlan Name.
+        /// </param>
+        /// <param name='input'>
+        /// Required. Input to do test failover of a recovery plan.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static LongRunningOperationResponse BeginRecoveryPlanTestFailover(this IRecoveryPlanOperations operations, string name, RpTestFailoverRequest input, CustomRequestHeaders customRequestHeaders)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IRecoveryPlanOperations)s).BeginRecoveryPlanTestFailoverAsync(name, input, customRequestHeaders);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// TestFailover for the recovery plan.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IRecoveryPlanOperations.
+        /// </param>
+        /// <param name='name'>
+        /// Required. RecoveryPlan Name.
+        /// </param>
+        /// <param name='input'>
+        /// Required. Input to do test failover of a recovery plan.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static Task<LongRunningOperationResponse> BeginRecoveryPlanTestFailoverAsync(this IRecoveryPlanOperations operations, string name, RpTestFailoverRequest input, CustomRequestHeaders customRequestHeaders)
+        {
+            return operations.BeginRecoveryPlanTestFailoverAsync(name, input, customRequestHeaders, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// UnplannedFailover for the recovery plan.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IRecoveryPlanOperations.
+        /// </param>
+        /// <param name='name'>
+        /// Required. RecoveryPlan ID.
+        /// </param>
+        /// <param name='input'>
+        /// Required. Input to do unplanned failover of a recovery plan.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static LongRunningOperationResponse BeginRecoveryPlanUnplannedFailover(this IRecoveryPlanOperations operations, string name, RpUnplannedFailoverRequest input, CustomRequestHeaders customRequestHeaders)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IRecoveryPlanOperations)s).BeginRecoveryPlanUnplannedFailoverAsync(name, input, customRequestHeaders);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// UnplannedFailover for the recovery plan.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IRecoveryPlanOperations.
+        /// </param>
+        /// <param name='name'>
+        /// Required. RecoveryPlan ID.
+        /// </param>
+        /// <param name='input'>
+        /// Required. Input to do unplanned failover of a recovery plan.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static Task<LongRunningOperationResponse> BeginRecoveryPlanUnplannedFailoverAsync(this IRecoveryPlanOperations operations, string name, RpUnplannedFailoverRequest input, CustomRequestHeaders customRequestHeaders)
+        {
+            return operations.BeginRecoveryPlanUnplannedFailoverAsync(name, input, customRequestHeaders, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Reprotect the recovery plan.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IRecoveryPlanOperations.
+        /// </param>
+        /// <param name='name'>
+        /// Required. RecoveryPlan Name.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static LongRunningOperationResponse BeginReprotect(this IRecoveryPlanOperations operations, string name, CustomRequestHeaders customRequestHeaders)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IRecoveryPlanOperations)s).BeginReprotectAsync(name, customRequestHeaders);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Reprotect the recovery plan.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IRecoveryPlanOperations.
+        /// </param>
+        /// <param name='name'>
+        /// Required. RecoveryPlan Name.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static Task<LongRunningOperationResponse> BeginReprotectAsync(this IRecoveryPlanOperations operations, string name, CustomRequestHeaders customRequestHeaders)
+        {
+            return operations.BeginReprotectAsync(name, customRequestHeaders, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Update the recovery plan.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IRecoveryPlanOperations.
+        /// </param>
+        /// <param name='input'>
+        /// Required. Update recovery plan input parameters.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static LongRunningOperationResponse BeginUpdateRecoveryPlan(this IRecoveryPlanOperations operations, RecoveryPlanXmlData input, CustomRequestHeaders customRequestHeaders)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IRecoveryPlanOperations)s).BeginUpdateRecoveryPlanAsync(input, customRequestHeaders);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Update the recovery plan.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IRecoveryPlanOperations.
+        /// </param>
+        /// <param name='input'>
+        /// Required. Update recovery plan input parameters.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static Task<LongRunningOperationResponse> BeginUpdateRecoveryPlanAsync(this IRecoveryPlanOperations operations, RecoveryPlanXmlData input, CustomRequestHeaders customRequestHeaders)
+        {
+            return operations.BeginUpdateRecoveryPlanAsync(input, customRequestHeaders, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Commit the recovery plan.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IRecoveryPlanOperations.
+        /// </param>
+        /// <param name='name'>
+        /// Required. RecoveryPlan Name.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static LongRunningOperationResponse Commit(this IRecoveryPlanOperations operations, string name, CustomRequestHeaders customRequestHeaders)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IRecoveryPlanOperations)s).CommitAsync(name, customRequestHeaders);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Commit the recovery plan.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IRecoveryPlanOperations.
+        /// </param>
+        /// <param name='name'>
+        /// Required. RecoveryPlan Name.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static Task<LongRunningOperationResponse> CommitAsync(this IRecoveryPlanOperations operations, string name, CustomRequestHeaders customRequestHeaders)
+        {
+            return operations.CommitAsync(name, customRequestHeaders, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Create the recovery plan.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IRecoveryPlanOperations.
+        /// </param>
+        /// <param name='input'>
+        /// Required. Create recovery plan input parameters.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static LongRunningOperationResponse CreateRecoveryPlan(this IRecoveryPlanOperations operations, RecoveryPlanXmlData input, CustomRequestHeaders customRequestHeaders)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IRecoveryPlanOperations)s).CreateRecoveryPlanAsync(input, customRequestHeaders);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Create the recovery plan.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IRecoveryPlanOperations.
+        /// </param>
+        /// <param name='input'>
+        /// Required. Create recovery plan input parameters.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static Task<LongRunningOperationResponse> CreateRecoveryPlanAsync(this IRecoveryPlanOperations operations, RecoveryPlanXmlData input, CustomRequestHeaders customRequestHeaders)
+        {
+            return operations.CreateRecoveryPlanAsync(input, customRequestHeaders, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Remove a Recovery Plan from the current Azure Site Recovery Vault.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IRecoveryPlanOperations.
+        /// </param>
+        /// <param name='name'>
+        /// Required. RecoveryPlan name.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static LongRunningOperationResponse Delete(this IRecoveryPlanOperations operations, string name, CustomRequestHeaders customRequestHeaders)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IRecoveryPlanOperations)s).DeleteAsync(name, customRequestHeaders);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Remove a Recovery Plan from the current Azure Site Recovery Vault.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IRecoveryPlanOperations.
+        /// </param>
+        /// <param name='name'>
+        /// Required. RecoveryPlan name.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static Task<LongRunningOperationResponse> DeleteAsync(this IRecoveryPlanOperations operations, string name, CustomRequestHeaders customRequestHeaders)
+        {
+            return operations.DeleteAsync(name, customRequestHeaders, CancellationToken.None);
         }
         
         /// <summary>
@@ -175,20 +561,20 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// Reference to the
         /// Microsoft.Azure.Management.SiteRecovery.IRecoveryPlanOperations.
         /// </param>
-        /// <param name='recoveryPlanId'>
-        /// Required. RecoveryPlan ID.
+        /// <param name='name'>
+        /// Required. RecoveryPlan Name.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The response model for the recoveryplan object.
+        /// The response model for the Recovery Plan object.
         /// </returns>
-        public static RecoveryPlanResponse Get(this IRecoveryPlanOperations operations, string recoveryPlanId, CustomRequestHeaders customRequestHeaders)
+        public static RecoveryPlanResponse Get(this IRecoveryPlanOperations operations, string name, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IRecoveryPlanOperations)s).GetAsync(recoveryPlanId, customRequestHeaders);
+                return ((IRecoveryPlanOperations)s).GetAsync(name, customRequestHeaders);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -200,18 +586,340 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// Reference to the
         /// Microsoft.Azure.Management.SiteRecovery.IRecoveryPlanOperations.
         /// </param>
-        /// <param name='recoveryPlanId'>
-        /// Required. RecoveryPlan ID.
+        /// <param name='name'>
+        /// Required. RecoveryPlan Name.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The response model for the recoveryplan object.
+        /// The response model for the Recovery Plan object.
         /// </returns>
-        public static Task<RecoveryPlanResponse> GetAsync(this IRecoveryPlanOperations operations, string recoveryPlanId, CustomRequestHeaders customRequestHeaders)
+        public static Task<RecoveryPlanResponse> GetAsync(this IRecoveryPlanOperations operations, string name, CustomRequestHeaders customRequestHeaders)
         {
-            return operations.GetAsync(recoveryPlanId, customRequestHeaders, CancellationToken.None);
+            return operations.GetAsync(name, customRequestHeaders, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The Get Operation Status operation returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call Get Operation Status to determine whether the operation
+        /// has succeeded, failed, or is still in progress.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IRecoveryPlanOperations.
+        /// </param>
+        /// <param name='operationStatusLink'>
+        /// Required. Location value returned by the Begin operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static RecoveryPlanOperationResponse GetRecoveryPlanCommitStatus(this IRecoveryPlanOperations operations, string operationStatusLink)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IRecoveryPlanOperations)s).GetRecoveryPlanCommitStatusAsync(operationStatusLink);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The Get Operation Status operation returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call Get Operation Status to determine whether the operation
+        /// has succeeded, failed, or is still in progress.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IRecoveryPlanOperations.
+        /// </param>
+        /// <param name='operationStatusLink'>
+        /// Required. Location value returned by the Begin operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static Task<RecoveryPlanOperationResponse> GetRecoveryPlanCommitStatusAsync(this IRecoveryPlanOperations operations, string operationStatusLink)
+        {
+            return operations.GetRecoveryPlanCommitStatusAsync(operationStatusLink, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The Get Operation Status operation returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call Get Operation Status to determine whether the operation
+        /// has succeeded, failed, or is still in progress.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IRecoveryPlanOperations.
+        /// </param>
+        /// <param name='operationStatusLink'>
+        /// Required. Location value returned by the Begin operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static RecoveryPlanOperationResponse GetRecoveryPlanCreateStatus(this IRecoveryPlanOperations operations, string operationStatusLink)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IRecoveryPlanOperations)s).GetRecoveryPlanCreateStatusAsync(operationStatusLink);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The Get Operation Status operation returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call Get Operation Status to determine whether the operation
+        /// has succeeded, failed, or is still in progress.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IRecoveryPlanOperations.
+        /// </param>
+        /// <param name='operationStatusLink'>
+        /// Required. Location value returned by the Begin operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static Task<RecoveryPlanOperationResponse> GetRecoveryPlanCreateStatusAsync(this IRecoveryPlanOperations operations, string operationStatusLink)
+        {
+            return operations.GetRecoveryPlanCreateStatusAsync(operationStatusLink, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The Get Operation Status operation returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call Get Operation Status to determine whether the operation
+        /// has succeeded, failed, or is still in progress.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IRecoveryPlanOperations.
+        /// </param>
+        /// <param name='operationStatusLink'>
+        /// Required. Location value returned by the Begin operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static RecoveryPlanOperationResponse GetRecoveryPlanDeleteStatus(this IRecoveryPlanOperations operations, string operationStatusLink)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IRecoveryPlanOperations)s).GetRecoveryPlanDeleteStatusAsync(operationStatusLink);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The Get Operation Status operation returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call Get Operation Status to determine whether the operation
+        /// has succeeded, failed, or is still in progress.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IRecoveryPlanOperations.
+        /// </param>
+        /// <param name='operationStatusLink'>
+        /// Required. Location value returned by the Begin operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static Task<RecoveryPlanOperationResponse> GetRecoveryPlanDeleteStatusAsync(this IRecoveryPlanOperations operations, string operationStatusLink)
+        {
+            return operations.GetRecoveryPlanDeleteStatusAsync(operationStatusLink, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The Get Operation Status operation returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call Get Operation Status to determine whether the operation
+        /// has succeeded, failed, or is still in progress.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IRecoveryPlanOperations.
+        /// </param>
+        /// <param name='operationStatusLink'>
+        /// Required. Location value returned by the Begin operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static RecoveryPlanOperationResponse GetRecoveryPlanPlannedFailoverStatus(this IRecoveryPlanOperations operations, string operationStatusLink)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IRecoveryPlanOperations)s).GetRecoveryPlanPlannedFailoverStatusAsync(operationStatusLink);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The Get Operation Status operation returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call Get Operation Status to determine whether the operation
+        /// has succeeded, failed, or is still in progress.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IRecoveryPlanOperations.
+        /// </param>
+        /// <param name='operationStatusLink'>
+        /// Required. Location value returned by the Begin operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static Task<RecoveryPlanOperationResponse> GetRecoveryPlanPlannedFailoverStatusAsync(this IRecoveryPlanOperations operations, string operationStatusLink)
+        {
+            return operations.GetRecoveryPlanPlannedFailoverStatusAsync(operationStatusLink, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The Get Operation Status operation returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call Get Operation Status to determine whether the operation
+        /// has succeeded, failed, or is still in progress.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IRecoveryPlanOperations.
+        /// </param>
+        /// <param name='operationStatusLink'>
+        /// Required. Location value returned by the Begin operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static RecoveryPlanOperationResponse GetRecoveryPlanReprotectStatus(this IRecoveryPlanOperations operations, string operationStatusLink)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IRecoveryPlanOperations)s).GetRecoveryPlanReprotectStatusAsync(operationStatusLink);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The Get Operation Status operation returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call Get Operation Status to determine whether the operation
+        /// has succeeded, failed, or is still in progress.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IRecoveryPlanOperations.
+        /// </param>
+        /// <param name='operationStatusLink'>
+        /// Required. Location value returned by the Begin operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static Task<RecoveryPlanOperationResponse> GetRecoveryPlanReprotectStatusAsync(this IRecoveryPlanOperations operations, string operationStatusLink)
+        {
+            return operations.GetRecoveryPlanReprotectStatusAsync(operationStatusLink, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The Get Operation Status operation returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call Get Operation Status to determine whether the operation
+        /// has succeeded, failed, or is still in progress.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IRecoveryPlanOperations.
+        /// </param>
+        /// <param name='operationStatusLink'>
+        /// Required. Location value returned by the Begin operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static RecoveryPlanOperationResponse GetRecoveryPlanTestFailoverStatus(this IRecoveryPlanOperations operations, string operationStatusLink)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IRecoveryPlanOperations)s).GetRecoveryPlanTestFailoverStatusAsync(operationStatusLink);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The Get Operation Status operation returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call Get Operation Status to determine whether the operation
+        /// has succeeded, failed, or is still in progress.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IRecoveryPlanOperations.
+        /// </param>
+        /// <param name='operationStatusLink'>
+        /// Required. Location value returned by the Begin operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static Task<RecoveryPlanOperationResponse> GetRecoveryPlanTestFailoverStatusAsync(this IRecoveryPlanOperations operations, string operationStatusLink)
+        {
+            return operations.GetRecoveryPlanTestFailoverStatusAsync(operationStatusLink, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The Get Operation Status operation returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call Get Operation Status to determine whether the operation
+        /// has succeeded, failed, or is still in progress.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IRecoveryPlanOperations.
+        /// </param>
+        /// <param name='operationStatusLink'>
+        /// Required. Location value returned by the Begin operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static RecoveryPlanOperationResponse GetRecoveryPlanUnplannedFailoverStatus(this IRecoveryPlanOperations operations, string operationStatusLink)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IRecoveryPlanOperations)s).GetRecoveryPlanUnplannedFailoverStatusAsync(operationStatusLink);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The Get Operation Status operation returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call Get Operation Status to determine whether the operation
+        /// has succeeded, failed, or is still in progress.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IRecoveryPlanOperations.
+        /// </param>
+        /// <param name='operationStatusLink'>
+        /// Required. Location value returned by the Begin operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static Task<RecoveryPlanOperationResponse> GetRecoveryPlanUnplannedFailoverStatusAsync(this IRecoveryPlanOperations operations, string operationStatusLink)
+        {
+            return operations.GetRecoveryPlanUnplannedFailoverStatusAsync(operationStatusLink, CancellationToken.None);
         }
         
         /// <summary>
@@ -221,8 +929,8 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// Reference to the
         /// Microsoft.Azure.Management.SiteRecovery.IRecoveryPlanOperations.
         /// </param>
-        /// <param name='recoveryPlanId'>
-        /// Required. RecoveryPlan ID.
+        /// <param name='name'>
+        /// Required. RecoveryPlan Name.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
@@ -230,11 +938,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// <returns>
         /// The xml output for the recoveryplan object.
         /// </returns>
-        public static RecoveryPlanXmlOuput GetRecoveryPlanXml(this IRecoveryPlanOperations operations, string recoveryPlanId, CustomRequestHeaders customRequestHeaders)
+        public static RecoveryPlanXmlOuput GetRecoveryPlanXml(this IRecoveryPlanOperations operations, string name, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IRecoveryPlanOperations)s).GetRecoveryPlanXmlAsync(recoveryPlanId, customRequestHeaders);
+                return ((IRecoveryPlanOperations)s).GetRecoveryPlanXmlAsync(name, customRequestHeaders);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -246,8 +954,8 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// Reference to the
         /// Microsoft.Azure.Management.SiteRecovery.IRecoveryPlanOperations.
         /// </param>
-        /// <param name='recoveryPlanId'>
-        /// Required. RecoveryPlan ID.
+        /// <param name='name'>
+        /// Required. RecoveryPlan Name.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
@@ -255,9 +963,55 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// <returns>
         /// The xml output for the recoveryplan object.
         /// </returns>
-        public static Task<RecoveryPlanXmlOuput> GetRecoveryPlanXmlAsync(this IRecoveryPlanOperations operations, string recoveryPlanId, CustomRequestHeaders customRequestHeaders)
+        public static Task<RecoveryPlanXmlOuput> GetRecoveryPlanXmlAsync(this IRecoveryPlanOperations operations, string name, CustomRequestHeaders customRequestHeaders)
         {
-            return operations.GetRecoveryPlanXmlAsync(recoveryPlanId, customRequestHeaders, CancellationToken.None);
+            return operations.GetRecoveryPlanXmlAsync(name, customRequestHeaders, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The Get Operation Status operation returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call Get Operation Status to determine whether the operation
+        /// has succeeded, failed, or is still in progress.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IRecoveryPlanOperations.
+        /// </param>
+        /// <param name='operationStatusLink'>
+        /// Required. Location value returned by the Begin operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static RecoveryPlanOperationResponse GetUpdateRecoveryPlanUpdateStatus(this IRecoveryPlanOperations operations, string operationStatusLink)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IRecoveryPlanOperations)s).GetUpdateRecoveryPlanUpdateStatusAsync(operationStatusLink);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The Get Operation Status operation returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call Get Operation Status to determine whether the operation
+        /// has succeeded, failed, or is still in progress.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IRecoveryPlanOperations.
+        /// </param>
+        /// <param name='operationStatusLink'>
+        /// Required. Location value returned by the Begin operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static Task<RecoveryPlanOperationResponse> GetUpdateRecoveryPlanUpdateStatusAsync(this IRecoveryPlanOperations operations, string operationStatusLink)
+        {
+            return operations.GetUpdateRecoveryPlanUpdateStatusAsync(operationStatusLink, CancellationToken.None);
         }
         
         /// <summary>
@@ -307,23 +1061,23 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// Reference to the
         /// Microsoft.Azure.Management.SiteRecovery.IRecoveryPlanOperations.
         /// </param>
-        /// <param name='recoveryPlanId'>
-        /// Required. RecoveryPlan ID.
+        /// <param name='name'>
+        /// Required. RecoveryPlan Name.
         /// </param>
-        /// <param name='parameters'>
-        /// Required. RpPlanned Failover Request.
+        /// <param name='input'>
+        /// Required. Input to do planned failover of a recovery plan.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The response model for the Job details object.
+        /// A standard service response for long running operations.
         /// </returns>
-        public static JobResponse RecoveryPlanPlannedFailover(this IRecoveryPlanOperations operations, string recoveryPlanId, RpPlannedFailoverRequest parameters, CustomRequestHeaders customRequestHeaders)
+        public static LongRunningOperationResponse RecoveryPlanPlannedFailover(this IRecoveryPlanOperations operations, string name, RpPlannedFailoverRequest input, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IRecoveryPlanOperations)s).RecoveryPlanPlannedFailoverAsync(recoveryPlanId, parameters, customRequestHeaders);
+                return ((IRecoveryPlanOperations)s).RecoveryPlanPlannedFailoverAsync(name, input, customRequestHeaders);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -335,21 +1089,21 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// Reference to the
         /// Microsoft.Azure.Management.SiteRecovery.IRecoveryPlanOperations.
         /// </param>
-        /// <param name='recoveryPlanId'>
-        /// Required. RecoveryPlan ID.
+        /// <param name='name'>
+        /// Required. RecoveryPlan Name.
         /// </param>
-        /// <param name='parameters'>
-        /// Required. RpPlanned Failover Request.
+        /// <param name='input'>
+        /// Required. Input to do planned failover of a recovery plan.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The response model for the Job details object.
+        /// A standard service response for long running operations.
         /// </returns>
-        public static Task<JobResponse> RecoveryPlanPlannedFailoverAsync(this IRecoveryPlanOperations operations, string recoveryPlanId, RpPlannedFailoverRequest parameters, CustomRequestHeaders customRequestHeaders)
+        public static Task<LongRunningOperationResponse> RecoveryPlanPlannedFailoverAsync(this IRecoveryPlanOperations operations, string name, RpPlannedFailoverRequest input, CustomRequestHeaders customRequestHeaders)
         {
-            return operations.RecoveryPlanPlannedFailoverAsync(recoveryPlanId, parameters, customRequestHeaders, CancellationToken.None);
+            return operations.RecoveryPlanPlannedFailoverAsync(name, input, customRequestHeaders, CancellationToken.None);
         }
         
         /// <summary>
@@ -359,23 +1113,23 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// Reference to the
         /// Microsoft.Azure.Management.SiteRecovery.IRecoveryPlanOperations.
         /// </param>
-        /// <param name='recoveryPlanId'>
-        /// Required. RecoveryPlan ID.
+        /// <param name='name'>
+        /// Required. RecoveryPlan Name.
         /// </param>
-        /// <param name='parameters'>
-        /// Optional.
+        /// <param name='input'>
+        /// Required. Input to do test failover of a recovery plan.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The response model for the Job details object.
+        /// A standard service response for long running operations.
         /// </returns>
-        public static JobResponse RecoveryPlanTestFailover(this IRecoveryPlanOperations operations, string recoveryPlanId, RpTestFailoverRequest parameters, CustomRequestHeaders customRequestHeaders)
+        public static LongRunningOperationResponse RecoveryPlanTestFailover(this IRecoveryPlanOperations operations, string name, RpTestFailoverRequest input, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IRecoveryPlanOperations)s).RecoveryPlanTestFailoverAsync(recoveryPlanId, parameters, customRequestHeaders);
+                return ((IRecoveryPlanOperations)s).RecoveryPlanTestFailoverAsync(name, input, customRequestHeaders);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -387,21 +1141,21 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// Reference to the
         /// Microsoft.Azure.Management.SiteRecovery.IRecoveryPlanOperations.
         /// </param>
-        /// <param name='recoveryPlanId'>
-        /// Required. RecoveryPlan ID.
+        /// <param name='name'>
+        /// Required. RecoveryPlan Name.
         /// </param>
-        /// <param name='parameters'>
-        /// Optional.
+        /// <param name='input'>
+        /// Required. Input to do test failover of a recovery plan.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The response model for the Job details object.
+        /// A standard service response for long running operations.
         /// </returns>
-        public static Task<JobResponse> RecoveryPlanTestFailoverAsync(this IRecoveryPlanOperations operations, string recoveryPlanId, RpTestFailoverRequest parameters, CustomRequestHeaders customRequestHeaders)
+        public static Task<LongRunningOperationResponse> RecoveryPlanTestFailoverAsync(this IRecoveryPlanOperations operations, string name, RpTestFailoverRequest input, CustomRequestHeaders customRequestHeaders)
         {
-            return operations.RecoveryPlanTestFailoverAsync(recoveryPlanId, parameters, customRequestHeaders, CancellationToken.None);
+            return operations.RecoveryPlanTestFailoverAsync(name, input, customRequestHeaders, CancellationToken.None);
         }
         
         /// <summary>
@@ -411,23 +1165,23 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// Reference to the
         /// Microsoft.Azure.Management.SiteRecovery.IRecoveryPlanOperations.
         /// </param>
-        /// <param name='recoveryPlanId'>
-        /// Required. RecoveryPlan ID.
+        /// <param name='name'>
+        /// Required. RecoveryPlan Name.
         /// </param>
-        /// <param name='parameters'>
-        /// Optional.
+        /// <param name='input'>
+        /// Required. Input to do unplanned failover of a recovery plan.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The response model for the Job details object.
+        /// A standard service response for long running operations.
         /// </returns>
-        public static JobResponse RecoveryPlanUnplannedFailover(this IRecoveryPlanOperations operations, string recoveryPlanId, RpUnplannedFailoverRequest parameters, CustomRequestHeaders customRequestHeaders)
+        public static LongRunningOperationResponse RecoveryPlanUnplannedFailover(this IRecoveryPlanOperations operations, string name, RpUnplannedFailoverRequest input, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IRecoveryPlanOperations)s).RecoveryPlanUnplannedFailoverAsync(recoveryPlanId, parameters, customRequestHeaders);
+                return ((IRecoveryPlanOperations)s).RecoveryPlanUnplannedFailoverAsync(name, input, customRequestHeaders);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -439,21 +1193,21 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// Reference to the
         /// Microsoft.Azure.Management.SiteRecovery.IRecoveryPlanOperations.
         /// </param>
-        /// <param name='recoveryPlanId'>
-        /// Required. RecoveryPlan ID.
+        /// <param name='name'>
+        /// Required. RecoveryPlan Name.
         /// </param>
-        /// <param name='parameters'>
-        /// Optional.
+        /// <param name='input'>
+        /// Required. Input to do unplanned failover of a recovery plan.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The response model for the Job details object.
+        /// A standard service response for long running operations.
         /// </returns>
-        public static Task<JobResponse> RecoveryPlanUnplannedFailoverAsync(this IRecoveryPlanOperations operations, string recoveryPlanId, RpUnplannedFailoverRequest parameters, CustomRequestHeaders customRequestHeaders)
+        public static Task<LongRunningOperationResponse> RecoveryPlanUnplannedFailoverAsync(this IRecoveryPlanOperations operations, string name, RpUnplannedFailoverRequest input, CustomRequestHeaders customRequestHeaders)
         {
-            return operations.RecoveryPlanUnplannedFailoverAsync(recoveryPlanId, parameters, customRequestHeaders, CancellationToken.None);
+            return operations.RecoveryPlanUnplannedFailoverAsync(name, input, customRequestHeaders, CancellationToken.None);
         }
         
         /// <summary>
@@ -463,20 +1217,20 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// Reference to the
         /// Microsoft.Azure.Management.SiteRecovery.IRecoveryPlanOperations.
         /// </param>
-        /// <param name='recoveryPlanId'>
-        /// Required. RecoveryPlan ID.
+        /// <param name='name'>
+        /// Required. RecoveryPlan Name.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The response model for the Job details object.
+        /// A standard service response for long running operations.
         /// </returns>
-        public static JobResponse Reprotect(this IRecoveryPlanOperations operations, string recoveryPlanId, CustomRequestHeaders customRequestHeaders)
+        public static LongRunningOperationResponse Reprotect(this IRecoveryPlanOperations operations, string name, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IRecoveryPlanOperations)s).ReprotectAsync(recoveryPlanId, customRequestHeaders);
+                return ((IRecoveryPlanOperations)s).ReprotectAsync(name, customRequestHeaders);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -488,18 +1242,18 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// Reference to the
         /// Microsoft.Azure.Management.SiteRecovery.IRecoveryPlanOperations.
         /// </param>
-        /// <param name='recoveryPlanId'>
-        /// Required. RecoveryPlan ID.
+        /// <param name='name'>
+        /// Required. RecoveryPlan Name.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The response model for the Job details object.
+        /// A standard service response for long running operations.
         /// </returns>
-        public static Task<JobResponse> ReprotectAsync(this IRecoveryPlanOperations operations, string recoveryPlanId, CustomRequestHeaders customRequestHeaders)
+        public static Task<LongRunningOperationResponse> ReprotectAsync(this IRecoveryPlanOperations operations, string name, CustomRequestHeaders customRequestHeaders)
         {
-            return operations.ReprotectAsync(recoveryPlanId, customRequestHeaders, CancellationToken.None);
+            return operations.ReprotectAsync(name, customRequestHeaders, CancellationToken.None);
         }
         
         /// <summary>
@@ -509,20 +1263,20 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// Reference to the
         /// Microsoft.Azure.Management.SiteRecovery.IRecoveryPlanOperations.
         /// </param>
-        /// <param name='parameters'>
+        /// <param name='input'>
         /// Required. Update recovery plan input parameters.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The response model for the Job details object.
+        /// A standard service response for long running operations.
         /// </returns>
-        public static JobResponse UpdateRecoveryPlan(this IRecoveryPlanOperations operations, RecoveryPlanXmlData parameters, CustomRequestHeaders customRequestHeaders)
+        public static LongRunningOperationResponse UpdateRecoveryPlan(this IRecoveryPlanOperations operations, RecoveryPlanXmlData input, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IRecoveryPlanOperations)s).UpdateRecoveryPlanAsync(parameters, customRequestHeaders);
+                return ((IRecoveryPlanOperations)s).UpdateRecoveryPlanAsync(input, customRequestHeaders);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -534,18 +1288,18 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// Reference to the
         /// Microsoft.Azure.Management.SiteRecovery.IRecoveryPlanOperations.
         /// </param>
-        /// <param name='parameters'>
+        /// <param name='input'>
         /// Required. Update recovery plan input parameters.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The response model for the Job details object.
+        /// A standard service response for long running operations.
         /// </returns>
-        public static Task<JobResponse> UpdateRecoveryPlanAsync(this IRecoveryPlanOperations operations, RecoveryPlanXmlData parameters, CustomRequestHeaders customRequestHeaders)
+        public static Task<LongRunningOperationResponse> UpdateRecoveryPlanAsync(this IRecoveryPlanOperations operations, RecoveryPlanXmlData input, CustomRequestHeaders customRequestHeaders)
         {
-            return operations.UpdateRecoveryPlanAsync(parameters, customRequestHeaders, CancellationToken.None);
+            return operations.UpdateRecoveryPlanAsync(input, customRequestHeaders, CancellationToken.None);
         }
     }
 }

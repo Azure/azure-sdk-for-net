@@ -43,16 +43,16 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._associationDetail = value; }
         }
         
-        private bool _canDissociate;
+        private string _associationStatus;
         
         /// <summary>
-        /// Required. the value indicating whether profile can be dissociated
-        /// or not.
+        /// Required. the profile association status. Values are
+        /// Associated/Disassociated
         /// </summary>
-        public bool CanDissociate
+        public string AssociationStatus
         {
-            get { return this._canDissociate; }
-            set { this._canDissociate = value; }
+            get { return this._associationStatus; }
+            set { this._associationStatus = value; }
         }
         
         private string _friendlyName;
@@ -89,15 +89,15 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._replicationProvider = value; }
         }
         
-        private string _replicationProviderSetting;
+        private ProtectionProfileProviderSettingsDetails _replicationProviderSettings;
         
         /// <summary>
         /// Required. the replication provider settings
         /// </summary>
-        public string ReplicationProviderSetting
+        public ProtectionProfileProviderSettingsDetails ReplicationProviderSettings
         {
-            get { return this._replicationProviderSetting; }
-            set { this._replicationProviderSetting = value; }
+            get { return this._replicationProviderSettings; }
+            set { this._replicationProviderSettings = value; }
         }
         
         /// <summary>

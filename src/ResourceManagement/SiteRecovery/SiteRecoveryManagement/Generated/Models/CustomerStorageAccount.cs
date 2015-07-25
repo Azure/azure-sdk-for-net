@@ -20,48 +20,42 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
-using Microsoft.Azure;
-using Microsoft.Azure.Management.SiteRecovery.Models;
 
 namespace Microsoft.Azure.Management.SiteRecovery.Models
 {
     /// <summary>
-    /// The response model for the list recoveryplans operation.
+    /// The definition of customer storage account.
     /// </summary>
-    public partial class RecoveryPlanListResponse : AzureOperationResponse
+    public partial class CustomerStorageAccount
     {
-        private string _nextLink;
+        private string _storageAccountName;
         
         /// <summary>
-        /// Optional. The nextLink value.
+        /// Optional.
         /// </summary>
-        public string NextLink
+        public string StorageAccountName
         {
-            get { return this._nextLink; }
-            set { this._nextLink = value; }
+            get { return this._storageAccountName; }
+            set { this._storageAccountName = value; }
         }
         
-        private IList<RecoveryPlan> _recoveryPlans;
+        private string _subscriptionId;
         
         /// <summary>
-        /// Optional. The list of recoveryplans for the given cloud service and
-        /// resource.
+        /// Optional.
         /// </summary>
-        public IList<RecoveryPlan> RecoveryPlans
+        public string SubscriptionId
         {
-            get { return this._recoveryPlans; }
-            set { this._recoveryPlans = value; }
+            get { return this._subscriptionId; }
+            set { this._subscriptionId = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the RecoveryPlanListResponse class.
+        /// Initializes a new instance of the CustomerStorageAccount class.
         /// </summary>
-        public RecoveryPlanListResponse()
+        public CustomerStorageAccount()
         {
-            this.RecoveryPlans = new LazyList<RecoveryPlan>();
         }
     }
 }

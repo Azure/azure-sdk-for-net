@@ -31,6 +31,104 @@ namespace Microsoft.Azure.Management.SiteRecovery
     public static partial class JobOperationsExtensions
     {
         /// <summary>
+        /// Restart the job .
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IJobOperations.
+        /// </param>
+        /// <param name='jobId'>
+        /// Required. Job ID.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static LongRunningOperationResponse BeginRestarting(this IJobOperations operations, string jobId, CustomRequestHeaders customRequestHeaders)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IJobOperations)s).BeginRestartingAsync(jobId, customRequestHeaders);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Restart the job .
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IJobOperations.
+        /// </param>
+        /// <param name='jobId'>
+        /// Required. Job ID.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static Task<LongRunningOperationResponse> BeginRestartingAsync(this IJobOperations operations, string jobId, CustomRequestHeaders customRequestHeaders)
+        {
+            return operations.BeginRestartingAsync(jobId, customRequestHeaders, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Resume the job .
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IJobOperations.
+        /// </param>
+        /// <param name='jobId'>
+        /// Required. Job ID.
+        /// </param>
+        /// <param name='resumeJobParameters'>
+        /// Optional. Resume job parameters.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static LongRunningOperationResponse BeginResuming(this IJobOperations operations, string jobId, ResumeJobParams resumeJobParameters, CustomRequestHeaders customRequestHeaders)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IJobOperations)s).BeginResumingAsync(jobId, resumeJobParameters, customRequestHeaders);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Resume the job .
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IJobOperations.
+        /// </param>
+        /// <param name='jobId'>
+        /// Required. Job ID.
+        /// </param>
+        /// <param name='resumeJobParameters'>
+        /// Optional. Resume job parameters.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static Task<LongRunningOperationResponse> BeginResumingAsync(this IJobOperations operations, string jobId, ResumeJobParams resumeJobParameters, CustomRequestHeaders customRequestHeaders)
+        {
+            return operations.BeginResumingAsync(jobId, resumeJobParameters, customRequestHeaders, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Get the job details.
         /// </summary>
         /// <param name='operations'>
@@ -74,6 +172,98 @@ namespace Microsoft.Azure.Management.SiteRecovery
         public static Task<JobResponse> GetAsync(this IJobOperations operations, string jobId, CustomRequestHeaders customRequestHeaders)
         {
             return operations.GetAsync(jobId, customRequestHeaders, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The Get Operation Status operation returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call Get Operation Status to determine whether the operation
+        /// has succeeded, failed, or is still in progress.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IJobOperations.
+        /// </param>
+        /// <param name='operationStatusLink'>
+        /// Required. Location value returned by the Begin operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static RestartJobOperationResponse GetRestartStatus(this IJobOperations operations, string operationStatusLink)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IJobOperations)s).GetRestartStatusAsync(operationStatusLink);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The Get Operation Status operation returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call Get Operation Status to determine whether the operation
+        /// has succeeded, failed, or is still in progress.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IJobOperations.
+        /// </param>
+        /// <param name='operationStatusLink'>
+        /// Required. Location value returned by the Begin operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static Task<RestartJobOperationResponse> GetRestartStatusAsync(this IJobOperations operations, string operationStatusLink)
+        {
+            return operations.GetRestartStatusAsync(operationStatusLink, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The Get Operation Status operation returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call Get Operation Status to determine whether the operation
+        /// has succeeded, failed, or is still in progress.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IJobOperations.
+        /// </param>
+        /// <param name='operationStatusLink'>
+        /// Required. Location value returned by the Begin operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static ResumeJobOperationResponse GetResumeStatus(this IJobOperations operations, string operationStatusLink)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IJobOperations)s).GetResumeStatusAsync(operationStatusLink);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The Get Operation Status operation returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call Get Operation Status to determine whether the operation
+        /// has succeeded, failed, or is still in progress.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IJobOperations.
+        /// </param>
+        /// <param name='operationStatusLink'>
+        /// Required. Location value returned by the Begin operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static Task<ResumeJobOperationResponse> GetResumeStatusAsync(this IJobOperations operations, string operationStatusLink)
+        {
+            return operations.GetResumeStatusAsync(operationStatusLink, CancellationToken.None);
         }
         
         /// <summary>
@@ -123,6 +313,52 @@ namespace Microsoft.Azure.Management.SiteRecovery
         }
         
         /// <summary>
+        /// Restart the job .
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IJobOperations.
+        /// </param>
+        /// <param name='jobId'>
+        /// Required. Job ID.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static LongRunningOperationResponse Restart(this IJobOperations operations, string jobId, CustomRequestHeaders customRequestHeaders)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IJobOperations)s).RestartAsync(jobId, customRequestHeaders);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Restart the job .
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IJobOperations.
+        /// </param>
+        /// <param name='jobId'>
+        /// Required. Job ID.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static Task<LongRunningOperationResponse> RestartAsync(this IJobOperations operations, string jobId, CustomRequestHeaders customRequestHeaders)
+        {
+            return operations.RestartAsync(jobId, customRequestHeaders, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Resume the job .
         /// </summary>
         /// <param name='operations'>
@@ -139,9 +375,9 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The response model for the Job details object.
+        /// A standard service response for long running operations.
         /// </returns>
-        public static JobResponse Resume(this IJobOperations operations, string jobId, ResumeJobParams resumeJobParameters, CustomRequestHeaders customRequestHeaders)
+        public static LongRunningOperationResponse Resume(this IJobOperations operations, string jobId, ResumeJobParams resumeJobParameters, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -167,9 +403,9 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The response model for the Job details object.
+        /// A standard service response for long running operations.
         /// </returns>
-        public static Task<JobResponse> ResumeAsync(this IJobOperations operations, string jobId, ResumeJobParams resumeJobParameters, CustomRequestHeaders customRequestHeaders)
+        public static Task<LongRunningOperationResponse> ResumeAsync(this IJobOperations operations, string jobId, ResumeJobParams resumeJobParameters, CustomRequestHeaders customRequestHeaders)
         {
             return operations.ResumeAsync(jobId, resumeJobParameters, customRequestHeaders, CancellationToken.None);
         }

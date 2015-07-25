@@ -21,46 +21,21 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure;
 using Microsoft.Azure.Management.SiteRecovery.Models;
 
 namespace Microsoft.Azure.Management.SiteRecovery.Models
 {
     /// <summary>
-    /// The definition of a Recovery Plan object.
+    /// A standard service response for long running operations.
     /// </summary>
-    public partial class RecoveryPlan : ResourceBaseExtended
+    public partial class UpdateProtectionProfileOperationResponse : CreateProfileOperationResponse
     {
-        private RecoveryPlanProperties _customData;
-        
         /// <summary>
-        /// Optional. Recovery Plan custom data.
+        /// Initializes a new instance of the
+        /// UpdateProtectionProfileOperationResponse class.
         /// </summary>
-        public RecoveryPlanProperties CustomData
+        public UpdateProtectionProfileOperationResponse()
         {
-            get { return this._customData; }
-            set { this._customData = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the RecoveryPlan class.
-        /// </summary>
-        public RecoveryPlan()
-        {
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the RecoveryPlan class with required
-        /// arguments.
-        /// </summary>
-        public RecoveryPlan(string location)
-            : this()
-        {
-            if (location == null)
-            {
-                throw new ArgumentNullException("location");
-            }
-            this.Location = location;
         }
     }
 }

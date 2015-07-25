@@ -40,18 +40,6 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._failoverDirection = value; }
         }
         
-        private bool _primaryAction;
-        
-        /// <summary>
-        /// Required. Value indicating whether primary site actions are
-        /// required or not.
-        /// </summary>
-        public bool PrimaryAction
-        {
-            get { return this._primaryAction; }
-            set { this._primaryAction = value; }
-        }
-        
         private string _replicationProvider;
         
         /// <summary>
@@ -74,6 +62,18 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._replicationProviderSettings = value; }
         }
         
+        private string _sourceSiteOperations;
+        
+        /// <summary>
+        /// Required. Source site operations are requested by the user. Values
+        /// are either Required/NotRequired
+        /// </summary>
+        public string SourceSiteOperations
+        {
+            get { return this._sourceSiteOperations; }
+            set { this._sourceSiteOperations = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the RpUnplannedFailoverRequest class.
         /// </summary>
@@ -85,10 +85,14 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         /// Initializes a new instance of the RpUnplannedFailoverRequest class
         /// with required arguments.
         /// </summary>
-        public RpUnplannedFailoverRequest(bool primaryAction)
+        public RpUnplannedFailoverRequest(string sourceSiteOperations)
             : this()
         {
-            this.PrimaryAction = primaryAction;
+            if (sourceSiteOperations == null)
+            {
+                throw new ArgumentNullException("sourceSiteOperations");
+            }
+            this.SourceSiteOperations = sourceSiteOperations;
         }
     }
 }

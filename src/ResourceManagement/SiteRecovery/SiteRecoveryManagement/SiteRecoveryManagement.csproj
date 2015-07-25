@@ -65,6 +65,8 @@
     <Compile Include="Generated\Models\ResourceExtendedInformation.cs" />
     <Compile Include="Generated\Models\ResourceExtendedInformationArgs.cs" />
     <Compile Include="Generated\Models\ResourceExtendedInformationResponse.cs" />
+    <Compile Include="Generated\Models\RestartJobOperationResponse.cs" />
+    <Compile Include="Generated\Models\ResumeJobOperationResponse.cs" />
     <Compile Include="Generated\Models\ResumeJobParams.cs" />
     <Compile Include="Generated\Models\RpPlannedFailoverRequest.cs" />
     <Compile Include="Generated\Models\RpTestFailoverRequest.cs" />

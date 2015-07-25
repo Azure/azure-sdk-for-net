@@ -20,48 +20,32 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
-using Microsoft.Azure;
 using Microsoft.Azure.Management.SiteRecovery.Models;
 
 namespace Microsoft.Azure.Management.SiteRecovery.Models
 {
     /// <summary>
-    /// The response model for the list recoveryplans operation.
+    /// A standard service response for long running operations.
     /// </summary>
-    public partial class RecoveryPlanListResponse : AzureOperationResponse
+    public partial class RestartJobOperationResponse : LongRunningOperationResponse
     {
-        private string _nextLink;
+        private Job _job;
         
         /// <summary>
-        /// Optional. The nextLink value.
+        /// Optional. The Job object.
         /// </summary>
-        public string NextLink
+        public Job Job
         {
-            get { return this._nextLink; }
-            set { this._nextLink = value; }
-        }
-        
-        private IList<RecoveryPlan> _recoveryPlans;
-        
-        /// <summary>
-        /// Optional. The list of recoveryplans for the given cloud service and
-        /// resource.
-        /// </summary>
-        public IList<RecoveryPlan> RecoveryPlans
-        {
-            get { return this._recoveryPlans; }
-            set { this._recoveryPlans = value; }
+            get { return this._job; }
+            set { this._job = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the RecoveryPlanListResponse class.
+        /// Initializes a new instance of the RestartJobOperationResponse class.
         /// </summary>
-        public RecoveryPlanListResponse()
+        public RestartJobOperationResponse()
         {
-            this.RecoveryPlans = new LazyList<RecoveryPlan>();
         }
     }
 }

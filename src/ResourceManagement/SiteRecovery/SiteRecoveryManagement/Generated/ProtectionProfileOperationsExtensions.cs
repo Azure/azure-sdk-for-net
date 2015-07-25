@@ -47,9 +47,61 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The response model for the Job details object.
+        /// A standard service response for long running operations.
         /// </returns>
-        public static JobResponse BeginAssociating(this IProtectionProfileOperations operations, string name, ProtectionProfileAssociationInput input, CustomRequestHeaders customRequestHeaders)
+        public static LongRunningOperationResponse Associate(this IProtectionProfileOperations operations, string name, ProtectionProfileAssociationInput input, CustomRequestHeaders customRequestHeaders)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IProtectionProfileOperations)s).AssociateAsync(name, input, customRequestHeaders);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Creates a profile
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IProtectionProfileOperations.
+        /// </param>
+        /// <param name='name'>
+        /// Required. Input to associate profile
+        /// </param>
+        /// <param name='input'>
+        /// Required. Input to associate profile
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static Task<LongRunningOperationResponse> AssociateAsync(this IProtectionProfileOperations operations, string name, ProtectionProfileAssociationInput input, CustomRequestHeaders customRequestHeaders)
+        {
+            return operations.AssociateAsync(name, input, customRequestHeaders, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Creates a profile
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IProtectionProfileOperations.
+        /// </param>
+        /// <param name='name'>
+        /// Required. Input to associate profile
+        /// </param>
+        /// <param name='input'>
+        /// Required. Input to associate profile
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static LongRunningOperationResponse BeginAssociating(this IProtectionProfileOperations operations, string name, ProtectionProfileAssociationInput input, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -75,9 +127,9 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The response model for the Job details object.
+        /// A standard service response for long running operations.
         /// </returns>
-        public static Task<JobResponse> BeginAssociatingAsync(this IProtectionProfileOperations operations, string name, ProtectionProfileAssociationInput input, CustomRequestHeaders customRequestHeaders)
+        public static Task<LongRunningOperationResponse> BeginAssociatingAsync(this IProtectionProfileOperations operations, string name, ProtectionProfileAssociationInput input, CustomRequestHeaders customRequestHeaders)
         {
             return operations.BeginAssociatingAsync(name, input, customRequestHeaders, CancellationToken.None);
         }
@@ -227,6 +279,58 @@ namespace Microsoft.Azure.Management.SiteRecovery
         }
         
         /// <summary>
+        /// Update protection profile.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IProtectionProfileOperations.
+        /// </param>
+        /// <param name='input'>
+        /// Required. input.
+        /// </param>
+        /// <param name='protectionProfileId'>
+        /// Required. Profile id.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static LongRunningOperationResponse BeginUpdating(this IProtectionProfileOperations operations, UpdateProtectionProfileInput input, string protectionProfileId, CustomRequestHeaders customRequestHeaders)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IProtectionProfileOperations)s).BeginUpdatingAsync(input, protectionProfileId, customRequestHeaders);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Update protection profile.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IProtectionProfileOperations.
+        /// </param>
+        /// <param name='input'>
+        /// Required. input.
+        /// </param>
+        /// <param name='protectionProfileId'>
+        /// Required. Profile id.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static Task<LongRunningOperationResponse> BeginUpdatingAsync(this IProtectionProfileOperations operations, UpdateProtectionProfileInput input, string protectionProfileId, CustomRequestHeaders customRequestHeaders)
+        {
+            return operations.BeginUpdatingAsync(input, protectionProfileId, customRequestHeaders, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Creates a profile
         /// </summary>
         /// <param name='operations'>
@@ -270,52 +374,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
         public static Task<LongRunningOperationResponse> CreateAsync(this IProtectionProfileOperations operations, CreateProtectionProfileInput input, CustomRequestHeaders customRequestHeaders)
         {
             return operations.CreateAsync(input, customRequestHeaders, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// Enable Protection for the given protection entity.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.SiteRecovery.IProtectionProfileOperations.
-        /// </param>
-        /// <param name='input'>
-        /// Required. input.
-        /// </param>
-        /// <param name='customRequestHeaders'>
-        /// Optional. Request header parameters.
-        /// </param>
-        /// <returns>
-        /// The response model for the Job details object.
-        /// </returns>
-        public static JobResponse CreateAndAssociate(this IProtectionProfileOperations operations, CreateAndAssociateProtectionProfileInput input, CustomRequestHeaders customRequestHeaders)
-        {
-            return Task.Factory.StartNew((object s) => 
-            {
-                return ((IProtectionProfileOperations)s).CreateAndAssociateAsync(input, customRequestHeaders);
-            }
-            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-        }
-        
-        /// <summary>
-        /// Enable Protection for the given protection entity.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.SiteRecovery.IProtectionProfileOperations.
-        /// </param>
-        /// <param name='input'>
-        /// Required. input.
-        /// </param>
-        /// <param name='customRequestHeaders'>
-        /// Optional. Request header parameters.
-        /// </param>
-        /// <returns>
-        /// The response model for the Job details object.
-        /// </returns>
-        public static Task<JobResponse> CreateAndAssociateAsync(this IProtectionProfileOperations operations, CreateAndAssociateProtectionProfileInput input, CustomRequestHeaders customRequestHeaders)
-        {
-            return operations.CreateAndAssociateAsync(input, customRequestHeaders, CancellationToken.None);
         }
         
         /// <summary>
@@ -417,58 +475,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
         }
         
         /// <summary>
-        /// Enable Protection for the given protection entity.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.SiteRecovery.IProtectionProfileOperations.
-        /// </param>
-        /// <param name='protectionProfileId'>
-        /// Required. Protection Profile ID.
-        /// </param>
-        /// <param name='input'>
-        /// Required. input.
-        /// </param>
-        /// <param name='customRequestHeaders'>
-        /// Optional. Request header parameters.
-        /// </param>
-        /// <returns>
-        /// The response model for the Job details object.
-        /// </returns>
-        public static JobResponse DissociateAndDelete(this IProtectionProfileOperations operations, string protectionProfileId, CreateAndAssociateProtectionProfileInput input, CustomRequestHeaders customRequestHeaders)
-        {
-            return Task.Factory.StartNew((object s) => 
-            {
-                return ((IProtectionProfileOperations)s).DissociateAndDeleteAsync(protectionProfileId, input, customRequestHeaders);
-            }
-            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-        }
-        
-        /// <summary>
-        /// Enable Protection for the given protection entity.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.SiteRecovery.IProtectionProfileOperations.
-        /// </param>
-        /// <param name='protectionProfileId'>
-        /// Required. Protection Profile ID.
-        /// </param>
-        /// <param name='input'>
-        /// Required. input.
-        /// </param>
-        /// <param name='customRequestHeaders'>
-        /// Optional. Request header parameters.
-        /// </param>
-        /// <returns>
-        /// The response model for the Job details object.
-        /// </returns>
-        public static Task<JobResponse> DissociateAndDeleteAsync(this IProtectionProfileOperations operations, string protectionProfileId, CreateAndAssociateProtectionProfileInput input, CustomRequestHeaders customRequestHeaders)
-        {
-            return operations.DissociateAndDeleteAsync(protectionProfileId, input, customRequestHeaders, CancellationToken.None);
-        }
-        
-        /// <summary>
         /// Get the protected Profile by Id.
         /// </summary>
         /// <param name='operations'>
@@ -512,6 +518,52 @@ namespace Microsoft.Azure.Management.SiteRecovery
         public static Task<ProtectionProfileResponse> GetAsync(this IProtectionProfileOperations operations, string protectionProfileId, CustomRequestHeaders customRequestHeaders)
         {
             return operations.GetAsync(protectionProfileId, customRequestHeaders, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The Get Operation Status operation returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call Get Operation Status to determine whether the operation
+        /// has succeeded, failed, or is still in progress.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IProtectionProfileOperations.
+        /// </param>
+        /// <param name='operationStatusLink'>
+        /// Required. Location value returned by the Begin operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static AssociateProtectionProfileOperationResponse GetAssociateStatus(this IProtectionProfileOperations operations, string operationStatusLink)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IProtectionProfileOperations)s).GetAssociateStatusAsync(operationStatusLink);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The Get Operation Status operation returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call Get Operation Status to determine whether the operation
+        /// has succeeded, failed, or is still in progress.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IProtectionProfileOperations.
+        /// </param>
+        /// <param name='operationStatusLink'>
+        /// Required. Location value returned by the Begin operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static Task<AssociateProtectionProfileOperationResponse> GetAssociateStatusAsync(this IProtectionProfileOperations operations, string operationStatusLink)
+        {
+            return operations.GetAssociateStatusAsync(operationStatusLink, CancellationToken.None);
         }
         
         /// <summary>
@@ -653,6 +705,52 @@ namespace Microsoft.Azure.Management.SiteRecovery
         }
         
         /// <summary>
+        /// The Get Operation Status operation returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call Get Operation Status to determine whether the operation
+        /// has succeeded, failed, or is still in progress.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IProtectionProfileOperations.
+        /// </param>
+        /// <param name='operationStatusLink'>
+        /// Required. Location value returned by the Begin operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static UpdateProtectionProfileOperationResponse GetUpdateStatus(this IProtectionProfileOperations operations, string operationStatusLink)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IProtectionProfileOperations)s).GetUpdateStatusAsync(operationStatusLink);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The Get Operation Status operation returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call Get Operation Status to determine whether the operation
+        /// has succeeded, failed, or is still in progress.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IProtectionProfileOperations.
+        /// </param>
+        /// <param name='operationStatusLink'>
+        /// Required. Location value returned by the Begin operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static Task<UpdateProtectionProfileOperationResponse> GetUpdateStatusAsync(this IProtectionProfileOperations operations, string operationStatusLink)
+        {
+            return operations.GetUpdateStatusAsync(operationStatusLink, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Get the list of all ProtectionContainers for the given server.
         /// </summary>
         /// <param name='operations'>
@@ -709,9 +807,9 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The response model for the Job details object.
+        /// A standard service response for long running operations.
         /// </returns>
-        public static JobResponse Update(this IProtectionProfileOperations operations, UpdateProtectionProfileInput input, string protectionProfileId, CustomRequestHeaders customRequestHeaders)
+        public static LongRunningOperationResponse Update(this IProtectionProfileOperations operations, UpdateProtectionProfileInput input, string protectionProfileId, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -737,9 +835,9 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
-        /// The response model for the Job details object.
+        /// A standard service response for long running operations.
         /// </returns>
-        public static Task<JobResponse> UpdateAsync(this IProtectionProfileOperations operations, UpdateProtectionProfileInput input, string protectionProfileId, CustomRequestHeaders customRequestHeaders)
+        public static Task<LongRunningOperationResponse> UpdateAsync(this IProtectionProfileOperations operations, UpdateProtectionProfileInput input, string protectionProfileId, CustomRequestHeaders customRequestHeaders)
         {
             return operations.UpdateAsync(input, protectionProfileId, customRequestHeaders, CancellationToken.None);
         }

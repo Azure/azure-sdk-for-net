@@ -119,26 +119,5 @@ namespace SiteRecovery.Tests
         }
 
         #endregion
-
-        ////protected void ValidateResponse(JobResponse response)
-        ////{
-        ////    Assert.NotNull(response.Job);
-        ////    Assert.NotNull(response.Job.ID);
-        ////    Assert.True(response.Job.Errors.Count < 1, "Errors found while doing planned failover operation");
-        ////    Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-        ////}
-
-        ////protected void WaitForJobToComplete(SiteRecoveryManagementClient client, string jobId)
-        ////{
-        ////    var responseJob = client.Jobs.Get(jobId, RequestHeaders);
-        ////    while (responseJob.Job.StateDescription != "Completed")
-        ////    {
-        ////        // Sleep for 1 min
-        ////        System.Threading.Thread.Sleep(60 * 1000);
-        ////        responseJob = client.Jobs.Get(jobId, RequestHeaders);
-        ////    }
-
-        ////    Assert.NotEqual(responseJob.Job.State, "Failed");
-        ////}
     }
 }

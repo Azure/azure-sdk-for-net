@@ -113,7 +113,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
             url = url + "/Servers/";
             url = url + Uri.EscapeDataString(serverId);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-06-10");
+            queryParameters.Add("api-version=2015-08-10");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -219,11 +219,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     propertiesInstance.LastHeartbeat = lastHeartbeatInstance;
                                 }
                                 
-                                JToken connectedValue = propertiesValue["connected"];
-                                if (connectedValue != null && connectedValue.Type != JTokenType.Null)
+                                JToken connectionStatusValue = propertiesValue["connectionStatus"];
+                                if (connectionStatusValue != null && connectionStatusValue.Type != JTokenType.Null)
                                 {
-                                    bool connectedInstance = ((bool)connectedValue);
-                                    propertiesInstance.Connected = connectedInstance;
+                                    string connectionStatusInstance = ((string)connectionStatusValue);
+                                    propertiesInstance.ConnectionStatus = connectionStatusInstance;
                                 }
                                 
                                 JToken friendlyNameValue = propertiesValue["friendlyName"];
@@ -362,7 +362,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
             url = url + Uri.EscapeDataString(this.Client.ResourceName);
             url = url + "/Servers";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-06-10");
+            queryParameters.Add("api-version=2015-08-10");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -473,11 +473,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             propertiesInstance.LastHeartbeat = lastHeartbeatInstance;
                                         }
                                         
-                                        JToken connectedValue = propertiesValue["connected"];
-                                        if (connectedValue != null && connectedValue.Type != JTokenType.Null)
+                                        JToken connectionStatusValue = propertiesValue["connectionStatus"];
+                                        if (connectionStatusValue != null && connectionStatusValue.Type != JTokenType.Null)
                                         {
-                                            bool connectedInstance = ((bool)connectedValue);
-                                            propertiesInstance.Connected = connectedInstance;
+                                            string connectionStatusInstance = ((string)connectionStatusValue);
+                                            propertiesInstance.ConnectionStatus = connectionStatusInstance;
                                         }
                                         
                                         JToken friendlyNameValue = propertiesValue["friendlyName"];

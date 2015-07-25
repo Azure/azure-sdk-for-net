@@ -21,6 +21,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -115,7 +116,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
             url = url + "/ProtectionContainers/";
             url = url + Uri.EscapeDataString(protectionContainerId);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-06-10");
+            queryParameters.Add("api-version=2015-08-10");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -270,18 +271,160 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 propertiesInstance2.ReplicationProvider = replicationProviderInstance;
                                             }
                                             
-                                            JToken replicationProviderSettingValue = propertiesValue2["replicationProviderSetting"];
-                                            if (replicationProviderSettingValue != null && replicationProviderSettingValue.Type != JTokenType.Null)
+                                            JToken replicationProviderSettingsValue = propertiesValue2["replicationProviderSettings"];
+                                            if (replicationProviderSettingsValue != null && replicationProviderSettingsValue.Type != JTokenType.Null)
                                             {
-                                                string replicationProviderSettingInstance = ((string)replicationProviderSettingValue);
-                                                propertiesInstance2.ReplicationProviderSetting = replicationProviderSettingInstance;
+                                                string typeName = ((string)replicationProviderSettingsValue["__type"]);
+                                                if (typeName == "HyperVReplicaProtectionProfileDetails")
+                                                {
+                                                    HyperVReplicaProtectionProfileDetails hyperVReplicaProtectionProfileDetailsInstance = new HyperVReplicaProtectionProfileDetails();
+                                                    
+                                                    JToken recoveryPointsValue = replicationProviderSettingsValue["recoveryPoints"];
+                                                    if (recoveryPointsValue != null && recoveryPointsValue.Type != JTokenType.Null)
+                                                    {
+                                                        int recoveryPointsInstance = ((int)recoveryPointsValue);
+                                                        hyperVReplicaProtectionProfileDetailsInstance.RecoveryPoints = recoveryPointsInstance;
+                                                    }
+                                                    
+                                                    JToken applicationConsistentSnapshotFrequencyInHoursValue = replicationProviderSettingsValue["applicationConsistentSnapshotFrequencyInHours"];
+                                                    if (applicationConsistentSnapshotFrequencyInHoursValue != null && applicationConsistentSnapshotFrequencyInHoursValue.Type != JTokenType.Null)
+                                                    {
+                                                        int applicationConsistentSnapshotFrequencyInHoursInstance = ((int)applicationConsistentSnapshotFrequencyInHoursValue);
+                                                        hyperVReplicaProtectionProfileDetailsInstance.ApplicationConsistentSnapshotFrequencyInHours = applicationConsistentSnapshotFrequencyInHoursInstance;
+                                                    }
+                                                    
+                                                    JToken compressionValue = replicationProviderSettingsValue["compression"];
+                                                    if (compressionValue != null && compressionValue.Type != JTokenType.Null)
+                                                    {
+                                                        string compressionInstance = ((string)compressionValue);
+                                                        hyperVReplicaProtectionProfileDetailsInstance.Compression = compressionInstance;
+                                                    }
+                                                    
+                                                    JToken initialReplicationMethodValue = replicationProviderSettingsValue["initialReplicationMethod"];
+                                                    if (initialReplicationMethodValue != null && initialReplicationMethodValue.Type != JTokenType.Null)
+                                                    {
+                                                        string initialReplicationMethodInstance = ((string)initialReplicationMethodValue);
+                                                        hyperVReplicaProtectionProfileDetailsInstance.InitialReplicationMethod = initialReplicationMethodInstance;
+                                                    }
+                                                    
+                                                    JToken onlineReplicationStartTimeValue = replicationProviderSettingsValue["onlineReplicationStartTime"];
+                                                    if (onlineReplicationStartTimeValue != null && onlineReplicationStartTimeValue.Type != JTokenType.Null)
+                                                    {
+                                                        TimeSpan onlineReplicationStartTimeInstance = TimeSpan.Parse(((string)onlineReplicationStartTimeValue), CultureInfo.InvariantCulture);
+                                                        hyperVReplicaProtectionProfileDetailsInstance.OnlineReplicationStartTime = onlineReplicationStartTimeInstance;
+                                                    }
+                                                    
+                                                    JToken offlineReplicationImportPathValue = replicationProviderSettingsValue["offlineReplicationImportPath"];
+                                                    if (offlineReplicationImportPathValue != null && offlineReplicationImportPathValue.Type != JTokenType.Null)
+                                                    {
+                                                        string offlineReplicationImportPathInstance = ((string)offlineReplicationImportPathValue);
+                                                        hyperVReplicaProtectionProfileDetailsInstance.OfflineReplicationImportPath = offlineReplicationImportPathInstance;
+                                                    }
+                                                    
+                                                    JToken offlineReplicationExportPathValue = replicationProviderSettingsValue["offlineReplicationExportPath"];
+                                                    if (offlineReplicationExportPathValue != null && offlineReplicationExportPathValue.Type != JTokenType.Null)
+                                                    {
+                                                        string offlineReplicationExportPathInstance = ((string)offlineReplicationExportPathValue);
+                                                        hyperVReplicaProtectionProfileDetailsInstance.OfflineReplicationExportPath = offlineReplicationExportPathInstance;
+                                                    }
+                                                    
+                                                    JToken replicationPortValue = replicationProviderSettingsValue["replicationPort"];
+                                                    if (replicationPortValue != null && replicationPortValue.Type != JTokenType.Null)
+                                                    {
+                                                        ushort replicationPortInstance = ((ushort)replicationPortValue);
+                                                        hyperVReplicaProtectionProfileDetailsInstance.ReplicationPort = replicationPortInstance;
+                                                    }
+                                                    
+                                                    JToken allowedAuthenticationTypeValue = replicationProviderSettingsValue["allowedAuthenticationType"];
+                                                    if (allowedAuthenticationTypeValue != null && allowedAuthenticationTypeValue.Type != JTokenType.Null)
+                                                    {
+                                                        ushort allowedAuthenticationTypeInstance = ((ushort)allowedAuthenticationTypeValue);
+                                                        hyperVReplicaProtectionProfileDetailsInstance.AllowedAuthenticationType = allowedAuthenticationTypeInstance;
+                                                    }
+                                                    
+                                                    JToken replicaDeletionOptionValue = replicationProviderSettingsValue["replicaDeletionOption"];
+                                                    if (replicaDeletionOptionValue != null && replicaDeletionOptionValue.Type != JTokenType.Null)
+                                                    {
+                                                        string replicaDeletionOptionInstance = ((string)replicaDeletionOptionValue);
+                                                        hyperVReplicaProtectionProfileDetailsInstance.ReplicaDeletionOption = replicaDeletionOptionInstance;
+                                                    }
+                                                    
+                                                    JToken replicationFrequencyInSecondsValue = replicationProviderSettingsValue["replicationFrequencyInSeconds"];
+                                                    if (replicationFrequencyInSecondsValue != null && replicationFrequencyInSecondsValue.Type != JTokenType.Null)
+                                                    {
+                                                        ushort replicationFrequencyInSecondsInstance = ((ushort)replicationFrequencyInSecondsValue);
+                                                        hyperVReplicaProtectionProfileDetailsInstance.ReplicationFrequencyInSeconds = replicationFrequencyInSecondsInstance;
+                                                    }
+                                                    propertiesInstance2.ReplicationProviderSettings = hyperVReplicaProtectionProfileDetailsInstance;
+                                                }
+                                                if (typeName == "HyperVReplicaAzureProtectionProfileDetails")
+                                                {
+                                                    HyperVReplicaAzureProtectionProfileDetails hyperVReplicaAzureProtectionProfileDetailsInstance = new HyperVReplicaAzureProtectionProfileDetails();
+                                                    
+                                                    JToken recoveryPointHistoryDurationValue = replicationProviderSettingsValue["recoveryPointHistoryDuration"];
+                                                    if (recoveryPointHistoryDurationValue != null && recoveryPointHistoryDurationValue.Type != JTokenType.Null)
+                                                    {
+                                                        int recoveryPointHistoryDurationInstance = ((int)recoveryPointHistoryDurationValue);
+                                                        hyperVReplicaAzureProtectionProfileDetailsInstance.RecoveryPointHistoryDuration = recoveryPointHistoryDurationInstance;
+                                                    }
+                                                    
+                                                    JToken applicationConsistentSnapshotFrequencyInHoursValue2 = replicationProviderSettingsValue["applicationConsistentSnapshotFrequencyInHours"];
+                                                    if (applicationConsistentSnapshotFrequencyInHoursValue2 != null && applicationConsistentSnapshotFrequencyInHoursValue2.Type != JTokenType.Null)
+                                                    {
+                                                        int applicationConsistentSnapshotFrequencyInHoursInstance2 = ((int)applicationConsistentSnapshotFrequencyInHoursValue2);
+                                                        hyperVReplicaAzureProtectionProfileDetailsInstance.ApplicationConsistentSnapshotFrequencyInHours = applicationConsistentSnapshotFrequencyInHoursInstance2;
+                                                    }
+                                                    
+                                                    JToken replicationIntervalValue = replicationProviderSettingsValue["replicationInterval"];
+                                                    if (replicationIntervalValue != null && replicationIntervalValue.Type != JTokenType.Null)
+                                                    {
+                                                        int replicationIntervalInstance = ((int)replicationIntervalValue);
+                                                        hyperVReplicaAzureProtectionProfileDetailsInstance.ReplicationInterval = replicationIntervalInstance;
+                                                    }
+                                                    
+                                                    JToken onlineReplicationStartTimeValue2 = replicationProviderSettingsValue["onlineReplicationStartTime"];
+                                                    if (onlineReplicationStartTimeValue2 != null && onlineReplicationStartTimeValue2.Type != JTokenType.Null)
+                                                    {
+                                                        TimeSpan onlineReplicationStartTimeInstance2 = TimeSpan.Parse(((string)onlineReplicationStartTimeValue2), CultureInfo.InvariantCulture);
+                                                        hyperVReplicaAzureProtectionProfileDetailsInstance.OnlineReplicationStartTime = onlineReplicationStartTimeInstance2;
+                                                    }
+                                                    
+                                                    JToken encryptionValue = replicationProviderSettingsValue["encryption"];
+                                                    if (encryptionValue != null && encryptionValue.Type != JTokenType.Null)
+                                                    {
+                                                        string encryptionInstance = ((string)encryptionValue);
+                                                        hyperVReplicaAzureProtectionProfileDetailsInstance.Encryption = encryptionInstance;
+                                                    }
+                                                    
+                                                    JToken activeStorageAccountValue = replicationProviderSettingsValue["activeStorageAccount"];
+                                                    if (activeStorageAccountValue != null && activeStorageAccountValue.Type != JTokenType.Null)
+                                                    {
+                                                        CustomerStorageAccount activeStorageAccountInstance = new CustomerStorageAccount();
+                                                        hyperVReplicaAzureProtectionProfileDetailsInstance.ActiveStorageAccount = activeStorageAccountInstance;
+                                                        
+                                                        JToken storageAccountNameValue = activeStorageAccountValue["storageAccountName"];
+                                                        if (storageAccountNameValue != null && storageAccountNameValue.Type != JTokenType.Null)
+                                                        {
+                                                            string storageAccountNameInstance = ((string)storageAccountNameValue);
+                                                            activeStorageAccountInstance.StorageAccountName = storageAccountNameInstance;
+                                                        }
+                                                        
+                                                        JToken subscriptionIdValue = activeStorageAccountValue["subscriptionId"];
+                                                        if (subscriptionIdValue != null && subscriptionIdValue.Type != JTokenType.Null)
+                                                        {
+                                                            string subscriptionIdInstance = ((string)subscriptionIdValue);
+                                                            activeStorageAccountInstance.SubscriptionId = subscriptionIdInstance;
+                                                        }
+                                                    }
+                                                    propertiesInstance2.ReplicationProviderSettings = hyperVReplicaAzureProtectionProfileDetailsInstance;
+                                                }
                                             }
                                             
-                                            JToken canDissociateValue = propertiesValue2["canDissociate"];
-                                            if (canDissociateValue != null && canDissociateValue.Type != JTokenType.Null)
+                                            JToken associationStatusValue = propertiesValue2["associationStatus"];
+                                            if (associationStatusValue != null && associationStatusValue.Type != JTokenType.Null)
                                             {
-                                                bool canDissociateInstance = ((bool)canDissociateValue);
-                                                propertiesInstance2.CanDissociate = canDissociateInstance;
+                                                string associationStatusInstance = ((string)associationStatusValue);
+                                                propertiesInstance2.AssociationStatus = associationStatusInstance;
                                             }
                                             
                                             JToken associationDetailArray = propertiesValue2["associationDetail"];
@@ -306,11 +449,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                         protectionProfileAssociationDetailsInstance.RecoveryProtectionContainerId = recoveryProtectionContainerIdInstance;
                                                     }
                                                     
-                                                    JToken associationStatusValue = associationDetailValue["associationStatus"];
-                                                    if (associationStatusValue != null && associationStatusValue.Type != JTokenType.Null)
+                                                    JToken associationStatusValue2 = associationDetailValue["associationStatus"];
+                                                    if (associationStatusValue2 != null && associationStatusValue2.Type != JTokenType.Null)
                                                     {
-                                                        string associationStatusInstance = ((string)associationStatusValue);
-                                                        protectionProfileAssociationDetailsInstance.AssociationStatus = associationStatusInstance;
+                                                        string associationStatusInstance2 = ((string)associationStatusValue2);
+                                                        protectionProfileAssociationDetailsInstance.AssociationStatus = associationStatusInstance2;
                                                     }
                                                 }
                                             }
@@ -472,7 +615,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
             url = url + Uri.EscapeDataString(this.Client.ResourceName);
             url = url + "/ProtectionContainers";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-06-10");
+            queryParameters.Add("api-version=2015-08-10");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -632,18 +775,160 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                         propertiesInstance2.ReplicationProvider = replicationProviderInstance;
                                                     }
                                                     
-                                                    JToken replicationProviderSettingValue = propertiesValue2["replicationProviderSetting"];
-                                                    if (replicationProviderSettingValue != null && replicationProviderSettingValue.Type != JTokenType.Null)
+                                                    JToken replicationProviderSettingsValue = propertiesValue2["replicationProviderSettings"];
+                                                    if (replicationProviderSettingsValue != null && replicationProviderSettingsValue.Type != JTokenType.Null)
                                                     {
-                                                        string replicationProviderSettingInstance = ((string)replicationProviderSettingValue);
-                                                        propertiesInstance2.ReplicationProviderSetting = replicationProviderSettingInstance;
+                                                        string typeName = ((string)replicationProviderSettingsValue["__type"]);
+                                                        if (typeName == "HyperVReplicaProtectionProfileDetails")
+                                                        {
+                                                            HyperVReplicaProtectionProfileDetails hyperVReplicaProtectionProfileDetailsInstance = new HyperVReplicaProtectionProfileDetails();
+                                                            
+                                                            JToken recoveryPointsValue = replicationProviderSettingsValue["recoveryPoints"];
+                                                            if (recoveryPointsValue != null && recoveryPointsValue.Type != JTokenType.Null)
+                                                            {
+                                                                int recoveryPointsInstance = ((int)recoveryPointsValue);
+                                                                hyperVReplicaProtectionProfileDetailsInstance.RecoveryPoints = recoveryPointsInstance;
+                                                            }
+                                                            
+                                                            JToken applicationConsistentSnapshotFrequencyInHoursValue = replicationProviderSettingsValue["applicationConsistentSnapshotFrequencyInHours"];
+                                                            if (applicationConsistentSnapshotFrequencyInHoursValue != null && applicationConsistentSnapshotFrequencyInHoursValue.Type != JTokenType.Null)
+                                                            {
+                                                                int applicationConsistentSnapshotFrequencyInHoursInstance = ((int)applicationConsistentSnapshotFrequencyInHoursValue);
+                                                                hyperVReplicaProtectionProfileDetailsInstance.ApplicationConsistentSnapshotFrequencyInHours = applicationConsistentSnapshotFrequencyInHoursInstance;
+                                                            }
+                                                            
+                                                            JToken compressionValue = replicationProviderSettingsValue["compression"];
+                                                            if (compressionValue != null && compressionValue.Type != JTokenType.Null)
+                                                            {
+                                                                string compressionInstance = ((string)compressionValue);
+                                                                hyperVReplicaProtectionProfileDetailsInstance.Compression = compressionInstance;
+                                                            }
+                                                            
+                                                            JToken initialReplicationMethodValue = replicationProviderSettingsValue["initialReplicationMethod"];
+                                                            if (initialReplicationMethodValue != null && initialReplicationMethodValue.Type != JTokenType.Null)
+                                                            {
+                                                                string initialReplicationMethodInstance = ((string)initialReplicationMethodValue);
+                                                                hyperVReplicaProtectionProfileDetailsInstance.InitialReplicationMethod = initialReplicationMethodInstance;
+                                                            }
+                                                            
+                                                            JToken onlineReplicationStartTimeValue = replicationProviderSettingsValue["onlineReplicationStartTime"];
+                                                            if (onlineReplicationStartTimeValue != null && onlineReplicationStartTimeValue.Type != JTokenType.Null)
+                                                            {
+                                                                TimeSpan onlineReplicationStartTimeInstance = TimeSpan.Parse(((string)onlineReplicationStartTimeValue), CultureInfo.InvariantCulture);
+                                                                hyperVReplicaProtectionProfileDetailsInstance.OnlineReplicationStartTime = onlineReplicationStartTimeInstance;
+                                                            }
+                                                            
+                                                            JToken offlineReplicationImportPathValue = replicationProviderSettingsValue["offlineReplicationImportPath"];
+                                                            if (offlineReplicationImportPathValue != null && offlineReplicationImportPathValue.Type != JTokenType.Null)
+                                                            {
+                                                                string offlineReplicationImportPathInstance = ((string)offlineReplicationImportPathValue);
+                                                                hyperVReplicaProtectionProfileDetailsInstance.OfflineReplicationImportPath = offlineReplicationImportPathInstance;
+                                                            }
+                                                            
+                                                            JToken offlineReplicationExportPathValue = replicationProviderSettingsValue["offlineReplicationExportPath"];
+                                                            if (offlineReplicationExportPathValue != null && offlineReplicationExportPathValue.Type != JTokenType.Null)
+                                                            {
+                                                                string offlineReplicationExportPathInstance = ((string)offlineReplicationExportPathValue);
+                                                                hyperVReplicaProtectionProfileDetailsInstance.OfflineReplicationExportPath = offlineReplicationExportPathInstance;
+                                                            }
+                                                            
+                                                            JToken replicationPortValue = replicationProviderSettingsValue["replicationPort"];
+                                                            if (replicationPortValue != null && replicationPortValue.Type != JTokenType.Null)
+                                                            {
+                                                                ushort replicationPortInstance = ((ushort)replicationPortValue);
+                                                                hyperVReplicaProtectionProfileDetailsInstance.ReplicationPort = replicationPortInstance;
+                                                            }
+                                                            
+                                                            JToken allowedAuthenticationTypeValue = replicationProviderSettingsValue["allowedAuthenticationType"];
+                                                            if (allowedAuthenticationTypeValue != null && allowedAuthenticationTypeValue.Type != JTokenType.Null)
+                                                            {
+                                                                ushort allowedAuthenticationTypeInstance = ((ushort)allowedAuthenticationTypeValue);
+                                                                hyperVReplicaProtectionProfileDetailsInstance.AllowedAuthenticationType = allowedAuthenticationTypeInstance;
+                                                            }
+                                                            
+                                                            JToken replicaDeletionOptionValue = replicationProviderSettingsValue["replicaDeletionOption"];
+                                                            if (replicaDeletionOptionValue != null && replicaDeletionOptionValue.Type != JTokenType.Null)
+                                                            {
+                                                                string replicaDeletionOptionInstance = ((string)replicaDeletionOptionValue);
+                                                                hyperVReplicaProtectionProfileDetailsInstance.ReplicaDeletionOption = replicaDeletionOptionInstance;
+                                                            }
+                                                            
+                                                            JToken replicationFrequencyInSecondsValue = replicationProviderSettingsValue["replicationFrequencyInSeconds"];
+                                                            if (replicationFrequencyInSecondsValue != null && replicationFrequencyInSecondsValue.Type != JTokenType.Null)
+                                                            {
+                                                                ushort replicationFrequencyInSecondsInstance = ((ushort)replicationFrequencyInSecondsValue);
+                                                                hyperVReplicaProtectionProfileDetailsInstance.ReplicationFrequencyInSeconds = replicationFrequencyInSecondsInstance;
+                                                            }
+                                                            propertiesInstance2.ReplicationProviderSettings = hyperVReplicaProtectionProfileDetailsInstance;
+                                                        }
+                                                        if (typeName == "HyperVReplicaAzureProtectionProfileDetails")
+                                                        {
+                                                            HyperVReplicaAzureProtectionProfileDetails hyperVReplicaAzureProtectionProfileDetailsInstance = new HyperVReplicaAzureProtectionProfileDetails();
+                                                            
+                                                            JToken recoveryPointHistoryDurationValue = replicationProviderSettingsValue["recoveryPointHistoryDuration"];
+                                                            if (recoveryPointHistoryDurationValue != null && recoveryPointHistoryDurationValue.Type != JTokenType.Null)
+                                                            {
+                                                                int recoveryPointHistoryDurationInstance = ((int)recoveryPointHistoryDurationValue);
+                                                                hyperVReplicaAzureProtectionProfileDetailsInstance.RecoveryPointHistoryDuration = recoveryPointHistoryDurationInstance;
+                                                            }
+                                                            
+                                                            JToken applicationConsistentSnapshotFrequencyInHoursValue2 = replicationProviderSettingsValue["applicationConsistentSnapshotFrequencyInHours"];
+                                                            if (applicationConsistentSnapshotFrequencyInHoursValue2 != null && applicationConsistentSnapshotFrequencyInHoursValue2.Type != JTokenType.Null)
+                                                            {
+                                                                int applicationConsistentSnapshotFrequencyInHoursInstance2 = ((int)applicationConsistentSnapshotFrequencyInHoursValue2);
+                                                                hyperVReplicaAzureProtectionProfileDetailsInstance.ApplicationConsistentSnapshotFrequencyInHours = applicationConsistentSnapshotFrequencyInHoursInstance2;
+                                                            }
+                                                            
+                                                            JToken replicationIntervalValue = replicationProviderSettingsValue["replicationInterval"];
+                                                            if (replicationIntervalValue != null && replicationIntervalValue.Type != JTokenType.Null)
+                                                            {
+                                                                int replicationIntervalInstance = ((int)replicationIntervalValue);
+                                                                hyperVReplicaAzureProtectionProfileDetailsInstance.ReplicationInterval = replicationIntervalInstance;
+                                                            }
+                                                            
+                                                            JToken onlineReplicationStartTimeValue2 = replicationProviderSettingsValue["onlineReplicationStartTime"];
+                                                            if (onlineReplicationStartTimeValue2 != null && onlineReplicationStartTimeValue2.Type != JTokenType.Null)
+                                                            {
+                                                                TimeSpan onlineReplicationStartTimeInstance2 = TimeSpan.Parse(((string)onlineReplicationStartTimeValue2), CultureInfo.InvariantCulture);
+                                                                hyperVReplicaAzureProtectionProfileDetailsInstance.OnlineReplicationStartTime = onlineReplicationStartTimeInstance2;
+                                                            }
+                                                            
+                                                            JToken encryptionValue = replicationProviderSettingsValue["encryption"];
+                                                            if (encryptionValue != null && encryptionValue.Type != JTokenType.Null)
+                                                            {
+                                                                string encryptionInstance = ((string)encryptionValue);
+                                                                hyperVReplicaAzureProtectionProfileDetailsInstance.Encryption = encryptionInstance;
+                                                            }
+                                                            
+                                                            JToken activeStorageAccountValue = replicationProviderSettingsValue["activeStorageAccount"];
+                                                            if (activeStorageAccountValue != null && activeStorageAccountValue.Type != JTokenType.Null)
+                                                            {
+                                                                CustomerStorageAccount activeStorageAccountInstance = new CustomerStorageAccount();
+                                                                hyperVReplicaAzureProtectionProfileDetailsInstance.ActiveStorageAccount = activeStorageAccountInstance;
+                                                                
+                                                                JToken storageAccountNameValue = activeStorageAccountValue["storageAccountName"];
+                                                                if (storageAccountNameValue != null && storageAccountNameValue.Type != JTokenType.Null)
+                                                                {
+                                                                    string storageAccountNameInstance = ((string)storageAccountNameValue);
+                                                                    activeStorageAccountInstance.StorageAccountName = storageAccountNameInstance;
+                                                                }
+                                                                
+                                                                JToken subscriptionIdValue = activeStorageAccountValue["subscriptionId"];
+                                                                if (subscriptionIdValue != null && subscriptionIdValue.Type != JTokenType.Null)
+                                                                {
+                                                                    string subscriptionIdInstance = ((string)subscriptionIdValue);
+                                                                    activeStorageAccountInstance.SubscriptionId = subscriptionIdInstance;
+                                                                }
+                                                            }
+                                                            propertiesInstance2.ReplicationProviderSettings = hyperVReplicaAzureProtectionProfileDetailsInstance;
+                                                        }
                                                     }
                                                     
-                                                    JToken canDissociateValue = propertiesValue2["canDissociate"];
-                                                    if (canDissociateValue != null && canDissociateValue.Type != JTokenType.Null)
+                                                    JToken associationStatusValue = propertiesValue2["associationStatus"];
+                                                    if (associationStatusValue != null && associationStatusValue.Type != JTokenType.Null)
                                                     {
-                                                        bool canDissociateInstance = ((bool)canDissociateValue);
-                                                        propertiesInstance2.CanDissociate = canDissociateInstance;
+                                                        string associationStatusInstance = ((string)associationStatusValue);
+                                                        propertiesInstance2.AssociationStatus = associationStatusInstance;
                                                     }
                                                     
                                                     JToken associationDetailArray = propertiesValue2["associationDetail"];
@@ -668,11 +953,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                                 protectionProfileAssociationDetailsInstance.RecoveryProtectionContainerId = recoveryProtectionContainerIdInstance;
                                                             }
                                                             
-                                                            JToken associationStatusValue = associationDetailValue["associationStatus"];
-                                                            if (associationStatusValue != null && associationStatusValue.Type != JTokenType.Null)
+                                                            JToken associationStatusValue2 = associationDetailValue["associationStatus"];
+                                                            if (associationStatusValue2 != null && associationStatusValue2.Type != JTokenType.Null)
                                                             {
-                                                                string associationStatusInstance = ((string)associationStatusValue);
-                                                                protectionProfileAssociationDetailsInstance.AssociationStatus = associationStatusInstance;
+                                                                string associationStatusInstance2 = ((string)associationStatusValue2);
+                                                                protectionProfileAssociationDetailsInstance.AssociationStatus = associationStatusInstance2;
                                                             }
                                                         }
                                                     }
