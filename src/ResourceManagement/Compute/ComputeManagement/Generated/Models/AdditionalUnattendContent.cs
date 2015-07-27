@@ -5,9 +5,13 @@ namespace Microsoft.Azure.Management.Compute.Models
     using Newtonsoft.Json;
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
-    using Microsoft.Azure;
+    using Microsoft.Rest.Azure;
 
     /// <summary>
+    /// Gets or sets additional XML formatted information that can be included
+    /// in the Unattend.xml file, which is used by Windows Setup. Contents
+    /// are defined by setting name, component name, and the pass in which
+    /// the content is a applied.
     /// </summary>
     public partial class AdditionalUnattendContent
     {

@@ -5,6 +5,7 @@ using Microsoft.Azure.Management.Network;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Test;
 using ResourceGroups.Tests;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
 namespace Networks.Tests.Helpers
 {
@@ -18,14 +19,7 @@ namespace Networks.Tests.Helpers
         public static NetworkResourceProviderClient GetNetworkResourceProviderClient(RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
-            var env = new CSMTestEnvironmentFactory();
-            var client = TestBase.GetServiceClient<NetworkResourceProviderClient>(env, handler);
-            client.SubscriptionId = env.GetTestEnvironment().SubscriptionId;
-            if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == null ||
-                Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Playback")
-            {
-                client.LongRunningOperationRetryTimeout = 0;
-            }
+            var client = TestBase.GetServiceClient<NetworkResourceProviderClient>(handler);
             return client;
         }
 

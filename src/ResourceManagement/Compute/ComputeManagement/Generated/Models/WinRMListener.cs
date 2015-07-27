@@ -5,9 +5,10 @@ namespace Microsoft.Azure.Management.Compute.Models
     using Newtonsoft.Json;
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
-    using Microsoft.Azure;
+    using Microsoft.Rest.Azure;
 
     /// <summary>
+    /// Describes Protocol and thumbprint of Windows Remote Management listener
     /// </summary>
     public partial class WinRMListener
     {

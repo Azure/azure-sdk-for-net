@@ -17,13 +17,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using Microsoft.Azure;
+using Microsoft.Rest.Azure;
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
-using Microsoft.Azure.Test;
 using Xunit;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
 namespace Compute.Tests
 {
@@ -33,7 +33,7 @@ namespace Compute.Tests
         ComputeManagementClient computeClient;
         ResourceManagementClient resourcesClient;
 
-        ResourceGroupExtended resourceGroup;
+        ResourceGroup resourceGroup;
 
         string subId;
         string location;
@@ -58,10 +58,8 @@ namespace Compute.Tests
         [Fact(Skip = "TODO: AutoRest")]
         public void TestOperations()
         {
-            using (var context = UndoContext.Current)
+            using (MockContext context = MockContext.Start())
             {
-                context.Start();
-
                 Initialize();
 
                 try

@@ -18,8 +18,8 @@ using System.Linq;
 using System.Net;
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
-using Microsoft.Azure.Test;
 using Xunit;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
 namespace Compute.Tests
 {
@@ -30,10 +30,10 @@ namespace Compute.Tests
         [Fact]
         public void TestVMImageGet()
         {
-            using (var context = UndoContext.Current)
+            using (MockContext context = MockContext.Start())
             {
-                context.Start();
-                ComputeManagementClient _pirClient = ComputeManagementTestUtilities.GetComputeManagementClient();
+                ComputeManagementClient _pirClient = ComputeManagementTestUtilities.GetComputeManagementClient(
+                    new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
                 var vmimage = _pirClient.VirtualMachineImages.Get(
                     ComputeManagementTestUtilities.DefaultLocation,
@@ -62,10 +62,10 @@ namespace Compute.Tests
         [Fact]
         public void TestVMImageListNoFilter()
         {
-            using (var context = UndoContext.Current)
+            using (MockContext context = MockContext.Start())
             {
-                context.Start();
-                ComputeManagementClient _pirClient = ComputeManagementTestUtilities.GetComputeManagementClient();
+                ComputeManagementClient _pirClient = ComputeManagementTestUtilities.GetComputeManagementClient(
+                    new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
                 var vmimages = _pirClient.VirtualMachineImages.List(
                     ComputeManagementTestUtilities.DefaultLocation, 
@@ -82,10 +82,10 @@ namespace Compute.Tests
         [Fact(Skip = "TODO: AutoRest")]
         public void TestVMImageListFilters()
         {
-            using (var context = UndoContext.Current)
+            using (MockContext context = MockContext.Start())
             {
-                context.Start();
-                ComputeManagementClient _pirClient = ComputeManagementTestUtilities.GetComputeManagementClient();
+                ComputeManagementClient _pirClient = ComputeManagementTestUtilities.GetComputeManagementClient(
+                    new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
                 // Filter: top - Negative Test
                 var vmimages = _pirClient.VirtualMachineImages.List(
@@ -167,10 +167,11 @@ namespace Compute.Tests
         [Fact]
         public void TestVMImageListPublishers()
         {
-            using (var context = UndoContext.Current)
+            using (MockContext context = MockContext.Start())
             {
-                context.Start();
-                ComputeManagementClient _pirClient = ComputeManagementTestUtilities.GetComputeManagementClient();
+
+                ComputeManagementClient _pirClient = ComputeManagementTestUtilities.GetComputeManagementClient(
+                    new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
                 var publishers = _pirClient.VirtualMachineImages.ListPublishers(
                     ComputeManagementTestUtilities.DefaultLocation);
@@ -183,10 +184,10 @@ namespace Compute.Tests
         [Fact]
         public void TestVMImageListOffers()
         {
-            using (var context = UndoContext.Current)
+            using (MockContext context = MockContext.Start())
             {
-                context.Start();
-                ComputeManagementClient _pirClient = ComputeManagementTestUtilities.GetComputeManagementClient();
+                ComputeManagementClient _pirClient = ComputeManagementTestUtilities.GetComputeManagementClient(
+                    new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
                 var offers = _pirClient.VirtualMachineImages.ListOffers(
                     ComputeManagementTestUtilities.DefaultLocation,
@@ -200,10 +201,11 @@ namespace Compute.Tests
         [Fact]
         public void TestVMImageListSkus()
         {
-            using (var context = UndoContext.Current)
+            using (MockContext context = MockContext.Start())
             {
-                context.Start();
-                ComputeManagementClient _pirClient = ComputeManagementTestUtilities.GetComputeManagementClient();
+
+                ComputeManagementClient _pirClient = ComputeManagementTestUtilities.GetComputeManagementClient(
+                    new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
                 var skus = _pirClient.VirtualMachineImages.ListSkus(
                     ComputeManagementTestUtilities.DefaultLocation,

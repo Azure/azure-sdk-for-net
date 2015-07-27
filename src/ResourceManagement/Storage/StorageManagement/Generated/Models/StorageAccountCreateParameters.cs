@@ -5,9 +5,10 @@ namespace Microsoft.Azure.Management.Storage.Models
     using Newtonsoft.Json;
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
-    using Microsoft.Azure;
+    using Microsoft.Rest.Azure;
 
     /// <summary>
+    /// The parameters to provide for the account.
     /// </summary>
     public partial class StorageAccountCreateParameters : Resource
     {

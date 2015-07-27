@@ -88,6 +88,10 @@ namespace Microsoft.Azure.Common.Authentication
                 }
                 return null;
             }
+            catch 
+            {
+                // we could be running in an environment that does not have credentials store
+            }
             finally
             {
                 if (pCredential != IntPtr.Zero)
@@ -95,6 +99,8 @@ namespace Microsoft.Azure.Common.Authentication
                     CredStore.NativeMethods.CredFree(pCredential);
                 }   
             }
+
+            return null;
         }
 
 

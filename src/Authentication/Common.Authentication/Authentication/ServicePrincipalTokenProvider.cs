@@ -19,6 +19,7 @@ using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using System;
 using System.Collections.Generic;
 using System.Security;
+using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Common.Authentication
 {
@@ -33,14 +34,18 @@ namespace Microsoft.Azure.Common.Authentication
             {
                 throw new ArgumentException(string.Format(Resources.InvalidCredentialType, "User"), "credentialType");
             }
-            return new ServicePrincipalAccessToken(config, AcquireToken(config, userId, password), this, userId);
+            return new ServicePrincipalAccessToken(
+                config, 
+                AcquireToken(config, userId, password).ConfigureAwait(false).GetAwaiter().GetResult(), 
+                this, 
+                userId);
         }
 
-        private AuthenticationResult AcquireToken(AdalConfiguration config, string appId, SecureString appKey)
+        private async Task<AuthenticationResult> AcquireToken(AdalConfiguration config, string appId, SecureString appKey)
         {
             if (appKey == null)
             {
-                return Renew(config, appId);
+                return await Renew(config, appId);
             }
 
             StoreAppKey(appId, config.AdDomain, appKey);
@@ -48,21 +53,22 @@ namespace Microsoft.Azure.Common.Authentication
             string authority = config.AdEndpoint + config.AdDomain;
             var context = new AuthenticationContext(authority, config.ValidateAuthority,
                 AzureSession.TokenCache);
-            var credential = new ClientCredential(appId, appKey);
-            return context.AcquireToken("https://management.core.windows.net/", credential);
+            var credential = new ClientCredential(appId, UserTokenProvider.ConvertToString(appKey));
+            return await context.AcquireTokenAsync(config.ResourceClientUri, credential);
         }
 
-        private AuthenticationResult Renew(AdalConfiguration config, string appId)
+        private async Task<AuthenticationResult> Renew(AdalConfiguration config, string appId)
         {
             TracingAdapter.Information(Resources.SPNRenewTokenTrace, appId, config.AdDomain, config.AdEndpoint, 
                 config.ClientId, config.ClientRedirectUri);
-           using (SecureString appKey = LoadAppKey(appId, config.AdDomain))
+
+            using (SecureString appKey = LoadAppKey(appId, config.AdDomain))
             {
                 if (appKey == null)
                 {
                     throw new KeyNotFoundException(string.Format(Resources.ServiceKeyNotFound, appId));
                 }
-                return AcquireToken(config, appId, appKey);
+                return await AcquireToken(config, appId, appKey);
             }
         }
 
@@ -96,7 +102,7 @@ namespace Microsoft.Azure.Common.Authentication
             {
                 if (IsExpired)
                 {
-                    AuthResult = tokenProvider.Renew(Configuration, appId);
+                    AuthResult = tokenProvider.Renew(Configuration, appId).ConfigureAwait(false).GetAwaiter().GetResult();
                 }
 
                 authTokenSetter(AuthResult.AccessTokenType, AuthResult.AccessToken);

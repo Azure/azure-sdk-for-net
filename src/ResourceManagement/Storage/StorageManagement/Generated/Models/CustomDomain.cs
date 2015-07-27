@@ -5,9 +5,11 @@ namespace Microsoft.Azure.Management.Storage.Models
     using Newtonsoft.Json;
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
-    using Microsoft.Azure;
+    using Microsoft.Rest.Azure;
 
     /// <summary>
+    /// The custom domain assigned to this storage account. This can be set
+    /// via Update.
     /// </summary>
     public partial class CustomDomain
     {

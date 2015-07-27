@@ -90,5 +90,16 @@ namespace Microsoft.WindowsAzure.Commands.Common.Test.Mocks
                 throw new NotImplementedException();
             }
         }
+
+        public TClient CreateArmClient<TClient>(AzureContext context, AzureEnvironment.Endpoint endpoint) where TClient : Rest.ServiceClient<TClient>
+        {
+            var creds = AzureSession.AuthenticationFactory.GetServiceClientCredentials(context);
+            return CreateCustomArmClient<TClient>(creds, context.Environment.GetEndpointAsUri(endpoint));
+        }
+
+        public TClient CreateCustomArmClient<TClient>(params object[] parameters) where TClient : Rest.ServiceClient<TClient>
+        {
+            return ManagementClients.FirstOrDefault(o => o is TClient) as TClient;
+        }
     }
 }

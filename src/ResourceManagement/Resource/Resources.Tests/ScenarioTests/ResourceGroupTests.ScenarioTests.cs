@@ -17,13 +17,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using Microsoft.Azure;
+using Microsoft.Rest.Azure;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
 using Microsoft.Azure.Test;
-using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.TransientFaultHandling;
 using Xunit;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using Newtonsoft.Json.Linq;
 
 namespace ResourceGroups.Tests
 {
@@ -35,54 +36,48 @@ namespace ResourceGroups.Tests
         {
             handler.IsPassThrough = true;
             var client = this.GetResourceManagementClientWithHandler(handler);
-           
-            if (HttpMockServer.Mode == HttpRecorderMode.Playback)
-            {
-                client.LongRunningOperationRetryTimeout = 0;
-            }
-
             return client;
         }
 
         [Fact]
         public void DeleteResourceGroupRemovesGroupResources()
         {
-            TestUtilities.StartTest();
-            var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Created };
+            using (MockContext context = MockContext.Start())
+            {
+                var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Created };
 
-            var client = GetResourceManagementClient(handler);
-            string location = ResourcesManagementTestUtilities.GetResourceLocation(client, "Microsoft.Web/sites");
-            var resourceGroupName = TestUtilities.GenerateName("csmrg");
-            var resourceName = TestUtilities.GenerateName("csmr");
-            var createResult = client.ResourceGroups.CreateOrUpdate(resourceGroupName, new ResourceGroup { Location = location });
-            var createResourceResult = client.Resources.CreateOrUpdate(
-                resourceGroupName,
-                "Microsoft.Web",
-                string.Empty,
-                "sites",
-                resourceName,
-                "2014-04-01",
-                new GenericResource
-                {
-                    Location = location,
-                    Properties = "{'name':'" + resourceName + "','siteMode': 'Standard','computeMode':'Shared'}"
-                });
+                var client = GetResourceManagementClient(handler);
+                string location = ResourcesManagementTestUtilities.GetResourceLocation(client, "Microsoft.Web/sites");
+                var resourceGroupName = TestUtilities.GenerateName("csmrg");
+                var resourceName = TestUtilities.GenerateName("csmr");
+                var createResult = client.ResourceGroups.CreateOrUpdate(resourceGroupName, new ResourceGroup { Location = location });
+                var createResourceResult = client.Resources.CreateOrUpdate(
+                    resourceGroupName,
+                    "Microsoft.Web",
+                    string.Empty,
+                    "sites",
+                    resourceName,
+                    "2014-04-01",
+                    new GenericResource
+                    {
+                        Location = location,
+                        Properties = JObject.Parse("{'name':'" + resourceName + "','siteMode': 'Standard','computeMode':'Shared'}")
+                    });
 
-            client.ResourceGroups.Delete(resourceGroupName);
-            var listGroupsResult = client.ResourceGroups.List(null);
+                client.ResourceGroups.Delete(resourceGroupName);
+                var listGroupsResult = client.ResourceGroups.List(null);
 
-            Assert.Throws<CloudException>(() => client.ResourceGroups.ListResources(resourceGroupName));
+                Assert.Throws<CloudException>(() => client.ResourceGroups.ListResources(resourceGroupName));
 
-            Assert.False(listGroupsResult.Any(rg => rg.Name == resourceGroupName));
-            TestUtilities.EndTest();
+                Assert.False(listGroupsResult.Any(rg => rg.Name == resourceGroupName));
+            }
         }
 
         [Fact]
         public void CanCreateResourceGroup()
         {
-            using (UndoContext context = UndoContext.Current)
+            using (MockContext context = MockContext.Start())
             {
-                context.Start();
                 string groupName = TestUtilities.GenerateName("csmrg");
                 ResourceManagementClient client = this.GetResourceManagementClient(new RecordedDelegatingHandler());
                 var result = client.ResourceGroups.CreateOrUpdate(groupName, 
@@ -111,9 +106,8 @@ namespace ResourceGroups.Tests
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (UndoContext context = UndoContext.Current)
+            using (MockContext context = MockContext.Start())
             {
-                context.Start();
                 string groupName = TestUtilities.GenerateName("csmrg");
                 var client = GetResourceManagementClient(handler);
                 client.SetRetryPolicy(new RetryPolicy<HttpStatusCodeErrorDetectionStrategy>(1));
@@ -132,21 +126,22 @@ namespace ResourceGroups.Tests
         [Fact]
         public void DeleteResourceGroupRemovesGroup()
         {
-            TestUtilities.StartTest();
-            var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Created };
+            using (MockContext context = MockContext.Start())
+            {
+                var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Created };
 
-            var client = GetResourceManagementClient(handler);
+                var client = GetResourceManagementClient(handler);
 
-            var resourceGroupName = TestUtilities.GenerateName("csmrg");
-            var createResult = client.ResourceGroups.CreateOrUpdate(resourceGroupName, new ResourceGroup { Location = DefaultLocation });
-            var getResult = client.ResourceGroups.Get(resourceGroupName);
-            var deleteResult =
-                client.ResourceGroups.DeleteWithHttpMessagesAsync(resourceGroupName).Result;
-            var listResult = client.ResourceGroups.List(null);
+                var resourceGroupName = TestUtilities.GenerateName("csmrg");
+                var createResult = client.ResourceGroups.CreateOrUpdate(resourceGroupName, new ResourceGroup { Location = DefaultLocation });
+                var getResult = client.ResourceGroups.Get(resourceGroupName);
+                var deleteResult =
+                    client.ResourceGroups.DeleteWithHttpMessagesAsync(resourceGroupName).Result;
+                var listResult = client.ResourceGroups.List(null);
 
-            Assert.Equal(HttpStatusCode.OK, deleteResult.Response.StatusCode);
-            Assert.False(listResult.Any(rg => rg.Name == resourceGroupName && rg.Properties.ProvisioningState != "Deleting"));
-            TestUtilities.EndTest();
+                Assert.Equal(HttpStatusCode.OK, deleteResult.Response.StatusCode);
+                Assert.False(listResult.Any(rg => rg.Name == resourceGroupName && rg.Properties.ProvisioningState != "Deleting"));
+            }
         }
     }
 }

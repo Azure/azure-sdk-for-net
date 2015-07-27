@@ -7,7 +7,7 @@ namespace Microsoft.Azure.Management.Resources
     using System.Threading.Tasks;
     using Microsoft.Rest;
     using System.Linq.Expressions;
-    using Microsoft.Azure;
+    using Microsoft.Rest.Azure;
     using Models;
 
     public static partial class ResourceGroupsOperationsExtensions
@@ -101,7 +101,7 @@ namespace Microsoft.Azure.Management.Resources
             /// Parameters supplied to the create or update resource group service
             /// operation.
             /// </param>
-            public static ResourceGroupExtended CreateOrUpdate(this IResourceGroupsOperations operations, string resourceGroupName, ResourceGroup parameters)
+            public static ResourceGroup CreateOrUpdate(this IResourceGroupsOperations operations, string resourceGroupName, ResourceGroup parameters)
             {
                 return Task.Factory.StartNew(s => ((IResourceGroupsOperations)s).CreateOrUpdateAsync(resourceGroupName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -122,9 +122,49 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<ResourceGroupExtended> CreateOrUpdateAsync( this IResourceGroupsOperations operations, string resourceGroupName, ResourceGroup parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ResourceGroup> CreateOrUpdateAsync( this IResourceGroupsOperations operations, string resourceGroupName, ResourceGroup parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<ResourceGroupExtended> result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, parameters, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<ResourceGroup> result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, parameters, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// Create a resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group to be created or updated.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to the create or update resource group service
+            /// operation.
+            /// </param>
+            public static ResourceGroup BeginCreateOrUpdate(this IResourceGroupsOperations operations, string resourceGroupName, ResourceGroup parameters)
+            {
+                return Task.Factory.StartNew(s => ((IResourceGroupsOperations)s).BeginCreateOrUpdateAsync(resourceGroupName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Create a resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group to be created or updated.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to the create or update resource group service
+            /// operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// Cancellation token.
+            /// </param>
+            public static async Task<ResourceGroup> BeginCreateOrUpdateAsync( this IResourceGroupsOperations operations, string resourceGroupName, ResourceGroup parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<ResourceGroup> result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, parameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -203,7 +243,7 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='resourceGroupName'>
             /// The name of the resource group to get. The name is case insensitive.
             /// </param>
-            public static ResourceGroupExtended Get(this IResourceGroupsOperations operations, string resourceGroupName)
+            public static ResourceGroup Get(this IResourceGroupsOperations operations, string resourceGroupName)
             {
                 return Task.Factory.StartNew(s => ((IResourceGroupsOperations)s).GetAsync(resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -220,9 +260,9 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<ResourceGroupExtended> GetAsync( this IResourceGroupsOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ResourceGroup> GetAsync( this IResourceGroupsOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<ResourceGroupExtended> result = await operations.GetWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<ResourceGroup> result = await operations.GetWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -242,7 +282,7 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='parameters'>
             /// Parameters supplied to the update state resource group service operation.
             /// </param>
-            public static ResourceGroupExtended Patch(this IResourceGroupsOperations operations, string resourceGroupName, ResourceGroup parameters)
+            public static ResourceGroup Patch(this IResourceGroupsOperations operations, string resourceGroupName, ResourceGroup parameters)
             {
                 return Task.Factory.StartNew(s => ((IResourceGroupsOperations)s).PatchAsync(resourceGroupName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -266,9 +306,9 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<ResourceGroupExtended> PatchAsync( this IResourceGroupsOperations operations, string resourceGroupName, ResourceGroup parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ResourceGroup> PatchAsync( this IResourceGroupsOperations operations, string resourceGroupName, ResourceGroup parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<ResourceGroupExtended> result = await operations.PatchWithHttpMessagesAsync(resourceGroupName, parameters, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<ResourceGroup> result = await operations.PatchWithHttpMessagesAsync(resourceGroupName, parameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -284,7 +324,7 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='top'>
             /// Query parameters. If null is passed returns all resource groups.
             /// </param>
-            public static Page<ResourceGroupExtended> List(this IResourceGroupsOperations operations, Expression<Func<ResourceGroupExtendedFilter, bool>> filter = default(Expression<Func<ResourceGroupExtendedFilter, bool>>), int? top = default(int?))
+            public static Page<ResourceGroup> List(this IResourceGroupsOperations operations, Expression<Func<ResourceGroupFilter, bool>> filter = default(Expression<Func<ResourceGroupFilter, bool>>), int? top = default(int?))
             {
                 return Task.Factory.StartNew(s => ((IResourceGroupsOperations)s).ListAsync(filter, top), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -304,9 +344,9 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<Page<ResourceGroupExtended>> ListAsync( this IResourceGroupsOperations operations, Expression<Func<ResourceGroupExtendedFilter, bool>> filter = default(Expression<Func<ResourceGroupExtendedFilter, bool>>), int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Page<ResourceGroup>> ListAsync( this IResourceGroupsOperations operations, Expression<Func<ResourceGroupFilter, bool>> filter = default(Expression<Func<ResourceGroupFilter, bool>>), int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<Page<ResourceGroupExtended>> result = await operations.ListWithHttpMessagesAsync(filter, top, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<Page<ResourceGroup>> result = await operations.ListWithHttpMessagesAsync(filter, top, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -351,7 +391,7 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='nextPageLink'>
             /// NextLink from the previous successful call to List operation.
             /// </param>
-            public static Page<ResourceGroupExtended> ListNext(this IResourceGroupsOperations operations, string nextPageLink)
+            public static Page<ResourceGroup> ListNext(this IResourceGroupsOperations operations, string nextPageLink)
             {
                 return Task.Factory.StartNew(s => ((IResourceGroupsOperations)s).ListNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -368,9 +408,9 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<Page<ResourceGroupExtended>> ListNextAsync( this IResourceGroupsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Page<ResourceGroup>> ListNextAsync( this IResourceGroupsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<Page<ResourceGroupExtended>> result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<Page<ResourceGroup>> result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
