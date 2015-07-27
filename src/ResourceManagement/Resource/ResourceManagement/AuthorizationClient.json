@@ -44,7 +44,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/ManagementLockProperties"
+              "$ref": "#/definitions/ManagementLock"
             },
             "description": "The management lock parameters."
           },
@@ -56,16 +56,16 @@
           }
         ],
         "responses": {
-          "201": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/ManagementLockObject"
-            }
-          },
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/ManagementLockObject"
+              "$ref": "#/definitions/ManagementLock"
+            }
+          },
+          "201": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ManagementLock"
             }
           }
         }
@@ -128,7 +128,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/ManagementLockProperties"
+              "$ref": "#/definitions/ManagementLock"
             },
             "description": "Create or update management lock parameters."
           },
@@ -143,13 +143,13 @@
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/ManagementLockObject"
+              "$ref": "#/definitions/ManagementLock"
             }
           },
           "201": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/ManagementLockObject"
+              "$ref": "#/definitions/ManagementLock"
             }
           }
         }
@@ -213,13 +213,13 @@
           }
         ],
         "responses": {
-          "202": {
+          "204": {
             "description": ""
           },
           "200": {
             "description": ""
           },
-          "204": {
+          "202": {
             "description": ""
           }
         }
@@ -245,7 +245,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/ManagementLockProperties"
+              "$ref": "#/definitions/ManagementLock"
             },
             "description": "The management lock parameters."
           },
@@ -257,16 +257,16 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/ManagementLockObject"
-            }
-          },
           "201": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/ManagementLockObject"
+              "$ref": "#/definitions/ManagementLock"
+            }
+          },
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ManagementLock"
             }
           }
         }
@@ -296,10 +296,10 @@
           "204": {
             "description": ""
           },
-          "202": {
+          "200": {
             "description": ""
           },
-          "200": {
+          "202": {
             "description": ""
           }
         }
@@ -326,16 +326,16 @@
           }
         ],
         "responses": {
-          "204": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/ManagementLockObject"
-            }
-          },
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/ManagementLockObject"
+              "$ref": "#/definitions/ManagementLock"
+            }
+          },
+          "204": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ManagementLock"
             }
           }
         }
@@ -371,13 +371,13 @@
           }
         ],
         "responses": {
+          "204": {
+            "description": ""
+          },
           "200": {
             "description": ""
           },
           "202": {
-            "description": ""
-          },
-          "204": {
             "description": ""
           }
         }
@@ -421,7 +421,7 @@
           }
         },
         "x-ms-pageable": true,
-        "x-ms-odata": "#/definitions/ManagementLockObject"
+        "x-ms-odata": "#/definitions/ManagementLock"
       }
     },
     "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}/providers/Microsoft.Authorization/locks": {
@@ -492,7 +492,7 @@
           }
         },
         "x-ms-pageable": true,
-        "x-ms-odata": "#/definitions/ManagementLockObject"
+        "x-ms-odata": "#/definitions/ManagementLock"
       }
     },
     "/{nextLink}": {
@@ -557,7 +557,7 @@
           }
         },
         "x-ms-pageable": true,
-        "x-ms-odata": "#/definitions/ManagementLockObject"
+        "x-ms-odata": "#/definitions/ManagementLock"
       }
     }
   },
@@ -588,7 +588,7 @@
       },
       "description": "Resource filter."
     },
-    "ResourceGroupExtendedFilter": {
+    "ResourceGroupFilter": {
       "properties": {
         "tagName": {
           "type": "string",
@@ -620,23 +620,26 @@
       },
       "description": "The management lock properties."
     },
-    "ManagementLockObject": {
+    "ManagementLock": {
       "properties": {
         "properties": {
           "$ref": "#/definitions/ManagementLockProperties",
           "description": "Gets or sets the properties of the lock."
         },
         "id": {
+          "readOnly": true,
           "type": "string",
-          "description": "Gets or sets the Id of the lock."
+          "description": "Gets the Id of the lock."
         },
         "type": {
+          "readOnly": true,
           "type": "string",
-          "description": "Gets or sets the type of the lock."
+          "description": "Gets the type of the lock."
         },
         "name": {
+          "readOnly": true,
           "type": "string",
-          "description": "Gets or sets the name of the lock."
+          "description": "Gets the name of the lock."
         }
       },
       "description": "Management lock information."
@@ -646,7 +649,7 @@
         "value": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/ManagementLockObject"
+            "$ref": "#/definitions/ManagementLock"
           },
           "description": "Gets or sets the list of locks."
         },

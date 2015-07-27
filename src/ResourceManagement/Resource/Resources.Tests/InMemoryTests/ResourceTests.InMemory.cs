@@ -52,7 +52,7 @@ namespace ResourceGroups.Tests
                         'name':'site1',
 	                    'siteMode': 'Standard',
                         'computeMode':'Dedicated',
-                        'provisioningState':'Running'
+                        'provisioningState':'Succeeded'
                     }
                 }")
             };
@@ -71,7 +71,7 @@ namespace ResourceGroups.Tests
             Assert.Equal("site1", result.Name);
             Assert.Equal("/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Web/Sites/site1", result.Id);
             Assert.True(result.Properties.ToString().Contains("Dedicated"));
-            Assert.Equal("Running", (result.Properties as JObject)["provisioningState"]);
+            Assert.Equal("Succeeded", (result.Properties as JObject)["provisioningState"]);
         }
 
         [Fact]
@@ -137,7 +137,7 @@ namespace ResourceGroups.Tests
                           'name':'site1',
 	                      'siteMode': 'Standard',
                           'computeMode':'Dedicated',
-                          'provisioningState':'Running'
+                          'provisioningState':'Succeeded'
                        }
                     },
                     {
@@ -175,7 +175,7 @@ namespace ResourceGroups.Tests
             Assert.Equal("/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Web/Sites/site1", result.First().Id);
             Assert.Equal("/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Web/Sites/site1", result.First().Id);
             Assert.True(result.First().Properties.ToString().Contains("Dedicated"));
-            Assert.Equal("Running", (result.First().Properties as JObject)["provisioningState"]);
+            Assert.Equal("Succeeded", (result.First().Properties as JObject)["provisioningState"]);
         }
 
         [Fact]
@@ -242,7 +242,7 @@ namespace ResourceGroups.Tests
                         'name':'site3',
 	                    'siteMode': 'Standard',
                         'computeMode':'Dedicated',
-                        'provisioningState':'Running'
+                        'provisioningState':'Succeeded'
                     }
                 }")
             };
@@ -282,7 +282,7 @@ namespace ResourceGroups.Tests
 
             // Validate result
             Assert.Equal("South Central US", result.Location);
-            Assert.Equal("Running", (result.Properties as JObject)["provisioningState"]);
+            Assert.Equal("Succeeded", (result.Properties as JObject)["provisioningState"]);
             Assert.Equal("finance", result.Tags["department"]);
             Assert.Equal("tagvalue", result.Tags["tagname"]);
             Assert.True(result.Properties.ToString().Contains("Dedicated"));

@@ -126,7 +126,7 @@
       },
       "description": "Resource filter."
     },
-    "ResourceGroupExtendedFilter": {
+    "ResourceGroupFilter": {
       "properties": {
         "tagName": {
           "type": "string",

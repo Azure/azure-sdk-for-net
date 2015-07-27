@@ -13,6 +13,23 @@ namespace Microsoft.Azure.Management.Resources.Models
     public partial class ResourceGroup
     {
         /// <summary>
+        /// Gets the ID of the resource group.
+        /// </summary>
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the Name of the resource group.
+        /// </summary>
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "properties")]
+        public ResourceGroupProperties Properties { get; set; }
+
+        /// <summary>
         /// Gets or sets the location of the resource group. It cannot be
         /// changed after the resource group has been created. Has to be one
         /// of the supported Azure Locations, such as West US, East US, West
@@ -22,22 +39,10 @@ namespace Microsoft.Azure.Management.Resources.Models
         public string Location { get; set; }
 
         /// <summary>
-        /// Gets or sets the resource group properties.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties")]
-        public object Properties { get; set; }
-
-        /// <summary>
         /// Gets or sets the tags attached to the resource group.
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
-
-        /// <summary>
-        /// Gets or sets resource group provisioning state.
-        /// </summary>
-        [JsonProperty(PropertyName = "provisioningState")]
-        public string ProvisioningState { get; set; }
 
     }
 }

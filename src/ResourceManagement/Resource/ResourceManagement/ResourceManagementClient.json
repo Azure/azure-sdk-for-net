@@ -219,10 +219,10 @@
           }
         ],
         "responses": {
-          "404": {
+          "204": {
             "description": ""
           },
-          "204": {
+          "404": {
             "description": ""
           }
         }
@@ -261,16 +261,20 @@
           "201": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/ResourceGroupExtended"
+              "$ref": "#/definitions/ResourceGroup"
             }
           },
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/ResourceGroupExtended"
+              "$ref": "#/definitions/ResourceGroup"
             }
+          },
+          "202": {
+            "description": ""
           }
-        }
+        },
+        "x-ms-long-running-operation": true
       },
       "delete": {
         "tags": [
@@ -328,7 +332,7 @@
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/ResourceGroupExtended"
+              "$ref": "#/definitions/ResourceGroup"
             }
           }
         }
@@ -367,7 +371,7 @@
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/ResourceGroupExtended"
+              "$ref": "#/definitions/ResourceGroup"
             }
           }
         }
@@ -412,7 +416,7 @@
           }
         },
         "x-ms-pageable": true,
-        "x-ms-odata": "#/definitions/ResourceGroupExtendedFilter"
+        "x-ms-odata": "#/definitions/ResourceGroupFilter"
       }
     },
     "/subscriptions/{subscriptionId}/resourceGroups/{sourceResourceGroupName}/moveResources": {
@@ -614,13 +618,13 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": ""
+          },
           "204": {
             "description": ""
           },
           "202": {
-            "description": ""
-          },
-          "200": {
             "description": ""
           }
         }
@@ -695,13 +699,17 @@
               "$ref": "#/definitions/GenericResource"
             }
           },
+          "202": {
+            "description": ""
+          },
           "200": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/GenericResource"
             }
           }
-        }
+        },
+        "x-ms-long-running-operation": true
       },
       "get": {
         "tags": [
@@ -758,13 +766,13 @@
           }
         ],
         "responses": {
-          "204": {
+          "200": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/GenericResource"
             }
           },
-          "200": {
+          "204": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/GenericResource"
@@ -803,10 +811,10 @@
           }
         ],
         "responses": {
-          "204": {
+          "200": {
             "description": ""
           },
-          "200": {
+          "204": {
             "description": ""
           }
         }
@@ -840,13 +848,13 @@
           }
         ],
         "responses": {
-          "201": {
+          "200": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/TagValue"
             }
           },
-          "200": {
+          "201": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/TagValue"
@@ -878,13 +886,13 @@
           }
         ],
         "responses": {
-          "201": {
+          "200": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/TagDetails"
             }
           },
-          "200": {
+          "201": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/TagDetails"
@@ -914,10 +922,10 @@
           }
         ],
         "responses": {
-          "204": {
+          "200": {
             "description": ""
           },
-          "200": {
+          "204": {
             "description": ""
           }
         }
@@ -1069,13 +1077,13 @@
           }
         ],
         "responses": {
-          "204": {
+          "200": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/ResourceProviderOperationDetailListResult"
             }
           },
-          "200": {
+          "204": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/ResourceProviderOperationDetailListResult"
@@ -1342,7 +1350,7 @@
       },
       "description": "Resource filter."
     },
-    "ResourceGroupExtendedFilter": {
+    "ResourceGroupFilter": {
       "properties": {
         "tagName": {
           "type": "string",
@@ -1480,51 +1488,29 @@
       },
       "description": "List of resource groups."
     },
-    "ResourceGroup": {
-      "properties": {
-        "location": {
-          "type": "string",
-          "description": "Gets or sets the location of the resource group. It cannot be changed after the resource group has been created. Has to be one of the supported Azure Locations, such as West US, East US, West Europe, East Asia, etc."
-        },
-        "properties": {
-          "type": "object",
-          "description": "Gets or sets the resource group properties."
-        },
-        "tags": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "string"
-          },
-          "description": "Gets or sets the tags attached to the resource group."
-        },
-        "provisioningState": {
-          "type": "string",
-          "description": "Gets or sets resource group provisioning state."
-        }
-      },
-      "description": "Resource group information."
-    },
-    "ResourceGroupFormatResourceProperties": {
+    "ResourceGroupProperties": {
       "properties": {
         "provisioningState": {
+          "readOnly": true,
           "type": "string",
-          "description": "Gets or sets resource group provisioning state."
+          "description": "Gets resource group provisioning state."
         }
       },
       "description": "The resource group properties."
     },
-    "ResourceGroupExtended": {
+    "ResourceGroup": {
       "properties": {
         "id": {
+          "readOnly": true,
           "type": "string",
-          "description": "Gets or sets the ID of the resource group."
+          "description": "Gets the ID of the resource group."
         },
         "name": {
           "type": "string",
           "description": "Gets or sets the Name of the resource group."
         },
         "properties": {
-          "$ref": "#/definitions/ResourceGroupFormatResourceProperties"
+          "$ref": "#/definitions/ResourceGroupProperties"
         },
         "location": {
           "type": "string",
@@ -1536,10 +1522,6 @@
             "type": "string"
           },
           "description": "Gets or sets the tags attached to the resource group."
-        },
-        "provisioningState": {
-          "type": "string",
-          "description": "Gets or sets resource group provisioning state."
         }
       },
       "description": "Resource group information."
@@ -1549,7 +1531,7 @@
         "value": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/ResourceGroupExtended"
+            "$ref": "#/definitions/ResourceGroup"
           },
           "description": "Gets or sets the list of resource groups."
         },
