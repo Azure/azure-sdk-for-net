@@ -9,6 +9,9 @@ set source=-Source https://www.myget.org/F/autorest/api/v2
 
 set repoRoot=%~dp0..\..\..\..
 set autoRestExe=%repoRoot%\packages\autorest.%autoRestVersion%\tools\AutoRest.exe
+set generateFolder=%~dp0Generated
 
 %repoRoot%\tools\nuget.exe install autorest %source% -Version %autoRestVersion% -o %repoRoot%\packages
-%autoRestExe% -Modeler Swagger -CodeGenerator Azure.CSharp -Namespace Microsoft.Azure.Management.Storage -Input %specUrl% -Header NONE
+
+if exist %generateFolder% rd /S /Q  %generateFolder%
+%autoRestExe% -Modeler Swagger -CodeGenerator Azure.CSharp -Namespace Microsoft.Azure.Management.Storage -Input %specUrl% -outputDirectory %generateFolder% -Header NONE

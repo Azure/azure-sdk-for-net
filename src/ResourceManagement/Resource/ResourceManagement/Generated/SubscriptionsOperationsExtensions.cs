@@ -1,4 +1,4 @@
-namespace Microsoft.Azure.Subscriptions
+namespace Microsoft.Azure.Management.Resources
 {
     using System;
     using System.Collections;

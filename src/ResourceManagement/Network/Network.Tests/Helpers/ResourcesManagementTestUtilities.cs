@@ -13,7 +13,6 @@
 // limitations under the License.
 //
 
-using Microsoft.Azure.Subscriptions;
 using ResourceGroups.Tests;
 
 namespace Microsoft.Azure.Test

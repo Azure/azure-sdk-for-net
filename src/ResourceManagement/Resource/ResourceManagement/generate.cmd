@@ -13,10 +13,12 @@ set subscriptionSpecUrl="https://raw.githubusercontent.com/Azure/azure-rest-api-
 
 set repoRoot=%~dp0..\..\..\..
 set autoRestExe=%repoRoot%\packages\autorest.%autoRestVersion%\tools\AutoRest.exe
-
+set generateFolder=%~dp0Generated
 %repoRoot%\tools\nuget.exe install autorest %source% -Version %autoRestVersion% -o %repoRoot%\packages
 
-%autoRestExe% -Modeler Swagger -CodeGenerator Azure.CSharp -Namespace Microsoft.Azure.Management.Resources -Input %resSpecUrl% -Header NONE
-%autoRestExe% -Modeler Swagger -CodeGenerator Azure.CSharp -Namespace Microsoft.Azure.Management.Resources -Input %authSpecUrl% -Header NONE
-%autoRestExe% -Modeler Swagger -CodeGenerator Azure.CSharp -Namespace Microsoft.Azure.Management.Resources -Input %featureSpecUrl% -Header NONE
-%autoRestExe% -Modeler Swagger -CodeGenerator Azure.CSharp -Namespace Microsoft.Azure.Management.Resources -Input %subscriptionSpecUrl% -Header NONE
+if exist %generateFolder% rd /S /Q  %generateFolder%
+
+%autoRestExe% -Modeler Swagger -CodeGenerator Azure.CSharp -Namespace Microsoft.Azure.Management.Resources -Input %resSpecUrl% -outputDirectory %generateFolder% -Header NONE
+%autoRestExe% -Modeler Swagger -CodeGenerator Azure.CSharp -Namespace Microsoft.Azure.Management.Resources -Input %authSpecUrl% -outputDirectory %generateFolder% -Header NONE
+%autoRestExe% -Modeler Swagger -CodeGenerator Azure.CSharp -Namespace Microsoft.Azure.Management.Resources -Input %featureSpecUrl% -outputDirectory %generateFolder% -Header NONE
+%autoRestExe% -Modeler Swagger -CodeGenerator Azure.CSharp -Namespace Microsoft.Azure.Management.Resources -Input %subscriptionSpecUrl% -outputDirectory %generateFolder% -Header NONE
