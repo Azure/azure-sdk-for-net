@@ -97,7 +97,7 @@ namespace Microsoft.Azure.Management.BackupServices
             
             // Construct URL
             string url = "";
-            url = url + "/Subscriptions/";
+            url = url + "/subscriptions/";
             if (this.Client.Credentials.SubscriptionId != null)
             {
                 url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
@@ -110,7 +110,7 @@ namespace Microsoft.Azure.Management.BackupServices
             url = url + "BackupVault";
             url = url + "/";
             url = url + Uri.EscapeDataString(this.Client.ResourceName);
-            url = url + "/operations/";
+            url = url + "/operationResults/";
             url = url + Uri.EscapeDataString(operationId);
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2014-09-01");

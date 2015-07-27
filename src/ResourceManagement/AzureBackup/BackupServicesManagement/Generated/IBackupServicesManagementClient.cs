@@ -97,6 +97,15 @@ namespace Microsoft.Azure.Management.BackupServices
         }
         
         /// <summary>
+        /// Definition of Protection Policy operations for the Azure Backup
+        /// extension.
+        /// </summary>
+        ICSMProtectionPolicyOperations CSMProtectionPolicy
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Definition of DataSource operations for the Azure Backup extension.
         /// </summary>
         IDataSourceOperations DataSource
@@ -125,15 +134,6 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Backup extension.
         /// </summary>
         IProtectableObjectOperations ProtectableObject
-        {
-            get; 
-        }
-        
-        /// <summary>
-        /// Definition of Protection Policy operations for the Azure Backup
-        /// extension.
-        /// </summary>
-        IProtectionPolicyOperations ProtectionPolicy
         {
             get; 
         }

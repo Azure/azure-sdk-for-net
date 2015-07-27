@@ -27,19 +27,19 @@ using Microsoft.Azure.Management.BackupServices.Models;
 namespace Microsoft.Azure.Management.BackupServices.Models
 {
     /// <summary>
-    /// The definition of a CSMRecoveryPointOperationResponse.
+    /// The definition of a CSMRecoveryPointGetOperationResponse.
     /// </summary>
     public partial class CSMRecoveryPointGetOperationResponse : AzureOperationResponse
     {
-        private CSMRecoveryPointResponse _value;
+        private CSMRecoveryPointResponse _cSMRecoveryPointResponse;
         
         /// <summary>
         /// Optional. Recovery Point Response
         /// </summary>
-        public CSMRecoveryPointResponse Value
+        public CSMRecoveryPointResponse CSMRecoveryPointResponse
         {
-            get { return this._value; }
-            set { this._value = value; }
+            get { return this._cSMRecoveryPointResponse; }
+            set { this._cSMRecoveryPointResponse = value; }
         }
         
         /// <summary>

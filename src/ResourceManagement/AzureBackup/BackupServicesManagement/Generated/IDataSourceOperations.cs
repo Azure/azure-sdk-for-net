@@ -34,29 +34,6 @@ namespace Microsoft.Azure.Management.BackupServices
     public partial interface IDataSourceOperations
     {
         /// <summary>
-        /// Enable protection for given item.
-        /// </summary>
-        /// <param name='customRequestHeaders'>
-        /// Request header parameters.
-        /// </param>
-        /// <param name='containerName'>
-        /// containerName.
-        /// </param>
-        /// <param name='itemName'>
-        /// itemName.
-        /// </param>
-        /// <param name='csmparameters'>
-        /// Set protection request input.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The definition of a Operation Response.
-        /// </returns>
-        Task<OperationResponse> CSMUpdateProtectionAsync(CustomRequestHeaders customRequestHeaders, CustomRequestHeaders containerName, CustomRequestHeaders itemName, CSMUpdateProtectionRequest csmparameters, CancellationToken cancellationToken);
-        
-        /// <summary>
         /// Disable protection for given item
         /// </summary>
         /// <param name='customRequestHeaders'>
@@ -115,5 +92,28 @@ namespace Microsoft.Azure.Management.BackupServices
         /// The definition of a CSMProtectedItemListOperationResponse.
         /// </returns>
         Task<CSMProtectedItemListOperationResponse> ListCSMAsync(CSMProtectedItemQueryObject csmparameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Enable protection for given item.
+        /// </summary>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='containerName'>
+        /// containerName.
+        /// </param>
+        /// <param name='itemName'>
+        /// itemName.
+        /// </param>
+        /// <param name='csmparameters'>
+        /// Set protection request input.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The definition of a Operation Response.
+        /// </returns>
+        Task<OperationResponse> UpdateProtectionCSMAsync(CustomRequestHeaders customRequestHeaders, string containerName, string itemName, CSMUpdateProtectionRequest csmparameters, CancellationToken cancellationToken);
     }
 }

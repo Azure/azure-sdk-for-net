@@ -64,8 +64,8 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <summary>
         /// Get details of a particular job.
         /// </summary>
-        /// <param name='jobId'>
-        /// Optional. Request header parameters.
+        /// <param name='name'>
+        /// Optional. Name of the job whose details should be retrieved.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
@@ -74,9 +74,9 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response model for the list jobs operation.
+        /// Response model for job details operation
         /// </returns>
-        public async Task<JobByIdResponse> GetAsync(string jobId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<CSMJobDetails> GetAsync(string name, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
             
@@ -87,14 +87,14 @@ namespace Microsoft.Azure.Management.BackupServices
             {
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("jobId", jobId);
+                tracingParameters.Add("name", name);
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
                 TracingAdapter.Enter(invocationId, this, "GetAsync", tracingParameters);
             }
             
             // Construct URL
             string url = "";
-            url = url + "/Subscriptions/";
+            url = url + "/subscriptions/";
             if (this.Client.Credentials.SubscriptionId != null)
             {
                 url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
@@ -108,11 +108,10 @@ namespace Microsoft.Azure.Management.BackupServices
             url = url + "/";
             url = url + Uri.EscapeDataString(this.Client.ResourceName);
             url = url + "/jobs/";
-            if (jobId != null)
+            if (name != null)
             {
-                url = url + Uri.EscapeDataString(jobId);
+                url = url + Uri.EscapeDataString(name);
             }
-            url = url + "/jobdetails";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2014-09-01");
             if (queryParameters.Count > 0)
@@ -175,13 +174,13 @@ namespace Microsoft.Azure.Management.BackupServices
                     }
                     
                     // Create Result
-                    JobByIdResponse result = null;
+                    CSMJobDetails result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new JobByIdResponse();
+                        result = new CSMJobDetails();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -190,203 +189,210 @@ namespace Microsoft.Azure.Management.BackupServices
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            JobProperties jobInstance = new JobProperties();
-                            result.Job = jobInstance;
+                            CSMJobDetailsResponse valueInstance = new CSMJobDetailsResponse();
+                            result.Value = valueInstance;
                             
-                            JToken tasksListArray = responseDoc["TasksList"];
-                            if (tasksListArray != null && tasksListArray.Type != JTokenType.Null)
+                            JToken propertiesValue = responseDoc["properties"];
+                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                             {
-                                foreach (JToken tasksListValue in ((JArray)tasksListArray))
+                                CSMJobDetailedProperties propertiesInstance = new CSMJobDetailedProperties();
+                                valueInstance.JobDetailedProperties = propertiesInstance;
+                                
+                                JToken tasksListArray = propertiesValue["tasksList"];
+                                if (tasksListArray != null && tasksListArray.Type != JTokenType.Null)
                                 {
-                                    JobTaskDetails jobTaskDetailsInstance = new JobTaskDetails();
-                                    jobInstance.TasksList.Add(jobTaskDetailsInstance);
-                                    
-                                    JToken taskIdValue = tasksListValue["TaskId"];
-                                    if (taskIdValue != null && taskIdValue.Type != JTokenType.Null)
+                                    foreach (JToken tasksListValue in ((JArray)tasksListArray))
                                     {
-                                        string taskIdInstance = ((string)taskIdValue);
-                                        jobTaskDetailsInstance.TaskId = taskIdInstance;
-                                    }
-                                    
-                                    JToken startTimeValue = tasksListValue["StartTime"];
-                                    if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
-                                    {
-                                        DateTime startTimeInstance = ((DateTime)startTimeValue);
-                                        jobTaskDetailsInstance.StartTime = startTimeInstance;
-                                    }
-                                    
-                                    JToken endTimeValue = tasksListValue["EndTime"];
-                                    if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
-                                    {
-                                        DateTime endTimeInstance = ((DateTime)endTimeValue);
-                                        jobTaskDetailsInstance.EndTime = endTimeInstance;
-                                    }
-                                    
-                                    JToken durationValue = tasksListValue["Duration"];
-                                    if (durationValue != null && durationValue.Type != JTokenType.Null)
-                                    {
-                                        TimeSpan durationInstance = TimeSpan.Parse(((string)durationValue), CultureInfo.InvariantCulture);
-                                        jobTaskDetailsInstance.Duration = durationInstance;
-                                    }
-                                    
-                                    JToken statusValue = tasksListValue["Status"];
-                                    if (statusValue != null && statusValue.Type != JTokenType.Null)
-                                    {
-                                        string statusInstance = ((string)statusValue);
-                                        jobTaskDetailsInstance.Status = statusInstance;
-                                    }
-                                    
-                                    JToken instanceIdValue = tasksListValue["InstanceId"];
-                                    if (instanceIdValue != null && instanceIdValue.Type != JTokenType.Null)
-                                    {
-                                        string instanceIdInstance = ((string)instanceIdValue);
-                                        jobTaskDetailsInstance.InstanceId = instanceIdInstance;
-                                    }
-                                    
-                                    JToken nameValue = tasksListValue["Name"];
-                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                    {
-                                        string nameInstance = ((string)nameValue);
-                                        jobTaskDetailsInstance.Name = nameInstance;
-                                    }
-                                    
-                                    JToken operationInProgressValue = tasksListValue["OperationInProgress"];
-                                    if (operationInProgressValue != null && operationInProgressValue.Type != JTokenType.Null)
-                                    {
-                                        bool operationInProgressInstance = ((bool)operationInProgressValue);
-                                        jobTaskDetailsInstance.OperationInProgress = operationInProgressInstance;
-                                    }
-                                }
-                            }
-                            
-                            JToken propertyBagSequenceElement = ((JToken)responseDoc["PropertyBag"]);
-                            if (propertyBagSequenceElement != null && propertyBagSequenceElement.Type != JTokenType.Null)
-                            {
-                                foreach (JProperty property in propertyBagSequenceElement)
-                                {
-                                    string propertyBagKey = ((string)property.Name);
-                                    string propertyBagValue = ((string)property.Value);
-                                    jobInstance.PropertyBag.Add(propertyBagKey, propertyBagValue);
-                                }
-                            }
-                            
-                            JToken typeValue = responseDoc["Type"];
-                            if (typeValue != null && typeValue.Type != JTokenType.Null)
-                            {
-                                string typeInstance = ((string)typeValue);
-                                jobInstance.Type = typeInstance;
-                            }
-                            
-                            JToken operationValue = responseDoc["Operation"];
-                            if (operationValue != null && operationValue.Type != JTokenType.Null)
-                            {
-                                string operationInstance = ((string)operationValue);
-                                jobInstance.Operation = operationInstance;
-                            }
-                            
-                            JToken statusValue2 = responseDoc["Status"];
-                            if (statusValue2 != null && statusValue2.Type != JTokenType.Null)
-                            {
-                                string statusInstance2 = ((string)statusValue2);
-                                jobInstance.Status = statusInstance2;
-                            }
-                            
-                            JToken startTimestampValue = responseDoc["StartTimestamp"];
-                            if (startTimestampValue != null && startTimestampValue.Type != JTokenType.Null)
-                            {
-                                DateTime startTimestampInstance = ((DateTime)startTimestampValue);
-                                jobInstance.StartTimestamp = startTimestampInstance;
-                            }
-                            
-                            JToken endTimestampValue = responseDoc["EndTimestamp"];
-                            if (endTimestampValue != null && endTimestampValue.Type != JTokenType.Null)
-                            {
-                                DateTime endTimestampInstance = ((DateTime)endTimestampValue);
-                                jobInstance.EndTimestamp = endTimestampInstance;
-                            }
-                            
-                            JToken durationValue2 = responseDoc["Duration"];
-                            if (durationValue2 != null && durationValue2.Type != JTokenType.Null)
-                            {
-                                TimeSpan durationInstance2 = TimeSpan.Parse(((string)durationValue2), CultureInfo.InvariantCulture);
-                                jobInstance.Duration = durationInstance2;
-                            }
-                            
-                            JToken entityFriendlyNameValue = responseDoc["EntityFriendlyName"];
-                            if (entityFriendlyNameValue != null && entityFriendlyNameValue.Type != JTokenType.Null)
-                            {
-                                string entityFriendlyNameInstance = ((string)entityFriendlyNameValue);
-                                jobInstance.EntityFriendlyName = entityFriendlyNameInstance;
-                            }
-                            
-                            JToken actionsInfoArray = responseDoc["ActionsInfo"];
-                            if (actionsInfoArray != null && actionsInfoArray.Type != JTokenType.Null)
-                            {
-                                foreach (JToken actionsInfoValue in ((JArray)actionsInfoArray))
-                                {
-                                    jobInstance.ActionsInfo.Add(((JobSupportedAction)Enum.Parse(typeof(JobSupportedAction), ((string)actionsInfoValue), true)));
-                                }
-                            }
-                            
-                            JToken errorDetailsArray = responseDoc["ErrorDetails"];
-                            if (errorDetailsArray != null && errorDetailsArray.Type != JTokenType.Null)
-                            {
-                                foreach (JToken errorDetailsValue in ((JArray)errorDetailsArray))
-                                {
-                                    ErrorInfo errorInfoInstance = new ErrorInfo();
-                                    jobInstance.ErrorDetails.Add(errorInfoInstance);
-                                    
-                                    JToken errorCodeValue = errorDetailsValue["ErrorCode"];
-                                    if (errorCodeValue != null && errorCodeValue.Type != JTokenType.Null)
-                                    {
-                                        int errorCodeInstance = ((int)errorCodeValue);
-                                        errorInfoInstance.ErrorCode = errorCodeInstance;
-                                    }
-                                    
-                                    JToken errorTitleValue = errorDetailsValue["ErrorTitle"];
-                                    if (errorTitleValue != null && errorTitleValue.Type != JTokenType.Null)
-                                    {
-                                        string errorTitleInstance = ((string)errorTitleValue);
-                                        errorInfoInstance.ErrorTitle = errorTitleInstance;
-                                    }
-                                    
-                                    JToken errorStringValue = errorDetailsValue["ErrorString"];
-                                    if (errorStringValue != null && errorStringValue.Type != JTokenType.Null)
-                                    {
-                                        string errorStringInstance = ((string)errorStringValue);
-                                        errorInfoInstance.ErrorString = errorStringInstance;
-                                    }
-                                    
-                                    JToken recommendationsArray = errorDetailsValue["Recommendations"];
-                                    if (recommendationsArray != null && recommendationsArray.Type != JTokenType.Null)
-                                    {
-                                        foreach (JToken recommendationsValue in ((JArray)recommendationsArray))
+                                        CSMJobTaskDetails cSMJobTaskDetailsInstance = new CSMJobTaskDetails();
+                                        propertiesInstance.TasksList.Add(cSMJobTaskDetailsInstance);
+                                        
+                                        JToken taskIdValue = tasksListValue["taskId"];
+                                        if (taskIdValue != null && taskIdValue.Type != JTokenType.Null)
                                         {
-                                            errorInfoInstance.Recommendations.Add(((string)recommendationsValue));
+                                            string taskIdInstance = ((string)taskIdValue);
+                                            cSMJobTaskDetailsInstance.TaskId = taskIdInstance;
+                                        }
+                                        
+                                        JToken startTimeValue = tasksListValue["startTime"];
+                                        if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
+                                        {
+                                            DateTime startTimeInstance = ((DateTime)startTimeValue);
+                                            cSMJobTaskDetailsInstance.StartTime = startTimeInstance;
+                                        }
+                                        
+                                        JToken endTimeValue = tasksListValue["endTime"];
+                                        if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
+                                        {
+                                            DateTime endTimeInstance = ((DateTime)endTimeValue);
+                                            cSMJobTaskDetailsInstance.EndTime = endTimeInstance;
+                                        }
+                                        
+                                        JToken durationValue = tasksListValue["duration"];
+                                        if (durationValue != null && durationValue.Type != JTokenType.Null)
+                                        {
+                                            TimeSpan durationInstance = TimeSpan.Parse(((string)durationValue), CultureInfo.InvariantCulture);
+                                            cSMJobTaskDetailsInstance.Duration = durationInstance;
+                                        }
+                                        
+                                        JToken statusValue = tasksListValue["status"];
+                                        if (statusValue != null && statusValue.Type != JTokenType.Null)
+                                        {
+                                            string statusInstance = ((string)statusValue);
+                                            cSMJobTaskDetailsInstance.Status = statusInstance;
+                                        }
+                                        
+                                        JToken progressPercentageValue = tasksListValue["progressPercentage"];
+                                        if (progressPercentageValue != null && progressPercentageValue.Type != JTokenType.Null)
+                                        {
+                                            double progressPercentageInstance = ((double)progressPercentageValue);
+                                            cSMJobTaskDetailsInstance.ProgressPercentage = progressPercentageInstance;
+                                        }
+                                    }
+                                }
+                                
+                                JToken propertyBagSequenceElement = ((JToken)propertiesValue["propertyBag"]);
+                                if (propertyBagSequenceElement != null && propertyBagSequenceElement.Type != JTokenType.Null)
+                                {
+                                    foreach (JProperty property in propertyBagSequenceElement)
+                                    {
+                                        string propertyBagKey = ((string)property.Name);
+                                        string propertyBagValue = ((string)property.Value);
+                                        propertiesInstance.PropertyBag.Add(propertyBagKey, propertyBagValue);
+                                    }
+                                }
+                                
+                                JToken progressPercentageValue2 = propertiesValue["progressPercentage"];
+                                if (progressPercentageValue2 != null && progressPercentageValue2.Type != JTokenType.Null)
+                                {
+                                    double progressPercentageInstance2 = ((double)progressPercentageValue2);
+                                    propertiesInstance.ProgressPercentage = progressPercentageInstance2;
+                                }
+                                
+                                JToken dynamicErrorMessageValue = propertiesValue["dynamicErrorMessage"];
+                                if (dynamicErrorMessageValue != null && dynamicErrorMessageValue.Type != JTokenType.Null)
+                                {
+                                    string dynamicErrorMessageInstance = ((string)dynamicErrorMessageValue);
+                                    propertiesInstance.DynamicErrorMessage = dynamicErrorMessageInstance;
+                                }
+                                
+                                JToken workloadTypeValue = propertiesValue["workloadType"];
+                                if (workloadTypeValue != null && workloadTypeValue.Type != JTokenType.Null)
+                                {
+                                    string workloadTypeInstance = ((string)workloadTypeValue);
+                                    propertiesInstance.WorkloadType = workloadTypeInstance;
+                                }
+                                
+                                JToken operationValue = propertiesValue["operation"];
+                                if (operationValue != null && operationValue.Type != JTokenType.Null)
+                                {
+                                    string operationInstance = ((string)operationValue);
+                                    propertiesInstance.Operation = operationInstance;
+                                }
+                                
+                                JToken statusValue2 = propertiesValue["status"];
+                                if (statusValue2 != null && statusValue2.Type != JTokenType.Null)
+                                {
+                                    string statusInstance2 = ((string)statusValue2);
+                                    propertiesInstance.Status = statusInstance2;
+                                }
+                                
+                                JToken startTimestampValue = propertiesValue["startTimestamp"];
+                                if (startTimestampValue != null && startTimestampValue.Type != JTokenType.Null)
+                                {
+                                    DateTime startTimestampInstance = ((DateTime)startTimestampValue);
+                                    propertiesInstance.StartTimestamp = startTimestampInstance;
+                                }
+                                
+                                JToken endTimestampValue = propertiesValue["endTimestamp"];
+                                if (endTimestampValue != null && endTimestampValue.Type != JTokenType.Null)
+                                {
+                                    DateTime endTimestampInstance = ((DateTime)endTimestampValue);
+                                    propertiesInstance.EndTimestamp = endTimestampInstance;
+                                }
+                                
+                                JToken durationValue2 = propertiesValue["duration"];
+                                if (durationValue2 != null && durationValue2.Type != JTokenType.Null)
+                                {
+                                    TimeSpan durationInstance2 = TimeSpan.Parse(((string)durationValue2), CultureInfo.InvariantCulture);
+                                    propertiesInstance.Duration = durationInstance2;
+                                }
+                                
+                                JToken entityFriendlyNameValue = propertiesValue["entityFriendlyName"];
+                                if (entityFriendlyNameValue != null && entityFriendlyNameValue.Type != JTokenType.Null)
+                                {
+                                    string entityFriendlyNameInstance = ((string)entityFriendlyNameValue);
+                                    propertiesInstance.EntityFriendlyName = entityFriendlyNameInstance;
+                                }
+                                
+                                JToken actionsInfoArray = propertiesValue["actionsInfo"];
+                                if (actionsInfoArray != null && actionsInfoArray.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken actionsInfoValue in ((JArray)actionsInfoArray))
+                                    {
+                                        propertiesInstance.ActionsInfo.Add(((JobSupportedAction)Enum.Parse(typeof(JobSupportedAction), ((string)actionsInfoValue), true)));
+                                    }
+                                }
+                                
+                                JToken errorDetailsArray = propertiesValue["errorDetails"];
+                                if (errorDetailsArray != null && errorDetailsArray.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken errorDetailsValue in ((JArray)errorDetailsArray))
+                                    {
+                                        CSMJobErrorInfo cSMJobErrorInfoInstance = new CSMJobErrorInfo();
+                                        propertiesInstance.ErrorDetails.Add(cSMJobErrorInfoInstance);
+                                        
+                                        JToken errorCodeValue = errorDetailsValue["errorCode"];
+                                        if (errorCodeValue != null && errorCodeValue.Type != JTokenType.Null)
+                                        {
+                                            int errorCodeInstance = ((int)errorCodeValue);
+                                            cSMJobErrorInfoInstance.ErrorCode = errorCodeInstance;
+                                        }
+                                        
+                                        JToken errorTitleValue = errorDetailsValue["errorTitle"];
+                                        if (errorTitleValue != null && errorTitleValue.Type != JTokenType.Null)
+                                        {
+                                            string errorTitleInstance = ((string)errorTitleValue);
+                                            cSMJobErrorInfoInstance.ErrorTitle = errorTitleInstance;
+                                        }
+                                        
+                                        JToken errorStringValue = errorDetailsValue["errorString"];
+                                        if (errorStringValue != null && errorStringValue.Type != JTokenType.Null)
+                                        {
+                                            string errorStringInstance = ((string)errorStringValue);
+                                            cSMJobErrorInfoInstance.ErrorString = errorStringInstance;
+                                        }
+                                        
+                                        JToken recommendationsArray = errorDetailsValue["recommendations"];
+                                        if (recommendationsArray != null && recommendationsArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken recommendationsValue in ((JArray)recommendationsArray))
+                                            {
+                                                cSMJobErrorInfoInstance.Recommendations.Add(((string)recommendationsValue));
+                                            }
                                         }
                                     }
                                 }
                             }
                             
-                            JToken instanceIdValue2 = responseDoc["InstanceId"];
-                            if (instanceIdValue2 != null && instanceIdValue2.Type != JTokenType.Null)
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
                             {
-                                string instanceIdInstance2 = ((string)instanceIdValue2);
-                                jobInstance.InstanceId = instanceIdInstance2;
+                                string idInstance = ((string)idValue);
+                                valueInstance.Id = idInstance;
                             }
                             
-                            JToken nameValue2 = responseDoc["Name"];
-                            if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
                             {
-                                string nameInstance2 = ((string)nameValue2);
-                                jobInstance.Name = nameInstance2;
+                                string nameInstance = ((string)nameValue);
+                                valueInstance.Name = nameInstance;
                             }
                             
-                            JToken operationInProgressValue2 = responseDoc["OperationInProgress"];
-                            if (operationInProgressValue2 != null && operationInProgressValue2.Type != JTokenType.Null)
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
                             {
-                                bool operationInProgressInstance2 = ((bool)operationInProgressValue2);
-                                jobInstance.OperationInProgress = operationInProgressInstance2;
+                                string typeInstance = ((string)typeValue);
+                                valueInstance.Type = typeInstance;
                             }
                         }
                         
@@ -429,9 +435,9 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response model for the list jobs operation.
+        /// Powershell response object
         /// </returns>
-        public async Task<JobListResponse> ListAsync(JobQueryParameter parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<CSMJobList> ListAsync(CSMJobQueryObject parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
             
@@ -449,7 +455,7 @@ namespace Microsoft.Azure.Management.BackupServices
             
             // Construct URL
             string url = "";
-            url = url + "/Subscriptions/";
+            url = url + "/subscriptions/";
             if (this.Client.Credentials.SubscriptionId != null)
             {
                 url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId.ToString());
@@ -465,29 +471,34 @@ namespace Microsoft.Azure.Management.BackupServices
             url = url + "/jobs";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2014-09-01");
+            List<string> odataFilter = new List<string>();
             if (parameters != null && parameters.Status != null)
             {
-                queryParameters.Add("Status=" + Uri.EscapeDataString(parameters.Status));
+                odataFilter.Add("status eq '" + Uri.EscapeDataString(parameters.Status) + "'");
             }
-            if (parameters != null && parameters.Type != null)
+            if (parameters != null && parameters.WorkloadType != null)
             {
-                queryParameters.Add("Type=" + Uri.EscapeDataString(parameters.Type));
+                odataFilter.Add("workloadType eq '" + Uri.EscapeDataString(parameters.WorkloadType) + "'");
             }
             if (parameters != null && parameters.Operation != null)
             {
-                queryParameters.Add("Operation=" + Uri.EscapeDataString(parameters.Operation));
+                odataFilter.Add("operation eq '" + Uri.EscapeDataString(parameters.Operation) + "'");
             }
-            if (parameters != null && parameters.JobId != null)
+            if (parameters != null && parameters.Name != null)
             {
-                queryParameters.Add("JobId=" + Uri.EscapeDataString(parameters.JobId));
+                odataFilter.Add("name eq '" + Uri.EscapeDataString(parameters.Name) + "'");
             }
             if (parameters != null && parameters.StartTime != null)
             {
-                queryParameters.Add("StartTime=" + Uri.EscapeDataString(parameters.StartTime));
+                odataFilter.Add("startTime eq '" + Uri.EscapeDataString(parameters.StartTime) + "'");
             }
             if (parameters != null && parameters.EndTime != null)
             {
-                queryParameters.Add("EndTime=" + Uri.EscapeDataString(parameters.EndTime));
+                odataFilter.Add("endTime eq '" + Uri.EscapeDataString(parameters.EndTime) + "'");
+            }
+            if (odataFilter.Count > 0)
+            {
+                queryParameters.Add("$filter=" + string.Join(" and ", odataFilter));
             }
             if (queryParameters.Count > 0)
             {
@@ -549,13 +560,13 @@ namespace Microsoft.Azure.Management.BackupServices
                     }
                     
                     // Create Result
-                    JobListResponse result = null;
+                    CSMJobList result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new JobListResponse();
+                        result = new CSMJobList();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -564,150 +575,171 @@ namespace Microsoft.Azure.Management.BackupServices
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            JobResponse jobsInstance = new JobResponse();
-                            result.Jobs = jobsInstance;
+                            CSMJobListResponse listInstance = new CSMJobListResponse();
+                            result.List = listInstance;
                             
-                            JToken objectsArray = responseDoc["Objects"];
-                            if (objectsArray != null && objectsArray.Type != JTokenType.Null)
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
                             {
-                                foreach (JToken objectsValue in ((JArray)objectsArray))
+                                foreach (JToken valueValue in ((JArray)valueArray))
                                 {
-                                    Job jobInstance = new Job();
-                                    jobsInstance.Objects.Add(jobInstance);
+                                    CSMJobResponse cSMJobResponseInstance = new CSMJobResponse();
+                                    listInstance.Value.Add(cSMJobResponseInstance);
                                     
-                                    JToken typeValue = objectsValue["Type"];
-                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                    JToken propertiesValue = valueValue["properties"];
+                                    if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                     {
-                                        string typeInstance = ((string)typeValue);
-                                        jobInstance.Type = typeInstance;
-                                    }
-                                    
-                                    JToken operationValue = objectsValue["Operation"];
-                                    if (operationValue != null && operationValue.Type != JTokenType.Null)
-                                    {
-                                        string operationInstance = ((string)operationValue);
-                                        jobInstance.Operation = operationInstance;
-                                    }
-                                    
-                                    JToken statusValue = objectsValue["Status"];
-                                    if (statusValue != null && statusValue.Type != JTokenType.Null)
-                                    {
-                                        string statusInstance = ((string)statusValue);
-                                        jobInstance.Status = statusInstance;
-                                    }
-                                    
-                                    JToken startTimestampValue = objectsValue["StartTimestamp"];
-                                    if (startTimestampValue != null && startTimestampValue.Type != JTokenType.Null)
-                                    {
-                                        DateTime startTimestampInstance = ((DateTime)startTimestampValue);
-                                        jobInstance.StartTimestamp = startTimestampInstance;
-                                    }
-                                    
-                                    JToken endTimestampValue = objectsValue["EndTimestamp"];
-                                    if (endTimestampValue != null && endTimestampValue.Type != JTokenType.Null)
-                                    {
-                                        DateTime endTimestampInstance = ((DateTime)endTimestampValue);
-                                        jobInstance.EndTimestamp = endTimestampInstance;
-                                    }
-                                    
-                                    JToken durationValue = objectsValue["Duration"];
-                                    if (durationValue != null && durationValue.Type != JTokenType.Null)
-                                    {
-                                        TimeSpan durationInstance = TimeSpan.Parse(((string)durationValue), CultureInfo.InvariantCulture);
-                                        jobInstance.Duration = durationInstance;
-                                    }
-                                    
-                                    JToken entityFriendlyNameValue = objectsValue["EntityFriendlyName"];
-                                    if (entityFriendlyNameValue != null && entityFriendlyNameValue.Type != JTokenType.Null)
-                                    {
-                                        string entityFriendlyNameInstance = ((string)entityFriendlyNameValue);
-                                        jobInstance.EntityFriendlyName = entityFriendlyNameInstance;
-                                    }
-                                    
-                                    JToken actionsInfoArray = objectsValue["ActionsInfo"];
-                                    if (actionsInfoArray != null && actionsInfoArray.Type != JTokenType.Null)
-                                    {
-                                        foreach (JToken actionsInfoValue in ((JArray)actionsInfoArray))
+                                        CSMJobProperties propertiesInstance = new CSMJobProperties();
+                                        cSMJobResponseInstance.Properties = propertiesInstance;
+                                        
+                                        JToken workloadTypeValue = propertiesValue["workloadType"];
+                                        if (workloadTypeValue != null && workloadTypeValue.Type != JTokenType.Null)
                                         {
-                                            jobInstance.ActionsInfo.Add(((JobSupportedAction)Enum.Parse(typeof(JobSupportedAction), ((string)actionsInfoValue), true)));
+                                            string workloadTypeInstance = ((string)workloadTypeValue);
+                                            propertiesInstance.WorkloadType = workloadTypeInstance;
                                         }
-                                    }
-                                    
-                                    JToken errorDetailsArray = objectsValue["ErrorDetails"];
-                                    if (errorDetailsArray != null && errorDetailsArray.Type != JTokenType.Null)
-                                    {
-                                        foreach (JToken errorDetailsValue in ((JArray)errorDetailsArray))
+                                        
+                                        JToken operationValue = propertiesValue["operation"];
+                                        if (operationValue != null && operationValue.Type != JTokenType.Null)
                                         {
-                                            ErrorInfo errorInfoInstance = new ErrorInfo();
-                                            jobInstance.ErrorDetails.Add(errorInfoInstance);
-                                            
-                                            JToken errorCodeValue = errorDetailsValue["ErrorCode"];
-                                            if (errorCodeValue != null && errorCodeValue.Type != JTokenType.Null)
+                                            string operationInstance = ((string)operationValue);
+                                            propertiesInstance.Operation = operationInstance;
+                                        }
+                                        
+                                        JToken statusValue = propertiesValue["status"];
+                                        if (statusValue != null && statusValue.Type != JTokenType.Null)
+                                        {
+                                            string statusInstance = ((string)statusValue);
+                                            propertiesInstance.Status = statusInstance;
+                                        }
+                                        
+                                        JToken startTimestampValue = propertiesValue["startTimestamp"];
+                                        if (startTimestampValue != null && startTimestampValue.Type != JTokenType.Null)
+                                        {
+                                            DateTime startTimestampInstance = ((DateTime)startTimestampValue);
+                                            propertiesInstance.StartTimestamp = startTimestampInstance;
+                                        }
+                                        
+                                        JToken endTimestampValue = propertiesValue["endTimestamp"];
+                                        if (endTimestampValue != null && endTimestampValue.Type != JTokenType.Null)
+                                        {
+                                            DateTime endTimestampInstance = ((DateTime)endTimestampValue);
+                                            propertiesInstance.EndTimestamp = endTimestampInstance;
+                                        }
+                                        
+                                        JToken durationValue = propertiesValue["duration"];
+                                        if (durationValue != null && durationValue.Type != JTokenType.Null)
+                                        {
+                                            TimeSpan durationInstance = TimeSpan.Parse(((string)durationValue), CultureInfo.InvariantCulture);
+                                            propertiesInstance.Duration = durationInstance;
+                                        }
+                                        
+                                        JToken entityFriendlyNameValue = propertiesValue["entityFriendlyName"];
+                                        if (entityFriendlyNameValue != null && entityFriendlyNameValue.Type != JTokenType.Null)
+                                        {
+                                            string entityFriendlyNameInstance = ((string)entityFriendlyNameValue);
+                                            propertiesInstance.EntityFriendlyName = entityFriendlyNameInstance;
+                                        }
+                                        
+                                        JToken actionsInfoArray = propertiesValue["actionsInfo"];
+                                        if (actionsInfoArray != null && actionsInfoArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken actionsInfoValue in ((JArray)actionsInfoArray))
                                             {
-                                                int errorCodeInstance = ((int)errorCodeValue);
-                                                errorInfoInstance.ErrorCode = errorCodeInstance;
+                                                propertiesInstance.ActionsInfo.Add(((JobSupportedAction)Enum.Parse(typeof(JobSupportedAction), ((string)actionsInfoValue), true)));
                                             }
-                                            
-                                            JToken errorTitleValue = errorDetailsValue["ErrorTitle"];
-                                            if (errorTitleValue != null && errorTitleValue.Type != JTokenType.Null)
+                                        }
+                                        
+                                        JToken errorDetailsArray = propertiesValue["errorDetails"];
+                                        if (errorDetailsArray != null && errorDetailsArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken errorDetailsValue in ((JArray)errorDetailsArray))
                                             {
-                                                string errorTitleInstance = ((string)errorTitleValue);
-                                                errorInfoInstance.ErrorTitle = errorTitleInstance;
-                                            }
-                                            
-                                            JToken errorStringValue = errorDetailsValue["ErrorString"];
-                                            if (errorStringValue != null && errorStringValue.Type != JTokenType.Null)
-                                            {
-                                                string errorStringInstance = ((string)errorStringValue);
-                                                errorInfoInstance.ErrorString = errorStringInstance;
-                                            }
-                                            
-                                            JToken recommendationsArray = errorDetailsValue["Recommendations"];
-                                            if (recommendationsArray != null && recommendationsArray.Type != JTokenType.Null)
-                                            {
-                                                foreach (JToken recommendationsValue in ((JArray)recommendationsArray))
+                                                CSMJobErrorInfo cSMJobErrorInfoInstance = new CSMJobErrorInfo();
+                                                propertiesInstance.ErrorDetails.Add(cSMJobErrorInfoInstance);
+                                                
+                                                JToken errorCodeValue = errorDetailsValue["errorCode"];
+                                                if (errorCodeValue != null && errorCodeValue.Type != JTokenType.Null)
                                                 {
-                                                    errorInfoInstance.Recommendations.Add(((string)recommendationsValue));
+                                                    int errorCodeInstance = ((int)errorCodeValue);
+                                                    cSMJobErrorInfoInstance.ErrorCode = errorCodeInstance;
+                                                }
+                                                
+                                                JToken errorTitleValue = errorDetailsValue["errorTitle"];
+                                                if (errorTitleValue != null && errorTitleValue.Type != JTokenType.Null)
+                                                {
+                                                    string errorTitleInstance = ((string)errorTitleValue);
+                                                    cSMJobErrorInfoInstance.ErrorTitle = errorTitleInstance;
+                                                }
+                                                
+                                                JToken errorStringValue = errorDetailsValue["errorString"];
+                                                if (errorStringValue != null && errorStringValue.Type != JTokenType.Null)
+                                                {
+                                                    string errorStringInstance = ((string)errorStringValue);
+                                                    cSMJobErrorInfoInstance.ErrorString = errorStringInstance;
+                                                }
+                                                
+                                                JToken recommendationsArray = errorDetailsValue["recommendations"];
+                                                if (recommendationsArray != null && recommendationsArray.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken recommendationsValue in ((JArray)recommendationsArray))
+                                                    {
+                                                        cSMJobErrorInfoInstance.Recommendations.Add(((string)recommendationsValue));
+                                                    }
                                                 }
                                             }
                                         }
                                     }
                                     
-                                    JToken instanceIdValue = objectsValue["InstanceId"];
-                                    if (instanceIdValue != null && instanceIdValue.Type != JTokenType.Null)
+                                    JToken idValue = valueValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
                                     {
-                                        string instanceIdInstance = ((string)instanceIdValue);
-                                        jobInstance.InstanceId = instanceIdInstance;
+                                        string idInstance = ((string)idValue);
+                                        cSMJobResponseInstance.Id = idInstance;
                                     }
                                     
-                                    JToken nameValue = objectsValue["Name"];
+                                    JToken nameValue = valueValue["name"];
                                     if (nameValue != null && nameValue.Type != JTokenType.Null)
                                     {
                                         string nameInstance = ((string)nameValue);
-                                        jobInstance.Name = nameInstance;
+                                        cSMJobResponseInstance.Name = nameInstance;
                                     }
                                     
-                                    JToken operationInProgressValue = objectsValue["OperationInProgress"];
-                                    if (operationInProgressValue != null && operationInProgressValue.Type != JTokenType.Null)
+                                    JToken typeValue = valueValue["type"];
+                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
                                     {
-                                        bool operationInProgressInstance = ((bool)operationInProgressValue);
-                                        jobInstance.OperationInProgress = operationInProgressInstance;
+                                        string typeInstance = ((string)typeValue);
+                                        cSMJobResponseInstance.Type = typeInstance;
                                     }
                                 }
                             }
                             
-                            JToken resultCountValue = responseDoc["ResultCount"];
-                            if (resultCountValue != null && resultCountValue.Type != JTokenType.Null)
+                            JToken nextLinkValue = responseDoc["nextLink"];
+                            if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
                             {
-                                int resultCountInstance = ((int)resultCountValue);
-                                jobsInstance.ResultCount = resultCountInstance;
+                                string nextLinkInstance = ((string)nextLinkValue);
+                                listInstance.NextLink = nextLinkInstance;
                             }
                             
-                            JToken skiptokenValue = responseDoc["Skiptoken"];
-                            if (skiptokenValue != null && skiptokenValue.Type != JTokenType.Null)
+                            JToken idValue2 = responseDoc["id"];
+                            if (idValue2 != null && idValue2.Type != JTokenType.Null)
                             {
-                                string skiptokenInstance = ((string)skiptokenValue);
-                                jobsInstance.Skiptoken = skiptokenInstance;
+                                string idInstance2 = ((string)idValue2);
+                                listInstance.Id = idInstance2;
+                            }
+                            
+                            JToken nameValue2 = responseDoc["name"];
+                            if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                            {
+                                string nameInstance2 = ((string)nameValue2);
+                                listInstance.Name = nameInstance2;
+                            }
+                            
+                            JToken typeValue2 = responseDoc["type"];
+                            if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
+                            {
+                                string typeInstance2 = ((string)typeValue2);
+                                listInstance.Type = typeInstance2;
                             }
                         }
                         
@@ -740,8 +772,8 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <summary>
         /// Trigger cancellation of a job.
         /// </summary>
-        /// <param name='jobId'>
-        /// Optional. Id of the job whose details should be retrieved.
+        /// <param name='name'>
+        /// Optional. Name of the job which should be stopped.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Custom request headers to make the call.
@@ -752,7 +784,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a Operation Response.
         /// </returns>
-        public async Task<OperationResponse> StopAsync(string jobId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<OperationResponse> StopAsync(string name, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
             
@@ -763,14 +795,14 @@ namespace Microsoft.Azure.Management.BackupServices
             {
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("jobId", jobId);
+                tracingParameters.Add("name", name);
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
                 TracingAdapter.Enter(invocationId, this, "StopAsync", tracingParameters);
             }
             
             // Construct URL
             string url = "";
-            url = url + "/Subscriptions/";
+            url = url + "/subscriptions/";
             if (this.Client.Credentials.SubscriptionId != null)
             {
                 url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
@@ -784,9 +816,9 @@ namespace Microsoft.Azure.Management.BackupServices
             url = url + "/";
             url = url + Uri.EscapeDataString(this.Client.ResourceName);
             url = url + "/jobs/";
-            if (jobId != null)
+            if (name != null)
             {
-                url = url + Uri.EscapeDataString(jobId);
+                url = url + Uri.EscapeDataString(name);
             }
             url = url + "/cancel";
             List<string> queryParameters = new List<string>();

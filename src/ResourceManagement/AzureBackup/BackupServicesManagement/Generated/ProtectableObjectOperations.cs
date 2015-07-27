@@ -94,7 +94,7 @@ namespace Microsoft.Azure.Management.BackupServices
             
             // Construct URL
             string url = "";
-            url = url + "/Subscriptions/";
+            url = url + "/subscriptions/";
             if (this.Client.Credentials.SubscriptionId != null)
             {
                 url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);

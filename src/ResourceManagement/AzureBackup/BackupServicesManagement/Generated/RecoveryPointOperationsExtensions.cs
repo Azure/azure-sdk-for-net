@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Optional.
         /// </param>
         /// <returns>
-        /// The definition of a CSMRecoveryPointOperationResponse.
+        /// The definition of a CSMRecoveryPointGetOperationResponse.
         /// </returns>
         public static CSMRecoveryPointGetOperationResponse Get(this IRecoveryPointOperations operations, CustomRequestHeaders customRequestHeaders, string containerName, string itemName, string recoveryPointName)
         {
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Optional.
         /// </param>
         /// <returns>
-        /// The definition of a CSMRecoveryPointOperationResponse.
+        /// The definition of a CSMRecoveryPointGetOperationResponse.
         /// </returns>
         public static Task<CSMRecoveryPointGetOperationResponse> GetAsync(this IRecoveryPointOperations operations, CustomRequestHeaders customRequestHeaders, string containerName, string itemName, string recoveryPointName)
         {

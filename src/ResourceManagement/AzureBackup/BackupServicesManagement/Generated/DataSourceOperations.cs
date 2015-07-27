@@ -63,210 +63,6 @@ namespace Microsoft.Azure.Management.BackupServices
         }
         
         /// <summary>
-        /// Enable protection for given item.
-        /// </summary>
-        /// <param name='customRequestHeaders'>
-        /// Optional. Request header parameters.
-        /// </param>
-        /// <param name='containerName'>
-        /// Required. containerName.
-        /// </param>
-        /// <param name='itemName'>
-        /// Required. itemName.
-        /// </param>
-        /// <param name='csmparameters'>
-        /// Required. Set protection request input.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The definition of a Operation Response.
-        /// </returns>
-        public async Task<OperationResponse> CSMUpdateProtectionAsync(CustomRequestHeaders customRequestHeaders, CustomRequestHeaders containerName, CustomRequestHeaders itemName, CSMUpdateProtectionRequest csmparameters, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (containerName == null)
-            {
-                throw new ArgumentNullException("containerName");
-            }
-            if (itemName == null)
-            {
-                throw new ArgumentNullException("itemName");
-            }
-            if (csmparameters == null)
-            {
-                throw new ArgumentNullException("csmparameters");
-            }
-            if (csmparameters.Properties == null)
-            {
-                throw new ArgumentNullException("csmparameters.Properties");
-            }
-            if (csmparameters.Properties.PolicyId == null)
-            {
-                throw new ArgumentNullException("csmparameters.Properties.PolicyId");
-            }
-            
-            // Tracing
-            bool shouldTrace = TracingAdapter.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = TracingAdapter.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("customRequestHeaders", customRequestHeaders);
-                tracingParameters.Add("containerName", containerName);
-                tracingParameters.Add("itemName", itemName);
-                tracingParameters.Add("csmparameters", csmparameters);
-                TracingAdapter.Enter(invocationId, this, "CSMUpdateProtectionAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = "";
-            url = url + "/Subscriptions/";
-            if (this.Client.Credentials.SubscriptionId != null)
-            {
-                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
-            }
-            url = url + "/resourceGroups/";
-            url = url + Uri.EscapeDataString(this.Client.ResourceGroupName);
-            url = url + "/providers/";
-            url = url + "Microsoft.Backup";
-            url = url + "/";
-            url = url + "BackupVault";
-            url = url + "/";
-            url = url + Uri.EscapeDataString(this.Client.ResourceName);
-            url = url + "/registeredContainers/";
-            url = url + Uri.EscapeDataString(containerName.ToString());
-            url = url + "/protectedItems/";
-            url = url + Uri.EscapeDataString(itemName.ToString());
-            List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-09-01");
-            if (queryParameters.Count > 0)
-            {
-                url = url + "?" + string.Join("&", queryParameters);
-            }
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            // Trim '/' character from the end of baseUrl and beginning of url.
-            if (baseUrl[baseUrl.Length - 1] == '/')
-            {
-                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
-            }
-            if (url[0] == '/')
-            {
-                url = url.Substring(1);
-            }
-            url = baseUrl + "/" + url;
-            url = url.Replace(" ", "%20");
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = new HttpMethod("PATCH");
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                httpRequest.Headers.Add("Accept-Language", "en-us");
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Serialize Request
-                string requestContent = null;
-                JToken requestDoc = null;
-                
-                JObject cSMUpdateProtectionRequestValue = new JObject();
-                requestDoc = cSMUpdateProtectionRequestValue;
-                
-                JObject propertiesValue = new JObject();
-                cSMUpdateProtectionRequestValue["properties"] = propertiesValue;
-                
-                propertiesValue["policyId"] = csmparameters.Properties.PolicyId;
-                
-                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
-                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.Accepted)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            TracingAdapter.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    OperationResponse result = null;
-                    // Deserialize Response
-                    if (statusCode == HttpStatusCode.Accepted)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new OperationResponse();
-                        JToken responseDoc = null;
-                        if (string.IsNullOrEmpty(responseContent) == false)
-                        {
-                            responseDoc = JToken.Parse(responseContent);
-                        }
-                        
-                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                        {
-                            Guid operationIdInstance = Guid.Parse(((string)responseDoc));
-                            result.OperationId = operationIdInstance;
-                        }
-                        
-                    }
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-client-request-id"))
-                    {
-                        customRequestHeaders.ClientRequestId = httpResponse.Headers.GetValues("x-ms-client-request-id").FirstOrDefault();
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
         /// Disable protection for given item
         /// </summary>
         /// <param name='customRequestHeaders'>
@@ -311,7 +107,7 @@ namespace Microsoft.Azure.Management.BackupServices
             
             // Construct URL
             string url = "";
-            url = url + "/Subscriptions/";
+            url = url + "/subscriptions/";
             if (this.Client.Credentials.SubscriptionId != null)
             {
                 url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
@@ -499,7 +295,7 @@ namespace Microsoft.Azure.Management.BackupServices
             
             // Construct URL
             string url = "";
-            url = url + "/Subscriptions/";
+            url = url + "/subscriptions/";
             if (this.Client.Credentials.SubscriptionId != null)
             {
                 url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
@@ -675,7 +471,7 @@ namespace Microsoft.Azure.Management.BackupServices
             
             // Construct URL
             string url = "";
-            url = url + "/Subscriptions/";
+            url = url + "/subscriptions/";
             if (this.Client.Credentials.SubscriptionId != null)
             {
                 url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
@@ -929,6 +725,210 @@ namespace Microsoft.Azure.Management.BackupServices
                                 string typeInstance2 = ((string)typeValue2);
                                 cSMProtectedItemListResponseInstance.Type = typeInstance2;
                             }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-client-request-id"))
+                    {
+                        customRequestHeaders.ClientRequestId = httpResponse.Headers.GetValues("x-ms-client-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Enable protection for given item.
+        /// </summary>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <param name='containerName'>
+        /// Required. containerName.
+        /// </param>
+        /// <param name='itemName'>
+        /// Required. itemName.
+        /// </param>
+        /// <param name='csmparameters'>
+        /// Required. Set protection request input.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The definition of a Operation Response.
+        /// </returns>
+        public async Task<OperationResponse> UpdateProtectionCSMAsync(CustomRequestHeaders customRequestHeaders, string containerName, string itemName, CSMUpdateProtectionRequest csmparameters, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (containerName == null)
+            {
+                throw new ArgumentNullException("containerName");
+            }
+            if (itemName == null)
+            {
+                throw new ArgumentNullException("itemName");
+            }
+            if (csmparameters == null)
+            {
+                throw new ArgumentNullException("csmparameters");
+            }
+            if (csmparameters.Properties == null)
+            {
+                throw new ArgumentNullException("csmparameters.Properties");
+            }
+            if (csmparameters.Properties.PolicyId == null)
+            {
+                throw new ArgumentNullException("csmparameters.Properties.PolicyId");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("customRequestHeaders", customRequestHeaders);
+                tracingParameters.Add("containerName", containerName);
+                tracingParameters.Add("itemName", itemName);
+                tracingParameters.Add("csmparameters", csmparameters);
+                TracingAdapter.Enter(invocationId, this, "UpdateProtectionCSMAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(this.Client.ResourceGroupName);
+            url = url + "/providers/";
+            url = url + "Microsoft.Backup";
+            url = url + "/";
+            url = url + "BackupVault";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(this.Client.ResourceName);
+            url = url + "/registeredContainers/";
+            url = url + Uri.EscapeDataString(containerName);
+            url = url + "/protectedItems/";
+            url = url + Uri.EscapeDataString(itemName);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-09-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = new HttpMethod("PATCH");
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("Accept-Language", "en-us");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                JToken requestDoc = null;
+                
+                JObject cSMUpdateProtectionRequestValue = new JObject();
+                requestDoc = cSMUpdateProtectionRequestValue;
+                
+                JObject propertiesValue = new JObject();
+                cSMUpdateProtectionRequestValue["properties"] = propertiesValue;
+                
+                propertiesValue["policyId"] = csmparameters.Properties.PolicyId;
+                
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    OperationResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new OperationResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            Guid operationIdInstance = Guid.Parse(((string)responseDoc));
+                            result.OperationId = operationIdInstance;
                         }
                         
                     }
