@@ -51,7 +51,9 @@ namespace SiteRecovery.Tests
         {
             ClientRequestId = Guid.NewGuid().ToString(),
         };
-        protected readonly RecordedDelegationHandler CustomHttpHandler = new RecordedDelegationHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+        protected readonly RecordedDelegationHandler CustomHttpHandler
+            = new RecordedDelegationHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
         public RecoveryServicesManagementClient GetRecoveryServicesClient(RecordedDelegationHandler handler)
         {

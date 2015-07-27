@@ -39,8 +39,14 @@ namespace SiteRecovery.Tests
                 var response = client.Servers.List(RequestHeaders);
 
                 Assert.True(response.Servers.Count > 0, "Servers count can't be less than 1");
-                Assert.True(response.Servers.All(server => !string.IsNullOrEmpty(server.Name)), "Server name can't be null or empty");
-                Assert.True(response.Servers.All(server => !string.IsNullOrEmpty(server.Id)), "Server Id can't be null or empty");
+                Assert.True(
+                    response.Servers.All(
+                    server => !string.IsNullOrEmpty(server.Name)),
+                    "Server name can't be null or empty");
+                Assert.True(
+                    response.Servers.All(
+                    server => !string.IsNullOrEmpty(server.Id)),
+                    "Server Id can't be null or empty");
                 Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             }
         }
@@ -55,51 +61,17 @@ namespace SiteRecovery.Tests
 
                 var response = client.ProtectionContainer.List(RequestHeaders);
 
-                Assert.True(response.ProtectionContainers.Count > 0, "Protection containers count can't be less than 1");
-                Assert.True(response.ProtectionContainers.All(protectedContainer => !string.IsNullOrEmpty(protectedContainer.Name)), "Protection Container name can't be null or empty");
-                Assert.True(response.ProtectionContainers.All(protectedContainer => !string.IsNullOrEmpty(protectedContainer.Id)), "Protection Container Id can't be null or empty");
-                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-            }
-        }
-
-        [Fact]
-        public void EnumerateProtectionProfileTests()
-        {
-            using (UndoContext context = UndoContext.Current)
-            {
-                context.Start();
-                var client = GetSiteRecoveryClient(CustomHttpHandler);
-
-                var response = client.ProtectionProfile.List(RequestHeaders);
-
-                Assert.True(response.ProtectionProfiles.Count > 0, "Protection Profiles count can't be less than 1");
-                Assert.True(response.ProtectionProfiles.All(protectedContainer => !string.IsNullOrEmpty(protectedContainer.Name)), "Protection Profile name can't be null or empty");
-                Assert.True(response.ProtectionProfiles.All(protectedContainer => !string.IsNullOrEmpty(protectedContainer.Id)), "Protection Profile Id can't be null or empty");
-                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-            }
-        }
-
-        [Fact]
-        public void EnumerateProtectedEntitiesTests()
-        {
-            using (UndoContext context = UndoContext.Current)
-            {
-                context.Start();
-                var client = GetSiteRecoveryClient(CustomHttpHandler);
-
-                var protectionContainerList = client.ProtectionContainer.List(RequestHeaders);
-                ProtectionEntityListResponse response = null;
-                foreach (var pc in protectionContainerList.ProtectionContainers)
-                {
-                    if (pc.Properties.Role == "Primary")
-                    {
-                        response = client.ProtectionEntity.List(pc.Id, RequestHeaders);
-                    }
-                }
-
-                Assert.True(response.ProtectionEntities.Count > 0, "Protected entity count can't be less than 1");
-                Assert.True(response.ProtectionEntities.All(pe => !string.IsNullOrEmpty(pe.Name)), "Protection entity name can't be null or empty");
-                Assert.True(response.ProtectionEntities.All(pe => !string.IsNullOrEmpty(pe.Id)), "Protection entity Id can't be null or empty");
+                Assert.True(
+                    response.ProtectionContainers.Count > 0,
+                    "Protection containers count can't be less than 1");
+                Assert.True(
+                    response.ProtectionContainers.All(
+                    protectedContainer => !string.IsNullOrEmpty(protectedContainer.Name)),
+                    "Protection Container name can't be null or empty");
+                Assert.True(
+                    response.ProtectionContainers.All(
+                    protectedContainer => !string.IsNullOrEmpty(protectedContainer.Id)),
+                    "Protection Container Id can't be null or empty");
                 Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             }
         }
@@ -116,8 +88,12 @@ namespace SiteRecovery.Tests
                 var response = client.Jobs.List(jobQueryParameter, RequestHeaders);
 
                 Assert.True(response.Jobs.Count > 0, "Jobs count can't be less than 1");
-                Assert.True(response.Jobs.All(protectedContainer => !string.IsNullOrEmpty(protectedContainer.Name)), "Job name can't be null or empty");
-                Assert.True(response.Jobs.All(protectedContainer => !string.IsNullOrEmpty(protectedContainer.Id)), "Job Id can't be null or empty");
+                Assert.True(response.Jobs.All(
+                    protectedContainer => !string.IsNullOrEmpty(protectedContainer.Name)),
+                    "Job name can't be null or empty");
+                Assert.True(response.Jobs.All(
+                    protectedContainer => !string.IsNullOrEmpty(protectedContainer.Id)),
+                    "Job Id can't be null or empty");
                 Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             }
         }

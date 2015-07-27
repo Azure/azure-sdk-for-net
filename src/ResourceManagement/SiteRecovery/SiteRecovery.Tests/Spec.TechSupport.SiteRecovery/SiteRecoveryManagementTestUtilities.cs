@@ -81,19 +81,23 @@ namespace Microsoft.Azure.Test
 
             if (string.IsNullOrEmpty(SiteRecoveryTestsBase.MyCloudService))
             {
-                throw new Exception("Please set CLOUD_SERVICE_NAME environment variable before running the tests in Live mode");
+                throw new Exception("Please set CLOUD_SERVICE_NAME" + 
+                    " environment variable before running the tests in Live mode");
             }
             if (string.IsNullOrEmpty(SiteRecoveryTestsBase.MyVaultName))
             {
-                throw new Exception("Please set RESOURCE_NAME environment variable before running the tests in Live mode");
+                throw new Exception("Please set RESOURCE_NAME" +
+                    " environment variable before running the tests in Live mode");
             }
             if (string.IsNullOrEmpty(SiteRecoveryTestsBase.VaultKey))
             {
-                throw new Exception("Please set CHANNEL_INTEGRITY_KEY environment variable before running the tests in Live mode");
+                throw new Exception("Please set CHANNEL_INTEGRITY_KEY" +
+                    " environment variable before running the tests in Live mode");
             }
             if (string.IsNullOrEmpty(SiteRecoveryTestsBase.MyResourceGroupName))
             {
-                throw new Exception("Please set RESOURCE_GROUP_NAME environment variable before running the tests in Live mode");
+                throw new Exception("Please set RESOURCE_GROUP_NAME" +
+                    " environment variable before running the tests in Live mode");
             }
 
             return new SiteRecoveryManagementClient(

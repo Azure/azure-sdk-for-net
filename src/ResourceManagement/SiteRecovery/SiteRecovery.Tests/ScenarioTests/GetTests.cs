@@ -34,7 +34,7 @@ namespace SiteRecovery.Tests
 
                 var responseServers = client.Servers.List(RequestHeaders);
 
-                var response = client.Servers.Get(responseServers.Servers[0].Id, RequestHeaders);
+                var response = client.Servers.Get(responseServers.Servers[0].Name, RequestHeaders);
 
                 Assert.NotNull(response.Server);
                 Assert.NotNull(response.Server.Name);
@@ -52,7 +52,9 @@ namespace SiteRecovery.Tests
                 var client = GetSiteRecoveryClient(CustomHttpHandler);
 
                 var protectionContainerList = client.ProtectionContainer.List(RequestHeaders);
-                var response = client.ProtectionContainer.Get(protectionContainerList.ProtectionContainers[0].Id, RequestHeaders);
+                var response = client.ProtectionContainer.Get(
+                    protectionContainerList.ProtectionContainers[0].Name,
+                    RequestHeaders);
 
                 Assert.NotNull(response.ProtectionContainer);
                 Assert.NotNull(response.ProtectionContainer.Name);
