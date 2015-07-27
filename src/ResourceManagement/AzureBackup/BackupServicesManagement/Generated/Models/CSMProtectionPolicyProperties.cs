@@ -41,15 +41,15 @@ namespace Microsoft.Azure.Management.BackupServices.Models
             set { this._backupSchedule = value; }
         }
         
-        private CSMLongTermRetentionPolicy _lTRRetentionPolicy;
+        private CSMLongTermRetentionPolicy _ltrRetentionPolicy;
         
         /// <summary>
         /// Optional. Long Term Retention Policy.
         /// </summary>
-        public CSMLongTermRetentionPolicy LTRRetentionPolicy
+        public CSMLongTermRetentionPolicy LtrRetentionPolicy
         {
-            get { return this._lTRRetentionPolicy; }
-            set { this._lTRRetentionPolicy = value; }
+            get { return this._ltrRetentionPolicy; }
+            set { this._ltrRetentionPolicy = value; }
         }
         
         private string _policyName;

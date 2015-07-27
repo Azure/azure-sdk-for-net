@@ -892,7 +892,7 @@ namespace Microsoft.Azure.Management.BackupServices
                                         if (ltrRetentionPolicyValue != null && ltrRetentionPolicyValue.Type != JTokenType.Null)
                                         {
                                             CSMLongTermRetentionPolicy ltrRetentionPolicyInstance = new CSMLongTermRetentionPolicy();
-                                            propertiesInstance.LTRRetentionPolicy = ltrRetentionPolicyInstance;
+                                            propertiesInstance.LtrRetentionPolicy = ltrRetentionPolicyInstance;
                                             
                                             JToken dailyScheduleValue = ltrRetentionPolicyValue["DailySchedule"];
                                             if (dailyScheduleValue != null && dailyScheduleValue.Type != JTokenType.Null)
