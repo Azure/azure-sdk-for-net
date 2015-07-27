@@ -33,7 +33,7 @@ namespace Compute.Tests
         ComputeManagementClient computeClient;
         ResourceManagementClient resourcesClient;
 
-        ResourceGroupExtended resourceGroup;
+        ResourceGroup resourceGroup;
 
         string subId;
         string location;
