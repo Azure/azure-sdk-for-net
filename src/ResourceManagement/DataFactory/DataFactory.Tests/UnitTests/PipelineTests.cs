@@ -139,6 +139,45 @@ namespace DataFactory.Tests.UnitTests
             Assert.IsType<GenericActivity>(pipeline.Properties.Activities[0].TypeProperties);
         }
 
+        [Theory]
+        [InlineData(@"
+{
+    name: ""MyPipelineName"",
+    properties: 
+    {
+        activities:
+        [
+            {
+                type: ""Copy"",
+                name: ""TestActivity"",
+                typeProperties:
+                {
+                    source:
+                    {
+                        type: ""UnknownSource"",
+                        sourceRetryCount: ""2"",
+                    }
+                },
+                inputs: [ ],
+                outputs: [ ],
+                linkedServiceName: ""MyLinkedServiceName""
+            }
+        ]
+    }
+}
+")]
+        [Trait(TraitName.TestType, TestType.Unit)]
+        [Trait(TraitName.Function, TestType.Conversion)]
+        public void UnknownCopySourceDoesNotThrowExceptionTest(string json)
+        {
+            Pipeline pipeline = null;
+
+            // When we try to deserialize an unknown nested polymorphic type, 
+            // the behavior should be to drop the object (return null) rather than throw an exception
+            Assert.DoesNotThrow(() => pipeline = this.ConvertToWrapper(json));
+            Assert.Null(((CopyActivity)pipeline.Properties.Activities[0].TypeProperties).Source);
+        }
+
         [Theory, InlineData(PipelineJsonSamples.HDInsightPipeline)]
         [Trait(TraitName.TestType, TestType.Unit)]
         [Trait(TraitName.Function, TestType.Conversion)]

@@ -21,7 +21,7 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyDescription("Provides Microsoft Azure Data Factory management operations.")]
 
 [assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.1.0")]
+[assembly: AssemblyFileVersion("1.0.2.0")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]

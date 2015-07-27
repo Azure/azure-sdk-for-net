@@ -115,20 +115,13 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
             JToken token;
             if (!obj.TryGetTypeProperty(out token))
             {
-                throw new InvalidOperationException(string.Format(
-                        CultureInfo.InvariantCulture,
-                        "Could not find a string property '{0}' for the following JSON: {1}",
-                        DataFactoryConstants.KeyPolymorphicType,
-                        obj));
+                return null;
             }
 
             Type type;
             if (!this.TryGetRegisteredType(token.ToString(), out type))
             {
-                throw new InvalidOperationException(string.Format(
-                        CultureInfo.InvariantCulture,
-                        "There is no type available with the name '{0}'.",
-                        token));
+                return null;
             }
 
             TRegistered target = (TRegistered)Activator.CreateInstance(type);
