@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.Resources.Models
     /// <summary>
     /// Management lock information.
     /// </summary>
-    public partial class ManagementLockObject
+    public partial class ManagementLock
     {
         /// <summary>
         /// Gets or sets the properties of the lock.
@@ -19,22 +19,22 @@ namespace Microsoft.Azure.Management.Resources.Models
         public ManagementLockProperties Properties { get; set; }
 
         /// <summary>
-        /// Gets or sets the Id of the lock.
+        /// Gets the Id of the lock.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
+        public string Id { get; private set; }
 
         /// <summary>
-        /// Gets or sets the type of the lock.
+        /// Gets the type of the lock.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
-        public string Type { get; set; }
+        public string Type { get; private set; }
 
         /// <summary>
-        /// Gets or sets the name of the lock.
+        /// Gets the name of the lock.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
+        public string Name { get; private set; }
 
     }
 }

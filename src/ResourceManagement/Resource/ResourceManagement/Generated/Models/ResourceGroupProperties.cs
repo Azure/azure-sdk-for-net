@@ -10,13 +10,13 @@ namespace Microsoft.Azure.Management.Resources.Models
     /// <summary>
     /// The resource group properties.
     /// </summary>
-    public partial class ResourceGroupFormatResourceProperties
+    public partial class ResourceGroupProperties
     {
         /// <summary>
-        /// Gets or sets resource group provisioning state.
+        /// Gets resource group provisioning state.
         /// </summary>
         [JsonProperty(PropertyName = "provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
 
     }
 }

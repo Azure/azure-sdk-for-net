@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.Resources.Models
     /// <summary>
     /// Resource group filter.
     /// </summary>
-    public partial class ResourceGroupExtendedFilter
+    public partial class ResourceGroupFilter
     {
         /// <summary>
         /// Gets or sets the tag name.

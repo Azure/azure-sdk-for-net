@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='parameters'>
             /// The management lock parameters.
             /// </param>
-            public static ManagementLockObject CreateOrUpdateAtResourceGroupLevel(this IManagementLocksOperations operations, string resourceGroupName, string lockName, ManagementLockProperties parameters)
+            public static ManagementLock CreateOrUpdateAtResourceGroupLevel(this IManagementLocksOperations operations, string resourceGroupName, string lockName, ManagementLock parameters)
             {
                 return Task.Factory.StartNew(s => ((IManagementLocksOperations)s).CreateOrUpdateAtResourceGroupLevelAsync(resourceGroupName, lockName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -50,9 +50,9 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<ManagementLockObject> CreateOrUpdateAtResourceGroupLevelAsync( this IManagementLocksOperations operations, string resourceGroupName, string lockName, ManagementLockProperties parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ManagementLock> CreateOrUpdateAtResourceGroupLevelAsync( this IManagementLocksOperations operations, string resourceGroupName, string lockName, ManagementLock parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<ManagementLockObject> result = await operations.CreateOrUpdateAtResourceGroupLevelWithHttpMessagesAsync(resourceGroupName, lockName, parameters, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<ManagementLock> result = await operations.CreateOrUpdateAtResourceGroupLevelWithHttpMessagesAsync(resourceGroupName, lockName, parameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -84,7 +84,7 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='parameters'>
             /// Create or update management lock parameters.
             /// </param>
-            public static ManagementLockObject CreateOrUpdateAtResourceLevel(this IManagementLocksOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string lockName, ManagementLockProperties parameters)
+            public static ManagementLock CreateOrUpdateAtResourceLevel(this IManagementLocksOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string lockName, ManagementLock parameters)
             {
                 return Task.Factory.StartNew(s => ((IManagementLocksOperations)s).CreateOrUpdateAtResourceLevelAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, lockName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -120,9 +120,9 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<ManagementLockObject> CreateOrUpdateAtResourceLevelAsync( this IManagementLocksOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string lockName, ManagementLockProperties parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ManagementLock> CreateOrUpdateAtResourceLevelAsync( this IManagementLocksOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string lockName, ManagementLock parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<ManagementLockObject> result = await operations.CreateOrUpdateAtResourceLevelWithHttpMessagesAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, lockName, parameters, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<ManagementLock> result = await operations.CreateOrUpdateAtResourceLevelWithHttpMessagesAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, lockName, parameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -199,7 +199,7 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='parameters'>
             /// The management lock parameters.
             /// </param>
-            public static ManagementLockObject CreateOrUpdateAtSubscriptionLevel(this IManagementLocksOperations operations, string lockName, ManagementLockProperties parameters)
+            public static ManagementLock CreateOrUpdateAtSubscriptionLevel(this IManagementLocksOperations operations, string lockName, ManagementLock parameters)
             {
                 return Task.Factory.StartNew(s => ((IManagementLocksOperations)s).CreateOrUpdateAtSubscriptionLevelAsync(lockName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -219,9 +219,9 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<ManagementLockObject> CreateOrUpdateAtSubscriptionLevelAsync( this IManagementLocksOperations operations, string lockName, ManagementLockProperties parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ManagementLock> CreateOrUpdateAtSubscriptionLevelAsync( this IManagementLocksOperations operations, string lockName, ManagementLock parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<ManagementLockObject> result = await operations.CreateOrUpdateAtSubscriptionLevelWithHttpMessagesAsync(lockName, parameters, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<ManagementLock> result = await operations.CreateOrUpdateAtSubscriptionLevelWithHttpMessagesAsync(lockName, parameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -265,7 +265,7 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='lockName'>
             /// Name of the management lock.
             /// </param>
-            public static ManagementLockObject Get(this IManagementLocksOperations operations, string lockName)
+            public static ManagementLock Get(this IManagementLocksOperations operations, string lockName)
             {
                 return Task.Factory.StartNew(s => ((IManagementLocksOperations)s).GetAsync(lockName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -282,9 +282,9 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<ManagementLockObject> GetAsync( this IManagementLocksOperations operations, string lockName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ManagementLock> GetAsync( this IManagementLocksOperations operations, string lockName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<ManagementLockObject> result = await operations.GetWithHttpMessagesAsync(lockName, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<ManagementLock> result = await operations.GetWithHttpMessagesAsync(lockName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -337,7 +337,7 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='filter'>
             /// The filter to apply on the operation.
             /// </param>
-            public static Page<ManagementLockObject> ListAtResourceGroupLevel(this IManagementLocksOperations operations, string resourceGroupName, Expression<Func<ManagementLockObject, bool>> filter = default(Expression<Func<ManagementLockObject, bool>>))
+            public static Page<ManagementLock> ListAtResourceGroupLevel(this IManagementLocksOperations operations, string resourceGroupName, Expression<Func<ManagementLock, bool>> filter = default(Expression<Func<ManagementLock, bool>>))
             {
                 return Task.Factory.StartNew(s => ((IManagementLocksOperations)s).ListAtResourceGroupLevelAsync(resourceGroupName, filter), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -357,9 +357,9 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<Page<ManagementLockObject>> ListAtResourceGroupLevelAsync( this IManagementLocksOperations operations, string resourceGroupName, Expression<Func<ManagementLockObject, bool>> filter = default(Expression<Func<ManagementLockObject, bool>>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Page<ManagementLock>> ListAtResourceGroupLevelAsync( this IManagementLocksOperations operations, string resourceGroupName, Expression<Func<ManagementLock, bool>> filter = default(Expression<Func<ManagementLock, bool>>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<Page<ManagementLockObject>> result = await operations.ListAtResourceGroupLevelWithHttpMessagesAsync(resourceGroupName, filter, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<Page<ManagementLock>> result = await operations.ListAtResourceGroupLevelWithHttpMessagesAsync(resourceGroupName, filter, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -387,7 +387,7 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='filter'>
             /// The filter to apply on the operation.
             /// </param>
-            public static Page<ManagementLockObject> ListAtResourceLevel(this IManagementLocksOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, Expression<Func<ManagementLockObject, bool>> filter = default(Expression<Func<ManagementLockObject, bool>>))
+            public static Page<ManagementLock> ListAtResourceLevel(this IManagementLocksOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, Expression<Func<ManagementLock, bool>> filter = default(Expression<Func<ManagementLock, bool>>))
             {
                 return Task.Factory.StartNew(s => ((IManagementLocksOperations)s).ListAtResourceLevelAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, filter), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -419,9 +419,9 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<Page<ManagementLockObject>> ListAtResourceLevelAsync( this IManagementLocksOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, Expression<Func<ManagementLockObject, bool>> filter = default(Expression<Func<ManagementLockObject, bool>>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Page<ManagementLock>> ListAtResourceLevelAsync( this IManagementLocksOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, Expression<Func<ManagementLock, bool>> filter = default(Expression<Func<ManagementLock, bool>>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<Page<ManagementLockObject>> result = await operations.ListAtResourceLevelWithHttpMessagesAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, filter, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<Page<ManagementLock>> result = await operations.ListAtResourceLevelWithHttpMessagesAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, filter, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -434,7 +434,7 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='nextLink'>
             /// NextLink from the previous successful call to List operation.
             /// </param>
-            public static Page<ManagementLockObject> ListNext(this IManagementLocksOperations operations, string nextLink)
+            public static Page<ManagementLock> ListNext(this IManagementLocksOperations operations, string nextLink)
             {
                 return Task.Factory.StartNew(s => ((IManagementLocksOperations)s).ListNextAsync(nextLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -451,9 +451,9 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<Page<ManagementLockObject>> ListNextAsync( this IManagementLocksOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Page<ManagementLock>> ListNextAsync( this IManagementLocksOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<Page<ManagementLockObject>> result = await operations.ListNextWithHttpMessagesAsync(nextLink, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<Page<ManagementLock>> result = await operations.ListNextWithHttpMessagesAsync(nextLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -466,7 +466,7 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='filter'>
             /// The filter to apply on the operation.
             /// </param>
-            public static Page<ManagementLockObject> ListAtSubscriptionLevel(this IManagementLocksOperations operations, Expression<Func<ManagementLockObject, bool>> filter = default(Expression<Func<ManagementLockObject, bool>>))
+            public static Page<ManagementLock> ListAtSubscriptionLevel(this IManagementLocksOperations operations, Expression<Func<ManagementLock, bool>> filter = default(Expression<Func<ManagementLock, bool>>))
             {
                 return Task.Factory.StartNew(s => ((IManagementLocksOperations)s).ListAtSubscriptionLevelAsync(filter), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -483,9 +483,9 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<Page<ManagementLockObject>> ListAtSubscriptionLevelAsync( this IManagementLocksOperations operations, Expression<Func<ManagementLockObject, bool>> filter = default(Expression<Func<ManagementLockObject, bool>>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Page<ManagementLock>> ListAtSubscriptionLevelAsync( this IManagementLocksOperations operations, Expression<Func<ManagementLock, bool>> filter = default(Expression<Func<ManagementLock, bool>>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<Page<ManagementLockObject>> result = await operations.ListAtSubscriptionLevelWithHttpMessagesAsync(filter, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<Page<ManagementLock>> result = await operations.ListAtSubscriptionLevelWithHttpMessagesAsync(filter, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -498,7 +498,7 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='nextPageLink'>
             /// NextLink from the previous successful call to List operation.
             /// </param>
-            public static Page<ManagementLockObject> ListAtResourceGroupLevelNext(this IManagementLocksOperations operations, string nextPageLink)
+            public static Page<ManagementLock> ListAtResourceGroupLevelNext(this IManagementLocksOperations operations, string nextPageLink)
             {
                 return Task.Factory.StartNew(s => ((IManagementLocksOperations)s).ListAtResourceGroupLevelNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -515,9 +515,9 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<Page<ManagementLockObject>> ListAtResourceGroupLevelNextAsync( this IManagementLocksOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Page<ManagementLock>> ListAtResourceGroupLevelNextAsync( this IManagementLocksOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<Page<ManagementLockObject>> result = await operations.ListAtResourceGroupLevelNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<Page<ManagementLock>> result = await operations.ListAtResourceGroupLevelNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -530,7 +530,7 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='nextPageLink'>
             /// NextLink from the previous successful call to List operation.
             /// </param>
-            public static Page<ManagementLockObject> ListAtResourceLevelNext(this IManagementLocksOperations operations, string nextPageLink)
+            public static Page<ManagementLock> ListAtResourceLevelNext(this IManagementLocksOperations operations, string nextPageLink)
             {
                 return Task.Factory.StartNew(s => ((IManagementLocksOperations)s).ListAtResourceLevelNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -547,9 +547,9 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<Page<ManagementLockObject>> ListAtResourceLevelNextAsync( this IManagementLocksOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Page<ManagementLock>> ListAtResourceLevelNextAsync( this IManagementLocksOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<Page<ManagementLockObject>> result = await operations.ListAtResourceLevelNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<Page<ManagementLock>> result = await operations.ListAtResourceLevelNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -562,7 +562,7 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='nextPageLink'>
             /// NextLink from the previous successful call to List operation.
             /// </param>
-            public static Page<ManagementLockObject> ListNextNext(this IManagementLocksOperations operations, string nextPageLink)
+            public static Page<ManagementLock> ListNextNext(this IManagementLocksOperations operations, string nextPageLink)
             {
                 return Task.Factory.StartNew(s => ((IManagementLocksOperations)s).ListNextNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -579,9 +579,9 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<Page<ManagementLockObject>> ListNextNextAsync( this IManagementLocksOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Page<ManagementLock>> ListNextNextAsync( this IManagementLocksOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<Page<ManagementLockObject>> result = await operations.ListNextNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<Page<ManagementLock>> result = await operations.ListNextNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -594,7 +594,7 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='nextPageLink'>
             /// NextLink from the previous successful call to List operation.
             /// </param>
-            public static Page<ManagementLockObject> ListAtSubscriptionLevelNext(this IManagementLocksOperations operations, string nextPageLink)
+            public static Page<ManagementLock> ListAtSubscriptionLevelNext(this IManagementLocksOperations operations, string nextPageLink)
             {
                 return Task.Factory.StartNew(s => ((IManagementLocksOperations)s).ListAtSubscriptionLevelNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -611,9 +611,9 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<Page<ManagementLockObject>> ListAtSubscriptionLevelNextAsync( this IManagementLocksOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Page<ManagementLock>> ListAtSubscriptionLevelNextAsync( this IManagementLocksOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<Page<ManagementLockObject>> result = await operations.ListAtSubscriptionLevelNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<Page<ManagementLock>> result = await operations.ListAtSubscriptionLevelNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

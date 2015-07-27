@@ -273,6 +273,72 @@ namespace Microsoft.Azure.Management.Resources
             }
 
             /// <summary>
+            /// Create a resource.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='resourceProviderNamespace'>
+            /// Resource identity.
+            /// </param>
+            /// <param name='parentResourcePath'>
+            /// Resource identity.
+            /// </param>
+            /// <param name='resourceType'>
+            /// Resource identity.
+            /// </param>
+            /// <param name='resourceName'>
+            /// Resource identity.
+            /// </param>
+            /// <param name='apiVersion'>
+            /// </param>
+            /// <param name='parameters'>
+            /// Create or update resource parameters.
+            /// </param>
+            public static GenericResource BeginCreateOrUpdate(this IResourcesOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion, GenericResource parameters)
+            {
+                return Task.Factory.StartNew(s => ((IResourcesOperations)s).BeginCreateOrUpdateAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Create a resource.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='resourceProviderNamespace'>
+            /// Resource identity.
+            /// </param>
+            /// <param name='parentResourcePath'>
+            /// Resource identity.
+            /// </param>
+            /// <param name='resourceType'>
+            /// Resource identity.
+            /// </param>
+            /// <param name='resourceName'>
+            /// Resource identity.
+            /// </param>
+            /// <param name='apiVersion'>
+            /// </param>
+            /// <param name='parameters'>
+            /// Create or update resource parameters.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// Cancellation token.
+            /// </param>
+            public static async Task<GenericResource> BeginCreateOrUpdateAsync( this IResourcesOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion, GenericResource parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<GenericResource> result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion, parameters, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
             /// Returns a resource belonging to a resource group.
             /// </summary>
             /// <param name='operations'>
