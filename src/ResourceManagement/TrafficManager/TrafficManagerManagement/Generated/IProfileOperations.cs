@@ -29,38 +29,57 @@ using Microsoft.Azure.Management.TrafficManager.Models;
 namespace Microsoft.Azure.Management.TrafficManager
 {
     /// <summary>
-    /// Operations for managing WATMv2 profiles.
+    /// Operations for managing Traffic Manager profiles.
     /// </summary>
     public partial interface IProfileOperations
     {
         /// <summary>
-        /// Create or update a WATMv2 profile within a resource group.
+        /// Create or update a Traffic Manager endpoint.
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='profileName'>
-        /// The name of the zone without a terminating dot.
-        /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the CreateOrUpdate operation.
+        /// The Traffic Manager name parameters supplied to the
+        /// CheckTrafficManagerNameAvailability operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response to a Profile CreateOrUpdate operation.
+        /// The response to a 'CheckTrafficManagerNameAvailability' operation.
+        /// </returns>
+        Task<CheckTrafficManagerRelativeDnsNameAvailabilityResponse> CheckTrafficManagerRelativeDnsNameAvailabilityAsync(CheckTrafficManagerRelativeDnsNameAvailabilityParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Create or update a Traffic Manager profile.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group containing the Traffic Manager
+        /// profile.
+        /// </param>
+        /// <param name='profileName'>
+        /// The name of the Traffic Manager profile.
+        /// </param>
+        /// <param name='parameters'>
+        /// The Traffic Manager profile parameters supplied to the
+        /// CreateOrUpdate operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response to a Traffic Manager profile 'CreateOrUpdate'
+        /// operation.
         /// </returns>
         Task<ProfileCreateOrUpdateResponse> CreateOrUpdateAsync(string resourceGroupName, string profileName, ProfileCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Deletes a WATMv2 profile within a resource group.
+        /// Deletes a Traffic Manager profile.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group containing the Traffic Manager
+        /// profile to be deleted.
         /// </param>
         /// <param name='profileName'>
-        /// The name of the zone without a terminating dot.
+        /// The name of the Traffic Manager profile to be deleted.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -72,45 +91,71 @@ namespace Microsoft.Azure.Management.TrafficManager
         Task<AzureOperationResponse> DeleteAsync(string resourceGroupName, string profileName, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Gets a WATMv2 profile within a resource group.
+        /// Gets a Traffic Manager profile.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group containing the Traffic Manager
+        /// profile.
         /// </param>
         /// <param name='profileName'>
-        /// The name of the zone without a terminating dot.
+        /// The name of the Traffic Manager profile.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response to a Profile Create operation.
+        /// The response to a Traffic Manager profile 'Create' operation.
         /// </returns>
         Task<ProfileGetResponse> GetAsync(string resourceGroupName, string profileName, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Lists all WATMv2 profile within a subscription.
+        /// Lists all Traffic Manager profiles within a subscription.
         /// </summary>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response to a Profile ProfileListAll operation.
+        /// The response to a Traffic Manager profile 'ListAll' or
+        /// 'ListAllInResourceGroup' operation.
         /// </returns>
         Task<ProfileListResponse> ListAllAsync(CancellationToken cancellationToken);
         
         /// <summary>
-        /// Lists all WATMv2 profiles within a resource group.
+        /// Lists all Traffic Manager profiles within a resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group containing the Traffic Manager
+        /// profiles to be listed.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response to a Profile ProfileListAll operation.
+        /// The response to a Traffic Manager profile 'ListAll' or
+        /// 'ListAllInResourceGroup' operation.
         /// </returns>
         Task<ProfileListResponse> ListAllInResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Update a Traffic Manager profile.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group containing the Traffic Manager
+        /// profile.
+        /// </param>
+        /// <param name='profileName'>
+        /// The name of the Traffic Manager profile.
+        /// </param>
+        /// <param name='parameters'>
+        /// The Traffic Manager profile parameters supplied to the Update
+        /// operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Parameters supplied to update a Traffic Manager profile.
+        /// </returns>
+        Task<ProfileUpdateResponse> UpdateAsync(string resourceGroupName, string profileName, ProfileUpdateParameters parameters, CancellationToken cancellationToken);
     }
 }

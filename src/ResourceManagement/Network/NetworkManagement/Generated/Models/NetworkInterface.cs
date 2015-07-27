@@ -32,15 +32,26 @@ namespace Microsoft.Azure.Management.Network.Models
     /// </summary>
     public partial class NetworkInterface : TopLevelResource
     {
-        private DnsSettings _dnsSettings;
+        private NetworkInterfaceDnsSettings _dnsSettings;
         
         /// <summary>
-        /// Optional. Gets or sets DNsSettings in  NetworkInterface
+        /// Optional. Gets or sets DNS Settings in  NetworkInterface
         /// </summary>
-        public DnsSettings DnsSettings
+        public NetworkInterfaceDnsSettings DnsSettings
         {
             get { return this._dnsSettings; }
             set { this._dnsSettings = value; }
+        }
+        
+        private bool _enableIPForwarding;
+        
+        /// <summary>
+        /// Optional. Gets or sets whether IPForwarding is enabled on the NIC
+        /// </summary>
+        public bool EnableIPForwarding
+        {
+            get { return this._enableIPForwarding; }
+            set { this._enableIPForwarding = value; }
         }
         
         private IList<NetworkInterfaceIpConfiguration> _ipConfigurations;

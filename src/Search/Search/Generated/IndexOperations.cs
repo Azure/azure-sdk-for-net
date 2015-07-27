@@ -986,8 +986,9 @@ namespace Microsoft.Azure.Search
             
             // Construct URL
             string url = "";
-            url = url + "/indexes/";
+            url = url + "/indexes('";
             url = url + Uri.EscapeDataString(index.Name);
+            url = url + "')";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-02-28");
             if (queryParameters.Count > 0)
@@ -1729,8 +1730,9 @@ namespace Microsoft.Azure.Search
             
             // Construct URL
             string url = "";
-            url = url + "/indexes/";
+            url = url + "/indexes('";
             url = url + Uri.EscapeDataString(indexName);
+            url = url + "')";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-02-28");
             if (queryParameters.Count > 0)
@@ -1861,8 +1863,9 @@ namespace Microsoft.Azure.Search
             
             // Construct URL
             string url = "";
-            url = url + "/indexes/";
+            url = url + "/indexes('";
             url = url + Uri.EscapeDataString(indexName);
+            url = url + "')";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-02-28");
             if (queryParameters.Count > 0)
@@ -2385,9 +2388,9 @@ namespace Microsoft.Azure.Search
             
             // Construct URL
             string url = "";
-            url = url + "/indexes/";
+            url = url + "/indexes('";
             url = url + Uri.EscapeDataString(indexName);
-            url = url + "/stats";
+            url = url + "')/search.stats";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-02-28");
             if (queryParameters.Count > 0)

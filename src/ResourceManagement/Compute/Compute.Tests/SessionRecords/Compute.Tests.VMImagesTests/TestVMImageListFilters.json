@@ -1,13 +1,117 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/84fffc2f-5d77-449a-bc7f-58c363f2a6b9/providers/Microsoft.Compute/locations/westus/publishers/Microsoft.Windows/artifacttypes/vmimage/offers/WindowsServer2012/skus/Enterprise/versions?api-version=2015-05-01-preview&$top=0",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODRmZmZjMmYtNWQ3Ny00NDlhLWJjN2YtNThjMzYzZjJhNmI5L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvd2VzdHVzL3B1Ymxpc2hlcnMvTWljcm9zb2Z0LldpbmRvd3MvYXJ0aWZhY3R0eXBlcy92bWltYWdlL29mZmVycy9XaW5kb3dzU2VydmVyMjAxMi9za3VzL0VudGVycHJpc2UvdmVyc2lvbnM/YXBpLXZlcnNpb249MjAxNS0wNS0wMS1wcmV2aWV3JiR0b3A9MA==",
+      "RequestUri": "/subscriptions/21466899-20b2-463c-8c30-b8fb28a43248/providers/Microsoft.Compute/locations/SoutheastAsia/publishers/MicrosoftWindowsServer/artifacttypes/vmimage/offers/WindowsServer/skus/2012-R2-Datacenter/versions?api-version=2015-06-15&$top=1",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjE0NjY4OTktMjBiMi00NjNjLThjMzAtYjhmYjI4YTQzMjQ4L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvU291dGhlYXN0QXNpYS9wdWJsaXNoZXJzL01pY3Jvc29mdFdpbmRvd3NTZXJ2ZXIvYXJ0aWZhY3R0eXBlcy92bWltYWdlL29mZmVycy9XaW5kb3dzU2VydmVyL3NrdXMvMjAxMi1SMi1EYXRhY2VudGVyL3ZlcnNpb25zP2FwaS12ZXJzaW9uPTIwMTUtMDYtMTUmJHRvcD0x",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "Microsoft.Azure.Management.Compute.ComputeManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/10.8.0.0"
+        ]
+      },
+      "ResponseBody": "[\r\n  {\r\n    \"location\": \"southeastasia\",\r\n    \"name\": \"4.0.201504\",\r\n    \"id\": \"/Subscriptions/21466899-20b2-463c-8c30-b8fb28a43248/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer/Skus/2012-R2-Datacenter/Versions/4.0.201504\"\r\n  }\r\n]",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "313"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "0d71a122-597a-4d89-bfad-9e0bf45492d7"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14976"
+        ],
+        "x-ms-correlation-request-id": [
+          "3fc850c6-d0f1-4c7f-b9e6-88e9635ba394"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20150716T173029Z:3fc850c6-d0f1-4c7f-b9e6-88e9635ba394"
+        ],
+        "Date": [
+          "Thu, 16 Jul 2015 17:30:29 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/21466899-20b2-463c-8c30-b8fb28a43248/providers/Microsoft.Compute/locations/SoutheastAsia/publishers/MicrosoftWindowsServer/artifacttypes/vmimage/offers/WindowsServer/skus/2012-R2-Datacenter/versions?api-version=2015-06-15&$top=1",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjE0NjY4OTktMjBiMi00NjNjLThjMzAtYjhmYjI4YTQzMjQ4L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvU291dGhlYXN0QXNpYS9wdWJsaXNoZXJzL01pY3Jvc29mdFdpbmRvd3NTZXJ2ZXIvYXJ0aWZhY3R0eXBlcy92bWltYWdlL29mZmVycy9XaW5kb3dzU2VydmVyL3NrdXMvMjAxMi1SMi1EYXRhY2VudGVyL3ZlcnNpb25zP2FwaS12ZXJzaW9uPTIwMTUtMDYtMTUmJHRvcD0x",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/10.8.0.0"
+        ]
+      },
+      "ResponseBody": "[\r\n  {\r\n    \"location\": \"southeastasia\",\r\n    \"name\": \"4.0.201504\",\r\n    \"id\": \"/Subscriptions/21466899-20b2-463c-8c30-b8fb28a43248/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer/Skus/2012-R2-Datacenter/Versions/4.0.201504\"\r\n  }\r\n]",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "313"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "271c04f0-2e6d-4d01-8b0c-d857b552f559"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14974"
+        ],
+        "x-ms-correlation-request-id": [
+          "9a04ea2e-376a-4072-9015-b1605337cff1"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20150716T173031Z:9a04ea2e-376a-4072-9015-b1605337cff1"
+        ],
+        "Date": [
+          "Thu, 16 Jul 2015 17:30:30 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/21466899-20b2-463c-8c30-b8fb28a43248/providers/Microsoft.Compute/locations/SoutheastAsia/publishers/MicrosoftWindowsServer/artifacttypes/vmimage/offers/WindowsServer/skus/2012-R2-Datacenter/versions?api-version=2015-06-15&$top=0",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjE0NjY4OTktMjBiMi00NjNjLThjMzAtYjhmYjI4YTQzMjQ4L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvU291dGhlYXN0QXNpYS9wdWJsaXNoZXJzL01pY3Jvc29mdFdpbmRvd3NTZXJ2ZXIvYXJ0aWZhY3R0eXBlcy92bWltYWdlL29mZmVycy9XaW5kb3dzU2VydmVyL3NrdXMvMjAxMi1SMi1EYXRhY2VudGVyL3ZlcnNpb25zP2FwaS12ZXJzaW9uPTIwMTUtMDYtMTUmJHRvcD0w",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/10.8.0.0"
         ]
       },
       "ResponseBody": "[]",
@@ -24,50 +128,48 @@
         "Pragma": [
           "no-cache"
         ],
-        "X-SourceFiles": [
-          "=?UTF-8?B?RTpccmRcYXpfY29tcHV0ZTJccHJpdmF0ZVxTZXJ2aWNlc1xBenVyZVJUXENSUC1QSVJcQXJ0aWZhY3RTZXJ2aWNlXHN1YnNjcmlwdGlvbnNcODRmZmZjMmYtNWQ3Ny00NDlhLWJjN2YtNThjMzYzZjJhNmI5XHByb3ZpZGVyc1xNaWNyb3NvZnQuQ29tcHV0ZVxsb2NhdGlvbnNcd2VzdHVzXHB1Ymxpc2hlcnNcTWljcm9zb2Z0LldpbmRvd3NcYXJ0aWZhY3R0eXBlc1x2bWltYWdlXG9mZmVyc1xXaW5kb3dzU2VydmVyMjAxMlxza3VzXEVudGVycHJpc2VcdmVyc2lvbnM=?="
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
         ],
-        "Access-Control-Allow-Origin": [
-          "*"
-        ],
-        "Access-Control-Allow-Headers": [
-          "Content-Type"
-        ],
-        "Access-Control-Allow-Methods": [
-          "GET, POST, PUT, DELETE, OPTIONS"
+        "x-ms-request-id": [
+          "2fd89c7c-b966-41d8-adbc-8cfa6b8c462c"
         ],
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Sat, 11 Apr 2015 00:27:06 GMT"
-        ],
         "Server": [
-          "Microsoft-IIS/8.0"
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
         ],
-        "X-AspNet-Version": [
-          "4.0.30319"
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14975"
         ],
-        "X-Powered-By": [
-          "ASP.NET"
+        "x-ms-correlation-request-id": [
+          "ddd65685-89cc-4246-ac3f-6caf234604d4"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20150716T173030Z:ddd65685-89cc-4246-ac3f-6caf234604d4"
+        ],
+        "Date": [
+          "Thu, 16 Jul 2015 17:30:29 GMT"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/84fffc2f-5d77-449a-bc7f-58c363f2a6b9/providers/Microsoft.Compute/locations/westus/publishers/Microsoft.Windows/artifacttypes/vmimage/offers/WindowsServer2012/skus/Enterprise/versions?api-version=2015-05-01-preview&$top=1",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODRmZmZjMmYtNWQ3Ny00NDlhLWJjN2YtNThjMzYzZjJhNmI5L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvd2VzdHVzL3B1Ymxpc2hlcnMvTWljcm9zb2Z0LldpbmRvd3MvYXJ0aWZhY3R0eXBlcy92bWltYWdlL29mZmVycy9XaW5kb3dzU2VydmVyMjAxMi9za3VzL0VudGVycHJpc2UvdmVyc2lvbnM/YXBpLXZlcnNpb249MjAxNS0wNS0wMS1wcmV2aWV3JiR0b3A9MQ==",
+      "RequestUri": "/subscriptions/21466899-20b2-463c-8c30-b8fb28a43248/providers/Microsoft.Compute/locations/SoutheastAsia/publishers/MicrosoftWindowsServer/artifacttypes/vmimage/offers/WindowsServer/skus/2012-R2-Datacenter/versions?api-version=2015-06-15&$top=2",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjE0NjY4OTktMjBiMi00NjNjLThjMzAtYjhmYjI4YTQzMjQ4L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvU291dGhlYXN0QXNpYS9wdWJsaXNoZXJzL01pY3Jvc29mdFdpbmRvd3NTZXJ2ZXIvYXJ0aWZhY3R0eXBlcy92bWltYWdlL29mZmVycy9XaW5kb3dzU2VydmVyL3NrdXMvMjAxMi1SMi1EYXRhY2VudGVyL3ZlcnNpb25zP2FwaS12ZXJzaW9uPTIwMTUtMDYtMTUmJHRvcD0y",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "Microsoft.Azure.Management.Compute.ComputeManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/10.8.0.0"
         ]
       },
-      "ResponseBody": "[\r\n  {\r\n    \"location\": \"westus\",\r\n    \"name\": \"1.0.0\",\r\n    \"id\": \"/subscriptions/84fffc2f-5d77-449a-bc7f-58c363f2a6b9/providers/Microsoft.Compute/locations/westus/publishers/Microsoft.Windows/artifacttypes/vmimage/offers/WindowsServer2012/skus/Enterprise/versions/1.0.0\"\r\n  }\r\n]",
+      "ResponseBody": "[\r\n  {\r\n    \"location\": \"southeastasia\",\r\n    \"name\": \"4.0.201504\",\r\n    \"id\": \"/Subscriptions/21466899-20b2-463c-8c30-b8fb28a43248/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer/Skus/2012-R2-Datacenter/Versions/4.0.201504\"\r\n  },\r\n  {\r\n    \"location\": \"southeastasia\",\r\n    \"name\": \"4.0.201505\",\r\n    \"id\": \"/Subscriptions/21466899-20b2-463c-8c30-b8fb28a43248/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer/Skus/2012-R2-Datacenter/Versions/4.0.201505\"\r\n  }\r\n]",
       "ResponseHeaders": {
         "Content-Length": [
-          "280"
+          "623"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -78,50 +180,48 @@
         "Pragma": [
           "no-cache"
         ],
-        "X-SourceFiles": [
-          "=?UTF-8?B?RTpccmRcYXpfY29tcHV0ZTJccHJpdmF0ZVxTZXJ2aWNlc1xBenVyZVJUXENSUC1QSVJcQXJ0aWZhY3RTZXJ2aWNlXHN1YnNjcmlwdGlvbnNcODRmZmZjMmYtNWQ3Ny00NDlhLWJjN2YtNThjMzYzZjJhNmI5XHByb3ZpZGVyc1xNaWNyb3NvZnQuQ29tcHV0ZVxsb2NhdGlvbnNcd2VzdHVzXHB1Ymxpc2hlcnNcTWljcm9zb2Z0LldpbmRvd3NcYXJ0aWZhY3R0eXBlc1x2bWltYWdlXG9mZmVyc1xXaW5kb3dzU2VydmVyMjAxMlxza3VzXEVudGVycHJpc2VcdmVyc2lvbnM=?="
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
         ],
-        "Access-Control-Allow-Origin": [
-          "*"
-        ],
-        "Access-Control-Allow-Headers": [
-          "Content-Type"
-        ],
-        "Access-Control-Allow-Methods": [
-          "GET, POST, PUT, DELETE, OPTIONS"
+        "x-ms-request-id": [
+          "b289c668-7926-4ae2-9042-cae8d2d49a85"
         ],
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Sat, 11 Apr 2015 00:27:06 GMT"
-        ],
         "Server": [
-          "Microsoft-IIS/8.0"
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
         ],
-        "X-AspNet-Version": [
-          "4.0.30319"
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14973"
         ],
-        "X-Powered-By": [
-          "ASP.NET"
+        "x-ms-correlation-request-id": [
+          "a0369442-92b9-4394-806f-5558488ddb7d"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20150716T173031Z:a0369442-92b9-4394-806f-5558488ddb7d"
+        ],
+        "Date": [
+          "Thu, 16 Jul 2015 17:30:31 GMT"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/84fffc2f-5d77-449a-bc7f-58c363f2a6b9/providers/Microsoft.Compute/locations/westus/publishers/Microsoft.Windows/artifacttypes/vmimage/offers/WindowsServer2012/skus/Enterprise/versions?api-version=2015-05-01-preview&$top=2",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODRmZmZjMmYtNWQ3Ny00NDlhLWJjN2YtNThjMzYzZjJhNmI5L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvd2VzdHVzL3B1Ymxpc2hlcnMvTWljcm9zb2Z0LldpbmRvd3MvYXJ0aWZhY3R0eXBlcy92bWltYWdlL29mZmVycy9XaW5kb3dzU2VydmVyMjAxMi9za3VzL0VudGVycHJpc2UvdmVyc2lvbnM/YXBpLXZlcnNpb249MjAxNS0wNS0wMS1wcmV2aWV3JiR0b3A9Mg==",
+      "RequestUri": "/subscriptions/21466899-20b2-463c-8c30-b8fb28a43248/providers/Microsoft.Compute/locations/SoutheastAsia/publishers/MicrosoftWindowsServer/artifacttypes/vmimage/offers/WindowsServer/skus/2012-R2-Datacenter/versions?api-version=2015-06-15&$orderby=name%20desc",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjE0NjY4OTktMjBiMi00NjNjLThjMzAtYjhmYjI4YTQzMjQ4L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvU291dGhlYXN0QXNpYS9wdWJsaXNoZXJzL01pY3Jvc29mdFdpbmRvd3NTZXJ2ZXIvYXJ0aWZhY3R0eXBlcy92bWltYWdlL29mZmVycy9XaW5kb3dzU2VydmVyL3NrdXMvMjAxMi1SMi1EYXRhY2VudGVyL3ZlcnNpb25zP2FwaS12ZXJzaW9uPTIwMTUtMDYtMTUmJG9yZGVyYnk9bmFtZSUyMGRlc2M=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "Microsoft.Azure.Management.Compute.ComputeManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/10.8.0.0"
         ]
       },
-      "ResponseBody": "[\r\n  {\r\n    \"location\": \"westus\",\r\n    \"name\": \"1.0.0\",\r\n    \"id\": \"/subscriptions/84fffc2f-5d77-449a-bc7f-58c363f2a6b9/providers/Microsoft.Compute/locations/westus/publishers/Microsoft.Windows/artifacttypes/vmimage/offers/WindowsServer2012/skus/Enterprise/versions/1.0.0\"\r\n  },\r\n  {\r\n    \"location\": \"westus\",\r\n    \"name\": \"1.1.0\",\r\n    \"id\": \"/subscriptions/84fffc2f-5d77-449a-bc7f-58c363f2a6b9/providers/Microsoft.Compute/locations/westus/publishers/Microsoft.Windows/artifacttypes/vmimage/offers/WindowsServer2012/skus/Enterprise/versions/1.1.0\"\r\n  }\r\n]",
+      "ResponseBody": "[\r\n  {\r\n    \"location\": \"southeastasia\",\r\n    \"name\": \"4.0.201506\",\r\n    \"id\": \"/Subscriptions/21466899-20b2-463c-8c30-b8fb28a43248/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer/Skus/2012-R2-Datacenter/Versions/4.0.201506\"\r\n  },\r\n  {\r\n    \"location\": \"southeastasia\",\r\n    \"name\": \"4.0.201505\",\r\n    \"id\": \"/Subscriptions/21466899-20b2-463c-8c30-b8fb28a43248/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer/Skus/2012-R2-Datacenter/Versions/4.0.201505\"\r\n  },\r\n  {\r\n    \"location\": \"southeastasia\",\r\n    \"name\": \"4.0.201504\",\r\n    \"id\": \"/Subscriptions/21466899-20b2-463c-8c30-b8fb28a43248/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer/Skus/2012-R2-Datacenter/Versions/4.0.201504\"\r\n  }\r\n]",
       "ResponseHeaders": {
         "Content-Length": [
-          "557"
+          "933"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -132,50 +232,48 @@
         "Pragma": [
           "no-cache"
         ],
-        "X-SourceFiles": [
-          "=?UTF-8?B?RTpccmRcYXpfY29tcHV0ZTJccHJpdmF0ZVxTZXJ2aWNlc1xBenVyZVJUXENSUC1QSVJcQXJ0aWZhY3RTZXJ2aWNlXHN1YnNjcmlwdGlvbnNcODRmZmZjMmYtNWQ3Ny00NDlhLWJjN2YtNThjMzYzZjJhNmI5XHByb3ZpZGVyc1xNaWNyb3NvZnQuQ29tcHV0ZVxsb2NhdGlvbnNcd2VzdHVzXHB1Ymxpc2hlcnNcTWljcm9zb2Z0LldpbmRvd3NcYXJ0aWZhY3R0eXBlc1x2bWltYWdlXG9mZmVyc1xXaW5kb3dzU2VydmVyMjAxMlxza3VzXEVudGVycHJpc2VcdmVyc2lvbnM=?="
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
         ],
-        "Access-Control-Allow-Origin": [
-          "*"
-        ],
-        "Access-Control-Allow-Headers": [
-          "Content-Type"
-        ],
-        "Access-Control-Allow-Methods": [
-          "GET, POST, PUT, DELETE, OPTIONS"
+        "x-ms-request-id": [
+          "16975411-dced-4364-a94a-a9162652289e"
         ],
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Sat, 11 Apr 2015 00:27:06 GMT"
-        ],
         "Server": [
-          "Microsoft-IIS/8.0"
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
         ],
-        "X-AspNet-Version": [
-          "4.0.30319"
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14972"
         ],
-        "X-Powered-By": [
-          "ASP.NET"
+        "x-ms-correlation-request-id": [
+          "433ec649-0e60-44a4-83b9-0aa33d822db4"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20150716T173032Z:433ec649-0e60-44a4-83b9-0aa33d822db4"
+        ],
+        "Date": [
+          "Thu, 16 Jul 2015 17:30:32 GMT"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/84fffc2f-5d77-449a-bc7f-58c363f2a6b9/providers/Microsoft.Compute/locations/westus/publishers/Microsoft.Windows/artifacttypes/vmimage/offers/WindowsServer2012/skus/Enterprise/versions?api-version=2015-05-01-preview&$orderby=name%20desc",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODRmZmZjMmYtNWQ3Ny00NDlhLWJjN2YtNThjMzYzZjJhNmI5L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvd2VzdHVzL3B1Ymxpc2hlcnMvTWljcm9zb2Z0LldpbmRvd3MvYXJ0aWZhY3R0eXBlcy92bWltYWdlL29mZmVycy9XaW5kb3dzU2VydmVyMjAxMi9za3VzL0VudGVycHJpc2UvdmVyc2lvbnM/YXBpLXZlcnNpb249MjAxNS0wNS0wMS1wcmV2aWV3JiRvcmRlcmJ5PW5hbWUlMjBkZXNj",
+      "RequestUri": "/subscriptions/21466899-20b2-463c-8c30-b8fb28a43248/providers/Microsoft.Compute/locations/SoutheastAsia/publishers/MicrosoftWindowsServer/artifacttypes/vmimage/offers/WindowsServer/skus/2012-R2-Datacenter/versions?api-version=2015-06-15&$top=2&$orderby=name%20asc",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjE0NjY4OTktMjBiMi00NjNjLThjMzAtYjhmYjI4YTQzMjQ4L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvU291dGhlYXN0QXNpYS9wdWJsaXNoZXJzL01pY3Jvc29mdFdpbmRvd3NTZXJ2ZXIvYXJ0aWZhY3R0eXBlcy92bWltYWdlL29mZmVycy9XaW5kb3dzU2VydmVyL3NrdXMvMjAxMi1SMi1EYXRhY2VudGVyL3ZlcnNpb25zP2FwaS12ZXJzaW9uPTIwMTUtMDYtMTUmJHRvcD0yJiRvcmRlcmJ5PW5hbWUlMjBhc2M=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "Microsoft.Azure.Management.Compute.ComputeManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/10.8.0.0"
         ]
       },
-      "ResponseBody": "[\r\n  {\r\n    \"location\": \"westus\",\r\n    \"name\": \"1.1.0\",\r\n    \"id\": \"/subscriptions/84fffc2f-5d77-449a-bc7f-58c363f2a6b9/providers/Microsoft.Compute/locations/westus/publishers/Microsoft.Windows/artifacttypes/vmimage/offers/WindowsServer2012/skus/Enterprise/versions/1.1.0\"\r\n  },\r\n  {\r\n    \"location\": \"westus\",\r\n    \"name\": \"1.0.0\",\r\n    \"id\": \"/subscriptions/84fffc2f-5d77-449a-bc7f-58c363f2a6b9/providers/Microsoft.Compute/locations/westus/publishers/Microsoft.Windows/artifacttypes/vmimage/offers/WindowsServer2012/skus/Enterprise/versions/1.0.0\"\r\n  }\r\n]",
+      "ResponseBody": "[\r\n  {\r\n    \"location\": \"southeastasia\",\r\n    \"name\": \"4.0.201504\",\r\n    \"id\": \"/Subscriptions/21466899-20b2-463c-8c30-b8fb28a43248/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer/Skus/2012-R2-Datacenter/Versions/4.0.201504\"\r\n  },\r\n  {\r\n    \"location\": \"southeastasia\",\r\n    \"name\": \"4.0.201505\",\r\n    \"id\": \"/Subscriptions/21466899-20b2-463c-8c30-b8fb28a43248/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer/Skus/2012-R2-Datacenter/Versions/4.0.201505\"\r\n  }\r\n]",
       "ResponseHeaders": {
         "Content-Length": [
-          "557"
+          "623"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -186,50 +284,48 @@
         "Pragma": [
           "no-cache"
         ],
-        "X-SourceFiles": [
-          "=?UTF-8?B?RTpccmRcYXpfY29tcHV0ZTJccHJpdmF0ZVxTZXJ2aWNlc1xBenVyZVJUXENSUC1QSVJcQXJ0aWZhY3RTZXJ2aWNlXHN1YnNjcmlwdGlvbnNcODRmZmZjMmYtNWQ3Ny00NDlhLWJjN2YtNThjMzYzZjJhNmI5XHByb3ZpZGVyc1xNaWNyb3NvZnQuQ29tcHV0ZVxsb2NhdGlvbnNcd2VzdHVzXHB1Ymxpc2hlcnNcTWljcm9zb2Z0LldpbmRvd3NcYXJ0aWZhY3R0eXBlc1x2bWltYWdlXG9mZmVyc1xXaW5kb3dzU2VydmVyMjAxMlxza3VzXEVudGVycHJpc2VcdmVyc2lvbnM=?="
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
         ],
-        "Access-Control-Allow-Origin": [
-          "*"
-        ],
-        "Access-Control-Allow-Headers": [
-          "Content-Type"
-        ],
-        "Access-Control-Allow-Methods": [
-          "GET, POST, PUT, DELETE, OPTIONS"
+        "x-ms-request-id": [
+          "5efddc27-21a6-4817-95d7-94a5d0006677"
         ],
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Sat, 11 Apr 2015 00:27:06 GMT"
-        ],
         "Server": [
-          "Microsoft-IIS/8.0"
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
         ],
-        "X-AspNet-Version": [
-          "4.0.30319"
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14971"
         ],
-        "X-Powered-By": [
-          "ASP.NET"
+        "x-ms-correlation-request-id": [
+          "f65cad69-6762-4ddc-8308-3b8d39ba759a"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20150716T173033Z:f65cad69-6762-4ddc-8308-3b8d39ba759a"
+        ],
+        "Date": [
+          "Thu, 16 Jul 2015 17:30:33 GMT"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/84fffc2f-5d77-449a-bc7f-58c363f2a6b9/providers/Microsoft.Compute/locations/westus/publishers/Microsoft.Windows/artifacttypes/vmimage/offers/WindowsServer2012/skus/Enterprise/versions?api-version=2015-05-01-preview&$orderby=name%20asc",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODRmZmZjMmYtNWQ3Ny00NDlhLWJjN2YtNThjMzYzZjJhNmI5L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvd2VzdHVzL3B1Ymxpc2hlcnMvTWljcm9zb2Z0LldpbmRvd3MvYXJ0aWZhY3R0eXBlcy92bWltYWdlL29mZmVycy9XaW5kb3dzU2VydmVyMjAxMi9za3VzL0VudGVycHJpc2UvdmVyc2lvbnM/YXBpLXZlcnNpb249MjAxNS0wNS0wMS1wcmV2aWV3JiRvcmRlcmJ5PW5hbWUlMjBhc2M=",
+      "RequestUri": "/subscriptions/21466899-20b2-463c-8c30-b8fb28a43248/providers/Microsoft.Compute/locations/SoutheastAsia/publishers/MicrosoftWindowsServer/artifacttypes/vmimage/offers/WindowsServer/skus/2012-R2-Datacenter/versions?api-version=2015-06-15&$top=1&$orderby=name%20desc",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjE0NjY4OTktMjBiMi00NjNjLThjMzAtYjhmYjI4YTQzMjQ4L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvU291dGhlYXN0QXNpYS9wdWJsaXNoZXJzL01pY3Jvc29mdFdpbmRvd3NTZXJ2ZXIvYXJ0aWZhY3R0eXBlcy92bWltYWdlL29mZmVycy9XaW5kb3dzU2VydmVyL3NrdXMvMjAxMi1SMi1EYXRhY2VudGVyL3ZlcnNpb25zP2FwaS12ZXJzaW9uPTIwMTUtMDYtMTUmJHRvcD0xJiRvcmRlcmJ5PW5hbWUlMjBkZXNj",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "Microsoft.Azure.Management.Compute.ComputeManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/10.8.0.0"
         ]
       },
-      "ResponseBody": "[\r\n  {\r\n    \"location\": \"westus\",\r\n    \"name\": \"1.0.0\",\r\n    \"id\": \"/subscriptions/84fffc2f-5d77-449a-bc7f-58c363f2a6b9/providers/Microsoft.Compute/locations/westus/publishers/Microsoft.Windows/artifacttypes/vmimage/offers/WindowsServer2012/skus/Enterprise/versions/1.0.0\"\r\n  },\r\n  {\r\n    \"location\": \"westus\",\r\n    \"name\": \"1.1.0\",\r\n    \"id\": \"/subscriptions/84fffc2f-5d77-449a-bc7f-58c363f2a6b9/providers/Microsoft.Compute/locations/westus/publishers/Microsoft.Windows/artifacttypes/vmimage/offers/WindowsServer2012/skus/Enterprise/versions/1.1.0\"\r\n  }\r\n]",
+      "ResponseBody": "[\r\n  {\r\n    \"location\": \"southeastasia\",\r\n    \"name\": \"4.0.201506\",\r\n    \"id\": \"/Subscriptions/21466899-20b2-463c-8c30-b8fb28a43248/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer/Skus/2012-R2-Datacenter/Versions/4.0.201506\"\r\n  }\r\n]",
       "ResponseHeaders": {
         "Content-Length": [
-          "557"
+          "313"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -240,50 +336,48 @@
         "Pragma": [
           "no-cache"
         ],
-        "X-SourceFiles": [
-          "=?UTF-8?B?RTpccmRcYXpfY29tcHV0ZTJccHJpdmF0ZVxTZXJ2aWNlc1xBenVyZVJUXENSUC1QSVJcQXJ0aWZhY3RTZXJ2aWNlXHN1YnNjcmlwdGlvbnNcODRmZmZjMmYtNWQ3Ny00NDlhLWJjN2YtNThjMzYzZjJhNmI5XHByb3ZpZGVyc1xNaWNyb3NvZnQuQ29tcHV0ZVxsb2NhdGlvbnNcd2VzdHVzXHB1Ymxpc2hlcnNcTWljcm9zb2Z0LldpbmRvd3NcYXJ0aWZhY3R0eXBlc1x2bWltYWdlXG9mZmVyc1xXaW5kb3dzU2VydmVyMjAxMlxza3VzXEVudGVycHJpc2VcdmVyc2lvbnM=?="
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
         ],
-        "Access-Control-Allow-Origin": [
-          "*"
-        ],
-        "Access-Control-Allow-Headers": [
-          "Content-Type"
-        ],
-        "Access-Control-Allow-Methods": [
-          "GET, POST, PUT, DELETE, OPTIONS"
+        "x-ms-request-id": [
+          "217ab970-346b-4461-9e03-f4f95d5a64a1"
         ],
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Sat, 11 Apr 2015 00:27:06 GMT"
-        ],
         "Server": [
-          "Microsoft-IIS/8.0"
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
         ],
-        "X-AspNet-Version": [
-          "4.0.30319"
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14970"
         ],
-        "X-Powered-By": [
-          "ASP.NET"
+        "x-ms-correlation-request-id": [
+          "564eb861-d7df-4e27-b85a-c5659cc6ae32"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20150716T173034Z:564eb861-d7df-4e27-b85a-c5659cc6ae32"
+        ],
+        "Date": [
+          "Thu, 16 Jul 2015 17:30:34 GMT"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/84fffc2f-5d77-449a-bc7f-58c363f2a6b9/providers/Microsoft.Compute/locations/westus/publishers/Microsoft.Windows/artifacttypes/vmimage/offers/WindowsServer2012/skus/Enterprise/versions?api-version=2015-05-01-preview&$top=1&$orderby=name%20desc",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODRmZmZjMmYtNWQ3Ny00NDlhLWJjN2YtNThjMzYzZjJhNmI5L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvd2VzdHVzL3B1Ymxpc2hlcnMvTWljcm9zb2Z0LldpbmRvd3MvYXJ0aWZhY3R0eXBlcy92bWltYWdlL29mZmVycy9XaW5kb3dzU2VydmVyMjAxMi9za3VzL0VudGVycHJpc2UvdmVyc2lvbnM/YXBpLXZlcnNpb249MjAxNS0wNS0wMS1wcmV2aWV3JiR0b3A9MSYkb3JkZXJieT1uYW1lJTIwZGVzYw==",
+      "RequestUri": "/subscriptions/21466899-20b2-463c-8c30-b8fb28a43248/providers/Microsoft.Compute/locations/SoutheastAsia/publishers/MicrosoftWindowsServer/artifacttypes/vmimage/offers/WindowsServer/skus/2012-R2-Datacenter/versions?api-version=2015-06-15&$top=1&$orderby=name%20asc",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjE0NjY4OTktMjBiMi00NjNjLThjMzAtYjhmYjI4YTQzMjQ4L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvU291dGhlYXN0QXNpYS9wdWJsaXNoZXJzL01pY3Jvc29mdFdpbmRvd3NTZXJ2ZXIvYXJ0aWZhY3R0eXBlcy92bWltYWdlL29mZmVycy9XaW5kb3dzU2VydmVyL3NrdXMvMjAxMi1SMi1EYXRhY2VudGVyL3ZlcnNpb25zP2FwaS12ZXJzaW9uPTIwMTUtMDYtMTUmJHRvcD0xJiRvcmRlcmJ5PW5hbWUlMjBhc2M=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "Microsoft.Azure.Management.Compute.ComputeManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/10.8.0.0"
         ]
       },
-      "ResponseBody": "[\r\n  {\r\n    \"location\": \"westus\",\r\n    \"name\": \"1.1.0\",\r\n    \"id\": \"/subscriptions/84fffc2f-5d77-449a-bc7f-58c363f2a6b9/providers/Microsoft.Compute/locations/westus/publishers/Microsoft.Windows/artifacttypes/vmimage/offers/WindowsServer2012/skus/Enterprise/versions/1.1.0\"\r\n  }\r\n]",
+      "ResponseBody": "[\r\n  {\r\n    \"location\": \"southeastasia\",\r\n    \"name\": \"4.0.201504\",\r\n    \"id\": \"/Subscriptions/21466899-20b2-463c-8c30-b8fb28a43248/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer/Skus/2012-R2-Datacenter/Versions/4.0.201504\"\r\n  }\r\n]",
       "ResponseHeaders": {
         "Content-Length": [
-          "280"
+          "313"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -294,86 +388,30 @@
         "Pragma": [
           "no-cache"
         ],
-        "X-SourceFiles": [
-          "=?UTF-8?B?RTpccmRcYXpfY29tcHV0ZTJccHJpdmF0ZVxTZXJ2aWNlc1xBenVyZVJUXENSUC1QSVJcQXJ0aWZhY3RTZXJ2aWNlXHN1YnNjcmlwdGlvbnNcODRmZmZjMmYtNWQ3Ny00NDlhLWJjN2YtNThjMzYzZjJhNmI5XHByb3ZpZGVyc1xNaWNyb3NvZnQuQ29tcHV0ZVxsb2NhdGlvbnNcd2VzdHVzXHB1Ymxpc2hlcnNcTWljcm9zb2Z0LldpbmRvd3NcYXJ0aWZhY3R0eXBlc1x2bWltYWdlXG9mZmVyc1xXaW5kb3dzU2VydmVyMjAxMlxza3VzXEVudGVycHJpc2VcdmVyc2lvbnM=?="
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
         ],
-        "Access-Control-Allow-Origin": [
-          "*"
-        ],
-        "Access-Control-Allow-Headers": [
-          "Content-Type"
-        ],
-        "Access-Control-Allow-Methods": [
-          "GET, POST, PUT, DELETE, OPTIONS"
+        "x-ms-request-id": [
+          "c2152873-643b-4b38-aa1c-14dbd8a817c4"
         ],
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Sat, 11 Apr 2015 00:27:06 GMT"
-        ],
         "Server": [
-          "Microsoft-IIS/8.0"
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
         ],
-        "X-AspNet-Version": [
-          "4.0.30319"
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14969"
         ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/84fffc2f-5d77-449a-bc7f-58c363f2a6b9/providers/Microsoft.Compute/locations/westus/publishers/Microsoft.Windows/artifacttypes/vmimage/offers/WindowsServer2012/skus/Enterprise/versions?api-version=2015-05-01-preview&$top=1&$orderby=name%20asc",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODRmZmZjMmYtNWQ3Ny00NDlhLWJjN2YtNThjMzYzZjJhNmI5L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvd2VzdHVzL3B1Ymxpc2hlcnMvTWljcm9zb2Z0LldpbmRvd3MvYXJ0aWZhY3R0eXBlcy92bWltYWdlL29mZmVycy9XaW5kb3dzU2VydmVyMjAxMi9za3VzL0VudGVycHJpc2UvdmVyc2lvbnM/YXBpLXZlcnNpb249MjAxNS0wNS0wMS1wcmV2aWV3JiR0b3A9MSYkb3JkZXJieT1uYW1lJTIwYXNj",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "Microsoft.Azure.Management.Compute.ComputeManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "[\r\n  {\r\n    \"location\": \"westus\",\r\n    \"name\": \"1.0.0\",\r\n    \"id\": \"/subscriptions/84fffc2f-5d77-449a-bc7f-58c363f2a6b9/providers/Microsoft.Compute/locations/westus/publishers/Microsoft.Windows/artifacttypes/vmimage/offers/WindowsServer2012/skus/Enterprise/versions/1.0.0\"\r\n  }\r\n]",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "280"
+        "x-ms-correlation-request-id": [
+          "eeb6c9a5-0be9-4024-b931-84341eed7cc6"
         ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "X-SourceFiles": [
-          "=?UTF-8?B?RTpccmRcYXpfY29tcHV0ZTJccHJpdmF0ZVxTZXJ2aWNlc1xBenVyZVJUXENSUC1QSVJcQXJ0aWZhY3RTZXJ2aWNlXHN1YnNjcmlwdGlvbnNcODRmZmZjMmYtNWQ3Ny00NDlhLWJjN2YtNThjMzYzZjJhNmI5XHByb3ZpZGVyc1xNaWNyb3NvZnQuQ29tcHV0ZVxsb2NhdGlvbnNcd2VzdHVzXHB1Ymxpc2hlcnNcTWljcm9zb2Z0LldpbmRvd3NcYXJ0aWZhY3R0eXBlc1x2bWltYWdlXG9mZmVyc1xXaW5kb3dzU2VydmVyMjAxMlxza3VzXEVudGVycHJpc2VcdmVyc2lvbnM=?="
-        ],
-        "Access-Control-Allow-Origin": [
-          "*"
-        ],
-        "Access-Control-Allow-Headers": [
-          "Content-Type"
-        ],
-        "Access-Control-Allow-Methods": [
-          "GET, POST, PUT, DELETE, OPTIONS"
-        ],
-        "Cache-Control": [
-          "no-cache"
+        "x-ms-routing-request-id": [
+          "WESTUS:20150716T173035Z:eeb6c9a5-0be9-4024-b931-84341eed7cc6"
         ],
         "Date": [
-          "Sat, 11 Apr 2015 00:27:06 GMT"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.0"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
+          "Thu, 16 Jul 2015 17:30:35 GMT"
         ]
       },
       "StatusCode": 200
@@ -381,6 +419,6 @@
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "84fffc2f-5d77-449a-bc7f-58c363f2a6b9"
+    "SubscriptionId": "21466899-20b2-463c-8c30-b8fb28a43248"
   }
 }

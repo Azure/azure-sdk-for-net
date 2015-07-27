@@ -29,12 +29,10 @@ using Microsoft.Azure.Management.TrafficManager;
 namespace Microsoft.Azure.Management.TrafficManager
 {
     /// <summary>
-    /// The Windows Azure Traffic Manager management API provides a RESTful set
-    /// of web services that interact with Windows Azure Traffic Manager
-    /// service for creating, updating, listing, and deleting Traffic Manager
-    /// profiles and definitions.  (see
-    /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166981.aspx for
-    /// more information)
+    /// Client for creating, updating, listing and deleting Azure Traffic
+    /// Manager profiles  (see
+    /// http://azure.microsoft.com/en-gb/documentation/articles/traffic-manager-overview/
+    /// for more information)
     /// </summary>
     public partial class TrafficManagerManagementClient : ServiceClient<TrafficManagerManagementClient>, ITrafficManagerManagementClient
     {
@@ -92,10 +90,20 @@ namespace Microsoft.Azure.Management.TrafficManager
             set { this._longRunningOperationRetryTimeout = value; }
         }
         
+        private IEndpointOperations _endpoints;
+        
+        /// <summary>
+        /// Operations for managing Traffic Manager endpoints.
+        /// </summary>
+        public virtual IEndpointOperations Endpoints
+        {
+            get { return this._endpoints; }
+        }
+        
         private IProfileOperations _profiles;
         
         /// <summary>
-        /// Operations for managing WATMv2 profiles.
+        /// Operations for managing Traffic Manager profiles.
         /// </summary>
         public virtual IProfileOperations Profiles
         {
@@ -109,6 +117,7 @@ namespace Microsoft.Azure.Management.TrafficManager
         public TrafficManagerManagementClient()
             : base()
         {
+            this._endpoints = new EndpointOperations(this);
             this._profiles = new ProfileOperations(this);
             this._apiVersion = "2015-04-28-preview";
             this._longRunningOperationInitialTimeout = -1;
@@ -178,6 +187,7 @@ namespace Microsoft.Azure.Management.TrafficManager
         public TrafficManagerManagementClient(HttpClient httpClient)
             : base(httpClient)
         {
+            this._endpoints = new EndpointOperations(this);
             this._profiles = new ProfileOperations(this);
             this._apiVersion = "2015-04-28-preview";
             this._longRunningOperationInitialTimeout = -1;

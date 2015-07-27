@@ -55,7 +55,7 @@ namespace Compute.Tests
                 context.Start();
                 EnsureClientsInitialized();
 
-                string imgRefId = GetPlatformOSImage(useWindowsImage: true);
+                ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
                 // Create resource group
                 var rgName = TestUtilities.GenerateName(TestPrefix);
                 string storageAccountName = TestUtilities.GenerateName(TestPrefix);
@@ -66,7 +66,7 @@ namespace Compute.Tests
                     // Create Storage Account, so that both the VMs can share it
                     var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
 
-                    var vm = CreateVM(rgName, asName, storageAccountOutput, imgRefId, out inputVM);
+                    var vm = CreateVM_NoAsyncTracking(rgName, asName, storageAccountOutput, imageRef, out inputVM);
 
                     // Delete an extension that does not exist in the VM. A http status code of NoContent should be returned which translates to operation success.
                     var deleteResponse = m_CrpClient.VirtualMachineExtensions.Delete(rgName, vm.Name, "VMExtensionDoesNotExist");

@@ -5,7 +5,7 @@
     Microsoft.Azure.Management.Redis
     -->
     <SdkNuGetPackage Include="Microsoft.Azure.Management.Redis">
-      <PackageVersion>0.14.1-preview</PackageVersion>
+      <PackageVersion>1.0.1-preview</PackageVersion>
       <Folder>$(MSBuildThisFileDirectory)</Folder>
     </SdkNuGetPackage>
   </ItemGroup>

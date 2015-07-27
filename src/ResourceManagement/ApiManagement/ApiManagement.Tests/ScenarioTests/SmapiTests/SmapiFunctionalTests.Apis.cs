@@ -235,14 +235,13 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.SmapiTest
                     Assert.Equal(1, listResponse.Result.Values.Count);
                     Assert.NotNull(listResponse.Result.NextLink);
 
-                    // TODO: list next page as soon as rewrite URLs goes to dogfood.
-                    //listResponse = ApiManagementClient.Apis.ListNext(listResponse.Result.NextLink);
+                    listResponse = ApiManagementClient.Apis.ListNext(listResponse.Result.NextLink);
 
-                    //Assert.NotNull(listResponse);
-                    //Assert.NotNull(listResponse.Result.Values);
-                    //Assert.Equal(2, listResponse.Result.TotalCount);
-                    //Assert.Equal(1, listResponse.Result.Values.Count);
-                    //Assert.NotNull(listResponse.Result.NextLink);
+                    Assert.NotNull(listResponse);
+                    Assert.NotNull(listResponse.Result.Values);
+                    Assert.Equal(2, listResponse.Result.TotalCount);
+                    Assert.Equal(1, listResponse.Result.Values.Count);
+                    Assert.Null(listResponse.Result.NextLink);
 
                     // delete the api
                     var deleteResponse = ApiManagementClient.Apis.Delete(

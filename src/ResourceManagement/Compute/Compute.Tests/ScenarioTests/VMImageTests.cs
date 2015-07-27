@@ -13,6 +13,7 @@
 // limitations under the License.
 //
 
+using System;
 using System.Linq;
 using System.Net;
 using Microsoft.Azure.Management.Compute;
@@ -22,66 +23,34 @@ using Xunit;
 
 namespace Compute.Tests
 {
-    public class VMImagesTests
+    public class VMImagesTests : VMTestBase
     {
-        private static readonly VirtualMachineImageGetParameters parameters = new VirtualMachineImageGetParameters()
-        {
-            Location = "westus",
-            PublisherName = "Microsoft.Windows",
-            Offer = "WindowsServer2012",
-            Skus = "Enterprise",
-            Version = "1.0.0"
-        };
+        private static readonly string[] AvailableWindowsServerImageVersions = new string[] { "4.0.201506", "4.0.201505", "4.0.201504"};
 
-        private static readonly VirtualMachineImageListParameters listParameters = new VirtualMachineImageListParameters()
-        {
-            Location = "westus",
-            PublisherName = "Microsoft.Windows",
-            Offer = "WindowsServer2012",
-            Skus = "Enterprise",
-        };
+        private VirtualMachineImageGetParameters parameters;
+        private VirtualMachineImageListParameters listParameters;
 
-        private static readonly VirtualMachineImage vmimage_v100 = new VirtualMachineImage()
+        private void Initialize()
         {
-            Id = "/subscriptions/84fffc2f-5d77-449a-bc7f-58c363f2a6b9/providers/Microsoft.Compute/locations/westus/publishers/Microsoft.Windows/artifacttypes/vmimage/offers/WindowsServer2012/skus/Enterprise/versions/1.0.0",
-            Name = "1.0.0",
-            Location = "westus",
-            PurchasePlan = new PurchasePlan()
-            {
-                Name = "name",
-                Product = "product",
-                Publisher = "publisher",
-            },
-            OSDiskImage = new OSDiskImage()
-            {
-                OperatingSystem = "Linux"
-            },
-            DataDiskImages = new []
-            {
-                new DataDiskImage(){Lun = 123456789}, 
-            }
-        };
+            ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
 
-        private static readonly VirtualMachineImage vmimage_v110 = new VirtualMachineImage()
-        {
-            Id = "/subscriptions/84fffc2f-5d77-449a-bc7f-58c363f2a6b9/providers/Microsoft.Compute/locations/westus/publishers/Microsoft.Windows/artifacttypes/vmimage/offers/WindowsServer2012/skus/Enterprise/versions/1.1.0",
-            Name = "1.1.0",
-            Location = "westus",
-            PurchasePlan = new PurchasePlan()
+            parameters = new VirtualMachineImageGetParameters()
             {
-                Name = "name",
-                Product = "product",
-                Publisher = "publisher",
-            },
-            OSDiskImage = new OSDiskImage()
+                Location = ComputeManagementTestUtilities.DefaultLocation,
+                PublisherName = imageRef.Publisher,
+                Offer = imageRef.Offer,
+                Skus = imageRef.Sku,
+                Version = imageRef.Version
+            };
+
+            listParameters = new VirtualMachineImageListParameters()
             {
-                OperatingSystem = "Linux"
-            },
-            DataDiskImages = new[]
-            {
-                new DataDiskImage(){Lun = 123456789}, 
-            }
-        };
+                Location = ComputeManagementTestUtilities.DefaultLocation,
+                PublisherName = imageRef.Publisher,
+                Offer = imageRef.Offer,
+                Skus = imageRef.Sku
+            };
+        }
 
         [Fact]
         public void TestVMImageGet()
@@ -89,22 +58,15 @@ namespace Compute.Tests
             using (var context = UndoContext.Current)
             {
                 context.Start();
-                ComputeManagementClient _pirClient =
-                    ComputeManagementTestUtilities.GetComputeManagementClient(new RDFETestEnvironmentFactory(),
-                        new RecordedDelegatingHandler {StatusCodeToReturn = HttpStatusCode.OK});
+                EnsureClientsInitialized();
+                Initialize();
 
-                var vmimage = _pirClient.VirtualMachineImages.Get(parameters);
+                var vmimage = m_CrpClient.VirtualMachineImages.Get(parameters);
 
-                Assert.True(vmimage.VirtualMachineImage.Name == "1.0.0");
-                Assert.True(vmimage.VirtualMachineImage.Location == "westus");
+                Assert.Equal(parameters.Version, vmimage.VirtualMachineImage.Name);
+                Assert.Equal(parameters.Location, vmimage.VirtualMachineImage.Location, StringComparer.OrdinalIgnoreCase);
 
-                Assert.True(vmimage.VirtualMachineImage.PurchasePlan.Name == "name");
-                Assert.True(vmimage.VirtualMachineImage.PurchasePlan.Publisher == "publisher");
-                Assert.True(vmimage.VirtualMachineImage.PurchasePlan.Product == "product");
-
-                Assert.True(vmimage.VirtualMachineImage.OSDiskImage.OperatingSystem == "Linux");
-
-                Assert.True(vmimage.VirtualMachineImage.DataDiskImages.Count(ddi => ddi.Lun == 123456789) != 0);
+                Assert.True(vmimage.VirtualMachineImage.OSDiskImage.OperatingSystem == "Windows");
             }
         }
 
@@ -114,15 +76,14 @@ namespace Compute.Tests
             using (var context = UndoContext.Current)
             {
                 context.Start();
-                ComputeManagementClient _pirClient =
-                    ComputeManagementTestUtilities.GetComputeManagementClient(new RDFETestEnvironmentFactory(),
-                        new RecordedDelegatingHandler {StatusCodeToReturn = HttpStatusCode.OK});
+                EnsureClientsInitialized();
+                Initialize();
 
-                var vmimages = _pirClient.VirtualMachineImages.List(listParameters);
+                var vmimages = m_CrpClient.VirtualMachineImages.List(listParameters);
 
                 Assert.True(vmimages.Resources.Count > 0);
-                Assert.True(vmimages.Resources.Count(vmi => vmi.Name == "1.0.0") != 0);
-                Assert.True(vmimages.Resources.Count(vmi => vmi.Name == "1.1.0") != 0);
+                Assert.True(vmimages.Resources.Count(vmi => vmi.Name == AvailableWindowsServerImageVersions[0]) != 0);
+                Assert.True(vmimages.Resources.Count(vmi => vmi.Name == AvailableWindowsServerImageVersions[1]) != 0);
             }
         }
 
@@ -132,9 +93,8 @@ namespace Compute.Tests
             using (var context = UndoContext.Current)
             {
                 context.Start();
-                ComputeManagementClient _pirClient =
-                    ComputeManagementTestUtilities.GetComputeManagementClient(new RDFETestEnvironmentFactory(),
-                        new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+                EnsureClientsInitialized();
+                Initialize();
 
                 VirtualMachineImageListParameters listParametersWithFilter = new VirtualMachineImageListParameters()
                 {
@@ -146,46 +106,47 @@ namespace Compute.Tests
 
                 // Filter: top - Negative Test
                 listParametersWithFilter.FilterExpression = "$top=0";
-                var vmimages = _pirClient.VirtualMachineImages.List(listParametersWithFilter);
+                var vmimages = m_CrpClient.VirtualMachineImages.List(listParametersWithFilter);
                 Assert.True(vmimages.Resources.Count == 0);
 
                 // Filter: top - Positive Test
                 listParametersWithFilter.FilterExpression = "$top=1";
-                vmimages = _pirClient.VirtualMachineImages.List(listParametersWithFilter);
+                vmimages = m_CrpClient.VirtualMachineImages.List(listParametersWithFilter);
                 Assert.True(vmimages.Resources.Count == 1);
 
                 // Filter: top - Positive Test
                 listParametersWithFilter.FilterExpression = "$top=2";
-                vmimages = _pirClient.VirtualMachineImages.List(listParametersWithFilter);
+                vmimages = m_CrpClient.VirtualMachineImages.List(listParametersWithFilter);
                 Assert.True(vmimages.Resources.Count == 2);
-                Assert.True(vmimages.Resources.Count(vmi => vmi.Name == "1.0.0") != 0);
-                Assert.True(vmimages.Resources.Count(vmi => vmi.Name == "1.1.0") != 0);
+                Assert.True(vmimages.Resources.Count(vmi => vmi.Name == AvailableWindowsServerImageVersions[1]) != 0);
 
                 // Filter: orderby - Positive Test
                 listParametersWithFilter.FilterExpression = "$orderby=name desc";
-                vmimages = _pirClient.VirtualMachineImages.List(listParametersWithFilter);
-                Assert.True(vmimages.Resources.Count == 2);
-                Assert.True(vmimages.Resources[0].Name == "1.1.0");
-                Assert.True(vmimages.Resources[1].Name == "1.0.0");
+                vmimages = m_CrpClient.VirtualMachineImages.List(listParametersWithFilter);
+                Assert.Equal(AvailableWindowsServerImageVersions.Length, vmimages.Resources.Count);
+                for (int i = 0; i < AvailableWindowsServerImageVersions.Length; i++)
+                {
+                    Assert.Equal(AvailableWindowsServerImageVersions[i], vmimages.Resources[i].Name);
+                }
 
                 // Filter: orderby - Positive Test
-                listParametersWithFilter.FilterExpression = "$orderby=name asc";
-                vmimages = _pirClient.VirtualMachineImages.List(listParametersWithFilter);
+                listParametersWithFilter.FilterExpression = "$top=2&$orderby=name asc";
+                vmimages = m_CrpClient.VirtualMachineImages.List(listParametersWithFilter);
                 Assert.True(vmimages.Resources.Count == 2);
-                Assert.True(vmimages.Resources[0].Name == "1.0.0");
-                Assert.True(vmimages.Resources[1].Name == "1.1.0");
+                Assert.True(vmimages.Resources[0].Name == AvailableWindowsServerImageVersions.Last());
+                Assert.True(vmimages.Resources[1].Name == AvailableWindowsServerImageVersions.Reverse().Skip(1).First());
 
                 // Filter: top orderby - Positive Test
                 listParametersWithFilter.FilterExpression = "$top=1&$orderby=name desc";
-                vmimages = _pirClient.VirtualMachineImages.List(listParametersWithFilter);
+                vmimages = m_CrpClient.VirtualMachineImages.List(listParametersWithFilter);
                 Assert.True(vmimages.Resources.Count == 1);
-                Assert.True(vmimages.Resources[0].Name == "1.1.0");
+                Assert.True(vmimages.Resources[0].Name == AvailableWindowsServerImageVersions[0]);
 
                 // Filter: top orderby - Positive Test
                 listParametersWithFilter.FilterExpression = "$top=1&$orderby=name asc";
-                vmimages = _pirClient.VirtualMachineImages.List(listParametersWithFilter);
+                vmimages = m_CrpClient.VirtualMachineImages.List(listParametersWithFilter);
                 Assert.True(vmimages.Resources.Count == 1);
-                Assert.True(vmimages.Resources[0].Name == "1.0.0");
+                Assert.True(vmimages.Resources[0].Name == AvailableWindowsServerImageVersions.Last());
             }
         }
 
@@ -195,14 +156,13 @@ namespace Compute.Tests
             using (var context = UndoContext.Current)
             {
                 context.Start();
-                ComputeManagementClient _pirClient =
-                    ComputeManagementTestUtilities.GetComputeManagementClient(new RDFETestEnvironmentFactory(),
-                        new RecordedDelegatingHandler {StatusCodeToReturn = HttpStatusCode.OK});
+                EnsureClientsInitialized();
+                Initialize();
 
-                var publishers = _pirClient.VirtualMachineImages.ListPublishers(parameters);
+                var publishers = m_CrpClient.VirtualMachineImages.ListPublishers(parameters);
 
                 Assert.True(publishers.Resources.Count > 0);
-                Assert.True(publishers.Resources.Count(pub => pub.Name == "Microsoft.Windows") != 0);
+                Assert.True(publishers.Resources.Count(pub => pub.Name == parameters.PublisherName) != 0);
             }
         }
 
@@ -212,14 +172,13 @@ namespace Compute.Tests
             using (var context = UndoContext.Current)
             {
                 context.Start();
-                ComputeManagementClient _pirClient =
-                    ComputeManagementTestUtilities.GetComputeManagementClient(new RDFETestEnvironmentFactory(),
-                        new RecordedDelegatingHandler {StatusCodeToReturn = HttpStatusCode.OK});
+                EnsureClientsInitialized();
+                Initialize();
 
-                var offers = _pirClient.VirtualMachineImages.ListOffers(parameters);
+                var offers = m_CrpClient.VirtualMachineImages.ListOffers(parameters);
 
                 Assert.True(offers.Resources.Count > 0);
-                Assert.True(offers.Resources.Count(offer => offer.Name == "WindowsServer2012") != 0);
+                Assert.True(offers.Resources.Count(offer => offer.Name == parameters.Offer) != 0);
             }
         }
 
@@ -229,14 +188,13 @@ namespace Compute.Tests
             using (var context = UndoContext.Current)
             {
                 context.Start();
-                ComputeManagementClient _pirClient =
-                    ComputeManagementTestUtilities.GetComputeManagementClient(new RDFETestEnvironmentFactory(),
-                        new RecordedDelegatingHandler {StatusCodeToReturn = HttpStatusCode.OK});
+                EnsureClientsInitialized();
+                Initialize();
 
-                var skus = _pirClient.VirtualMachineImages.ListSkus(parameters);
+                var skus = m_CrpClient.VirtualMachineImages.ListSkus(parameters);
 
                 Assert.True(skus.Resources.Count > 0);
-                Assert.True(skus.Resources.Count(sku => sku.Name == "Enterprise") != 0);
+                Assert.True(skus.Resources.Count(sku => sku.Name == parameters.Skus) != 0);
             }
         }
     }

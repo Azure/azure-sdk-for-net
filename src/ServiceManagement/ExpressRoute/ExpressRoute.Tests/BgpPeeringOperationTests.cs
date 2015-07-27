@@ -11,7 +11,7 @@
     using Management;
     using Xunit;
 
-    public class BgpPeeringOperationTests : ExpressRouteTestBase
+    public class BgpPeeringTests : ExpressRouteTestBase
     {
         [Fact]
         public void CanCreateGetUpdateAndRemovePrivateAndPublicPeerings()

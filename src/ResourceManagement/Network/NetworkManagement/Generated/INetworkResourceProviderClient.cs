@@ -81,6 +81,15 @@ namespace Microsoft.Azure.Management.Network
         }
         
         /// <summary>
+        /// The Network Resource Provider API includes operations managing the
+        /// application gateways for your subscription.
+        /// </summary>
+        IApplicationGatewayOperations ApplicationGateways
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// The Network Resource Provider API includes operations for managing
         /// the load balancers for your subscription.
         /// </summary>
@@ -121,6 +130,24 @@ namespace Microsoft.Azure.Management.Network
         /// the PublicIPAddress for your subscription.
         /// </summary>
         IPublicIpAddressOperations PublicIpAddresses
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// The Network Resource Provider API includes operations for managing
+        /// the Routes for your subscription.
+        /// </summary>
+        IRouteOperations Routes
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// The Network Resource Provider API includes operations for managing
+        /// the RouteTables for your subscription.
+        /// </summary>
+        IRouteTableOperations RouteTables
         {
             get; 
         }

@@ -40,9 +40,9 @@ namespace Microsoft.Azure.Management.Network.Models
         public const string Vnet2Vnet = "Vnet2Vnet";
         
         /// <summary>
-        /// Virtual network gateway connection type:Dedicated
+        /// Virtual network gateway dedicated connection type:ExpressRoute
         /// </summary>
-        public const string Dedicated = "Dedicated";
+        public const string ExpressRoute = "ExpressRoute";
         
         /// <summary>
         /// Virtual network gateway connection type:VPNClient

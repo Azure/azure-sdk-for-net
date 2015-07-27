@@ -11,9 +11,8 @@
     <projectUrl>https://github.com/Azure/azure-sdk-for-net</projectUrl>
     <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <summary>DO NOT SHIP IN PUBLIC. MICROSOFT CONFIDENTIAL. Provides management capabilities for Network services.</summary>
-    <description>
-      DO NOT SHIP IN PUBLIC. MICROSOFT CONFIDENTIAL.
+    <summary>Provides management capabilities for Network services.</summary>
+    <description>      
       CSM/Resource Groups-compatible library.
       Provides management capabilities for Network services.
     </description>
@@ -29,7 +28,7 @@
     </references>
     <dependencies>
       <dependency id="Microsoft.Azure.Common" version="[2.1.0,3.0)" />
-      <dependency id="Microsoft.Azure.Management.Resources" version="2.12.0-preview" />
+      <dependency id="Microsoft.Azure.Management.Resources" version="2.18.1-preview" />
     </dependencies>
   </metadata>
   <files>

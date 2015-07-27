@@ -165,18 +165,6 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
                                 },
                         });
 
-                    var startTime = new DateTime(2015, 1, 10);
-                    var endTime = new DateTime(2015, 1, 20);
-                    var events = compute.Deployments.ListEvents(serviceName, deploymentName, startTime, endTime);
-                    var slot = DeploymentSlot.Production;
-                    Func<RebootEvent, bool> func = e => !string.IsNullOrEmpty(e.RoleName)
-                        && !string.IsNullOrEmpty(e.InstanceName)
-                        && !string.IsNullOrEmpty(e.RebootReason)
-                        && e.RebootStartTime.Value >= startTime && e.RebootStartTime.Value <= endTime;
-                    Assert.True(!events.DeploymentEvents.Any() || events.DeploymentEvents.All(e => func(e)));
-                    events = compute.Deployments.ListEventsBySlot(serviceName, slot, startTime, endTime);
-                    Assert.True(!events.DeploymentEvents.Any() || events.DeploymentEvents.All(e => func(e)));
-
                     // Create virtual disks
                     string dataDiskBlobName = "datadisk.vhd";
                     string osDiskBlobName = "osdisk.vhd";
