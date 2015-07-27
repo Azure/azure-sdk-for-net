@@ -27,14 +27,14 @@ using Microsoft.Azure.Management.SiteRecovery.Models;
 namespace Microsoft.Azure.Management.SiteRecovery.Models
 {
     /// <summary>
-    /// The response model for the recoveryplan object.
+    /// The response model for the Recovery Plan object.
     /// </summary>
     public partial class RecoveryPlanResponse : AzureOperationResponse
     {
         private RecoveryPlan _recoveryPlan;
         
         /// <summary>
-        /// Optional. The recoveryplan object for the given recoveryplan ID.
+        /// Optional. The recovery plan object for the given recovery plan name.
         /// </summary>
         public RecoveryPlan RecoveryPlan
         {

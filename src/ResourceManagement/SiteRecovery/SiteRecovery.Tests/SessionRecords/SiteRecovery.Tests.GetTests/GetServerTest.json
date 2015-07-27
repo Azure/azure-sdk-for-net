@@ -1,31 +1,28 @@
 {
   "Entries": [
     {
-      "RequestUri": "/a5aa5997-33e5-46cc-8ab8-8bd89b76b7ba/cloudservices/RecoveryServices-T2RMT6H7QF7AENS66ZV7KS2QZA2BXRAUPOECQXGXX2Q4V3VQ6MUQ-West-US/resources/WAHyperVRecoveryManager/~/HyperVRecoveryManagerVault/Hosters-FC-BVT-Vault/Servers?api-version=2015-04-10",
-      "EncodedRequestUri": "L2E1YWE1OTk3LTMzZTUtNDZjYy04YWI4LThiZDg5Yjc2YjdiYS9jbG91ZHNlcnZpY2VzL1JlY292ZXJ5U2VydmljZXMtVDJSTVQ2SDdRRjdBRU5TNjZaVjdLUzJRWkEyQlhSQVVQT0VDUVhHWFgyUTRWM1ZRNk1VUS1XZXN0LVVTL3Jlc291cmNlcy9XQUh5cGVyVlJlY292ZXJ5TWFuYWdlci9+L0h5cGVyVlJlY292ZXJ5TWFuYWdlclZhdWx0L0hvc3RlcnMtRkMtQlZULVZhdWx0L1NlcnZlcnM/YXBpLXZlcnNpb249MjAxNS0wNC0xMA==",
+      "RequestUri": "/Subscriptions/00a07ea0-ad8b-491c-9de8-77bf10881499/resourceGroups/testsitegroup/providers/Microsoft.SiteRecovery/SiteRecoveryVault/ppeVault2/Servers?api-version=2015-08-10",
+      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvMDBhMDdlYTAtYWQ4Yi00OTFjLTlkZTgtNzdiZjEwODgxNDk5L3Jlc291cmNlR3JvdXBzL3Rlc3RzaXRlZ3JvdXAvcHJvdmlkZXJzL01pY3Jvc29mdC5TaXRlUmVjb3ZlcnkvU2l0ZVJlY292ZXJ5VmF1bHQvcHBlVmF1bHQyL1NlcnZlcnM/YXBpLXZlcnNpb249MjAxNS0wOC0xMA==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
-        "Accept": [
-          "application/xml"
-        ],
         "x-ms-client-request-id": [
-          "896c1f50-07a3-48a0-aab2-9c85acfc9520"
+          "12e92b86-ee78-45d7-954d-b054e502cfed"
         ],
         "x-ms-version": [
-          "2013-03-01"
+          "2015-01-01"
         ],
         "User-Agent": [
-          "Microsoft.WindowsAzure.Management.SiteRecovery.SiteRecoveryManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.SiteRecovery.SiteRecoveryManagementClient/0.0.0.0"
         ]
       },
-      "ResponseBody": "<ArrayOfServer xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Server>\r\n    <ID>4c83e038-7abd-428b-9138-81065e2bb559</ID>\r\n    <Name>HRM-04-020.dratest.nttest.microsoft.com</Name>\r\n    <Connected>true</Connected>\r\n    <LastHeartbeat>2015-04-10T05:04:04.7555231Z</LastHeartbeat>\r\n    <ProviderVersion>3.5.721.0</ProviderVersion>\r\n    <ServerVersion>3.2.7768.0</ServerVersion>\r\n    <FabricObjectID>4c83e038-7abd-428b-9138-81065e2bb559</FabricObjectID>\r\n    <FabricType>VMM</FabricType>\r\n    <Type>VMM</Type>\r\n  </Server>\r\n  <Server>\r\n    <ID>8ec64e79-fb97-4837-a6b1-1968f3fcc63f</ID>\r\n    <Name>HRM-04-019.dratest.nttest.microsoft.com</Name>\r\n    <Connected>true</Connected>\r\n    <LastHeartbeat>2015-04-10T05:04:09.1599625Z</LastHeartbeat>\r\n    <ProviderVersion>3.5.721.0</ProviderVersion>\r\n    <ServerVersion>3.2.7768.0</ServerVersion>\r\n    <FabricObjectID>8ec64e79-fb97-4837-a6b1-1968f3fcc63f</FabricObjectID>\r\n    <FabricType>VMM</FabricType>\r\n    <Type>VMM</Type>\r\n  </Server>\r\n</ArrayOfServer>",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/Subscriptions/00a07ea0-ad8b-491c-9de8-77bf10881499/resourceGroups/testsitegroup/providers/Microsoft.SiteRecovery/SiteRecoveryVault/ppeVault2/Servers/57f95c35-6c83-42ce-bb21-2c4f10f92d8e\",\r\n      \"name\": \"57f95c35-6c83-42ce-bb21-2c4f10f92d8e\",\r\n      \"type\": \"Microsoft.SiteRecovery/Servers\",\r\n      \"properties\": {\r\n        \"serverVersion\": \"3.2.7510.0\",\r\n        \"providerVersion\": \"3.5.601.0\",\r\n        \"lastHeartbeat\": \"2015-07-27T21:06:02.9032678Z\",\r\n        \"connectionStatus\": \"Connected\",\r\n        \"fabricType\": \"VMM\",\r\n        \"fabricObjectID\": \"57f95c35-6c83-42ce-bb21-2c4f10f92d8e\",\r\n        \"friendlyName\": \"sriramvu-hv2.fareast.corp.microsoft.com\"\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": null\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "929"
+          "593"
         ],
         "Content-Type": [
-          "application/xml; charset=utf-8"
+          "application/json"
         ],
         "Expires": [
           "-1"
@@ -33,61 +30,66 @@
         "Pragma": [
           "no-cache"
         ],
-        "Strict-Transport-Security": [
-          "max-age=15724800; includeSubDomains,max-age=15724800; includeSubDomains"
-        ],
-        "x-ms-client-request-id": [
-          "896c1f50-07a3-48a0-aab2-9c85acfc9520"
-        ],
         "x-ms-request-id": [
-          "56b6155680fdae6180ae9f3f027d547c"
+          "12e92b86-ee78-45d7-954d-b054e502cfed 7/27/2015 9:07:13 PM"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
         ],
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Fri, 10 Apr 2015 05:04:14 GMT"
-        ],
         "Server": [
-          "1.0.6198.202",
-          "(rd_rdfe_stable.150307-1902)",
-          "Microsoft-HTTPAPI/2.0"
+          "Microsoft-IIS/8.0",
+          "Microsoft-IIS/8.0"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
         ],
         "X-Powered-By": [
           "ASP.NET"
+        ],
+        "x-ms-client-request-id": [
+          "12e92b86-ee78-45d7-954d-b054e502cfed"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14999"
+        ],
+        "x-ms-correlation-request-id": [
+          "6062dec5-5b6c-4c64-80be-8ee3542b874d"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150727T210713Z:6062dec5-5b6c-4c64-80be-8ee3542b874d"
+        ],
+        "Date": [
+          "Mon, 27 Jul 2015 21:07:12 GMT"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/a5aa5997-33e5-46cc-8ab8-8bd89b76b7ba/cloudservices/RecoveryServices-T2RMT6H7QF7AENS66ZV7KS2QZA2BXRAUPOECQXGXX2Q4V3VQ6MUQ-West-US/resources/WAHyperVRecoveryManager/~/HyperVRecoveryManagerVault/Hosters-FC-BVT-Vault/Servers/4c83e038-7abd-428b-9138-81065e2bb559?api-version=2015-04-10",
-      "EncodedRequestUri": "L2E1YWE1OTk3LTMzZTUtNDZjYy04YWI4LThiZDg5Yjc2YjdiYS9jbG91ZHNlcnZpY2VzL1JlY292ZXJ5U2VydmljZXMtVDJSTVQ2SDdRRjdBRU5TNjZaVjdLUzJRWkEyQlhSQVVQT0VDUVhHWFgyUTRWM1ZRNk1VUS1XZXN0LVVTL3Jlc291cmNlcy9XQUh5cGVyVlJlY292ZXJ5TWFuYWdlci9+L0h5cGVyVlJlY292ZXJ5TWFuYWdlclZhdWx0L0hvc3RlcnMtRkMtQlZULVZhdWx0L1NlcnZlcnMvNGM4M2UwMzgtN2FiZC00MjhiLTkxMzgtODEwNjVlMmJiNTU5P2FwaS12ZXJzaW9uPTIwMTUtMDQtMTA=",
+      "RequestUri": "/Subscriptions/00a07ea0-ad8b-491c-9de8-77bf10881499/resourceGroups/testsitegroup/providers/Microsoft.SiteRecovery/SiteRecoveryVault/ppeVault2/Servers/57f95c35-6c83-42ce-bb21-2c4f10f92d8e?api-version=2015-08-10",
+      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvMDBhMDdlYTAtYWQ4Yi00OTFjLTlkZTgtNzdiZjEwODgxNDk5L3Jlc291cmNlR3JvdXBzL3Rlc3RzaXRlZ3JvdXAvcHJvdmlkZXJzL01pY3Jvc29mdC5TaXRlUmVjb3ZlcnkvU2l0ZVJlY292ZXJ5VmF1bHQvcHBlVmF1bHQyL1NlcnZlcnMvNTdmOTVjMzUtNmM4My00MmNlLWJiMjEtMmM0ZjEwZjkyZDhlP2FwaS12ZXJzaW9uPTIwMTUtMDgtMTA=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
-        "Accept": [
-          "application/xml"
-        ],
         "x-ms-client-request-id": [
-          "896c1f50-07a3-48a0-aab2-9c85acfc9520"
+          "12e92b86-ee78-45d7-954d-b054e502cfed"
         ],
         "x-ms-version": [
-          "2013-03-01"
+          "2015-01-01"
         ],
         "User-Agent": [
-          "Microsoft.WindowsAzure.Management.SiteRecovery.SiteRecoveryManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.SiteRecovery.SiteRecoveryManagementClient/0.0.0.0"
         ]
       },
-      "ResponseBody": "<Server xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>4c83e038-7abd-428b-9138-81065e2bb559</ID>\r\n  <Name>HRM-04-020.dratest.nttest.microsoft.com</Name>\r\n  <Connected>true</Connected>\r\n  <LastHeartbeat>2015-04-10T05:04:04.7555231Z</LastHeartbeat>\r\n  <ProviderVersion>3.5.721.0</ProviderVersion>\r\n  <ServerVersion>3.2.7768.0</ServerVersion>\r\n  <FabricObjectID>4c83e038-7abd-428b-9138-81065e2bb559</FabricObjectID>\r\n  <FabricType>VMM</FabricType>\r\n  <Type>VMM</Type>\r\n</Server>",
+      "ResponseBody": "{\r\n  \"id\": \"/Subscriptions/00a07ea0-ad8b-491c-9de8-77bf10881499/resourceGroups/testsitegroup/providers/Microsoft.SiteRecovery/SiteRecoveryVault/ppeVault2/Servers/57f95c35-6c83-42ce-bb21-2c4f10f92d8e\",\r\n  \"name\": \"57f95c35-6c83-42ce-bb21-2c4f10f92d8e\",\r\n  \"type\": \"Microsoft.SiteRecovery/Servers\",\r\n  \"properties\": {\r\n    \"serverVersion\": \"3.2.7510.0\",\r\n    \"providerVersion\": \"3.5.601.0\",\r\n    \"lastHeartbeat\": \"2015-07-27T21:06:02.9032678Z\",\r\n    \"connectionStatus\": \"Connected\",\r\n    \"fabricType\": \"VMM\",\r\n    \"fabricObjectID\": \"57f95c35-6c83-42ce-bb21-2c4f10f92d8e\",\r\n    \"friendlyName\": \"sriramvu-hv2.fareast.corp.microsoft.com\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "500"
+          "565"
         ],
         "Content-Type": [
-          "application/xml; charset=utf-8"
+          "application/json"
         ],
         "Expires": [
           "-1"
@@ -95,31 +97,39 @@
         "Pragma": [
           "no-cache"
         ],
-        "Strict-Transport-Security": [
-          "max-age=15724800; includeSubDomains,max-age=15724800; includeSubDomains"
-        ],
-        "x-ms-client-request-id": [
-          "896c1f50-07a3-48a0-aab2-9c85acfc9520"
-        ],
         "x-ms-request-id": [
-          "aa57a5ba4742a8ada91cb5e8ab899141"
+          "12e92b86-ee78-45d7-954d-b054e502cfed 7/27/2015 9:07:13 PM"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
         ],
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Fri, 10 Apr 2015 05:04:15 GMT"
-        ],
         "Server": [
-          "1.0.6198.202",
-          "(rd_rdfe_stable.150307-1902)",
-          "Microsoft-HTTPAPI/2.0"
+          "Microsoft-IIS/8.0",
+          "Microsoft-IIS/8.0"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
         ],
         "X-Powered-By": [
           "ASP.NET"
+        ],
+        "x-ms-client-request-id": [
+          "12e92b86-ee78-45d7-954d-b054e502cfed"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14998"
+        ],
+        "x-ms-correlation-request-id": [
+          "395f9a16-a38e-4c45-8d0e-2dac43c7fc7e"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150727T210714Z:395f9a16-a38e-4c45-8d0e-2dac43c7fc7e"
+        ],
+        "Date": [
+          "Mon, 27 Jul 2015 21:07:14 GMT"
         ]
       },
       "StatusCode": 200
@@ -127,6 +137,6 @@
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "a5aa5997-33e5-46cc-8ab8-8bd89b76b7ba"
+    "SubscriptionId": "00a07ea0-ad8b-491c-9de8-77bf10881499"
   }
 }

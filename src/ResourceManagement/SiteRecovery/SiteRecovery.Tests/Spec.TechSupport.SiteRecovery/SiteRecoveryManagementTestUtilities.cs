@@ -60,42 +60,44 @@ namespace Microsoft.Azure.Test
                     IgnoreCertificateErrorHandler;
             }
 
-            TestEnvironment environment = new RDFETestEnvironmentFactory().GetTestEnvironment();
-            //// TestEnvironment environment = new CSMTestEnvironmentFactory().GetTestEnvironment();
-            environment.BaseUri = new Uri("https://localhost:8443/RdfeProxy.svc/");
+            TestEnvironment environment = new CSMTestEnvironmentFactory().GetTestEnvironment();
 
             SiteRecoveryTestsBase.MyCloudService = (HttpMockServer.Mode == HttpRecorderMode.Playback) ?
-                "RecoveryServices-T2RMT6H7QF7AENS66ZV7KS2QZA2BXRAUPOECQXGXX2Q4V3VQ6MUQ-West-US" :
+                "testsitegroup" :
                 Environment.GetEnvironmentVariable("CLOUD_SERVICE_NAME");
 
             SiteRecoveryTestsBase.MyVaultName = (HttpMockServer.Mode == HttpRecorderMode.Playback) ?
-                "Hosters-FC-BVT-Vault" :
+                "ppeVault2" :
                 Environment.GetEnvironmentVariable("RESOURCE_NAME");
 
             SiteRecoveryTestsBase.VaultKey = (HttpMockServer.Mode == HttpRecorderMode.Playback) ?
-                "mock#ACIK" :
+                "tmPfTki5UFSdaEq2JFvzuw==" :
                 Environment.GetEnvironmentVariable("CHANNEL_INTEGRITY_KEY");
 
             SiteRecoveryTestsBase.MyResourceGroupName = (HttpMockServer.Mode == HttpRecorderMode.Playback) ?
-                "resourceGroupName" :
+                "testsitegroup" :
                 Environment.GetEnvironmentVariable("RESOURCE_GROUP_NAME");
 
 
             if (string.IsNullOrEmpty(SiteRecoveryTestsBase.MyCloudService))
             {
-                throw new Exception("Please set CLOUD_SERVICE_NAME environment variable before running the tests in Live mode");
+                throw new Exception("Please set CLOUD_SERVICE_NAME" + 
+                    " environment variable before running the tests in Live mode");
             }
             if (string.IsNullOrEmpty(SiteRecoveryTestsBase.MyVaultName))
             {
-                throw new Exception("Please set RESOURCE_NAME environment variable before running the tests in Live mode");
+                throw new Exception("Please set RESOURCE_NAME" +
+                    " environment variable before running the tests in Live mode");
             }
             if (string.IsNullOrEmpty(SiteRecoveryTestsBase.VaultKey))
             {
-                throw new Exception("Please set CHANNEL_INTEGRITY_KEY environment variable before running the tests in Live mode");
+                throw new Exception("Please set CHANNEL_INTEGRITY_KEY" +
+                    " environment variable before running the tests in Live mode");
             }
             if (string.IsNullOrEmpty(SiteRecoveryTestsBase.MyResourceGroupName))
             {
-                throw new Exception("Please set RESOURCE_GROUP_NAME environment variable before running the tests in Live mode");
+                throw new Exception("Please set RESOURCE_GROUP_NAME" +
+                    " environment variable before running the tests in Live mode");
             }
 
             return new SiteRecoveryManagementClient(

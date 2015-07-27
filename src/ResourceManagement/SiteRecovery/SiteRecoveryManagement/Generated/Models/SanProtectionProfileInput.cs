@@ -20,48 +20,65 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
-using Microsoft.Azure;
 using Microsoft.Azure.Management.SiteRecovery.Models;
 
 namespace Microsoft.Azure.Management.SiteRecovery.Models
 {
     /// <summary>
-    /// The response model for the list recoveryplans operation.
+    /// San protection profile input.
     /// </summary>
-    public partial class RecoveryPlanListResponse : AzureOperationResponse
+    public partial class SanProtectionProfileInput : ProtectionProfileProviderSpecificInput
     {
-        private string _nextLink;
+        private string _arrayUniqueId;
         
         /// <summary>
-        /// Optional. The nextLink value.
+        /// Optional.
         /// </summary>
-        public string NextLink
+        public string ArrayUniqueId
         {
-            get { return this._nextLink; }
-            set { this._nextLink = value; }
+            get { return this._arrayUniqueId; }
+            set { this._arrayUniqueId = value; }
         }
         
-        private IList<RecoveryPlan> _recoveryPlans;
+        private string _cloudId;
         
         /// <summary>
-        /// Optional. The list of recoveryplans for the given cloud service and
-        /// resource.
+        /// Optional.
         /// </summary>
-        public IList<RecoveryPlan> RecoveryPlans
+        public string CloudId
         {
-            get { return this._recoveryPlans; }
-            set { this._recoveryPlans = value; }
+            get { return this._cloudId; }
+            set { this._cloudId = value; }
+        }
+        
+        private string _remoteArrayUniqueId;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string RemoteArrayUniqueId
+        {
+            get { return this._remoteArrayUniqueId; }
+            set { this._remoteArrayUniqueId = value; }
+        }
+        
+        private string _remoteCloudId;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string RemoteCloudId
+        {
+            get { return this._remoteCloudId; }
+            set { this._remoteCloudId = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the RecoveryPlanListResponse class.
+        /// Initializes a new instance of the SanProtectionProfileInput class.
         /// </summary>
-        public RecoveryPlanListResponse()
+        public SanProtectionProfileInput()
         {
-            this.RecoveryPlans = new LazyList<RecoveryPlan>();
         }
     }
 }

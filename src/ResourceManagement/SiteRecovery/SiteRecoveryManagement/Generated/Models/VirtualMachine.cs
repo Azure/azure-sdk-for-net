@@ -30,11 +30,46 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
     /// </summary>
     public partial class VirtualMachine : ProtectionEntity
     {
+        private string _replicationProviderSettings;
+        
+        /// <summary>
+        /// Required. Virtual machine settings related to Replication provider
+        /// </summary>
+        public string ReplicationProviderSettings
+        {
+            get { return this._replicationProviderSettings; }
+            set { this._replicationProviderSettings = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the VirtualMachine class.
         /// </summary>
         public VirtualMachine()
         {
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the VirtualMachine class with
+        /// required arguments.
+        /// </summary>
+        public VirtualMachine(string replicationProviderSettings, ProtectionEntityProperties properties, string location)
+            : this()
+        {
+            if (replicationProviderSettings == null)
+            {
+                throw new ArgumentNullException("replicationProviderSettings");
+            }
+            if (properties == null)
+            {
+                throw new ArgumentNullException("properties");
+            }
+            if (location == null)
+            {
+                throw new ArgumentNullException("location");
+            }
+            this.ReplicationProviderSettings = replicationProviderSettings;
+            this.Properties = properties;
+            this.Location = location;
         }
     }
 }

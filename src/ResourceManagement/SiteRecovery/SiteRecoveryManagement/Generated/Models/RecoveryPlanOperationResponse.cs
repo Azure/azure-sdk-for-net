@@ -20,48 +20,33 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
+using Microsoft.Azure.Management.SiteRecovery.Models;
 
 namespace Microsoft.Azure.Management.SiteRecovery.Models
 {
     /// <summary>
-    /// Certificate to be uploaded to the vault
+    /// A standard service response for long running operations.
     /// </summary>
-    public partial class CertificateArgs
+    public partial class RecoveryPlanOperationResponse : LongRunningOperationResponse
     {
-        private IDictionary<string, string> _properties;
+        private RecoveryPlan _recoveryPlan;
         
         /// <summary>
-        /// Required. Properties of the certificate.
+        /// Optional. The Recovery Plan.
         /// </summary>
-        public IDictionary<string, string> Properties
+        public RecoveryPlan RecoveryPlan
         {
-            get { return this._properties; }
-            set { this._properties = value; }
+            get { return this._recoveryPlan; }
+            set { this._recoveryPlan = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the CertificateArgs class.
+        /// Initializes a new instance of the RecoveryPlanOperationResponse
+        /// class.
         /// </summary>
-        public CertificateArgs()
+        public RecoveryPlanOperationResponse()
         {
-            this.Properties = new LazyDictionary<string, string>();
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the CertificateArgs class with
-        /// required arguments.
-        /// </summary>
-        public CertificateArgs(IDictionary<string, string> properties)
-            : this()
-        {
-            if (properties == null)
-            {
-                throw new ArgumentNullException("properties");
-            }
-            this.Properties = properties;
         }
     }
 }

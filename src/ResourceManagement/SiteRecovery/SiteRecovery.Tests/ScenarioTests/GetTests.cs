@@ -34,11 +34,11 @@ namespace SiteRecovery.Tests
 
                 var responseServers = client.Servers.List(RequestHeaders);
 
-                var response = client.Servers.Get(responseServers.Servers[0].ID, RequestHeaders);
+                var response = client.Servers.Get(responseServers.Servers[0].Name, RequestHeaders);
 
                 Assert.NotNull(response.Server);
                 Assert.NotNull(response.Server.Name);
-                Assert.NotNull(response.Server.ID);
+                Assert.NotNull(response.Server.Id);
                 Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             }
         }
@@ -52,42 +52,13 @@ namespace SiteRecovery.Tests
                 var client = GetSiteRecoveryClient(CustomHttpHandler);
 
                 var protectionContainerList = client.ProtectionContainer.List(RequestHeaders);
-                var response = client.ProtectionContainer.Get(protectionContainerList.ProtectionContainers[0].ID, RequestHeaders);
+                var response = client.ProtectionContainer.Get(
+                    protectionContainerList.ProtectionContainers[0].Name,
+                    RequestHeaders);
 
                 Assert.NotNull(response.ProtectionContainer);
                 Assert.NotNull(response.ProtectionContainer.Name);
-                Assert.NotNull(response.ProtectionContainer.ID);
-                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-            }
-        }
-
-        [Fact]
-        public void GetVirtualMachineTest()
-        {
-            using (UndoContext context = UndoContext.Current)
-            {
-                context.Start();
-                var client = GetSiteRecoveryClient(CustomHttpHandler);
-                VirtualMachineResponse response = null;
-                var protectionContainerList = client.ProtectionContainer.List(RequestHeaders);
-
-                foreach (var pc in protectionContainerList.ProtectionContainers)
-                {
-                    if (pc.Role == "Primary")
-                    {
-                        var vmList = client.Vm.List(pc.ID, RequestHeaders);
-
-                        if (vmList.Vms.Count != 0)
-                        {
-                            response = client.Vm.Get(vmList.Vms[0].ProtectionContainerId, vmList.Vms[0].ID, RequestHeaders);
-                        }
-                    }
-                }
-
-                Assert.NotNull(response);
-                Assert.NotNull(response.Vm);
-                Assert.NotNull(response.Vm.Name);
-                Assert.NotNull(response.Vm.ID);
+                Assert.NotNull(response.ProtectionContainer.Id);
                 Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             }
         }

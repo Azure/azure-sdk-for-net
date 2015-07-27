@@ -21,32 +21,30 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure;
 using Microsoft.Azure.Management.SiteRecovery.Models;
 
 namespace Microsoft.Azure.Management.SiteRecovery.Models
 {
     /// <summary>
-    /// The response model for the resource extended information object
+    /// A standard service response for long running operations.
     /// </summary>
-    public partial class ResourceExtendedInformationResponse : AzureOperationResponse
+    public partial class RestartJobOperationResponse : LongRunningOperationResponse
     {
-        private ResourceExtendedInformation _resourceExtendedInformation;
+        private Job _job;
         
         /// <summary>
-        /// Optional. The resource extended information object
+        /// Optional. The Job object.
         /// </summary>
-        public ResourceExtendedInformation ResourceExtendedInformation
+        public Job Job
         {
-            get { return this._resourceExtendedInformation; }
-            set { this._resourceExtendedInformation = value; }
+            get { return this._job; }
+            set { this._job = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the
-        /// ResourceExtendedInformationResponse class.
+        /// Initializes a new instance of the RestartJobOperationResponse class.
         /// </summary>
-        public ResourceExtendedInformationResponse()
+        public RestartJobOperationResponse()
         {
         }
     }

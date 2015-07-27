@@ -29,15 +29,16 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
     /// </summary>
     public partial class ServerProperties
     {
-        private bool _connected;
+        private string _connectionStatus;
         
         /// <summary>
-        /// Optional. Value indicating whether server is connected or not.
+        /// Optional. Server connection status. Values are
+        /// Connected/ConnectionError
         /// </summary>
-        public bool Connected
+        public string ConnectionStatus
         {
-            get { return this._connected; }
-            set { this._connected = value; }
+            get { return this._connectionStatus; }
+            set { this._connectionStatus = value; }
         }
         
         private string _fabricObjectID;

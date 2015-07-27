@@ -49,9 +49,29 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response model for the Job details object.
+        /// A standard service response for long running operations.
         /// </returns>
-        Task<JobResponse> BeginAssociatingAsync(string name, ProtectionProfileAssociationInput input, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<LongRunningOperationResponse> AssociateAsync(string name, ProtectionProfileAssociationInput input, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Creates a profile
+        /// </summary>
+        /// <param name='name'>
+        /// Input to associate profile
+        /// </param>
+        /// <param name='input'>
+        /// Input to associate profile
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        Task<LongRunningOperationResponse> BeginAssociatingAsync(string name, ProtectionProfileAssociationInput input, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
         /// Creates a profile
@@ -108,6 +128,26 @@ namespace Microsoft.Azure.Management.SiteRecovery
         Task<LongRunningOperationResponse> BeginDissociatingAsync(string name, DisassociateProtectionProfileInput input, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
+        /// Update protection profile.
+        /// </summary>
+        /// <param name='input'>
+        /// input.
+        /// </param>
+        /// <param name='protectionProfileId'>
+        /// Profile id.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        Task<LongRunningOperationResponse> BeginUpdatingAsync(UpdateProtectionProfileInput input, string protectionProfileId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// Creates a profile
         /// </summary>
         /// <param name='input'>
@@ -123,23 +163,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// A standard service response for long running operations.
         /// </returns>
         Task<LongRunningOperationResponse> CreateAsync(CreateProtectionProfileInput input, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Enable Protection for the given protection entity.
-        /// </summary>
-        /// <param name='input'>
-        /// input.
-        /// </param>
-        /// <param name='customRequestHeaders'>
-        /// Request header parameters.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The response model for the Job details object.
-        /// </returns>
-        Task<JobResponse> CreateAndAssociateAsync(CreateAndAssociateProtectionProfileInput input, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
         /// Deletes a ProtectionProfile
@@ -179,26 +202,6 @@ namespace Microsoft.Azure.Management.SiteRecovery
         Task<LongRunningOperationResponse> DissociateAsync(string name, DisassociateProtectionProfileInput input, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Enable Protection for the given protection entity.
-        /// </summary>
-        /// <param name='protectionProfileId'>
-        /// Protection Profile ID.
-        /// </param>
-        /// <param name='input'>
-        /// input.
-        /// </param>
-        /// <param name='customRequestHeaders'>
-        /// Request header parameters.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The response model for the Job details object.
-        /// </returns>
-        Task<JobResponse> DissociateAndDeleteAsync(string protectionProfileId, CreateAndAssociateProtectionProfileInput input, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
-        
-        /// <summary>
         /// Get the protected Profile by Id.
         /// </summary>
         /// <param name='protectionProfileId'>
@@ -214,6 +217,23 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// The response model for the Protection Profile object.
         /// </returns>
         Task<ProtectionProfileResponse> GetAsync(string protectionProfileId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The Get Operation Status operation returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call Get Operation Status to determine whether the operation
+        /// has succeeded, failed, or is still in progress.
+        /// </summary>
+        /// <param name='operationStatusLink'>
+        /// Location value returned by the Begin operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        Task<AssociateProtectionProfileOperationResponse> GetAssociateStatusAsync(string operationStatusLink, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Get Operation Status operation returns the status of the
@@ -267,6 +287,23 @@ namespace Microsoft.Azure.Management.SiteRecovery
         Task<DissociateProtectionProfileOperationResponse> GetDissociateStatusAsync(string operationStatusLink, CancellationToken cancellationToken);
         
         /// <summary>
+        /// The Get Operation Status operation returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call Get Operation Status to determine whether the operation
+        /// has succeeded, failed, or is still in progress.
+        /// </summary>
+        /// <param name='operationStatusLink'>
+        /// Location value returned by the Begin operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        Task<UpdateProtectionProfileOperationResponse> GetUpdateStatusAsync(string operationStatusLink, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// Get the list of all ProtectionContainers for the given server.
         /// </summary>
         /// <param name='customRequestHeaders'>
@@ -296,8 +333,8 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response model for the Job details object.
+        /// A standard service response for long running operations.
         /// </returns>
-        Task<JobResponse> UpdateAsync(UpdateProtectionProfileInput input, string protectionProfileId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<LongRunningOperationResponse> UpdateAsync(UpdateProtectionProfileInput input, string protectionProfileId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
     }
 }

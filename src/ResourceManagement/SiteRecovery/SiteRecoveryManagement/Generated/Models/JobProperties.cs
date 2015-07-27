@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         private string _displayName;
         
         /// <summary>
-        /// Required. Localized name.
+        /// Required. Display name.
         /// </summary>
         public string DisplayName
         {

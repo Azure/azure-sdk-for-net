@@ -30,13 +30,13 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
     /// </summary>
     public partial class UnplannedFailoverRequest : FailoverRequest
     {
-        private bool _sourceSiteOperations;
+        private string _sourceSiteOperations;
         
         /// <summary>
-        /// Required. Value indicating whether source site operations are
-        /// requested by the user.
+        /// Required. Source site operations are requested by the user. Values
+        /// are either Required/NotRequired
         /// </summary>
-        public bool SourceSiteOperations
+        public string SourceSiteOperations
         {
             get { return this._sourceSiteOperations; }
             set { this._sourceSiteOperations = value; }
@@ -53,9 +53,13 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         /// Initializes a new instance of the UnplannedFailoverRequest class
         /// with required arguments.
         /// </summary>
-        public UnplannedFailoverRequest(bool sourceSiteOperations)
+        public UnplannedFailoverRequest(string sourceSiteOperations)
             : this()
         {
+            if (sourceSiteOperations == null)
+            {
+                throw new ArgumentNullException("sourceSiteOperations");
+            }
             this.SourceSiteOperations = sourceSiteOperations;
         }
     }

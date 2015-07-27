@@ -21,19 +21,19 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.SiteRecovery.Models;
 
 namespace Microsoft.Azure.Management.SiteRecovery.Models
 {
     /// <summary>
-    /// A standard service response for long running operations.
+    /// Protection profile provider setting details.
     /// </summary>
-    public partial class ReprotectOperationResponse : FailoverOperationResponse
+    public partial class ProtectionProfileProviderSettingsDetails
     {
         /// <summary>
-        /// Initializes a new instance of the ReprotectOperationResponse class.
+        /// Initializes a new instance of the
+        /// ProtectionProfileProviderSettingsDetails class.
         /// </summary>
-        public ReprotectOperationResponse()
+        public ProtectionProfileProviderSettingsDetails()
         {
         }
     }

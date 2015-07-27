@@ -36,11 +36,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// <summary>
         /// Commit failover of a protection entity.
         /// </summary>
-        /// <param name='protectionContainerId'>
-        /// Parent Protection Container ID.
+        /// <param name='pcName'>
+        /// Parent Protection Container name.
         /// </param>
-        /// <param name='protectionEntityId'>
-        /// Protection entity ID.
+        /// <param name='name'>
+        /// Protection entity name.
         /// </param>
         /// <param name='parameters'>
         /// Commit failover request.
@@ -52,9 +52,124 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response model for the Job details object.
+        /// A standard service response for long running operations.
         /// </returns>
-        Task<JobResponse> CommitFailoverAsync(string protectionContainerId, string protectionEntityId, CommitFailoverRequest parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<LongRunningOperationResponse> BeginCommitFailoverAsync(string pcName, string name, CommitFailoverRequest parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Planned failover of a protection entity.
+        /// </summary>
+        /// <param name='pcName'>
+        /// Parent Protection Container name.
+        /// </param>
+        /// <param name='name'>
+        /// Protection entity name.
+        /// </param>
+        /// <param name='parameters'>
+        /// Planned failover request.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        Task<LongRunningOperationResponse> BeginPlannedFailoverAsync(string pcName, string name, PlannedFailoverRequest parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Reprotect operation for the given protection entity.
+        /// </summary>
+        /// <param name='pcName'>
+        /// Parent Protection Container name.
+        /// </param>
+        /// <param name='name'>
+        /// Protection entity name.
+        /// </param>
+        /// <param name='parameters'>
+        /// Reprotect request after failover.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        Task<LongRunningOperationResponse> BeginReprotectAsync(string pcName, string name, ReprotectRequest parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Test failover of a protection entity.
+        /// </summary>
+        /// <param name='pcName'>
+        /// Parent Protection Container name.
+        /// </param>
+        /// <param name='name'>
+        /// Protection entity name.
+        /// </param>
+        /// <param name='parameters'>
+        /// Test failover request.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        Task<LongRunningOperationResponse> BeginTestFailoverAsync(string pcName, string name, TestFailoverRequest parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Unplanned failover of a protection entity.
+        /// </summary>
+        /// <param name='pcName'>
+        /// Parent Protection Container name.
+        /// </param>
+        /// <param name='name'>
+        /// Protection entity name.
+        /// </param>
+        /// <param name='parameters'>
+        /// Unplanned failover request.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        Task<LongRunningOperationResponse> BeginUnplannedFailoverAsync(string pcName, string name, UnplannedFailoverRequest parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Creates a profile
+        /// </summary>
+        /// <param name='pcName'>
+        /// Parent Protection Container name.
+        /// </param>
+        /// <param name='name'>
+        /// Protection entity name.
+        /// </param>
+        /// <param name='parameters'>
+        /// Commit failover request.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        Task<LongRunningOperationResponse> CommitFailoverAsync(string pcName, string name, CommitFailoverRequest parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
         /// Disable Protection for the given protection enity.
@@ -123,6 +238,91 @@ namespace Microsoft.Azure.Management.SiteRecovery
         Task<ProtectionEntityResponse> GetAsync(string protectionContainerId, string protectionEntityId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
+        /// The Get Operation Status operation returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call Get Operation Status to determine whether the operation
+        /// has succeeded, failed, or is still in progress.
+        /// </summary>
+        /// <param name='operationStatusLink'>
+        /// Location value returned by the Begin operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        Task<CommitFailoverOperationResponse> GetCommitFailoverStatusAsync(string operationStatusLink, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The Get Operation Status operation returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call Get Operation Status to determine whether the operation
+        /// has succeeded, failed, or is still in progress.
+        /// </summary>
+        /// <param name='operationStatusLink'>
+        /// Location value returned by the Begin operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        Task<PlannedFailoverOperationResponse> GetPlannedFailoverStatusAsync(string operationStatusLink, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The Get Operation Status operation returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call Get Operation Status to determine whether the operation
+        /// has succeeded, failed, or is still in progress.
+        /// </summary>
+        /// <param name='operationStatusLink'>
+        /// Location value returned by the Begin operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        Task<ReprotectOperationResponse> GetReprotectStatusAsync(string operationStatusLink, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The Get Operation Status operation returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call Get Operation Status to determine whether the operation
+        /// has succeeded, failed, or is still in progress.
+        /// </summary>
+        /// <param name='operationStatusLink'>
+        /// Location value returned by the Begin operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        Task<TestFailoverOperationResponse> GetTestFailoverStatusAsync(string operationStatusLink, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The Get Operation Status operation returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call Get Operation Status to determine whether the operation
+        /// has succeeded, failed, or is still in progress.
+        /// </summary>
+        /// <param name='operationStatusLink'>
+        /// Location value returned by the Begin operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        Task<UnplannedFailoverOperationResponse> GetUnplannedFailoverStatusAsync(string operationStatusLink, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// Get the list of all protection entities.
         /// </summary>
         /// <param name='protectionContainerId'>
@@ -140,13 +340,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
         Task<ProtectionEntityListResponse> ListAsync(string protectionContainerId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Planned failover of a protection entity.
+        /// Creates a profile
         /// </summary>
-        /// <param name='protectionContainerId'>
-        /// Parent Protection Container ID.
+        /// <param name='pcName'>
+        /// Parent Protection Container name.
         /// </param>
-        /// <param name='protectionEntityId'>
-        /// Protection entity ID.
+        /// <param name='name'>
+        /// Protection entity name.
         /// </param>
         /// <param name='parameters'>
         /// Planned failover request.
@@ -158,18 +358,18 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response model for the Job details object.
+        /// A standard service response for long running operations.
         /// </returns>
-        Task<JobResponse> PlannedFailoverAsync(string protectionContainerId, string protectionEntityId, PlannedFailoverRequest parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<LongRunningOperationResponse> PlannedFailoverAsync(string pcName, string name, PlannedFailoverRequest parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Reprotect operation for the given protection entity.
+        /// Creates a profile
         /// </summary>
-        /// <param name='protectionContainerId'>
-        /// Parent Protection Container ID.
+        /// <param name='pcName'>
+        /// Parent Protection Container name.
         /// </param>
-        /// <param name='protectionEntityId'>
-        /// Protection entity ID.
+        /// <param name='name'>
+        /// Protection entity name.
         /// </param>
         /// <param name='parameters'>
         /// Reprotect request after failover.
@@ -181,18 +381,18 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response model for the Job details object.
+        /// A standard service response for long running operations.
         /// </returns>
-        Task<JobResponse> ReprotectAsync(string protectionContainerId, string protectionEntityId, ReprotectRequest parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<LongRunningOperationResponse> ReprotectAsync(string pcName, string name, ReprotectRequest parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Test failover of a protection entity.
+        /// Creates a profile
         /// </summary>
-        /// <param name='protectionContainerId'>
-        /// Parent Protection Container ID.
+        /// <param name='pcName'>
+        /// Parent Protection Container name.
         /// </param>
-        /// <param name='protectionEntityId'>
-        /// Protection entity ID.
+        /// <param name='name'>
+        /// Protection entity name.
         /// </param>
         /// <param name='parameters'>
         /// Test failover request.
@@ -206,19 +406,19 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// <returns>
         /// A standard service response for long running operations.
         /// </returns>
-        Task<LongRunningOperationResponse> TestFailoverAsync(string protectionContainerId, string protectionEntityId, TestFailoverRequest parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<LongRunningOperationResponse> TestFailoverAsync(string pcName, string name, TestFailoverRequest parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Unplanned failover of a protection entity.
+        /// Creates a profile
         /// </summary>
-        /// <param name='protectionContainerId'>
-        /// Parent Protection Container ID.
+        /// <param name='pcName'>
+        /// Parent Protection Container name.
         /// </param>
-        /// <param name='protectionEntityId'>
-        /// Protection entity ID.
+        /// <param name='name'>
+        /// Protection entity name.
         /// </param>
         /// <param name='parameters'>
-        /// Planned failover request.
+        /// Unplanned failover request.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Request header parameters.
@@ -227,8 +427,8 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response model for the Job details object.
+        /// A standard service response for long running operations.
         /// </returns>
-        Task<JobResponse> UnplannedFailoverAsync(string protectionContainerId, string protectionEntityId, UnplannedFailoverRequest parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<LongRunningOperationResponse> UnplannedFailoverAsync(string pcName, string name, UnplannedFailoverRequest parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
     }
 }

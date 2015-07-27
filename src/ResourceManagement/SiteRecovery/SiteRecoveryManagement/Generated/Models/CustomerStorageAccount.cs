@@ -25,38 +25,36 @@ using System.Linq;
 namespace Microsoft.Azure.Management.SiteRecovery.Models
 {
     /// <summary>
-    /// HTTP Request headers for Site recovery service.
+    /// The definition of customer storage account.
     /// </summary>
-    public partial class CustomRequestHeaders
+    public partial class CustomerStorageAccount
     {
-        private string _agentAuthenticationHeader;
+        private string _storageAccountName;
         
         /// <summary>
-        /// Optional. String representing a unique code which is used to
-        /// validate that the request is originated by an authenticated client.
+        /// Optional.
         /// </summary>
-        public string AgentAuthenticationHeader
+        public string StorageAccountName
         {
-            get { return this._agentAuthenticationHeader; }
-            set { this._agentAuthenticationHeader = value; }
+            get { return this._storageAccountName; }
+            set { this._storageAccountName = value; }
         }
         
-        private string _clientRequestId;
+        private string _subscriptionId;
         
         /// <summary>
-        /// Optional. ClientRequestId is a unique ID for every request to Azure
-        /// Site Recovery. It is useful when diagnosing failures in API calls.
+        /// Optional.
         /// </summary>
-        public string ClientRequestId
+        public string SubscriptionId
         {
-            get { return this._clientRequestId; }
-            set { this._clientRequestId = value; }
+            get { return this._subscriptionId; }
+            set { this._subscriptionId = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the CustomRequestHeaders class.
+        /// Initializes a new instance of the CustomerStorageAccount class.
         /// </summary>
-        public CustomRequestHeaders()
+        public CustomerStorageAccount()
         {
         }
     }

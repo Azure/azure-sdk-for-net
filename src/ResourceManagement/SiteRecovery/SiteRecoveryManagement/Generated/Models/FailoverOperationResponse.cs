@@ -21,31 +21,30 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure;
 using Microsoft.Azure.Management.SiteRecovery.Models;
 
 namespace Microsoft.Azure.Management.SiteRecovery.Models
 {
     /// <summary>
-    /// The response model for the upload certificate response
+    /// A standard service response for long running operations.
     /// </summary>
-    public partial class UploadCertificateResponse : AzureOperationResponse
+    public partial class FailoverOperationResponse : LongRunningOperationResponse
     {
-        private CertificateProperties _properties;
+        private ProtectionEntity _protectionEntity;
         
         /// <summary>
-        /// Optional. The certificate properties
+        /// Optional. The Protection Entity.
         /// </summary>
-        public CertificateProperties Properties
+        public ProtectionEntity ProtectionEntity
         {
-            get { return this._properties; }
-            set { this._properties = value; }
+            get { return this._protectionEntity; }
+            set { this._protectionEntity = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the UploadCertificateResponse class.
+        /// Initializes a new instance of the FailoverOperationResponse class.
         /// </summary>
-        public UploadCertificateResponse()
+        public FailoverOperationResponse()
         {
         }
     }

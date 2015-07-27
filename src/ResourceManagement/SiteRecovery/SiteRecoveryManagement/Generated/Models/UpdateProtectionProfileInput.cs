@@ -21,6 +21,7 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure.Management.SiteRecovery.Models;
 
 namespace Microsoft.Azure.Management.SiteRecovery.Models
 {
@@ -29,12 +30,12 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
     /// </summary>
     public partial class UpdateProtectionProfileInput
     {
-        private string _replicationProviderSettings;
+        private ProtectionProfileProviderSpecificInput _replicationProviderSettings;
         
         /// <summary>
         /// Required. the replication provider settings.
         /// </summary>
-        public string ReplicationProviderSettings
+        public ProtectionProfileProviderSpecificInput ReplicationProviderSettings
         {
             get { return this._replicationProviderSettings; }
             set { this._replicationProviderSettings = value; }
@@ -52,7 +53,7 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         /// Initializes a new instance of the UpdateProtectionProfileInput
         /// class with required arguments.
         /// </summary>
-        public UpdateProtectionProfileInput(string replicationProviderSettings)
+        public UpdateProtectionProfileInput(ProtectionProfileProviderSpecificInput replicationProviderSettings)
             : this()
         {
             if (replicationProviderSettings == null)
