@@ -123,6 +123,18 @@ namespace Microsoft.Azure.Management.Sql.Models
             set { this._replacementString = value; }
         }
         
+        private string _schemaName;
+        
+        /// <summary>
+        /// Optional. Gets or sets the schema name on which the data masking
+        /// rule is applied.
+        /// </summary>
+        public string SchemaName
+        {
+            get { return this._schemaName; }
+            set { this._schemaName = value; }
+        }
+        
         private string _suffixSize;
         
         /// <summary>
