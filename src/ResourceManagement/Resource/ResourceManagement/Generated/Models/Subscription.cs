@@ -1,4 +1,4 @@
-namespace Microsoft.Azure.Subscriptions.Models
+namespace Microsoft.Azure.Management.Resources.Models
 {
     using System;
     using System.Collections.Generic;

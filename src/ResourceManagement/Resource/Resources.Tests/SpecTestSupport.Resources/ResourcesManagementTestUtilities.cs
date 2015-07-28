@@ -13,16 +13,16 @@
 // limitations under the License.
 //
 
-using Microsoft.Azure.Subscriptions;
 using ResourceGroups.Tests;
+using Microsoft.Azure.Management.Resources;
+using Microsoft.Azure.Management.Resources.Models;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using System;
+using System.Linq;
 
 namespace Microsoft.Azure.Test
 {
-    using Microsoft.Azure.Management.Resources;
-    using Microsoft.Azure.Management.Resources.Models;
-    using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-    using System;
-    using System.Linq;
+
 
     public static class ResourcesManagementTestUtilities
     {

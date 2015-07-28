@@ -15,11 +15,11 @@
 
 using System.Linq;
 using System.Net;
-using Microsoft.Azure.Subscriptions;
+using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Test;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.Rest.TransientFaultHandling;
 using Xunit;
-using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
 namespace ResourceGroups.Tests
 {
