@@ -20,11 +20,21 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="SessionRecords\SiteRecovery.Tests.EnumerationTests\EnumerateJobsTest.json" />
-    <None Include="SessionRecords\SiteRecovery.Tests.EnumerationTests\EnumerateProtectedContainerTests.json" />
-    <None Include="SessionRecords\SiteRecovery.Tests.EnumerationTests\EnumerateServersTests.json" />
-    <None Include="SessionRecords\SiteRecovery.Tests.GetTests\GetProtectedContainerTest.json" />
-    <None Include="SessionRecords\SiteRecovery.Tests.GetTests\GetServerTest.json" />
+    <None Include="SessionRecords\SiteRecovery.Tests.EnumerationTests\EnumerateJobsTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\SiteRecovery.Tests.EnumerationTests\EnumerateProtectedContainerTests.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\SiteRecovery.Tests.EnumerationTests\EnumerateServersTests.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\SiteRecovery.Tests.GetTests\GetProtectedContainerTest.json" >
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\SiteRecovery.Tests.GetTests\GetServerTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="SiteRecovery.playlist" />
   </ItemGroup>
   <ItemGroup>
