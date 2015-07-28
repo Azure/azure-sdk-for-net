@@ -186,8 +186,7 @@ namespace Sql2.Tests.ScenarioTests
             string startIp1 = "1.1.1.1";
             string endIp1 = "255.255.255.255";
 
-            // Create standard firewall rule.
-            var firewallCreate = sqlClient.FirewallRules.CreateOrUpdate(resourceGroupName, serverName.Split('.').ElementAt(0), firewallRuleName, new FirewallRuleCreateOrUpdateParameters()
+            sqlClient.FirewallRules.CreateOrUpdate(resourceGroupName, serverName.Split('.').ElementAt(0), firewallRuleName, new FirewallRuleCreateOrUpdateParameters()
             {
                 Properties = new FirewallRuleCreateOrUpdateProperties()
                 {
