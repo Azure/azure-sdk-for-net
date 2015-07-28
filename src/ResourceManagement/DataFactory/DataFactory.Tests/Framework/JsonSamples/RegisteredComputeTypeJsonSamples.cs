@@ -21,7 +21,11 @@ namespace DataFactory.Tests.Framework.JsonSamples
     /// </summary>
     public class RegisteredComputeTypeJsonSamples : JsonSampleCollection<RegisteredComputeTypeJsonSamples>
     {
-        [JsonSample]
+        [JsonSample(propertyBagKeys: new string[]
+             {
+                "properties.schema.properties.KeyPairName",
+                "properties.schema.properties.KeyPairKey"
+             })]
         public const string AmazonEMRCompute_ServiceBusTransport = @"
 { 
     ""name"": ""AmazonEMR"", 
@@ -54,7 +58,11 @@ namespace DataFactory.Tests.Framework.JsonSamples
     }
 }";
 
-        [JsonSample]
+        [JsonSample(propertyBagKeys: new string[]
+             {
+                "properties.schema.properties.KeyPairName",
+                "properties.schema.properties.KeyPairKey"
+             })]
         public const string AmazonEMRCompute_ServiceBusTransport_NestedPropertiesAndDefinitions = @"
 { 
     ""name"": ""AmazonEMR"", 
