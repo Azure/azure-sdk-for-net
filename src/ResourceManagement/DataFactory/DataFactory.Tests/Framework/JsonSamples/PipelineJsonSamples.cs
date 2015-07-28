@@ -18,7 +18,13 @@ namespace DataFactory.Tests.Framework.JsonSamples
 {
     public class PipelineJsonSamples : JsonSampleCollection<PipelineJsonSamples>
     {
-        [JsonSample(JsonSampleType.Unregistered)]
+        [JsonSample(JsonSampleType.Unregistered,
+            propertyBagKeys:
+                new string[]
+                    {
+                        "properties.activities[0].typeProperties.AssemblyName",
+                        "properties.activities[0].typeProperties.SliceStart"
+                    })]
         public const string ActivityTypePipeline = @"
 {
     name: ""activityType pipeline name"",
@@ -53,7 +59,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
         [JsonSample(propertyBagKeys: new string[] 
             { 
                 // Identify user-provided property names. These should always be cased exactly as the user specified, rather than converted to camel/Pascal-cased.
-                "properties.activities[0].typeProperties.extendedProperties.PropertyBagPropertyName1"
+                "properties.activities[0].typeProperties.defines.PropertyBagPropertyName1"
             }
         )]
         public const string HDInsightPipeline = @"
@@ -133,7 +139,11 @@ namespace DataFactory.Tests.Framework.JsonSamples
     }
 }
 ";
-        [JsonSample]
+
+        [JsonSample(propertyBagKeys: new string[]
+                        {
+                            "properties.activities[0].typeProperties.defines.PropertyBagPropertyName1"                     
+                        })]
         public const string HDInsightMapReducePipeline = @"
 {
     name: ""My HDInsight MapReduce pipeline"",
@@ -476,7 +486,8 @@ namespace DataFactory.Tests.Framework.JsonSamples
         [JsonSample(propertyBagKeys: new string[]
                     {
                         "properties.activities[0].typeProperties.webServiceParameters.oNe",
-                        "properties.activities[0].typeProperties.webServiceParameters.two NAME"
+                        "properties.activities[0].typeProperties.webServiceParameters.two NAME",
+                        "properties.activities[0].typeProperties.webServiceParameters.THREE"
                     })]
         public const string AzureMLPipelineWithWebParams = @"
 {
@@ -517,7 +528,8 @@ namespace DataFactory.Tests.Framework.JsonSamples
                     webServiceParameters:
                     {
                         ""oNe"": ""one value"",
-                        ""two NAME"": ""$$Text.Format('macro{0:yyyyMMddHH-mm}', Time.AddMinutes(SliceStart, 0))""
+                        ""two NAME"": ""$$Text.Format('macro{0:yyyyMMddHH-mm}', Time.AddMinutes(SliceStart, 0))"", 
+                        ""THREE"": ""HELLO""
                     }
                 }
             }
@@ -573,7 +585,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
         [JsonSample(propertyBagKeys: new string[] 
             { 
                 // Identify user-provided property names. These should always be cased exactly as the user specified, rather than converted to camel/Pascal-cased.
-                "properties.activities[0].transformation.extendedProperties.PropertyBagPropertyName1",
+                "properties.activities[0].typeproperties.defines.PropertyBagPropertyName1"
             }
 )]
         public const string StreamingWithExtendedProperties = @"
