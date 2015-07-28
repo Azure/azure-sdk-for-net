@@ -20,7 +20,9 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 using Microsoft.Azure.Management.Redis.Models;
 
 namespace Microsoft.Azure.Management.Redis.Models
@@ -41,17 +43,17 @@ namespace Microsoft.Azure.Management.Redis.Models
             set { this._enableNonSslPort = value; }
         }
         
-        private string _maxMemoryPolicy;
+        private IDictionary<string, string> _redisConfiguration;
         
         /// <summary>
-        /// Optional. What is maxMemoryPolicy of redis cache. Valid values:
-        /// (VolatileLRU, AllKeysLRU, VolatileRandom, AllKeysRandom,
-        /// VolatileTTL, NoEviction)
+        /// Optional. All Redis Settings. Few possible keys:
+        /// <para>maxmemory-delta</para><para>maxmemory-policy</para><para>notify-keyspace-events</para><para>maxmemory-samples</para><para>slowlog-log-slower-than</para><para>slowlog-max-len</para><para>list-max-ziplist-entries</para><para>list-max-ziplist-value</para><para>hash-max-ziplist-entries</para><para>hash-max-ziplist-value</para><para>set-max-intset-entries</para><para>zset-max-ziplist-entries</para><para>zset-max-ziplist-value
+        /// etc.</para>
         /// </summary>
-        public string MaxMemoryPolicy
+        public IDictionary<string, string> RedisConfiguration
         {
-            get { return this._maxMemoryPolicy; }
-            set { this._maxMemoryPolicy = value; }
+            get { return this._redisConfiguration; }
+            set { this._redisConfiguration = value; }
         }
         
         private string _redisVersion;
@@ -81,6 +83,7 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// </summary>
         public RedisProperties()
         {
+            this.RedisConfiguration = new LazyDictionary<string, string>();
         }
         
         /// <summary>

@@ -5,9 +5,10 @@ namespace Microsoft.Azure.Management.Resources.Models
     using Newtonsoft.Json;
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
-    using Microsoft.Azure;
+    using Microsoft.Rest.Azure;
 
     /// <summary>
+    /// Tag details.
     /// </summary>
     public partial class TagDetails
     {
@@ -35,25 +36,5 @@ namespace Microsoft.Azure.Management.Resources.Models
         [JsonProperty(PropertyName = "values")]
         public IList<TagValue> Values { get; set; }
 
-        /// <summary>
-        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
-        /// </summary>
-        public virtual void Validate()
-        {
-            if (this.Count != null)
-            {
-                this.Count.Validate();
-            }
-            if (this.Values != null)
-            {
-                foreach ( var element in this.Values)
-            {
-                if (element != null)
-            {
-                element.Validate();
-            }
-            }
-            }
-        }
     }
 }

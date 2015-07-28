@@ -5,9 +5,10 @@ namespace Microsoft.Azure.Management.Network.Models
     using Newtonsoft.Json;
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
-    using Microsoft.Azure;
+    using Microsoft.Rest.Azure;
 
     /// <summary>
+    /// Backend Address of application gateway
     /// </summary>
     public partial class ApplicationGatewayBackendAddress
     {
@@ -23,12 +24,5 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "ipAddress")]
         public string IpAddress { get; set; }
 
-        /// <summary>
-        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
-        /// </summary>
-        public virtual void Validate()
-        {
-            //Nothing to validate
-        }
     }
 }

@@ -1,19 +1,29 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\..\..\packages\xunit.core.2.0.0\build\portable-net45+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS\xunit.core.props" Condition="Exists('..\..\..\..\packages\xunit.core.2.0.0\build\portable-net45+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS\xunit.core.props')" />
+  <Import Project="..\..\..\..\packages\xunit.runner.visualstudio.2.0.0\build\net20\xunit.runner.visualstudio.props" Condition="Exists('..\..\..\..\packages\xunit.runner.visualstudio.2.0.0\build\net20\xunit.runner.visualstudio.props')" />
   <PropertyGroup>
+    <AutoRestProjects>true</AutoRestProjects>
+    <SDKTestProject>true</SDKTestProject>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <FileAlignment>512</FileAlignment>
+    <RestorePackages>true</RestorePackages>
     <ProjectGuid>{3C768CCE-36A0-433E-8280-31979756CC07}</ProjectGuid>
     <RootNamespace>Compute.Tests</RootNamespace>
     <AssemblyName>Compute.Tests</AssemblyName>
   </PropertyGroup>
   <Import Project="..\..\..\..\tools\Library.Settings.targets" />
-  <Import Project="$(LibraryToolsFolder)\Test.Dependencies.target" />
   <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\ApiConstants.cs" />
     <Compile Include="Helpers\ComputeManagementTestUtilities.cs" />
     <Compile Include="Helpers\Helpers.cs" />
     <Compile Include="Helpers\RecordedDelegatingHandler.cs" />
     <Compile Include="Helpers\VaultCertComparer.cs" />
     <Compile Include="ScenarioTests\AvailabilitySetTests.cs" />
+    <Compile Include="ScenarioTests\UndoContext.cs" />
     <Compile Include="ScenarioTests\VMMarketplaceTest.cs" />
     <Compile Include="ScenarioTests\VMNetworkInterfaceTests.cs" />
     <Compile Include="ScenarioTests\ListVMTests.cs" />
@@ -36,8 +46,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\CreateKeyVaultAndCertificateScript.ps1" />
     <None Include="SessionRecords\Compute.Tests.AvailabilitySetTests\TestOperations.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -99,9 +107,6 @@
     <None Include="SessionRecords\Compute.Tests.VMScenarioTests\TestVMScenarioOperations.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="SessionRecords\Compute.Tests.VMScenarioTests\TestVMScenarioWithPlan.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="SessionRecords\Compute.Tests.VMSizesTests\TestListVMSizes.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -116,24 +121,70 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Azure.Management.Storage">
-      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Azure.Management.Storage.2.4.0-preview\lib\net40\Microsoft.Azure.Management.Storage.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Azure.Management.Network">
-      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Azure.Management.Network.2.0.3-preview\lib\net40\Microsoft.Azure.Management.Network.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\TestDependencies\TestDependencies.csproj">
-      <Project>{40f35645-00ee-4df2-b66e-7624546b66df}</Project>
-      <Name>TestDependencies</Name>
+    <Reference Include="System" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Runtime.Serialization" />
+    <ProjectReference Include="..\..\..\ClientRuntime.Azure.TestFramework\TestFramework\ClientRuntime.Azure.TestFramework.csproj">
+      <Project>{f144a258-3c38-447a-993e-967f74a1a76c}</Project>
+      <Name>ClientRuntime.Azure.TestFramework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Resource\ResourceManagement\ResourceManagement.csproj">
+      <Project>{165ef660-235b-45af-83cb-0d32bef4c1a2}</Project>
+      <Name>ResourceManagement</Name>
+      <Properties>SkipValidatePackageReferences=true</Properties>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Storage\StorageManagement\StorageManagement.csproj">
+      <Project>{a7f47b7f-319b-411f-bf33-f57899a430cb}</Project>
+      <Name>StorageManagement</Name>
+      <Properties>SkipValidatePackageReferences=true</Properties>
     </ProjectReference>
     <ProjectReference Include="..\ComputeManagement\ComputeManagement.csproj">
       <Project>{4f41c7a2-7df6-4cc1-9f2d-66e8f05c2331}</Project>
       <Name>ComputeManagement</Name>
+      <Properties>SkipValidatePackageReferences=true</Properties>
     </ProjectReference>
+    <ProjectReference Include="..\..\Network\NetworkManagement\NetworkManagement.csproj">
+      <Project>{4500a2d3-c087-4fbc-bebd-e630cd728788}</Project>
+      <Name>NetworkManagement</Name>
+      <Properties>SkipValidatePackageReferences=true</Properties>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.IdentityModel.Clients.ActiveDirectory">
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.IdentityModel.Clients.ActiveDirectory.3.5.207081303-alpha\lib\net45\Microsoft.IdentityModel.Clients.ActiveDirectory.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Clients.ActiveDirectory.Platform">
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.IdentityModel.Clients.ActiveDirectory.3.5.207081303-alpha\lib\net45\Microsoft.IdentityModel.Clients.ActiveDirectory.Platform.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Rest.ClientRuntime">
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Rest.ClientRuntime.1.1.1\lib\net45\Microsoft.Rest.ClientRuntime.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Rest.ClientRuntime.Azure">
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Rest.ClientRuntime.Azure.1.0.18-preview\lib\net45\Microsoft.Rest.ClientRuntime.Azure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>$(LibraryNugetPackageFolder)\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="xunit.abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <HintPath>$(LibraryNugetPackageFolder)\xunit.abstractions.2.0.0\lib\net35\xunit.abstractions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="xunit.assert, Version=2.0.0.2929, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <HintPath>$(LibraryNugetPackageFolder)\xunit.assert.2.0.0\lib\portable-net45+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS\xunit.assert.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="xunit.core, Version=2.0.0.2929, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <HintPath>$(LibraryNugetPackageFolder)\xunit.extensibility.core.2.0.0\lib\portable-net45+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS\xunit.core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

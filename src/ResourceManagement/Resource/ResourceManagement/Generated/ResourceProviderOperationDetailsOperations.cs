@@ -11,11 +11,15 @@ namespace Microsoft.Azure.Management.Resources
     using System.Threading.Tasks;
     using Microsoft.Rest;
     using Newtonsoft.Json;
-    using Microsoft.Azure.OData;
+    using System.Linq;
     using System.Linq.Expressions;
-    using Microsoft.Azure;
+    using Microsoft.Rest.Azure.OData;
+    using Microsoft.Rest.Azure;
     using Models;
 
+    /// <summary>
+    /// ResourceProviderOperationDetailsOperations operations.
+    /// </summary>
     internal partial class ResourceProviderOperationDetailsOperations : IServiceOperations<ResourceManagementClient>, IResourceProviderOperationDetailsOperations
     {
         /// <summary>
@@ -42,18 +46,25 @@ namespace Microsoft.Azure.Management.Resources
         /// </param>    
         /// <param name='apiVersion'>
         /// </param>    
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<IList<ResourceProviderOperationDefinition>>> ListWithOperationResponseAsync(string resourceProviderNamespace, string apiVersion, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ResourceProviderOperationDetailListResult>> ListWithHttpMessagesAsync(string resourceProviderNamespace, string apiVersion, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceProviderNamespace == null)
             {
-                throw new ArgumentNullException("resourceProviderNamespace");
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceProviderNamespace");
             }
             if (apiVersion == null)
             {
-                throw new ArgumentNullException("apiVersion");
+                throw new ValidationException(ValidationRules.CannotBeNull, "apiVersion");
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
             // Tracing
             bool shouldTrace = ServiceClientTracing.IsEnabled;
@@ -71,6 +82,7 @@ namespace Microsoft.Azure.Management.Resources
             string url = this.Client.BaseUri.AbsoluteUri + 
                          "//providers/{resourceProviderNamespace}/operations";
             url = url.Replace("{resourceProviderNamespace}", Uri.EscapeDataString(resourceProviderNamespace));
+            url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> queryParameters = new List<string>();
             if (apiVersion != null)
             {
@@ -87,9 +99,33 @@ namespace Microsoft.Azure.Management.Resources
             httpRequest.Method = new HttpMethod("GET");
             httpRequest.RequestUri = new Uri(url);
             // Set Headers
+            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (httpRequest.Headers.Contains("accept-language"))
+                {
+                    httpRequest.Headers.Remove("accept-language");
+                }
+                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var header in customHeaders)
+                {
+                    if (httpRequest.Headers.Contains(header.Key))
+                    {
+                        httpRequest.Headers.Remove(header.Key);
+                    }
+                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                }
+            }
+
             // Set Credentials
-            cancellationToken.ThrowIfCancellationRequested();
-            await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+            }
             // Send Request
             if (shouldTrace)
             {
@@ -103,10 +139,10 @@ namespace Microsoft.Azure.Management.Resources
             }
             HttpStatusCode statusCode = httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
-            string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-            if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "NoContent") || statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK")))
+            if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK") || statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "NoContent")))
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
+                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
                 if (errorBody != null)
                 {
@@ -122,18 +158,24 @@ namespace Microsoft.Azure.Management.Resources
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<IList<ResourceProviderOperationDefinition>>();
+            var result = new AzureOperationResponse<ResourceProviderOperationDetailListResult>();
             result.Request = httpRequest;
             result.Response = httpResponse;
-            // Deserialize Response
-            if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "NoContent"))
+            if (httpResponse.Headers.Contains("x-ms-request-id"))
             {
-                result.Body = JsonConvert.DeserializeObject<IList<ResourceProviderOperationDefinition>>(responseContent, this.Client.DeserializationSettings);
+                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
             }
             // Deserialize Response
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
-                result.Body = JsonConvert.DeserializeObject<IList<ResourceProviderOperationDefinition>>(responseContent, this.Client.DeserializationSettings);
+                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                result.Body = JsonConvert.DeserializeObject<ResourceProviderOperationDetailListResult>(responseContent, this.Client.DeserializationSettings);
+            }
+            // Deserialize Response
+            if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "NoContent"))
+            {
+                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                result.Body = JsonConvert.DeserializeObject<ResourceProviderOperationDetailListResult>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {

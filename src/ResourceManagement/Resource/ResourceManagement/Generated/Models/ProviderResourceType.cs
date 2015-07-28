@@ -5,9 +5,10 @@ namespace Microsoft.Azure.Management.Resources.Models
     using Newtonsoft.Json;
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
-    using Microsoft.Azure;
+    using Microsoft.Rest.Azure;
 
     /// <summary>
+    /// Resource type managed by the resource provider.
     /// </summary>
     public partial class ProviderResourceType
     {
@@ -36,11 +37,5 @@ namespace Microsoft.Azure.Management.Resources.Models
         [JsonProperty(PropertyName = "properties")]
         public IDictionary<string, string> Properties { get; set; }
 
-        /// <summary>
-        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
-        /// </summary>
-        public virtual void Validate()
-        {
-        }
     }
 }

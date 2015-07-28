@@ -14,16 +14,17 @@
 //
 
 using System;
-using System.Linq;
 using System.Collections.Generic;
-using System.Threading;
-using Microsoft.Azure;
-using Microsoft.Azure.Management.Resources;
-using Xunit;
-using Newtonsoft.Json.Linq;
-using System.Net.Http;
+using System.Linq;
 using System.Net;
+using System.Net.Http;
+using Microsoft.Rest.Azure;
+using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
+using Microsoft.Rest;
+using Newtonsoft.Json.Linq;
+
+using Xunit;
 
 namespace ResourceGroups.Tests
 {
@@ -31,9 +32,12 @@ namespace ResourceGroups.Tests
     {
         public ResourceManagementClient GetResourceManagementClient(RecordedDelegatingHandler handler)
         {
-            var token = new TokenCloudCredentials(Guid.NewGuid().ToString(), "abc123");
+            var subscriptionId = Guid.NewGuid().ToString();
+            var token = new TokenCredentials(subscriptionId, "abc123");
             handler.IsPassThrough = false;
-            return new ResourceManagementClient(token, handler);
+            var client = new ResourceManagementClient(token, handler);
+            client.SubscriptionId = subscriptionId;
+            return client;
         }
 
         [Fact]
@@ -91,9 +95,8 @@ namespace ResourceGroups.Tests
             var handler = new RecordedDelegatingHandler();
             var client = GetResourceManagementClient(handler);
 
-
-            Assert.Throws<ArgumentNullException>(() => client.ResourceGroups.CreateOrUpdate(null,  new ResourceGroup()));
-            Assert.Throws<ArgumentNullException>(() => client.ResourceGroups.CreateOrUpdate("foo",  null));
+            Assert.Throws<Microsoft.Rest.ValidationException>(() => client.ResourceGroups.CreateOrUpdate(null,  new ResourceGroup()));
+            Assert.Throws<Microsoft.Rest.ValidationException>(() => client.ResourceGroups.CreateOrUpdate("foo", null));
         }
 
         [Fact]
@@ -289,11 +292,11 @@ namespace ResourceGroups.Tests
             Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
 
             // Validate result
-            Assert.Equal(2, result.Value.Count);
-            Assert.Equal("myresourcegroup1", result.Value[0].Name);
-            Assert.Equal("Succeeded", result.Value[0].Properties.ProvisioningState);
-            Assert.Equal("/subscriptions/abc123/resourcegroups/csmrgr5mfggio", result.Value[0].Id);
-            Assert.Equal("https://wa/subscriptions/subId/resourcegroups?api-version=1.0&$skiptoken=662idk", result.NextLink.ToString());
+            Assert.Equal(2, result.Count());
+            Assert.Equal("myresourcegroup1", result.First().Name);
+            Assert.Equal("Succeeded", result.First().Properties.ProvisioningState);
+            Assert.Equal("/subscriptions/abc123/resourcegroups/csmrgr5mfggio", result.First().Id);
+            Assert.Equal("https://wa/subscriptions/subId/resourcegroups?api-version=1.0&$skiptoken=662idk", result.NextPageLink);
         }
 
         [Fact]
@@ -314,7 +317,7 @@ namespace ResourceGroups.Tests
             Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
 
             // Validate result
-            Assert.Equal(0, result.Value.Count);
+            Assert.Equal(0, result.Count());
         }
         
         [Fact]
@@ -349,9 +352,9 @@ namespace ResourceGroups.Tests
             Assert.True(handler.Uri.ToString().Contains("$top=5"));
 
             // Validate result
-            Assert.Equal(2, result.Value.Count);
-            Assert.Equal("myresourcegroup1", result.Value[0].Name);
-            Assert.Equal("https://wa/subscriptions/subId/resourcegroups?api-version=1.0&$skiptoken=662idk", result.NextLink.ToString());
+            Assert.Equal(2, result.Count());
+            Assert.Equal("myresourcegroup1", result.First().Name);
+            Assert.Equal("https://wa/subscriptions/subId/resourcegroups?api-version=1.0&$skiptoken=662idk", result.NextPageLink);
         }
 
         [Fact]
@@ -366,8 +369,7 @@ namespace ResourceGroups.Tests
                     SubsequentStatusCodeToReturn = HttpStatusCode.OK
                 };
             var client = GetResourceManagementClient(handler);
-
-
+            client.LongRunningOperationRetryTimeout = 0;
             client.ResourceGroups.Delete("foo");
         }
 
@@ -377,7 +379,7 @@ namespace ResourceGroups.Tests
             var handler = new RecordedDelegatingHandler();
             var client = GetResourceManagementClient(handler);
 
-            Assert.Throws<ArgumentNullException>(() => client.ResourceGroups.Delete(null));
+            Assert.Throws<Microsoft.Rest.ValidationException>(() => client.ResourceGroups.Delete(null));
             Assert.Throws<CloudException>(() => client.ResourceGroups.Delete("~`123"));
         }
     }

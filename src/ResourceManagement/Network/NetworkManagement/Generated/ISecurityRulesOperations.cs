@@ -6,10 +6,12 @@ namespace Microsoft.Azure.Management.Network
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Rest;
-    using Microsoft.Azure;
+    using System.Linq;
+    using Microsoft.Rest.Azure;
     using Models;
 
     /// <summary>
+    /// SecurityRulesOperations operations.
     /// </summary>
     public partial interface ISecurityRulesOperations
     {
@@ -26,10 +28,13 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='securityRuleName'>
         /// The name of the security rule.
         /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
         /// </param>
-        Task<AzureOperationResponse> DeleteWithOperationResponseAsync(string resourceGroupName, string networkSecurityGroupName, string securityRuleName, CancellationToken cancellationToken = default(CancellationToken));
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string networkSecurityGroupName, string securityRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The delete network security rule operation deletes the specified
         /// network security rule.
@@ -43,10 +48,13 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='securityRuleName'>
         /// The name of the security rule.
         /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
         /// </param>
-        Task<AzureOperationResponse> BeginDeleteWithOperationResponseAsync(string resourceGroupName, string networkSecurityGroupName, string securityRuleName, CancellationToken cancellationToken = default(CancellationToken));
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string networkSecurityGroupName, string securityRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The Get NetworkSecurityRule operation retreives information about
         /// the specified network security rule.
@@ -60,10 +68,13 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='securityRuleName'>
         /// The name of the security rule.
         /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
         /// </param>
-        Task<AzureOperationResponse<SecurityRule>> GetWithOperationResponseAsync(string resourceGroupName, string networkSecurityGroupName, string securityRuleName, CancellationToken cancellationToken = default(CancellationToken));
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<SecurityRule>> GetWithHttpMessagesAsync(string resourceGroupName, string networkSecurityGroupName, string securityRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The Put network security rule operation creates/updates a security
         /// rule in the specified network security group
@@ -81,10 +92,13 @@ namespace Microsoft.Azure.Management.Network
         /// Parameters supplied to the create/update network security rule
         /// operation
         /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
         /// </param>
-        Task<AzureOperationResponse<SecurityRule>> CreateOrUpdateWithOperationResponseAsync(string resourceGroupName, string networkSecurityGroupName, string securityRuleName, SecurityRule securityRuleParameters, CancellationToken cancellationToken = default(CancellationToken));
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<SecurityRule>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string networkSecurityGroupName, string securityRuleName, SecurityRule securityRuleParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The Put network security rule operation creates/updates a security
         /// rule in the specified network security group
@@ -102,10 +116,13 @@ namespace Microsoft.Azure.Management.Network
         /// Parameters supplied to the create/update network security rule
         /// operation
         /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
         /// </param>
-        Task<AzureOperationResponse<SecurityRule>> BeginCreateOrUpdateWithOperationResponseAsync(string resourceGroupName, string networkSecurityGroupName, string securityRuleName, SecurityRule securityRuleParameters, CancellationToken cancellationToken = default(CancellationToken));
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<SecurityRule>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string networkSecurityGroupName, string securityRuleName, SecurityRule securityRuleParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The List network security rule opertion retrieves all the security
         /// rules in a network security group.
@@ -116,20 +133,26 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='networkSecurityGroupName'>
         /// The name of the network security group.
         /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
         /// </param>
-        Task<AzureOperationResponse<SecurityRuleListResult>> ListWithOperationResponseAsync(string resourceGroupName, string networkSecurityGroupName, CancellationToken cancellationToken = default(CancellationToken));
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<Page<SecurityRule>>> ListWithHttpMessagesAsync(string resourceGroupName, string networkSecurityGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The List network security rule opertion retrieves all the security
         /// rules in a network security group.
         /// </summary>
-        /// <param name='nextLink'>
+        /// <param name='nextPageLink'>
         /// NextLink from the previous successful call to List operation.
         /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
         /// </param>
-        Task<AzureOperationResponse<SecurityRuleListResult>> ListNextWithOperationResponseAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken));
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<Page<SecurityRule>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

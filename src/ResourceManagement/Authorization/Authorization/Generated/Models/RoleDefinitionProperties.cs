@@ -76,17 +76,6 @@ namespace Microsoft.Azure.Management.Authorization.Models
             set { this._roleName = value; }
         }
         
-        private string _scope;
-        
-        /// <summary>
-        /// Optional. Gets or sets role definition scope.
-        /// </summary>
-        public string Scope
-        {
-            get { return this._scope; }
-            set { this._scope = value; }
-        }
-        
         private string _type;
         
         /// <summary>

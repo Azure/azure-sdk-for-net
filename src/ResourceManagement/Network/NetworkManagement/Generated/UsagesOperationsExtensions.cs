@@ -6,7 +6,7 @@ namespace Microsoft.Azure.Management.Network
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Rest;
-    using Microsoft.Azure;
+    using Microsoft.Rest.Azure;
     using Models;
 
     public static partial class UsagesOperationsExtensions
@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.Network
             /// Lists compute usages for a subscription.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='location'>
             /// The location upon which resource usage is queried.
@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Network
             /// Lists compute usages for a subscription.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='location'>
             /// The location upon which resource usage is queried.
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task<UsagesListResult> ListAsync( this IUsagesOperations operations, string location, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<UsagesListResult> result = await operations.ListWithOperationResponseAsync(location, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<UsagesListResult> result = await operations.ListWithHttpMessagesAsync(location, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

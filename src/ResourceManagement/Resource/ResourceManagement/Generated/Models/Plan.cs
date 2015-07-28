@@ -5,9 +5,10 @@ namespace Microsoft.Azure.Management.Resources.Models
     using Newtonsoft.Json;
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
-    using Microsoft.Azure;
+    using Microsoft.Rest.Azure;
 
     /// <summary>
+    /// Plan for the resource.
     /// </summary>
     public partial class Plan
     {
@@ -35,12 +36,5 @@ namespace Microsoft.Azure.Management.Resources.Models
         [JsonProperty(PropertyName = "promotionCode")]
         public string PromotionCode { get; set; }
 
-        /// <summary>
-        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
-        /// </summary>
-        public virtual void Validate()
-        {
-            //Nothing to validate
-        }
     }
 }

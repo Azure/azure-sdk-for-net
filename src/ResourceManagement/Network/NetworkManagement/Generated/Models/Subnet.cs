@@ -5,9 +5,10 @@ namespace Microsoft.Azure.Management.Network.Models
     using Newtonsoft.Json;
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
-    using Microsoft.Azure;
+    using Microsoft.Rest.Azure;
 
     /// <summary>
+    /// Subnet in a VirtualNework resource
     /// </summary>
     public partial class Subnet : SubResource
     {
@@ -28,42 +29,28 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets or sets Address prefix for the subnet.
         /// </summary>
-        [JsonProperty(PropertyName = "addressPrefix")]
+        [JsonProperty(PropertyName = "properties.addressPrefix")]
         public string AddressPrefix { get; set; }
 
         /// <summary>
         /// Gets or sets the reference of the NetworkSecurityGroup resource
         /// </summary>
-        [JsonProperty(PropertyName = "networkSecurityGroup")]
+        [JsonProperty(PropertyName = "properties.networkSecurityGroup")]
         public SubResource NetworkSecurityGroup { get; set; }
 
         /// <summary>
         /// Gets array of references to the network interface IP
         /// configurations using subnet
         /// </summary>
-        [JsonProperty(PropertyName = "ipConfigurations")]
+        [JsonProperty(PropertyName = "properties.ipConfigurations")]
         public IList<SubResource> IpConfigurations { get; set; }
 
         /// <summary>
-        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
+        /// Gets or sets Provisioning state of the PublicIP resource
+        /// Updating/Deleting/Failed
         /// </summary>
-        public override void Validate()
-        {
-            base.Validate();
-            if (this.NetworkSecurityGroup != null)
-            {
-                this.NetworkSecurityGroup.Validate();
-            }
-            if (this.IpConfigurations != null)
-            {
-                foreach ( var element in this.IpConfigurations)
-            {
-                if (element != null)
-            {
-                element.Validate();
-            }
-            }
-            }
-        }
+        [JsonProperty(PropertyName = "properties.provisioningState")]
+        public string ProvisioningState { get; set; }
+
     }
 }

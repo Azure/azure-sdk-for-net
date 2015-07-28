@@ -6,12 +6,14 @@ namespace Microsoft.Azure.Management.Resources
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Rest;
-    using Microsoft.Azure.OData;
+    using System.Linq;
     using System.Linq.Expressions;
-    using Microsoft.Azure;
+    using Microsoft.Rest.Azure.OData;
+    using Microsoft.Rest.Azure;
     using Models;
 
     /// <summary>
+    /// ResourceGroupsOperations operations.
     /// </summary>
     public partial interface IResourceGroupsOperations
     {
@@ -27,10 +29,13 @@ namespace Microsoft.Azure.Management.Resources
         /// <param name='top'>
         /// Query parameters. If null is passed returns all resource groups.
         /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
         /// </param>
-        Task<AzureOperationResponse<ResourceListResult>> ListResourcesWithOperationResponseAsync(string resourceGroupName, Expression<Func<GenericResourceFilter, bool>> filter = default(Expression<Func<GenericResourceFilter, bool>>), int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken));
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<Page<GenericResource>>> ListResourcesWithHttpMessagesAsync(string resourceGroupName, Expression<Func<GenericResourceFilter, bool>> filter = default(Expression<Func<GenericResourceFilter, bool>>), int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Checks whether resource group exists.
         /// </summary>
@@ -38,10 +43,13 @@ namespace Microsoft.Azure.Management.Resources
         /// The name of the resource group to check. The name is case
         /// insensitive.
         /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
         /// </param>
-        Task<AzureOperationResponse<bool?>> CheckExistenceWithOperationResponseAsync(string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken));
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<bool?>> CheckExistenceWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Create a resource group.
         /// </summary>
@@ -52,32 +60,62 @@ namespace Microsoft.Azure.Management.Resources
         /// Parameters supplied to the create or update resource group service
         /// operation.
         /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
         /// </param>
-        Task<AzureOperationResponse<ResourceGroupExtended>> CreateOrUpdateWithOperationResponseAsync(string resourceGroupName, ResourceGroup parameters, CancellationToken cancellationToken = default(CancellationToken));
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<ResourceGroup>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, ResourceGroup parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Delete resource group and all of its resources.
+        /// Create a resource group.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group to be created or updated.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the create or update resource group service
+        /// operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<ResourceGroup>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, ResourceGroup parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Begin deleting resource group.To determine whether the operation
+        /// has finished processing the request, call
+        /// GetLongRunningOperationStatus.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group to be deleted. The name is case
         /// insensitive.
         /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
         /// </param>
-        Task<AzureOperationResponse> DeleteWithOperationResponseAsync(string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken));
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Delete resource group and all of its resources.
+        /// Begin deleting resource group.To determine whether the operation
+        /// has finished processing the request, call
+        /// GetLongRunningOperationStatus.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group to be deleted. The name is case
         /// insensitive.
         /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
         /// </param>
-        Task<AzureOperationResponse> BeginDeleteWithOperationResponseAsync(string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken));
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get a resource group.
         /// </summary>
@@ -85,10 +123,13 @@ namespace Microsoft.Azure.Management.Resources
         /// The name of the resource group to get. The name is case
         /// insensitive.
         /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
         /// </param>
-        Task<AzureOperationResponse<ResourceGroupExtended>> GetWithOperationResponseAsync(string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken));
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<ResourceGroup>> GetWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Resource groups can be updated through a simple PATCH operation to
         /// a group address. The format of the request is the same as that
@@ -103,10 +144,13 @@ namespace Microsoft.Azure.Management.Resources
         /// Parameters supplied to the update state resource group service
         /// operation.
         /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
         /// </param>
-        Task<AzureOperationResponse<ResourceGroupExtended>> PatchWithOperationResponseAsync(string resourceGroupName, ResourceGroup parameters, CancellationToken cancellationToken = default(CancellationToken));
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<ResourceGroup>> PatchWithHttpMessagesAsync(string resourceGroupName, ResourceGroup parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets a collection of resource groups.
         /// </summary>
@@ -116,29 +160,38 @@ namespace Microsoft.Azure.Management.Resources
         /// <param name='top'>
         /// Query parameters. If null is passed returns all resource groups.
         /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
         /// </param>
-        Task<AzureOperationResponse<ResourceGroupListResult>> ListWithOperationResponseAsync(Expression<Func<ResourceGroupExtendedFilter, bool>> filter = default(Expression<Func<ResourceGroupExtendedFilter, bool>>), int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken));
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<Page<ResourceGroup>>> ListWithHttpMessagesAsync(Expression<Func<ResourceGroupFilter, bool>> filter = default(Expression<Func<ResourceGroupFilter, bool>>), int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get all of the resources under a subscription.
         /// </summary>
-        /// <param name='nextLink'>
+        /// <param name='nextPageLink'>
         /// NextLink from the previous successful call to List operation.
         /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
         /// </param>
-        Task<AzureOperationResponse<ResourceListResult>> ListResourcesNextWithOperationResponseAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken));
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<Page<GenericResource>>> ListResourcesNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets a collection of resource groups.
         /// </summary>
-        /// <param name='nextLink'>
+        /// <param name='nextPageLink'>
         /// NextLink from the previous successful call to List operation.
         /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
         /// </param>
-        Task<AzureOperationResponse<ResourceGroupListResult>> ListNextWithOperationResponseAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken));
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<Page<ResourceGroup>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

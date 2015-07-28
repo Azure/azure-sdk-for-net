@@ -13,230 +13,207 @@
 // limitations under the License.
 //
 
+using System;
 using System.Linq;
 using System.Net;
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
-using Microsoft.Azure.Test;
 using Xunit;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
 namespace Compute.Tests
 {
     public class VMImagesTests
     {
-        private static readonly VirtualMachineImageGetParameters parameters = new VirtualMachineImageGetParameters()
-        {
-            Location = "westus",
-            PublisherName = "Microsoft.Windows",
-            Offer = "WindowsServer2012",
-            Skus = "Enterprise",
-            Version = "1.0.0"
-        };
-
-        private static readonly VirtualMachineImageListParameters listParameters = new VirtualMachineImageListParameters()
-        {
-            Location = "westus",
-            PublisherName = "Microsoft.Windows",
-            Offer = "WindowsServer2012",
-            Skus = "Enterprise",
-        };
-
-        private static readonly VirtualMachineImage vmimage_v100 = new VirtualMachineImage()
-        {
-            Id = "/subscriptions/84fffc2f-5d77-449a-bc7f-58c363f2a6b9/providers/Microsoft.Compute/locations/westus/publishers/Microsoft.Windows/artifacttypes/vmimage/offers/WindowsServer2012/skus/Enterprise/versions/1.0.0",
-            Name = "1.0.0",
-            Location = "westus",
-            PurchasePlan = new PurchasePlan()
-            {
-                Name = "name",
-                Product = "product",
-                Publisher = "publisher",
-            },
-            OSDiskImage = new OSDiskImage()
-            {
-                OperatingSystem = "Linux"
-            },
-            DataDiskImages = new []
-            {
-                new DataDiskImage(){Lun = 123456789}, 
-            }
-        };
-
-        private static readonly VirtualMachineImage vmimage_v110 = new VirtualMachineImage()
-        {
-            Id = "/subscriptions/84fffc2f-5d77-449a-bc7f-58c363f2a6b9/providers/Microsoft.Compute/locations/westus/publishers/Microsoft.Windows/artifacttypes/vmimage/offers/WindowsServer2012/skus/Enterprise/versions/1.1.0",
-            Name = "1.1.0",
-            Location = "westus",
-            PurchasePlan = new PurchasePlan()
-            {
-                Name = "name",
-                Product = "product",
-                Publisher = "publisher",
-            },
-            OSDiskImage = new OSDiskImage()
-            {
-                OperatingSystem = "Linux"
-            },
-            DataDiskImages = new[]
-            {
-                new DataDiskImage(){Lun = 123456789}, 
-            }
-        };
+        private static readonly string[] AvailableWindowsServerImageVersions = new string[] { "4.0.201505", "4.0.201504", "4.0.201503" };
 
         [Fact]
         public void TestVMImageGet()
         {
-            using (var context = UndoContext.Current)
+            using (MockContext context = MockContext.Start())
             {
-                context.Start();
-                ComputeManagementClient _pirClient =
-                    ComputeManagementTestUtilities.GetComputeManagementClient(new RDFETestEnvironmentFactory(),
-                        new RecordedDelegatingHandler {StatusCodeToReturn = HttpStatusCode.OK});
+                ComputeManagementClient _pirClient = ComputeManagementTestUtilities.GetComputeManagementClient(
+                    new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
-                var vmimage = _pirClient.VirtualMachineImages.Get(parameters);
+                var vmimage = _pirClient.VirtualMachineImages.Get(
+                    ComputeManagementTestUtilities.DefaultLocation,
+                    "MicrosoftWindowsServer", 
+                    "WindowsServer",
+                    "2012-R2-Datacenter",
+                    AvailableWindowsServerImageVersions[0]);
 
-                Assert.True(vmimage.VirtualMachineImage.Name == "1.0.0");
-                Assert.True(vmimage.VirtualMachineImage.Location == "westus");
+                Assert.Equal(AvailableWindowsServerImageVersions[0], vmimage.Name);
+                Assert.Equal(ComputeManagementTestUtilities.DefaultLocation, vmimage.Location, StringComparer.OrdinalIgnoreCase);
 
+                // FIXME: This doesn't work with a real Windows Server images, which is what's in the query parameters.
+                // Bug 4196378
+                /*
                 Assert.True(vmimage.VirtualMachineImage.PurchasePlan.Name == "name");
                 Assert.True(vmimage.VirtualMachineImage.PurchasePlan.Publisher == "publisher");
                 Assert.True(vmimage.VirtualMachineImage.PurchasePlan.Product == "product");
+                */
 
-                Assert.True(vmimage.VirtualMachineImage.OSDiskImage.OperatingSystem == "Linux");
+                Assert.Equal(OperatingSystemTypes.Windows, vmimage.OsDiskImage.OperatingSystem);
 
-                Assert.True(vmimage.VirtualMachineImage.DataDiskImages.Count(ddi => ddi.Lun == 123456789) != 0);
+                //Assert.True(vmimage.VirtualMachineImage.DataDiskImages.Count(ddi => ddi.Lun == 123456789) != 0);
             }
         }
 
         [Fact]
         public void TestVMImageListNoFilter()
         {
-            using (var context = UndoContext.Current)
+            using (MockContext context = MockContext.Start())
             {
-                context.Start();
-                ComputeManagementClient _pirClient =
-                    ComputeManagementTestUtilities.GetComputeManagementClient(new RDFETestEnvironmentFactory(),
-                        new RecordedDelegatingHandler {StatusCodeToReturn = HttpStatusCode.OK});
+                ComputeManagementClient _pirClient = ComputeManagementTestUtilities.GetComputeManagementClient(
+                    new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
-                var vmimages = _pirClient.VirtualMachineImages.List(listParameters);
+                var vmimages = _pirClient.VirtualMachineImages.List(
+                    ComputeManagementTestUtilities.DefaultLocation, 
+                    "MicrosoftWindowsServer",
+                    "WindowsServer",
+                    "2012-R2-Datacenter");
 
-                Assert.True(vmimages.Resources.Count > 0);
-                Assert.True(vmimages.Resources.Count(vmi => vmi.Name == "1.0.0") != 0);
-                Assert.True(vmimages.Resources.Count(vmi => vmi.Name == "1.1.0") != 0);
+                Assert.True(vmimages.Count > 0);
+                Assert.True(vmimages.Count(vmi => vmi.Name == AvailableWindowsServerImageVersions[0]) != 0);
+                Assert.True(vmimages.Count(vmi => vmi.Name == AvailableWindowsServerImageVersions[1]) != 0);
             }
         }
 
-        [Fact]
+        [Fact(Skip = "TODO: AutoRest")]
         public void TestVMImageListFilters()
         {
-            using (var context = UndoContext.Current)
+            using (MockContext context = MockContext.Start())
             {
-                context.Start();
-                ComputeManagementClient _pirClient =
-                    ComputeManagementTestUtilities.GetComputeManagementClient(new RDFETestEnvironmentFactory(),
-                        new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
-
-                VirtualMachineImageListParameters listParametersWithFilter = new VirtualMachineImageListParameters()
-                {
-                    Location = listParameters.Location,
-                    PublisherName = listParameters.PublisherName,
-                    Offer = listParameters.Offer,
-                    Skus = listParameters.Skus,
-                };
+                ComputeManagementClient _pirClient = ComputeManagementTestUtilities.GetComputeManagementClient(
+                    new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
                 // Filter: top - Negative Test
-                listParametersWithFilter.FilterExpression = "$top=0";
-                var vmimages = _pirClient.VirtualMachineImages.List(listParametersWithFilter);
-                Assert.True(vmimages.Resources.Count == 0);
+                var vmimages = _pirClient.VirtualMachineImages.List(
+                    ComputeManagementTestUtilities.DefaultLocation,
+                    "MicrosoftWindowsServer",
+                    "WindowsServer",
+                    "2012-R2-Datacenter",
+                    top: 0);
+                Assert.True(vmimages.Count == 0);
 
                 // Filter: top - Positive Test
-                listParametersWithFilter.FilterExpression = "$top=1";
-                vmimages = _pirClient.VirtualMachineImages.List(listParametersWithFilter);
-                Assert.True(vmimages.Resources.Count == 1);
+                vmimages = _pirClient.VirtualMachineImages.List(
+                    ComputeManagementTestUtilities.DefaultLocation,
+                    "MicrosoftWindowsServer",
+                    "WindowsServer",
+                    "2012-R2-Datacenter",
+                    top: 1);
+                Assert.True(vmimages.Count == 1);
 
                 // Filter: top - Positive Test
-                listParametersWithFilter.FilterExpression = "$top=2";
-                vmimages = _pirClient.VirtualMachineImages.List(listParametersWithFilter);
-                Assert.True(vmimages.Resources.Count == 2);
-                Assert.True(vmimages.Resources.Count(vmi => vmi.Name == "1.0.0") != 0);
-                Assert.True(vmimages.Resources.Count(vmi => vmi.Name == "1.1.0") != 0);
+                vmimages = _pirClient.VirtualMachineImages.List(
+                    ComputeManagementTestUtilities.DefaultLocation,
+                    "MicrosoftWindowsServer",
+                    "WindowsServer",
+                    "2012-R2-Datacenter",
+                    top: 2);
+                Assert.True(vmimages.Count == 2);
+                Assert.True(vmimages.Count(vmi => vmi.Name == AvailableWindowsServerImageVersions[1]) != 0);
 
                 // Filter: orderby - Positive Test
-                listParametersWithFilter.FilterExpression = "$orderby=name desc";
-                vmimages = _pirClient.VirtualMachineImages.List(listParametersWithFilter);
-                Assert.True(vmimages.Resources.Count == 2);
-                Assert.True(vmimages.Resources[0].Name == "1.1.0");
-                Assert.True(vmimages.Resources[1].Name == "1.0.0");
+                vmimages = _pirClient.VirtualMachineImages.List(
+                    ComputeManagementTestUtilities.DefaultLocation,
+                    "MicrosoftWindowsServer",
+                    "WindowsServer",
+                    "2012-R2-Datacenter",
+                    orderby:"name desc");
+                Assert.Equal(AvailableWindowsServerImageVersions.Length, vmimages.Count);
+                for (int i = 0; i < AvailableWindowsServerImageVersions.Length; i++)
+                {
+                    Assert.Equal(AvailableWindowsServerImageVersions[i], vmimages[i].Name);
+                }
 
                 // Filter: orderby - Positive Test
-                listParametersWithFilter.FilterExpression = "$orderby=name asc";
-                vmimages = _pirClient.VirtualMachineImages.List(listParametersWithFilter);
-                Assert.True(vmimages.Resources.Count == 2);
-                Assert.True(vmimages.Resources[0].Name == "1.0.0");
-                Assert.True(vmimages.Resources[1].Name == "1.1.0");
+                vmimages = _pirClient.VirtualMachineImages.List(
+                    ComputeManagementTestUtilities.DefaultLocation,
+                    "MicrosoftWindowsServer",
+                    "WindowsServer",
+                    "2012-R2-Datacenter",
+                    top: 2,
+                    orderby: "name asc");
+                Assert.True(vmimages.Count == 2);
+                Assert.True(vmimages[0].Name == AvailableWindowsServerImageVersions.Last());
+                Assert.True(vmimages[1].Name == AvailableWindowsServerImageVersions.Reverse().Skip(1).First());
 
                 // Filter: top orderby - Positive Test
-                listParametersWithFilter.FilterExpression = "$top=1&$orderby=name desc";
-                vmimages = _pirClient.VirtualMachineImages.List(listParametersWithFilter);
-                Assert.True(vmimages.Resources.Count == 1);
-                Assert.True(vmimages.Resources[0].Name == "1.1.0");
+                vmimages = _pirClient.VirtualMachineImages.List(
+                    ComputeManagementTestUtilities.DefaultLocation,
+                    "MicrosoftWindowsServer",
+                    "WindowsServer",
+                    "2012-R2-Datacenter",
+                    top: 1,
+                    orderby: "name desc");
+                Assert.True(vmimages.Count == 1);
+                Assert.True(vmimages[0].Name == AvailableWindowsServerImageVersions[0]);
 
                 // Filter: top orderby - Positive Test
-                listParametersWithFilter.FilterExpression = "$top=1&$orderby=name asc";
-                vmimages = _pirClient.VirtualMachineImages.List(listParametersWithFilter);
-                Assert.True(vmimages.Resources.Count == 1);
-                Assert.True(vmimages.Resources[0].Name == "1.0.0");
+                vmimages = _pirClient.VirtualMachineImages.List(
+                    ComputeManagementTestUtilities.DefaultLocation,
+                    "MicrosoftWindowsServer",
+                    "WindowsServer",
+                    "2012-R2-Datacenter",
+                    top: 1, 
+                    orderby: "name asc");
+                Assert.True(vmimages.Count == 1);
+                Assert.True(vmimages[0].Name == AvailableWindowsServerImageVersions.Last());
             }
         }
 
         [Fact]
         public void TestVMImageListPublishers()
         {
-            using (var context = UndoContext.Current)
+            using (MockContext context = MockContext.Start())
             {
-                context.Start();
-                ComputeManagementClient _pirClient =
-                    ComputeManagementTestUtilities.GetComputeManagementClient(new RDFETestEnvironmentFactory(),
-                        new RecordedDelegatingHandler {StatusCodeToReturn = HttpStatusCode.OK});
 
-                var publishers = _pirClient.VirtualMachineImages.ListPublishers(parameters);
+                ComputeManagementClient _pirClient = ComputeManagementTestUtilities.GetComputeManagementClient(
+                    new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
-                Assert.True(publishers.Resources.Count > 0);
-                Assert.True(publishers.Resources.Count(pub => pub.Name == "Microsoft.Windows") != 0);
+                var publishers = _pirClient.VirtualMachineImages.ListPublishers(
+                    ComputeManagementTestUtilities.DefaultLocation);
+
+                Assert.True(publishers.Count > 0);
+                Assert.True(publishers.Count(pub => pub.Name == "MicrosoftWindowsServer") != 0);
             }
         }
 
         [Fact]
         public void TestVMImageListOffers()
         {
-            using (var context = UndoContext.Current)
+            using (MockContext context = MockContext.Start())
             {
-                context.Start();
-                ComputeManagementClient _pirClient =
-                    ComputeManagementTestUtilities.GetComputeManagementClient(new RDFETestEnvironmentFactory(),
-                        new RecordedDelegatingHandler {StatusCodeToReturn = HttpStatusCode.OK});
+                ComputeManagementClient _pirClient = ComputeManagementTestUtilities.GetComputeManagementClient(
+                    new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
-                var offers = _pirClient.VirtualMachineImages.ListOffers(parameters);
+                var offers = _pirClient.VirtualMachineImages.ListOffers(
+                    ComputeManagementTestUtilities.DefaultLocation,
+                    "MicrosoftWindowsServer");
 
-                Assert.True(offers.Resources.Count > 0);
-                Assert.True(offers.Resources.Count(offer => offer.Name == "WindowsServer2012") != 0);
+                Assert.True(offers.Count > 0);
+                Assert.True(offers.Count(offer => offer.Name == "WindowsServer") != 0);
             }
         }
 
         [Fact]
         public void TestVMImageListSkus()
         {
-            using (var context = UndoContext.Current)
+            using (MockContext context = MockContext.Start())
             {
-                context.Start();
-                ComputeManagementClient _pirClient =
-                    ComputeManagementTestUtilities.GetComputeManagementClient(new RDFETestEnvironmentFactory(),
-                        new RecordedDelegatingHandler {StatusCodeToReturn = HttpStatusCode.OK});
 
-                var skus = _pirClient.VirtualMachineImages.ListSkus(parameters);
+                ComputeManagementClient _pirClient = ComputeManagementTestUtilities.GetComputeManagementClient(
+                    new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
-                Assert.True(skus.Resources.Count > 0);
-                Assert.True(skus.Resources.Count(sku => sku.Name == "Enterprise") != 0);
+                var skus = _pirClient.VirtualMachineImages.ListSkus(
+                    ComputeManagementTestUtilities.DefaultLocation,
+                    "MicrosoftWindowsServer",
+                    "WindowsServer");
+
+                Assert.True(skus.Count > 0);
+                Assert.True(skus.Count(sku => sku.Name == "2012-R2-Datacenter") != 0);
             }
         }
     }

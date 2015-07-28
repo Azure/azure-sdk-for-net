@@ -5,9 +5,10 @@ namespace Microsoft.Azure.Management.Network.Models
     using Newtonsoft.Json;
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
-    using Microsoft.Azure;
+    using Microsoft.Rest.Azure;
 
     /// <summary>
+    /// IP configuration of application gateway
     /// </summary>
     public partial class ApplicationGatewayIpConfiguration : SubResource
     {
@@ -29,19 +30,15 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Gets or sets the reference of the subnet resource.A subnet from
         /// where appliation gateway gets its private address
         /// </summary>
-        [JsonProperty(PropertyName = "subnet")]
+        [JsonProperty(PropertyName = "properties.subnet")]
         public SubResource Subnet { get; set; }
 
         /// <summary>
-        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
+        /// Gets or sets Provisioning state of the application gateway subnet
+        /// resource Updating/Deleting/Failed
         /// </summary>
-        public override void Validate()
-        {
-            base.Validate();
-            if (this.Subnet != null)
-            {
-                this.Subnet.Validate();
-            }
-        }
+        [JsonProperty(PropertyName = "properties.provisioningState")]
+        public string ProvisioningState { get; set; }
+
     }
 }

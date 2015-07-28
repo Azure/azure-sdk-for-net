@@ -5,9 +5,10 @@ namespace Microsoft.Azure.Management.Network.Models
     using Newtonsoft.Json;
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
-    using Microsoft.Azure;
+    using Microsoft.Rest.Azure;
 
     /// <summary>
+    /// Describes Network Resource Usage.
     /// </summary>
     public partial class Usage
     {
@@ -36,15 +37,5 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "name")]
         public UsageName Name { get; set; }
 
-        /// <summary>
-        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
-        /// </summary>
-        public virtual void Validate()
-        {
-            if (this.Name != null)
-            {
-                this.Name.Validate();
-            }
-        }
     }
 }

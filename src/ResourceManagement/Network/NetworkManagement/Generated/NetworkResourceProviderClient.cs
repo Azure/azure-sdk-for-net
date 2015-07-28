@@ -13,7 +13,8 @@ namespace Microsoft.Azure.Management.Network
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
-    using Microsoft.Azure;
+    using System.Linq;
+    using Microsoft.Rest.Azure;
     using Models;
 
     /// <summary>
@@ -36,15 +37,26 @@ namespace Microsoft.Azure.Management.Network
         public JsonSerializerSettings DeserializationSettings { get; private set; }        
 
         /// <summary>
-        /// The Api Version.
+        /// Management credentials for Azure.
+        /// </summary>
+        public ServiceClientCredentials Credentials { get; private set; }
+
+        /// <summary>
+        /// Gets subscription credentials which uniquely identify Microsoft
+        /// Azure subscription. The subscription ID forms part of the URI for
+        /// every service call.
+        /// </summary>
+        public string SubscriptionId { get; set; }
+
+        /// <summary>
+        /// Client Api Version.
         /// </summary>
         public string ApiVersion { get; private set; }
 
         /// <summary>
-        /// Subscription credentials which uniquely identify Microsoft Azure
-        /// subscription.
+        /// Gets or sets the preferred language for the response.
         /// </summary>
-        public SubscriptionCloudCredentials Credentials { get; set; }
+        public string AcceptLanguage { get; set; }
 
         /// <summary>
         /// The retry timeout for Long Running Operations.
@@ -133,13 +145,13 @@ namespace Microsoft.Azure.Management.Network
         /// Initializes a new instance of the NetworkResourceProviderClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. Subscription credentials which uniquely identify Microsoft Azure subscription.
+        /// Required. Management credentials for Azure.
         /// </param>
         /// <param name='handlers'>
         /// Optional. The set of delegating handlers to insert in the http
         /// client pipeline.
         /// </param>
-        public NetworkResourceProviderClient(SubscriptionCloudCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        public NetworkResourceProviderClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (credentials == null)
             {
@@ -155,13 +167,13 @@ namespace Microsoft.Azure.Management.Network
         /// Optional. The base URI of the service.
         /// </param>
         /// <param name='credentials'>
-        /// Required. Subscription credentials which uniquely identify Microsoft Azure subscription.
+        /// Required. Management credentials for Azure.
         /// </param>
         /// <param name='handlers'>
         /// Optional. The set of delegating handlers to insert in the http
         /// client pipeline.
         /// </param>
-        public NetworkResourceProviderClient(Uri baseUri, SubscriptionCloudCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        public NetworkResourceProviderClient(Uri baseUri, ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (baseUri == null)
             {
@@ -194,6 +206,7 @@ namespace Microsoft.Azure.Management.Network
             this.VirtualNetworks = new VirtualNetworksOperations(this);
             this.BaseUri = new Uri("https://management.azure.com");
             this.ApiVersion = "2015-05-01-preview";
+            this.AcceptLanguage = "en-US";
             SerializationSettings = new JsonSerializerSettings
             {
                 Formatting = Formatting.Indented,
@@ -224,14 +237,25 @@ namespace Microsoft.Azure.Management.Network
         /// The domain name to be verified. It must conform to the following regular
         /// expression: ^[a-z][a-z0-9-]{1,61}[a-z0-9]$.
         /// </param>    
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<DnsNameAvailabilityResult>> CheckDnsNameAvailabilityWithOperationResponseAsync(string location, string domainNameLabel = default(string), CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<DnsNameAvailabilityResult>> CheckDnsNameAvailabilityWithHttpMessagesAsync(string location, string domainNameLabel = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (location == null)
             {
-                throw new ArgumentNullException("location");
+                throw new ValidationException(ValidationRules.CannotBeNull, "location");
+            }
+            if (this.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
+            }
+            if (this.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.SubscriptionId");
             }
             // Tracing
             bool shouldTrace = ServiceClientTracing.IsEnabled;
@@ -248,18 +272,17 @@ namespace Microsoft.Azure.Management.Network
             // Construct URL
             string url = this.BaseUri.AbsoluteUri + 
                          "//subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/CheckDnsNameAvailability";
-            if (this.Credentials == null)
-            {
-                throw new ArgumentNullException("Credentials", "SubscriptionCloudCredentials are missing from the client.");
-            }
-            url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Credentials.SubscriptionId));
             url = url.Replace("{location}", Uri.EscapeDataString(location));
+            url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.SubscriptionId));
             List<string> queryParameters = new List<string>();
             if (domainNameLabel != null)
             {
                 queryParameters.Add(string.Format("domainNameLabel={0}", Uri.EscapeDataString(domainNameLabel)));
             }
-            queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.ApiVersion)));
+            if (this.ApiVersion != null)
+            {
+                queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.ApiVersion)));
+            }
             if (queryParameters.Count > 0)
             {
                 url += "?" + string.Join("&", queryParameters);
@@ -271,6 +294,27 @@ namespace Microsoft.Azure.Management.Network
             httpRequest.Method = new HttpMethod("GET");
             httpRequest.RequestUri = new Uri(url);
             // Set Headers
+            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            if (this.AcceptLanguage != null)
+            {
+                if (httpRequest.Headers.Contains("accept-language"))
+                {
+                    httpRequest.Headers.Remove("accept-language");
+                }
+                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var header in customHeaders)
+                {
+                    if (httpRequest.Headers.Contains(header.Key))
+                    {
+                        httpRequest.Headers.Remove(header.Key);
+                    }
+                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                }
+            }
+
             // Set Credentials
             cancellationToken.ThrowIfCancellationRequested();
             await this.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
@@ -287,10 +331,10 @@ namespace Microsoft.Azure.Management.Network
             }
             HttpStatusCode statusCode = httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
-            string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
             if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK")))
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
+                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.DeserializationSettings);
                 if (errorBody != null)
                 {
@@ -309,9 +353,14 @@ namespace Microsoft.Azure.Management.Network
             var result = new AzureOperationResponse<DnsNameAvailabilityResult>();
             result.Request = httpRequest;
             result.Response = httpResponse;
+            if (httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
             // Deserialize Response
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
+                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 result.Body = JsonConvert.DeserializeObject<DnsNameAvailabilityResult>(responseContent, this.DeserializationSettings);
             }
             if (shouldTrace)

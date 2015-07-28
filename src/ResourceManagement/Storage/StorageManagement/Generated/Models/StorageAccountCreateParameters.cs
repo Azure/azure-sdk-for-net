@@ -5,9 +5,10 @@ namespace Microsoft.Azure.Management.Storage.Models
     using Newtonsoft.Json;
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
-    using Microsoft.Azure;
+    using Microsoft.Rest.Azure;
 
     /// <summary>
+    /// The parameters to provide for the account.
     /// </summary>
     public partial class StorageAccountCreateParameters : Resource
     {
@@ -16,7 +17,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// include: 'Standard_LRS', 'Standard_ZRS', 'Standard_GRS',
         /// 'Standard_RAGRS', 'Premium_LRS'
         /// </summary>
-        [JsonProperty(PropertyName = "accountType")]
+        [JsonProperty(PropertyName = "properties.accountType")]
         public AccountType? AccountType { get; set; }
 
         /// <summary>

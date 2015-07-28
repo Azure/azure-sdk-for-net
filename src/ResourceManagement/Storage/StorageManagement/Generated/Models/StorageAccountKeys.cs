@@ -5,9 +5,10 @@ namespace Microsoft.Azure.Management.Storage.Models
     using Newtonsoft.Json;
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
-    using Microsoft.Azure;
+    using Microsoft.Rest.Azure;
 
     /// <summary>
+    /// The access keys for the storage account.
     /// </summary>
     public partial class StorageAccountKeys
     {
@@ -23,12 +24,5 @@ namespace Microsoft.Azure.Management.Storage.Models
         [JsonProperty(PropertyName = "key2")]
         public string Key2 { get; set; }
 
-        /// <summary>
-        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
-        /// </summary>
-        public virtual void Validate()
-        {
-            //Nothing to validate
-        }
     }
 }

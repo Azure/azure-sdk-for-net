@@ -1,19 +1,19 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/84fffc2f-5d77-449a-bc7f-58c363f2a6b9/providers/Microsoft.Compute/locations/westus/publishers/Microsoft.Windows/artifacttypes/vmextension/types/vmaccess/versions?api-version=2015-05-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODRmZmZjMmYtNWQ3Ny00NDlhLWJjN2YtNThjMzYzZjJhNmI5L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvd2VzdHVzL3B1Ymxpc2hlcnMvTWljcm9zb2Z0LldpbmRvd3MvYXJ0aWZhY3R0eXBlcy92bWV4dGVuc2lvbi90eXBlcy92bWFjY2Vzcy92ZXJzaW9ucz9hcGktdmVyc2lvbj0yMDE1LTA1LTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/00977cdb-163f-435f-9c32-39ec8ae61f4d/providers/Microsoft.Compute/locations/westus/publishers/Microsoft.Compute/artifacttypes/vmextension/types/VMAccessAgent/versions?api-version=2015-06-15",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDA5NzdjZGItMTYzZi00MzVmLTljMzItMzllYzhhZTYxZjRkL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvd2VzdHVzL3B1Ymxpc2hlcnMvTWljcm9zb2Z0LkNvbXB1dGUvYXJ0aWZhY3R0eXBlcy92bWV4dGVuc2lvbi90eXBlcy9WTUFjY2Vzc0FnZW50L3ZlcnNpb25zP2FwaS12ZXJzaW9uPTIwMTUtMDYtMTU=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "Microsoft.Azure.Management.Compute.ComputeManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/8.0.0.0"
         ]
       },
-      "ResponseBody": "[\r\n  {\r\n    \"location\": \"westus\",\r\n    \"name\": \"1.1.0\",\r\n    \"id\": \"/subscriptions/84fffc2f-5d77-449a-bc7f-58c363f2a6b9/providers/Microsoft.Compute/locations/westus/publishers/Microsoft.Windows/artifacttypes/vmextension/types/vmaccess/versions/1.1.0\"\r\n  }\r\n]",
+      "ResponseBody": "[\r\n  {\r\n    \"location\": \"westus\",\r\n    \"name\": \"2.0\",\r\n    \"id\": \"/Subscriptions/00977cdb-163f-435f-9c32-39ec8ae61f4d/Providers/Microsoft.Compute/Locations/westus/Publishers/Microsoft.Compute/ArtifactTypes/VMExtension/Types/VMAccessAgent/Versions/2.0\"\r\n  }\r\n]",
       "ResponseHeaders": {
         "Content-Length": [
-          "258"
+          "259"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -24,32 +24,30 @@
         "Pragma": [
           "no-cache"
         ],
-        "X-SourceFiles": [
-          "=?UTF-8?B?RTpccmRcYXpfY29tcHV0ZTJccHJpdmF0ZVxTZXJ2aWNlc1xBenVyZVJUXENSUC1QSVJcQXJ0aWZhY3RTZXJ2aWNlXHN1YnNjcmlwdGlvbnNcODRmZmZjMmYtNWQ3Ny00NDlhLWJjN2YtNThjMzYzZjJhNmI5XHByb3ZpZGVyc1xNaWNyb3NvZnQuQ29tcHV0ZVxsb2NhdGlvbnNcd2VzdHVzXHB1Ymxpc2hlcnNcTWljcm9zb2Z0LldpbmRvd3NcYXJ0aWZhY3R0eXBlc1x2bWV4dGVuc2lvblx0eXBlc1x2bWFjY2Vzc1x2ZXJzaW9ucw==?="
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
         ],
-        "Access-Control-Allow-Origin": [
-          "*"
-        ],
-        "Access-Control-Allow-Headers": [
-          "Content-Type"
-        ],
-        "Access-Control-Allow-Methods": [
-          "GET, POST, PUT, DELETE, OPTIONS"
+        "x-ms-request-id": [
+          "4454767b-328f-441a-b0d2-c12e9c03ed53"
         ],
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Fri, 10 Apr 2015 19:15:43 GMT"
-        ],
         "Server": [
-          "Microsoft-IIS/8.0"
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
         ],
-        "X-AspNet-Version": [
-          "4.0.30319"
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14998"
         ],
-        "X-Powered-By": [
-          "ASP.NET"
+        "x-ms-correlation-request-id": [
+          "e1cf1cc5-f33b-469b-8f8c-ff2c1c34f817"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20150715T004117Z:e1cf1cc5-f33b-469b-8f8c-ff2c1c34f817"
+        ],
+        "Date": [
+          "Wed, 15 Jul 2015 00:41:17 GMT"
         ]
       },
       "StatusCode": 200
@@ -57,6 +55,6 @@
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "84fffc2f-5d77-449a-bc7f-58c363f2a6b9"
+    "SubscriptionId": "00977cdb-163f-435f-9c32-39ec8ae61f4d"
   }
 }

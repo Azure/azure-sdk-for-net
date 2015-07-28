@@ -31,6 +31,18 @@ namespace Microsoft.Azure.Management.Sql.Models
     /// </summary>
     public partial class ServerUpgradeGetResponse : AzureOperationResponse
     {
+        private System.DateTime? _scheduleUpgradeAfterTime;
+        
+        /// <summary>
+        /// Optional. Gets the schedule time of the Azure SQL Database Server
+        /// Upgrade.
+        /// </summary>
+        public System.DateTime? ScheduleUpgradeAfterTime
+        {
+            get { return this._scheduleUpgradeAfterTime; }
+            set { this._scheduleUpgradeAfterTime = value; }
+        }
+        
         private string _status;
         
         /// <summary>

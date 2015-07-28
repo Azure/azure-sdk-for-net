@@ -13,7 +13,8 @@ namespace Microsoft.Azure.Management.Storage
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
-    using Microsoft.Azure;
+    using System.Linq;
+    using Microsoft.Rest.Azure;
     using Models;
 
     /// <summary>
@@ -36,15 +37,26 @@ namespace Microsoft.Azure.Management.Storage
         public JsonSerializerSettings DeserializationSettings { get; private set; }        
 
         /// <summary>
-        /// The Api Version.
+        /// Management credentials for Azure.
+        /// </summary>
+        public ServiceClientCredentials Credentials { get; private set; }
+
+        /// <summary>
+        /// Gets subscription credentials which uniquely identify Microsoft
+        /// Azure subscription. The subscription ID forms part of the URI for
+        /// every service call.
+        /// </summary>
+        public string SubscriptionId { get; set; }
+
+        /// <summary>
+        /// Client Api Version.
         /// </summary>
         public string ApiVersion { get; private set; }
 
         /// <summary>
-        /// Subscription credentials which uniquely identify Microsoft Azure
-        /// subscription.
+        /// Gets or sets the preferred language for the response.
         /// </summary>
-        public SubscriptionCloudCredentials Credentials { get; set; }
+        public string AcceptLanguage { get; set; }
 
         /// <summary>
         /// The retry timeout for Long Running Operations.
@@ -52,6 +64,8 @@ namespace Microsoft.Azure.Management.Storage
         public int? LongRunningOperationRetryTimeout { get; set; }
 
         public virtual IStorageAccountsOperations StorageAccounts { get; private set; }
+
+        public virtual IUsageOperations Usage { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the StorageManagementClient class.
@@ -111,13 +125,13 @@ namespace Microsoft.Azure.Management.Storage
         /// Initializes a new instance of the StorageManagementClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. Subscription credentials which uniquely identify Microsoft Azure subscription.
+        /// Required. Management credentials for Azure.
         /// </param>
         /// <param name='handlers'>
         /// Optional. The set of delegating handlers to insert in the http
         /// client pipeline.
         /// </param>
-        public StorageManagementClient(SubscriptionCloudCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        public StorageManagementClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (credentials == null)
             {
@@ -133,13 +147,13 @@ namespace Microsoft.Azure.Management.Storage
         /// Optional. The base URI of the service.
         /// </param>
         /// <param name='credentials'>
-        /// Required. Subscription credentials which uniquely identify Microsoft Azure subscription.
+        /// Required. Management credentials for Azure.
         /// </param>
         /// <param name='handlers'>
         /// Optional. The set of delegating handlers to insert in the http
         /// client pipeline.
         /// </param>
-        public StorageManagementClient(Uri baseUri, SubscriptionCloudCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        public StorageManagementClient(Uri baseUri, ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (baseUri == null)
             {
@@ -159,8 +173,10 @@ namespace Microsoft.Azure.Management.Storage
         private void Initialize()
         {
             this.StorageAccounts = new StorageAccountsOperations(this);
+            this.Usage = new UsageOperations(this);
             this.BaseUri = new Uri("https://management.azure.com");
             this.ApiVersion = "2015-05-01-preview";
+            this.AcceptLanguage = "en-US";
             SerializationSettings = new JsonSerializerSettings
             {
                 Formatting = Formatting.Indented,

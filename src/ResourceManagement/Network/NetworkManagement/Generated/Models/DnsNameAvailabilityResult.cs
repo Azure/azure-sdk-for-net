@@ -5,9 +5,10 @@ namespace Microsoft.Azure.Management.Network.Models
     using Newtonsoft.Json;
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
-    using Microsoft.Azure;
+    using Microsoft.Rest.Azure;
 
     /// <summary>
+    /// Response for CheckDnsNameAvailability Api servive call
     /// </summary>
     public partial class DnsNameAvailabilityResult
     {
@@ -17,12 +18,5 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "available")]
         public bool? Available { get; set; }
 
-        /// <summary>
-        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
-        /// </summary>
-        public virtual void Validate()
-        {
-            //Nothing to validate
-        }
     }
 }

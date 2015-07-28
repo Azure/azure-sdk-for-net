@@ -6,7 +6,7 @@ namespace Microsoft.Azure.Management.Resources
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Rest;
-    using Microsoft.Azure;
+    using Microsoft.Rest.Azure;
     using Models;
 
     public static partial class FeaturesOperationsExtensions
@@ -16,9 +16,9 @@ namespace Microsoft.Azure.Management.Resources
             /// subscription.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
-            public static FeatureOperationsListResult ListAll(this IFeaturesOperations operations)
+            public static Page<FeatureResult> ListAll(this IFeaturesOperations operations)
             {
                 return Task.Factory.StartNew(s => ((IFeaturesOperations)s).ListAllAsync(), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -28,14 +28,14 @@ namespace Microsoft.Azure.Management.Resources
             /// subscription.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<FeatureOperationsListResult> ListAllAsync( this IFeaturesOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Page<FeatureResult>> ListAllAsync( this IFeaturesOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<FeatureOperationsListResult> result = await operations.ListAllWithOperationResponseAsync(cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<Page<FeatureResult>> result = await operations.ListAllWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -43,12 +43,12 @@ namespace Microsoft.Azure.Management.Resources
             /// Gets a list of previewed features of a resource provider.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceProviderNamespace'>
             /// The namespace of the resource provider.
             /// </param>
-            public static FeatureOperationsListResult List(this IFeaturesOperations operations, string resourceProviderNamespace)
+            public static Page<FeatureResult> List(this IFeaturesOperations operations, string resourceProviderNamespace)
             {
                 return Task.Factory.StartNew(s => ((IFeaturesOperations)s).ListAsync(resourceProviderNamespace), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.Resources
             /// Gets a list of previewed features of a resource provider.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceProviderNamespace'>
             /// The namespace of the resource provider.
@@ -65,9 +65,9 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<FeatureOperationsListResult> ListAsync( this IFeaturesOperations operations, string resourceProviderNamespace, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Page<FeatureResult>> ListAsync( this IFeaturesOperations operations, string resourceProviderNamespace, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<FeatureOperationsListResult> result = await operations.ListWithOperationResponseAsync(resourceProviderNamespace, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<Page<FeatureResult>> result = await operations.ListWithHttpMessagesAsync(resourceProviderNamespace, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.Resources
             /// Get all features under the subscription.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceProviderNamespace'>
             /// Namespace of the resource provider.
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='featureName'>
             /// Previewed feature name in the resource provider.
             /// </param>
-            public static FeatureResponse Get(this IFeaturesOperations operations, string resourceProviderNamespace, string featureName)
+            public static FeatureResult Get(this IFeaturesOperations operations, string resourceProviderNamespace, string featureName)
             {
                 return Task.Factory.StartNew(s => ((IFeaturesOperations)s).GetAsync(resourceProviderNamespace, featureName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -92,7 +92,7 @@ namespace Microsoft.Azure.Management.Resources
             /// Get all features under the subscription.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceProviderNamespace'>
             /// Namespace of the resource provider.
@@ -103,9 +103,9 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<FeatureResponse> GetAsync( this IFeaturesOperations operations, string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<FeatureResult> GetAsync( this IFeaturesOperations operations, string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<FeatureResponse> result = await operations.GetWithOperationResponseAsync(resourceProviderNamespace, featureName, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<FeatureResult> result = await operations.GetWithHttpMessagesAsync(resourceProviderNamespace, featureName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -113,7 +113,7 @@ namespace Microsoft.Azure.Management.Resources
             /// Registers for a previewed feature of a resource provider.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceProviderNamespace'>
             /// Namespace of the resource provider.
@@ -121,7 +121,7 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='featureName'>
             /// Previewed feature name in the resource provider.
             /// </param>
-            public static FeatureResponse Register(this IFeaturesOperations operations, string resourceProviderNamespace, string featureName)
+            public static FeatureResult Register(this IFeaturesOperations operations, string resourceProviderNamespace, string featureName)
             {
                 return Task.Factory.StartNew(s => ((IFeaturesOperations)s).RegisterAsync(resourceProviderNamespace, featureName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -130,7 +130,7 @@ namespace Microsoft.Azure.Management.Resources
             /// Registers for a previewed feature of a resource provider.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceProviderNamespace'>
             /// Namespace of the resource provider.
@@ -141,9 +141,9 @@ namespace Microsoft.Azure.Management.Resources
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<FeatureResponse> RegisterAsync( this IFeaturesOperations operations, string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<FeatureResult> RegisterAsync( this IFeaturesOperations operations, string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<FeatureResponse> result = await operations.RegisterWithOperationResponseAsync(resourceProviderNamespace, featureName, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<FeatureResult> result = await operations.RegisterWithHttpMessagesAsync(resourceProviderNamespace, featureName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -152,14 +152,14 @@ namespace Microsoft.Azure.Management.Resources
             /// subscription.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
-            /// <param name='nextLink'>
+            /// <param name='nextPageLink'>
             /// NextLink from the previous successful call to List operation.
             /// </param>
-            public static FeatureOperationsListResult ListAllNext(this IFeaturesOperations operations, string nextLink)
+            public static Page<FeatureResult> ListAllNext(this IFeaturesOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((IFeaturesOperations)s).ListAllNextAsync(nextLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IFeaturesOperations)s).ListAllNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -167,17 +167,17 @@ namespace Microsoft.Azure.Management.Resources
             /// subscription.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
-            /// <param name='nextLink'>
+            /// <param name='nextPageLink'>
             /// NextLink from the previous successful call to List operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<FeatureOperationsListResult> ListAllNextAsync( this IFeaturesOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Page<FeatureResult>> ListAllNextAsync( this IFeaturesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<FeatureOperationsListResult> result = await operations.ListAllNextWithOperationResponseAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<Page<FeatureResult>> result = await operations.ListAllNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -185,31 +185,31 @@ namespace Microsoft.Azure.Management.Resources
             /// Gets a list of previewed features of a resource provider.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
-            /// <param name='nextLink'>
+            /// <param name='nextPageLink'>
             /// NextLink from the previous successful call to List operation.
             /// </param>
-            public static FeatureOperationsListResult ListNext(this IFeaturesOperations operations, string nextLink)
+            public static Page<FeatureResult> ListNext(this IFeaturesOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((IFeaturesOperations)s).ListNextAsync(nextLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IFeaturesOperations)s).ListNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
             /// Gets a list of previewed features of a resource provider.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
-            /// <param name='nextLink'>
+            /// <param name='nextPageLink'>
             /// NextLink from the previous successful call to List operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<FeatureOperationsListResult> ListNextAsync( this IFeaturesOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Page<FeatureResult>> ListNextAsync( this IFeaturesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<FeatureOperationsListResult> result = await operations.ListNextWithOperationResponseAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<Page<FeatureResult>> result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

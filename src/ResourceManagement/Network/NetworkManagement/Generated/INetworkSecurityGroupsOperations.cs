@@ -6,10 +6,12 @@ namespace Microsoft.Azure.Management.Network
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Rest;
-    using Microsoft.Azure;
+    using System.Linq;
+    using Microsoft.Rest.Azure;
     using Models;
 
     /// <summary>
+    /// NetworkSecurityGroupsOperations operations.
     /// </summary>
     public partial interface INetworkSecurityGroupsOperations
     {
@@ -23,10 +25,13 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='networkSecurityGroupName'>
         /// The name of the network security group.
         /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
         /// </param>
-        Task<AzureOperationResponse> DeleteWithOperationResponseAsync(string resourceGroupName, string networkSecurityGroupName, CancellationToken cancellationToken = default(CancellationToken));
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string networkSecurityGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The Delete NetworkSecurityGroup operation deletes the specifed
         /// network security group
@@ -37,10 +42,13 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='networkSecurityGroupName'>
         /// The name of the network security group.
         /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
         /// </param>
-        Task<AzureOperationResponse> BeginDeleteWithOperationResponseAsync(string resourceGroupName, string networkSecurityGroupName, CancellationToken cancellationToken = default(CancellationToken));
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string networkSecurityGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The Get NetworkSecurityGroups operation retrieves information
         /// about the specified network security group.
@@ -51,10 +59,13 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='networkSecurityGroupName'>
         /// The name of the network security group.
         /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
         /// </param>
-        Task<AzureOperationResponse<NetworkSecurityGroup>> GetWithOperationResponseAsync(string resourceGroupName, string networkSecurityGroupName, CancellationToken cancellationToken = default(CancellationToken));
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<NetworkSecurityGroup>> GetWithHttpMessagesAsync(string resourceGroupName, string networkSecurityGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The Put NetworkSecurityGroup operation creates/updates a network
         /// security groupin the specified resource group.
@@ -69,10 +80,13 @@ namespace Microsoft.Azure.Management.Network
         /// Parameters supplied to the create/update Network Security Group
         /// operation
         /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
         /// </param>
-        Task<AzureOperationResponse<NetworkSecurityGroup>> CreateOrUpdateWithOperationResponseAsync(string resourceGroupName, string networkSecurityGroupName, NetworkSecurityGroup parameters, CancellationToken cancellationToken = default(CancellationToken));
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<NetworkSecurityGroup>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string networkSecurityGroupName, NetworkSecurityGroup parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The Put NetworkSecurityGroup operation creates/updates a network
         /// security groupin the specified resource group.
@@ -87,18 +101,24 @@ namespace Microsoft.Azure.Management.Network
         /// Parameters supplied to the create/update Network Security Group
         /// operation
         /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
         /// </param>
-        Task<AzureOperationResponse<NetworkSecurityGroup>> BeginCreateOrUpdateWithOperationResponseAsync(string resourceGroupName, string networkSecurityGroupName, NetworkSecurityGroup parameters, CancellationToken cancellationToken = default(CancellationToken));
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<NetworkSecurityGroup>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string networkSecurityGroupName, NetworkSecurityGroup parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The list NetworkSecurityGroups returns all network security groups
         /// in a subscription
         /// </summary>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
         /// </param>
-        Task<AzureOperationResponse<NetworkSecurityGroupListResult>> ListAllWithOperationResponseAsync(CancellationToken cancellationToken = default(CancellationToken));
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<Page<NetworkSecurityGroup>>> ListAllWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The list NetworkSecurityGroups returns all network security groups
         /// in a resource group
@@ -106,31 +126,40 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
         /// </param>
-        Task<AzureOperationResponse<NetworkSecurityGroupListResult>> ListWithOperationResponseAsync(string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken));
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<Page<NetworkSecurityGroup>>> ListWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The list NetworkSecurityGroups returns all network security groups
         /// in a subscription
         /// </summary>
-        /// <param name='nextLink'>
+        /// <param name='nextPageLink'>
         /// NextLink from the previous successful call to List operation.
         /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
         /// </param>
-        Task<AzureOperationResponse<NetworkSecurityGroupListResult>> ListAllNextWithOperationResponseAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken));
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<Page<NetworkSecurityGroup>>> ListAllNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The list NetworkSecurityGroups returns all network security groups
         /// in a resource group
         /// </summary>
-        /// <param name='nextLink'>
+        /// <param name='nextPageLink'>
         /// NextLink from the previous successful call to List operation.
         /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
         /// </param>
-        Task<AzureOperationResponse<NetworkSecurityGroupListResult>> ListNextWithOperationResponseAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken));
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<Page<NetworkSecurityGroup>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

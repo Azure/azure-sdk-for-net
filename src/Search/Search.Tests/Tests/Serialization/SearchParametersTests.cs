@@ -39,6 +39,7 @@ namespace Microsoft.Azure.Search.Tests
                     HighlightFields = new[] { "field1", "field2" },
                     HighlightPreTag = "<b>",
                     HighlightPostTag = "</b>",
+                    MinimumCoverage = 66.67,
                     OrderBy = new[] { "field1 asc", "field2 desc" },
                     ScoringParameters = new[] { "name:value" },
                     ScoringProfile = "myprofile",
@@ -51,9 +52,9 @@ namespace Microsoft.Azure.Search.Tests
 
             const string ExpectedQueryString =
                 "$count=true&facet=field%2Coption%3Avalue&$filter=field%20eq%20value&highlight=field1,field2&" +
-                "highlightPreTag=%3Cb%3E&highlightPostTag=%3C%2Fb%3E&$orderby=field1 asc,field2 desc&" +
-                "scoringParameter=name:value&scoringProfile=myprofile&searchFields=field1,field2&searchMode=all&" +
-                "$select=field1,field2&$skip=10&$top=5";
+                "highlightPreTag=%3Cb%3E&highlightPostTag=%3C%2Fb%3E&minimumCoverage=66.67&" +
+                "$orderby=field1 asc,field2 desc&scoringParameter=name:value&scoringProfile=myprofile&" +
+                "searchFields=field1,field2&searchMode=all&$select=field1,field2&$skip=10&$top=5";
 
             Assert.Equal(ExpectedQueryString, parameters.ToString());
         }

@@ -6,10 +6,12 @@ namespace Microsoft.Azure.Management.Network
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Rest;
-    using Microsoft.Azure;
+    using System.Linq;
+    using Microsoft.Rest.Azure;
     using Models;
 
     /// <summary>
+    /// UsagesOperations operations.
     /// </summary>
     public partial interface IUsagesOperations
     {
@@ -19,9 +21,12 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='location'>
         /// The location upon which resource usage is queried.
         /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
         /// </param>
-        Task<AzureOperationResponse<UsagesListResult>> ListWithOperationResponseAsync(string location, CancellationToken cancellationToken = default(CancellationToken));
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<UsagesListResult>> ListWithHttpMessagesAsync(string location, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

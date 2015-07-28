@@ -5,9 +5,10 @@ namespace Microsoft.Azure.Management.Network.Models
     using Newtonsoft.Json;
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
-    using Microsoft.Azure;
+    using Microsoft.Rest.Azure;
 
     /// <summary>
+    /// Backend address pool settings of application gateway
     /// </summary>
     public partial class ApplicationGatewayBackendHttpSettings : SubResource
     {
@@ -28,29 +29,29 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets or sets the port
         /// </summary>
-        [JsonProperty(PropertyName = "port")]
+        [JsonProperty(PropertyName = "properties.port")]
         public int? Port { get; set; }
 
         /// <summary>
         /// Gets or sets the protocol. Possible values for this property
         /// include: 'Http', 'Https'
         /// </summary>
-        [JsonProperty(PropertyName = "protocol")]
+        [JsonProperty(PropertyName = "properties.protocol")]
         public ApplicationGatewayProtocol? Protocol { get; set; }
 
         /// <summary>
         /// Gets or sets the cookie affinity. Possible values for this
         /// property include: 'Enabled', 'Disabled'
         /// </summary>
-        [JsonProperty(PropertyName = "cookieBasedAffinity")]
+        [JsonProperty(PropertyName = "properties.cookieBasedAffinity")]
         public ApplicationGatewayCookieBasedAffinity? CookieBasedAffinity { get; set; }
 
         /// <summary>
-        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
+        /// Gets or sets Provisioning state of the backend http settings
+        /// resource Updating/Deleting/Failed
         /// </summary>
-        public override void Validate()
-        {
-            base.Validate();
-        }
+        [JsonProperty(PropertyName = "properties.provisioningState")]
+        public string ProvisioningState { get; set; }
+
     }
 }

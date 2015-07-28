@@ -5,7 +5,7 @@ namespace Microsoft.Azure.Management.Storage.Models
     using Newtonsoft.Json;
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
-    using Microsoft.Azure;
+    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// </summary>
@@ -21,12 +21,5 @@ namespace Microsoft.Azure.Management.Storage.Models
         [JsonProperty(PropertyName = "type")]
         public string Type { get; set; }
 
-        /// <summary>
-        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
-        /// </summary>
-        public virtual void Validate()
-        {
-            //Nothing to validate
-        }
     }
 }

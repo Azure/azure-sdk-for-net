@@ -1,4 +1,4 @@
-namespace Microsoft.Azure.Subscriptions
+namespace Microsoft.Azure.Management.Resources
 {
     using System;
     using System.Collections;
@@ -6,7 +6,7 @@ namespace Microsoft.Azure.Subscriptions
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Rest;
-    using Microsoft.Azure;
+    using Microsoft.Rest.Azure;
     using Models;
 
     public static partial class SubscriptionClientExtensions

@@ -5,9 +5,10 @@ namespace Microsoft.Azure.Management.Network.Models
     using Newtonsoft.Json;
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
-    using Microsoft.Azure;
+    using Microsoft.Rest.Azure;
 
     /// <summary>
+    /// A common class for general resource information
     /// </summary>
     public partial class VirtualNetworkGatewayConnection : Resource
     {
@@ -20,17 +21,17 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "virtualNetworkGateway1")]
+        [JsonProperty(PropertyName = "properties.virtualNetworkGateway1")]
         public VirtualNetworkGateway VirtualNetworkGateway1 { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "virtualNetworkGateway2")]
+        [JsonProperty(PropertyName = "properties.virtualNetworkGateway2")]
         public VirtualNetworkGateway VirtualNetworkGateway2 { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "localNetworkGateway2")]
+        [JsonProperty(PropertyName = "properties.localNetworkGateway2")]
         public LocalNetworkGateway LocalNetworkGateway2 { get; set; }
 
         /// <summary>
@@ -38,20 +39,27 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Possible values for this property include: 'IPsec', 'Vnet2Vnet',
         /// 'ExpressRoute', 'VPNClient'
         /// </summary>
-        [JsonProperty(PropertyName = "connectionType")]
+        [JsonProperty(PropertyName = "properties.connectionType")]
         public VirtualNetworkGatewayConnectionType? ConnectionType { get; set; }
 
         /// <summary>
         /// The Routing weight.
         /// </summary>
-        [JsonProperty(PropertyName = "routingWeight")]
+        [JsonProperty(PropertyName = "properties.routingWeight")]
         public int? RoutingWeight { get; set; }
 
         /// <summary>
         /// The Ipsec share key.
         /// </summary>
-        [JsonProperty(PropertyName = "sharedKey")]
+        [JsonProperty(PropertyName = "properties.sharedKey")]
         public string SharedKey { get; set; }
+
+        /// <summary>
+        /// Gets or sets Provisioning state of the
+        /// VirtualNetworkGatewayConnection resource Updating/Deleting/Failed
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.provisioningState")]
+        public string ProvisioningState { get; set; }
 
         /// <summary>
         /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.

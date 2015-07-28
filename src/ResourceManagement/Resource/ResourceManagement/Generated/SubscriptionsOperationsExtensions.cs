@@ -1,4 +1,4 @@
-namespace Microsoft.Azure.Subscriptions
+namespace Microsoft.Azure.Management.Resources
 {
     using System;
     using System.Collections;
@@ -6,7 +6,7 @@ namespace Microsoft.Azure.Subscriptions
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Rest;
-    using Microsoft.Azure;
+    using Microsoft.Rest.Azure;
     using Models;
 
     public static partial class SubscriptionsOperationsExtensions
@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Subscriptions
             /// Gets details about particular subscription.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='subscriptionId'>
             /// Id of the subscription.
@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Subscriptions
             /// Gets details about particular subscription.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='subscriptionId'>
             /// Id of the subscription.
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Subscriptions
             /// </param>
             public static async Task<Subscription> GetAsync( this ISubscriptionsOperations operations, string subscriptionId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<Subscription> result = await operations.GetWithOperationResponseAsync(subscriptionId, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<Subscription> result = await operations.GetWithHttpMessagesAsync(subscriptionId, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -47,9 +47,9 @@ namespace Microsoft.Azure.Subscriptions
             /// Gets a list of the subscriptionIds.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
-            public static SubscriptionListResult List(this ISubscriptionsOperations operations)
+            public static Page<Subscription> List(this ISubscriptionsOperations operations)
             {
                 return Task.Factory.StartNew(s => ((ISubscriptionsOperations)s).ListAsync(), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -58,14 +58,14 @@ namespace Microsoft.Azure.Subscriptions
             /// Gets a list of the subscriptionIds.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<SubscriptionListResult> ListAsync( this ISubscriptionsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Page<Subscription>> ListAsync( this ISubscriptionsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<SubscriptionListResult> result = await operations.ListWithOperationResponseAsync(cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<Page<Subscription>> result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -73,31 +73,31 @@ namespace Microsoft.Azure.Subscriptions
             /// Gets a list of the subscriptionIds.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
-            /// <param name='nextLink'>
+            /// <param name='nextPageLink'>
             /// NextLink from the previous successful call to List operation.
             /// </param>
-            public static SubscriptionListResult ListNext(this ISubscriptionsOperations operations, string nextLink)
+            public static Page<Subscription> ListNext(this ISubscriptionsOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((ISubscriptionsOperations)s).ListNextAsync(nextLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISubscriptionsOperations)s).ListNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
             /// Gets a list of the subscriptionIds.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
-            /// <param name='nextLink'>
+            /// <param name='nextPageLink'>
             /// NextLink from the previous successful call to List operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<SubscriptionListResult> ListNextAsync( this ISubscriptionsOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Page<Subscription>> ListNextAsync( this ISubscriptionsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<SubscriptionListResult> result = await operations.ListNextWithOperationResponseAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<Page<Subscription>> result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

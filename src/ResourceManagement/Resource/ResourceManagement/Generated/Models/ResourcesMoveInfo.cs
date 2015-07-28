@@ -5,9 +5,10 @@ namespace Microsoft.Azure.Management.Resources.Models
     using Newtonsoft.Json;
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
-    using Microsoft.Azure;
+    using Microsoft.Rest.Azure;
 
     /// <summary>
+    /// Parameters of move resources.
     /// </summary>
     public partial class ResourcesMoveInfo
     {
@@ -23,11 +24,5 @@ namespace Microsoft.Azure.Management.Resources.Models
         [JsonProperty(PropertyName = "targetResourceGroup")]
         public string TargetResourceGroup { get; set; }
 
-        /// <summary>
-        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
-        /// </summary>
-        public virtual void Validate()
-        {
-        }
     }
 }

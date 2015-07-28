@@ -5,9 +5,10 @@ namespace Microsoft.Azure.Management.Network.Models
     using Newtonsoft.Json;
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
-    using Microsoft.Azure;
+    using Microsoft.Rest.Azure;
 
     /// <summary>
+    /// The Usage Names.
     /// </summary>
     public partial class UsageName
     {
@@ -23,12 +24,5 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "localizedValue")]
         public string LocalizedValue { get; set; }
 
-        /// <summary>
-        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
-        /// </summary>
-        public virtual void Validate()
-        {
-            //Nothing to validate
-        }
     }
 }

@@ -13,13 +13,13 @@
 // limitations under the License.
 //
 
-using Microsoft.Azure.Subscriptions;
 using ResourceGroups.Tests;
 
 namespace Microsoft.Azure.Test
 {
     using Microsoft.Azure.Management.Resources;
     using Microsoft.Azure.Management.Resources.Models;
+    using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using System;
     using System.Linq;
 
@@ -33,11 +33,7 @@ namespace Microsoft.Azure.Test
         public static ResourceManagementClient GetResourceManagementClientWithHandler(RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
-            var client = TestBase.GetServiceClient<ResourceManagementClient>(new CSMTestEnvironmentFactory(), handler);
-            if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Playback")
-            {
-                client.LongRunningOperationRetryTimeout = 0;
-            }
+            var client = TestBase.GetServiceClient<ResourceManagementClient>(handler);
             return client;
         }
 
@@ -64,7 +60,7 @@ namespace Microsoft.Azure.Test
         }
 
         /// <summary>
-        /// Equality comparison for locatiosn returned by resource management
+        /// Equality comparison for locations returned by resource management
         /// </summary>
         /// <param name="expected">The expected location</param>
         /// <param name="actual">The actual location returned by resource management</param>

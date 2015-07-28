@@ -9,19 +9,20 @@ using Microsoft.Azure.Test;
 using Networks.Tests.Helpers;
 using ResourceGroups.Tests;
 using Xunit;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
 namespace Networks.Tests
 {
     public class SubnetTests
     {
-        [Fact]
+        [Fact(Skip = "TODO: Autorest")]
         public void SubnetApiTest()
         {
             var handler = new RecordedDelegatingHandler {StatusCodeToReturn = HttpStatusCode.OK};
 
-            using (var context = UndoContext.Current)
+            using (MockContext context = MockContext.Start())
             {
-                context.Start();
+                
                 var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(handler);
                 var networkResourceProviderClient =
                     NetworkManagementTestUtilities.GetNetworkResourceProviderClient(handler);
@@ -94,7 +95,7 @@ namespace Networks.Tests
                 var getSubnetListResponse = networkResourceProviderClient.Subnets.List(resourceGroupName, vnetName);
 
                 // Verify ListSubnets
-                Assert.True(AreSubnetsEqual(getVnetResponse.Subnets, getSubnetListResponse.Value));
+                Assert.True(AreSubnetsEqual(getVnetResponse.Subnets, getSubnetListResponse));
 
                 // Delete the subnet "subnet1"
                 networkResourceProviderClient.Subnets.Delete(resourceGroupName, vnetName, subnet2Name);
@@ -102,8 +103,8 @@ namespace Networks.Tests
                 // Verify that the deletion was successful
                 getSubnetListResponse = networkResourceProviderClient.Subnets.List(resourceGroupName, vnetName);
 
-                Assert.Equal(1, getSubnetListResponse.Value.Count);
-                Assert.Equal(subnet1Name, getSubnetListResponse.Value[0].Name);
+                Assert.Equal(1, getSubnetListResponse.Count());
+                Assert.Equal(subnet1Name, getSubnetListResponse.First().Name);
 
                 #endregion
             }

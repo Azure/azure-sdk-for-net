@@ -5,9 +5,10 @@ namespace Microsoft.Azure.Management.Network.Models
     using Newtonsoft.Json;
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
-    using Microsoft.Azure;
+    using Microsoft.Rest.Azure;
 
     /// <summary>
+    /// Frontend Port of application gateway
     /// </summary>
     public partial class ApplicationGatewayFrontendPort : SubResource
     {
@@ -28,15 +29,15 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets or sets the frontend port
         /// </summary>
-        [JsonProperty(PropertyName = "port")]
+        [JsonProperty(PropertyName = "properties.port")]
         public int? Port { get; set; }
 
         /// <summary>
-        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
+        /// Gets or sets Provisioning state of the frontend port resource
+        /// Updating/Deleting/Failed
         /// </summary>
-        public override void Validate()
-        {
-            base.Validate();
-        }
+        [JsonProperty(PropertyName = "properties.provisioningState")]
+        public string ProvisioningState { get; set; }
+
     }
 }

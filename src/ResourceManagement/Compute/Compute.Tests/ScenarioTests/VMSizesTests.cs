@@ -15,7 +15,7 @@
 
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
-using Microsoft.Azure.Test;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System.Net;
 using Xunit;
 
@@ -26,17 +26,14 @@ namespace Compute.Tests
         [Fact]
         public void TestListVMSizes()
         {
-            var handler = new RecordedDelegatingHandler {StatusCodeToReturn = HttpStatusCode.OK};
-
-            using (var context = UndoContext.Current)
+            using (MockContext context = MockContext.Start())
             {
-                context.Start();
-                var computeClient = ComputeManagementTestUtilities.GetComputeManagementClient(handler);
+                var computeClient = ComputeManagementTestUtilities.GetComputeManagementClient(
+                    new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                 string location = ComputeManagementTestUtilities.DefaultLocation.Replace(" ", "");
 
-                VirtualMachineSizeListResponse virtualMachineSizeListResponse = computeClient.VirtualMachineSizes.List(location);
-                Assert.True(virtualMachineSizeListResponse.StatusCode == HttpStatusCode.OK);
-                Helpers.ValidateVirtualMachineSizeListResponse(virtualMachineSizeListResponse);
+                var virtualMachineSizeListResponse = computeClient.VirtualMachineSizes.List(location);
+                Helpers.ValidateVirtualMachineSizeListResponse(virtualMachineSizeListResponse.Value);
             }
         }
     }

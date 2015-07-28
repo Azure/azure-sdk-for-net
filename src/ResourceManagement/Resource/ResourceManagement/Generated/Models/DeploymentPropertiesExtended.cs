@@ -5,9 +5,10 @@ namespace Microsoft.Azure.Management.Resources.Models
     using Newtonsoft.Json;
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
-    using Microsoft.Azure;
+    using Microsoft.Rest.Azure;
 
     /// <summary>
+    /// Deployment properties with additional details.
     /// </summary>
     public partial class DeploymentPropertiesExtended
     {
@@ -82,39 +83,5 @@ namespace Microsoft.Azure.Management.Resources.Models
         [JsonProperty(PropertyName = "mode")]
         public DeploymentMode? Mode { get; set; }
 
-        /// <summary>
-        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
-        /// </summary>
-        public virtual void Validate()
-        {
-            if (this.Providers != null)
-            {
-                foreach ( var element in this.Providers)
-            {
-                if (element != null)
-            {
-                element.Validate();
-            }
-            }
-            }
-            if (this.Dependencies != null)
-            {
-                foreach ( var element1 in this.Dependencies)
-            {
-                if (element1 != null)
-            {
-                element1.Validate();
-            }
-            }
-            }
-            if (this.TemplateLink != null)
-            {
-                this.TemplateLink.Validate();
-            }
-            if (this.ParametersLink != null)
-            {
-                this.ParametersLink.Validate();
-            }
-        }
     }
 }

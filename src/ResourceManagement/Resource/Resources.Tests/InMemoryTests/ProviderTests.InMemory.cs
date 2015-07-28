@@ -14,11 +14,12 @@
 //
 
 using System;
-using Microsoft.Azure;
-using Microsoft.Azure.Management.Resources;
-using Xunit;
-using System.Net.Http;
+using System.Linq;
 using System.Net;
+using System.Net.Http;
+using Microsoft.Azure.Management.Resources;
+using Microsoft.Rest;
+using Xunit;
 
 namespace ResourceGroups.Tests
 {
@@ -26,9 +27,12 @@ namespace ResourceGroups.Tests
     {
         public ResourceManagementClient GetResourceManagementClient(RecordedDelegatingHandler handler)
         {
-            var token = new TokenCloudCredentials(Guid.NewGuid().ToString(), "abc123");
+            var subscriptionId = Guid.NewGuid().ToString();
+            var token = new TokenCredentials(subscriptionId, "abc123");
             handler.IsPassThrough = false;
-            return new ResourceManagementClient(token, handler);
+            var client = new ResourceManagementClient(token, handler);
+            client.SubscriptionId = subscriptionId;
+            return client;
         }
         
         [Fact]
@@ -80,7 +84,7 @@ namespace ResourceGroups.Tests
             var handler = new RecordedDelegatingHandler();
             var client = GetResourceManagementClient(handler);
 
-            Assert.Throws<ArgumentNullException>(() => client.Providers.Get(null));
+            Assert.Throws<Microsoft.Rest.ValidationException>(() => client.Providers.Get(null));
         }
 
         [Fact]
@@ -120,13 +124,13 @@ namespace ResourceGroups.Tests
             Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
 
             // Validate result
-            Assert.Equal(1, result.Value.Count);
-            Assert.Equal("Microsoft.Websites", result.Value[0].NamespaceProperty);
-            Assert.Equal("Registered", result.Value[0].RegistrationState);
-            Assert.Equal(2, result.Value[0].ResourceTypes.Count);
-            Assert.Equal("sites", result.Value[0].ResourceTypes[0].ResourceType);
-            Assert.Equal(1, result.Value[0].ResourceTypes[0].Locations.Count);
-            Assert.Equal("Central US", result.Value[0].ResourceTypes[0].Locations[0]);
+            Assert.Equal(1, result.Count());
+            Assert.Equal("Microsoft.Websites", result.First().NamespaceProperty);
+            Assert.Equal("Registered", result.First().RegistrationState);
+            Assert.Equal(2, result.First().ResourceTypes.Count);
+            Assert.Equal("sites", result.First().ResourceTypes[0].ResourceType);
+            Assert.Equal(1, result.First().ResourceTypes[0].Locations.Count);
+            Assert.Equal("Central US", result.First().ResourceTypes[0].Locations[0]);
         }
 
         [Fact]
@@ -149,7 +153,7 @@ namespace ResourceGroups.Tests
             var handler = new RecordedDelegatingHandler();
             var client = GetResourceManagementClient(handler);
 
-            Assert.Throws<ArgumentNullException>(() => client.Providers.Register(null));
+            Assert.Throws<Microsoft.Rest.ValidationException>(() => client.Providers.Register(null));
         }
 
         [Fact]
@@ -172,7 +176,7 @@ namespace ResourceGroups.Tests
             var handler = new RecordedDelegatingHandler();
             var client = GetResourceManagementClient(handler);
 
-            Assert.Throws<ArgumentNullException>(() => client.Providers.Unregister(null));
+            Assert.Throws<Microsoft.Rest.ValidationException>(() => client.Providers.Unregister(null));
         }
     }
 }

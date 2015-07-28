@@ -5,7 +5,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using Newtonsoft.Json;
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
-    using Microsoft.Azure;
+    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// </summary>
@@ -16,15 +16,5 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "properties")]
         public ConnectionResetSharedKeyPropertiesFormat Properties { get; set; }
 
-        /// <summary>
-        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
-        /// </summary>
-        public virtual void Validate()
-        {
-            if (this.Properties != null)
-            {
-                this.Properties.Validate();
-            }
-        }
     }
 }

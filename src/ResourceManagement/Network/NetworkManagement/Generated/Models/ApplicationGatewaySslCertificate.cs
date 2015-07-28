@@ -5,9 +5,10 @@ namespace Microsoft.Azure.Management.Network.Models
     using Newtonsoft.Json;
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
-    using Microsoft.Azure;
+    using Microsoft.Rest.Azure;
 
     /// <summary>
+    /// SSL certificates of application gateway
     /// </summary>
     public partial class ApplicationGatewaySslCertificate : SubResource
     {
@@ -28,27 +29,27 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets or sets the certificate data
         /// </summary>
-        [JsonProperty(PropertyName = "data")]
+        [JsonProperty(PropertyName = "properties.data")]
         public string Data { get; set; }
 
         /// <summary>
         /// Gets or sets the certificate password
         /// </summary>
-        [JsonProperty(PropertyName = "password")]
+        [JsonProperty(PropertyName = "properties.password")]
         public string Password { get; set; }
 
         /// <summary>
         /// Gets or sets the certificate public data
         /// </summary>
-        [JsonProperty(PropertyName = "publicCertData")]
+        [JsonProperty(PropertyName = "properties.publicCertData")]
         public string PublicCertData { get; set; }
 
         /// <summary>
-        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
+        /// Gets or sets Provisioning state of the ssl certificate resource
+        /// Updating/Deleting/Failed
         /// </summary>
-        public override void Validate()
-        {
-            base.Validate();
-        }
+        [JsonProperty(PropertyName = "properties.provisioningState")]
+        public string ProvisioningState { get; set; }
+
     }
 }

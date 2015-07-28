@@ -13,14 +13,15 @@
 // limitations under the License.
 //
 
-using Microsoft.Azure;
+using System;
+using Microsoft.Rest.Azure;
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Storage.Models;
-using Microsoft.Azure.Test;
 using System.Net;
 using Xunit;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
 namespace Compute.Tests
 {
@@ -37,15 +38,14 @@ namespace Compute.Tests
     /// </summary>
     public class UsageTests : VMTestBase
     {
-        [Fact]
+        [Fact(Skip = "TODO: AutoRest")]
         public void TestListUsages()
         {
-            using (UndoContext context = UndoContext.Current)
+            using (MockContext context = MockContext.Start())
             {
-                context.Start();
                 EnsureClientsInitialized();
 
-                string imgRefId = GetPlatformOSImage(useWindowsImage: true);
+                ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
                 // Create resource group
                 var rgName = TestUtilities.GenerateName(TestPrefix);
                 string storageAccountName = TestUtilities.GenerateName(TestPrefix);
@@ -57,33 +57,33 @@ namespace Compute.Tests
                     // Create Storage Account, so that both the VMs can share it
                     var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
 
-                    var vm1 = CreateVM(rgName, asName, storageAccountOutput, imgRefId, out inputVM);
+                    var vm1 = CreateVM_NoAsyncTracking(rgName, asName, storageAccountOutput, imageRef, out inputVM);
 
                     // List Usages, and do weak validation to assure that some usages were returned.
                     var luResponse = m_CrpClient.Usage.List(vm1.Location);
 
                     ValidateListUsageResponse(luResponse);
 
-                    var lroResponse = m_CrpClient.VirtualMachines.Delete(rgName, inputVM.Name);
-                    Assert.True(lroResponse.Status != OperationStatus.Failed);
-
+                    m_CrpClient.VirtualMachines.Delete(rgName, inputVM.Name);
+                }
+                catch (Exception e)
+                {
+                    Assert.Null(e);
                 }
                 finally
                 {
-                    var deleteResourceGroupResponse = m_ResourcesClient.ResourceGroups.Delete(rgName);
-                    Assert.True(deleteResourceGroupResponse.StatusCode == HttpStatusCode.OK);
+                    m_ResourcesClient.ResourceGroups.Delete(rgName);
                 }
             }
         }
 
-        public void ValidateListUsageResponse(ListUsagesResponse luResponse)
+        public void ValidateListUsageResponse(ListUsagesResult luResponse)
         {
-            Assert.True(luResponse.StatusCode == HttpStatusCode.OK);
-            Assert.True(luResponse.Usages != null);
-            Assert.True(luResponse.Usages.Count > 0);
+            Assert.NotNull(luResponse.Value);
+            Assert.True(luResponse.Value.Count > 0);
 
             // Can't do any validation on primitive fields, but will make sure strings are populated and non-null as expected.
-            foreach(var usage in luResponse.Usages)
+            foreach (var usage in luResponse.Value)
             {
                 Assert.True(usage.Name.LocalizedValue != null);
                 Assert.True(usage.Name.Value != null);

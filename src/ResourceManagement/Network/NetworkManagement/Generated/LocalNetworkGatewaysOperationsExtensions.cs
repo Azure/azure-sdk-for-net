@@ -6,7 +6,7 @@ namespace Microsoft.Azure.Management.Network
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Rest;
-    using Microsoft.Azure;
+    using Microsoft.Rest.Azure;
     using Models;
 
     public static partial class LocalNetworkGatewaysOperationsExtensions
@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Network
             /// gateway in the specified resource group through Network resource provider.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Network
             /// gateway in the specified resource group through Network resource provider.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task<LocalNetworkGateway> CreateOrUpdateAsync( this ILocalNetworkGatewaysOperations operations, string resourceGroupName, string localNetworkGatewayName, LocalNetworkGateway parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<LocalNetworkGateway> result = await operations.CreateOrUpdateWithOperationResponseAsync(resourceGroupName, localNetworkGatewayName, parameters, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<LocalNetworkGateway> result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, localNetworkGatewayName, parameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.Network
             /// gateway in the specified resource group through Network resource provider.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Management.Network
             /// gateway in the specified resource group through Network resource provider.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -103,7 +103,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task<LocalNetworkGateway> BeginCreateOrUpdateAsync( this ILocalNetworkGatewaysOperations operations, string resourceGroupName, string localNetworkGatewayName, LocalNetworkGateway parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<LocalNetworkGateway> result = await operations.BeginCreateOrUpdateWithOperationResponseAsync(resourceGroupName, localNetworkGatewayName, parameters, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<LocalNetworkGateway> result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, localNetworkGatewayName, parameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -112,7 +112,7 @@ namespace Microsoft.Azure.Management.Network
             /// specified local network gateway through Network resource provider.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -130,7 +130,7 @@ namespace Microsoft.Azure.Management.Network
             /// specified local network gateway through Network resource provider.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -143,7 +143,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task<LocalNetworkGateway> GetAsync( this ILocalNetworkGatewaysOperations operations, string resourceGroupName, string localNetworkGatewayName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<LocalNetworkGateway> result = await operations.GetWithOperationResponseAsync(resourceGroupName, localNetworkGatewayName, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<LocalNetworkGateway> result = await operations.GetWithHttpMessagesAsync(resourceGroupName, localNetworkGatewayName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -152,7 +152,7 @@ namespace Microsoft.Azure.Management.Network
             /// network Gateway through Network resource provider.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -170,7 +170,7 @@ namespace Microsoft.Azure.Management.Network
             /// network Gateway through Network resource provider.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -183,7 +183,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task DeleteAsync( this ILocalNetworkGatewaysOperations operations, string resourceGroupName, string localNetworkGatewayName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.DeleteWithOperationResponseAsync(resourceGroupName, localNetworkGatewayName, cancellationToken).ConfigureAwait(false);
+                await operations.DeleteWithHttpMessagesAsync(resourceGroupName, localNetworkGatewayName, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -191,7 +191,7 @@ namespace Microsoft.Azure.Management.Network
             /// network Gateway through Network resource provider.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -209,7 +209,7 @@ namespace Microsoft.Azure.Management.Network
             /// network Gateway through Network resource provider.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -222,7 +222,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task BeginDeleteAsync( this ILocalNetworkGatewaysOperations operations, string resourceGroupName, string localNetworkGatewayName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.BeginDeleteWithOperationResponseAsync(resourceGroupName, localNetworkGatewayName, cancellationToken).ConfigureAwait(false);
+                await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, localNetworkGatewayName, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -230,12 +230,12 @@ namespace Microsoft.Azure.Management.Network
             /// gateways stored.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
-            public static LocalNetworkGatewayListResult List(this ILocalNetworkGatewaysOperations operations, string resourceGroupName)
+            public static Page<LocalNetworkGateway> List(this ILocalNetworkGatewaysOperations operations, string resourceGroupName)
             {
                 return Task.Factory.StartNew(s => ((ILocalNetworkGatewaysOperations)s).ListAsync(resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -245,7 +245,7 @@ namespace Microsoft.Azure.Management.Network
             /// gateways stored.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -253,9 +253,9 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<LocalNetworkGatewayListResult> ListAsync( this ILocalNetworkGatewaysOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Page<LocalNetworkGateway>> ListAsync( this ILocalNetworkGatewaysOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<LocalNetworkGatewayListResult> result = await operations.ListWithOperationResponseAsync(resourceGroupName, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<Page<LocalNetworkGateway>> result = await operations.ListWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -264,14 +264,14 @@ namespace Microsoft.Azure.Management.Network
             /// gateways stored.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
-            /// <param name='nextLink'>
+            /// <param name='nextPageLink'>
             /// NextLink from the previous successful call to List operation.
             /// </param>
-            public static LocalNetworkGatewayListResult ListNext(this ILocalNetworkGatewaysOperations operations, string nextLink)
+            public static Page<LocalNetworkGateway> ListNext(this ILocalNetworkGatewaysOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((ILocalNetworkGatewaysOperations)s).ListNextAsync(nextLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ILocalNetworkGatewaysOperations)s).ListNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -279,17 +279,17 @@ namespace Microsoft.Azure.Management.Network
             /// gateways stored.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
-            /// <param name='nextLink'>
+            /// <param name='nextPageLink'>
             /// NextLink from the previous successful call to List operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<LocalNetworkGatewayListResult> ListNextAsync( this ILocalNetworkGatewaysOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Page<LocalNetworkGateway>> ListNextAsync( this ILocalNetworkGatewaysOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<LocalNetworkGatewayListResult> result = await operations.ListNextWithOperationResponseAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<Page<LocalNetworkGateway>> result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

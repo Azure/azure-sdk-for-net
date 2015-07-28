@@ -5,9 +5,10 @@ namespace Microsoft.Azure.Management.Resources.Models
     using Newtonsoft.Json;
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
-    using Microsoft.Azure;
+    using Microsoft.Rest.Azure;
 
     /// <summary>
+    /// Deployment dependency information.
     /// </summary>
     public partial class Dependency
     {
@@ -35,21 +36,5 @@ namespace Microsoft.Azure.Management.Resources.Models
         [JsonProperty(PropertyName = "resourceName")]
         public string ResourceName { get; set; }
 
-        /// <summary>
-        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
-        /// </summary>
-        public virtual void Validate()
-        {
-            if (this.DependsOn != null)
-            {
-                foreach ( var element in this.DependsOn)
-            {
-                if (element != null)
-            {
-                element.Validate();
-            }
-            }
-            }
-        }
     }
 }

@@ -5,7 +5,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for VpnType
+    /// Defines values for VpnType.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
     public enum VpnType

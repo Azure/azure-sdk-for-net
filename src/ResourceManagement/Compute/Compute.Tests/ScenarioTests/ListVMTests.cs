@@ -13,30 +13,29 @@
 // limitations under the License.
 //
 
+using System.Linq;
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
-using Microsoft.Azure.Test;
-using System.Net;
 using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Management.Storage.Models;
 using Xunit;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
 namespace Compute.Tests
 {
     public class ListVMTests: VMTestBase
     {
-        [Fact]
+        [Fact(Skip = "TODO: AutoRest")]
         public void TestListVMInSubscription()
         {
-            using (var context = UndoContext.Current)
+            using (MockContext context = MockContext.Start())
             {
-                context.Start();
                 EnsureClientsInitialized();
 
-                string imgRefId = GetPlatformOSImage(useWindowsImage: true);
+                ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
 
-                string rg1Name = TestUtilities.GenerateName(TestPrefix) + 1;
-                string rg2Name = TestUtilities.GenerateName(TestPrefix) + 2;
+                string baseRGName = TestUtilities.GenerateName(TestPrefix);
+                string rg1Name = baseRGName + "_1";
+                string rg2Name = baseRGName + "_2";
                 string asName = TestUtilities.GenerateName("as");
                 string storageAccountName = TestUtilities.GenerateName(TestPrefix);
                 VirtualMachine inputVM1, inputVM2;
@@ -46,17 +45,16 @@ namespace Compute.Tests
                     // Create Storage Account, so that both the VMs can share it
                     var storageAccountOutput = CreateStorageAccount(rg1Name, storageAccountName);
 
-                    var vm1 = CreateVM(rg1Name, asName, storageAccountOutput, imgRefId, out inputVM1);
-                    var vm2 = CreateVM(rg2Name, asName, storageAccountOutput, imgRefId, out inputVM2);
+                    var vm1 = CreateVM_NoAsyncTracking(rg1Name, asName, storageAccountOutput, imageRef, out inputVM1);
+                    var vm2 = CreateVM_NoAsyncTracking(rg2Name, asName, storageAccountOutput, imageRef, out inputVM2);
 
-                    var listResponse = m_CrpClient.VirtualMachines.ListAll(new ListParameters());
-                    Assert.True(listResponse.StatusCode == HttpStatusCode.OK);
-                    Assert.True(listResponse.VirtualMachines.Count >= 2);
-                    Assert.Null(listResponse.NextLink);
+                    var listResponse = m_CrpClient.VirtualMachines.ListAll();
+                    Assert.True(listResponse.Count() >= 2);
+                    Assert.Null(listResponse.NextPageLink);
 
                     int vmsValidatedCount = 0;
 
-                    foreach (var vm in listResponse.VirtualMachines)
+                    foreach (var vm in listResponse)
                     {
                         if (vm.Name == vm1.Name)
                         {
@@ -74,16 +72,15 @@ namespace Compute.Tests
                 }
                 finally
                 {
-                    // Cleanup the created resources
+                    // Cleanup the created resources. rg2 first since the VM in it needs to be deleted before the 
+                    // storage account, which is in rg1.
                     try
                     {
-                        var deleteRg1Response = m_ResourcesClient.ResourceGroups.Delete(rg1Name);
-                        Assert.True(deleteRg1Response.StatusCode == HttpStatusCode.OK);
+                        m_ResourcesClient.ResourceGroups.Delete(rg2Name);
                     }
                     finally
                     {
-                        var deleteRg2Response = m_ResourcesClient.ResourceGroups.Delete(rg2Name);
-                        Assert.True(deleteRg2Response.StatusCode == HttpStatusCode.OK);
+                        m_ResourcesClient.ResourceGroups.Delete(rg1Name);
                     }
                 }
             }

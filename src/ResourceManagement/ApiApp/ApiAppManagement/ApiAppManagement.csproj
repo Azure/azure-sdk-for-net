@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B304999A-EBE1-4FA5-B28B-894C1AFACA15}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Microsoft.Azure.Management.ApiApps</RootNamespace>
+    <AssemblyName>Microsoft.Azure.Management.ApiApps</AssemblyName>
+  </PropertyGroup>
+  <Import Project="..\..\..\..\tools\Library.Settings.targets" />
+  <ItemGroup>
+    <!--
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Xml" />
+    -->
+    <Reference Include="Hyak.Common">
+      <HintPath>$(LibraryNugetPackageFolder)\Hyak.Common.1.0.2\lib\portable-net403+win+wpa81\Hyak.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Azure.Common">
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Azure.Common.2.1.0\lib\portable-net45+wp8+wpa81+win\Microsoft.Azure.Common.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Generated\ApiAppManagementClient.cs" />
+    <Compile Include="Generated\ApiAppManagementClientExtensions.cs" />
+    <Compile Include="Generated\ApiAppOperations.cs" />
+    <Compile Include="Generated\ApiAppOperationsExtensions.cs" />
+    <Compile Include="Generated\IApiAppManagementClient.cs" />
+    <Compile Include="Generated\IApiAppOperations.cs" />
+    <Compile Include="Generated\ITemplateOperations.cs" />
+    <Compile Include="Generated\Models\ApiApp.cs" />
+    <Compile Include="Generated\Models\DeploymentTemplateMetadata.cs" />
+    <Compile Include="Generated\Models\GetApiAppResponse.cs" />
+    <Compile Include="Generated\Models\GetDeploymentMetadataRequest.cs" />
+    <Compile Include="Generated\Models\GetDeploymentTemplateMetadataResponse.cs" />
+    <Compile Include="Generated\Models\LengthConstraint.cs" />
+    <Compile Include="Generated\Models\ListApiAppsResponse.cs" />
+    <Compile Include="Generated\Models\MicroserviceApi.cs" />
+    <Compile Include="Generated\Models\MicroserviceAuthentication.cs" />
+    <Compile Include="Generated\Models\MicroserviceLink.cs" />
+    <Compile Include="Generated\Models\MicroserviceMetadata.cs" />
+    <Compile Include="Generated\Models\MicroservicePackage.cs" />
+    <Compile Include="Generated\Models\ParameterConstraints.cs" />
+    <Compile Include="Generated\Models\ParameterMetadata.cs" />
+    <Compile Include="Generated\Models\RangeConstraint.cs" />
+    <Compile Include="Generated\Models\ResourceReference.cs" />
+    <Compile Include="Generated\Models\StatusCheckEntry.cs" />
+    <Compile Include="Generated\Models\StatusLevel.cs" />
+    <Compile Include="Generated\Models\TemplateParameterType.cs" />
+    <Compile Include="Generated\Models\UIHint.cs" />
+    <Compile Include="Generated\TemplateOperations.cs" />
+    <Compile Include="Generated\TemplateOperationsExtensions.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(LibraryFxTarget)' == 'portable' " />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(LibraryNugetPackageFolder)\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('$(LibraryNugetPackageFolder)\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -6,10 +6,12 @@ namespace Microsoft.Azure.Management.Network
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Rest;
-    using Microsoft.Azure;
+    using System.Linq;
+    using Microsoft.Rest.Azure;
     using Models;
 
     /// <summary>
+    /// SubnetsOperations operations.
     /// </summary>
     public partial interface ISubnetsOperations
     {
@@ -25,10 +27,13 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='subnetName'>
         /// The name of the subnet.
         /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
         /// </param>
-        Task<AzureOperationResponse> DeleteWithOperationResponseAsync(string resourceGroupName, string virtualNetworkName, string subnetName, CancellationToken cancellationToken = default(CancellationToken));
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string virtualNetworkName, string subnetName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The delete subnet operation deletes the specified subnet.
         /// </summary>
@@ -41,10 +46,13 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='subnetName'>
         /// The name of the subnet.
         /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
         /// </param>
-        Task<AzureOperationResponse> BeginDeleteWithOperationResponseAsync(string resourceGroupName, string virtualNetworkName, string subnetName, CancellationToken cancellationToken = default(CancellationToken));
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string virtualNetworkName, string subnetName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The Get subnet operation retreives information about the specified
         /// subnet.
@@ -58,10 +66,13 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='subnetName'>
         /// The name of the subnet.
         /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
         /// </param>
-        Task<AzureOperationResponse<Subnet>> GetWithOperationResponseAsync(string resourceGroupName, string virtualNetworkName, string subnetName, CancellationToken cancellationToken = default(CancellationToken));
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<Subnet>> GetWithHttpMessagesAsync(string resourceGroupName, string virtualNetworkName, string subnetName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The Put Subnet operation creates/updates a subnet in thespecified
         /// virtual network
@@ -78,10 +89,13 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='subnetParameters'>
         /// Parameters supplied to the create/update Subnet operation
         /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
         /// </param>
-        Task<AzureOperationResponse<Subnet>> CreateOrUpdateWithOperationResponseAsync(string resourceGroupName, string virtualNetworkName, string subnetName, Subnet subnetParameters, CancellationToken cancellationToken = default(CancellationToken));
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<Subnet>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string virtualNetworkName, string subnetName, Subnet subnetParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The Put Subnet operation creates/updates a subnet in thespecified
         /// virtual network
@@ -98,10 +112,13 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='subnetParameters'>
         /// Parameters supplied to the create/update Subnet operation
         /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
         /// </param>
-        Task<AzureOperationResponse<Subnet>> BeginCreateOrUpdateWithOperationResponseAsync(string resourceGroupName, string virtualNetworkName, string subnetName, Subnet subnetParameters, CancellationToken cancellationToken = default(CancellationToken));
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<Subnet>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string virtualNetworkName, string subnetName, Subnet subnetParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The List subnets opertion retrieves all the subnets in a virtual
         /// network.
@@ -112,20 +129,26 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='virtualNetworkName'>
         /// The name of the virtual network.
         /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
         /// </param>
-        Task<AzureOperationResponse<SubnetListResult>> ListWithOperationResponseAsync(string resourceGroupName, string virtualNetworkName, CancellationToken cancellationToken = default(CancellationToken));
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<Page<Subnet>>> ListWithHttpMessagesAsync(string resourceGroupName, string virtualNetworkName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The List subnets opertion retrieves all the subnets in a virtual
         /// network.
         /// </summary>
-        /// <param name='nextLink'>
+        /// <param name='nextPageLink'>
         /// NextLink from the previous successful call to List operation.
         /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
         /// </param>
-        Task<AzureOperationResponse<SubnetListResult>> ListNextWithOperationResponseAsync(string nextLink, CancellationToken cancellationToken = default(CancellationToken));
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<Page<Subnet>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

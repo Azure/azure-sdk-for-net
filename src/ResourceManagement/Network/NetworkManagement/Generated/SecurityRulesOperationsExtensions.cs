@@ -6,7 +6,7 @@ namespace Microsoft.Azure.Management.Network
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Rest;
-    using Microsoft.Azure;
+    using Microsoft.Rest.Azure;
     using Models;
 
     public static partial class SecurityRulesOperationsExtensions
@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Network
             /// security rule.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.Network
             /// security rule.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task DeleteAsync( this ISecurityRulesOperations operations, string resourceGroupName, string networkSecurityGroupName, string securityRuleName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.DeleteWithOperationResponseAsync(resourceGroupName, networkSecurityGroupName, securityRuleName, cancellationToken).ConfigureAwait(false);
+                await operations.DeleteWithHttpMessagesAsync(resourceGroupName, networkSecurityGroupName, securityRuleName, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.Network
             /// security rule.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.Management.Network
             /// security rule.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -98,7 +98,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task BeginDeleteAsync( this ISecurityRulesOperations operations, string resourceGroupName, string networkSecurityGroupName, string securityRuleName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.BeginDeleteWithOperationResponseAsync(resourceGroupName, networkSecurityGroupName, securityRuleName, cancellationToken).ConfigureAwait(false);
+                await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, networkSecurityGroupName, securityRuleName, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -106,7 +106,7 @@ namespace Microsoft.Azure.Management.Network
             /// specified network security rule.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -127,7 +127,7 @@ namespace Microsoft.Azure.Management.Network
             /// specified network security rule.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -143,7 +143,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task<SecurityRule> GetAsync( this ISecurityRulesOperations operations, string resourceGroupName, string networkSecurityGroupName, string securityRuleName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<SecurityRule> result = await operations.GetWithOperationResponseAsync(resourceGroupName, networkSecurityGroupName, securityRuleName, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<SecurityRule> result = await operations.GetWithHttpMessagesAsync(resourceGroupName, networkSecurityGroupName, securityRuleName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -152,7 +152,7 @@ namespace Microsoft.Azure.Management.Network
             /// the specified network security group
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -176,7 +176,7 @@ namespace Microsoft.Azure.Management.Network
             /// the specified network security group
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -195,7 +195,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task<SecurityRule> CreateOrUpdateAsync( this ISecurityRulesOperations operations, string resourceGroupName, string networkSecurityGroupName, string securityRuleName, SecurityRule securityRuleParameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<SecurityRule> result = await operations.CreateOrUpdateWithOperationResponseAsync(resourceGroupName, networkSecurityGroupName, securityRuleName, securityRuleParameters, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<SecurityRule> result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, networkSecurityGroupName, securityRuleName, securityRuleParameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -204,7 +204,7 @@ namespace Microsoft.Azure.Management.Network
             /// the specified network security group
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -228,7 +228,7 @@ namespace Microsoft.Azure.Management.Network
             /// the specified network security group
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -247,7 +247,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task<SecurityRule> BeginCreateOrUpdateAsync( this ISecurityRulesOperations operations, string resourceGroupName, string networkSecurityGroupName, string securityRuleName, SecurityRule securityRuleParameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<SecurityRule> result = await operations.BeginCreateOrUpdateWithOperationResponseAsync(resourceGroupName, networkSecurityGroupName, securityRuleName, securityRuleParameters, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<SecurityRule> result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, networkSecurityGroupName, securityRuleName, securityRuleParameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -256,7 +256,7 @@ namespace Microsoft.Azure.Management.Network
             /// in a network security group.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -264,7 +264,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='networkSecurityGroupName'>
             /// The name of the network security group.
             /// </param>
-            public static SecurityRuleListResult List(this ISecurityRulesOperations operations, string resourceGroupName, string networkSecurityGroupName)
+            public static Page<SecurityRule> List(this ISecurityRulesOperations operations, string resourceGroupName, string networkSecurityGroupName)
             {
                 return Task.Factory.StartNew(s => ((ISecurityRulesOperations)s).ListAsync(resourceGroupName, networkSecurityGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -274,7 +274,7 @@ namespace Microsoft.Azure.Management.Network
             /// in a network security group.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -285,9 +285,9 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<SecurityRuleListResult> ListAsync( this ISecurityRulesOperations operations, string resourceGroupName, string networkSecurityGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Page<SecurityRule>> ListAsync( this ISecurityRulesOperations operations, string resourceGroupName, string networkSecurityGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<SecurityRuleListResult> result = await operations.ListWithOperationResponseAsync(resourceGroupName, networkSecurityGroupName, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<Page<SecurityRule>> result = await operations.ListWithHttpMessagesAsync(resourceGroupName, networkSecurityGroupName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -296,14 +296,14 @@ namespace Microsoft.Azure.Management.Network
             /// in a network security group.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
-            /// <param name='nextLink'>
+            /// <param name='nextPageLink'>
             /// NextLink from the previous successful call to List operation.
             /// </param>
-            public static SecurityRuleListResult ListNext(this ISecurityRulesOperations operations, string nextLink)
+            public static Page<SecurityRule> ListNext(this ISecurityRulesOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((ISecurityRulesOperations)s).ListNextAsync(nextLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISecurityRulesOperations)s).ListNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -311,17 +311,17 @@ namespace Microsoft.Azure.Management.Network
             /// in a network security group.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
-            /// <param name='nextLink'>
+            /// <param name='nextPageLink'>
             /// NextLink from the previous successful call to List operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<SecurityRuleListResult> ListNextAsync( this ISecurityRulesOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Page<SecurityRule>> ListNextAsync( this ISecurityRulesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<SecurityRuleListResult> result = await operations.ListNextWithOperationResponseAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<Page<SecurityRule>> result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

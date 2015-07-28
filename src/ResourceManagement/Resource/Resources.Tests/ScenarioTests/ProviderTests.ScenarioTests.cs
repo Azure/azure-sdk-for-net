@@ -16,14 +16,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Azure;
+using System.Net;
+using System.Net.Http;
+using Microsoft.Rest.Azure;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
-using Xunit;
-using System.Net.Http;
-using System.Net;
 using Microsoft.Azure.Test;
-using System.Threading;
+using Xunit;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
 namespace ResourceGroups.Tests
 {
@@ -39,70 +39,71 @@ namespace ResourceGroups.Tests
         [Fact]
         public void ProviderGetValidateMessage()
         {
-            TestUtilities.StartTest();
-            var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
+            using (MockContext context = MockContext.Start())
+            {
+                var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
 
-            var client = GetResourceManagementClient(handler);
+                var client = GetResourceManagementClient(handler);
 
-            var reg = client.Providers.Register(ProviderName);
-            Assert.NotNull(reg);
+                var reg = client.Providers.Register(ProviderName);
+                Assert.NotNull(reg);
 
-            var result = client.Providers.Get(ProviderName);
+                var result = client.Providers.Get(ProviderName);
 
-            // Validate headers
-            Assert.Equal(HttpMethod.Get, handler.Method);
-            Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
+                // Validate headers
+                Assert.Equal(HttpMethod.Get, handler.Method);
+                Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
 
-            // Validate result
-            Assert.NotNull(result);
-            Assert.NotEmpty(result.Id);
-            Assert.Equal(ProviderName, result.NamespaceProperty);
-            Assert.True("Registered" == result.RegistrationState ||
-                "Registering" == result.RegistrationState,
-                string.Format("Provider registration state was not 'Registered' or 'Registering', instead it was '{0}'", result.RegistrationState));
-            Assert.NotEmpty(result.ResourceTypes);
-            Assert.NotEmpty(result.ResourceTypes[0].Locations);
-            TestUtilities.EndTest();
+                // Validate result
+                Assert.NotNull(result);
+                Assert.NotEmpty(result.Id);
+                Assert.Equal(ProviderName, result.NamespaceProperty);
+                Assert.True("Registered" == result.RegistrationState ||
+                    "Registering" == result.RegistrationState,
+                    string.Format("Provider registration state was not 'Registered' or 'Registering', instead it was '{0}'", result.RegistrationState));
+                Assert.NotEmpty(result.ResourceTypes);
+                Assert.NotEmpty(result.ResourceTypes[0].Locations);
+            }
         }
 
         [Fact]
         public void ProviderListValidateMessage()
         {
-            TestUtilities.StartTest();
-            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+            using (MockContext context = MockContext.Start())
+            {
+                var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            var client = GetResourceManagementClient(handler);
+                var client = GetResourceManagementClient(handler);
 
-            var reg = client.Providers.Register(ProviderName);
-            Assert.NotNull(reg);
+                var reg = client.Providers.Register(ProviderName);
+                Assert.NotNull(reg);
 
-            var result = client.Providers.List(null);
+                var result = client.Providers.List(null);
 
-            // Validate headers
-            Assert.Equal(HttpMethod.Get, handler.Method);
-            Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
+                // Validate headers
+                Assert.Equal(HttpMethod.Get, handler.Method);
+                Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
 
-            // Validate result
-            Assert.True(result.Value.Any());
-            var websiteProvider =
-                result.Value.First(
-                    p => p.NamespaceProperty.Equals(ProviderName, StringComparison.InvariantCultureIgnoreCase));
-            Assert.Equal(ProviderName, websiteProvider.NamespaceProperty);
-            Assert.True("Registered" == websiteProvider.RegistrationState ||
-                "Registering" == websiteProvider.RegistrationState,
-                string.Format("Provider registration state was not 'Registered' or 'Registering', instead it was '{0}'", websiteProvider.RegistrationState));
-            Assert.NotEmpty(websiteProvider.ResourceTypes);
-            Assert.NotEmpty(websiteProvider.ResourceTypes[0].Locations);
-            TestUtilities.EndTest();
+                // Validate result
+                Assert.True(result.Any());
+                var websiteProvider =
+                    result.First(
+                        p => p.NamespaceProperty.Equals(ProviderName, StringComparison.InvariantCultureIgnoreCase));
+                Assert.Equal(ProviderName, websiteProvider.NamespaceProperty);
+                Assert.True("Registered" == websiteProvider.RegistrationState ||
+                    "Registering" == websiteProvider.RegistrationState,
+                    string.Format("Provider registration state was not 'Registered' or 'Registering', instead it was '{0}'", websiteProvider.RegistrationState));
+                Assert.NotEmpty(websiteProvider.ResourceTypes);
+                Assert.NotEmpty(websiteProvider.ResourceTypes[0].Locations);
+            }
         }
 
         [Fact]
         public void VerifyProviderRegister()
         {
             var handler = new RecordedDelegatingHandler() {StatusCodeToReturn = HttpStatusCode.OK};
-            using (UndoContext context = UndoContext.Current)
+            using (MockContext context = MockContext.Start())
             {
-                context.Start();
                 var client = GetResourceManagementClient(handler);
 
                 client.Providers.Register(ProviderName);
@@ -117,9 +118,8 @@ namespace ResourceGroups.Tests
         public void VerifyProviderUnregister()
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
-            using (UndoContext context = UndoContext.Current)
+            using (MockContext context = MockContext.Start())
             {
-                context.Start();
                 var client = GetResourceManagementClient(handler);
 
                 var registerResult = client.Providers.Register(ProviderName);
@@ -135,6 +135,68 @@ namespace ResourceGroups.Tests
                             provider.RegistrationState == "Unregistering",
                             "RegistrationState is expected NotRegistered or Unregistering. Actual value " +
                             provider.RegistrationState);
+            }
+        }
+
+        [Fact]
+        public void ProviderOperationsList()
+        {
+            using (MockContext context = MockContext.Start())
+            {
+                const string DefaultApiVersion = "2014-06-01";
+
+                var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+                var client = GetResourceManagementClient(handler);
+                var insightsProvider = client.Providers.Get(ProviderName);
+
+                // Validate result
+                Assert.True(insightsProvider != null);
+
+                // Validate headers
+                Assert.Equal(HttpMethod.Get, handler.Method);
+                Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
+
+                Assert.NotEmpty(insightsProvider.ResourceTypes);
+                var operationResourceType = insightsProvider.ResourceTypes.Single(x => x.ResourceType == "operations");
+                IList<string> operationsSupportedApiVersions = operationResourceType.ApiVersions;
+                string latestSupportedApiVersion = DefaultApiVersion;
+
+                if (operationsSupportedApiVersions != null && operationsSupportedApiVersions.Any())
+                {
+                    latestSupportedApiVersion = operationsSupportedApiVersions.First();
+                }
+
+                ResourceIdentity identity = new ResourceIdentity
+                {
+                    ResourceName = string.Empty,
+                    ResourceType = "operations",
+                    ResourceProviderNamespace = ProviderName,
+                    ResourceProviderApiVersion = latestSupportedApiVersion
+                };
+
+                var operations = client.ResourceProviderOperationDetails.List(identity.ResourceProviderNamespace, identity.ResourceProviderApiVersion);
+
+                Assert.NotNull(operations);
+                Assert.NotEmpty(operations.Value);
+                Assert.NotEmpty(operations.Value.First().Name);
+                Assert.NotNull(operations.Value.First().Display);
+                IEnumerable<ResourceProviderOperationDefinition> definitions =
+                    operations.Value.Where(op => string.Equals(op.Name, "Microsoft.Insights/AlertRules/Write", StringComparison.InvariantCultureIgnoreCase));
+                Assert.NotNull(definitions);
+                Assert.NotEmpty(definitions);
+                Assert.Equal(1, definitions.Count());
+
+                // Negative case with unsupported api version
+                identity = new ResourceIdentity
+                {
+                    ResourceName = string.Empty,
+                    ResourceType = "operations",
+                    ResourceProviderNamespace = ProviderName,
+                    ResourceProviderApiVersion = "2015-01-01"
+                };
+
+                Assert.Throws<CloudException>(() => client.ResourceProviderOperationDetails.List(identity.ResourceProviderNamespace, identity.ResourceProviderApiVersion));
             }
         }
     }

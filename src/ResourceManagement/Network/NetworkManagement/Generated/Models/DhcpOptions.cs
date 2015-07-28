@@ -5,9 +5,12 @@ namespace Microsoft.Azure.Management.Network.Models
     using Newtonsoft.Json;
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
-    using Microsoft.Azure;
+    using Microsoft.Rest.Azure;
 
     /// <summary>
+    /// DHCPOptions contains an array of DNS servers available to VMs deployed
+    /// in the virtual networkStandard DHCP option for a subnet overrides
+    /// VNET DHCP options.
     /// </summary>
     public partial class DhcpOptions
     {
@@ -17,11 +20,5 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "dnsServers")]
         public IList<string> DnsServers { get; set; }
 
-        /// <summary>
-        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
-        /// </summary>
-        public virtual void Validate()
-        {
-        }
     }
 }

@@ -5,7 +5,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for OperationStatus
+    /// Defines values for OperationStatus.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
     public enum OperationStatus

@@ -5,9 +5,10 @@ namespace Microsoft.Azure.Management.Network.Models
     using Newtonsoft.Json;
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
-    using Microsoft.Azure;
+    using Microsoft.Rest.Azure;
 
     /// <summary>
+    /// Pool of backend IP addresseses
     /// </summary>
     public partial class BackendAddressPool : SubResource
     {
@@ -28,41 +29,21 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets collection of references to IPs defined in NICs
         /// </summary>
-        [JsonProperty(PropertyName = "backendIPConfigurations")]
+        [JsonProperty(PropertyName = "properties.backendIPConfigurations")]
         public IList<SubResource> BackendIPConfigurations { get; set; }
 
         /// <summary>
         /// Gets Load Balancing rules that use this Backend Address Pool
         /// </summary>
-        [JsonProperty(PropertyName = "loadBalancingRules")]
+        [JsonProperty(PropertyName = "properties.loadBalancingRules")]
         public IList<SubResource> LoadBalancingRules { get; set; }
 
         /// <summary>
-        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
+        /// Provisioning state of the PublicIP resource
+        /// Updating/Deleting/Failed
         /// </summary>
-        public override void Validate()
-        {
-            base.Validate();
-            if (this.BackendIPConfigurations != null)
-            {
-                foreach ( var element in this.BackendIPConfigurations)
-            {
-                if (element != null)
-            {
-                element.Validate();
-            }
-            }
-            }
-            if (this.LoadBalancingRules != null)
-            {
-                foreach ( var element1 in this.LoadBalancingRules)
-            {
-                if (element1 != null)
-            {
-                element1.Validate();
-            }
-            }
-            }
-        }
+        [JsonProperty(PropertyName = "properties.provisioningState")]
+        public string ProvisioningState { get; set; }
+
     }
 }

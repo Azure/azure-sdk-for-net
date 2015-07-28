@@ -5,9 +5,10 @@ namespace Microsoft.Azure.Management.Network.Models
     using Newtonsoft.Json;
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
-    using Microsoft.Azure;
+    using Microsoft.Rest.Azure;
 
     /// <summary>
+    /// Backend Address Pool of application gateway
     /// </summary>
     public partial class ApplicationGatewayBackendAddressPool : SubResource
     {
@@ -28,41 +29,21 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets or sets backendIpConfiguration of application gateway
         /// </summary>
-        [JsonProperty(PropertyName = "backendIpConfigurations")]
+        [JsonProperty(PropertyName = "properties.backendIpConfigurations")]
         public IList<SubResource> BackendIpConfigurations { get; set; }
 
         /// <summary>
         /// Gets or sets the backend addresses
         /// </summary>
-        [JsonProperty(PropertyName = "backendAddresses")]
+        [JsonProperty(PropertyName = "properties.backendAddresses")]
         public IList<ApplicationGatewayBackendAddress> BackendAddresses { get; set; }
 
         /// <summary>
-        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
+        /// Gets or sets Provisioning state of the backend address pool
+        /// resource Updating/Deleting/Failed
         /// </summary>
-        public override void Validate()
-        {
-            base.Validate();
-            if (this.BackendIpConfigurations != null)
-            {
-                foreach ( var element in this.BackendIpConfigurations)
-            {
-                if (element != null)
-            {
-                element.Validate();
-            }
-            }
-            }
-            if (this.BackendAddresses != null)
-            {
-                foreach ( var element1 in this.BackendAddresses)
-            {
-                if (element1 != null)
-            {
-                element1.Validate();
-            }
-            }
-            }
-        }
+        [JsonProperty(PropertyName = "properties.provisioningState")]
+        public string ProvisioningState { get; set; }
+
     }
 }

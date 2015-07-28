@@ -18,7 +18,8 @@ using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
 using Microsoft.Azure.Management.Storage;
 using Microsoft.Azure.Management.Storage.Models;
-using Microsoft.Azure.Test;
+using Microsoft.Rest;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using ResourceGroups.Tests;
 using System;
 using System.Collections.Generic;
@@ -33,7 +34,7 @@ namespace Storage.Tests.Helpers
     public static class StorageManagementTestUtilities
     {
         public static bool IsTestTenant = false;
-        private static SubscriptionCloudCredentials Creds = null;
+        private static TokenCredentials Creds = null;
         private static Uri testUri = null;
 
         // These are used to create default accounts
@@ -55,10 +56,8 @@ namespace Storage.Tests.Helpers
             else
             {
                 handler.IsPassThrough = true;
-                resourcesClient = TestBase.GetServiceClient<ResourceManagementClient>(new CSMTestEnvironmentFactory(), handler);
+                resourcesClient = TestBase.GetServiceClient<ResourceManagementClient>(handler);
             }
-
-            resourcesClient.LongRunningOperationRetryTimeout = 0;
             return resourcesClient;
         }
 
@@ -72,14 +71,12 @@ namespace Storage.Tests.Helpers
             else
             {
                 handler.IsPassThrough = true;
-                storageClient = TestBase.GetServiceClient<StorageManagementClient>(new CSMTestEnvironmentFactory(), handler);
+                storageClient = TestBase.GetServiceClient<StorageManagementClient>(handler);
             }
-
-            storageClient.LongRunningOperationRetryTimeout = 0;
             return storageClient;
         }
 
-        private static SubscriptionCloudCredentials GetCreds() 
+        private static TokenCredentials GetCreds() 
         {
             return Creds;
         }
@@ -145,7 +142,7 @@ namespace Storage.Tests.Helpers
                 Assert.NotNull(account.PrimaryEndpoints.Table);
             }
 
-            Assert.Equal("Succeeded", account.ProvisioningState);
+            Assert.Equal(ProvisioningState.Succeeded, account.ProvisioningState);
             Assert.Null(account.LastGeoFailoverTime);
 
             switch (account.AccountType)

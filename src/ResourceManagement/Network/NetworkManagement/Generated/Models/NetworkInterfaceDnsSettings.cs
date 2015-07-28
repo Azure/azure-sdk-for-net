@@ -5,9 +5,10 @@ namespace Microsoft.Azure.Management.Network.Models
     using Newtonsoft.Json;
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
-    using Microsoft.Azure;
+    using Microsoft.Rest.Azure;
 
     /// <summary>
+    /// Dns Settings of a network interface
     /// </summary>
     public partial class NetworkInterfaceDnsSettings
     {
@@ -37,11 +38,5 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "internalFqdn")]
         public string InternalFqdn { get; set; }
 
-        /// <summary>
-        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
-        /// </summary>
-        public virtual void Validate()
-        {
-        }
     }
 }

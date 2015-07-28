@@ -26,13 +26,6 @@
         "description": "Create or update a management lock at the resource group level.",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
             "name": "resourceGroupName",
             "in": "path",
             "required": true,
@@ -47,32 +40,32 @@
             "description": "The lock name."
           },
           {
-            "name": "api-version",
-            "in": "query",
-            "required": true,
-            "type": "string"
-          },
-          {
             "name": "parameters",
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/ManagementLockProperties"
+              "$ref": "#/definitions/ManagementLock"
             },
             "description": "The management lock parameters."
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
-          "201": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/ManagementLockObject"
-            }
-          },
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/ManagementLockObject"
+              "$ref": "#/definitions/ManagementLock"
+            }
+          },
+          "201": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ManagementLock"
             }
           }
         }
@@ -87,13 +80,6 @@
         "description": "Create or update a management lock at the resource level or any level below resource.",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
             "name": "resourceGroupName",
             "in": "path",
             "required": true,
@@ -138,32 +124,32 @@
             "description": "The name of lock."
           },
           {
-            "name": "api-version",
-            "in": "query",
-            "required": true,
-            "type": "string"
-          },
-          {
             "name": "parameters",
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/ManagementLockProperties"
+              "$ref": "#/definitions/ManagementLock"
             },
             "description": "Create or update management lock parameters."
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/ManagementLockObject"
+              "$ref": "#/definitions/ManagementLock"
             }
           },
           "201": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/ManagementLockObject"
+              "$ref": "#/definitions/ManagementLock"
             }
           }
         }
@@ -176,13 +162,6 @@
         "description": "Deletes the management lock of a resource or any level below resource.",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
             "name": "resourceGroupName",
             "in": "path",
             "required": true,
@@ -227,20 +206,20 @@
             "description": "The name of lock."
           },
           {
-            "name": "api-version",
-            "in": "query",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
-          "202": {
+          "204": {
             "description": ""
           },
           "200": {
             "description": ""
           },
-          "204": {
+          "202": {
             "description": ""
           }
         }
@@ -255,13 +234,6 @@
         "description": "Create or update a management lock at the subscription level.",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
             "name": "lockName",
             "in": "path",
             "required": true,
@@ -269,32 +241,32 @@
             "description": "The name of lock."
           },
           {
-            "name": "api-version",
-            "in": "query",
-            "required": true,
-            "type": "string"
-          },
-          {
             "name": "parameters",
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/ManagementLockProperties"
+              "$ref": "#/definitions/ManagementLock"
             },
             "description": "The management lock parameters."
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
-          "200": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/ManagementLockObject"
-            }
-          },
           "201": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/ManagementLockObject"
+              "$ref": "#/definitions/ManagementLock"
+            }
+          },
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ManagementLock"
             }
           }
         }
@@ -307,13 +279,6 @@
         "description": "Deletes the management lock of a subscription.",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
             "name": "lockName",
             "in": "path",
             "required": true,
@@ -321,20 +286,20 @@
             "description": "The name of lock."
           },
           {
-            "name": "api-version",
-            "in": "query",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
           "204": {
             "description": ""
           },
-          "202": {
+          "200": {
             "description": ""
           },
-          "200": {
+          "202": {
             "description": ""
           }
         }
@@ -347,13 +312,6 @@
         "description": "Gets the management lock of a scope.",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
             "name": "lockName",
             "in": "path",
             "required": true,
@@ -361,23 +319,23 @@
             "description": "Name of the management lock."
           },
           {
-            "name": "api-version",
-            "in": "query",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
-          "204": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/ManagementLockObject"
-            }
-          },
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/ManagementLockObject"
+              "$ref": "#/definitions/ManagementLock"
+            }
+          },
+          "204": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ManagementLock"
             }
           }
         }
@@ -391,13 +349,6 @@
         "operationId": "ManagementLocks_DeleteAtResourceGroupLevel",
         "description": "Deletes the management lock of a resource group.",
         "parameters": [
-          {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
           {
             "name": "resourceGroup",
             "in": "path",
@@ -413,20 +364,20 @@
             "description": "The name of lock."
           },
           {
-            "name": "api-version",
-            "in": "query",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
+          "204": {
+            "description": ""
+          },
           "200": {
             "description": ""
           },
           "202": {
-            "description": ""
-          },
-          "204": {
             "description": ""
           }
         }
@@ -441,13 +392,6 @@
         "description": "Gets all the management locks of a resource group.",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
             "name": "resourceGroupName",
             "in": "path",
             "required": true,
@@ -455,17 +399,17 @@
             "description": "Resource group name."
           },
           {
-            "name": "api-version",
-            "in": "query",
-            "required": true,
-            "type": "string"
-          },
-          {
             "name": "$filter",
             "in": "query",
             "required": false,
             "type": "string",
             "description": "The filter to apply on the operation."
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -477,7 +421,7 @@
           }
         },
         "x-ms-pageable": true,
-        "x-ms-odata": "#/definitions/ManagementLockObject"
+        "x-ms-odata": "#/definitions/ManagementLock"
       }
     },
     "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}/providers/Microsoft.Authorization/locks": {
@@ -488,13 +432,6 @@
         "operationId": "ManagementLocks_ListAtResourceLevel",
         "description": "Gets all the management locks of a resource or any level below resource.",
         "parameters": [
-          {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
           {
             "name": "resourceGroupName",
             "in": "path",
@@ -533,17 +470,17 @@
             "description": "Resource identity."
           },
           {
-            "name": "api-version",
-            "in": "query",
-            "required": true,
-            "type": "string"
-          },
-          {
             "name": "$filter",
             "in": "query",
             "required": false,
             "type": "string",
             "description": "The filter to apply on the operation."
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -555,7 +492,7 @@
           }
         },
         "x-ms-pageable": true,
-        "x-ms-odata": "#/definitions/ManagementLockObject"
+        "x-ms-odata": "#/definitions/ManagementLock"
       }
     },
     "/{nextLink}": {
@@ -573,6 +510,9 @@
             "type": "string",
             "description": "NextLink from the previous successful call to List operation.",
             "x-ms-skip-url-encoding": true
+          },
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -595,24 +535,17 @@
         "description": "Gets all the management locks of a subscription.",
         "parameters": [
           {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
-          },
-          {
-            "name": "api-version",
-            "in": "query",
-            "required": true,
-            "type": "string"
-          },
-          {
             "name": "$filter",
             "in": "query",
             "required": false,
             "type": "string",
             "description": "The filter to apply on the operation."
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -624,7 +557,7 @@
           }
         },
         "x-ms-pageable": true,
-        "x-ms-odata": "#/definitions/ManagementLockObject"
+        "x-ms-odata": "#/definitions/ManagementLock"
       }
     }
   },
@@ -655,7 +588,7 @@
       },
       "description": "Resource filter."
     },
-    "ResourceGroupExtendedFilter": {
+    "ResourceGroupFilter": {
       "properties": {
         "tagName": {
           "type": "string",
@@ -672,7 +605,13 @@
       "properties": {
         "level": {
           "type": "string",
-          "description": "Gets or sets the lock level of the management lock."
+          "description": "Gets or sets the lock level of the management lock.",
+          "enum": [
+            "NotSpecified",
+            "CanNotDelete",
+            "ReadOnly"
+          ],
+          "x-ms-enum": "LockLevel"
         },
         "notes": {
           "type": "string",
@@ -681,23 +620,26 @@
       },
       "description": "The management lock properties."
     },
-    "ManagementLockObject": {
+    "ManagementLock": {
       "properties": {
         "properties": {
           "$ref": "#/definitions/ManagementLockProperties",
           "description": "Gets or sets the properties of the lock."
         },
         "id": {
+          "readOnly": true,
           "type": "string",
-          "description": "Gets or sets the Id of the lock."
+          "description": "Gets the Id of the lock."
         },
         "type": {
+          "readOnly": true,
           "type": "string",
-          "description": "Gets or sets the type of the lock."
+          "description": "Gets the type of the lock."
         },
         "name": {
+          "readOnly": true,
           "type": "string",
-          "description": "Gets or sets the name of the lock."
+          "description": "Gets the name of the lock."
         }
       },
       "description": "Management lock information."
@@ -707,7 +649,7 @@
         "value": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/ManagementLockObject"
+            "$ref": "#/definitions/ManagementLock"
           },
           "description": "Gets or sets the list of locks."
         },
@@ -721,11 +663,61 @@
     "Resource": {
       "properties": {
         "id": {
+          "readOnly": true,
+          "type": "string",
+          "description": "Resource Id"
+        },
+        "name": {
+          "readOnly": true,
+          "type": "string",
+          "description": "Resource name"
+        },
+        "type": {
+          "readOnly": true,
+          "type": "string",
+          "description": "Resource type"
+        },
+        "location": {
+          "type": "string",
+          "description": "Resource location"
+        },
+        "tags": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Resource tags"
+        }
+      },
+      "required": [
+        "location"
+      ],
+      "x-ms-external": true
+    },
+    "SubResource": {
+      "properties": {
+        "id": {
           "type": "string",
           "description": "Resource Id"
         }
       },
       "x-ms-external": true
+    }
+  },
+  "parameters": {
+    "SubscriptionIdParameter": {
+      "name": "subscriptionId",
+      "in": "path",
+      "required": true,
+      "type": "string",
+      "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call."
+    },
+    "ApiVersionParameter": {
+      "name": "api-version",
+      "in": "query",
+      "required": true,
+      "type": "string",
+      "description": "Client Api Version."
     }
   }
 }

@@ -5,7 +5,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for ProbeProtocol
+    /// Defines values for ProbeProtocol.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
     public enum ProbeProtocol

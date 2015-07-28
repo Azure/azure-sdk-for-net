@@ -5,7 +5,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for SecurityRuleAccess
+    /// Defines values for SecurityRuleAccess.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
     public enum SecurityRuleAccess

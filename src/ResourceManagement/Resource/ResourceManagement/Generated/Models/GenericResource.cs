@@ -5,9 +5,10 @@ namespace Microsoft.Azure.Management.Resources.Models
     using Newtonsoft.Json;
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
-    using Microsoft.Azure;
+    using Microsoft.Rest.Azure;
 
     /// <summary>
+    /// Resource information.
     /// </summary>
     public partial class GenericResource : Resource
     {
@@ -29,10 +30,6 @@ namespace Microsoft.Azure.Management.Resources.Models
         public override void Validate()
         {
             base.Validate();
-            if (this.Plan != null)
-            {
-                this.Plan.Validate();
-            }
         }
     }
 }

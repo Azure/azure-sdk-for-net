@@ -32,13 +32,24 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     /// </summary>
     public partial class Hive : HDInsightActivityPropertiesBase
     {
+        private IDictionary<string, string> _defines;
+        
+        /// <summary>
+        /// Optional. Allows user to specify defines for Hive job request.
+        /// </summary>
+        public IDictionary<string, string> Defines
+        {
+            get { return this._defines; }
+            set { this._defines = value; }
+        }
+        
         private IDictionary<string, string> _extendedProperties;
         
         /// <summary>
-        /// Optional. User specified property bag used in Pig or Hive scripts.
-        /// There is no restriction on the keys or values that can be used.
-        /// User needs to consume and interpret the content accordingly in
-        /// their customized Pig or Hive scripts.
+        /// Optional. User specified property bag used in Hive scripts. There
+        /// is no restriction on the keys or values that can be used. User
+        /// needs to consume and interpret the content accordingly in their
+        /// customized Hive scripts.
         /// </summary>
         public IDictionary<string, string> ExtendedProperties
         {
@@ -84,6 +95,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// </summary>
         public Hive()
         {
+            this.Defines = new LazyDictionary<string, string>();
             this.ExtendedProperties = new LazyDictionary<string, string>();
         }
     }

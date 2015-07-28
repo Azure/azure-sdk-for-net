@@ -5,9 +5,10 @@ namespace Microsoft.Azure.Management.Network.Models
     using Newtonsoft.Json;
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
-    using Microsoft.Azure;
+    using Microsoft.Rest.Azure;
 
     /// <summary>
+    /// A common class for general resource information
     /// </summary>
     public partial class LocalNetworkGateway : Resource
     {
@@ -21,14 +22,21 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Local network site Address space
         /// </summary>
-        [JsonProperty(PropertyName = "localNetworkAddressSpace")]
+        [JsonProperty(PropertyName = "properties.localNetworkAddressSpace")]
         public AddressSpace LocalNetworkAddressSpace { get; set; }
 
         /// <summary>
         /// IP address of local network gateway.
         /// </summary>
-        [JsonProperty(PropertyName = "gatewayIpAddress")]
+        [JsonProperty(PropertyName = "properties.gatewayIpAddress")]
         public string GatewayIpAddress { get; set; }
+
+        /// <summary>
+        /// Gets or sets Provisioning state of the LocalNetworkGateway
+        /// resource Updating/Deleting/Failed
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.provisioningState")]
+        public string ProvisioningState { get; set; }
 
         /// <summary>
         /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
@@ -36,10 +44,6 @@ namespace Microsoft.Azure.Management.Network.Models
         public override void Validate()
         {
             base.Validate();
-            if (this.LocalNetworkAddressSpace != null)
-            {
-                this.LocalNetworkAddressSpace.Validate();
-            }
         }
     }
 }

@@ -13,10 +13,11 @@
 // limitations under the License.
 //
 
-using Microsoft.Azure.Subscriptions;
-using Microsoft.Azure.Test.HttpRecorder;
-using Microsoft.Azure.Test;
+using System.Linq;
 using System.Net;
+using Microsoft.Azure.Management.Resources;
+using Microsoft.Azure.Test;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.Rest.TransientFaultHandling;
 using Xunit;
 
@@ -28,10 +29,6 @@ namespace ResourceGroups.Tests
         {
             handler.IsPassThrough = true;
             var client = this.GetSubscriptionClientWithHandler(handler);
-            if (HttpMockServer.Mode == HttpRecorderMode.Playback)
-            {
-                client.LongRunningOperationRetryTimeout = 0;
-            }
 
             return client;
         }
@@ -43,20 +40,19 @@ namespace ResourceGroups.Tests
 
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (UndoContext context = UndoContext.Current)
+            using (MockContext context = MockContext.Start())
             {
-                context.Start();
                 var client = GetSubscriptionClient(handler);
                 client.SetRetryPolicy(new RetryPolicy<HttpStatusCodeErrorDetectionStrategy>(1));
 
-                var tenants = client.Tenants.ListWithOperationResponseAsync().Result;
+                var tenants = client.Tenants.ListWithHttpMessagesAsync().ConfigureAwait(false).GetAwaiter().GetResult();
 
                 Assert.NotNull(tenants);
                 Assert.Equal(HttpStatusCode.OK, tenants.Response.StatusCode);
                 Assert.NotNull(tenants.Body);
-                Assert.NotEqual(0, tenants.Body.Value.Count);
-                Assert.NotNull(tenants.Body.Value[0].Id);
-                Assert.NotNull(tenants.Body.Value[0].TenantId);
+                Assert.NotEqual(0, tenants.Body.Count());
+                Assert.NotNull(tenants.Body.First().Id);
+                Assert.NotNull(tenants.Body.First().TenantId);
             }
         }
     }

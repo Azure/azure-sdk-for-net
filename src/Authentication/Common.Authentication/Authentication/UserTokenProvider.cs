@@ -22,6 +22,7 @@ using System.Runtime.InteropServices;
 using System.Security;
 using System.Threading;
 using System.Windows.Forms;
+using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Common.Authentication
 {
@@ -47,7 +48,10 @@ namespace Microsoft.Azure.Common.Authentication
                 throw new ArgumentException(string.Format(Resources.InvalidCredentialType, "User"), "credentialType");
             }
 
-            return new AdalAccessToken(AcquireToken(config, promptBehavior, userId, password), this, config);
+            return new AdalAccessToken(
+                AcquireToken(config, promptBehavior, userId, password).ConfigureAwait(false).GetAwaiter().GetResult(), 
+                this, 
+                config);
         }
 
         private readonly static TimeSpan expirationThreshold = TimeSpan.FromMinutes(5);
@@ -70,8 +74,12 @@ namespace Microsoft.Azure.Common.Authentication
 
         private void Renew(AdalAccessToken token)
         {
-            TracingAdapter.Information(Resources.UPNRenewTokenTrace, token.AuthResult.AccessTokenType, token.AuthResult.ExpiresOn,
-                token.AuthResult.IsMultipleResourceRefreshToken, token.AuthResult.TenantId, token.UserId);
+            TracingAdapter.Information(
+                Resources.UPNRenewTokenTrace, 
+                token.AuthResult.AccessTokenType, 
+                token.AuthResult.ExpiresOn,
+                token.AuthResult.TenantId, 
+                token.UserId);
             var user = token.AuthResult.UserInfo;
             if (user != null)
             {
@@ -81,7 +89,8 @@ namespace Microsoft.Azure.Common.Authentication
             if (IsExpired(token))
             {
                 TracingAdapter.Information(Resources.UPNExpiredTokenTrace);
-                AuthenticationResult result = AcquireToken(token.Configuration, ShowDialog.Never, token.UserId, null);
+                AuthenticationResult result = AcquireToken(token.Configuration, ShowDialog.Never, token.UserId, null)
+                                                .ConfigureAwait(false).GetAwaiter().GetResult();
 
                 if (result == null)
                 {
@@ -96,37 +105,19 @@ namespace Microsoft.Azure.Common.Authentication
 
         private AuthenticationContext CreateContext(AdalConfiguration config)
         {
-            return new AuthenticationContext(config.AdEndpoint + config.AdDomain, config.ValidateAuthority, AzureSession.TokenCache)
-            {
-                OwnerWindow = parentWindow
-            };
+            return new AuthenticationContext(config.AdEndpoint + config.AdDomain, config.ValidateAuthority, AzureSession.TokenCache);
         }
 
         // We have to run this in a separate thread to guarantee that it's STA. This method
         // handles the threading details.
-        private AuthenticationResult AcquireToken(AdalConfiguration config, ShowDialog promptBehavior, string userId,
+        private async Task<AuthenticationResult> AcquireToken(AdalConfiguration config, ShowDialog promptBehavior, string userId,
             SecureString password)
         {
-            AuthenticationResult result = null;
-            Exception ex = null;
-            if (promptBehavior == ShowDialog.Never)
+            try
             {
-                result = SafeAquireToken(config, promptBehavior, userId, password, out ex);
+                return await SafeAquireToken(config, promptBehavior, userId, password);
             }
-            else
-            {
-                var thread = new Thread(() =>
-                {
-                    result = SafeAquireToken(config, promptBehavior, userId, password, out ex);
-                });
-
-                thread.SetApartmentState(ApartmentState.STA);
-                thread.Name = "AcquireTokenThread";
-                thread.Start();
-                thread.Join();
-            }
-
-            if (ex != null)
+            catch(Exception ex)
             {
                 var adex = ex as AdalException;
                 if (adex != null)
@@ -140,25 +131,22 @@ namespace Microsoft.Azure.Common.Authentication
                 {
                     throw ex;
                 }
+
                 throw new AadAuthenticationFailedException(GetExceptionMessage(ex), ex);
             }
-
-            return result;
         }
 
-        private AuthenticationResult SafeAquireToken(
+        private async Task<AuthenticationResult> SafeAquireToken(
             AdalConfiguration config,
             ShowDialog showDialog,
             string userId,
-            SecureString password,
-            out Exception ex)
+            SecureString password)
         {
             try
             {
-                ex = null;
                 var promptBehavior = (PromptBehavior)Enum.Parse(typeof(PromptBehavior), showDialog.ToString());
 
-                return DoAcquireToken(config, promptBehavior, userId, password);
+                return await DoAcquireToken(config, promptBehavior, userId, password);
             }
             catch (AdalException adalEx)
             {
@@ -171,28 +159,20 @@ namespace Microsoft.Azure.Common.Authentication
                         message = Resources.AdalMultipleTokens;
                     }
 
-                    ex = new AadAuthenticationFailedWithoutPopupException(message, adalEx);
+                    throw new AadAuthenticationFailedWithoutPopupException(message, adalEx);
                 }
                 else if (adalEx.ErrorCode == AdalError.MissingFederationMetadataUrl)
                 {
-                    ex = new AadAuthenticationFailedException(Resources.CredentialOrganizationIdMessage, adalEx);
+                    throw new AadAuthenticationFailedException(Resources.CredentialOrganizationIdMessage, adalEx);
                 }
-                else
-                {
-                    ex = adalEx;
-                }
+
+                throw;
             }
-            catch (Exception threadEx)
-            {
-                ex = threadEx;
-            }
-            return null;
         }
 
-        private AuthenticationResult DoAcquireToken(AdalConfiguration config, PromptBehavior promptBehavior, string userId,
+        private async Task<AuthenticationResult> DoAcquireToken(AdalConfiguration config, PromptBehavior promptBehavior, string userId,
             SecureString password)
         {
-            AuthenticationResult result;
             var context = CreateContext(config);
 
             TracingAdapter.Information(Resources.UPNAcquireTokenContextTrace, context.Authority, context.CorrelationId,
@@ -206,26 +186,52 @@ namespace Microsoft.Azure.Common.Authentication
                     ClearCookies();
                 }
 
-                result = context.AcquireToken(config.ResourceClientUri, config.ClientId,
-                        config.ClientRedirectUri, promptBehavior,
+                return await context.AcquireTokenAsync(
+                        config.ResourceClientUri, 
+                        config.ClientId,
+                        config.ClientRedirectUri,
+                        new PlatformParameters(promptBehavior, parentWindow),
                         UserIdentifier.AnyUser, AdalConfiguration.EnableEbdMagicCookie);
             }
             else
             {
                 if (password == null)
                 {
-                    result = context.AcquireToken(config.ResourceClientUri, config.ClientId,
-                        config.ClientRedirectUri, promptBehavior,
+                    return await context.AcquireTokenAsync(
+                        config.ResourceClientUri, 
+                        config.ClientId,
+                        config.ClientRedirectUri,
+                        new PlatformParameters(promptBehavior, parentWindow),
                         new UserIdentifier(userId, UserIdentifierType.OptionalDisplayableId),
                         AdalConfiguration.EnableEbdMagicCookie);
                 }
                 else
                 {
-                    UserCredential credential = new UserCredential(userId, password);
-                    result = context.AcquireToken(config.ResourceClientUri, config.ClientId, credential);
+                    UserCredential credential = new UserCredential(userId, ConvertToString(password));
+                    return await context.AcquireTokenAsync(
+                        config.ResourceClientUri, 
+                        config.ClientId, 
+                        credential);
                 }
             }
-            return result;
+        }
+
+
+        internal static string ConvertToString(SecureString securePassword)
+        {
+            if (securePassword == null)
+                throw new ArgumentNullException("securePassword");
+
+            IntPtr unmanagedString = IntPtr.Zero;
+            try
+            {
+                unmanagedString = Marshal.SecureStringToGlobalAllocUnicode(securePassword);
+                return Marshal.PtrToStringUni(unmanagedString);
+            }
+            finally
+            {
+                Marshal.ZeroFreeGlobalAllocUnicode(unmanagedString);
+            }
         }
 
         private string GetExceptionMessage(Exception ex)

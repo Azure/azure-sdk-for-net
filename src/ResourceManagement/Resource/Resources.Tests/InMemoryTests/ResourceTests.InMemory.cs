@@ -16,14 +16,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Azure;
-using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Test;
-using Xunit;
-using Newtonsoft.Json.Linq;
-using System.Net.Http;
 using System.Net;
+using System.Net.Http;
+using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
+using Microsoft.Azure.Test;
+using Microsoft.Rest;
+using Newtonsoft.Json.Linq;
+using Xunit;
 
 namespace ResourceGroups.Tests
 {
@@ -31,9 +31,12 @@ namespace ResourceGroups.Tests
     {
         public ResourceManagementClient GetResourceManagementClient(RecordedDelegatingHandler handler)
         {
-            var token = new TokenCloudCredentials(Guid.NewGuid().ToString(), "abc123");
+            var subscriptionId = Guid.NewGuid().ToString();
+            var token = new TokenCredentials(subscriptionId, "abc123");
+            var client = new ResourceManagementClient(token, handler);
+            client.SubscriptionId = subscriptionId;
             handler.IsPassThrough = false;
-            return new ResourceManagementClient(token, handler);
+            return client;
         }
 
         [Fact]
@@ -49,7 +52,7 @@ namespace ResourceGroups.Tests
                         'name':'site1',
 	                    'siteMode': 'Standard',
                         'computeMode':'Dedicated',
-                        'provisioningState':'Running'
+                        'provisioningState':'Succeeded'
                     }
                 }")
             };
@@ -68,7 +71,7 @@ namespace ResourceGroups.Tests
             Assert.Equal("site1", result.Name);
             Assert.Equal("/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Web/Sites/site1", result.Id);
             Assert.True(result.Properties.ToString().Contains("Dedicated"));
-            Assert.Equal("Running", result.ProvisioningState);
+            Assert.Equal("Succeeded", (result.Properties as JObject)["provisioningState"]);
         }
 
         [Fact]
@@ -115,7 +118,7 @@ namespace ResourceGroups.Tests
             Assert.Equal("site1", result.Name);
             Assert.Equal("/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Web/Sites/site1", result.Id);
             Assert.True(result.Properties.ToString().Contains("Dedicated"));
-            Assert.Null(result.ProvisioningState);
+            Assert.Null((result.Properties as JObject)["provisionState"]);
         }
 
         [Fact]
@@ -134,7 +137,7 @@ namespace ResourceGroups.Tests
                           'name':'site1',
 	                      'siteMode': 'Standard',
                           'computeMode':'Dedicated',
-                          'provisioningState':'Running'
+                          'provisioningState':'Succeeded'
                        }
                     },
                     {
@@ -166,13 +169,13 @@ namespace ResourceGroups.Tests
             Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
 
             // Validate result
-            Assert.Equal(2, result.Value.Count());
-            Assert.Equal("South Central US", result.Value[0].Location);
-            Assert.Equal("site1", result.Value[0].Name);
-            Assert.Equal("/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Web/Sites/site1", result.Value[0].Id);
-            Assert.Equal("/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Web/Sites/site1", result.Value[0].Id);
-            Assert.True(result.Value[0].Properties.ToString().Contains("Dedicated"));
-            Assert.Equal("Running", result.Value[0].ProvisioningState);
+            Assert.Equal(2, result.Count());
+            Assert.Equal("South Central US", result.First().Location);
+            Assert.Equal("site1", result.First().Name);
+            Assert.Equal("/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Web/Sites/site1", result.First().Id);
+            Assert.Equal("/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Web/Sites/site1", result.First().Id);
+            Assert.True(result.First().Properties.ToString().Contains("Dedicated"));
+            Assert.Equal("Succeeded", (result.First().Properties as JObject)["provisioningState"]);
         }
 
         [Fact]
@@ -207,12 +210,12 @@ namespace ResourceGroups.Tests
             Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
 
             // Validate result
-            Assert.Equal(2, result.Value.Count());
-            Assert.Equal("South Central US", result.Value[0].Location);
-            Assert.Equal("site1", result.Value[0].Name);
-            Assert.Equal("/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Web/Sites/site1", result.Value[0].Id);
-            Assert.Equal("/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Web/Sites/site1", result.Value[0].Id);
-            Assert.Null(result.Value[0].Properties);
+            Assert.Equal(2, result.Count());
+            Assert.Equal("South Central US", result.First().Location);
+            Assert.Equal("site1", result.First().Name);
+            Assert.Equal("/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Web/Sites/site1", result.First().Id);
+            Assert.Equal("/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Web/Sites/site1", result.First().Id);
+            Assert.Null(result.First().Properties);
         }
 
         [Fact]
@@ -221,7 +224,7 @@ namespace ResourceGroups.Tests
             var handler = new RecordedDelegatingHandler();
             var client = GetResourceManagementClient(handler);
 
-            Assert.Throws<ArgumentNullException>(() => client.Resources.Get(null, null, null, null, null, null));
+            Assert.Throws<Microsoft.Rest.ValidationException>(() => client.Resources.Get(null, null, null, null, null, null));
         }
 
         [Fact]
@@ -239,7 +242,7 @@ namespace ResourceGroups.Tests
                         'name':'site3',
 	                    'siteMode': 'Standard',
                         'computeMode':'Dedicated',
-                        'provisioningState':'Running'
+                        'provisioningState':'Succeeded'
                     }
                 }")
             };
@@ -279,7 +282,7 @@ namespace ResourceGroups.Tests
 
             // Validate result
             Assert.Equal("South Central US", result.Location);
-            Assert.Equal("Running", result.ProvisioningState);
+            Assert.Equal("Succeeded", (result.Properties as JObject)["provisioningState"]);
             Assert.Equal("finance", result.Tags["department"]);
             Assert.Equal("tagvalue", result.Tags["tagname"]);
             Assert.True(result.Properties.ToString().Contains("Dedicated"));
@@ -340,21 +343,21 @@ namespace ResourceGroups.Tests
                 };
 
 
-            Assert.Throws<ArgumentNullException>(() => client.Resources.Get(
+            Assert.Throws<Microsoft.Rest.ValidationException>(() => client.Resources.Get(
                 "foo",
                 resourceProviderNamespace,
                 parentResourse,
                 resourceType,
                 resourceName,
                 resourceProviderApiVersion));
-            Assert.Throws<ArgumentNullException>(() => client.Resources.CheckExistence(
+            Assert.Throws<Microsoft.Rest.ValidationException>(() => client.Resources.CheckExistence(
                 "foo",
                 resourceProviderNamespace,
                 parentResourse,
                 resourceType,
                 resourceName,
                 resourceProviderApiVersion));
-            Assert.Throws<ArgumentNullException>(() => client.Resources.CreateOrUpdate(
+            Assert.Throws<Microsoft.Rest.ValidationException>(() => client.Resources.CreateOrUpdate(
                 "foo",
                 resourceProviderNamespace,
                 parentResourse,
@@ -362,7 +365,7 @@ namespace ResourceGroups.Tests
                 resourceName,
                 resourceProviderApiVersion, 
                 resource));
-            Assert.Throws<ArgumentNullException>(() => client.Resources.Delete(
+            Assert.Throws<Microsoft.Rest.ValidationException>(() => client.Resources.Delete(
                 "foo",
                 resourceProviderNamespace,
                 parentResourse,
@@ -443,8 +446,9 @@ namespace ResourceGroups.Tests
             var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.NotFound };
             handler.IsPassThrough = false;
             var randomValue = Guid.NewGuid().ToString();
-            var token = new TokenCloudCredentials(randomValue, "abc123");
+            var token = new TokenCredentials(randomValue, "abc123");
             var client = new ResourceManagementClient(new Uri("https://localhost:123/test/"), token, handler);
+            client.SubscriptionId = randomValue;
             var identity = new ResourceIdentity
             {
                 ResourceName = randomValue,
@@ -527,12 +531,12 @@ namespace ResourceGroups.Tests
 
             var resourceToMove = new ResourcesMoveInfo();
             resourceToMove.Resources = new List<string>();
-            resourceToMove.TargetResourceGroup = "/subscriptions/" + Uri.EscapeDataString(client.Credentials.SubscriptionId) + "/resourceGroups/resourceGroup1";
+            resourceToMove.TargetResourceGroup = "/subscriptions/" + Uri.EscapeDataString(client.SubscriptionId) + "/resourceGroups/resourceGroup1";
 
-            var resource1 = "/subscriptions/" + Uri.EscapeDataString(client.Credentials.SubscriptionId) + "/resourceGroups/resourceGroup0/providers/Microsoft.Web/website/website1";
+            var resource1 = "/subscriptions/" + Uri.EscapeDataString(client.SubscriptionId) + "/resourceGroups/resourceGroup0/providers/Microsoft.Web/website/website1";
             resourceToMove.Resources.Add(resource1);
 
-            var resource2 = "/subscriptions/" + Uri.EscapeDataString(client.Credentials.SubscriptionId) + "/resourceGroups/resourceGroup0/providers/Microsoft.Compute/hostservice/vm1";
+            var resource2 = "/subscriptions/" + Uri.EscapeDataString(client.SubscriptionId) + "/resourceGroups/resourceGroup0/providers/Microsoft.Compute/hostservice/vm1";
             resourceToMove.Resources.Add(resource2);
 
             client.Resources.MoveResources("resourceGroup0", resourceToMove);
@@ -543,7 +547,7 @@ namespace ResourceGroups.Tests
 
             //Valid payload
             //Construct expected URL
-            string expectedUrl = "/subscriptions/" + Uri.EscapeDataString(client.Credentials.SubscriptionId) + "/resourceGroups/resourceGroup0/moveResources?";
+            string expectedUrl = "/subscriptions/" + Uri.EscapeDataString(client.SubscriptionId) + "/resourceGroups/resourceGroup0/moveResources?";
             expectedUrl = expectedUrl + "api-version=2014-04-01-preview";
             string baseUrl = client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.

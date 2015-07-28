@@ -5,9 +5,10 @@ namespace Microsoft.Azure.Management.Network.Models
     using Newtonsoft.Json;
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
-    using Microsoft.Azure;
+    using Microsoft.Rest.Azure;
 
     /// <summary>
+    /// PublicIPAddress resource
     /// </summary>
     public partial class PublicIpAddress : Resource
     {
@@ -22,34 +23,41 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Gets or sets PublicIP allocation method (Static/Dynamic). Possible
         /// values for this property include: 'Static', 'Dynamic'
         /// </summary>
-        [JsonProperty(PropertyName = "publicIPAllocationMethod")]
+        [JsonProperty(PropertyName = "properties.publicIPAllocationMethod")]
         public IpAllocationMethod? PublicIPAllocationMethod { get; set; }
 
         /// <summary>
         /// Gets a reference to the network interface IP configurations using
         /// this public IP address
         /// </summary>
-        [JsonProperty(PropertyName = "ipConfiguration")]
+        [JsonProperty(PropertyName = "properties.ipConfiguration")]
         public SubResource IpConfiguration { get; set; }
 
         /// <summary>
         /// Gets or sets FQDN of the DNS record associated with the public IP
         /// address
         /// </summary>
-        [JsonProperty(PropertyName = "dnsSettings")]
+        [JsonProperty(PropertyName = "properties.dnsSettings")]
         public PublicIpAddressDnsSettings DnsSettings { get; set; }
 
         /// <summary>
         /// Gets the assigned public IP address
         /// </summary>
-        [JsonProperty(PropertyName = "ipAddress")]
+        [JsonProperty(PropertyName = "properties.ipAddress")]
         public string IpAddress { get; set; }
 
         /// <summary>
         /// Gets or sets the Idletimeout of the public IP address
         /// </summary>
-        [JsonProperty(PropertyName = "idleTimeoutInMinutes")]
+        [JsonProperty(PropertyName = "properties.idleTimeoutInMinutes")]
         public int? IdleTimeoutInMinutes { get; set; }
+
+        /// <summary>
+        /// Gets or sets Provisioning state of the PublicIP resource
+        /// Updating/Deleting/Failed
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.provisioningState")]
+        public string ProvisioningState { get; set; }
 
         /// <summary>
         /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
@@ -57,14 +65,6 @@ namespace Microsoft.Azure.Management.Network.Models
         public override void Validate()
         {
             base.Validate();
-            if (this.IpConfiguration != null)
-            {
-                this.IpConfiguration.Validate();
-            }
-            if (this.DnsSettings != null)
-            {
-                this.DnsSettings.Validate();
-            }
         }
     }
 }

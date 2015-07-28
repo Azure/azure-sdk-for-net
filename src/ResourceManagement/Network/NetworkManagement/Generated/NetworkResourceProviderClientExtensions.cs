@@ -6,7 +6,7 @@ namespace Microsoft.Azure.Management.Network
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Rest;
-    using Microsoft.Azure;
+    using Microsoft.Rest.Azure;
     using Models;
 
     public static partial class NetworkResourceProviderClientExtensions
@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.Network
             /// Checks whether a domain name in the cloudapp.net zone is available for use.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='location'>
             /// The location of the domain name
@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Network
             /// Checks whether a domain name in the cloudapp.net zone is available for use.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='location'>
             /// The location of the domain name
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task<DnsNameAvailabilityResult> CheckDnsNameAvailabilityAsync( this INetworkResourceProviderClient operations, string location, string domainNameLabel = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<DnsNameAvailabilityResult> result = await operations.CheckDnsNameAvailabilityWithOperationResponseAsync(location, domainNameLabel, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<DnsNameAvailabilityResult> result = await operations.CheckDnsNameAvailabilityWithHttpMessagesAsync(location, domainNameLabel, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

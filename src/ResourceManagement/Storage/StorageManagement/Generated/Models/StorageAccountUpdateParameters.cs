@@ -5,9 +5,10 @@ namespace Microsoft.Azure.Management.Storage.Models
     using Newtonsoft.Json;
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
-    using Microsoft.Azure;
+    using Microsoft.Rest.Azure;
 
     /// <summary>
+    /// The parameters to update on the account.
     /// </summary>
     public partial class StorageAccountUpdateParameters : Resource
     {
@@ -19,7 +20,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// 'Standard_LRS', 'Standard_ZRS', 'Standard_GRS', 'Standard_RAGRS',
         /// 'Premium_LRS'
         /// </summary>
-        [JsonProperty(PropertyName = "accountType")]
+        [JsonProperty(PropertyName = "properties.accountType")]
         public AccountType? AccountType { get; set; }
 
         /// <summary>
@@ -28,7 +29,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// at this time. To clear the existing custom domain, use an empty
         /// string for the custom domain name property.
         /// </summary>
-        [JsonProperty(PropertyName = "customDomain")]
+        [JsonProperty(PropertyName = "properties.customDomain")]
         public CustomDomain CustomDomain { get; set; }
 
         /// <summary>
@@ -37,10 +38,6 @@ namespace Microsoft.Azure.Management.Storage.Models
         public override void Validate()
         {
             base.Validate();
-            if (this.CustomDomain != null)
-            {
-                this.CustomDomain.Validate();
-            }
         }
     }
 }

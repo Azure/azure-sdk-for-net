@@ -13,15 +13,16 @@
 // limitations under the License.
 //
 
-using Microsoft.Azure.Subscriptions;
 using ResourceGroups.Tests;
+using Microsoft.Azure.Management.Resources;
+using Microsoft.Azure.Management.Resources.Models;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using System;
+using System.Linq;
 
 namespace Microsoft.Azure.Test
 {
-    using Microsoft.Azure.Management.Resources;
-    using Microsoft.Azure.Management.Resources.Models;
-    using System;
-    using System.Linq;
+
 
     public static class ResourcesManagementTestUtilities
     {
@@ -32,7 +33,8 @@ namespace Microsoft.Azure.Test
         /// <returns>A resource management client, created from the current context (environment variables)</returns>
         public static ResourceManagementClient GetResourceManagementClient(this TestBase testBase)
         {
-            return TestBase.GetServiceClient<ResourceManagementClient>(new CSMTestEnvironmentFactory());
+            var client = TestBase.GetServiceClient<ResourceManagementClient>();
+            return client;
         }
 
         /// <summary>
@@ -43,7 +45,8 @@ namespace Microsoft.Azure.Test
         public static ResourceManagementClient GetResourceManagementClientWithHandler(this TestBase testBase, RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
-            return TestBase.GetServiceClient<ResourceManagementClient>(new CSMTestEnvironmentFactory(), handler);
+            var client = TestBase.GetServiceClient<ResourceManagementClient>(handler);
+            return client;
         }
 
         /// <summary>
@@ -53,7 +56,8 @@ namespace Microsoft.Azure.Test
         /// <returns>A subscription client, created from the current context (environment variables)</returns>
         public static SubscriptionClient GetSubscriptionClient(this TestBase testBase)
         {
-            return TestBase.GetServiceClient<SubscriptionClient>(new CSMTestEnvironmentFactory());
+            var client = TestBase.GetServiceClient<SubscriptionClient>();
+            return client;
         }
 
         /// <summary>
@@ -64,7 +68,8 @@ namespace Microsoft.Azure.Test
         public static SubscriptionClient GetSubscriptionClientWithHandler(this TestBase testBase, RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
-            return TestBase.GetServiceClient<SubscriptionClient>(new CSMTestEnvironmentFactory(), handler);
+            var client = TestBase.GetServiceClient<SubscriptionClient>(handler);
+            return client;
         }
 
         /// <summary>
@@ -91,7 +96,7 @@ namespace Microsoft.Azure.Test
         }
 
         /// <summary>
-        /// Equality comparison for locatiosn returned by resource management
+        /// Equality comparison for locations returned by resource management
         /// </summary>
         /// <param name="expected">The expected location</param>
         /// <param name="actual">The actual location returned by resource management</param>

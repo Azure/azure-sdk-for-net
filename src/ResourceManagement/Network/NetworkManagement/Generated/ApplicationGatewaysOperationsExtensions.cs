@@ -6,7 +6,7 @@ namespace Microsoft.Azure.Management.Network
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Rest;
-    using Microsoft.Azure;
+    using Microsoft.Rest.Azure;
     using Models;
 
     public static partial class ApplicationGatewaysOperationsExtensions
@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Network
             /// applicationgateway.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Network
             /// applicationgateway.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task DeleteAsync( this IApplicationGatewaysOperations operations, string resourceGroupName, string applicationGatewayName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.DeleteWithOperationResponseAsync(resourceGroupName, applicationGatewayName, cancellationToken).ConfigureAwait(false);
+                await operations.DeleteWithHttpMessagesAsync(resourceGroupName, applicationGatewayName, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.Network
             /// applicationgateway.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Management.Network
             /// applicationgateway.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task BeginDeleteAsync( this IApplicationGatewaysOperations operations, string resourceGroupName, string applicationGatewayName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.BeginDeleteWithOperationResponseAsync(resourceGroupName, applicationGatewayName, cancellationToken).ConfigureAwait(false);
+                await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, applicationGatewayName, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -94,7 +94,7 @@ namespace Microsoft.Azure.Management.Network
             /// specified applicationgateway.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -112,7 +112,7 @@ namespace Microsoft.Azure.Management.Network
             /// specified applicationgateway.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -125,7 +125,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task<ApplicationGateway> GetAsync( this IApplicationGatewaysOperations operations, string resourceGroupName, string applicationGatewayName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<ApplicationGateway> result = await operations.GetWithOperationResponseAsync(resourceGroupName, applicationGatewayName, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<ApplicationGateway> result = await operations.GetWithHttpMessagesAsync(resourceGroupName, applicationGatewayName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -133,7 +133,7 @@ namespace Microsoft.Azure.Management.Network
             /// The Put ApplicationGateway operation creates/updates a ApplicationGateway
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -153,7 +153,7 @@ namespace Microsoft.Azure.Management.Network
             /// The Put ApplicationGateway operation creates/updates a ApplicationGateway
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -169,7 +169,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task<ApplicationGateway> CreateOrUpdateAsync( this IApplicationGatewaysOperations operations, string resourceGroupName, string applicationGatewayName, ApplicationGateway parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<ApplicationGateway> result = await operations.CreateOrUpdateWithOperationResponseAsync(resourceGroupName, applicationGatewayName, parameters, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<ApplicationGateway> result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, applicationGatewayName, parameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -177,7 +177,7 @@ namespace Microsoft.Azure.Management.Network
             /// The Put ApplicationGateway operation creates/updates a ApplicationGateway
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -197,7 +197,7 @@ namespace Microsoft.Azure.Management.Network
             /// The Put ApplicationGateway operation creates/updates a ApplicationGateway
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -213,7 +213,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task<ApplicationGateway> BeginCreateOrUpdateAsync( this IApplicationGatewaysOperations operations, string resourceGroupName, string applicationGatewayName, ApplicationGateway parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<ApplicationGateway> result = await operations.BeginCreateOrUpdateWithOperationResponseAsync(resourceGroupName, applicationGatewayName, parameters, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<ApplicationGateway> result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, applicationGatewayName, parameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -222,12 +222,12 @@ namespace Microsoft.Azure.Management.Network
             /// in a resource group.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
-            public static ApplicationGatewayListResult List(this IApplicationGatewaysOperations operations, string resourceGroupName)
+            public static Page<ApplicationGateway> List(this IApplicationGatewaysOperations operations, string resourceGroupName)
             {
                 return Task.Factory.StartNew(s => ((IApplicationGatewaysOperations)s).ListAsync(resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -237,7 +237,7 @@ namespace Microsoft.Azure.Management.Network
             /// in a resource group.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -245,9 +245,9 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<ApplicationGatewayListResult> ListAsync( this IApplicationGatewaysOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Page<ApplicationGateway>> ListAsync( this IApplicationGatewaysOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<ApplicationGatewayListResult> result = await operations.ListWithOperationResponseAsync(resourceGroupName, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<Page<ApplicationGateway>> result = await operations.ListWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -256,9 +256,9 @@ namespace Microsoft.Azure.Management.Network
             /// in a subscription.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
-            public static ApplicationGatewayListResult ListAll(this IApplicationGatewaysOperations operations)
+            public static Page<ApplicationGateway> ListAll(this IApplicationGatewaysOperations operations)
             {
                 return Task.Factory.StartNew(s => ((IApplicationGatewaysOperations)s).ListAllAsync(), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -268,14 +268,14 @@ namespace Microsoft.Azure.Management.Network
             /// in a subscription.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<ApplicationGatewayListResult> ListAllAsync( this IApplicationGatewaysOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Page<ApplicationGateway>> ListAllAsync( this IApplicationGatewaysOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<ApplicationGatewayListResult> result = await operations.ListAllWithOperationResponseAsync(cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<Page<ApplicationGateway>> result = await operations.ListAllWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -284,7 +284,7 @@ namespace Microsoft.Azure.Management.Network
             /// specified resource group through Network resource provider.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -302,7 +302,7 @@ namespace Microsoft.Azure.Management.Network
             /// specified resource group through Network resource provider.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -315,7 +315,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task StartAsync( this IApplicationGatewaysOperations operations, string resourceGroupName, string applicationGatewayName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.StartWithOperationResponseAsync(resourceGroupName, applicationGatewayName, cancellationToken).ConfigureAwait(false);
+                await operations.StartWithHttpMessagesAsync(resourceGroupName, applicationGatewayName, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -323,7 +323,7 @@ namespace Microsoft.Azure.Management.Network
             /// specified resource group through Network resource provider.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -341,7 +341,7 @@ namespace Microsoft.Azure.Management.Network
             /// specified resource group through Network resource provider.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -354,7 +354,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task BeginStartAsync( this IApplicationGatewaysOperations operations, string resourceGroupName, string applicationGatewayName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.BeginStartWithOperationResponseAsync(resourceGroupName, applicationGatewayName, cancellationToken).ConfigureAwait(false);
+                await operations.BeginStartWithHttpMessagesAsync(resourceGroupName, applicationGatewayName, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -362,7 +362,7 @@ namespace Microsoft.Azure.Management.Network
             /// specified resource group through Network resource provider.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -380,7 +380,7 @@ namespace Microsoft.Azure.Management.Network
             /// specified resource group through Network resource provider.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -393,7 +393,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task StopAsync( this IApplicationGatewaysOperations operations, string resourceGroupName, string applicationGatewayName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.StopWithOperationResponseAsync(resourceGroupName, applicationGatewayName, cancellationToken).ConfigureAwait(false);
+                await operations.StopWithHttpMessagesAsync(resourceGroupName, applicationGatewayName, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -401,7 +401,7 @@ namespace Microsoft.Azure.Management.Network
             /// specified resource group through Network resource provider.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -419,7 +419,7 @@ namespace Microsoft.Azure.Management.Network
             /// specified resource group through Network resource provider.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -432,7 +432,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task BeginStopAsync( this IApplicationGatewaysOperations operations, string resourceGroupName, string applicationGatewayName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.BeginStopWithOperationResponseAsync(resourceGroupName, applicationGatewayName, cancellationToken).ConfigureAwait(false);
+                await operations.BeginStopWithHttpMessagesAsync(resourceGroupName, applicationGatewayName, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -440,14 +440,14 @@ namespace Microsoft.Azure.Management.Network
             /// in a resource group.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
-            /// <param name='nextLink'>
+            /// <param name='nextPageLink'>
             /// NextLink from the previous successful call to List operation.
             /// </param>
-            public static ApplicationGatewayListResult ListNext(this IApplicationGatewaysOperations operations, string nextLink)
+            public static Page<ApplicationGateway> ListNext(this IApplicationGatewaysOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((IApplicationGatewaysOperations)s).ListNextAsync(nextLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IApplicationGatewaysOperations)s).ListNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -455,17 +455,17 @@ namespace Microsoft.Azure.Management.Network
             /// in a resource group.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
-            /// <param name='nextLink'>
+            /// <param name='nextPageLink'>
             /// NextLink from the previous successful call to List operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<ApplicationGatewayListResult> ListNextAsync( this IApplicationGatewaysOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Page<ApplicationGateway>> ListNextAsync( this IApplicationGatewaysOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<ApplicationGatewayListResult> result = await operations.ListNextWithOperationResponseAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<Page<ApplicationGateway>> result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -474,14 +474,14 @@ namespace Microsoft.Azure.Management.Network
             /// in a subscription.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
-            /// <param name='nextLink'>
+            /// <param name='nextPageLink'>
             /// NextLink from the previous successful call to List operation.
             /// </param>
-            public static ApplicationGatewayListResult ListAllNext(this IApplicationGatewaysOperations operations, string nextLink)
+            public static Page<ApplicationGateway> ListAllNext(this IApplicationGatewaysOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((IApplicationGatewaysOperations)s).ListAllNextAsync(nextLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IApplicationGatewaysOperations)s).ListAllNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -489,17 +489,17 @@ namespace Microsoft.Azure.Management.Network
             /// in a subscription.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
-            /// <param name='nextLink'>
+            /// <param name='nextPageLink'>
             /// NextLink from the previous successful call to List operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<ApplicationGatewayListResult> ListAllNextAsync( this IApplicationGatewaysOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Page<ApplicationGateway>> ListAllNextAsync( this IApplicationGatewaysOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<ApplicationGatewayListResult> result = await operations.ListAllNextWithOperationResponseAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<Page<ApplicationGateway>> result = await operations.ListAllNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

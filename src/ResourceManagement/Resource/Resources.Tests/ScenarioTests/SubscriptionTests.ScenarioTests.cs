@@ -13,11 +13,11 @@
 // limitations under the License.
 //
 
-using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Subscriptions;
-using Microsoft.Azure.Test.HttpRecorder;
-using Microsoft.Azure.Test;
+using System.Linq;
 using System.Net;
+using Microsoft.Azure.Management.Resources;
+using Microsoft.Azure.Test;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.Rest.TransientFaultHandling;
 using Xunit;
 
@@ -29,11 +29,6 @@ namespace ResourceGroups.Tests
         {
             handler.IsPassThrough = true;
             var client = this.GetResourceManagementClientWithHandler(handler);
-            if (HttpMockServer.Mode == HttpRecorderMode.Playback)
-            {
-                client.LongRunningOperationRetryTimeout = 0;
-            }
-
             return client;
         }
 
@@ -41,11 +36,6 @@ namespace ResourceGroups.Tests
         {
             handler.IsPassThrough = true;
             var client = this.GetSubscriptionClientWithHandler(handler);
-            if (HttpMockServer.Mode == HttpRecorderMode.Playback)
-            {
-                client.LongRunningOperationRetryTimeout = 0;
-            }
-
             return client;
         }
 
@@ -54,20 +44,19 @@ namespace ResourceGroups.Tests
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (UndoContext context = UndoContext.Current)
+            using (MockContext context = MockContext.Start())
             {
-                context.Start();
                 var client = GetSubscriptionClient(handler);
                 client.SetRetryPolicy(new RetryPolicy<HttpStatusCodeErrorDetectionStrategy>(1));
 
                 var subscriptions = client.Subscriptions.List();
 
                 Assert.NotNull(subscriptions);
-                Assert.NotEqual(0, subscriptions.Value.Count);
-                Assert.NotNull(subscriptions.Value[0].Id);
-                Assert.NotNull(subscriptions.Value[0].SubscriptionId);
-                Assert.NotNull(subscriptions.Value[0].DisplayName);
-                Assert.NotNull(subscriptions.Value[0].State);
+                Assert.NotEqual(0, subscriptions.Count());
+                Assert.NotNull(subscriptions.First().Id);
+                Assert.NotNull(subscriptions.First().SubscriptionId);
+                Assert.NotNull(subscriptions.First().DisplayName);
+                Assert.NotNull(subscriptions.First().State);
             }
         }
         
@@ -76,14 +65,13 @@ namespace ResourceGroups.Tests
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (UndoContext context = UndoContext.Current)
+            using (MockContext context = MockContext.Start())
             {
-                context.Start();
                 var client = GetSubscriptionClient(handler);
                 var rmclient = GetResourceManagementClient(handler);
                 client.SetRetryPolicy(new RetryPolicy<HttpStatusCodeErrorDetectionStrategy>(1));
 
-                var subscriptionDetails = client.Subscriptions.Get(rmclient.Credentials.SubscriptionId);
+                var subscriptionDetails = client.Subscriptions.Get(rmclient.SubscriptionId);
 
                 Assert.NotNull(subscriptionDetails);
                 Assert.NotNull(subscriptionDetails.Id);

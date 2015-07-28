@@ -6,7 +6,7 @@ namespace Microsoft.Azure.Management.Network
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Rest;
-    using Microsoft.Azure;
+    using Microsoft.Rest.Azure;
     using Models;
 
     public static partial class VirtualNetworkGatewaysOperationsExtensions
@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Network
             /// gateway in the specified resource group through Network resource provider.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Network
             /// gateway in the specified resource group through Network resource provider.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task<VirtualNetworkGateway> CreateOrUpdateAsync( this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, VirtualNetworkGateway parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<VirtualNetworkGateway> result = await operations.CreateOrUpdateWithOperationResponseAsync(resourceGroupName, virtualNetworkGatewayName, parameters, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<VirtualNetworkGateway> result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, virtualNetworkGatewayName, parameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.Network
             /// gateway in the specified resource group through Network resource provider.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Management.Network
             /// gateway in the specified resource group through Network resource provider.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -103,7 +103,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task<VirtualNetworkGateway> BeginCreateOrUpdateAsync( this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, VirtualNetworkGateway parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<VirtualNetworkGateway> result = await operations.BeginCreateOrUpdateWithOperationResponseAsync(resourceGroupName, virtualNetworkGatewayName, parameters, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<VirtualNetworkGateway> result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, virtualNetworkGatewayName, parameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -112,7 +112,7 @@ namespace Microsoft.Azure.Management.Network
             /// specified virtual network gateway through Network resource provider.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -130,7 +130,7 @@ namespace Microsoft.Azure.Management.Network
             /// specified virtual network gateway through Network resource provider.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -143,7 +143,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task<VirtualNetworkGateway> GetAsync( this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<VirtualNetworkGateway> result = await operations.GetWithOperationResponseAsync(resourceGroupName, virtualNetworkGatewayName, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<VirtualNetworkGateway> result = await operations.GetWithHttpMessagesAsync(resourceGroupName, virtualNetworkGatewayName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -152,7 +152,7 @@ namespace Microsoft.Azure.Management.Network
             /// network Gateway through Network resource provider.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -170,7 +170,7 @@ namespace Microsoft.Azure.Management.Network
             /// network Gateway through Network resource provider.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -183,7 +183,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task DeleteAsync( this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.DeleteWithOperationResponseAsync(resourceGroupName, virtualNetworkGatewayName, cancellationToken).ConfigureAwait(false);
+                await operations.DeleteWithHttpMessagesAsync(resourceGroupName, virtualNetworkGatewayName, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -191,7 +191,7 @@ namespace Microsoft.Azure.Management.Network
             /// network Gateway through Network resource provider.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -209,7 +209,7 @@ namespace Microsoft.Azure.Management.Network
             /// network Gateway through Network resource provider.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -222,7 +222,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task BeginDeleteAsync( this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.BeginDeleteWithOperationResponseAsync(resourceGroupName, virtualNetworkGatewayName, cancellationToken).ConfigureAwait(false);
+                await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, virtualNetworkGatewayName, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -230,12 +230,12 @@ namespace Microsoft.Azure.Management.Network
             /// gateways stored.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
-            public static VirtualNetworkGatewayListResult List(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName)
+            public static Page<VirtualNetworkGateway> List(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName)
             {
                 return Task.Factory.StartNew(s => ((IVirtualNetworkGatewaysOperations)s).ListAsync(resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -245,7 +245,7 @@ namespace Microsoft.Azure.Management.Network
             /// gateways stored.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -253,9 +253,9 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<VirtualNetworkGatewayListResult> ListAsync( this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Page<VirtualNetworkGateway>> ListAsync( this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<VirtualNetworkGatewayListResult> result = await operations.ListWithOperationResponseAsync(resourceGroupName, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<Page<VirtualNetworkGateway>> result = await operations.ListWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -265,7 +265,7 @@ namespace Microsoft.Azure.Management.Network
             /// resource provider.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -288,7 +288,7 @@ namespace Microsoft.Azure.Management.Network
             /// resource provider.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -305,7 +305,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task<VirtualNetworkGateway> ResetAsync( this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, VirtualNetworkGateway parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<VirtualNetworkGateway> result = await operations.ResetWithOperationResponseAsync(resourceGroupName, virtualNetworkGatewayName, parameters, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<VirtualNetworkGateway> result = await operations.ResetWithHttpMessagesAsync(resourceGroupName, virtualNetworkGatewayName, parameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -315,7 +315,7 @@ namespace Microsoft.Azure.Management.Network
             /// resource provider.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -338,7 +338,7 @@ namespace Microsoft.Azure.Management.Network
             /// resource provider.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -355,7 +355,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static async Task<VirtualNetworkGateway> BeginResetAsync( this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, VirtualNetworkGateway parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<VirtualNetworkGateway> result = await operations.BeginResetWithOperationResponseAsync(resourceGroupName, virtualNetworkGatewayName, parameters, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<VirtualNetworkGateway> result = await operations.BeginResetWithHttpMessagesAsync(resourceGroupName, virtualNetworkGatewayName, parameters, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -364,14 +364,14 @@ namespace Microsoft.Azure.Management.Network
             /// gateways stored.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
-            /// <param name='nextLink'>
+            /// <param name='nextPageLink'>
             /// NextLink from the previous successful call to List operation.
             /// </param>
-            public static VirtualNetworkGatewayListResult ListNext(this IVirtualNetworkGatewaysOperations operations, string nextLink)
+            public static Page<VirtualNetworkGateway> ListNext(this IVirtualNetworkGatewaysOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((IVirtualNetworkGatewaysOperations)s).ListNextAsync(nextLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IVirtualNetworkGatewaysOperations)s).ListNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -379,17 +379,17 @@ namespace Microsoft.Azure.Management.Network
             /// gateways stored.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
-            /// <param name='nextLink'>
+            /// <param name='nextPageLink'>
             /// NextLink from the previous successful call to List operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<VirtualNetworkGatewayListResult> ListNextAsync( this IVirtualNetworkGatewaysOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Page<VirtualNetworkGateway>> ListNextAsync( this IVirtualNetworkGatewaysOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<VirtualNetworkGatewayListResult> result = await operations.ListNextWithOperationResponseAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<Page<VirtualNetworkGateway>> result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

@@ -5,7 +5,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for ApplicationGatewayTier
+    /// Defines values for ApplicationGatewayTier.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
     public enum ApplicationGatewayTier

@@ -2,38 +2,56 @@
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
-    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
+    <AutoRestProjects>true</AutoRestProjects>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{A7F47B7F-319B-411F-BF33-F57899A430CB}</ProjectGuid>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Microsoft.Azure.Management.Storage</RootNamespace>
     <AssemblyName>Microsoft.Azure.Management.Storage</AssemblyName>
     <OutputType>Library</OutputType>
     <RestorePackages>true</RestorePackages>
     <NuGetPackageImportStamp>2bbdc770</NuGetPackageImportStamp>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <Import Project="..\..\..\..\tools\Library.Settings.targets" />
   <ItemGroup>
     <Compile Include="Generated\**\*.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="Microsoft.Azure.Management.Storage.nuspec" />
-    <None Include="Microsoft.Azure.Management.Storage.nuget.proj" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="Microsoft.Azure.Common, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Microsoft.Azure.Common.3.0.9\lib\net45\Microsoft.Azure.Common.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.Rest.ClientRuntime, Version=0.9.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Microsoft.Rest.ClientRuntime.0.9.8\lib\net45\Microsoft.Rest.ClientRuntime.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-  </ItemGroup>
+
+  <Choose>
+    <When Condition=" '$(LibraryFxTarget)' == 'portable' ">
+      <ItemGroup>
+        <Reference Include="Newtonsoft.Json">
+          <HintPath>$(LibraryNugetPackageFolder)\Newtonsoft.Json.6.0.4\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
+        </Reference>
+        <Reference Include="Microsoft.Rest.ClientRuntime">
+          <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Rest.ClientRuntime.1.1.1\lib\portable-net45+win8+wpa81\Microsoft.Rest.ClientRuntime.dll</HintPath>
+        </Reference>
+        <Reference Include="Microsoft.Rest.ClientRuntime.Azure">
+          <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Rest.ClientRuntime.Azure.1.0.18-preview\lib\portable-net45+win8+wpa81\Microsoft.Rest.ClientRuntime.Azure.dll</HintPath>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition=" '$(LibraryFxTarget)' == 'net45' ">
+      <ItemGroup>
+        <Reference Include="System" />
+        <Reference Include="System.Net.Http" />
+        <Reference Include="System.Runtime.Serialization" />
+        <Reference Include="Newtonsoft.Json">
+          <HintPath>$(LibraryNugetPackageFolder)\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+        </Reference>
+        <Reference Include="Microsoft.Rest.ClientRuntime">
+          <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Rest.ClientRuntime.1.1.1\lib\net45\Microsoft.Rest.ClientRuntime.dll</HintPath>
+        </Reference>
+        <Reference Include="Microsoft.Rest.ClientRuntime.Azure">
+          <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Rest.ClientRuntime.Azure.1.0.18-preview\lib\net45\Microsoft.Rest.ClientRuntime.Azure.dll</HintPath>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(LibraryFxTarget)' == 'portable' " />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(LibraryFxTarget)' != 'portable' " />
+  <Import Project="$(LibraryNugetPackageFolder)\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('$(LibraryNugetPackageFolder)\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
 </Project>

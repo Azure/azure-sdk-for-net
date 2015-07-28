@@ -23,7 +23,7 @@
     <LibraryFxTarget Condition="'$(LibraryFxTarget)' == ''">net45</LibraryFxTarget>
   </PropertyGroup>
   
-  <Import Project="references.$(LibraryFxTarget).props" />  
+  <Import Project="references.$(LibraryFxTarget).props" Condition=" '$(AutoRestProjects)' != 'true' " />  
   
   <!--
   Shared Project properties
@@ -46,6 +46,14 @@
     <LibraryCustomConstants>NET45</LibraryCustomConstants>
   </PropertyGroup>
   
+  <PropertyGroup Condition=" '$(LibraryFxTarget)' == 'net40'" >
+    <LibraryCustomConstants>NET40</LibraryCustomConstants>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition=" '$(LibraryFxTarget)' == 'portable'" >
+    <LibraryCustomConstants>PORTABLE</LibraryCustomConstants>
+  </PropertyGroup>
+  
   <PropertyGroup Condition=" '$(CodeSign)' == 'true' " >
     <LibraryCustomConstants>$(LibraryCustomConstants);CODESIGN</LibraryCustomConstants>
   </PropertyGroup>
@@ -65,13 +73,16 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  
+
   <PropertyGroup Condition=" '$(LibraryFxTarget)' == 'portable' ">
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Profile102</TargetFrameworkProfile>
+    <TargetFrameworkVersion Condition=" '$(AutoRestProjects)' != 'true' ">v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion Condition=" '$(AutoRestProjects)'== 'true' ">v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile Condition=" '$(AutoRestProjects)' != 'true' ">Profile102</TargetFrameworkProfile>
+    <TargetFrameworkProfile Condition=" '$(AutoRestProjects)' == 'true' ">Profile111</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
   </PropertyGroup>
+  
   <PropertyGroup Condition=" '$(LibraryFxTarget)' == 'net40' ">
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile />
@@ -83,18 +94,6 @@
     <TargetFrameworkProfile />
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids />
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(LibraryFxTarget)' == 'windows8' ">
-    <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(LibraryFxTarget)' == 'wp80' ">
-    <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{C089C8C0-30E0-4E22-80C0-CE093F111A43};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(LibraryFxTarget)' == 'wpa81' ">
-    <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{C089C8C0-30E0-4E22-80C0-CE093F111A43};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
   </PropertyGroup>
 
   <Target Name="InformationAboutThisBuild" BeforeTargets="BeforeBuild">
@@ -124,7 +123,7 @@
           DestinationFolder="$(_BinariesDirectory)"/>
   </Target>
 
-  <Target Name="SyncPackageVersions" BeforeTargets="BeforeBuild">
+  <Target Name="SyncPackageVersions" BeforeTargets="BeforeBuild" Condition=" '$(SDKTestProject)' != 'true' ">
     <PropertyGroup>
       <PowerShellExe Condition=" '$(PowerShellExe)'=='' ">%WINDIR%\System32\WindowsPowerShell\v1.0\powershell.exe</PowerShellExe>   
       <NuSpecSyncScript>$(LibraryToolsFolder)\Sync-NuspecDependencies.ps1</NuSpecSyncScript>	 

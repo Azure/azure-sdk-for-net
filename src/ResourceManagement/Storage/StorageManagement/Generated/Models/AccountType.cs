@@ -5,7 +5,7 @@ namespace Microsoft.Azure.Management.Storage.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for AccountType
+    /// Defines values for AccountType.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
     public enum AccountType

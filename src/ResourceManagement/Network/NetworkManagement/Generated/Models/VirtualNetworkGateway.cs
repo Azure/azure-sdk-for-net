@@ -5,9 +5,10 @@ namespace Microsoft.Azure.Management.Network.Models
     using Newtonsoft.Json;
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
-    using Microsoft.Azure;
+    using Microsoft.Rest.Azure;
 
     /// <summary>
+    /// A common class for general resource information
     /// </summary>
     public partial class VirtualNetworkGateway : Resource
     {
@@ -21,28 +22,35 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// IpConfigurations for Virtual network gateway.
         /// </summary>
-        [JsonProperty(PropertyName = "ipConfigurations")]
+        [JsonProperty(PropertyName = "properties.ipConfigurations")]
         public IList<VirtualNetworkGatewayIpConfiguration> IpConfigurations { get; set; }
 
         /// <summary>
         /// The type of this virtual network gateway. Possible values for this
         /// property include: 'Vpn'
         /// </summary>
-        [JsonProperty(PropertyName = "gatewayType")]
+        [JsonProperty(PropertyName = "properties.gatewayType")]
         public VirtualNetworkGatewayType? GatewayType { get; set; }
 
         /// <summary>
         /// The type of this virtual network gateway. Possible values for this
         /// property include: 'PolicyBased', 'RouteBased'
         /// </summary>
-        [JsonProperty(PropertyName = "vpnType")]
+        [JsonProperty(PropertyName = "properties.vpnType")]
         public VpnType? VpnType { get; set; }
 
         /// <summary>
         /// EnableBgp Flag
         /// </summary>
-        [JsonProperty(PropertyName = "enableBgp")]
+        [JsonProperty(PropertyName = "properties.enableBgp")]
         public bool? EnableBgp { get; set; }
+
+        /// <summary>
+        /// Gets or sets Provisioning state of the VirtualNetworkGateway
+        /// resource Updating/Deleting/Failed
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.provisioningState")]
+        public string ProvisioningState { get; set; }
 
         /// <summary>
         /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
@@ -50,16 +58,6 @@ namespace Microsoft.Azure.Management.Network.Models
         public override void Validate()
         {
             base.Validate();
-            if (this.IpConfigurations != null)
-            {
-                foreach ( var element in this.IpConfigurations)
-            {
-                if (element != null)
-            {
-                element.Validate();
-            }
-            }
-            }
         }
     }
 }
