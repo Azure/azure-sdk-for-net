@@ -18,7 +18,11 @@ namespace DataFactory.Tests.Framework.JsonSamples
 {
     public class TableJsonSamples : JsonSampleCollection<TableJsonSamples>
     {
-        [JsonSample]
+        [JsonSample(propertyBagKeys: new string[]
+                        {                     
+                            "properties.typeProperties.PropertyBagPropertyName1",
+                            "properties.typeProperties.propertyBagPropertyName2"
+                        })]
         public const string CustomTable = @"
 {
     name: ""CustomTable"",

@@ -13,6 +13,7 @@
   </PropertyGroup>
   <Import Project="..\..\..\..\tools\Library.Settings.targets" />
   <ItemGroup>
+    <Compile Include="Customizations\Conversion\DictionaryConverter.cs" />
     <Compile Include="Customizations\Models\Activities\CopySinks\CopyBehavior\CopyBehaviorType.cs" />
     <Compile Include="Customizations\Models\Activities\CopySinks\FileSystemSink.cs" />
     <Compile Include="Customizations\Models\Activities\CopySinks\SqlDWSink.cs" />
@@ -25,6 +26,7 @@
     <Compile Include="Customizations\Models\LinkedServices\InputPartitionOptions.cs" />
     <Compile Include="Customizations\Models\LinkedServices\SchemaGenerationTypes.cs" />
     <Compile Include="Customizations\Models\Tables\AzureSqlDataWarehouseTableDataset.cs" />
+    <Compile Include="Customizations\Models\Registration\BaseAdfSchemaProperty.cs" />
     <Compile Include="Customizations\Models\Tables\Compression\CompressionLevel.cs" />
     <Compile Include="Customizations\Models\Tables\Compression\BZip2Compression.cs" />
     <Compile Include="Customizations\Models\Tables\Compression\DeflateCompression.cs" />

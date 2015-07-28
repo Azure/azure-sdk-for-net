@@ -21,23 +21,34 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
+using Microsoft.Azure.Management.Sql.Models;
 
-namespace Microsoft.WindowsAzure.Scheduler.Models
+namespace Microsoft.Azure.Management.Sql.Models
 {
     /// <summary>
-    /// Type of action. Can be one of http, https, storageQueue,
-    /// serviceBusQueue, serviceBusTopic.
+    /// Represents the response to a Get Azure Sql Database Replication Link
+    /// request.
     /// </summary>
-    public enum JobActionType
+    public partial class ReplicationLinkGetResponse : AzureOperationResponse
     {
-        Http = 0,
+        private ReplicationLink _replicationLink;
         
-        Https = 1,
+        /// <summary>
+        /// Optional. Gets or sets the object that represents the Azure Sql
+        /// Database Replication Link.
+        /// </summary>
+        public ReplicationLink ReplicationLink
+        {
+            get { return this._replicationLink; }
+            set { this._replicationLink = value; }
+        }
         
-        StorageQueue = 2,
-        
-        ServiceBusQueue = 3,
-        
-        ServiceBusTopic = 4,
+        /// <summary>
+        /// Initializes a new instance of the ReplicationLinkGetResponse class.
+        /// </summary>
+        public ReplicationLinkGetResponse()
+        {
+        }
     }
 }

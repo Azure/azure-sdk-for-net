@@ -22,22 +22,32 @@
 using System;
 using System.Linq;
 
-namespace Microsoft.WindowsAzure.Scheduler.Models
+namespace Microsoft.Azure.Management.Sql.Models
 {
     /// <summary>
-    /// Type of action. Can be one of http, https, storageQueue,
-    /// serviceBusQueue, serviceBusTopic.
+    /// Defines the valid create modes of Azure SQL Databases. See MSDN for
+    /// more information.
     /// </summary>
-    public enum JobActionType
+    public static partial class DatabaseCreateMode
     {
-        Http = 0,
+        /// <summary>
+        /// Regular database creation.
+        /// </summary>
+        public const string Default = "Default";
         
-        Https = 1,
+        /// <summary>
+        /// Create database as a one-time copy.
+        /// </summary>
+        public const string Copy = "Copy";
         
-        StorageQueue = 2,
+        /// <summary>
+        /// Create database as a readable geo-secondary.
+        /// </summary>
+        public const string Secondary = "Secondary";
         
-        ServiceBusQueue = 3,
-        
-        ServiceBusTopic = 4,
+        /// <summary>
+        /// Create database as non-readable geo-secondary.
+        /// </summary>
+        public const string NonReadableSecondary = "NonReadableSecondary";
     }
 }

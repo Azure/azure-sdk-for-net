@@ -22,22 +22,31 @@
 using System;
 using System.Linq;
 
-namespace Microsoft.WindowsAzure.Scheduler.Models
+namespace Microsoft.Azure.Management.Sql.Models
 {
     /// <summary>
-    /// Type of action. Can be one of http, https, storageQueue,
-    /// serviceBusQueue, serviceBusTopic.
+    /// Represents an Azure SQL Database Replication Link's Replication State.
     /// </summary>
-    public enum JobActionType
+    public static partial class ReplicationState
     {
-        Http = 0,
+        /// <summary>
+        /// Replication is pending.
+        /// </summary>
+        public const string Pending = "PENDING";
         
-        Https = 1,
+        /// <summary>
+        /// Replication is seeding.
+        /// </summary>
+        public const string Seeding = "SEEDING";
         
-        StorageQueue = 2,
+        /// <summary>
+        /// Replication has finished catching up.
+        /// </summary>
+        public const string CatchUp = "CATCH_UP";
         
-        ServiceBusQueue = 3,
-        
-        ServiceBusTopic = 4,
+        /// <summary>
+        /// Replication is suspended.
+        /// </summary>
+        public const string Suspended = "SUSPENDED";
     }
 }
