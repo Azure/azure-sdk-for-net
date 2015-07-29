@@ -160,10 +160,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Microsoft.Azure.Management.RecoveryServicesARM.nuget.proj">
+    <None Include="Microsoft.Azure.Management.SiteRecovery.nuget.proj">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Microsoft.Azure.Management.RecoveryServicesARM.nuspec" />
+    <None Include="Microsoft.Azure.Management.SiteRecovery.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

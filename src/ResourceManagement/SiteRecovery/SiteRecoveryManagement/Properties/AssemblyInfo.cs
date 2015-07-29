@@ -15,10 +15,10 @@
 
 using System.Reflection;
 
-[assembly: AssemblyTitle("Microsoft.Azure.Management.RecoveryServicesARM.Specification")]
+[assembly: AssemblyTitle("Microsoft.Azure.Management.SiteRecovery.Specification")]
 [assembly: AssemblyDescription("Hydra specification for Recovery services Management")]
 
-[assembly: AssemblyVersion("0.1.0.0")]
+[assembly: AssemblyVersion("0.9.0.0")]
 [assembly: AssemblyFileVersion("0.1.0.0")]
 
 [assembly: AssemblyCompany("Microsoft Corporation")]
