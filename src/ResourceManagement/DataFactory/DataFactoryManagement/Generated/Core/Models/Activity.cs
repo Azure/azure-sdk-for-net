@@ -98,6 +98,17 @@ namespace Microsoft.Azure.Management.DataFactories.Core.Models
             set { this._policy = value; }
         }
         
+        private Scheduler _scheduler;
+        
+        /// <summary>
+        /// Optional. Scheduler of the activity.
+        /// </summary>
+        public Scheduler Scheduler
+        {
+            get { return this._scheduler; }
+            set { this._scheduler = value; }
+        }
+        
         private string _type;
         
         /// <summary>
