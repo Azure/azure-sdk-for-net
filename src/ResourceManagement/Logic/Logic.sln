@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogicManagement", "LogicManagement\LogicManagement.csproj", "{9BA56208-B184-4B1D-830F-16146BBD8DD7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logic.Tests", "Logic.Tests\Logic.Tests.csproj", "{07FD28BF-5DE5-432D-99A1-1FD5EE738446}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientRuntime.Azure.TestFramework", "..\..\ClientRuntime.Azure.TestFramework\TestFramework\ClientRuntime.Azure.TestFramework.csproj", "{F144A258-3C38-447A-993E-967F74A1A76C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Net45-Debug|Any CPU = Net45-Debug|Any CPU
+		Net45-Release|Any CPU = Net45-Release|Any CPU
+		Portable-Debug|Any CPU = Portable-Debug|Any CPU
+		Portable-Release|Any CPU = Portable-Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9BA56208-B184-4B1D-830F-16146BBD8DD7}.Net45-Debug|Any CPU.ActiveCfg = Net45-Debug|Any CPU
+		{9BA56208-B184-4B1D-830F-16146BBD8DD7}.Net45-Debug|Any CPU.Build.0 = Net45-Debug|Any CPU
+		{9BA56208-B184-4B1D-830F-16146BBD8DD7}.Net45-Release|Any CPU.ActiveCfg = Net45-Release|Any CPU
+		{9BA56208-B184-4B1D-830F-16146BBD8DD7}.Net45-Release|Any CPU.Build.0 = Net45-Release|Any CPU
+		{9BA56208-B184-4B1D-830F-16146BBD8DD7}.Portable-Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
+		{9BA56208-B184-4B1D-830F-16146BBD8DD7}.Portable-Debug|Any CPU.Build.0 = Portable-Debug|Any CPU
+		{9BA56208-B184-4B1D-830F-16146BBD8DD7}.Portable-Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
+		{9BA56208-B184-4B1D-830F-16146BBD8DD7}.Portable-Release|Any CPU.Build.0 = Portable-Release|Any CPU
+		{07FD28BF-5DE5-432D-99A1-1FD5EE738446}.Net45-Debug|Any CPU.ActiveCfg = Net45-Debug|Any CPU
+		{07FD28BF-5DE5-432D-99A1-1FD5EE738446}.Net45-Release|Any CPU.ActiveCfg = Net45-Release|Any CPU
+		{07FD28BF-5DE5-432D-99A1-1FD5EE738446}.Portable-Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
+		{07FD28BF-5DE5-432D-99A1-1FD5EE738446}.Portable-Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
+		{F144A258-3C38-447A-993E-967F74A1A76C}.Net45-Debug|Any CPU.ActiveCfg = Net45-Debug|Any CPU
+		{F144A258-3C38-447A-993E-967F74A1A76C}.Net45-Release|Any CPU.ActiveCfg = Net45-Release|Any CPU
+		{F144A258-3C38-447A-993E-967F74A1A76C}.Portable-Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
+		{F144A258-3C38-447A-993E-967F74A1A76C}.Portable-Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
