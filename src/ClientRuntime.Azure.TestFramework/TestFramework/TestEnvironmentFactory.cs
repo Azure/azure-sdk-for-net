@@ -5,11 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework.HttpRecorder;
-using Microsoft.Rest;
 using System.Net.Http;
 using Newtonsoft.Json.Linq;
-using Microsoft.Rest.Azure.Authentication;
 using System.Threading;
+using Microsoft.Rest.Azure.Authentication;
 
 namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
 {
