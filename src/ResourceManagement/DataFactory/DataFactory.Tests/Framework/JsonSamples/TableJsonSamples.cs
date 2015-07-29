@@ -18,7 +18,11 @@ namespace DataFactory.Tests.Framework.JsonSamples
 {
     public class TableJsonSamples : JsonSampleCollection<TableJsonSamples>
     {
-        [JsonSample]
+        [JsonSample(propertyBagKeys: new string[]
+                        {                     
+                            "properties.typeProperties.PropertyBagPropertyName1",
+                            "properties.typeProperties.propertyBagPropertyName2"
+                        })]
         public const string CustomTable = @"
 {
     name: ""CustomTable"",
@@ -201,6 +205,32 @@ namespace DataFactory.Tests.Framework.JsonSamples
         }
     }
 }";
+
+        [JsonSample]
+        public const string AzureSqlDataWarehouseTable = @"
+{
+    name: ""Test"",
+    properties:
+    {
+        type: ""AzureSqlDWTable"",
+        linkedServiceName: ""MyLinkedServiceName"",
+        published: ""False"",
+        structure:  
+        [ 
+            { name: ""somecol"", type: ""String"" }
+        ],
+        typeProperties:
+        {            
+            tableName: ""mytablename""            
+        },
+        availability: 
+        {
+            interval: 1, 
+            frequency: ""Hour"",
+        },
+    }
+}
+";
 
         [JsonSample]
         public const string ExternalTable = @"

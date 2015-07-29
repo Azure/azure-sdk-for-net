@@ -15,11 +15,13 @@
 // 
 
 using System;
+using System.Collections.Generic;
 using DataFactory.Tests.Framework;
 using DataFactory.Tests.Framework.JsonSamples;
 using DataFactory.Tests.UnitTests.TestClasses;
 using Microsoft.Azure.Management.DataFactories;
 using Microsoft.Azure.Management.DataFactories.Models;
+using Newtonsoft.Json.Linq;
 using Xunit;
 using Xunit.Extensions;
 using Core = Microsoft.Azure.Management.DataFactories.Core;
@@ -265,7 +267,7 @@ namespace DataFactory.Tests.UnitTests
 
         #region Test helpers
 
-        private LinkedService ConvertAndTestJson(string json, bool customTest = false)
+        private LinkedService ConvertAndTestJson(string json, bool customTest = false, HashSet<string> propertyBagKeys = null)
         {
             LinkedService linkedService = this.ConvertToWrapper(json);
             CoreModel.LinkedService actual = this.Operations.Converter.ToCoreType(linkedService);
@@ -283,6 +285,9 @@ namespace DataFactory.Tests.UnitTests
 
             JsonComparer.ValidateAreSame(json, actualJson, ignoreDefaultValues: true);
             Assert.DoesNotContain("ServiceExtraProperties", actualJson);
+
+            JObject actualJObject = JObject.Parse(actualJson);
+            JsonComparer.ValidatePropertyNameCasing(actualJObject, true, string.Empty, propertyBagKeys);
             
             return linkedService;
         }

@@ -1,0 +1,142 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/Subscriptions/00a07ea0-ad8b-491c-9de8-77bf10881499/resourceGroups/testsitegroup/providers/Microsoft.SiteRecovery/SiteRecoveryVault/ppeVault2/ProtectionContainers?api-version=2015-08-10",
+      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvMDBhMDdlYTAtYWQ4Yi00OTFjLTlkZTgtNzdiZjEwODgxNDk5L3Jlc291cmNlR3JvdXBzL3Rlc3RzaXRlZ3JvdXAvcHJvdmlkZXJzL01pY3Jvc29mdC5TaXRlUmVjb3ZlcnkvU2l0ZVJlY292ZXJ5VmF1bHQvcHBlVmF1bHQyL1Byb3RlY3Rpb25Db250YWluZXJzP2FwaS12ZXJzaW9uPTIwMTUtMDgtMTA=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "12e92b86-ee78-45d7-954d-b054e502cfed"
+        ],
+        "x-ms-version": [
+          "2015-01-01"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.SiteRecovery.SiteRecoveryManagementClient/0.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/Subscriptions/00a07ea0-ad8b-491c-9de8-77bf10881499/resourceGroups/testsitegroup/providers/Microsoft.SiteRecovery/SiteRecoveryVault/ppeVault2/ProtectionContainers/01709fee-1177-4b82-9d56-cbaf6618070d\",\r\n      \"name\": \"01709fee-1177-4b82-9d56-cbaf6618070d\",\r\n      \"type\": \"Microsoft.SiteRecovery/ProtectionContainer\",\r\n      \"properties\": {\r\n        \"friendlyName\": \"pri\",\r\n        \"serverId\": \"57f95c35-6c83-42ce-bb21-2c4f10f92d8e\",\r\n        \"fabricObjectId\": \"01709fee-1177-4b82-9d56-cbaf6618070d\",\r\n        \"role\": null,\r\n        \"fabricType\": \"VMM\",\r\n        \"availableProtectionProfiles\": []\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/Subscriptions/00a07ea0-ad8b-491c-9de8-77bf10881499/resourceGroups/testsitegroup/providers/Microsoft.SiteRecovery/SiteRecoveryVault/ppeVault2/ProtectionContainers/19996177-88ca-4aa8-8fe6-8ae9198c06d3\",\r\n      \"name\": \"19996177-88ca-4aa8-8fe6-8ae9198c06d3\",\r\n      \"type\": \"Microsoft.SiteRecovery/ProtectionContainer\",\r\n      \"properties\": {\r\n        \"friendlyName\": \"cloud9\",\r\n        \"serverId\": \"57f95c35-6c83-42ce-bb21-2c4f10f92d8e\",\r\n        \"fabricObjectId\": \"19996177-88ca-4aa8-8fe6-8ae9198c06d3\",\r\n        \"role\": null,\r\n        \"fabricType\": \"VMM\",\r\n        \"availableProtectionProfiles\": []\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/Subscriptions/00a07ea0-ad8b-491c-9de8-77bf10881499/resourceGroups/testsitegroup/providers/Microsoft.SiteRecovery/SiteRecoveryVault/ppeVault2/ProtectionContainers/42432614-e000-4cb9-8827-a49ea1d0d3cc\",\r\n      \"name\": \"42432614-e000-4cb9-8827-a49ea1d0d3cc\",\r\n      \"type\": \"Microsoft.SiteRecovery/ProtectionContainer\",\r\n      \"properties\": {\r\n        \"friendlyName\": \"d2\",\r\n        \"serverId\": \"57f95c35-6c83-42ce-bb21-2c4f10f92d8e\",\r\n        \"fabricObjectId\": \"42432614-e000-4cb9-8827-a49ea1d0d3cc\",\r\n        \"role\": null,\r\n        \"fabricType\": \"VMM\",\r\n        \"availableProtectionProfiles\": []\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/Subscriptions/00a07ea0-ad8b-491c-9de8-77bf10881499/resourceGroups/testsitegroup/providers/Microsoft.SiteRecovery/SiteRecoveryVault/ppeVault2/ProtectionContainers/7c3641bb-d572-4d56-80da-498440f924e7\",\r\n      \"name\": \"7c3641bb-d572-4d56-80da-498440f924e7\",\r\n      \"type\": \"Microsoft.SiteRecovery/ProtectionContainer\",\r\n      \"properties\": {\r\n        \"friendlyName\": \"d1\",\r\n        \"serverId\": \"57f95c35-6c83-42ce-bb21-2c4f10f92d8e\",\r\n        \"fabricObjectId\": \"7c3641bb-d572-4d56-80da-498440f924e7\",\r\n        \"role\": null,\r\n        \"fabricType\": \"VMM\",\r\n        \"availableProtectionProfiles\": []\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/Subscriptions/00a07ea0-ad8b-491c-9de8-77bf10881499/resourceGroups/testsitegroup/providers/Microsoft.SiteRecovery/SiteRecoveryVault/ppeVault2/ProtectionContainers/b007f06c-646c-4978-a7bd-2a3d1a13110e\",\r\n      \"name\": \"b007f06c-646c-4978-a7bd-2a3d1a13110e\",\r\n      \"type\": \"Microsoft.SiteRecovery/ProtectionContainer\",\r\n      \"properties\": {\r\n        \"friendlyName\": \"alokSec\",\r\n        \"serverId\": \"57f95c35-6c83-42ce-bb21-2c4f10f92d8e\",\r\n        \"fabricObjectId\": \"b007f06c-646c-4978-a7bd-2a3d1a13110e\",\r\n        \"role\": null,\r\n        \"fabricType\": \"VMM\",\r\n        \"availableProtectionProfiles\": []\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/Subscriptions/00a07ea0-ad8b-491c-9de8-77bf10881499/resourceGroups/testsitegroup/providers/Microsoft.SiteRecovery/SiteRecoveryVault/ppeVault2/ProtectionContainers/de58c031-820e-4e1a-9505-763523bb69c5\",\r\n      \"name\": \"de58c031-820e-4e1a-9505-763523bb69c5\",\r\n      \"type\": \"Microsoft.SiteRecovery/ProtectionContainer\",\r\n      \"properties\": {\r\n        \"friendlyName\": \"alokPri\",\r\n        \"serverId\": \"57f95c35-6c83-42ce-bb21-2c4f10f92d8e\",\r\n        \"fabricObjectId\": \"de58c031-820e-4e1a-9505-763523bb69c5\",\r\n        \"role\": null,\r\n        \"fabricType\": \"VMM\",\r\n        \"availableProtectionProfiles\": []\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/Subscriptions/00a07ea0-ad8b-491c-9de8-77bf10881499/resourceGroups/testsitegroup/providers/Microsoft.SiteRecovery/SiteRecoveryVault/ppeVault2/ProtectionContainers/f0982c81-dfb1-4bfa-ba0d-a7d941f6e8c7\",\r\n      \"name\": \"f0982c81-dfb1-4bfa-ba0d-a7d941f6e8c7\",\r\n      \"type\": \"Microsoft.SiteRecovery/ProtectionContainer\",\r\n      \"properties\": {\r\n        \"friendlyName\": \"azurecloud\",\r\n        \"serverId\": \"57f95c35-6c83-42ce-bb21-2c4f10f92d8e\",\r\n        \"fabricObjectId\": \"f0982c81-dfb1-4bfa-ba0d-a7d941f6e8c7\",\r\n        \"role\": null,\r\n        \"fabricType\": \"VMM\",\r\n        \"availableProtectionProfiles\": []\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/Subscriptions/00a07ea0-ad8b-491c-9de8-77bf10881499/resourceGroups/testsitegroup/providers/Microsoft.SiteRecovery/SiteRecoveryVault/ppeVault2/ProtectionContainers/ff10d996-9083-4aee-b99d-7f7f44c81118\",\r\n      \"name\": \"ff10d996-9083-4aee-b99d-7f7f44c81118\",\r\n      \"type\": \"Microsoft.SiteRecovery/ProtectionContainer\",\r\n      \"properties\": {\r\n        \"friendlyName\": \"rec\",\r\n        \"serverId\": \"57f95c35-6c83-42ce-bb21-2c4f10f92d8e\",\r\n        \"fabricObjectId\": \"ff10d996-9083-4aee-b99d-7f7f44c81118\",\r\n        \"role\": null,\r\n        \"fabricType\": \"VMM\",\r\n        \"availableProtectionProfiles\": []\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": null\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "4147"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "12e92b86-ee78-45d7-954d-b054e502cfed 7/27/2015 9:07:18 PM"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0",
+          "Microsoft-IIS/8.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-client-request-id": [
+          "12e92b86-ee78-45d7-954d-b054e502cfed"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14999"
+        ],
+        "x-ms-correlation-request-id": [
+          "c03ff8d2-245a-4eb7-85f6-38588f532a0c"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150727T210718Z:c03ff8d2-245a-4eb7-85f6-38588f532a0c"
+        ],
+        "Date": [
+          "Mon, 27 Jul 2015 21:07:17 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/Subscriptions/00a07ea0-ad8b-491c-9de8-77bf10881499/resourceGroups/testsitegroup/providers/Microsoft.SiteRecovery/SiteRecoveryVault/ppeVault2/ProtectionContainers/01709fee-1177-4b82-9d56-cbaf6618070d?api-version=2015-08-10",
+      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvMDBhMDdlYTAtYWQ4Yi00OTFjLTlkZTgtNzdiZjEwODgxNDk5L3Jlc291cmNlR3JvdXBzL3Rlc3RzaXRlZ3JvdXAvcHJvdmlkZXJzL01pY3Jvc29mdC5TaXRlUmVjb3ZlcnkvU2l0ZVJlY292ZXJ5VmF1bHQvcHBlVmF1bHQyL1Byb3RlY3Rpb25Db250YWluZXJzLzAxNzA5ZmVlLTExNzctNGI4Mi05ZDU2LWNiYWY2NjE4MDcwZD9hcGktdmVyc2lvbj0yMDE1LTA4LTEw",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "12e92b86-ee78-45d7-954d-b054e502cfed"
+        ],
+        "x-ms-version": [
+          "2015-01-01"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.SiteRecovery.SiteRecoveryManagementClient/0.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/Subscriptions/00a07ea0-ad8b-491c-9de8-77bf10881499/resourceGroups/testsitegroup/providers/Microsoft.SiteRecovery/SiteRecoveryVault/ppeVault2/ProtectionContainers/01709fee-1177-4b82-9d56-cbaf6618070d\",\r\n  \"name\": \"01709fee-1177-4b82-9d56-cbaf6618070d\",\r\n  \"type\": \"Microsoft.SiteRecovery/ProtectionContainer\",\r\n  \"properties\": {\r\n    \"friendlyName\": \"pri\",\r\n    \"serverId\": \"57f95c35-6c83-42ce-bb21-2c4f10f92d8e\",\r\n    \"fabricObjectId\": \"01709fee-1177-4b82-9d56-cbaf6618070d\",\r\n    \"role\": null,\r\n    \"fabricType\": \"VMM\",\r\n    \"availableProtectionProfiles\": []\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "512"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "12e92b86-ee78-45d7-954d-b054e502cfed 7/27/2015 9:07:19 PM"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0",
+          "Microsoft-IIS/8.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-client-request-id": [
+          "12e92b86-ee78-45d7-954d-b054e502cfed"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14998"
+        ],
+        "x-ms-correlation-request-id": [
+          "bf1bd3a7-58a9-4c2b-90e2-a1f5567a05e4"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150727T210719Z:bf1bd3a7-58a9-4c2b-90e2-a1f5567a05e4"
+        ],
+        "Date": [
+          "Mon, 27 Jul 2015 21:07:18 GMT"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "00a07ea0-ad8b-491c-9de8-77bf10881499"
+  }
+}

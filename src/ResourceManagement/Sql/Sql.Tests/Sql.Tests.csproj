@@ -133,4 +133,7 @@
       <Name>SqlManagement</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Data" />
+  </ItemGroup>
 </Project>
