@@ -26,22 +26,22 @@ using Microsoft.Azure.Management.DataFactories.Common.Models;
 namespace Microsoft.Azure.Management.DataFactories.Common.Models
 {
     /// <summary>
-    /// The availability definition.
+    /// The scheduler definition.
     /// </summary>
-    public partial class Availability : BaseScheduler
+    public partial class Scheduler : BaseScheduler
     {
         /// <summary>
-        /// Initializes a new instance of the Availability class.
+        /// Initializes a new instance of the Scheduler class.
         /// </summary>
-        public Availability()
+        public Scheduler()
         {
         }
         
         /// <summary>
-        /// Initializes a new instance of the Availability class with required
+        /// Initializes a new instance of the Scheduler class with required
         /// arguments.
         /// </summary>
-        public Availability(string frequency, uint interval)
+        public Scheduler(string frequency, uint interval)
             : this()
         {
             if (frequency == null)

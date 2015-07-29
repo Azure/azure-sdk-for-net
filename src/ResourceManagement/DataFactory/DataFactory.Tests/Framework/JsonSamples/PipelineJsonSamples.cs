@@ -42,7 +42,14 @@ namespace DataFactory.Tests.Framework.JsonSamples
                     AssemblyName: ""foo.dll"",
                     SliceStart: ""$$Text.Format('{0:yyyyMMddHH-mm}', Time.AddMinutes(SliceStart, 0))""
                 },
-                linkedServiceName: ""MyLinkedServiceName""
+                linkedServiceName: ""MyLinkedServiceName"",
+                scheduler:
+                {
+                    offset: ""01:00:00"",
+                    interval: 1,
+                    anchorDateTime: ""2014-02-27T12:00:00"",
+                    frequency: ""Hour""
+                }
             }
         ],
         start: ""2001-01-01"",
@@ -126,7 +133,14 @@ namespace DataFactory.Tests.Framework.JsonSamples
                         ""storageLinkedService2""
                     ]
                 },
-                linkedServiceName: ""MyLinkedServiceName""
+                linkedServiceName: ""MyLinkedServiceName"",
+                scheduler:
+                {
+                    offset: ""01:00:00"",
+                    interval: 1,
+                    anchorDateTime: ""2014-02-27T12:00:00"",
+                    frequency: ""Hour""
+                }
             }
         ],
         start: ""2001-01-01"",
@@ -179,7 +193,14 @@ namespace DataFactory.Tests.Framework.JsonSamples
                         PropertyBagPropertyName1: ""PropertyBagValue1""
 					}
                 },
-                linkedServiceName: ""MyLinkedServiceName""
+                linkedServiceName: ""MyLinkedServiceName"",
+                scheduler:
+                {
+                    offset: ""01:00:00"",
+                    interval: 1,
+                    anchorDateTime: ""2014-02-27T12:00:00"",
+                    frequency: ""Hour""
+                }
             }
         ],
         start: ""2001-01-01"",
@@ -244,6 +265,13 @@ namespace DataFactory.Tests.Framework.JsonSamples
                     retry: 3,
                     timeout: ""00:00:05"",
                     delay: ""00:00:01""
+                },
+                scheduler:
+                {
+                    offset: ""01:00:00"",
+                    interval: 1,
+                    anchorDateTime: ""2014-02-27T12:00:00"",
+                    frequency: ""Hour""
                 }
             }
         ]
@@ -491,6 +519,13 @@ namespace DataFactory.Tests.Framework.JsonSamples
                     executionPriorityOrder: ""NewestFirst"",
                     retry: 2,
                     timeout: ""01:00:00""
+                },
+                scheduler:
+                {
+                    offset: ""01:00:00"",
+                    interval: 1,
+                    anchorDateTime: ""2014-02-27T12:00:00"",
+                    frequency: ""Hour""
                 }
             },
         ]
