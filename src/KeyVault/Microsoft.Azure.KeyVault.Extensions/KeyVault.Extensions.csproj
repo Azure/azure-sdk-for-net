@@ -59,7 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Azure.KeyVault.Core">
-      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Azure.KeyVault.Core.0.9.1-preview\lib\net40\Microsoft.Azure.KeyVault.Core.dll</HintPath>
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Azure.KeyVault.Core.1.0.0\lib\net40\Microsoft.Azure.KeyVault.Core.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup Condition=" '$(LibraryFxTarget)' == 'net40' ">
