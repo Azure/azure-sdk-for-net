@@ -343,7 +343,7 @@ namespace Microsoft.Azure.Management.HDInsight
                 ServicePrincipal servicePrincipalObj = (ServicePrincipal)clusterCreateParameters.Principal;
                 datalakeConfig.Add("serviceAccountClientCredential.appPrincipalId", servicePrincipalObj.AppPrincipalId.ToString());
                 datalakeConfig.Add("serviceAccountClientCredential.aadTenantId", servicePrincipalObj.AADTenantId.ToString());
-                datalakeConfig.Add("serviceAccountClientCredential.certificate", servicePrincipalObj.ClientCertificate);
+                datalakeConfig.Add("serviceAccountClientCredential.certificate", Convert.ToBase64String(servicePrincipalObj.ClientCertificate));
                 datalakeConfig.Add("serviceAccountClientCredential.certificatePassword", servicePrincipalObj.ClientCertificatePassword);
                 datalakeConfig.Add("serviceAccountClientCredential.resourceUri", servicePrincipalObj.ResourceUri.ToString());
 

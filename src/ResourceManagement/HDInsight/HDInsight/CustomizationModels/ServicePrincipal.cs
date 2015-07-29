@@ -1,10 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
+﻿// 
+// Copyright (c) Microsoft and contributors.  All rights reserved.
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//   http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// 
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// 
+
+using System;
 
 namespace Microsoft.Azure.Management.HDInsight.Models
 {
@@ -21,7 +31,7 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// <summary>
         /// Gets client certificate associated with service principal
         /// </summary>
-        public string ClientCertificate { get; private set; }
+        public byte[] ClientCertificate { get; private set; }
 
         /// <summary>
         /// Gets client certificate password associated with service principal
@@ -42,10 +52,10 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// Initializes a new instance of the ServicePrincipal class.
         /// </summary>
         /// <param name="appPrincipalId">Application principal id of the service principal.</param>
-        /// <param name="clientCertificateFileName">client certificate file name associated with service principal.</param>
+        /// <param name="clientCertificate">client certificate associated with service principal.</param>
         /// <param name="clientCertificatePassword">client certificate password associated with service principal.</param>
         /// <param name="aadTenantId">AAD tenant uri of the service principal</param>
-        public ServicePrincipal(Guid appPrincipalId, Uri aadTenantId, string clientCertificateFileName, string clientCertificatePassword)
+        public ServicePrincipal(Guid appPrincipalId, Uri aadTenantId, byte[] clientCertificate, string clientCertificatePassword)
         {
             if (appPrincipalId == Guid.Empty)
                 throw new ArgumentException("Input cannot be empty", "appPrincipalId");
@@ -53,29 +63,12 @@ namespace Microsoft.Azure.Management.HDInsight.Models
             if (aadTenantId == null)
                 throw new ArgumentNullException("aadTenantId");
             
-            if (string.IsNullOrEmpty(clientCertificateFileName))
-                throw new ArgumentException("Input cannot be null or empty", "clientCertificateFileName");
-
-            if (!File.Exists(clientCertificateFileName))
-                throw new ArgumentException("File doesn't exist", clientCertificateFileName);
-
-            //validate certificate
-            X509Certificate2 clientCertificate = null;
-            byte[] certBytes = File.ReadAllBytes(clientCertificateFileName);
-            try
-            {
-                clientCertificate = new X509Certificate2();
-                clientCertificate.Import(certBytes, clientCertificatePassword,
-                    X509KeyStorageFlags.MachineKeySet | X509KeyStorageFlags.PersistKeySet | X509KeyStorageFlags.Exportable);
-            }
-            catch (Exception)
-            {
-                throw new ArgumentException("Invalid Certificate", clientCertificateFileName);
-            }
-
+            if (clientCertificate == null)
+                throw new ArgumentNullException("clientCertificate");
+    
             this.AppPrincipalId = appPrincipalId;
             this.AADTenantId = aadTenantId;
-            this.ClientCertificate = Convert.ToBase64String(certBytes);
+            this.ClientCertificate = clientCertificate;
             this.ClientCertificatePassword = clientCertificatePassword;
 
             //Resource Uri of data lake 
