@@ -147,8 +147,11 @@ namespace Microsoft.Azure.Insights.Customizations.Shoebox
                 }
             }
 
-            lastSeen.Average = lastSeen.Total / lastSeen.Count;
-
+            if (lastSeen != null)
+            {
+                lastSeen.Average = lastSeen.Total / lastSeen.Count;
+            }
+            
             return result;
         }
 
