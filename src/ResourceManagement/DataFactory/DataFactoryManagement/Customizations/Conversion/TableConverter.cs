@@ -18,95 +18,95 @@ using Microsoft.Azure.Management.DataFactories.Models;
 
 namespace Microsoft.Azure.Management.DataFactories.Conversion
 {
-    internal class TableConverter : CoreTypeConverter<Core.Models.Table, Table, TableTypeProperties, GenericDataset>
+    internal class TableConverter : CoreTypeConverter<Core.Models.Dataset, Dataset, DatasetTypeProperties, GenericDataset>
     {
         /// <summary> 
-        /// Convert <paramref name="table"/> to an <see cref="Core.Models.Table"/> instance.
+        /// Convert <paramref name="dataset"/> to an <see cref="Core.Models.Dataset"/> instance.
         /// This method should be called only after type is validated, otherwise type-specific logic will break
         /// </summary>
-        /// <param name="table">The <see cref="Core.Models.Table"/> instance to convert.</param>
-        /// <returns>An <see cref="Core.Models.Table"/> instance equivalent to <paramref name="table"/>.</returns>
-        public override Core.Models.Table ToCoreType(Table table)
+        /// <param name="dataset">The <see cref="Core.Models.Dataset"/> instance to convert.</param>
+        /// <returns>An <see cref="Core.Models.Dataset"/> instance equivalent to <paramref name="dataset"/>.</returns>
+        public override Core.Models.Dataset ToCoreType(Dataset dataset)
         {
-            Ensure.IsNotNull(table, "table");
-            Ensure.IsNotNull(table.Properties, "table.Properties");
-            Ensure.IsNotNull(table.Properties.TypeProperties, "table.Properties.TypeProperties");
+            Ensure.IsNotNull(dataset, "dataset");
+            Ensure.IsNotNull(dataset.Properties, "dataset.Properties");
+            Ensure.IsNotNull(dataset.Properties.TypeProperties, "dataset.Properties.TypeProperties");
 
-            string typeProperties = table.Properties.TypeProperties.SerializeObject();
+            string typeProperties = dataset.Properties.TypeProperties.SerializeObject();
 
-            Core.Models.Table internalTable = new Core.Models.Table()
+            Core.Models.Dataset internalDataset = new Core.Models.Dataset()
             {
-                Name = table.Name, 
-                Properties = new Core.Models.TableProperties()
+                Name = dataset.Name, 
+                Properties = new Core.Models.DatasetProperties()
                                  {
-                                     Type = table.Properties.Type, 
+                                     Type = dataset.Properties.Type, 
                                      TypeProperties = typeProperties, 
-                                     Availability = table.Properties.Availability, 
-                                     CreateTime = table.Properties.CreateTime,
-                                     Description = table.Properties.Description, 
-                                     LinkedServiceName = table.Properties.LinkedServiceName, 
-                                     Policy = table.Properties.Policy, 
-                                     Published = table.Properties.Published, 
-                                     Structure = table.Properties.Structure,
-                                     External = table.Properties.External
+                                     Availability = dataset.Properties.Availability, 
+                                     CreateTime = dataset.Properties.CreateTime,
+                                     Description = dataset.Properties.Description, 
+                                     LinkedServiceName = dataset.Properties.LinkedServiceName, 
+                                     Policy = dataset.Properties.Policy, 
+                                     Published = dataset.Properties.Published, 
+                                     Structure = dataset.Properties.Structure,
+                                     External = dataset.Properties.External
                                  }
             };
 
-            return internalTable;
+            return internalDataset;
         }
 
         /// <summary> 
-        /// Convert <paramref name="internalTable"/> to a <see cref="Table"/> instance.
+        /// Convert <paramref name="internalDataset"/> to a <see cref="Dataset"/> instance.
         /// </summary>
-        /// <param name="internalTable">The <see cref="Core.Models.Table"/> instance to convert.</param>
-        /// <returns>A <see cref="Table"/> instance equivalent to <paramref name="internalTable"/>.</returns>
-        public override Table ToWrapperType(Core.Models.Table internalTable)
+        /// <param name="internalDataset">The <see cref="Core.Models.Dataset"/> instance to convert.</param>
+        /// <returns>A <see cref="Dataset"/> instance equivalent to <paramref name="internalDataset"/>.</returns>
+        public override Dataset ToWrapperType(Core.Models.Dataset internalDataset)
         {
-            Ensure.IsNotNull(internalTable, "internalTable");
-            Ensure.IsNotNull(internalTable.Properties, "internalTable.Properties");
+            Ensure.IsNotNull(internalDataset, "internalDataset");
+            Ensure.IsNotNull(internalDataset.Properties, "internalDataset.Properties");
 
             Type type;
-            TableTypeProperties typeProperties = this.DeserializeTypeProperties(
-                internalTable.Properties.Type,
-                internalTable.Properties.TypeProperties,
+            DatasetTypeProperties typeProperties = this.DeserializeTypeProperties(
+                internalDataset.Properties.Type,
+                internalDataset.Properties.TypeProperties,
                 out type);
 
-            string typeName = GetTypeName(type, internalTable.Properties.Type);
-            TableProperties properties = new TableProperties(
+            string typeName = GetTypeName(type, internalDataset.Properties.Type);
+            DatasetProperties properties = new DatasetProperties(
                 typeProperties,
-                internalTable.Properties.Availability,
-                internalTable.Properties.LinkedServiceName,
+                internalDataset.Properties.Availability,
+                internalDataset.Properties.LinkedServiceName,
                 typeName)
                      {
-                         Availability = internalTable.Properties.Availability,
-                         CreateTime = internalTable.Properties.CreateTime,
-                         Description = internalTable.Properties.Description,
-                         ErrorMessage = internalTable.Properties.ErrorMessage,
-                         LinkedServiceName = internalTable.Properties.LinkedServiceName,
-                         Policy = internalTable.Properties.Policy,
-                         ProvisioningState = internalTable.Properties.ProvisioningState,
-                         Published = internalTable.Properties.Published,
-                         Structure = internalTable.Properties.Structure,
-                         External = internalTable.Properties.External
+                         Availability = internalDataset.Properties.Availability,
+                         CreateTime = internalDataset.Properties.CreateTime,
+                         Description = internalDataset.Properties.Description,
+                         ErrorMessage = internalDataset.Properties.ErrorMessage,
+                         LinkedServiceName = internalDataset.Properties.LinkedServiceName,
+                         Policy = internalDataset.Properties.Policy,
+                         ProvisioningState = internalDataset.Properties.ProvisioningState,
+                         Published = internalDataset.Properties.Published,
+                         Structure = internalDataset.Properties.Structure,
+                         External = internalDataset.Properties.External
                      };
 
-            return new Table() { Name = internalTable.Name, Properties = properties };
+            return new Dataset() { Name = internalDataset.Name, Properties = properties };
         }
 
         /// <summary>
-        /// Validate a <see cref="Table"/> instance, specifically its type properties.
+        /// Validate a <see cref="Dataset"/> instance, specifically its type properties.
         /// </summary>
-        /// <param name="table">The <see cref="Table"/> instance to validate.</param>
-        public override void ValidateWrappedObject(Table table)
+        /// <param name="dataset">The <see cref="Dataset"/> instance to validate.</param>
+        public override void ValidateWrappedObject(Dataset dataset)
         {
-            Ensure.IsNotNull(table, "table");
-            Ensure.IsNotNull(table.Properties, "table.Properties");
-            Ensure.IsNotNull(table.Properties.Type, "table.Properties.Type");
+            Ensure.IsNotNull(dataset, "dataset");
+            Ensure.IsNotNull(dataset.Properties, "dataset.Properties");
+            Ensure.IsNotNull(dataset.Properties.Type, "dataset.Properties.Type");
 
             Type type;
-            if (this.TryGetRegisteredType(table.Properties.Type, out type))
+            if (this.TryGetRegisteredType(dataset.Properties.Type, out type))
             {
-                this.ValidateTypeProperties(table.Properties.TypeProperties, type);
+                this.ValidateTypeProperties(dataset.Properties.TypeProperties, type);
             }
         }
     }

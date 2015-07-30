@@ -115,6 +115,16 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             get { return this._dataFactories; }
         }
         
+        private IDatasetOperations _datasets;
+        
+        /// <summary>
+        /// Operations for managing datasets.
+        /// </summary>
+        public virtual IDatasetOperations Datasets
+        {
+            get { return this._datasets; }
+        }
+        
         private IDataSliceOperations _dataSlices;
         
         /// <summary>
@@ -175,16 +185,6 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             get { return this._pipelines; }
         }
         
-        private ITableOperations _tables;
-        
-        /// <summary>
-        /// Operations for managing tables.
-        /// </summary>
-        public virtual ITableOperations Tables
-        {
-            get { return this._tables; }
-        }
-        
         /// <summary>
         /// Initializes a new instance of the DataFactoryManagementClient class.
         /// </summary>
@@ -194,13 +194,13 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             this._activityTypes = new ActivityTypeOperations(this);
             this._computeTypes = new ComputeTypeOperations(this);
             this._dataFactories = new DataFactoryOperations(this);
+            this._datasets = new DatasetOperations(this);
             this._dataSlices = new DataSliceOperations(this);
             this._dataSliceRuns = new DataSliceRunOperations(this);
             this._gateways = new GatewayOperations(this);
             this._hubs = new HubOperations(this);
             this._linkedServices = new LinkedServiceOperations(this);
             this._pipelines = new PipelineOperations(this);
-            this._tables = new TableOperations(this);
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(60);
@@ -276,13 +276,13 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             this._activityTypes = new ActivityTypeOperations(this);
             this._computeTypes = new ComputeTypeOperations(this);
             this._dataFactories = new DataFactoryOperations(this);
+            this._datasets = new DatasetOperations(this);
             this._dataSlices = new DataSliceOperations(this);
             this._dataSliceRuns = new DataSliceRunOperations(this);
             this._gateways = new GatewayOperations(this);
             this._hubs = new HubOperations(this);
             this._linkedServices = new LinkedServiceOperations(this);
             this._pipelines = new PipelineOperations(this);
-            this._tables = new TableOperations(this);
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(60);

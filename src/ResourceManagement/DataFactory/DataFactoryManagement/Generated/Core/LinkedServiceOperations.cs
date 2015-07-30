@@ -394,8 +394,8 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         /// Required. The name of the data factory.
         /// </param>
         /// <param name='linkedServiceName'>
-        /// Required. The name of the data factory table to be created or
-        /// updated.
+        /// Required. The name of the data factory linked service to be created
+        /// or updated.
         /// </param>
         /// <param name='parameters'>
         /// Required. The parameters required to create or update a data
@@ -929,8 +929,8 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         /// Required. The name of the data factory.
         /// </param>
         /// <param name='linkedServiceName'>
-        /// Required. The name of the data factory table to be created or
-        /// updated.
+        /// Required. The name of the data factory linked service to be created
+        /// or updated.
         /// </param>
         /// <param name='parameters'>
         /// Required. The parameters required to create or update a data

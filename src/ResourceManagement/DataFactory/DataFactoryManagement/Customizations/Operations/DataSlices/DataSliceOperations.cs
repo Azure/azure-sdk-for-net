@@ -36,14 +36,14 @@ namespace Microsoft.Azure.Management.DataFactories
         public async Task<DataSliceListResponse> ListAsync(
             string resourceGroupName,
             string dataFactoryName,
-            string tableName,
+            string datasetName,
             DataSliceListParameters parameters,
             CancellationToken cancellationToken)
         {
             return await this.Client.InternalClient.DataSlices.ListAsync(
                     resourceGroupName,
                     dataFactoryName,
-                    tableName,
+                    datasetName,
                     parameters,
                     cancellationToken);
         }
@@ -56,14 +56,14 @@ namespace Microsoft.Azure.Management.DataFactories
         public async Task<AzureOperationResponse> SetStatusAsync(
             string resourceGroupName,
             string dataFactoryName,
-            string tableName,
+            string datasetName,
             DataSliceSetStatusParameters parameters,
             CancellationToken cancellationToken)
         {
             return await this.Client.InternalClient.DataSlices.SetStatusAsync(
                     resourceGroupName,
                     dataFactoryName,
-                    tableName,
+                    datasetName,
                     parameters,
                     cancellationToken);
         }

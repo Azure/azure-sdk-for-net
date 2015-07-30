@@ -89,7 +89,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         private string _tableName;
         
         /// <summary>
-        /// Optional. The table name.
+        /// Optional. The dataset name.
         /// </summary>
         public string TableName
         {

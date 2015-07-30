@@ -248,7 +248,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         private string _tableName;
         
         /// <summary>
-        /// Optional. Run table name.
+        /// Optional. Run dataset name.
         /// </summary>
         public string TableName
         {

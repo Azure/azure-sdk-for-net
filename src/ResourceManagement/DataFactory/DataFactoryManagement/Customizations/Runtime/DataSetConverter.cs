@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.DataFactories.Runtime
 
             if (jObject.TryGetValue(TableToken, StringComparison.OrdinalIgnoreCase, out tableJToken))
             {
-                Core.Models.Table internalTable = Core.DataFactoryManagementClient.DeserializeInternalTableJson(tableJToken.ToString());
+                Core.Models.Dataset internalTable = Core.DataFactoryManagementClient.DeserializeInternalDatasetJson(tableJToken.ToString());
                 dataSet.Table = tableConverter.ToWrapperType(internalTable);
             }
 

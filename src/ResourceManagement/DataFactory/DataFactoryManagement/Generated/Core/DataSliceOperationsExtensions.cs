@@ -45,21 +45,21 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         /// <param name='dataFactoryName'>
         /// Required. A unique data factory instance name.
         /// </param>
-        /// <param name='tableName'>
-        /// Required. A unique table instance name.
+        /// <param name='datasetName'>
+        /// Required. A unique dataset instance name.
         /// </param>
         /// <param name='parameters'>
         /// Required. Parameters specifying how to list data slices of the
-        /// table.
+        /// dataset.
         /// </param>
         /// <returns>
         /// The List data slices operation response.
         /// </returns>
-        public static DataSliceListResponse List(this IDataSliceOperations operations, string resourceGroupName, string dataFactoryName, string tableName, DataSliceListParameters parameters)
+        public static DataSliceListResponse List(this IDataSliceOperations operations, string resourceGroupName, string dataFactoryName, string datasetName, DataSliceListParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IDataSliceOperations)s).ListAsync(resourceGroupName, dataFactoryName, tableName, parameters);
+                return ((IDataSliceOperations)s).ListAsync(resourceGroupName, dataFactoryName, datasetName, parameters);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -78,19 +78,19 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         /// <param name='dataFactoryName'>
         /// Required. A unique data factory instance name.
         /// </param>
-        /// <param name='tableName'>
-        /// Required. A unique table instance name.
+        /// <param name='datasetName'>
+        /// Required. A unique dataset instance name.
         /// </param>
         /// <param name='parameters'>
         /// Required. Parameters specifying how to list data slices of the
-        /// table.
+        /// dataset.
         /// </param>
         /// <returns>
         /// The List data slices operation response.
         /// </returns>
-        public static Task<DataSliceListResponse> ListAsync(this IDataSliceOperations operations, string resourceGroupName, string dataFactoryName, string tableName, DataSliceListParameters parameters)
+        public static Task<DataSliceListResponse> ListAsync(this IDataSliceOperations operations, string resourceGroupName, string dataFactoryName, string datasetName, DataSliceListParameters parameters)
         {
-            return operations.ListAsync(resourceGroupName, dataFactoryName, tableName, parameters, CancellationToken.None);
+            return operations.ListAsync(resourceGroupName, dataFactoryName, datasetName, parameters, CancellationToken.None);
         }
         
         /// <summary>
@@ -136,7 +136,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         }
         
         /// <summary>
-        /// Sets status of data slices over a time range for a specific table.
+        /// Sets status of data slices over a time range for a specific dataset.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -148,8 +148,8 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         /// <param name='dataFactoryName'>
         /// Required. A unique data factory instance name.
         /// </param>
-        /// <param name='tableName'>
-        /// Required. A unique table instance name.
+        /// <param name='datasetName'>
+        /// Required. A unique dataset instance name.
         /// </param>
         /// <param name='parameters'>
         /// Required. The parameters required to set status of data slices.
@@ -158,17 +158,17 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static AzureOperationResponse SetStatus(this IDataSliceOperations operations, string resourceGroupName, string dataFactoryName, string tableName, DataSliceSetStatusParameters parameters)
+        public static AzureOperationResponse SetStatus(this IDataSliceOperations operations, string resourceGroupName, string dataFactoryName, string datasetName, DataSliceSetStatusParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IDataSliceOperations)s).SetStatusAsync(resourceGroupName, dataFactoryName, tableName, parameters);
+                return ((IDataSliceOperations)s).SetStatusAsync(resourceGroupName, dataFactoryName, datasetName, parameters);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// Sets status of data slices over a time range for a specific table.
+        /// Sets status of data slices over a time range for a specific dataset.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -180,8 +180,8 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         /// <param name='dataFactoryName'>
         /// Required. A unique data factory instance name.
         /// </param>
-        /// <param name='tableName'>
-        /// Required. A unique table instance name.
+        /// <param name='datasetName'>
+        /// Required. A unique dataset instance name.
         /// </param>
         /// <param name='parameters'>
         /// Required. The parameters required to set status of data slices.
@@ -190,9 +190,9 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<AzureOperationResponse> SetStatusAsync(this IDataSliceOperations operations, string resourceGroupName, string dataFactoryName, string tableName, DataSliceSetStatusParameters parameters)
+        public static Task<AzureOperationResponse> SetStatusAsync(this IDataSliceOperations operations, string resourceGroupName, string dataFactoryName, string datasetName, DataSliceSetStatusParameters parameters)
         {
-            return operations.SetStatusAsync(resourceGroupName, dataFactoryName, tableName, parameters, CancellationToken.None);
+            return operations.SetStatusAsync(resourceGroupName, dataFactoryName, datasetName, parameters, CancellationToken.None);
         }
     }
 }

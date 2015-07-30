@@ -152,11 +152,11 @@ namespace Microsoft.Azure.Management.DataFactories
         /// <param name='dataFactoryName'>
         /// Required. A unique data factory instance name.
         /// </param>
-        /// <param name='tableName'>
-        /// Required. A unique table instance name.
+        /// <param name='datasetName'>
+        /// Required. A unique dataset instance name.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters for specifying the filters to list data slice runs of the table.
+        /// Required. Parameters for specifying the filters to list data slice runs of the dataset.
         /// </param>
         /// <returns>
         /// The List data slice runs operation response.
@@ -165,14 +165,14 @@ namespace Microsoft.Azure.Management.DataFactories
             this IDataSliceRunOperations operations,
             string resourceGroupName,
             string dataFactoryName,
-            string tableName,
+            string datasetName,
             DataSliceRunListParameters parameters)
         {
             return Task.Factory.StartNew(
                 s => ((IDataSliceRunOperations)s).ListAsync(
                     resourceGroupName,
                     dataFactoryName,
-                    tableName,
+                    datasetName,
                     parameters),
                 operations,
                 CancellationToken.None,
@@ -194,11 +194,11 @@ namespace Microsoft.Azure.Management.DataFactories
         /// <param name='dataFactoryName'>
         /// Required. A unique data factory instance name.
         /// </param>
-        /// <param name='tableName'>
-        /// Required. A unique table instance name.
+        /// <param name='datasetName'>
+        /// Required. A unique dataset instance name.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters for specifying the filters to list data slice runs of the table.
+        /// Required. Parameters for specifying the filters to list data slice runs of the dataset.
         /// </param>
         /// <returns>
         /// The List data slice runs operation response.
@@ -207,13 +207,13 @@ namespace Microsoft.Azure.Management.DataFactories
             this IDataSliceRunOperations operations,
             string resourceGroupName,
             string dataFactoryName,
-            string tableName,
+            string datasetName,
             DataSliceRunListParameters parameters)
         {
             return operations.ListAsync(
                 resourceGroupName,
                 dataFactoryName,
-                tableName,
+                datasetName,
                 parameters,
                 CancellationToken.None);
         }

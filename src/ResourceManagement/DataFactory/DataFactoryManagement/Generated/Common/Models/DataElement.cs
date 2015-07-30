@@ -25,7 +25,7 @@ using System.Linq;
 namespace Microsoft.Azure.Management.DataFactories.Common.Models
 {
     /// <summary>
-    /// Data element defines the semantics of each column of a table.
+    /// Data element defines the semantics of each column of a dataset.
     /// </summary>
     public partial class DataElement
     {
