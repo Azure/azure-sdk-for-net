@@ -13,9 +13,12 @@
 // limitations under the License.
 //
 
+using Microsoft.Azure.Management.DataFactories.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Globalization;
+using System.Linq;
 
 namespace Microsoft.Azure.Management.DataFactories.Runtime
 {
@@ -34,12 +37,60 @@ namespace Microsoft.Azure.Management.DataFactories.Runtime
 
             ActivityLogger logger = new ActivityLogger(logAction);
 
+            Collection<LinkedService> linkedServices = new Collection<LinkedService>();
+            PopulateLinkedServices(activityConfiguration.InputDataSets, linkedServices);
+            PopulateLinkedServices(activityConfiguration.OutputDataSets, linkedServices);
+
+            Collection<Table> tables = new Collection<Table>();
+            PopulateLinkedServices(activityConfiguration.InputDataSets, tables);
+            PopulateLinkedServices(activityConfiguration.OutputDataSets, tables);
+
+            Activity activity = null;
+            
+            if(activityConfiguration.Pipeline != null &&
+               activityConfiguration.Pipeline.Properties != null &&
+               activityConfiguration.Pipeline.Properties.Activities != null)
+            {
+                activity = activityConfiguration.Pipeline.Properties.Activities.FirstOrDefault();
+            }
+
             return activityImplementation.Execute(
-                activityConfiguration.InputDataSets,
-                activityConfiguration.OutputDataSets,
-                activityConfiguration.ExtendedProperties,
+                linkedServices,
+                tables,
+                activity,
                 logger);
         }
-    }
 
+        private static void PopulateLinkedServices(IEnumerable<DataSet> dataSets, ICollection<LinkedService> linkedServices)
+        {
+            if (dataSets == null)
+            {
+                return;
+            }
+
+            foreach(DataSet dataSet in dataSets)
+            {
+                if (dataSet.LinkedService != null)
+                {
+                    linkedServices.Add(dataSet.LinkedService);
+                }
+            }
+        }
+
+        private static void PopulateLinkedServices(IEnumerable<DataSet> dataSets, ICollection<Table> tables)
+        {
+            if (tables == null)
+            {
+                return;
+            }
+
+            foreach (DataSet dataSet in dataSets)
+            {
+                if (dataSet.Table != null)
+                {
+                    tables.Add(dataSet.Table);
+                }
+            }
+        }
+    }
 }

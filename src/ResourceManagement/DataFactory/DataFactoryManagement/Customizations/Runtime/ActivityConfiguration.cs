@@ -13,6 +13,7 @@
 // limitations under the License.
 //
 
+using Microsoft.Azure.Management.DataFactories.Models;
 using System.Collections.Generic;
 
 namespace Microsoft.Azure.Management.DataFactories.Runtime
@@ -21,6 +22,6 @@ namespace Microsoft.Azure.Management.DataFactories.Runtime
     {
         public IEnumerable<DataSet> InputDataSets { get; set; }
         public IEnumerable<DataSet> OutputDataSets { get; set; }
-        public IDictionary<string, string> ExtendedProperties { get; set; }
+        public Pipeline Pipeline { get; set; }
     }
 }
