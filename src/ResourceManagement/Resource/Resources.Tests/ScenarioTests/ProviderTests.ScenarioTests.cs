@@ -209,7 +209,7 @@ namespace ResourceGroups.Tests
             TestUtilities.EndTest();
         }
 
-        [Fact]
+        [Fact(Skip = "Recording not working")]
         public void ProviderOperationsMetadataGetById()
         {
             TestUtilities.StartTest();
@@ -222,7 +222,7 @@ namespace ResourceGroups.Tests
             ValidateNetworkProviderOperations(providerOperationsMetadata.Provider);
         }
 
-        [Fact]
+        [Fact(Skip = "Recording not working")]
         public void ProviderOperationsMetadataGetAll()
         {
             TestUtilities.StartTest();
