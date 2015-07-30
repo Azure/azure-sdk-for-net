@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     /// The Azure SQL data warehouse dataset.
     /// </summary>
     [AdfTypeName("AzureSqlDWTable")]
-    public class AzureSqlDataWarehouseTableDataset : TableTypeProperties
+    public class AzureSqlDataWarehouseTableDataset : DatasetTypeProperties
     {
         /// <summary>
         /// Required. The table name of the Azure SQL data warehouse dataset.
