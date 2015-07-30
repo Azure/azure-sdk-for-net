@@ -23,39 +23,14 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     public class BlobSink : CopySink
     {
         /// <summary>
-        /// Block writer block size.
-        /// </summary>
-        public int? BlockWriterBlockSize { get; set; }
-
-        /// <summary>
         /// Blob writer overwrite files.
         /// </summary>
         public bool? BlobWriterOverwriteFiles { get; set; }
 
         /// <summary>
-        /// Blob writer partition columns.
-        /// </summary>
-        public string BlobWriterPartitionColumns { get; set; }
-
-        /// <summary>
-        /// Blob writer partition format.
-        /// </summary>
-        public string BlobWriterPartitionFormat { get; set; }
-
-        /// <summary>
         /// Blob writer date time format.
         /// </summary>
         public string BlobWriterDateTimeFormat { get; set; }
-
-        /// <summary>
-        /// Blob writer separator.
-        /// </summary>
-        public string BlobWriterSeparator { get; set; }
-
-        /// <summary>
-        /// Blob writer row suffix.
-        /// </summary>
-        public string BlobWriterRowSuffix { get; set; }
 
         /// <summary>
         /// Blob writer add header.
