@@ -209,34 +209,41 @@ namespace ResourceGroups.Tests
             TestUtilities.EndTest();
         }
 
-        [Fact(Skip = "Recording not working")]
+        [Fact]
         public void ProviderOperationsMetadataGetById()
         {
-            TestUtilities.StartTest();
-            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
-            var client = GetResourceManagementClient(handler);
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+                var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+                var client = GetResourceManagementClient(handler);
 
-            var providerOperationsMetadata = client.ProviderOperationsMetadata.Get(NetworkProvider);
+                var providerOperationsMetadata = client.ProviderOperationsMetadata.Get(NetworkProvider);
 
-            Assert.NotNull(providerOperationsMetadata);            
-            ValidateNetworkProviderOperations(providerOperationsMetadata.Provider);
+                Assert.NotNull(providerOperationsMetadata);
+                ValidateNetworkProviderOperations(providerOperationsMetadata.Provider);
+            }
         }
 
-        [Fact(Skip = "Recording not working")]
+        [Fact]
         public void ProviderOperationsMetadataGetAll()
         {
-            TestUtilities.StartTest();
-            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
-            var client = GetResourceManagementClient(handler);
+           
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+                var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+                var client = GetResourceManagementClient(handler);
 
-            var providers = client.ProviderOperationsMetadata.List();
+                var providers = client.ProviderOperationsMetadata.List();
 
-            // check for Microsoft.Network provider
-            ProviderOperationsMetadata network = providers.Providers.FirstOrDefault(p => p.Name.Equals(NetworkProvider, StringComparison.OrdinalIgnoreCase));
-            ValidateNetworkProviderOperations(network);
+                // check for Microsoft.Network provider
+                ProviderOperationsMetadata network = providers.Providers.FirstOrDefault(p => p.Name.Equals(NetworkProvider, StringComparison.OrdinalIgnoreCase));
+                ValidateNetworkProviderOperations(network);
 
-            ProviderOperationsMetadata sql = providers.Providers.FirstOrDefault(p => p.Name.Equals(SqlProvider, StringComparison.OrdinalIgnoreCase));
-            ValidateSqlProviderOperations(sql);
+                ProviderOperationsMetadata sql = providers.Providers.FirstOrDefault(p => p.Name.Equals(SqlProvider, StringComparison.OrdinalIgnoreCase));
+                ValidateSqlProviderOperations(sql);
+            }        
         }
 
         private static void ValidateSqlProviderOperations(ProviderOperationsMetadata provider)
