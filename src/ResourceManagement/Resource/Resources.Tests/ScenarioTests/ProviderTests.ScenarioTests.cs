@@ -30,6 +30,9 @@ namespace ResourceGroups.Tests
     public class LiveProviderTests : TestBase
     {
         private const string ProviderName = "microsoft.insights";
+        private const string NetworkProvider = "Microsoft.Network";
+        private const string SqlProvider = "Microsoft.Sql";
+
         public ResourceManagementClient GetResourceManagementClient(RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
@@ -204,6 +207,66 @@ namespace ResourceGroups.Tests
 
             Assert.Throws<Hyak.Common.CloudException>(() => client.ResourceProviderOperationDetails.List(identity));
             TestUtilities.EndTest();
+        }
+
+        [Fact]
+        public void ProviderOperationsMetadataGetById()
+        {
+            TestUtilities.StartTest();
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+            var client = GetResourceManagementClient(handler);
+
+            var providerOperationsMetadata = client.ProviderOperationsMetadata.Get(NetworkProvider);
+
+            Assert.NotNull(providerOperationsMetadata);            
+            ValidateNetworkProviderOperations(providerOperationsMetadata.Provider);
+        }
+
+        [Fact]
+        public void ProviderOperationsMetadataGetAll()
+        {
+            TestUtilities.StartTest();
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+            var client = GetResourceManagementClient(handler);
+
+            var providers = client.ProviderOperationsMetadata.List();
+
+            // check for Microsoft.Network provider
+            ProviderOperationsMetadata network = providers.Providers.FirstOrDefault(p => p.Name.Equals(NetworkProvider, StringComparison.OrdinalIgnoreCase));
+            ValidateNetworkProviderOperations(network);
+
+            ProviderOperationsMetadata sql = providers.Providers.FirstOrDefault(p => p.Name.Equals(SqlProvider, StringComparison.OrdinalIgnoreCase));
+            ValidateSqlProviderOperations(sql);
+        }
+
+        private static void ValidateSqlProviderOperations(ProviderOperationsMetadata provider)
+        {
+            Assert.NotNull(provider);
+
+            ResourceType resourceType = provider.ResourceTypes.FirstOrDefault(rt => rt.Name.Equals("servers"));
+            Assert.NotNull(resourceType);
+
+            Operation op = resourceType.Operations.FirstOrDefault(p => p.Name.Equals("Microsoft.Sql/servers/write"));
+            Assert.NotNull(op);
+
+            Assert.Null(op.Origin);
+            Assert.Null(op.Properties);
+        }
+
+        private static void ValidateNetworkProviderOperations(ProviderOperationsMetadata provider)
+        {
+            Assert.NotNull(provider);
+
+            // check for expected Resourcetype
+            ResourceType resourceType = provider.ResourceTypes.FirstOrDefault(rt => rt.Name.Equals("networksecuritygroups/providers/Microsoft.Insights/logDefinitions"));
+            Assert.NotNull(resourceType);
+
+            Operation op = resourceType.Operations.FirstOrDefault(p => p.Name.Equals("Microsoft.Network/networksecuritygroups/providers/Microsoft.Insights/logDefinitions/read"));
+            Assert.NotNull(op);
+
+            Assert.Equal<string>("system", op.Origin);
+
+            Assert.True(op.Properties != null && op.Properties.ToString().Contains("serviceSpecification"));
         }
     }
 }

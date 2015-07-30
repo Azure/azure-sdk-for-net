@@ -98,6 +98,14 @@ namespace Microsoft.Azure.Management.Resources
         }
         
         /// <summary>
+        /// Operations for managing providers.
+        /// </summary>
+        IProviderOperationsMetadataOperations ProviderOperationsMetadata
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Operations for managing resource groups.
         /// </summary>
         IResourceGroupOperations ResourceGroups
