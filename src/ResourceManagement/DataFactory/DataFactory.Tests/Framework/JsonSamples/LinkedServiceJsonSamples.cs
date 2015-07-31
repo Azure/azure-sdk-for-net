@@ -108,6 +108,21 @@ namespace DataFactory.Tests.Framework.JsonSamples
 }";
 
         [JsonSample]
+        public const string AzureSqlDataWarehouseLinkedService = @"
+{
+    name: ""Test-Windows-Azure-SQLDW-LinkedService"",
+    properties:
+    {
+        type: ""AzureSqlDW"",
+        hubName: ""testHub"",
+        typeProperties:
+        {
+            connectionString: ""MyConnectionString"",
+        }
+    }
+}";
+
+        [JsonSample]
         public const string AzureMLLinkedServiceJson = @"
 {
     name: ""Test-ML-LinkedService"",

@@ -29,7 +29,7 @@ namespace Sql2.Tests.ScenarioTests
         /// <summary>
         /// The region in which the tests will create their needed resources
         /// </summary>
-        private static string TestEnvironmentRegion = "Japan East";
+        private static string TestEnvironmentRegion = "Australia East";
         
         /// <summary>
         /// Generate a SQL Client from the test base to use.
