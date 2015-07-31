@@ -93,70 +93,6 @@ namespace DataFactory.Tests.Framework.JsonSamples
 ";
 
         [JsonSample]
-        public const string PublishedTrueTable = @"
-{
-    name: ""TestOut"",
-    properties:
-    {
-        type: ""AzureSqlTable"",
-        linkedServiceName: ""MyLinkedServiceName"",
-        published: ""True"",
-        structure:  
-        [ 
-            { name: ""Id"", type: ""Guid"" },
-            { name: ""Username"", type: ""String"" },
-            { name: ""Alias"", type: ""String"" },
-            { name: ""CreatedTime"", type: ""DateTime"", culture:""en-US"", format: ""MM/dd/yyyy"" },
-            { name: ""TotalCount1"", type: ""Int16"" },
-            { name: ""TotalCount2"", type: ""Intt32"" },
-            { name: ""TotalCount3"", type: ""Int64"" },
-            { name: ""somevalue1"", type: ""Decimal"" },
-            { name: ""somevalue2"", type: ""Single"" },
-            { name: ""somevalue3"", type: ""Timespan"" },
-            { name: ""somevalue4"", type: ""DateTimeOffset"" },
-            { name: ""somevalue5"", type: ""Enum"" },
-            { name: ""somevalue6"", type: ""Boolean"" }
-        ],
-        typeProperties: 
-        {            
-            tableName: ""mytablename"",            
-        },
-        availability: 
-        {
-            interval: 1, 
-            frequency: ""Hour"",
-        },
-    }
-}
-";
-
-        [JsonSample]
-        public const string PublishedFalseTable = @"
-{
-    name: ""TestOut"",
-    properties:
-    {
-        type: ""AzureSqlTable"",
-        linkedServiceName: ""MyLinkedServiceName"",
-        published: ""False"",
-        structure:  
-        [ 
-            { name: ""somecol"", type: ""String"" }
-        ],
-        typeProperties:
-        {            
-            tableName: ""mytablename""            
-        },
-        availability: 
-        {
-            interval: 1, 
-            frequency: ""Hour"",
-        },
-    }
-}
-";
-
-        [JsonSample]
         public const string BlobTable = @"
 {
     name: ""MyDemoBlob"",
@@ -205,6 +141,31 @@ namespace DataFactory.Tests.Framework.JsonSamples
         }
     }
 }";
+
+        [JsonSample]
+        public const string AzureSqlDataWarehouseTable = @"
+{
+    name: ""Test"",
+    properties:
+    {
+        type: ""AzureSqlDWTable"",
+        linkedServiceName: ""MyLinkedServiceName"",
+        structure:  
+        [ 
+            { name: ""somecol"", type: ""String"" }
+        ],
+        typeProperties:
+        {            
+            tableName: ""mytablename""            
+        },
+        availability: 
+        {
+            interval: 1, 
+            frequency: ""Hour"",
+        },
+    }
+}
+";
 
         [JsonSample]
         public const string ExternalTable = @"
