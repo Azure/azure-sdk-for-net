@@ -428,7 +428,8 @@ namespace Microsoft.Azure.Management.HDInsight
             }
 
             //Roles
-            var headNodeSize = !string.IsNullOrEmpty(clusterCreateParameters.HeadNodeSize) ? clusterCreateParameters.HeadNodeSize : "Large";
+            var roles = new List<Role>();
+            var headNodeSize = GetHeadNodeSize(clusterCreateParameters);
             var headNode = new Role
             {
                 Name = "headnode",
@@ -441,8 +442,9 @@ namespace Microsoft.Azure.Management.HDInsight
                 VirtualNetworkProfile = vnetProfile,
                 ScriptActions = headnodeactions
             };
+            roles.Add(headNode);
 
-            var workerNodeSize = !string.IsNullOrEmpty(clusterCreateParameters.DataNodeSize) ? clusterCreateParameters.DataNodeSize : "Large";
+            var workerNodeSize = GetWorkerNodeSize(clusterCreateParameters);
             var workerNode = new Role
             {
                 Name = "workernode",
@@ -454,8 +456,15 @@ namespace Microsoft.Azure.Management.HDInsight
                 OsProfile = osProfile,
                 ScriptActions = workernodeactions
             };
+            roles.Add(workerNode);
 
-            var nodesize = clusterCreateParameters.ClusterType == HDInsightClusterType.HBase ? "Medium" : "Small";
+            if (clusterCreateParameters.ClusterType == HDInsightClusterType.Hadoop ||
+                clusterCreateParameters.ClusterType == HDInsightClusterType.Spark)
+            {
+                return roles;
+            }
+
+            string zookeeperNodeSize = clusterCreateParameters.ZookeeperNodeSize ?? "A2";
 
             var zookeepernode = new Role
             {
@@ -465,13 +474,46 @@ namespace Microsoft.Azure.Management.HDInsight
                 OsProfile = osProfile,
                 HardwareProfile = new HardwareProfile
                 {
-                    VmSize = nodesize
+                    VmSize = zookeeperNodeSize
                 }
             };
-
-            var roles = new[] {headNode, workerNode, zookeepernode};
+            roles.Add(zookeepernode);
 
             return roles;
+        }
+
+        private static string GetHeadNodeSize(ClusterCreateParameters clusterCreateParameters)
+        {
+            string headNodeSize;
+            if (clusterCreateParameters.HeadNodeSize != null)
+            {
+                headNodeSize = clusterCreateParameters.HeadNodeSize;
+            }
+            else
+            {
+                headNodeSize = clusterCreateParameters.ClusterType == HDInsightClusterType.Hadoop ||
+                               clusterCreateParameters.ClusterType == HDInsightClusterType.Spark
+                    ? "D12"
+                    : "A3";
+            }
+            return headNodeSize;
+        }
+
+        private static string GetWorkerNodeSize(ClusterCreateParameters clusterCreateParameters)
+        {
+            string workerNodeSize;
+            if (clusterCreateParameters.WorkerNodeSize != null)
+            {
+                workerNodeSize = clusterCreateParameters.WorkerNodeSize;
+            }
+            else
+            {
+                workerNodeSize = clusterCreateParameters.ClusterType == HDInsightClusterType.Hadoop ||
+                                 clusterCreateParameters.ClusterType == HDInsightClusterType.Spark
+                    ? "D12"
+                    : "D3";
+            }
+            return workerNodeSize;
         }
     }
 }
