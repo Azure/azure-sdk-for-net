@@ -19,6 +19,7 @@ using DataFactory.Tests.Framework;
 using DataFactory.Tests.Framework.JsonSamples;
 using Microsoft.Azure.Management.DataFactories;
 using Microsoft.Azure.Management.DataFactories.Models;
+using Newtonsoft.Json.Linq;
 using Xunit;
 using Xunit.Extensions;
 using Core = Microsoft.Azure.Management.DataFactories.Core;
@@ -139,6 +140,45 @@ namespace DataFactory.Tests.UnitTests
             Assert.IsType<GenericActivity>(pipeline.Properties.Activities[0].TypeProperties);
         }
 
+        [Theory]
+        [InlineData(@"
+{
+    name: ""MyPipelineName"",
+    properties: 
+    {
+        activities:
+        [
+            {
+                type: ""Copy"",
+                name: ""TestActivity"",
+                typeProperties:
+                {
+                    source:
+                    {
+                        type: ""UnknownSource"",
+                        sourceRetryCount: ""2"",
+                    }
+                },
+                inputs: [ ],
+                outputs: [ ],
+                linkedServiceName: ""MyLinkedServiceName""
+            }
+        ]
+    }
+}
+")]
+        [Trait(TraitName.TestType, TestType.Unit)]
+        [Trait(TraitName.Function, TestType.Conversion)]
+        public void UnknownCopySourceDoesNotThrowExceptionTest(string json)
+        {
+            Pipeline pipeline = null;
+
+            // When we try to deserialize an unknown nested polymorphic type, 
+            // the behavior should be to drop the object (return null) rather than throw an exception
+            Assert.DoesNotThrow(() => pipeline = this.ConvertToWrapper(json));
+            Assert.Null(((CopyActivity)pipeline.Properties.Activities[0].TypeProperties).Source);
+        }
+
         [Theory, InlineData(PipelineJsonSamples.HDInsightPipeline)]
         [Trait(TraitName.TestType, TestType.Unit)]
         [Trait(TraitName.Function, TestType.Conversion)]
@@ -166,13 +206,17 @@ namespace DataFactory.Tests.UnitTests
             JsonComparer.ValidateAreSame(json, actualJson, ignoreDefaultValues: true);
             Assert.DoesNotContain("ServiceExtraProperties", actualJson);
 
-            if (sampleInfo.Version == null)
+            if (sampleInfo.Version == null
+                || !sampleInfo.Version.Equals(JsonSampleType.Unregistered, StringComparison.OrdinalIgnoreCase))
             {
                 foreach (Activity activity in pipeline.Properties.Activities)
                 {
                     Assert.IsNotType<GenericActivity>(activity.TypeProperties);
                 }
             }
+
+            JObject actualJObject = JObject.Parse(actualJson);
+            JsonComparer.ValidatePropertyNameCasing(actualJObject, true, string.Empty, sampleInfo.PropertyBagKeys);
         }
 
         private void TestPipelineValidation(string json)

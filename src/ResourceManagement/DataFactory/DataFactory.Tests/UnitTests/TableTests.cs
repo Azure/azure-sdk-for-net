@@ -19,6 +19,7 @@ using DataFactory.Tests.Framework;
 using DataFactory.Tests.Framework.JsonSamples;
 using Microsoft.Azure.Management.DataFactories;
 using Microsoft.Azure.Management.DataFactories.Models;
+using Newtonsoft.Json.Linq;
 using Xunit;
 using Xunit.Extensions;
 using Core = Microsoft.Azure.Management.DataFactories.Core;
@@ -119,6 +120,9 @@ namespace DataFactory.Tests.UnitTests
             {
                 Assert.IsNotType<GenericDataset>(table.Properties.TypeProperties);
             }
+
+            JObject actualJObject = JObject.Parse(actualJson);
+            JsonComparer.ValidatePropertyNameCasing(actualJObject, true, string.Empty, info.PropertyBagKeys);
         }
 
         private void TestTableValidation(JsonSampleInfo sampleInfo)

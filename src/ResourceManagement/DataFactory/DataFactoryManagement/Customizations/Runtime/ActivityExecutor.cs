@@ -26,11 +26,11 @@ namespace Microsoft.Azure.Management.DataFactories.Runtime
             ActivityConfiguration activityConfiguration = Utils.GetActivityConfiguration(configuration);
 
             IDotNetActivity activityImplementation = job as IDotNetActivity;
-            if (job == null)
-            {
-                throw new InvalidOperationException(string.Format(CultureInfo.InvariantCulture,
-                    "The type {0} in does not implement IDotNetActivity. Check the configuration and try again.", job == null ? "<null>" : job.GetType().FullName));
-            }
+            Ensure.IsNotNull(job, "job",
+                string.Format(
+                    CultureInfo.InvariantCulture,
+                    "The type {0} in does not implement IDotNetActivity. Check the configuration and try again.",
+                    job == null ? "<null>" : job.GetType().FullName));
 
             ActivityLogger logger = new ActivityLogger(logAction);
 

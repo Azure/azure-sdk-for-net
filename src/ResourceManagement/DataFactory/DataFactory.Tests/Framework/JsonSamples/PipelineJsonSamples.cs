@@ -18,7 +18,13 @@ namespace DataFactory.Tests.Framework.JsonSamples
 {
     public class PipelineJsonSamples : JsonSampleCollection<PipelineJsonSamples>
     {
-        [JsonSample(JsonSampleType.Unregistered)]
+        [JsonSample(JsonSampleType.Unregistered,
+            propertyBagKeys:
+                new string[]
+                    {
+                        "properties.activities[0].typeProperties.AssemblyName",
+                        "properties.activities[0].typeProperties.SliceStart"
+                    })]
         public const string ActivityTypePipeline = @"
 {
     name: ""activityType pipeline name"",
@@ -36,7 +42,14 @@ namespace DataFactory.Tests.Framework.JsonSamples
                     AssemblyName: ""foo.dll"",
                     SliceStart: ""$$Text.Format('{0:yyyyMMddHH-mm}', Time.AddMinutes(SliceStart, 0))""
                 },
-                linkedServiceName: ""MyLinkedServiceName""
+                linkedServiceName: ""MyLinkedServiceName"",
+                scheduler:
+                {
+                    offset: ""01:00:00"",
+                    interval: 1,
+                    anchorDateTime: ""2014-02-27T12:00:00"",
+                    frequency: ""Hour""
+                }
             }
         ],
         start: ""2001-01-01"",
@@ -53,7 +66,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
         [JsonSample(propertyBagKeys: new string[] 
             { 
                 // Identify user-provided property names. These should always be cased exactly as the user specified, rather than converted to camel/Pascal-cased.
-                "properties.activities[0].typeProperties.extendedProperties.PropertyBagPropertyName1"
+                "properties.activities[0].typeProperties.defines.PropertyBagPropertyName1"
             }
         )]
         public const string HDInsightPipeline = @"
@@ -120,7 +133,14 @@ namespace DataFactory.Tests.Framework.JsonSamples
                         ""storageLinkedService2""
                     ]
                 },
-                linkedServiceName: ""MyLinkedServiceName""
+                linkedServiceName: ""MyLinkedServiceName"",
+                scheduler:
+                {
+                    offset: ""01:00:00"",
+                    interval: 1,
+                    anchorDateTime: ""2014-02-27T12:00:00"",
+                    frequency: ""Hour""
+                }
             }
         ],
         start: ""2001-01-01"",
@@ -133,7 +153,11 @@ namespace DataFactory.Tests.Framework.JsonSamples
     }
 }
 ";
-        [JsonSample]
+
+        [JsonSample(propertyBagKeys: new string[]
+                        {
+                            "properties.activities[0].typeProperties.defines.PropertyBagPropertyName1"                     
+                        })]
         public const string HDInsightMapReducePipeline = @"
 {
     name: ""My HDInsight MapReduce pipeline"",
@@ -169,7 +193,14 @@ namespace DataFactory.Tests.Framework.JsonSamples
                         PropertyBagPropertyName1: ""PropertyBagValue1""
 					}
                 },
-                linkedServiceName: ""MyLinkedServiceName""
+                linkedServiceName: ""MyLinkedServiceName"",
+                scheduler:
+                {
+                    offset: ""01:00:00"",
+                    interval: 1,
+                    anchorDateTime: ""2014-02-27T12:00:00"",
+                    frequency: ""Hour""
+                }
             }
         ],
         start: ""2001-01-01"",
@@ -224,6 +255,70 @@ namespace DataFactory.Tests.Framework.JsonSamples
                 [ 
                     {
                         name: ""OutputBlobDA""
+                    }
+                ],
+                linkedServiceName: ""MyLinkedServiceName"",
+                policy:
+                {
+                    concurrency: 3,
+                    executionPriorityOrder: ""NewestFirst"",
+                    retry: 3,
+                    timeout: ""00:00:05"",
+                    delay: ""00:00:01""
+                },
+                scheduler:
+                {
+                    offset: ""01:00:00"",
+                    interval: 1,
+                    anchorDateTime: ""2014-02-27T12:00:00"",
+                    frequency: ""Hour""
+                }
+            }
+        ]
+    }
+}
+";
+
+        [JsonSample]
+        public const string CopySqlDWToSqlDW = @"
+{
+    name: ""MyPipelineName"",
+    properties: 
+    {
+        description : ""Copy from SQLDW to SQLDW"",
+        hubName: ""MyHDIHub"",
+        activities:
+        [
+            {
+                type: ""Copy"",
+                name: ""TestActivity"",
+                description: ""Test activity description"", 
+                typeProperties:
+                {
+                    source:
+                    {
+                        type: ""SqlDWSource"",
+                        sourceRetryCount: ""2"",
+                        sourceRetryWait: ""00:00:01"",
+                        sqlReaderQuery: ""$EncryptedString$MyEncryptedQuery""
+                    },
+                    sink:
+                    {
+                        type: ""SqlDWSink"",
+                        writeBatchSize: 1000000,
+                        writeBatchTimeout: ""01:00:00""
+                    },
+                },
+                inputs: 
+                [ 
+                    {
+                        name: ""InputSqlDWDA""
+                    }
+                ],
+                outputs: 
+                [ 
+                    {
+                        name: ""OutputSqlDWDA""
                     }
                 ],
                 linkedServiceName: ""MyLinkedServiceName"",
@@ -424,6 +519,13 @@ namespace DataFactory.Tests.Framework.JsonSamples
                     executionPriorityOrder: ""NewestFirst"",
                     retry: 2,
                     timeout: ""01:00:00""
+                },
+                scheduler:
+                {
+                    offset: ""01:00:00"",
+                    interval: 1,
+                    anchorDateTime: ""2014-02-27T12:00:00"",
+                    frequency: ""Hour""
                 }
             },
         ]
@@ -476,7 +578,8 @@ namespace DataFactory.Tests.Framework.JsonSamples
         [JsonSample(propertyBagKeys: new string[]
                     {
                         "properties.activities[0].typeProperties.webServiceParameters.oNe",
-                        "properties.activities[0].typeProperties.webServiceParameters.two NAME"
+                        "properties.activities[0].typeProperties.webServiceParameters.two NAME",
+                        "properties.activities[0].typeProperties.webServiceParameters.THREE"
                     })]
         public const string AzureMLPipelineWithWebParams = @"
 {
@@ -517,7 +620,8 @@ namespace DataFactory.Tests.Framework.JsonSamples
                     webServiceParameters:
                     {
                         ""oNe"": ""one value"",
-                        ""two NAME"": ""$$Text.Format('macro{0:yyyyMMddHH-mm}', Time.AddMinutes(SliceStart, 0))""
+                        ""two NAME"": ""$$Text.Format('macro{0:yyyyMMddHH-mm}', Time.AddMinutes(SliceStart, 0))"", 
+                        ""THREE"": ""HELLO""
                     }
                 }
             }
@@ -573,7 +677,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
         [JsonSample(propertyBagKeys: new string[] 
             { 
                 // Identify user-provided property names. These should always be cased exactly as the user specified, rather than converted to camel/Pascal-cased.
-                "properties.activities[0].transformation.extendedProperties.PropertyBagPropertyName1",
+                "properties.activities[0].typeproperties.defines.PropertyBagPropertyName1"
             }
 )]
         public const string StreamingWithExtendedProperties = @"

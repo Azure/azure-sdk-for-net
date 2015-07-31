@@ -21,7 +21,11 @@ namespace DataFactory.Tests.Framework.JsonSamples
     /// </summary>
     public class RegisteredActivityTypeJsonSamples : JsonSampleCollection<RegisteredActivityTypeJsonSamples>
     {
-        [JsonSample]
+        [JsonSample(propertyBagKeys: new string[]
+             {
+                "properties.schema.properties.PackageFile",
+                "properties.schema.properties.Bar"
+             })]
         public const string DotNetActivity = @"
 { 
     ""name"": ""CloudMLActivity"", 
@@ -43,7 +47,11 @@ namespace DataFactory.Tests.Framework.JsonSamples
     }
 }";
 
-        [JsonSample]
+        [JsonSample(propertyBagKeys: new string[]
+             {
+                "properties.schema.properties.PackageFile",
+                "properties.schema.properties.Bar"
+             })]
         public const string DotNetActivityNestedProperties = @"
 { 
     ""name"": ""CloudMLActivity"", 

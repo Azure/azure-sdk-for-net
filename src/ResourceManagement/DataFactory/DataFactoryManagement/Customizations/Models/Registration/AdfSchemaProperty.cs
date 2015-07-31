@@ -17,8 +17,28 @@ using System.Collections.Generic;
 
 namespace Microsoft.Azure.Management.DataFactories.Registration.Models
 {
-    public class AdfSchemaProperty
+    public class AdfSchemaProperty : BaseAdfSchemaProperty
     {
+        /// <summary>
+        /// Items for array property type. 
+        /// </summary>
+        public BaseAdfSchemaProperty Items { get; set; }
+
+        /// <summary>
+        /// Maximum number of items for array property type. 
+        /// </summary>
+        public int? MaxItems { get; set; }
+
+        /// <summary>
+        /// Minimum number of items for array property type. 
+        /// </summary>
+        public int? MinItems { get; set; }
+
+        /// <summary>
+        /// Unique number of items for array property type. 
+        /// </summary>
+        public bool? UniqueItems { get; set; }
+
         /// <summary>
         /// Nested properties of this property (only valid for object types). 
         /// </summary>
@@ -28,46 +48,5 @@ namespace Microsoft.Azure.Management.DataFactories.Registration.Models
         /// Name of the required properties for the type.
         /// </summary>
         public IList<string> Required { get; set; }
-
-        /// <summary>
-        /// Description of the schema property.
-        /// </summary>
-        public string Description { get; set; }
-
-        /// <summary>
-        /// Type of the JSON property.
-        /// </summary>
-        public string Type { get; set; }
-
-        /// <summary>
-        /// Default value of the JSON property.
-        /// </summary>
-        public object Default { get; set; }
-
-        /// <summary>
-        /// Regular expression pattern for string property types.
-        /// </summary>
-        public string Pattern { get; set; }
-
-        /// <summary>
-        /// Minimum allowed value for numeric property types.
-        /// </summary>
-        public double? Minimum { get; set; }
-
-        /// <summary>
-        /// Maximum allowed value for numeric property types. 
-        /// </summary>
-        public double? Maximum { get; set; }
-
-        /// <summary>
-        /// The property is reference to a Linked Service (only valid for string types). 
-        /// </summary>
-        public bool? LinkedServiceReference { get; set; }
-
-        /// <summary>
-        /// The value of the property will be some sensitive value and should be 
-        /// masked when returned from a GET call (only valid for string types).  
-        /// </summary>
-        public bool? SecureString { get; set; }
     }
 }

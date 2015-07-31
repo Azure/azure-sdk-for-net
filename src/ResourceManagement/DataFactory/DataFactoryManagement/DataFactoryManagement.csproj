@@ -13,20 +13,27 @@
   </PropertyGroup>
   <Import Project="..\..\..\..\tools\Library.Settings.targets" />
   <ItemGroup>
+    <Compile Include="Customizations\Conversion\DictionaryConverter.cs" />
     <Compile Include="Customizations\Models\Activities\CopySinks\CopyBehavior\CopyBehaviorType.cs" />
     <Compile Include="Customizations\Models\Activities\CopySinks\FileSystemSink.cs" />
+    <Compile Include="Customizations\Models\Activities\CopySinks\SqlDWSink.cs" />
+    <Compile Include="Customizations\Models\Activities\CopySources\SqlDWSource.cs" />
     <Compile Include="Customizations\Models\Activities\HDInsightActivityDebugInfoOption.cs" />
     <Compile Include="Customizations\Conversion\GenericRegisteredTypeConverter.cs" />
     <Compile Include="Customizations\Models\IRegisteredType.cs" />
+    <Compile Include="Customizations\Models\LinkedServices\AzureSqlDataWarehouseLinkedService.cs" />
     <Compile Include="Customizations\Models\LinkedServices\HDInsightSchemaGenerationProperties.cs" />
     <Compile Include="Customizations\Models\LinkedServices\InputPartitionOptions.cs" />
     <Compile Include="Customizations\Models\LinkedServices\SchemaGenerationTypes.cs" />
+    <Compile Include="Customizations\Models\Tables\AzureSqlDataWarehouseTableDataset.cs" />
+    <Compile Include="Customizations\Models\Registration\BaseAdfSchemaProperty.cs" />
     <Compile Include="Customizations\Models\Tables\Compression\CompressionLevel.cs" />
     <Compile Include="Customizations\Models\Tables\Compression\BZip2Compression.cs" />
     <Compile Include="Customizations\Models\Tables\Compression\DeflateCompression.cs" />
     <Compile Include="Customizations\Models\Tables\Compression\GZipCompression.cs" />
     <Compile Include="Customizations\Models\Tables\Compression\Compression.cs" />
     <Compile Include="Customizations\Models\IGenericTypeProperties.cs" />
+    <Compile Include="Customizations\Operations\DataFactoryOperationUtilities.cs" />
     <Compile Include="Customizations\Operations\DataSliceRuns\DataSliceRunOperations.cs" />
     <Compile Include="Customizations\Operations\DataSliceRuns\DataSliceRunOperationsExtensions.cs" />
     <Compile Include="Customizations\Operations\DataSliceRuns\IDataSliceRunOperations.cs" />
@@ -59,7 +66,6 @@
     <Compile Include="Customizations\Conversion\AdfRegisteredTypeConverter.cs" />
     <Compile Include="Customizations\Conversion\ComputeTypeConverter.cs" />
     <Compile Include="Customizations\Conversion\ConversionCommon.cs" />
-    <Compile Include="Customizations\Conversion\CoreRegistrationConverter.cs" />
     <Compile Include="Customizations\Conversion\CoreTypeConverter.cs" />
     <Compile Include="Customizations\Conversion\ITypeRegistrationOperations.cs" />
     <Compile Include="Customizations\Conversion\JObjectExtensions.cs" />

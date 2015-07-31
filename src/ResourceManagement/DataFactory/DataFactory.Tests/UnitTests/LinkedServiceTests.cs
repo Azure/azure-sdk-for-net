@@ -15,11 +15,13 @@
 // 
 
 using System;
+using System.Collections.Generic;
 using DataFactory.Tests.Framework;
 using DataFactory.Tests.Framework.JsonSamples;
 using DataFactory.Tests.UnitTests.TestClasses;
 using Microsoft.Azure.Management.DataFactories;
 using Microsoft.Azure.Management.DataFactories.Models;
+using Newtonsoft.Json.Linq;
 using Xunit;
 using Xunit.Extensions;
 using Core = Microsoft.Azure.Management.DataFactories.Core;
@@ -117,6 +119,44 @@ namespace DataFactory.Tests.UnitTests
             // typeProperties should be deserialized to a GenericLinkedServiceInstance
             LinkedService linkedService = this.ConvertToWrapper(unregisteredTypeJson);
             Assert.IsType<GenericLinkedService>(linkedService.Properties.TypeProperties);
+        }
+
+        [Fact]
+        [Trait(TraitName.TestType, TestType.Unit)]
+        [Trait(TraitName.Function, TestType.Conversion)]
+        public void CreatingGenericLinkedServiceWithoutTypeNameThrowsExceptionTest()
+        {
+            string expectedError =
+                "cannot be used if its value is GenericLinkedService, GenericTable or GenericActivity";
+
+            var genericLinkedService = new GenericLinkedService();
+            ArgumentException ex =
+                Assert.Throws<ArgumentException>(() => new LinkedServiceProperties(genericLinkedService));
+            
+            Assert.Contains(expectedError, ex.Message);
+
+            ex = Assert.Throws<ArgumentException>(
+                () =>
+                    {
+                        var ls = new LinkedServiceProperties(genericLinkedService, "somename");
+                        ls.TypeProperties = genericLinkedService;
+                    });
+
+            Assert.Contains(expectedError, ex.Message);
+        }
+
+        [Fact]
+        [Trait(TraitName.TestType, TestType.Unit)]
+        [Trait(TraitName.Function, TestType.Conversion)]
+        public void CanSetNonGenericTypePropertiesWithoutTypeName()
+        {
+            var storageLinkedService = new AzureStorageLinkedService();
+            Assert.DoesNotThrow(
+                () =>
+                    {
+                        var ls = new LinkedServiceProperties(storageLinkedService);
+                        ls.TypeProperties = storageLinkedService;
+                    });
         }
 
 #if NET45
@@ -227,7 +267,7 @@ namespace DataFactory.Tests.UnitTests
 
         #region Test helpers
 
-        private LinkedService ConvertAndTestJson(string json, bool customTest = false)
+        private LinkedService ConvertAndTestJson(string json, bool customTest = false, HashSet<string> propertyBagKeys = null)
         {
             LinkedService linkedService = this.ConvertToWrapper(json);
             CoreModel.LinkedService actual = this.Operations.Converter.ToCoreType(linkedService);
@@ -245,6 +285,9 @@ namespace DataFactory.Tests.UnitTests
 
             JsonComparer.ValidateAreSame(json, actualJson, ignoreDefaultValues: true);
             Assert.DoesNotContain("ServiceExtraProperties", actualJson);
+
+            JObject actualJObject = JObject.Parse(actualJson);
+            JsonComparer.ValidatePropertyNameCasing(actualJObject, true, string.Empty, propertyBagKeys);
             
             return linkedService;
         }
