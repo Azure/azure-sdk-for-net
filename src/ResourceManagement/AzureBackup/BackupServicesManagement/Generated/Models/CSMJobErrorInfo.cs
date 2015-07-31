@@ -23,71 +23,74 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Hyak.Common;
-using Microsoft.Azure.Management.BackupServices.Models;
 
 namespace Microsoft.Azure.Management.BackupServices.Models
 {
     /// <summary>
-    /// The definition of a Management List Response.
+    /// Definition of error details in a job
     /// </summary>
-    public partial class ProtectionPolicyInfoResponse : ManagementBaseObject, IEnumerable<ProtectionPolicyInfo>
+    public partial class CSMJobErrorInfo
     {
-        private IList<ProtectionPolicyInfo> _objects;
+        private int _errorCode;
         
         /// <summary>
-        /// Optional. The definition of List of ProtectionPolicyInfo.
+        /// Required. Error code for the job
         /// </summary>
-        public IList<ProtectionPolicyInfo> Objects
+        public int ErrorCode
         {
-            get { return this._objects; }
-            set { this._objects = value; }
+            get { return this._errorCode; }
+            set { this._errorCode = value; }
         }
         
-        private int _resultCount;
+        private string _errorString;
         
         /// <summary>
-        /// Optional. The definition of ResultCount.
+        /// Optional. Error message
         /// </summary>
-        public int ResultCount
+        public string ErrorString
         {
-            get { return this._resultCount; }
-            set { this._resultCount = value; }
+            get { return this._errorString; }
+            set { this._errorString = value; }
         }
         
-        private string _skiptoken;
+        private string _errorTitle;
         
         /// <summary>
-        /// Optional. The definition of Skiptoken.
+        /// Optional. Title of the error
         /// </summary>
-        public string Skiptoken
+        public string ErrorTitle
         {
-            get { return this._skiptoken; }
-            set { this._skiptoken = value; }
+            get { return this._errorTitle; }
+            set { this._errorTitle = value; }
         }
         
-        /// <summary>
-        /// Initializes a new instance of the ProtectionPolicyInfoResponse
-        /// class.
-        /// </summary>
-        public ProtectionPolicyInfoResponse()
-        {
-            this.Objects = new LazyList<ProtectionPolicyInfo>();
-        }
+        private IList<string> _recommendations;
         
         /// <summary>
-        /// Gets the sequence of Objects.
+        /// Optional. Recommendations for this particular error
         /// </summary>
-        public IEnumerator<ProtectionPolicyInfo> GetEnumerator()
+        public IList<string> Recommendations
         {
-            return this.Objects.GetEnumerator();
+            get { return this._recommendations; }
+            set { this._recommendations = value; }
         }
         
         /// <summary>
-        /// Gets the sequence of Objects.
+        /// Initializes a new instance of the CSMJobErrorInfo class.
         /// </summary>
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        public CSMJobErrorInfo()
         {
-            return this.GetEnumerator();
+            this.Recommendations = new LazyList<string>();
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the CSMJobErrorInfo class with
+        /// required arguments.
+        /// </summary>
+        public CSMJobErrorInfo(int errorCode)
+            : this()
+        {
+            this.ErrorCode = errorCode;
         }
     }
 }

@@ -20,54 +20,34 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Azure.Management.BackupServices.Models;
 
 namespace Microsoft.Azure.Management.BackupServices.Models
 {
     /// <summary>
-    /// The definition of a Management AddProtectionPolicy Request.
+    /// The definition of a CSMDailyRetentionFormat object.
     /// </summary>
-    public partial class AddProtectionPolicyRequest : ManagementBaseObject
+    public partial class CSMDailyRetentionFormat
     {
-        private string _policyName;
+        private IList<Day> _daysOfTheMonth;
         
         /// <summary>
-        /// Optional. Protection policy name.
+        /// Optional. List of Days of month.
         /// </summary>
-        public string PolicyName
+        public IList<Day> DaysOfTheMonth
         {
-            get { return this._policyName; }
-            set { this._policyName = value; }
-        }
-        
-        private BackupSchedule _schedule;
-        
-        /// <summary>
-        /// Optional. Schedule of ProtectionPolicy.
-        /// </summary>
-        public BackupSchedule Schedule
-        {
-            get { return this._schedule; }
-            set { this._schedule = value; }
-        }
-        
-        private string _workloadType;
-        
-        /// <summary>
-        /// Optional. WorkloadType of protection policy.
-        /// </summary>
-        public string WorkloadType
-        {
-            get { return this._workloadType; }
-            set { this._workloadType = value; }
+            get { return this._daysOfTheMonth; }
+            set { this._daysOfTheMonth = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the AddProtectionPolicyRequest class.
+        /// Initializes a new instance of the CSMDailyRetentionFormat class.
         /// </summary>
-        public AddProtectionPolicyRequest()
+        public CSMDailyRetentionFormat()
         {
+            this.DaysOfTheMonth = new List<Day>();
         }
     }
 }

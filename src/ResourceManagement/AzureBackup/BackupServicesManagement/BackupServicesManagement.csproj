@@ -424,6 +424,7 @@
     <Compile Include="Generated\VaultOperationsExtensions.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Generated\**\*.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(LibraryFxTarget)' == 'portable' " />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(LibraryFxTarget)' != 'portable' " />
