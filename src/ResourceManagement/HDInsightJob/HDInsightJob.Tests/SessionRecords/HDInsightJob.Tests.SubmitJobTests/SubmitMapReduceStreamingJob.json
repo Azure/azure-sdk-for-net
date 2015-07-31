@@ -1,0 +1,68 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/templeton/v1/mapreduce/streaming?user.name=hadoopuser",
+      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9tYXByZWR1Y2Uvc3RyZWFtaW5nP3VzZXIubmFtZT1oYWRvb3B1c2Vy",
+      "RequestMethod": "POST",
+      "RequestBody": "user.name=hadoopuser&input=/example/data/gutenberg/davinci.txt&output=/example/data/gutenberg/wcout&mapper=cat.exe&reducer=wc.exe&File=&define=&cmdenv=&arg=&statusdir=&enablelog=",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/text"
+        ],
+        "Content-Length": [
+          "178"
+        ],
+        "accept": [
+          "application/json"
+        ],
+        "useragent": [
+          "xplat MapReduce streaming job submission"
+        ],
+        "User-Agent": [
+          "xplat",
+          "MapReduce",
+          "streaming",
+          "job",
+          "submission"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"job_1435101021696_0048\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "31"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "x-ms-hdi-servedby": [
+          "GATEWAY1"
+        ],
+        "x-ms-hdi-active": [
+          "headnode0.hdisdk-resize1.d6.internal.cloudapp.net"
+        ],
+        "x-ms-leader-detect-time": [
+          "0"
+        ],
+        "Set-Cookie": [
+          "hadoop.auth=\"u=hadoopuser&p=hadoopuser&t=simple&e=1435732440516&s=2KmTSgphtKxPUrP+8al/4u9MeG0=\"; Version=1; Path=/; Expires=Wed, 01-Jul-2015 06:34:00 GMT; HttpOnly"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ARR/2.5",
+          "ASP.NET"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 30 Jun 2015 20:34:02 GMT"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}
