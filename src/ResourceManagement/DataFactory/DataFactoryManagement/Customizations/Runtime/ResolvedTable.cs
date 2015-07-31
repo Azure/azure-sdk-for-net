@@ -15,15 +15,12 @@
 
 using Microsoft.Azure.Management.DataFactories.Models;
 using Newtonsoft.Json;
-using System.Collections.Generic;
 
 namespace Microsoft.Azure.Management.DataFactories.Runtime
 {
-    [JsonConverter(typeof(ActivityConfigurationConverter))]
-    internal class ActivityConfiguration
+    internal class ResolvedTable
     {
-        public IEnumerable<ResolvedTable> Inputs { get; set; }
-        public IEnumerable<ResolvedTable> Outputs { get; set; }
-        public Pipeline Pipeline { get; set; }
+        public Table Table { get; internal set; }
+        public LinkedService LinkedService { get; internal set; }
     }
 }

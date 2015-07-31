@@ -38,12 +38,10 @@ namespace Microsoft.Azure.Management.DataFactories.Runtime
             ActivityLogger logger = new ActivityLogger(logAction);
 
             Collection<LinkedService> linkedServices = new Collection<LinkedService>();
-            PopulateLinkedServices(activityConfiguration.InputDataSets, linkedServices);
-            PopulateLinkedServices(activityConfiguration.OutputDataSets, linkedServices);
-
             Collection<Table> tables = new Collection<Table>();
-            PopulateLinkedServices(activityConfiguration.InputDataSets, tables);
-            PopulateLinkedServices(activityConfiguration.OutputDataSets, tables);
+
+            PopulateCollections(activityConfiguration.Inputs, linkedServices, tables);
+            PopulateCollections(activityConfiguration.Outputs, linkedServices, tables);
 
             Activity activity = null;
             
@@ -61,34 +59,23 @@ namespace Microsoft.Azure.Management.DataFactories.Runtime
                 logger);
         }
 
-        private static void PopulateLinkedServices(IEnumerable<DataSet> dataSets, ICollection<LinkedService> linkedServices)
+        private static void PopulateCollections(IEnumerable<ResolvedTable> resolvedTables, ICollection<LinkedService> linkedServices, ICollection<Table> tables)
         {
-            if (dataSets == null)
+            if (resolvedTables == null)
             {
                 return;
             }
 
-            foreach(DataSet dataSet in dataSets)
+            foreach (ResolvedTable resolvedTable in resolvedTables)
             {
-                if (dataSet.LinkedService != null)
+                if (resolvedTable.LinkedService != null)
                 {
-                    linkedServices.Add(dataSet.LinkedService);
+                    linkedServices.Add(resolvedTable.LinkedService);
                 }
-            }
-        }
 
-        private static void PopulateLinkedServices(IEnumerable<DataSet> dataSets, ICollection<Table> tables)
-        {
-            if (tables == null)
-            {
-                return;
-            }
-
-            foreach (DataSet dataSet in dataSets)
-            {
-                if (dataSet.Table != null)
+                if (resolvedTable.Table != null)
                 {
-                    tables.Add(dataSet.Table);
+                    tables.Add(resolvedTable.Table);
                 }
             }
         }
