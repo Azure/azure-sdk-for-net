@@ -177,6 +177,17 @@ namespace Microsoft.Azure.Management.Sql
         }
         
         /// <summary>
+        /// Represents all the operations for operating on Azure SQL Server
+        /// Active Directory Administrators.  Contains operations to: Create,
+        /// Retrieve, Update, and Delete Azure SQL Server Active Directory
+        /// Administrators.
+        /// </summary>
+        IServerAdministratorOperations ServerAdministrators
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Represents all the operations for operating on Azure SQL Database
         /// Servers.  Contains operations to: Create, Retrieve, Update, and
         /// Delete servers.
