@@ -36,15 +36,15 @@ namespace Microsoft.Azure.Management.BackupServices
     /// <summary>
     /// Definition of Container operations for the Azure Backup extension.
     /// </summary>
-    internal partial class ContainerOperation : IServiceOperations<BackupServicesManagementClient>, IContainerOperation
+    internal partial class ContainerOperations : IServiceOperations<BackupServicesManagementClient>, IContainerOperations
     {
         /// <summary>
-        /// Initializes a new instance of the ContainerOperation class.
+        /// Initializes a new instance of the ContainerOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal ContainerOperation(BackupServicesManagementClient client)
+        internal ContainerOperations(BackupServicesManagementClient client)
         {
             this._client = client;
         }
@@ -64,8 +64,8 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Get the list of all container based on the given query filter
         /// string.
         /// </summary>
-        /// <param name='queryFilterString'>
-        /// Optional. Job query parameter string.
+        /// <param name='parameters'>
+        /// Optional. Container query parameters.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a CSMContainerListOperationResponse.
         /// </returns>
-        public async Task<CSMContainerListOperationResponse> ListAsync(string queryFilterString, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<CSMContainerListOperationResponse> ListAsync(ContainerQueryParameters parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
             
@@ -87,7 +87,7 @@ namespace Microsoft.Azure.Management.BackupServices
             {
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("queryFilterString", queryFilterString);
+                tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
                 TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
             }
@@ -110,9 +110,22 @@ namespace Microsoft.Azure.Management.BackupServices
             url = url + "/containers";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2014-09-01");
-            if (queryFilterString != null)
+            List<string> odataFilter = new List<string>();
+            if (parameters != null && parameters.ContainerType != null)
             {
-                queryParameters.Add("dummy=" + Uri.EscapeDataString(queryFilterString));
+                odataFilter.Add("containerType eq '" + Uri.EscapeDataString(parameters.ContainerType) + "'");
+            }
+            if (parameters != null && parameters.FriendlyName != null)
+            {
+                odataFilter.Add("friendlyName eq '" + Uri.EscapeDataString(parameters.FriendlyName) + "'");
+            }
+            if (parameters != null && parameters.Status != null)
+            {
+                odataFilter.Add("status eq '" + Uri.EscapeDataString(parameters.Status) + "'");
+            }
+            if (odataFilter.Count > 0)
+            {
+                queryParameters.Add("$filter=" + string.Join(" and ", odataFilter));
             }
             if (queryParameters.Count > 0)
             {
@@ -527,7 +540,7 @@ namespace Microsoft.Azure.Management.BackupServices
             url = url + "BackupVault";
             url = url + "/";
             url = url + Uri.EscapeDataString(this.Client.ResourceName);
-            url = url + "//registeredContainers/";
+            url = url + "/registeredContainers/";
             url = url + Uri.EscapeDataString(containerName);
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2014-09-01");

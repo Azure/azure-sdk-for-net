@@ -28,7 +28,7 @@ using Microsoft.Azure.Management.BackupServices.Models;
 
 namespace Microsoft.Azure.Management.BackupServices
 {
-    public static partial class ContainerOperationExtensions
+    public static partial class ContainerOperationsExtensions
     {
         /// <summary>
         /// Get the list of all container based on the given query filter
@@ -36,10 +36,10 @@ namespace Microsoft.Azure.Management.BackupServices
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.BackupServices.IContainerOperation.
+        /// Microsoft.Azure.Management.BackupServices.IContainerOperations.
         /// </param>
-        /// <param name='queryFilterString'>
-        /// Optional. Job query parameter string.
+        /// <param name='parameters'>
+        /// Optional. Container query parameters.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
@@ -47,11 +47,11 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a CSMContainerListOperationResponse.
         /// </returns>
-        public static CSMContainerListOperationResponse List(this IContainerOperation operations, string queryFilterString, CustomRequestHeaders customRequestHeaders)
+        public static CSMContainerListOperationResponse List(this IContainerOperations operations, ContainerQueryParameters parameters, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IContainerOperation)s).ListAsync(queryFilterString, customRequestHeaders);
+                return ((IContainerOperations)s).ListAsync(parameters, customRequestHeaders);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -62,10 +62,10 @@ namespace Microsoft.Azure.Management.BackupServices
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.BackupServices.IContainerOperation.
+        /// Microsoft.Azure.Management.BackupServices.IContainerOperations.
         /// </param>
-        /// <param name='queryFilterString'>
-        /// Optional. Job query parameter string.
+        /// <param name='parameters'>
+        /// Optional. Container query parameters.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
@@ -73,9 +73,9 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a CSMContainerListOperationResponse.
         /// </returns>
-        public static Task<CSMContainerListOperationResponse> ListAsync(this IContainerOperation operations, string queryFilterString, CustomRequestHeaders customRequestHeaders)
+        public static Task<CSMContainerListOperationResponse> ListAsync(this IContainerOperations operations, ContainerQueryParameters parameters, CustomRequestHeaders customRequestHeaders)
         {
-            return operations.ListAsync(queryFilterString, customRequestHeaders, CancellationToken.None);
+            return operations.ListAsync(parameters, customRequestHeaders, CancellationToken.None);
         }
         
         /// <summary>
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.BackupServices.IContainerOperation.
+        /// Microsoft.Azure.Management.BackupServices.IContainerOperations.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
@@ -91,11 +91,11 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a Operation Response.
         /// </returns>
-        public static OperationResponse Refresh(this IContainerOperation operations, CustomRequestHeaders customRequestHeaders)
+        public static OperationResponse Refresh(this IContainerOperations operations, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IContainerOperation)s).RefreshAsync(customRequestHeaders);
+                return ((IContainerOperations)s).RefreshAsync(customRequestHeaders);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -105,7 +105,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.BackupServices.IContainerOperation.
+        /// Microsoft.Azure.Management.BackupServices.IContainerOperations.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
@@ -113,7 +113,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a Operation Response.
         /// </returns>
-        public static Task<OperationResponse> RefreshAsync(this IContainerOperation operations, CustomRequestHeaders customRequestHeaders)
+        public static Task<OperationResponse> RefreshAsync(this IContainerOperations operations, CustomRequestHeaders customRequestHeaders)
         {
             return operations.RefreshAsync(customRequestHeaders, CancellationToken.None);
         }
@@ -123,7 +123,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.BackupServices.IContainerOperation.
+        /// Microsoft.Azure.Management.BackupServices.IContainerOperations.
         /// </param>
         /// <param name='containerName'>
         /// Required. Container to be register.
@@ -134,11 +134,11 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a Operation Response.
         /// </returns>
-        public static OperationResponse Register(this IContainerOperation operations, string containerName, CustomRequestHeaders customRequestHeaders)
+        public static OperationResponse Register(this IContainerOperations operations, string containerName, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IContainerOperation)s).RegisterAsync(containerName, customRequestHeaders);
+                return ((IContainerOperations)s).RegisterAsync(containerName, customRequestHeaders);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -148,7 +148,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.BackupServices.IContainerOperation.
+        /// Microsoft.Azure.Management.BackupServices.IContainerOperations.
         /// </param>
         /// <param name='containerName'>
         /// Required. Container to be register.
@@ -159,7 +159,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a Operation Response.
         /// </returns>
-        public static Task<OperationResponse> RegisterAsync(this IContainerOperation operations, string containerName, CustomRequestHeaders customRequestHeaders)
+        public static Task<OperationResponse> RegisterAsync(this IContainerOperations operations, string containerName, CustomRequestHeaders customRequestHeaders)
         {
             return operations.RegisterAsync(containerName, customRequestHeaders, CancellationToken.None);
         }
@@ -169,7 +169,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.BackupServices.IContainerOperation.
+        /// Microsoft.Azure.Management.BackupServices.IContainerOperations.
         /// </param>
         /// <param name='containerName'>
         /// Required. Container which we want to unregister.
@@ -180,11 +180,11 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a Operation Response.
         /// </returns>
-        public static OperationResponse Unregister(this IContainerOperation operations, string containerName, CustomRequestHeaders customRequestHeaders)
+        public static OperationResponse Unregister(this IContainerOperations operations, string containerName, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IContainerOperation)s).UnregisterAsync(containerName, customRequestHeaders);
+                return ((IContainerOperations)s).UnregisterAsync(containerName, customRequestHeaders);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -194,7 +194,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.BackupServices.IContainerOperation.
+        /// Microsoft.Azure.Management.BackupServices.IContainerOperations.
         /// </param>
         /// <param name='containerName'>
         /// Required. Container which we want to unregister.
@@ -205,7 +205,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a Operation Response.
         /// </returns>
-        public static Task<OperationResponse> UnregisterAsync(this IContainerOperation operations, string containerName, CustomRequestHeaders customRequestHeaders)
+        public static Task<OperationResponse> UnregisterAsync(this IContainerOperations operations, string containerName, CustomRequestHeaders customRequestHeaders)
         {
             return operations.UnregisterAsync(containerName, customRequestHeaders, CancellationToken.None);
         }

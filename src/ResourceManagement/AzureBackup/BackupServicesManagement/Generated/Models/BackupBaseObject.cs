@@ -21,31 +21,18 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure;
-using Microsoft.Azure.Management.BackupServices;
 
 namespace Microsoft.Azure.Management.BackupServices.Models
 {
     /// <summary>
-    /// The response model for the list jobs operation.
+    /// The definition of a BackupBaseObject.
     /// </summary>
-    public partial class JobListResponse : AzureOperationResponse
+    public partial class BackupBaseObject
     {
-        private JobResponse _jobs;
-        
         /// <summary>
-        /// Optional. The list of jobs queried by filters for the resource id.
+        /// Initializes a new instance of the BackupBaseObject class.
         /// </summary>
-        public JobResponse Jobs
-        {
-            get { return this._jobs; }
-            set { this._jobs = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the JobListResponse class.
-        /// </summary>
-        public JobListResponse()
+        public BackupBaseObject()
         {
         }
     }

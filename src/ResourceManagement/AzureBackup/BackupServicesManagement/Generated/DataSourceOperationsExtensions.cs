@@ -31,64 +31,6 @@ namespace Microsoft.Azure.Management.BackupServices
     public static partial class DataSourceOperationsExtensions
     {
         /// <summary>
-        /// Enable protection for given item.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.BackupServices.IDataSourceOperations.
-        /// </param>
-        /// <param name='customRequestHeaders'>
-        /// Optional. Request header parameters.
-        /// </param>
-        /// <param name='containerName'>
-        /// Required. containerName.
-        /// </param>
-        /// <param name='itemName'>
-        /// Required. itemName.
-        /// </param>
-        /// <param name='csmparameters'>
-        /// Required. Set protection request input.
-        /// </param>
-        /// <returns>
-        /// The definition of a Operation Response.
-        /// </returns>
-        public static OperationResponse CSMUpdateProtection(this IDataSourceOperations operations, CustomRequestHeaders customRequestHeaders, CustomRequestHeaders containerName, CustomRequestHeaders itemName, CSMUpdateProtectionRequest csmparameters)
-        {
-            return Task.Factory.StartNew((object s) => 
-            {
-                return ((IDataSourceOperations)s).CSMUpdateProtectionAsync(customRequestHeaders, containerName, itemName, csmparameters);
-            }
-            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-        }
-        
-        /// <summary>
-        /// Enable protection for given item.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.BackupServices.IDataSourceOperations.
-        /// </param>
-        /// <param name='customRequestHeaders'>
-        /// Optional. Request header parameters.
-        /// </param>
-        /// <param name='containerName'>
-        /// Required. containerName.
-        /// </param>
-        /// <param name='itemName'>
-        /// Required. itemName.
-        /// </param>
-        /// <param name='csmparameters'>
-        /// Required. Set protection request input.
-        /// </param>
-        /// <returns>
-        /// The definition of a Operation Response.
-        /// </returns>
-        public static Task<OperationResponse> CSMUpdateProtectionAsync(this IDataSourceOperations operations, CustomRequestHeaders customRequestHeaders, CustomRequestHeaders containerName, CustomRequestHeaders itemName, CSMUpdateProtectionRequest csmparameters)
-        {
-            return operations.CSMUpdateProtectionAsync(customRequestHeaders, containerName, itemName, csmparameters, CancellationToken.None);
-        }
-        
-        /// <summary>
         /// Disable protection for given item
         /// </summary>
         /// <param name='operations'>
@@ -242,6 +184,64 @@ namespace Microsoft.Azure.Management.BackupServices
         public static Task<CSMProtectedItemListOperationResponse> ListCSMAsync(this IDataSourceOperations operations, CSMProtectedItemQueryObject csmparameters, CustomRequestHeaders customRequestHeaders)
         {
             return operations.ListCSMAsync(csmparameters, customRequestHeaders, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Enable protection for given item.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.BackupServices.IDataSourceOperations.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <param name='containerName'>
+        /// Required. containerName.
+        /// </param>
+        /// <param name='itemName'>
+        /// Required. itemName.
+        /// </param>
+        /// <param name='csmparameters'>
+        /// Required. Set protection request input.
+        /// </param>
+        /// <returns>
+        /// The definition of a Operation Response.
+        /// </returns>
+        public static OperationResponse UpdateProtectionCSM(this IDataSourceOperations operations, CustomRequestHeaders customRequestHeaders, string containerName, string itemName, CSMUpdateProtectionRequest csmparameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IDataSourceOperations)s).UpdateProtectionCSMAsync(customRequestHeaders, containerName, itemName, csmparameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Enable protection for given item.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.BackupServices.IDataSourceOperations.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <param name='containerName'>
+        /// Required. containerName.
+        /// </param>
+        /// <param name='itemName'>
+        /// Required. itemName.
+        /// </param>
+        /// <param name='csmparameters'>
+        /// Required. Set protection request input.
+        /// </param>
+        /// <returns>
+        /// The definition of a Operation Response.
+        /// </returns>
+        public static Task<OperationResponse> UpdateProtectionCSMAsync(this IDataSourceOperations operations, CustomRequestHeaders customRequestHeaders, string containerName, string itemName, CSMUpdateProtectionRequest csmparameters)
+        {
+            return operations.UpdateProtectionCSMAsync(customRequestHeaders, containerName, itemName, csmparameters, CancellationToken.None);
         }
     }
 }

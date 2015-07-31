@@ -29,21 +29,33 @@ using Microsoft.Azure.Management.BackupServices.Models;
 namespace Microsoft.Azure.Management.BackupServices
 {
     /// <summary>
-    /// Definition of DataSource operations for the Azure Backup extension.
+    /// Definition of Container operations for the Azure Backup extension.
     /// </summary>
-    public partial interface IDataSourceOperations
+    public partial interface IContainerOperations
     {
         /// <summary>
-        /// Disable protection for given item
+        /// Get the list of all container based on the given query filter
+        /// string.
         /// </summary>
+        /// <param name='parameters'>
+        /// Container query parameters.
+        /// </param>
         /// <param name='customRequestHeaders'>
         /// Request header parameters.
         /// </param>
-        /// <param name='containerName'>
-        /// containerName.
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
         /// </param>
-        /// <param name='itemName'>
-        /// itemName.
+        /// <returns>
+        /// The definition of a CSMContainerListOperationResponse.
+        /// </returns>
+        Task<CSMContainerListOperationResponse> ListAsync(ContainerQueryParameters parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Trigger the Discovery.
+        /// </summary>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -51,22 +63,16 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a Operation Response.
         /// </returns>
-        Task<OperationResponse> DisableProtectionCSMAsync(CustomRequestHeaders customRequestHeaders, string containerName, string itemName, CancellationToken cancellationToken);
+        Task<OperationResponse> RefreshAsync(CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Enable protection for given item.
+        /// Register the container.
         /// </summary>
+        /// <param name='containerName'>
+        /// Container to be register.
+        /// </param>
         /// <param name='customRequestHeaders'>
         /// Request header parameters.
-        /// </param>
-        /// <param name='containerName'>
-        /// containerName.
-        /// </param>
-        /// <param name='itemName'>
-        /// itemName.
-        /// </param>
-        /// <param name='csmparameters'>
-        /// Set protection request input.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -74,39 +80,16 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a Operation Response.
         /// </returns>
-        Task<OperationResponse> EnableProtectionCSMAsync(CustomRequestHeaders customRequestHeaders, string containerName, string itemName, CSMSetProtectionRequest csmparameters, CancellationToken cancellationToken);
+        Task<OperationResponse> RegisterAsync(string containerName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Get the list of all Datasources.
+        /// Unregister the container.
         /// </summary>
-        /// <param name='csmparameters'>
-        /// DataSource query parameter.
-        /// </param>
-        /// <param name='customRequestHeaders'>
-        /// Request header parameters.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The definition of a CSMProtectedItemListOperationResponse.
-        /// </returns>
-        Task<CSMProtectedItemListOperationResponse> ListCSMAsync(CSMProtectedItemQueryObject csmparameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Enable protection for given item.
-        /// </summary>
-        /// <param name='customRequestHeaders'>
-        /// Request header parameters.
-        /// </param>
         /// <param name='containerName'>
-        /// containerName.
+        /// Container which we want to unregister.
         /// </param>
-        /// <param name='itemName'>
-        /// itemName.
-        /// </param>
-        /// <param name='csmparameters'>
-        /// Set protection request input.
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -114,6 +97,6 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a Operation Response.
         /// </returns>
-        Task<OperationResponse> UpdateProtectionCSMAsync(CustomRequestHeaders customRequestHeaders, string containerName, string itemName, CSMUpdateProtectionRequest csmparameters, CancellationToken cancellationToken);
+        Task<OperationResponse> UnregisterAsync(string containerName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
     }
 }

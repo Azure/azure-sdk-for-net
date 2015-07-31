@@ -21,33 +21,23 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure;
-using Microsoft.Azure.Management.BackupServices.Models;
 
 namespace Microsoft.Azure.Management.BackupServices.Models
 {
-    /// <summary>
-    /// The response model for the list jobs operation.
-    /// </summary>
-    public partial class JobByIdResponse : AzureOperationResponse
+    public enum CustomerType
     {
-        private JobProperties _job;
+        Invalid = 0,
         
-        /// <summary>
-        /// Optional. The list of jobs queried by the filters for the resource
-        /// id.
-        /// </summary>
-        public JobProperties Job
-        {
-            get { return this._job; }
-            set { this._job = value; }
-        }
+        OBS = 1,
         
-        /// <summary>
-        /// Initializes a new instance of the JobByIdResponse class.
-        /// </summary>
-        public JobByIdResponse()
-        {
-        }
+        SBS = 2,
+        
+        DPM = 4,
+        
+        InMage = 8,
+        
+        ManagedContainer = 16,
+        
+        SqlPaaS = 32,
     }
 }

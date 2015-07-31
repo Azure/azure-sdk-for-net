@@ -21,51 +21,52 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure.Management.BackupServices.Models;
 
 namespace Microsoft.Azure.Management.BackupServices.Models
 {
     /// <summary>
-    /// The definition of a DataSourceQueryParameter object.
+    /// The definition of a MarsContainerResponse.
     /// </summary>
-    public partial class DataSourceQueryParameter
+    public partial class MarsContainerResponse : BackupBaseResponse
     {
-        private string _protectionStatus;
+        private string _containerType;
         
         /// <summary>
-        /// Optional. Protection Status of item.
+        /// Optional. MARS Container Friendly Name
         /// </summary>
-        public string ProtectionStatus
+        public string ContainerType
         {
-            get { return this._protectionStatus; }
-            set { this._protectionStatus = value; }
+            get { return this._containerType; }
+            set { this._containerType = value; }
         }
         
-        private string _status;
+        private MarsContainerProperties _properties;
         
         /// <summary>
-        /// Optional. Status of item.
+        /// Optional. MARS Container Properties
         /// </summary>
-        public string Status
+        public MarsContainerProperties Properties
         {
-            get { return this._status; }
-            set { this._status = value; }
+            get { return this._properties; }
+            set { this._properties = value; }
         }
         
-        private string _type;
+        private string _uniqueName;
         
         /// <summary>
-        /// Optional. Type of item.
+        /// Optional. MARS Container Unique Name
         /// </summary>
-        public string Type
+        public string UniqueName
         {
-            get { return this._type; }
-            set { this._type = value; }
+            get { return this._uniqueName; }
+            set { this._uniqueName = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the DataSourceQueryParameter class.
+        /// Initializes a new instance of the MarsContainerResponse class.
         /// </summary>
-        public DataSourceQueryParameter()
+        public MarsContainerResponse()
         {
         }
     }

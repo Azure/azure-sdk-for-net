@@ -91,7 +91,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <summary>
         /// Definition of Container operations for the Azure Backup extension.
         /// </summary>
-        IContainerOperation Container
+        IContainerOperations Container
         {
             get; 
         }

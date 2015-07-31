@@ -21,31 +21,30 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure;
-using Microsoft.Azure.Management.BackupServices.Models;
 
 namespace Microsoft.Azure.Management.BackupServices.Models
 {
     /// <summary>
-    /// The response model for the list DataSource operation.
+    /// The definition of a ContainerReregistrationState.
     /// </summary>
-    public partial class DataSourceListResponse : AzureOperationResponse
+    public partial class ContainerReregistrationState
     {
-        private DataSourceResponse _dataSources;
+        private bool _enableReregistration;
         
         /// <summary>
-        /// Optional. The list of DataSource for the resource id.
+        /// Optional. Flag to enable container reregistration.
         /// </summary>
-        public DataSourceResponse DataSources
+        public bool EnableReregistration
         {
-            get { return this._dataSources; }
-            set { this._dataSources = value; }
+            get { return this._enableReregistration; }
+            set { this._enableReregistration = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the DataSourceListResponse class.
+        /// Initializes a new instance of the ContainerReregistrationState
+        /// class.
         /// </summary>
-        public DataSourceListResponse()
+        public ContainerReregistrationState()
         {
         }
     }

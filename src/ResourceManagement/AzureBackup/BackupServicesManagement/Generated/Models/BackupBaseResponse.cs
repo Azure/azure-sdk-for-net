@@ -20,47 +20,54 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
 using Microsoft.Azure.Management.BackupServices.Models;
 
 namespace Microsoft.Azure.Management.BackupServices.Models
 {
     /// <summary>
-    /// The definition of a Management List Response.
+    /// The definition of a BackupBaseResponse.
     /// </summary>
-    public partial class JobProperties : Job
+    public partial class BackupBaseResponse : BackupBaseObject
     {
-        private IDictionary<string, string> _propertyBag;
+        private string _id;
         
         /// <summary>
-        /// Optional. PropertyBag of JobProperties.
+        /// Optional. ID
         /// </summary>
-        public IDictionary<string, string> PropertyBag
+        public string Id
         {
-            get { return this._propertyBag; }
-            set { this._propertyBag = value; }
+            get { return this._id; }
+            set { this._id = value; }
         }
         
-        private IList<JobTaskDetails> _tasksList;
+        private string _name;
         
         /// <summary>
-        /// Optional. TasksList of JobProperties.
+        /// Optional. Name
         /// </summary>
-        public IList<JobTaskDetails> TasksList
+        public string Name
         {
-            get { return this._tasksList; }
-            set { this._tasksList = value; }
+            get { return this._name; }
+            set { this._name = value; }
+        }
+        
+        private string _type;
+        
+        /// <summary>
+        /// Optional. Type
+        /// </summary>
+        public string Type
+        {
+            get { return this._type; }
+            set { this._type = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the JobProperties class.
+        /// Initializes a new instance of the BackupBaseResponse class.
         /// </summary>
-        public JobProperties()
+        public BackupBaseResponse()
         {
-            this.PropertyBag = new LazyDictionary<string, string>();
-            this.TasksList = new LazyList<JobTaskDetails>();
         }
     }
 }

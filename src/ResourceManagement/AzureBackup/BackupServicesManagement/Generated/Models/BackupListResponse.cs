@@ -21,31 +21,30 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure;
 using Microsoft.Azure.Management.BackupServices.Models;
 
 namespace Microsoft.Azure.Management.BackupServices.Models
 {
     /// <summary>
-    /// The response model for the list RecoveryPoints operation.
+    /// The definition of a BackupListResponse.
     /// </summary>
-    public partial class RecoveryPointListResponse : AzureOperationResponse
+    public partial class BackupListResponse : BackupBaseResponse
     {
-        private RecoveryPointInfoResponse _recoveryPoints;
+        private string _nextLink;
         
         /// <summary>
-        /// Optional. The list of RecoveryPoints for the resource id.
+        /// Optional. Next Link
         /// </summary>
-        public RecoveryPointInfoResponse RecoveryPoints
+        public string NextLink
         {
-            get { return this._recoveryPoints; }
-            set { this._recoveryPoints = value; }
+            get { return this._nextLink; }
+            set { this._nextLink = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the RecoveryPointListResponse class.
+        /// Initializes a new instance of the BackupListResponse class.
         /// </summary>
-        public RecoveryPointListResponse()
+        public BackupListResponse()
         {
         }
     }

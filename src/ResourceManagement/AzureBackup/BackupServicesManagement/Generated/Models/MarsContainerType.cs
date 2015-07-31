@@ -21,33 +21,13 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure;
-using Microsoft.Azure.Management.BackupServices.Models;
 
 namespace Microsoft.Azure.Management.BackupServices.Models
 {
-    /// <summary>
-    /// The response model for the list ProtectableObject operation.
-    /// </summary>
-    public partial class ProtectableObjectListResponse : AzureOperationResponse
+    public enum MarsContainerType
     {
-        private ProtectableObjectResponse _protectableObject;
+        Invalid = 0,
         
-        /// <summary>
-        /// Optional. The list of ProtectableObject for the resource id.
-        /// </summary>
-        public ProtectableObjectResponse ProtectableObject
-        {
-            get { return this._protectableObject; }
-            set { this._protectableObject = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the ProtectableObjectListResponse
-        /// class.
-        /// </summary>
-        public ProtectableObjectListResponse()
-        {
-        }
+        Machine = 1,
     }
 }

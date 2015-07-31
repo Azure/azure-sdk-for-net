@@ -9,15 +9,18 @@
   <Import Project="$(LibraryToolsFolder)\Test.Dependencies.target" />
   <ItemGroup>
     <Compile Include="Helpers\VaultTestHelper.cs" />
-    <Compile Include="ScenarioTests\AzureBackupItemTests.cs" />
     <Compile Include="ScenarioTests\BackupServicesTestBase.cs" />
     <Compile Include="ScenarioTests\BackUpTests.cs" />
-    <Compile Include="ScenarioTests\ContainerTests.cs" />
+    <Compile Include="ScenarioTests\CSMAzureBackupItem.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="ScenarioTests\JobsTests.cs" />
     <Compile Include="ScenarioTests\CSMProtectionPolicyTests.cs" />
     <Compile Include="ScenarioTests\RecoveryPointTests.cs" />
     <Compile Include="ScenarioTests\RestoreTest.cs" />
-    <Compile Include="ScenarioTests\VaultTests.cs" />
+    <Compile Include="ScenarioTests\VaultTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.WindowsAzure.Management.Common, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">

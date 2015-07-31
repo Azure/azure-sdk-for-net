@@ -21,52 +21,48 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.BackupServices.Models;
 
 namespace Microsoft.Azure.Management.BackupServices.Models
 {
-    /// <summary>
-    /// The definition of a RecoveryPoint Info object.
-    /// </summary>
-    public partial class RecoveryPointInfo : ManagementResponseObject
+    public partial class ContainerQueryParameters
     {
-        private string _recoveryPointAdditionalInfo;
+        private string _containerType;
         
         /// <summary>
-        /// Optional. RecoveryPointAdditionalInfo of RecoveryPointInfo.
+        /// Optional.
         /// </summary>
-        public string RecoveryPointAdditionalInfo
+        public string ContainerType
         {
-            get { return this._recoveryPointAdditionalInfo; }
-            set { this._recoveryPointAdditionalInfo = value; }
+            get { return this._containerType; }
+            set { this._containerType = value; }
         }
         
-        private DateTime _recoveryPointTime;
+        private string _friendlyName;
         
         /// <summary>
-        /// Optional. RecoveryPointTime of RecoveryPointInfo.
+        /// Optional.
         /// </summary>
-        public DateTime RecoveryPointTime
+        public string FriendlyName
         {
-            get { return this._recoveryPointTime; }
-            set { this._recoveryPointTime = value; }
+            get { return this._friendlyName; }
+            set { this._friendlyName = value; }
         }
         
-        private string _recoveryPointType;
+        private string _status;
         
         /// <summary>
-        /// Optional. RecoveryPointType of RecoveryPointInfo.
+        /// Optional.
         /// </summary>
-        public string RecoveryPointType
+        public string Status
         {
-            get { return this._recoveryPointType; }
-            set { this._recoveryPointType = value; }
+            get { return this._status; }
+            set { this._status = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the RecoveryPointInfo class.
+        /// Initializes a new instance of the ContainerQueryParameters class.
         /// </summary>
-        public RecoveryPointInfo()
+        public ContainerQueryParameters()
         {
         }
     }

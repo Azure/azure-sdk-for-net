@@ -110,12 +110,12 @@ namespace Microsoft.Azure.Management.BackupServices
             get { return this._backUp; }
         }
         
-        private IContainerOperation _container;
+        private IContainerOperations _container;
         
         /// <summary>
         /// Definition of Container operations for the Azure Backup extension.
         /// </summary>
-        public virtual IContainerOperation Container
+        public virtual IContainerOperations Container
         {
             get { return this._container; }
         }
@@ -201,7 +201,7 @@ namespace Microsoft.Azure.Management.BackupServices
             : base()
         {
             this._backUp = new BackUpOperations(this);
-            this._container = new ContainerOperation(this);
+            this._container = new ContainerOperations(this);
             this._cSMProtectionPolicy = new CSMProtectionPolicyOperations(this);
             this._dataSource = new DataSourceOperations(this);
             this._job = new JobOperations(this);
@@ -310,7 +310,7 @@ namespace Microsoft.Azure.Management.BackupServices
             : base(httpClient)
         {
             this._backUp = new BackUpOperations(this);
-            this._container = new ContainerOperation(this);
+            this._container = new ContainerOperations(this);
             this._cSMProtectionPolicy = new CSMProtectionPolicyOperations(this);
             this._dataSource = new DataSourceOperations(this);
             this._job = new JobOperations(this);

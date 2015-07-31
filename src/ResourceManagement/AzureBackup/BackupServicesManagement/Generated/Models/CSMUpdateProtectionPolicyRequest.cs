@@ -21,41 +21,46 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure.Management.BackupServices.Models;
 
 namespace Microsoft.Azure.Management.BackupServices.Models
 {
     /// <summary>
-    /// The definition of a POQueryParameter object.
+    /// The definition of a CSMUpdateProtectionPolicyRequest Request.
     /// </summary>
-    public partial class POQueryParameter
+    public partial class CSMUpdateProtectionPolicyRequest : CSMBaseRequest
     {
-        private string _status;
+        private CSMUpdateProtectionPolicyRequestProperties _properties;
         
         /// <summary>
-        /// Optional. Status Status of item.
+        /// Required. CSMUpdateProtectionPolicy Request Properties
         /// </summary>
-        public string Status
+        public CSMUpdateProtectionPolicyRequestProperties Properties
         {
-            get { return this._status; }
-            set { this._status = value; }
-        }
-        
-        private string _type;
-        
-        /// <summary>
-        /// Optional. Type of item.
-        /// </summary>
-        public string Type
-        {
-            get { return this._type; }
-            set { this._type = value; }
+            get { return this._properties; }
+            set { this._properties = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the POQueryParameter class.
+        /// Initializes a new instance of the CSMUpdateProtectionPolicyRequest
+        /// class.
         /// </summary>
-        public POQueryParameter()
+        public CSMUpdateProtectionPolicyRequest()
         {
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the CSMUpdateProtectionPolicyRequest
+        /// class with required arguments.
+        /// </summary>
+        public CSMUpdateProtectionPolicyRequest(CSMUpdateProtectionPolicyRequestProperties properties)
+            : this()
+        {
+            if (properties == null)
+            {
+                throw new ArgumentNullException("properties");
+            }
+            this.Properties = properties;
         }
     }
 }

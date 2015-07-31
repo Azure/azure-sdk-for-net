@@ -94,7 +94,7 @@ namespace Microsoft.Azure.Management.BackupServices
             
             // Construct URL
             string url = "";
-            url = url + "/Subscriptions/";
+            url = url + "/subscriptions/";
             if (this.Client.Credentials.SubscriptionId != null)
             {
                 url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
@@ -110,8 +110,19 @@ namespace Microsoft.Azure.Management.BackupServices
             url = url + "/items";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2014-09-01");
-            queryParameters.Add("Status -eq csmparameters.Status}");
-            queryParameters.Add("Type -eq csmparameters.Type}");
+            List<string> odataFilter = new List<string>();
+            if (csmparameters != null && csmparameters.Status != null)
+            {
+                odataFilter.Add("status eq '" + Uri.EscapeDataString(csmparameters.Status) + "'");
+            }
+            if (csmparameters != null && csmparameters.Type != null)
+            {
+                odataFilter.Add("itemType eq '" + Uri.EscapeDataString(csmparameters.Type) + "'");
+            }
+            if (odataFilter.Count > 0)
+            {
+                queryParameters.Add("$filter=" + string.Join(" and ", odataFilter));
+            }
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
