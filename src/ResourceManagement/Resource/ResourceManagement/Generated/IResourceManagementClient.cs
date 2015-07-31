@@ -98,7 +98,7 @@ namespace Microsoft.Azure.Management.Resources
         }
         
         /// <summary>
-        /// Operations for managing providers.
+        /// Operations for getting provider operations metadata.
         /// </summary>
         IProviderOperationsMetadataOperations ProviderOperationsMetadata
         {

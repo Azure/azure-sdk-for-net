@@ -122,7 +122,7 @@ namespace Microsoft.Azure.Management.Resources
         private IProviderOperationsMetadataOperations _providerOperationsMetadata;
         
         /// <summary>
-        /// Operations for managing providers.
+        /// Operations for getting provider operations metadata.
         /// </summary>
         public virtual IProviderOperationsMetadataOperations ProviderOperationsMetadata
         {

@@ -28,7 +28,7 @@ using Microsoft.Azure.Management.Resources.Models;
 namespace Microsoft.Azure.Management.Resources
 {
     /// <summary>
-    /// Operations for managing providers.
+    /// Operations for getting provider operations metadata.
     /// </summary>
     public partial interface IProviderOperationsMetadataOperations
     {

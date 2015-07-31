@@ -34,7 +34,7 @@ using Newtonsoft.Json.Linq;
 namespace Microsoft.Azure.Management.Resources
 {
     /// <summary>
-    /// Operations for managing providers.
+    /// Operations for getting provider operations metadata.
     /// </summary>
     internal partial class ProviderOperationsMetadataOperations : IServiceOperations<ResourceManagementClient>, IProviderOperationsMetadataOperations
     {
