@@ -25,17 +25,17 @@ namespace ResourceGroups.Tests
 {
     public class LiveSubscriptionTests : TestBase
     {
-        public ResourceManagementClient GetResourceManagementClient(RecordedDelegatingHandler handler)
+        public ResourceManagementClient GetResourceManagementClient(MockContext context, RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
-            var client = this.GetResourceManagementClientWithHandler(handler);
+            var client = this.GetResourceManagementClientWithHandler(context, handler);
             return client;
         }
 
-        public SubscriptionClient GetSubscriptionClient(RecordedDelegatingHandler handler)
+        public SubscriptionClient GetSubscriptionClient(MockContext context, RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
-            var client = this.GetSubscriptionClientWithHandler(handler);
+            var client = this.GetSubscriptionClientWithHandler(context, handler);
             return client;
         }
 
@@ -46,7 +46,7 @@ namespace ResourceGroups.Tests
 
             using (MockContext context = MockContext.Start())
             {
-                var client = GetSubscriptionClient(handler);
+                var client = GetSubscriptionClient(context, handler);
                 client.SetRetryPolicy(new RetryPolicy<HttpStatusCodeErrorDetectionStrategy>(1));
 
                 var subscriptions = client.Subscriptions.List();
@@ -67,8 +67,8 @@ namespace ResourceGroups.Tests
 
             using (MockContext context = MockContext.Start())
             {
-                var client = GetSubscriptionClient(handler);
-                var rmclient = GetResourceManagementClient(handler);
+                var client = GetSubscriptionClient(context, handler);
+                var rmclient = GetResourceManagementClient(context, handler);
                 client.SetRetryPolicy(new RetryPolicy<HttpStatusCodeErrorDetectionStrategy>(1));
 
                 var subscriptionDetails = client.Subscriptions.Get(rmclient.SubscriptionId);

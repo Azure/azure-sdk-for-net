@@ -61,6 +61,7 @@
     <Compile Include="ConnectionStringFields.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SubscriptionInfo.cs" />
+    <Compile Include="ResourceGroupCleaner.cs" />
     <Compile Include="TestBase.cs" />
     <Compile Include="TestTraits.cs" />
     <Compile Include="TestEndpoints.cs" />

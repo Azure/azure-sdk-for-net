@@ -23,8 +23,8 @@ namespace Networks.Tests
             using (MockContext context = MockContext.Start())
             {
                 
-                var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(handler);
-                var networkResourceProviderClient = NetworkManagementTestUtilities.GetNetworkResourceProviderClient(handler);
+                var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler);
+                var networkResourceProviderClient = NetworkManagementTestUtilities.GetNetworkResourceProviderClient(context, handler);
                 
                 var location = NetworkManagementTestUtilities.GetResourceLocation(resourcesClient, "Microsoft.Network/publicIPAddresses");
                 
@@ -89,8 +89,8 @@ namespace Networks.Tests
             using (MockContext context = MockContext.Start())
             {
                 
-                var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(handler);
-                var networkResourceProviderClient = NetworkManagementTestUtilities.GetNetworkResourceProviderClient(handler);
+                var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler);
+                var networkResourceProviderClient = NetworkManagementTestUtilities.GetNetworkResourceProviderClient(context, handler);
 
                 var location = ResourcesManagementTestUtilities.GetResourceLocation(resourcesClient, "Microsoft.Network/publicIPAddresses");
 

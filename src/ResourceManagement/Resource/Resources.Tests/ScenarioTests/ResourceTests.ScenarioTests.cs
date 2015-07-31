@@ -43,10 +43,10 @@ namespace ResourceGroups.Tests
             return new ResourceIdentity { ResourceType = parts[1], ResourceProviderNamespace = parts[0], ResourceName = resource.Name, ResourceProviderApiVersion = WebResourceProviderVersion };
         }
 
-        public ResourceManagementClient GetResourceManagementClient(RecordedDelegatingHandler handler)
+        public ResourceManagementClient GetResourceManagementClient(MockContext context, RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
-            return this.GetResourceManagementClientWithHandler(handler);
+            return this.GetResourceManagementClientWithHandler(context, handler);
         }
 
         public string GetWebsiteLocation(ResourceManagementClient client)
@@ -66,7 +66,7 @@ namespace ResourceGroups.Tests
 
             using (MockContext context = MockContext.Start())
             {
-                var client = GetResourceManagementClient(handler);
+                var client = GetResourceManagementClient(context, handler);
                 client.SetRetryPolicy(new RetryPolicy<HttpStatusCodeErrorDetectionStrategy>(1));
 
                 var groups = client.ResourceGroups.List();
@@ -97,7 +97,7 @@ namespace ResourceGroups.Tests
             {
                 string groupName = TestUtilities.GenerateName("csmrg");
                 string resourceName = TestUtilities.GenerateName("csmr");
-                var client = GetResourceManagementClient(handler);
+                var client = GetResourceManagementClient(context, handler);
                 string mySqlLocation = GetMySqlLocation(client);
                 var groupIdentity = new ResourceIdentity
                     {
@@ -146,7 +146,7 @@ namespace ResourceGroups.Tests
             {
                 string groupName = TestUtilities.GenerateName("csmrg");
                 string resourceName = TestUtilities.GenerateName("csmr");
-                var client = GetResourceManagementClient(handler);
+                var client = GetResourceManagementClient(context, handler);
                 string websiteLocation = GetWebsiteLocation(client);
 
                 client.SetRetryPolicy(new RetryPolicy<HttpStatusCodeErrorDetectionStrategy>(1));
@@ -195,7 +195,7 @@ namespace ResourceGroups.Tests
                 string resourceName = TestUtilities.GenerateName("csmr");
                 string resourceNameNoTags = TestUtilities.GenerateName("csmr");
                 string tagName = TestUtilities.GenerateName("csmtn");
-                var client = GetResourceManagementClient(handler);
+                var client = GetResourceManagementClient(context, handler);
                 string websiteLocation = GetWebsiteLocation(client);
 
                 client.SetRetryPolicy(new RetryPolicy<HttpStatusCodeErrorDetectionStrategy>(1));
@@ -257,7 +257,7 @@ namespace ResourceGroups.Tests
                 string resourceNameNoTags = TestUtilities.GenerateName("csmr");
                 string tagName = TestUtilities.GenerateName("csmtn");
                 string tagValue = TestUtilities.GenerateName("csmtv");
-                var client = GetResourceManagementClient(handler);
+                var client = GetResourceManagementClient(context, handler);
                 string websiteLocation = GetWebsiteLocation(client);
 
                 client.SetRetryPolicy(new RetryPolicy<HttpStatusCodeErrorDetectionStrategy>(1));
@@ -319,7 +319,7 @@ namespace ResourceGroups.Tests
             {
                 string groupName = TestUtilities.GenerateName("csmrg");
                 string resourceName = TestUtilities.GenerateName("csmr");
-                var client = GetResourceManagementClient(handler);
+                var client = GetResourceManagementClient(context, handler);
 
                 client.SetRetryPolicy(new RetryPolicy<HttpStatusCodeErrorDetectionStrategy>(1));
                 string location = this.GetWebsiteLocation(client);
@@ -361,7 +361,7 @@ namespace ResourceGroups.Tests
             {
                 string groupName = TestUtilities.GenerateName("csmrg");
                 string resourceName = TestUtilities.GenerateName("csmr");
-                var client = GetResourceManagementClient(handler);
+                var client = GetResourceManagementClient(context, handler);
                 string location = this.GetWebsiteLocation(client);
                 client.ResourceGroups.CreateOrUpdate(groupName, new ResourceGroup { Location = location });
                 var createOrUpdateResult = client.Resources.CreateOrUpdate(
