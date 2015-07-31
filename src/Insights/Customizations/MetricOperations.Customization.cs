@@ -68,8 +68,9 @@ namespace Microsoft.Azure.Insights
                 throw new ArgumentNullException("resourceUri");
             }
 
-            // Ensure exactly one '/' at the start
-            resourceUri = '/' + resourceUri.TrimStart('/');
+            // Remove any '/' characters from the start since these are handled by the hydra (thin) client
+            // Don't encode Uri segments here since this will mess up the SAS retrievers (they use the resourceUri directly)
+            resourceUri = resourceUri.TrimStart('/');
 
             MetricListResponse result;
             string invocationId = TracingAdapter.NextInvocationId.ToString(CultureInfo.InvariantCulture);

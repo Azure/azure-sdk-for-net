@@ -84,6 +84,24 @@ namespace Microsoft.Azure.Insights
                 filter.EndTime.ToString("O"));
         }
 
+        // Encodes each segment of the uri and returs the encoded version
+        // Side effect: Trims '/' characters from both ends
+        public static string EncodeUriSegments(string uri)
+        {
+            // return original string if null or whitespace
+            if (string.IsNullOrWhiteSpace(uri))
+            {
+                return uri;
+            }
+
+            // split segments (this also removes leading and trailing slashes, if any)
+            string[] segments = uri.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
+
+            return segments.Any()
+                ? segments.Select(Uri.EscapeDataString).Aggregate((a, b) => string.Concat(a, "/", b))
+                : uri;
+        }
+
         private static string GenerateMetricDimensionFilterString(IEnumerable<MetricDimension> metricDimensions)
         {
             return IsNullOrEmpty(metricDimensions) ? null : metricDimensions.Select(md => string.Format(CultureInfo.InvariantCulture, "name.value eq '{0}'{1}",
