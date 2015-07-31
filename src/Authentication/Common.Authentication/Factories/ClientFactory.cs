@@ -35,6 +35,35 @@ namespace Microsoft.Azure.Common.Authentication.Factories
             UserAgents = new List<ProductInfoHeaderValue>();
         }
 
+        /// <summary>
+        /// </summary>
+        /// <typeparam name="TClient"></typeparam>
+        /// <param name="subscription"></param>
+        /// <param name="endpoint"></param>
+        /// <returns></returns>
+        public virtual TClient CreateArmClient<TClient>(AzureProfile profile, AzureSubscription subscription, AzureEnvironment.Endpoint endpoint) where TClient : Microsoft.Rest.ServiceClient<TClient>
+        {
+            if (subscription == null)
+            {
+                throw new ApplicationException(Resources.InvalidDefaultSubscription);
+            }
+
+            ProfileClient profileClient = new ProfileClient(profile);
+            AzureContext context = new AzureContext(subscription,
+                profileClient.GetAccount(subscription.Account),
+                profileClient.GetEnvironmentOrDefault(subscription.Environment));
+
+            var creds = AzureSession.AuthenticationFactory.GetServiceClientCredentials(context);
+            TClient client = CreateCustomArmClient<TClient>(context.Environment.GetEndpointAsUri(endpoint), creds, new DelegatingHandler[]{});
+
+            foreach (IClientAction action in actions.Values)
+            {
+                action.ApplyArm<TClient>(client, profile, endpoint);
+            }
+
+            return client;
+        }
+
         public virtual TClient CreateArmClient<TClient>(AzureContext context, AzureEnvironment.Endpoint endpoint) where TClient : Microsoft.Rest.ServiceClient<TClient>
         {
             if (context == null)
@@ -105,7 +134,6 @@ namespace Microsoft.Azure.Common.Authentication.Factories
         }
 
         /// <summary>
-        /// TODO: Migrate all code that references this method to use AzureContext
         /// </summary>
         /// <typeparam name="TClient"></typeparam>
         /// <param name="subscription"></param>
