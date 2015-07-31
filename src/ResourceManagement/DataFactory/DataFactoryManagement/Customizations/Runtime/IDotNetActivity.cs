@@ -13,6 +13,7 @@
 // limitations under the License.
 //
 
+using Microsoft.Azure.Management.DataFactories.Models;
 using System.Collections.Generic;
 
 namespace Microsoft.Azure.Management.DataFactories.Runtime
@@ -26,15 +27,15 @@ namespace Microsoft.Azure.Management.DataFactories.Runtime
         /// <summary>
         /// Called to execute an instance of the activity.
         /// </summary>
-        /// <param name="inputDataSets">Input data sets defined in the activity definition.</param>
-        /// <param name="outputDataSets">Output data sets defined in the activity definition.</param>
-        /// <param name="extendedProperties">Extended properties defined in the activity definition.</param>
+        /// <param name="linkedServices">Linked services referenced by activity definition.</param>
+        /// <param name="tables">Tables referenced by activity definition.</param>
+        /// <param name="activity">Activity definition.</param>
         /// <param name="logger">Used to log messages during activity execution.</param>
         /// <returns>Properties that may be passed to down-stream activites.</returns>
         IDictionary<string, string> Execute(
-            IEnumerable<DataSet> inputDataSets,
-            IEnumerable<DataSet> outputDataSets,
-            IDictionary<string, string> extendedProperties,
+            IEnumerable<LinkedService> linkedServices,
+            IEnumerable<Table> tables,
+            Activity activity,
             IActivityLogger logger);
     }
 }
