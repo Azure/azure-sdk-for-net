@@ -487,17 +487,22 @@ namespace Microsoft.Azure.Management.BackupServices
             url = url + "/protectedItems";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2014-09-01");
+            List<string> odataFilter = new List<string>();
             if (csmparameters != null && csmparameters.ProtectionStatus != null)
             {
-                queryParameters.Add("ProtectionStatus -eq " + Uri.EscapeDataString(csmparameters.ProtectionStatus));
+                odataFilter.Add("protectionStatus eq '" + Uri.EscapeDataString(csmparameters.ProtectionStatus) + "'");
             }
             if (csmparameters != null && csmparameters.Status != null)
             {
-                queryParameters.Add("Status -eq " + Uri.EscapeDataString(csmparameters.Status));
+                odataFilter.Add("status eq '" + Uri.EscapeDataString(csmparameters.Status) + "'");
             }
             if (csmparameters != null && csmparameters.Type != null)
             {
-                queryParameters.Add("Type -eq " + Uri.EscapeDataString(csmparameters.Type));
+                odataFilter.Add("type eq '" + Uri.EscapeDataString(csmparameters.Type) + "'");
+            }
+            if (odataFilter.Count > 0)
+            {
+                queryParameters.Add("$filter=" + string.Join(" and ", odataFilter));
             }
             if (queryParameters.Count > 0)
             {
@@ -576,7 +581,7 @@ namespace Microsoft.Azure.Management.BackupServices
                             CSMProtectedItemListResponse cSMProtectedItemListResponseInstance = new CSMProtectedItemListResponse();
                             result.CSMProtectedItemListResponse = cSMProtectedItemListResponseInstance;
                             
-                            JToken valueArray = responseDoc["Value"];
+                            JToken valueArray = responseDoc["value"];
                             if (valueArray != null && valueArray.Type != JTokenType.Null)
                             {
                                 foreach (JToken valueValue in ((JArray)valueArray))
@@ -584,7 +589,7 @@ namespace Microsoft.Azure.Management.BackupServices
                                     CSMProtectedItemResponse cSMProtectedItemResponseInstance = new CSMProtectedItemResponse();
                                     cSMProtectedItemListResponseInstance.Value.Add(cSMProtectedItemResponseInstance);
                                     
-                                    JToken propertiesValue = valueValue["Properties"];
+                                    JToken propertiesValue = valueValue["properties"];
                                     if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                     {
                                         CSMProtectedItemProperties propertiesInstance = new CSMProtectedItemProperties();

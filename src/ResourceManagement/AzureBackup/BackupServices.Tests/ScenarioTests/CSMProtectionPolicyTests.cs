@@ -19,7 +19,7 @@ namespace BackupServices.Tests
                 context.Start();
                 var client = GetServiceClient<BackupServicesManagementClient>();
 
-                var response = client.ProtectionPolicy.List(GetCustomRequestHeaders());
+                var response = client.CSMProtectionPolicy.List(GetCustomRequestHeaders());
 
                 Assert.True(response.CSMProtectionPolicyListResponse.Value.Count > 0, "Protection Policies Result count can't be less than 1");
 
@@ -32,12 +32,12 @@ namespace BackupServices.Tests
                     Assert.True(!string.IsNullOrEmpty(ppo.Name), "Policy Name can't be null or empty");
                     if(ppo.Properties.BackupSchedule.ScheduleRun == "Daily")
                     {
-                        Assert.True(ppo.Properties.LTRRetentionPolicy.DailySchedule == null, "Daily RetentionType can't be  null or empty for Daily Schedule");
+                        Assert.True(ppo.Properties.LtrRetentionPolicy.DailySchedule == null, "Daily RetentionType can't be  null or empty for Daily Schedule");
                     
                     }
                     else
                     {
-                        Assert.True(ppo.Properties.LTRRetentionPolicy.WeeklySchedule == null, "Weekly RetentionType can't be  null or empty for Weekly Schedule");
+                        Assert.True(ppo.Properties.LtrRetentionPolicy.WeeklySchedule == null, "Weekly RetentionType can't be  null or empty for Weekly Schedule");
                     
                     }                   
                 }
@@ -61,7 +61,7 @@ namespace BackupServices.Tests
                 addProtectionPolicyRequest.Properties.BackupSchedule = backupSchedule;
                 addProtectionPolicyRequest.Properties.WorkloadType = ConfigurationManager.AppSettings["WorkloadType"];
                 addProtectionPolicyRequest.Properties.LtrRetentionPolicy = GetRetentionPolicy(backupSchedule.ScheduleRunTimes);
-                var response = client.ProtectionPolicy.Add(policyName, addProtectionPolicyRequest, GetCustomRequestHeaders());
+                var response = client.CSMProtectionPolicy.Add(policyName, addProtectionPolicyRequest, GetCustomRequestHeaders());
 
                 Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             }
@@ -81,7 +81,7 @@ namespace BackupServices.Tests
                 string policyName = ConfigurationManager.AppSettings["PolicyName"];
                 updateProtectionPolicyRequest.Properties.BackupSchedule = backupSchedule;
                 updateProtectionPolicyRequest.Properties.LtrRetentionPolicy = GetRetentionPolicy(backupSchedule.ScheduleRunTimes);
-                var response = client.ProtectionPolicy.Update(policyName, updateProtectionPolicyRequest, GetCustomRequestHeaders());
+                var response = client.CSMProtectionPolicy.Update(policyName, updateProtectionPolicyRequest, GetCustomRequestHeaders());
                 var isSuccess = (response.StatusCode == HttpStatusCode.OK || response.StatusCode == HttpStatusCode.Accepted) ? true : false;
                 Assert.Equal(true, isSuccess);
             }
@@ -95,7 +95,7 @@ namespace BackupServices.Tests
                 context.Start();
                 var client = GetServiceClient<BackupServicesManagementClient>();
                 string policyName = ConfigurationManager.AppSettings["PolicyName"];
-                var response = client.ProtectionPolicy.Delete(policyName, GetCustomRequestHeaders());
+                var response = client.CSMProtectionPolicy.Delete(policyName, GetCustomRequestHeaders());
 
                 Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
             }

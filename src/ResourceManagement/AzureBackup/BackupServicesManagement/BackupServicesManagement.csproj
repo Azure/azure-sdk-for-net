@@ -51,10 +51,10 @@
     <Compile Include="Generated\BackupVaultServicesManagementClientExtensions.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Generated\ContainerOperation.cs">
+    <Compile Include="Generated\ContainerOperations.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Generated\ContainerOperationExtensions.cs">
+    <Compile Include="Generated\ContainerOperationsExtensions.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Generated\CSMOperationErrorInfo.cs">
@@ -63,8 +63,12 @@
     <Compile Include="Generated\CSMOperationResult.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Generated\CSMProtectionPolicyOperations.cs" />
-    <Compile Include="Generated\CSMProtectionPolicyOperationsExtensions.cs" />
+    <Compile Include="Generated\CSMProtectionPolicyOperations.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\CSMProtectionPolicyOperationsExtensions.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Generated\DataSourceOperations.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -80,23 +84,25 @@
     <Compile Include="Generated\IBackupVaultServicesManagementClient.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Generated\IContainerOperation.cs">
+    <Compile Include="Generated\IContainerOperations.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Generated\ICSMProtectionPolicyOperations.cs" />
+    <Compile Include="Generated\ICSMProtectionPolicyOperations.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Generated\IDataSourceOperations.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Generated\IJobOperations.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Generated\IMarsContainerOperations.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Generated\IOperationStatus.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Generated\IProtectableObjectOperations.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Generated\IProtectionPolicyOperations.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Generated\IRecoveryPointOperations.cs">
@@ -114,13 +120,10 @@
     <Compile Include="Generated\JobOperationsExtensions.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Generated\JobQueryParameter.cs">
+    <Compile Include="Generated\MarsContainerOperations.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Generated\JobResponse.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Generated\Models\AddProtectionPolicyRequest.cs">
+    <Compile Include="Generated\MarsContainerOperationsExtensions.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Generated\Models\AzureBackupVault.cs">
@@ -141,12 +144,30 @@
     <Compile Include="Generated\Models\AzureIaaSVMRecoveryInputsCSMObject.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Generated\Models\BackupSchedule.cs">
+    <Compile Include="Generated\Models\BackupBaseObject.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Generated\Models\CSMAddProtectionPolicyRequest.cs" />
-    <Compile Include="Generated\Models\CSMAddProtectionPolicyRequestProperties.cs" />
-    <Compile Include="Generated\Models\CSMBackupSchedule.cs" />
+    <Compile Include="Generated\Models\BackupBaseResponse.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\Models\BackupListResponse.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\Models\ContainerQueryParameters.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\Models\ContainerReregistrationState.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\Models\CSMAddProtectionPolicyRequest.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\Models\CSMAddProtectionPolicyRequestProperties.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\Models\CSMBackupSchedule.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Generated\Models\CSMBaseObject.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -168,8 +189,12 @@
     <Compile Include="Generated\Models\CSMContainerResponse.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Generated\Models\CSMDailyRetentionFormat.cs" />
-    <Compile Include="Generated\Models\CSMDailyRetentionSchedule.cs" />
+    <Compile Include="Generated\Models\CSMDailyRetentionFormat.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\Models\CSMDailyRetentionSchedule.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Generated\Models\CSMItemListOperationResponse.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -185,21 +210,45 @@
     <Compile Include="Generated\Models\CSMItemResponse.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Generated\Models\CSMJobDetailedProperties.cs" />
-    <Compile Include="Generated\Models\CSMJobDetails.cs" />
-    <Compile Include="Generated\Models\CSMJobDetailsResponse.cs" />
-    <Compile Include="Generated\Models\CSMJobErrorInfo.cs" />
-    <Compile Include="Generated\Models\CSMJobList.cs" />
-    <Compile Include="Generated\Models\CSMJobListResponse.cs" />
-    <Compile Include="Generated\Models\CSMJobProperties.cs" />
-    <Compile Include="Generated\Models\CSMJobQueryObject.cs" />
-    <Compile Include="Generated\Models\CSMJobResponse.cs" />
-    <Compile Include="Generated\Models\CSMJobTaskDetails.cs" />
+    <Compile Include="Generated\Models\CSMJobDetailedProperties.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\Models\CSMJobDetails.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\Models\CSMJobDetailsResponse.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\Models\CSMJobErrorInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\Models\CSMJobList.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\Models\CSMJobListResponse.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\Models\CSMJobProperties.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\Models\CSMJobQueryObject.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\Models\CSMJobResponse.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\Models\CSMJobTaskDetails.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Generated\Models\CSMListResponse.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Generated\Models\CSMLongTermRetentionPolicy.cs" />
-    <Compile Include="Generated\Models\CSMMonthlyRetentionSchedule.cs" />
+    <Compile Include="Generated\Models\CSMLongTermRetentionPolicy.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\Models\CSMMonthlyRetentionSchedule.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Generated\Models\CSMProtectedItemListOperationResponse.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -215,11 +264,21 @@
     <Compile Include="Generated\Models\CSMProtectedItemResponse.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Generated\Models\CSMProtectionPolicyListOperationResponse.cs" />
-    <Compile Include="Generated\Models\CSMProtectionPolicyListResponse.cs" />
-    <Compile Include="Generated\Models\CSMProtectionPolicyProperties.cs" />
-    <Compile Include="Generated\Models\CSMProtectionPolicyResponse.cs" />
-    <Compile Include="Generated\Models\CSMQueryObject.cs" />
+    <Compile Include="Generated\Models\CSMProtectionPolicyListOperationResponse.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\Models\CSMProtectionPolicyListResponse.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\Models\CSMProtectionPolicyProperties.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\Models\CSMProtectionPolicyResponse.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\Models\CSMQueryObject.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Generated\Models\CSMRecoveryPointGetOperationResponse.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -241,64 +300,70 @@
     <Compile Include="Generated\Models\CSMRestoreRequestProperties.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Generated\Models\CSMRetentionDuration.cs" />
-    <Compile Include="Generated\Models\CSMRetentionPolicy.cs" />
-    <Compile Include="Generated\Models\CSMRetentionScheduleBase.cs" />
+    <Compile Include="Generated\Models\CSMRetentionDuration.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\Models\CSMRetentionPolicy.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\Models\CSMRetentionScheduleBase.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Generated\Models\CSMSetProtectionRequest.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Generated\Models\CSMSetProtectionRequestProperties.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Generated\Models\CSMUpdateProtectionPolicyRequest.cs" />
-    <Compile Include="Generated\Models\CSMUpdateProtectionPolicyRequestProperties.cs" />
+    <Compile Include="Generated\Models\CSMUpdateProtectionPolicyRequest.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\Models\CSMUpdateProtectionPolicyRequestProperties.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Generated\Models\CSMUpdateProtectionRequest.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Generated\Models\CSMUpdateProtectionRequestProperties.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Generated\Models\CSMWeeklyRetentionFormat.cs" />
-    <Compile Include="Generated\Models\CSMWeeklyRetentionSchedule.cs" />
-    <Compile Include="Generated\Models\CSMYearlyRetentionSchedule.cs" />
+    <Compile Include="Generated\Models\CSMWeeklyRetentionFormat.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\Models\CSMWeeklyRetentionSchedule.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\Models\CSMYearlyRetentionSchedule.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\Models\CustomerType.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Generated\Models\CustomRequestHeaders.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Generated\Models\DataSourceInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Generated\Models\DataSourceListResponse.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Generated\Models\DataSourceQueryParameter.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Generated\Models\DataSourceResponse.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Generated\Models\Day.cs" />
-    <Compile Include="Generated\Models\ErrorInfo.cs">
+    <Compile Include="Generated\Models\Day.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\Models\EnableReregistrationRequest.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Generated\Models\GetResourceStorageConfigResponse.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Generated\Models\Job.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Generated\Models\JobByIdResponse.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Generated\Models\JobListResponse.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Generated\Models\JobProperties.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Generated\Models\JobSupportedAction.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Generated\Models\JobTaskDetails.cs">
+    <Compile Include="Generated\Models\ListMarsContainerOperationResponse.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\Models\ListMarsContainerResponse.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Generated\Models\ManagementBaseObject.cs">
@@ -307,38 +372,25 @@
     <Compile Include="Generated\Models\ManagementResponseObject.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Generated\Models\Month.cs" />
-    <Compile Include="Generated\Models\POQueryParameter.cs">
+    <Compile Include="Generated\Models\MarsContainerProperties.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\Models\MarsContainerResponse.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\Models\MarsContainerType.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\Models\Month.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Generated\Models\ProtectableObjectInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Generated\Models\ProtectableObjectListResponse.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Generated\Models\ProtectableObjectResponse.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Generated\Models\ProtectionPolicyInfo.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Generated\Models\ProtectionPolicyInfoResponse.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Generated\Models\ProtectionPolicyListResponse.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Generated\Models\RawCertificateData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Generated\Models\RecoveryPointInfo.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Generated\Models\RecoveryPointInfoResponse.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Generated\Models\RecoveryPointListResponse.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Generated\Models\RecoveryType.cs">
@@ -353,10 +405,9 @@
     <Compile Include="Generated\Models\RetentionDurationType.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Generated\Models\RetentionPolicy.cs">
+    <Compile Include="Generated\Models\RetentionScheduleFormat.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Generated\Models\RetentionScheduleFormat.cs" />
     <Compile Include="Generated\Models\SetProtectionRequestInput.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -369,9 +420,6 @@
     <Compile Include="Generated\Models\StorageTypeProperties.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Generated\Models\UpdateProtectionPolicyRequest.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Generated\Models\UpdateVaultStorageTypeRequest.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -381,11 +429,10 @@
     <Compile Include="Generated\Models\VaultCredUploadCertResponse.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Generated\Models\WeekNumber.cs" />
-    <Compile Include="Generated\OperationResponse.cs">
+    <Compile Include="Generated\Models\WeekNumber.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Generated\OperationResultResponse.cs">
+    <Compile Include="Generated\OperationResponse.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Generated\OperationStatus.cs">
@@ -398,12 +445,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Generated\ProtectableObjectOperationsExtensions.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Generated\ProtectionPolicyOperations.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Generated\ProtectionPolicyOperationsExtensions.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Generated\RecoveryPointOperations.cs">
@@ -424,7 +465,6 @@
     <Compile Include="Generated\VaultOperationsExtensions.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Generated\**\*.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(LibraryFxTarget)' == 'portable' " />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(LibraryFxTarget)' != 'portable' " />

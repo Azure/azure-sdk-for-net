@@ -81,6 +81,14 @@ namespace Microsoft.Azure.Management.BackupServices
         }
         
         /// <summary>
+        /// Definition of Container operations for the Azure Backup extension.
+        /// </summary>
+        IMarsContainerOperations Container
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Definition of Vault-related operations for the Azure Backup
         /// extension.
         /// </summary>
