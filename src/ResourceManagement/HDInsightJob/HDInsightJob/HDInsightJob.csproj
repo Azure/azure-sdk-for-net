@@ -42,7 +42,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="Microsoft.Azure.Management.HDInsight.Job.nuget.proj" />
     <None Include="Microsoft.Azure.Management.HDInsight.Job.nuspec">
       <SubType>Designer</SubType>
