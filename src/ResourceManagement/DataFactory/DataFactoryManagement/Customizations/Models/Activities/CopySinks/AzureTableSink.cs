@@ -23,18 +23,6 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     public class AzureTableSink : CopySink
     {
         /// <summary>
-        /// Azure table retry interval in seconds.
-        /// </summary>
-        [AdfRequired]
-        public int AzureTableRetryIntervalInSec { get; set; }
-
-        /// <summary>
-        /// Azure table retry times.
-        /// </summary>
-        [AdfRequired]
-        public int AzureTableRetryTimes { get; set; }
-
-        /// <summary>
         /// Azure table default partition key value.
         /// </summary>
         public string AzureTableDefaultPartitionKeyValue { get; set; }
@@ -61,17 +49,6 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         public AzureTableSink(int writeBatchSize, TimeSpan writeBatchTimeout)
             : base(writeBatchSize, writeBatchTimeout)
         {
-        }
-
-        public AzureTableSink(
-            int writeBatchSize,
-            TimeSpan writeBatchTimeout,
-            int retryIntervalInSec,
-            int retryTimes)
-            : this(writeBatchSize, writeBatchTimeout)
-        {
-            this.AzureTableRetryIntervalInSec = retryIntervalInSec;
-            this.AzureTableRetryTimes = retryTimes;
         }
     }
 }
