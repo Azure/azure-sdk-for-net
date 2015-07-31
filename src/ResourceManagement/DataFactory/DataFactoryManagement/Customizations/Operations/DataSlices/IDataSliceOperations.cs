@@ -35,11 +35,11 @@ namespace Microsoft.Azure.Management.DataFactories
         /// <param name='dataFactoryName'>
         /// A unique data factory instance name.
         /// </param>
-        /// <param name='tableName'>
-        /// A unique table instance name.
+        /// <param name='datasetName'>
+        /// A unique dataset instance name.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters specifying how to list data slices of the table.
+        /// Parameters specifying how to list data slices of the dataset.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.DataFactories
         Task<DataSliceListResponse> ListAsync(
             string resourceGroupName,
             string dataFactoryName,
-            string tableName,
+            string datasetName,
             DataSliceListParameters parameters,
             CancellationToken cancellationToken);
 
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.DataFactories
         Task<DataSliceListResponse> ListNextAsync(string nextLink, CancellationToken cancellationToken);
 
         /// <summary>
-        /// Sets status of data slices over a time range for a specific table.
+        /// Sets status of data slices over a time range for a specific dataset.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The resource group name of the data factory.
@@ -78,8 +78,8 @@ namespace Microsoft.Azure.Management.DataFactories
         /// <param name='dataFactoryName'>
         /// A unique data factory instance name.
         /// </param>
-        /// <param name='tableName'>
-        /// A unique table instance name.
+        /// <param name='datasetName'>
+        /// A unique dataset instance name.
         /// </param>
         /// <param name='parameters'>
         /// The parameters required to set status of data slices.
@@ -94,7 +94,7 @@ namespace Microsoft.Azure.Management.DataFactories
         Task<AzureOperationResponse> SetStatusAsync(
             string resourceGroupName,
             string dataFactoryName,
-            string tableName,
+            string datasetName,
             DataSliceSetStatusParameters parameters,
             CancellationToken cancellationToken);
     }

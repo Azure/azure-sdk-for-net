@@ -82,12 +82,12 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         /// <param name='dataFactoryName'>
         /// A unique data factory instance name.
         /// </param>
-        /// <param name='tableName'>
-        /// A unique table instance name.
+        /// <param name='datasetName'>
+        /// A unique dataset instance name.
         /// </param>
         /// <param name='parameters'>
         /// Parameters for specifying the filters to list data slice runs of
-        /// the table.
+        /// the dataset.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -95,7 +95,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         /// <returns>
         /// The List data slice runs operation response.
         /// </returns>
-        Task<DataSliceRunListResponse> ListAsync(string resourceGroupName, string dataFactoryName, string tableName, DataSliceRunListParameters parameters, CancellationToken cancellationToken);
+        Task<DataSliceRunListResponse> ListAsync(string resourceGroupName, string dataFactoryName, string datasetName, DataSliceRunListParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Gets the next page of run instances with the link to the next page.

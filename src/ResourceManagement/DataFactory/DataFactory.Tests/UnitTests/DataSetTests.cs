@@ -38,7 +38,7 @@ namespace DataFactory.Tests.UnitTests
             JsonSampleCommon.TestJsonSample(sampleInfo, this.TestLinkedServiceJsonSample);
         }
 
-        [Theory, ClassData(typeof(TableJsonSamples))]
+        [Theory, ClassData(typeof(DatasetJsonSamples))]
         [Trait(TraitName.TestType, TestType.Unit)]
         [Trait(TraitName.Function, TestType.Conversion)]
         public void DataSetTableJsonConstsTest(JsonSampleInfo sampleInfo)
@@ -61,8 +61,8 @@ namespace DataFactory.Tests.UnitTests
 
         private void TestTableJsonSample(JsonSampleInfo sampleInfo)
         {
-            Core.Models.Table table =
-                Core.DataFactoryManagementClient.DeserializeInternalTableJson(sampleInfo.Json);
+            Core.Models.Dataset table =
+                Core.DataFactoryManagementClient.DeserializeInternalDatasetJson(sampleInfo.Json);
 
             var expectedDataSet = new DataSet()
             {

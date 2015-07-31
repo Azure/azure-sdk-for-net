@@ -15,11 +15,12 @@
 
 using Microsoft.Azure.Management.DataFactories.Models;
 using Newtonsoft.Json;
+using ModelsDataset = Microsoft.Azure.Management.DataFactories.Models.Dataset;
 
 namespace Microsoft.Azure.Management.DataFactories.Runtime
 {
     /// <summary>
-    /// Represents a set of resolved <see cref="Microsoft.Azure.Management.DataFactories.Models.Table"/> and 
+    /// Represents a set of resolved <see cref="Microsoft.Azure.Management.DataFactories.Models.Dataset"/> and 
     /// <see cref="Microsoft.Azure.Management.DataFactories.Models.LinkedService"/> values.
     /// </summary>
     [JsonConverter(typeof(DataSetConverter))]
@@ -33,9 +34,9 @@ namespace Microsoft.Azure.Management.DataFactories.Runtime
         }
 
         /// <summary>
-        /// The <see cref="Microsoft.Azure.Management.DataFactories.Models.Table"/> value.
+        /// The <see cref="Microsoft.Azure.Management.DataFactories.Models.Dataset"/> value.
         /// </summary>
-        public Table Table { get; internal set; }
+        public ModelsDataset Table { get; internal set; }
 
         /// <summary>
         /// The <see cref="Microsoft.Azure.Management.DataFactories.Models.LinkedService"/> value.

@@ -86,9 +86,9 @@ namespace Microsoft.Azure.Management.DataFactories
         public virtual IPipelineOperations Pipelines { get; private set; }
 
         /// <summary>
-        /// Operations for managing tables.
+        /// Operations for managing datasets.
         /// </summary>
-        public virtual ITableOperations Tables { get; private set; }
+        public virtual IDatasetOperations Datasets { get; private set; }
 
         internal Core.DataFactoryManagementClient InternalClient { get; private set; }
 
@@ -263,7 +263,7 @@ namespace Microsoft.Azure.Management.DataFactories
             this.Hubs = new HubOperations(this);
             this.LinkedServices = new LinkedServiceOperations(this);
             this.Pipelines = new PipelineOperations(this);
-            this.Tables = new TableOperations(this);
+            this.Datasets = new DatasetOperations(this);
             this.HttpClient.Timeout = this.InternalClient.HttpClient.Timeout;
             this.Credentials = this.InternalClient.Credentials;
             this.BaseUri = this.InternalClient.BaseUri;

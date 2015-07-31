@@ -29,15 +29,15 @@ namespace DataFactory.Tests.UnitTests
 {
     public class TableTests : UnitTestBase
     {
-        private TableOperations Operations
+        private DatasetOperations Operations
         {
             get 
             {
-                return (TableOperations)this.Client.Tables;
+                return (DatasetOperations)this.Client.Datasets;
             }
         }
 
-        [Theory, ClassData(typeof(TableJsonSamples))]
+        [Theory, ClassData(typeof(DatasetJsonSamples))]
         [Trait(TraitName.TestType, TestType.Unit)]
         [Trait(TraitName.Function, TestType.Conversion)]
         public void TableJsonConstsToWrappedObjectTest(JsonSampleInfo sampleInfo)
@@ -45,7 +45,7 @@ namespace DataFactory.Tests.UnitTests
             JsonSampleCommon.TestJsonSample(sampleInfo, this.TestTableJson);
         }
 
-        [Theory, ClassData(typeof(TableJsonSamples))]
+        [Theory, ClassData(typeof(DatasetJsonSamples))]
         [Trait(TraitName.TestType, TestType.Unit)]
         [Trait(TraitName.Function, TestType.Conversion)]
         public void TableValidateJsonConstsTest(JsonSampleInfo sampleInfo)
@@ -54,7 +54,7 @@ namespace DataFactory.Tests.UnitTests
         }
 
         [Theory, InlineData(@"{
-    name: ""Test-BYOC-HDInsight-Table"",
+    name: ""Test-BYOC-HDInsight-Dataset"",
     properties:
     {
         type: ""AzureSqlTable"",
@@ -71,7 +71,7 @@ namespace DataFactory.Tests.UnitTests
             Assert.Contains("is required", ex.Message);
         }
 
-        [Theory, ClassData(typeof(TableJsonSamples))]
+        [Theory, ClassData(typeof(DatasetJsonSamples))]
         [Trait(TraitName.TestType, TestType.Unit)]
         [Trait(TraitName.Function, TestType.Conversion)]
         public void TableWithExtraPropertiesTest(JsonSampleInfo sampleInfo)
@@ -85,7 +85,7 @@ namespace DataFactory.Tests.UnitTests
 
         [Theory, InlineData(@"
 {
-    name: ""Test-Unregistered-Table"",
+    name: ""Test-Unregistered-Dataset"",
     properties:
     {
         type: ""MyUnregisteredCustomType"",
@@ -100,25 +100,25 @@ namespace DataFactory.Tests.UnitTests
         [Trait(TraitName.Function, TestType.Conversion)]
         public void TableUnregisteredTypeTest(string unregisteredTypeJson)
         {
-            // If a table type has not been locally registered, 
+            // If a Dataset type has not been locally registered, 
             // typeProperties should be deserialized to a GenericTableInstance
-            Table table = this.ConvertToWrapper(unregisteredTypeJson);
-            Assert.IsType<GenericDataset>(table.Properties.TypeProperties);
+            Dataset dataset = this.ConvertToWrapper(unregisteredTypeJson);
+            Assert.IsType<GenericDataset>(dataset.Properties.TypeProperties);
         }
 
         private void TestTableJson(JsonSampleInfo info)
         {
             string json = info.Json;
-            Table table = this.ConvertToWrapper(json);
-            CoreModel.Table actual = this.Operations.Converter.ToCoreType(table);
-            string actualJson = Core.DataFactoryManagementClient.SerializeInternalTableToJson(actual);
+            Dataset dataset = this.ConvertToWrapper(json);
+            CoreModel.Dataset actual = this.Operations.Converter.ToCoreType(dataset);
+            string actualJson = Core.DataFactoryManagementClient.SerializeInternalDatasetToJson(actual);
             
             JsonComparer.ValidateAreSame(json, actualJson, ignoreDefaultValues: true);
 
             if (info.Version == null
                 || !info.Version.Equals(JsonSampleType.Unregistered, StringComparison.OrdinalIgnoreCase))
             {
-                Assert.IsNotType<GenericDataset>(table.Properties.TypeProperties);
+                Assert.IsNotType<GenericDataset>(dataset.Properties.TypeProperties);
             }
 
             JObject actualJObject = JObject.Parse(actualJson);
@@ -132,14 +132,14 @@ namespace DataFactory.Tests.UnitTests
         
         private void TestTableValidation(string json)
         {
-            Table table = this.ConvertToWrapper(json);
-            this.Operations.ValidateObject(table);
+            Dataset dataset = this.ConvertToWrapper(json);
+            this.Operations.ValidateObject(dataset);
         }
 
-        private Table ConvertToWrapper(string json)
+        private Dataset ConvertToWrapper(string json)
         {
-            CoreModel.Table internalTable =
-                Core.DataFactoryManagementClient.DeserializeInternalTableJson(json);
+            CoreModel.Dataset internalTable =
+                Core.DataFactoryManagementClient.DeserializeInternalDatasetJson(json);
 
             return this.Operations.Converter.ToWrapperType(internalTable);
         }

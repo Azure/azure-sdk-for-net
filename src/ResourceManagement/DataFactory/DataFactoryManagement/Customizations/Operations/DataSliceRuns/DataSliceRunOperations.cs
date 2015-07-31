@@ -49,14 +49,14 @@ namespace Microsoft.Azure.Management.DataFactories
         public async Task<DataSliceRunListResponse> ListAsync(
             string resourceGroupName,
             string dataFactoryName,
-            string tableName,
+            string datasetName,
             DataSliceRunListParameters parameters,
             CancellationToken cancellationToken)
         {
             return await this.Client.InternalClient.DataSliceRuns.ListAsync(
                 resourceGroupName,
                 dataFactoryName,
-                tableName,
+                datasetName,
                 parameters,
                 cancellationToken);
         }
