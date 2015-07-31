@@ -121,8 +121,6 @@ namespace DataFactory.Tests.UnitTests
 
             var expectedActivityConfiguration = new ActivityConfiguration()
             {
-                Inputs = new Collection<ResolvedTable>(),
-                Outputs = new Collection<ResolvedTable>(),
                 Pipeline = this.pipelineConverter.ToWrapperType(pipeline)
             };
 
