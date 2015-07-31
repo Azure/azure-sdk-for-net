@@ -14,4 +14,4 @@ set generateFolder=%~dp0Generated
 %repoRoot%\tools\nuget.exe install autorest %source% -Version %autoRestVersion% -o %repoRoot%\packages
 
 if exist %generateFolder% rd /S /Q  %generateFolder%
-%autoRestExe% -Input %specUrl% -outputDirectory %generateFolder% -Namespace Microsoft.Azure.Management.Logic -Header MICROSOFT_APACHE -CodeGenerator Azure.CSharp -AddCredentials
+%autoRestExe% -Input %specUrl% -outputDirectory %generateFolder% -Namespace Microsoft.Azure.Management.Logic -Header MICROSOFT_MIT -CodeGenerator Azure.CSharp -AddCredentials
