@@ -464,7 +464,7 @@ namespace Microsoft.Azure.Management.HDInsight
                 return roles;
             }
 
-            string zookeeperNodeSize = clusterCreateParameters.ZookeeperNodeSize ?? "A2";
+            string zookeeperNodeSize = clusterCreateParameters.ZookeeperNodeSize ?? "Medium";
 
             var zookeepernode = new Role
             {
@@ -493,8 +493,8 @@ namespace Microsoft.Azure.Management.HDInsight
             {
                 headNodeSize = clusterCreateParameters.ClusterType == HDInsightClusterType.Hadoop ||
                                clusterCreateParameters.ClusterType == HDInsightClusterType.Spark
-                    ? "D12"
-                    : "A3";
+                    ? "Standard_D12"
+                    : "Large";
             }
             return headNodeSize;
         }
@@ -510,8 +510,8 @@ namespace Microsoft.Azure.Management.HDInsight
             {
                 workerNodeSize = clusterCreateParameters.ClusterType == HDInsightClusterType.Hadoop ||
                                  clusterCreateParameters.ClusterType == HDInsightClusterType.Spark
-                    ? "D12"
-                    : "D3";
+                    ? "Standard_D12"
+                    : "Standard_D3";
             }
             return workerNodeSize;
         }
