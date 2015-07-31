@@ -1,0 +1,56 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/nonexistentrg/providers/Microsoft.HDInsight/clusters?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzMxMmMxMzItZmM0MC00OTNmLTljOTctODJkODAyNTZhMzEzL3Jlc291cmNlR3JvdXBzL25vbmV4aXN0ZW50cmcvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnM/YXBpLXZlcnNpb249MjAxNS0wMy0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceGroupNotFound\",\r\n    \"message\": \"Resource group 'nonexistentrg' could not be found.\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "105"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-failure-cause": [
+          "gateway"
+        ],
+        "x-ms-request-id": [
+          "001c72b0-6587-46b8-8db5-b2a57e466302"
+        ],
+        "x-ms-correlation-request-id": [
+          "001c72b0-6587-46b8-8db5-b2a57e466302"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150527T033834Z:001c72b0-6587-46b8-8db5-b2a57e466302"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 27 May 2015 03:38:34 GMT"
+        ]
+      },
+      "StatusCode": 404
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "3312c132-fc40-493f-9c97-82d80256a313"
+  }
+}

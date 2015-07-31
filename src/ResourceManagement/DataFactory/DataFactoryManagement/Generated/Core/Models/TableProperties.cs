@@ -120,17 +120,6 @@ namespace Microsoft.Azure.Management.DataFactories.Core.Models
             set { this._provisioningState = value; }
         }
         
-        private bool? _published;
-        
-        /// <summary>
-        /// Optional. Table is published to Enterprise Data Directory.
-        /// </summary>
-        public bool? Published
-        {
-            get { return this._published; }
-            set { this._published = value; }
-        }
-        
         private IList<DataElement> _structure;
         
         /// <summary>

@@ -52,11 +52,6 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         public bool? External { get; set; }
 
         /// <summary>
-        /// Table is published to Enterprise Data Directory.
-        /// </summary>
-        public bool? Published { get; set; }
-
-        /// <summary>
         /// The time it is created.
         /// </summary>
         public DateTime? CreateTime { get; internal set; }

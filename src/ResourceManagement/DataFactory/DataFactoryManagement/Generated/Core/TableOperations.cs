@@ -374,11 +374,6 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                         propertiesValue["external"] = parameters.Table.Properties.External.Value;
                     }
                     
-                    if (parameters.Table.Properties.Published != null)
-                    {
-                        propertiesValue["published"] = parameters.Table.Properties.Published.Value;
-                    }
-                    
                     if (parameters.Table.Properties.CreateTime != null)
                     {
                         propertiesValue["createTime"] = parameters.Table.Properties.CreateTime.Value;
@@ -661,13 +656,6 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                 {
                                     bool externalInstance = ((bool)externalValue);
                                     propertiesInstance.External = externalInstance;
-                                }
-                                
-                                JToken publishedValue = propertiesValue2["published"];
-                                if (publishedValue != null && publishedValue.Type != JTokenType.Null)
-                                {
-                                    bool publishedInstance = ((bool)publishedValue);
-                                    propertiesInstance.Published = publishedInstance;
                                 }
                                 
                                 JToken createTimeValue = propertiesValue2["createTime"];
@@ -1124,13 +1112,6 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                     propertiesInstance.External = externalInstance;
                                 }
                                 
-                                JToken publishedValue = propertiesValue["published"];
-                                if (publishedValue != null && publishedValue.Type != JTokenType.Null)
-                                {
-                                    bool publishedInstance = ((bool)publishedValue);
-                                    propertiesInstance.Published = publishedInstance;
-                                }
-                                
                                 JToken createTimeValue = propertiesValue["createTime"];
                                 if (createTimeValue != null && createTimeValue.Type != JTokenType.Null)
                                 {
@@ -1350,11 +1331,11 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                     {
                         result.Status = OperationStatus.Failed;
                     }
-                    if (statusCode == HttpStatusCode.NoContent)
+                    if (statusCode == HttpStatusCode.OK)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
-                    if (statusCode == HttpStatusCode.OK)
+                    if (statusCode == HttpStatusCode.NoContent)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
@@ -1978,13 +1959,6 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                     propertiesInstance.External = externalInstance;
                                 }
                                 
-                                JToken publishedValue = propertiesValue["published"];
-                                if (publishedValue != null && publishedValue.Type != JTokenType.Null)
-                                {
-                                    bool publishedInstance = ((bool)publishedValue);
-                                    propertiesInstance.Published = publishedInstance;
-                                }
-                                
                                 JToken createTimeValue = propertiesValue["createTime"];
                                 if (createTimeValue != null && createTimeValue.Type != JTokenType.Null)
                                 {
@@ -2349,13 +2323,6 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                 {
                                     bool externalInstance = ((bool)externalValue);
                                     propertiesInstance.External = externalInstance;
-                                }
-                                
-                                JToken publishedValue = propertiesValue["published"];
-                                if (publishedValue != null && publishedValue.Type != JTokenType.Null)
-                                {
-                                    bool publishedInstance = ((bool)publishedValue);
-                                    propertiesInstance.Published = publishedInstance;
                                 }
                                 
                                 JToken createTimeValue = propertiesValue["createTime"];
@@ -2791,13 +2758,6 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                             propertiesInstance.External = externalInstance;
                                         }
                                         
-                                        JToken publishedValue = propertiesValue["published"];
-                                        if (publishedValue != null && publishedValue.Type != JTokenType.Null)
-                                        {
-                                            bool publishedInstance = ((bool)publishedValue);
-                                            propertiesInstance.Published = publishedInstance;
-                                        }
-                                        
                                         JToken createTimeValue = propertiesValue["createTime"];
                                         if (createTimeValue != null && createTimeValue.Type != JTokenType.Null)
                                         {
@@ -3179,13 +3139,6 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                         {
                                             bool externalInstance = ((bool)externalValue);
                                             propertiesInstance.External = externalInstance;
-                                        }
-                                        
-                                        JToken publishedValue = propertiesValue["published"];
-                                        if (publishedValue != null && publishedValue.Type != JTokenType.Null)
-                                        {
-                                            bool publishedInstance = ((bool)publishedValue);
-                                            propertiesInstance.Published = publishedInstance;
                                         }
                                         
                                         JToken createTimeValue = propertiesValue["createTime"];
