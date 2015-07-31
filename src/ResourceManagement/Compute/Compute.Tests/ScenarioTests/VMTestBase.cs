@@ -13,8 +13,12 @@
 // limitations under the License.
 //
 
-using Compute.Tests;
-using Microsoft.Azure;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Net;
+using Microsoft.Rest.Azure;
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.Network;
@@ -23,13 +27,9 @@ using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
 using Microsoft.Azure.Management.Storage;
 using Microsoft.Azure.Management.Storage.Models;
-using Microsoft.Azure.Test;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+
 using Xunit;
-using System.Diagnostics;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
 namespace Compute.Tests
 {
@@ -63,7 +63,7 @@ namespace Compute.Tests
                         m_SrpClient = ComputeManagementTestUtilities.GetStorageManagementClient(handler);
                         m_NrpClient = ComputeManagementTestUtilities.GetNetworkResourceProviderClient(handler);
 
-                        m_subId = m_CrpClient.Credentials.SubscriptionId;
+                        m_subId = m_CrpClient.SubscriptionId;
                         m_location = ComputeManagementTestUtilities.DefaultLocation;
                     }
                 }
@@ -130,12 +130,12 @@ namespace Compute.Tests
                     ComputeManagementTestUtilities.WaitSeconds(10);
                     var stos = m_SrpClient.StorageAccounts.ListByResourceGroup(rgName);
                     created =
-                        stos.Value.Any(
+                        stos.Any(
                             t =>
                                 StringComparer.OrdinalIgnoreCase.Equals(t.Name, storageAccountName));
                 }
 
-                return storageAccountOutput;
+                return m_SrpClient.StorageAccounts.GetProperties(rgName, storageAccountName);
             }
             catch
             {
@@ -376,8 +376,8 @@ namespace Compute.Tests
                 }
             };
 
-            typeof(VirtualMachine).GetProperty("Name").SetValue(vm, TestUtilities.GenerateName("vm"));
-            typeof(VirtualMachine).GetProperty("Type").SetValue(vm, TestUtilities.GenerateName("Microsoft.Compute/virtualMachines"));
+            typeof(Resource).GetProperty("Name").SetValue(vm, TestUtilities.GenerateName("vm"));
+            typeof(Resource).GetProperty("Type").SetValue(vm, TestUtilities.GenerateName("Microsoft.Compute/virtualMachines"));
             return vm;
         }
 

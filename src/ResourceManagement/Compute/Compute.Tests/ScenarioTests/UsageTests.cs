@@ -13,14 +13,15 @@
 // limitations under the License.
 //
 
-using Microsoft.Azure;
+using System;
+using Microsoft.Rest.Azure;
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Storage.Models;
-using Microsoft.Azure.Test;
 using System.Net;
 using Xunit;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
 namespace Compute.Tests
 {
@@ -40,9 +41,8 @@ namespace Compute.Tests
         [Fact(Skip = "TODO: AutoRest")]
         public void TestListUsages()
         {
-            using (UndoContext context = UndoContext.Current)
+            using (MockContext context = MockContext.Start())
             {
-                context.Start();
                 EnsureClientsInitialized();
 
                 ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
@@ -65,6 +65,10 @@ namespace Compute.Tests
                     ValidateListUsageResponse(luResponse);
 
                     m_CrpClient.VirtualMachines.Delete(rgName, inputVM.Name);
+                }
+                catch (Exception e)
+                {
+                    Assert.Null(e);
                 }
                 finally
                 {

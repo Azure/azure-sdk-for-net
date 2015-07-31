@@ -5,9 +5,11 @@ namespace Microsoft.Azure.Management.Compute.Models
     using Newtonsoft.Json;
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
-    using Microsoft.Azure;
+    using Microsoft.Rest.Azure;
 
     /// <summary>
+    /// Contains information about SSH certificate public key and the path on
+    /// the Linux VM where the public key is placed.
     /// </summary>
     public partial class SshPublicKey
     {

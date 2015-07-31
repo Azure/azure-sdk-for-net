@@ -13,12 +13,12 @@
 // limitations under the License.
 //
 
-using Microsoft.Azure;
+using Microsoft.Rest.Azure;
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Storage.Models;
-using Microsoft.Azure.Test;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,9 +43,8 @@ namespace Compute.Tests
         [Fact(Skip = "TODO: AutoRest")]
         public void TestVMMarketplace()
         {
-            using (var context = UndoContext.Current)
+            using (MockContext context = MockContext.Start())
             {
-                context.Start();
                 EnsureClientsInitialized();
 
                 ImageReference dummyImageRef = GetPlatformVMImage(useWindowsImage: true);

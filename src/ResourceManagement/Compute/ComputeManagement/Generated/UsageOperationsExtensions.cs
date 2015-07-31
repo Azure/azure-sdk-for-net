@@ -7,7 +7,7 @@ namespace Microsoft.Azure.Management.Compute
     using System.Threading.Tasks;
     using Microsoft.Rest;
     using System.Linq.Expressions;
-    using Microsoft.Azure;
+    using Microsoft.Rest.Azure;
     using Models;
 
     public static partial class UsageOperationsExtensions
@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Compute
             /// Lists compute usages for a subscription.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='location'>
             /// The location upon which resource usage is queried.
@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Compute
             /// Lists compute usages for a subscription.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='location'>
             /// The location upon which resource usage is queried.

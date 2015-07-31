@@ -20,8 +20,8 @@ using Microsoft.Azure.Management.Network;
 using Microsoft.Azure.Management.Network.Models;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
-using Microsoft.Azure.Test;
 using Xunit;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
 namespace Compute.Tests
 {
@@ -30,9 +30,8 @@ namespace Compute.Tests
         [Fact(Skip = "TODO: AutoRest")]
         public void TestNicVirtualMachineReference()
         {
-            using (var context = UndoContext.Current)
+            using (MockContext context = MockContext.Start())
             {
-                context.Start();
                 EnsureClientsInitialized();
 
                 ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
@@ -93,9 +92,8 @@ namespace Compute.Tests
         [Fact(Skip = "TODO: AutoRest")]
         public void TestMultiNicVirtualMachineReference()
         {
-            using (var context = UndoContext.Current)
+            using (MockContext context = MockContext.Start())
             {
-                context.Start();
                 EnsureClientsInitialized();
 
                 ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);

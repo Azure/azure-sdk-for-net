@@ -6,7 +6,7 @@ namespace Microsoft.Azure.Management.Network
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Rest;
-    using Microsoft.Azure;
+    using Microsoft.Rest.Azure;
     using Models;
 
     public static partial class LoadBalancersOperationsExtensions
@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.Network
             /// The delete loadbalancer operation deletes the specified loadbalancer.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Network
             /// The delete loadbalancer operation deletes the specified loadbalancer.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.Network
             /// The delete loadbalancer operation deletes the specified loadbalancer.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Management.Network
             /// The delete loadbalancer operation deletes the specified loadbalancer.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -90,7 +90,7 @@ namespace Microsoft.Azure.Management.Network
             /// specified network interface.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -108,7 +108,7 @@ namespace Microsoft.Azure.Management.Network
             /// specified network interface.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -129,7 +129,7 @@ namespace Microsoft.Azure.Management.Network
             /// The Put LoadBalancer operation creates/updates a LoadBalancer
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -149,7 +149,7 @@ namespace Microsoft.Azure.Management.Network
             /// The Put LoadBalancer operation creates/updates a LoadBalancer
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -173,7 +173,7 @@ namespace Microsoft.Azure.Management.Network
             /// The Put LoadBalancer operation creates/updates a LoadBalancer
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -193,7 +193,7 @@ namespace Microsoft.Azure.Management.Network
             /// The Put LoadBalancer operation creates/updates a LoadBalancer
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -218,9 +218,9 @@ namespace Microsoft.Azure.Management.Network
             /// subscription.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
-            public static LoadBalancerListResult ListAll(this ILoadBalancersOperations operations)
+            public static Page<LoadBalancer> ListAll(this ILoadBalancersOperations operations)
             {
                 return Task.Factory.StartNew(s => ((ILoadBalancersOperations)s).ListAllAsync(), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -230,14 +230,14 @@ namespace Microsoft.Azure.Management.Network
             /// subscription.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<LoadBalancerListResult> ListAllAsync( this ILoadBalancersOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Page<LoadBalancer>> ListAllAsync( this ILoadBalancersOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<LoadBalancerListResult> result = await operations.ListAllWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<Page<LoadBalancer>> result = await operations.ListAllWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -246,12 +246,12 @@ namespace Microsoft.Azure.Management.Network
             /// resource group.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
-            public static LoadBalancerListResult List(this ILoadBalancersOperations operations, string resourceGroupName)
+            public static Page<LoadBalancer> List(this ILoadBalancersOperations operations, string resourceGroupName)
             {
                 return Task.Factory.StartNew(s => ((ILoadBalancersOperations)s).ListAsync(resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -261,7 +261,7 @@ namespace Microsoft.Azure.Management.Network
             /// resource group.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -269,9 +269,9 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<LoadBalancerListResult> ListAsync( this ILoadBalancersOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Page<LoadBalancer>> ListAsync( this ILoadBalancersOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<LoadBalancerListResult> result = await operations.ListWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<Page<LoadBalancer>> result = await operations.ListWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -280,14 +280,14 @@ namespace Microsoft.Azure.Management.Network
             /// subscription.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
-            /// <param name='nextLink'>
+            /// <param name='nextPageLink'>
             /// NextLink from the previous successful call to List operation.
             /// </param>
-            public static LoadBalancerListResult ListAllNext(this ILoadBalancersOperations operations, string nextLink)
+            public static Page<LoadBalancer> ListAllNext(this ILoadBalancersOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((ILoadBalancersOperations)s).ListAllNextAsync(nextLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ILoadBalancersOperations)s).ListAllNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -295,17 +295,17 @@ namespace Microsoft.Azure.Management.Network
             /// subscription.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
-            /// <param name='nextLink'>
+            /// <param name='nextPageLink'>
             /// NextLink from the previous successful call to List operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<LoadBalancerListResult> ListAllNextAsync( this ILoadBalancersOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Page<LoadBalancer>> ListAllNextAsync( this ILoadBalancersOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<LoadBalancerListResult> result = await operations.ListAllNextWithHttpMessagesAsync(nextLink, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<Page<LoadBalancer>> result = await operations.ListAllNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -314,14 +314,14 @@ namespace Microsoft.Azure.Management.Network
             /// resource group.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
-            /// <param name='nextLink'>
+            /// <param name='nextPageLink'>
             /// NextLink from the previous successful call to List operation.
             /// </param>
-            public static LoadBalancerListResult ListNext(this ILoadBalancersOperations operations, string nextLink)
+            public static Page<LoadBalancer> ListNext(this ILoadBalancersOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((ILoadBalancersOperations)s).ListNextAsync(nextLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ILoadBalancersOperations)s).ListNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -329,17 +329,17 @@ namespace Microsoft.Azure.Management.Network
             /// resource group.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
-            /// <param name='nextLink'>
+            /// <param name='nextPageLink'>
             /// NextLink from the previous successful call to List operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<LoadBalancerListResult> ListNextAsync( this ILoadBalancersOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Page<LoadBalancer>> ListNextAsync( this ILoadBalancersOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<LoadBalancerListResult> result = await operations.ListNextWithHttpMessagesAsync(nextLink, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<Page<LoadBalancer>> result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

@@ -27,7 +27,7 @@ Note: This client library is for Virtual Machines under Azure Resource Manager.<
       </group>
     </references>
     <dependencies>
-      <dependency id="Microsoft.Rest.ClientRuntime.Azure" version="[1.0.12,2.0)" />
+      <dependency id="Microsoft.Rest.ClientRuntime.Azure" version="[1.0.20,2.0)" />
     </dependencies>
   </metadata>
   <files>

@@ -17,12 +17,12 @@ using System;
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Test;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using Microsoft.Azure;
+using Microsoft.Rest.Azure;
 using Xunit;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
 namespace Compute.Tests
 {
@@ -41,8 +41,8 @@ namespace Compute.Tests
                 Settings = "{}",
                 ProtectedSettings = "{}"
             };
-            typeof(VirtualMachineExtension).GetProperty("Name").SetValue(vmExtension, "vmext01");
-            typeof(VirtualMachineExtension).GetProperty("Type").SetValue(vmExtension, "Microsoft.Compute/virtualMachines/extensions");
+            typeof(Resource).GetProperty("Name").SetValue(vmExtension, "vmext01");
+            typeof(Resource).GetProperty("Type").SetValue(vmExtension, "Microsoft.Compute/virtualMachines/extensions");
 
             return vmExtension;
         }
@@ -50,9 +50,8 @@ namespace Compute.Tests
         [Fact(Skip = "TODO: AutoRest")]
         public void TestVMExtensionOperations()
         {
-            using (var context = UndoContext.Current)
+            using (MockContext context = MockContext.Start())
             {
-                context.Start();
                 EnsureClientsInitialized();
 
                 ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
@@ -113,7 +112,7 @@ namespace Compute.Tests
             Assert.True(vmExtExpected.VirtualMachineExtensionType == vmExtReturned.VirtualMachineExtensionType);
             Assert.True(vmExtExpected.AutoUpgradeMinorVersion == vmExtReturned.AutoUpgradeMinorVersion);
             Assert.True(vmExtExpected.TypeHandlerVersion == vmExtReturned.TypeHandlerVersion);
-            Assert.True(vmExtExpected.Settings == vmExtReturned.Settings);
+            Assert.True(vmExtExpected.Settings.ToString() == vmExtReturned.Settings.ToString());
         }
 
         private void ValidateVMExtensionInstanceView(VirtualMachineExtensionInstanceView vmExtInstanceView)

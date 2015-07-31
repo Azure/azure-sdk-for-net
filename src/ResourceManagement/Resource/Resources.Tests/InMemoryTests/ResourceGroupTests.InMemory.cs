@@ -14,16 +14,17 @@
 //
 
 using System;
-using System.Linq;
 using System.Collections.Generic;
-using System.Threading;
-using Microsoft.Azure;
-using Microsoft.Azure.Management.Resources;
-using Xunit;
-using Newtonsoft.Json.Linq;
-using System.Net.Http;
+using System.Linq;
 using System.Net;
+using System.Net.Http;
+using Microsoft.Rest.Azure;
+using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
+using Microsoft.Rest;
+using Newtonsoft.Json.Linq;
+
+using Xunit;
 
 namespace ResourceGroups.Tests
 {
@@ -32,7 +33,7 @@ namespace ResourceGroups.Tests
         public ResourceManagementClient GetResourceManagementClient(RecordedDelegatingHandler handler)
         {
             var subscriptionId = Guid.NewGuid().ToString();
-            var token = new TokenCloudCredentials(subscriptionId, "abc123");
+            var token = new TokenCredentials(subscriptionId, "abc123");
             handler.IsPassThrough = false;
             var client = new ResourceManagementClient(token, handler);
             client.SubscriptionId = subscriptionId;
@@ -291,11 +292,11 @@ namespace ResourceGroups.Tests
             Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
 
             // Validate result
-            Assert.Equal(2, result.Value.Count);
-            Assert.Equal("myresourcegroup1", result.Value[0].Name);
-            Assert.Equal("Succeeded", result.Value[0].Properties.ProvisioningState);
-            Assert.Equal("/subscriptions/abc123/resourcegroups/csmrgr5mfggio", result.Value[0].Id);
-            Assert.Equal("https://wa/subscriptions/subId/resourcegroups?api-version=1.0&$skiptoken=662idk", result.NextLink.ToString());
+            Assert.Equal(2, result.Count());
+            Assert.Equal("myresourcegroup1", result.First().Name);
+            Assert.Equal("Succeeded", result.First().Properties.ProvisioningState);
+            Assert.Equal("/subscriptions/abc123/resourcegroups/csmrgr5mfggio", result.First().Id);
+            Assert.Equal("https://wa/subscriptions/subId/resourcegroups?api-version=1.0&$skiptoken=662idk", result.NextPageLink);
         }
 
         [Fact]
@@ -316,7 +317,7 @@ namespace ResourceGroups.Tests
             Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
 
             // Validate result
-            Assert.Equal(0, result.Value.Count);
+            Assert.Equal(0, result.Count());
         }
         
         [Fact]
@@ -351,9 +352,9 @@ namespace ResourceGroups.Tests
             Assert.True(handler.Uri.ToString().Contains("$top=5"));
 
             // Validate result
-            Assert.Equal(2, result.Value.Count);
-            Assert.Equal("myresourcegroup1", result.Value[0].Name);
-            Assert.Equal("https://wa/subscriptions/subId/resourcegroups?api-version=1.0&$skiptoken=662idk", result.NextLink.ToString());
+            Assert.Equal(2, result.Count());
+            Assert.Equal("myresourcegroup1", result.First().Name);
+            Assert.Equal("https://wa/subscriptions/subId/resourcegroups?api-version=1.0&$skiptoken=662idk", result.NextPageLink);
         }
 
         [Fact]

@@ -5,8 +5,10 @@ namespace Microsoft.Azure.Management.Network
     using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
+    using Newtonsoft.Json;
     using Microsoft.Rest;
-    using Microsoft.Azure;
+    using System.Linq;
+    using Microsoft.Rest.Azure;
     using Models;
 
     /// <summary>
@@ -17,6 +19,44 @@ namespace Microsoft.Azure.Management.Network
         /// The base URI of the service.
         /// </summary>
         Uri BaseUri { get; set; }
+
+        /// <summary>
+        /// Gets or sets json serialization settings.
+        /// </summary>
+        JsonSerializerSettings SerializationSettings { get; }
+
+        /// <summary>
+        /// Gets or sets json deserialization settings.
+        /// </summary>
+        JsonSerializerSettings DeserializationSettings { get; }        
+
+        /// <summary>
+        /// Management credentials for Azure.
+        /// </summary>
+        ServiceClientCredentials Credentials { get; }
+
+        /// <summary>
+        /// Gets subscription credentials which uniquely identify Microsoft
+        /// Azure subscription. The subscription ID forms part of the URI for
+        /// every service call.
+        /// </summary>
+        string SubscriptionId { get; set; }
+
+        /// <summary>
+        /// Client Api Version.
+        /// </summary>
+        string ApiVersion { get; }
+
+        /// <summary>
+        /// Gets or sets the preferred language for the response.
+        /// </summary>
+        string AcceptLanguage { get; set; }
+
+        /// <summary>
+        /// The retry timeout for Long Running Operations.
+        /// </summary>
+        int? LongRunningOperationRetryTimeout { get; set; }
+
 
         IApplicationGatewaysOperations ApplicationGateways { get; }
 
@@ -54,10 +94,10 @@ namespace Microsoft.Azure.Management.Network
         /// regular expression: ^[a-z][a-z0-9-]{1,61}[a-z0-9]$.
         /// </param>
         /// <param name='customHeaders'>
-        /// Headers that will be added to request.
+        /// The headers that will be added to request.
         /// </param>        
         /// <param name='cancellationToken'>
-        /// Cancellation token.
+        /// The cancellation token.
         /// </param>
         Task<AzureOperationResponse<DnsNameAvailabilityResult>> CheckDnsNameAvailabilityWithHttpMessagesAsync(string location, string domainNameLabel = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 

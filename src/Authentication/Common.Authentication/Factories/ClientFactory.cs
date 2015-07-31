@@ -35,6 +35,50 @@ namespace Microsoft.Azure.Common.Authentication.Factories
             UserAgents = new List<ProductInfoHeaderValue>();
         }
 
+        public virtual TClient CreateArmClient<TClient>(AzureContext context, AzureEnvironment.Endpoint endpoint) where TClient : Microsoft.Rest.ServiceClient<TClient>
+        {
+            if (context == null)
+            {
+                throw new ApplicationException(Resources.InvalidDefaultSubscription);
+            }
+
+            var creds = AzureSession.AuthenticationFactory.GetServiceClientCredentials(context);
+            TClient client = CreateCustomArmClient<TClient>(context.Environment.GetEndpointAsUri(endpoint), creds, new DelegatingHandler[]{});
+
+            var subscriptionId = typeof(TClient).GetProperty("SubscriptionId");
+            if (subscriptionId != null && context.Subscription != null)
+            {
+                subscriptionId.SetValue(client, context.Subscription.Id.ToString());
+            }
+
+            return client;
+        }
+
+        public virtual TClient CreateCustomArmClient<TClient>(params object[] parameters) where TClient : Microsoft.Rest.ServiceClient<TClient>
+        {
+            List<Type> types = new List<Type>();
+            foreach (object obj in parameters)
+            {
+                types.Add(obj.GetType());
+            }
+            
+            var constructor = typeof(TClient).GetConstructor(types.ToArray());
+
+            if (constructor == null)
+            {
+                throw new InvalidOperationException(string.Format(Resources.InvalidManagementClientType, typeof(TClient).Name));
+            }
+
+            TClient client = (TClient)constructor.Invoke(parameters);
+
+            foreach (ProductInfoHeaderValue userAgent in UserAgents)
+            {
+                client.UserAgent.Add(userAgent);
+            }
+
+            return client;
+        }
+
         public virtual TClient CreateClient<TClient>(AzureContext context, AzureEnvironment.Endpoint endpoint) where TClient : ServiceClient<TClient>
         {
             if (context == null)

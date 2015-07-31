@@ -7,7 +7,7 @@ namespace Microsoft.Azure.Management.Compute
     using System.Threading.Tasks;
     using Microsoft.Rest;
     using System.Linq.Expressions;
-    using Microsoft.Azure;
+    using Microsoft.Rest.Azure;
     using Models;
 
     public static partial class VirtualMachineExtensionsOperationsExtensions
@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The operation to create or update the extension.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The operation to create or update the extension.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The operation to create or update the extension.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -92,7 +92,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The operation to create or update the extension.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -120,7 +120,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The operation to delete the extension.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -140,7 +140,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The operation to delete the extension.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -163,7 +163,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The operation to delete the extension.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -183,7 +183,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The operation to delete the extension.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -206,7 +206,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The operation to get the extension.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -229,7 +229,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The operation to get the extension.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.

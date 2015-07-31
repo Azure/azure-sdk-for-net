@@ -13,13 +13,13 @@
 // limitations under the License.
 //
 
-using System;
-using Microsoft.Azure;
 using Microsoft.Azure.Management.Resources;
-using Xunit;
-using System.Net.Http;
+using Microsoft.Rest;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework.HttpRecorder;
+using System;
 using System.Net;
-using Microsoft.Azure.Test.HttpRecorder;
+using System.Net.Http;
+using Xunit;
 
 
 namespace ResourceGroups.Tests
@@ -29,7 +29,7 @@ namespace ResourceGroups.Tests
         public FeatureClient GetFeatureClient(RecordedDelegatingHandler handler)
         {
             var subscriptionId = Guid.NewGuid().ToString();
-            var token = new TokenCloudCredentials(subscriptionId, "abc123");
+            var token = new TokenCredentials(subscriptionId, "abc123");
             handler.IsPassThrough = false;
             var client = new FeatureClient(token, handler);
             client.SubscriptionId = subscriptionId;
@@ -74,7 +74,7 @@ namespace ResourceGroups.Tests
 
             //Valid payload
             //Construct expected URL
-            string expectedUrl = "/subscriptions/" + Uri.EscapeDataString(client.Credentials.SubscriptionId) + "/providers/Microsoft.Features/providers/" + Uri.EscapeDataString(resourceProviderNamespace) + "/features/" + Uri.EscapeDataString(featureName) + "/register?";
+            string expectedUrl = "/subscriptions/" + Uri.EscapeDataString(client.SubscriptionId) + "/providers/Microsoft.Features/providers/" + Uri.EscapeDataString(resourceProviderNamespace) + "/features/" + Uri.EscapeDataString(featureName) + "/register?";
             expectedUrl = expectedUrl + "api-version=2014-08-01-preview";
             string baseUrl = client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -132,7 +132,7 @@ namespace ResourceGroups.Tests
 
             //Valid payload
             //Construct expected URL
-            string expectedUrl = "/subscriptions/" + Uri.EscapeDataString(client.Credentials.SubscriptionId) + "/providers/Microsoft.Features/providers/"+Uri.EscapeDataString(resourceProviderNamespace) + "/features/" + Uri.EscapeDataString(featureName) + "?";
+            string expectedUrl = "/subscriptions/" + Uri.EscapeDataString(client.SubscriptionId) + "/providers/Microsoft.Features/providers/"+Uri.EscapeDataString(resourceProviderNamespace) + "/features/" + Uri.EscapeDataString(featureName) + "?";
             expectedUrl = expectedUrl + "api-version=2014-08-01-preview";
             string baseUrl = client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -192,7 +192,7 @@ namespace ResourceGroups.Tests
 
             //Valid payload
             //Construct expected URL
-            string expectedUrl = "/subscriptions/" + Uri.EscapeDataString(client.Credentials.SubscriptionId) + "/providers/Microsoft.Features/providers/" + Uri.EscapeDataString(resourceProviderNamespace) + "/features?";
+            string expectedUrl = "/subscriptions/" + Uri.EscapeDataString(client.SubscriptionId) + "/providers/Microsoft.Features/providers/" + Uri.EscapeDataString(resourceProviderNamespace) + "/features?";
             expectedUrl = expectedUrl + "api-version=2014-08-01-preview";
             string baseUrl = client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -248,7 +248,7 @@ namespace ResourceGroups.Tests
 
             //Valid payload
             //Construct expected URL
-            string expectedUrl = "/subscriptions/" + Uri.EscapeDataString(client.Credentials.SubscriptionId) + "/providers/Microsoft.Features/features?";
+            string expectedUrl = "/subscriptions/" + Uri.EscapeDataString(client.SubscriptionId) + "/providers/Microsoft.Features/features?";
             expectedUrl = expectedUrl + "api-version=2014-08-01-preview";
             string baseUrl = client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.

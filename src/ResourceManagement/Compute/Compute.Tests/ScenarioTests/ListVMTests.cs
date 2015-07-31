@@ -13,13 +13,12 @@
 // limitations under the License.
 //
 
+using System.Linq;
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
-using Microsoft.Azure.Test;
-using System.Net;
 using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Management.Storage.Models;
 using Xunit;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
 namespace Compute.Tests
 {
@@ -28,9 +27,8 @@ namespace Compute.Tests
         [Fact(Skip = "TODO: AutoRest")]
         public void TestListVMInSubscription()
         {
-            using (var context = UndoContext.Current)
+            using (MockContext context = MockContext.Start())
             {
-                context.Start();
                 EnsureClientsInitialized();
 
                 ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
@@ -51,12 +49,12 @@ namespace Compute.Tests
                     var vm2 = CreateVM_NoAsyncTracking(rg2Name, asName, storageAccountOutput, imageRef, out inputVM2);
 
                     var listResponse = m_CrpClient.VirtualMachines.ListAll();
-                    Assert.True(listResponse.Value.Count >= 2);
-                    Assert.Null(listResponse.NextLink);
+                    Assert.True(listResponse.Count() >= 2);
+                    Assert.Null(listResponse.NextPageLink);
 
                     int vmsValidatedCount = 0;
 
-                    foreach (var vm in listResponse.Value )
+                    foreach (var vm in listResponse)
                     {
                         if (vm.Name == vm1.Name)
                         {

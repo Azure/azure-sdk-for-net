@@ -1,19 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
+using Microsoft.Rest.Azure;
+using Microsoft.Azure.Management.Network;
+using Microsoft.Azure.Management.Network.Models;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
 using Microsoft.Azure.Test;
 using Networks.Tests.Helpers;
 using ResourceGroups.Tests;
 using Xunit;
-using Microsoft.Azure;
-using System;
-using Microsoft.Azure.Management.Network;
-using System.Security.Cryptography.X509Certificates;
-using Microsoft.Azure.Management.Network.Models;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
 namespace Networks.Tests
 {
@@ -25,9 +23,9 @@ namespace Networks.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (var context = UndoContext.Current)
+            using (MockContext context = MockContext.Start())
             {
-                context.Start();
+                
 
                 var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(handler);
                 var networkResourceProviderClient = NetworkManagementTestUtilities.GetNetworkResourceProviderClient(handler);
@@ -118,16 +116,16 @@ namespace Networks.Tests
 
                 // 4. ListVitualNetworkGateways API
                 var listVirtualNetworkGatewayResponse = networkResourceProviderClient.VirtualNetworkGateways.List(resourceGroupName);
-                Console.WriteLine("ListVirtualNetworkGateways count ={0} ", listVirtualNetworkGatewayResponse.Value.Count);
-                Assert.Equal(1, listVirtualNetworkGatewayResponse.Value.Count);
+                Console.WriteLine("ListVirtualNetworkGateways count ={0} ", listVirtualNetworkGatewayResponse.Count());
+                Assert.Equal(1, listVirtualNetworkGatewayResponse.Count());
 
                 // 5A. DeleteVirtualNetworkGateway API
                 networkResourceProviderClient.VirtualNetworkGateways.Delete(resourceGroupName, virtualNetworkGatewayName);
 
                 // 5B. ListVitualNetworkGateways API after deleting VirtualNetworkGateway
                 listVirtualNetworkGatewayResponse = networkResourceProviderClient.VirtualNetworkGateways.List(resourceGroupName);
-                Console.WriteLine("ListVirtualNetworkGateways count ={0} ", listVirtualNetworkGatewayResponse.Value.Count);
-                Assert.Equal(0, listVirtualNetworkGatewayResponse.Value.Count);
+                Console.WriteLine("ListVirtualNetworkGateways count ={0} ", listVirtualNetworkGatewayResponse.Count());
+                Assert.Equal(0, listVirtualNetworkGatewayResponse.Count());
             }
         }
 
@@ -137,9 +135,9 @@ namespace Networks.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (var context = UndoContext.Current)
+            using (MockContext context = MockContext.Start())
             {
-                context.Start();
+                
 
                 var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(handler);
                 var networkResourceProviderClient = NetworkManagementTestUtilities.GetNetworkResourceProviderClient(handler);
@@ -212,16 +210,16 @@ namespace Networks.Tests
 
                 // 4. ListLocalNetworkGateways API
                 var listLocalNetworkGatewayResponse = networkResourceProviderClient.LocalNetworkGateways.List(resourceGroupName);
-                Console.WriteLine("ListLocalNetworkGateways count ={0} ", listLocalNetworkGatewayResponse.Value.Count);
-                Assert.Equal(1, listLocalNetworkGatewayResponse.Value.Count);
+                Console.WriteLine("ListLocalNetworkGateways count ={0} ", listLocalNetworkGatewayResponse.Count());
+                Assert.Equal(1, listLocalNetworkGatewayResponse.Count());
 
                 // 5A. DeleteLocalNetworkGateway API
                 networkResourceProviderClient.LocalNetworkGateways.Delete(resourceGroupName, localNetworkGatewayName);
 
                 // 5B. ListLocalNetworkGateways API after DeleteLocalNetworkGateway API was called
                 listLocalNetworkGatewayResponse = networkResourceProviderClient.LocalNetworkGateways.List(resourceGroupName);
-                Console.WriteLine("ListLocalNetworkGateways count ={0} ", listLocalNetworkGatewayResponse.Value.Count);
-                Assert.Equal(0, listLocalNetworkGatewayResponse.Value.Count);
+                Console.WriteLine("ListLocalNetworkGateways count ={0} ", listLocalNetworkGatewayResponse.Count());
+                Assert.Equal(0, listLocalNetworkGatewayResponse.Count());
             }
         }
 
@@ -231,9 +229,9 @@ namespace Networks.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (var context = UndoContext.Current)
+            using (MockContext context = MockContext.Start())
             {
-                context.Start();
+                
 
                 var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(handler);
                 var networkResourceProviderClient = NetworkManagementTestUtilities.GetNetworkResourceProviderClient(handler);
@@ -377,16 +375,16 @@ namespace Networks.Tests
 
                 // 4. ListVitualNetworkGatewayConnections API
                 var listVirtualNetworkGatewayConectionResponse = networkResourceProviderClient.VirtualNetworkGatewayConnections.List(resourceGroupName);
-                Console.WriteLine("ListVirtualNetworkGatewayConnections count ={0} ", listVirtualNetworkGatewayConectionResponse.Value.Count);
-                Assert.Equal(1, listVirtualNetworkGatewayConectionResponse.Value.Count);
+                Console.WriteLine("ListVirtualNetworkGatewayConnections count ={0} ", listVirtualNetworkGatewayConectionResponse.Count());
+                Assert.Equal(1, listVirtualNetworkGatewayConectionResponse.Count());
 
                 // 5A. DeleteVirtualNetworkGatewayConnection API
                 networkResourceProviderClient.VirtualNetworkGatewayConnections.Delete(resourceGroupName, VirtualNetworkGatewayConnectionName);
 
                 // 5B. ListVitualNetworkGatewayConnections API after DeleteVirtualNetworkGatewayConnection API called
                 listVirtualNetworkGatewayConectionResponse = networkResourceProviderClient.VirtualNetworkGatewayConnections.List(resourceGroupName);
-                Console.WriteLine("ListVirtualNetworkGatewayConnections count ={0} ", listVirtualNetworkGatewayConectionResponse.Value.Count);
-                Assert.Equal(0, listVirtualNetworkGatewayConectionResponse.Value.Count);
+                Console.WriteLine("ListVirtualNetworkGatewayConnections count ={0} ", listVirtualNetworkGatewayConectionResponse.Count());
+                Assert.Equal(0, listVirtualNetworkGatewayConectionResponse.Count());
 
             }
         }
@@ -397,9 +395,9 @@ namespace Networks.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (var context = UndoContext.Current)
+            using (MockContext context = MockContext.Start())
             {
-                context.Start();
+                
 
                 var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(handler);
                 var networkResourceProviderClient = NetworkManagementTestUtilities.GetNetworkResourceProviderClient(handler);

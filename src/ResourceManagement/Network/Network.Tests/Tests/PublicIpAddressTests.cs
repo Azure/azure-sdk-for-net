@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Net;
+using System.Linq;
 using Microsoft.Azure.Management.Network;
 using Microsoft.Azure.Management.Network.Models;
 using Microsoft.Azure.Management.Resources;
@@ -8,6 +9,7 @@ using Microsoft.Azure.Test;
 using Networks.Tests.Helpers;
 using ResourceGroups.Tests;
 using Xunit;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
 namespace Networks.Tests
 {
@@ -18,9 +20,9 @@ namespace Networks.Tests
         {
             var handler = new RecordedDelegatingHandler {StatusCodeToReturn = HttpStatusCode.OK};
 
-            using (var context = UndoContext.Current)
+            using (MockContext context = MockContext.Start())
             {
-                context.Start();
+                
                 var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(handler);
                 var networkResourceProviderClient = NetworkManagementTestUtilities.GetNetworkResourceProviderClient(handler);
                 
@@ -62,20 +64,20 @@ namespace Networks.Tests
 
                 // Get List of PublicIpAddress 
                 var getPublicIpAddressListResponse = networkResourceProviderClient.PublicIpAddresses.List(resourceGroupName);
-                Assert.Equal(1, getPublicIpAddressListResponse.Value.Count);
-                ArePublicIpAddressesEqual(getPublicIpAddressResponse, getPublicIpAddressListResponse.Value[0]);
+                Assert.Equal(1, getPublicIpAddressListResponse.Count());
+                ArePublicIpAddressesEqual(getPublicIpAddressResponse, getPublicIpAddressListResponse.First());
 
                 // Get List of PublicIpAddress in a subscription
                 var getPublicIpAddressListSubscriptionResponse = networkResourceProviderClient.PublicIpAddresses.ListAll();
-                Assert.Equal(1, getPublicIpAddressListSubscriptionResponse.Value.Count);
-                ArePublicIpAddressesEqual(getPublicIpAddressResponse, getPublicIpAddressListSubscriptionResponse.Value[0]);
+                Assert.Equal(1, getPublicIpAddressListSubscriptionResponse.Count());
+                ArePublicIpAddressesEqual(getPublicIpAddressResponse, getPublicIpAddressListSubscriptionResponse.First());
 
                 // Delete PublicIpAddress
                 networkResourceProviderClient.PublicIpAddresses.Delete(resourceGroupName, publicIpName);
 
                 // Get PublicIpAddress
                 getPublicIpAddressListResponse = networkResourceProviderClient.PublicIpAddresses.List(resourceGroupName);
-                Assert.Equal(0, getPublicIpAddressListResponse.Value.Count);
+                Assert.Equal(0, getPublicIpAddressListResponse.Count());
             }
         }
 
@@ -84,9 +86,9 @@ namespace Networks.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (var context = UndoContext.Current)
+            using (MockContext context = MockContext.Start())
             {
-                context.Start();
+                
                 var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(handler);
                 var networkResourceProviderClient = NetworkManagementTestUtilities.GetNetworkResourceProviderClient(handler);
 
@@ -140,20 +142,20 @@ namespace Networks.Tests
 
                 // Get List of PublicIpAddress 
                 var getPublicIpAddressListResponse = networkResourceProviderClient.PublicIpAddresses.List(resourceGroupName);
-                Assert.Equal(1, getPublicIpAddressListResponse.Value.Count);
-                ArePublicIpAddressesEqual(getPublicIpAddressResponse, getPublicIpAddressListResponse.Value[0]);
+                Assert.Equal(1, getPublicIpAddressListResponse.Count());
+                ArePublicIpAddressesEqual(getPublicIpAddressResponse, getPublicIpAddressListResponse.First());
 
                 // Get List of PublicIpAddress in a subscription
                 var getPublicIpAddressListSubscriptionResponse = networkResourceProviderClient.PublicIpAddresses.ListAll();
-                Assert.Equal(1, getPublicIpAddressListSubscriptionResponse.Value.Count);
-                ArePublicIpAddressesEqual(getPublicIpAddressResponse, getPublicIpAddressListSubscriptionResponse.Value[0]);
+                Assert.Equal(1, getPublicIpAddressListSubscriptionResponse.Count());
+                ArePublicIpAddressesEqual(getPublicIpAddressResponse, getPublicIpAddressListSubscriptionResponse.First());
 
                 // Delete PublicIpAddress
                 networkResourceProviderClient.PublicIpAddresses.Delete(resourceGroupName, publicIpName);
 
                 // Get PublicIpAddress
                 getPublicIpAddressListResponse = networkResourceProviderClient.PublicIpAddresses.List(resourceGroupName);
-                Assert.Equal(0, getPublicIpAddressListResponse.Value.Count);
+                Assert.Equal(0, getPublicIpAddressListResponse.Count());
 
             }
         }

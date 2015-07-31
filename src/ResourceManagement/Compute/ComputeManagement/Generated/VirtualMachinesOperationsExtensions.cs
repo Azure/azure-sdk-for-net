@@ -7,7 +7,7 @@ namespace Microsoft.Azure.Management.Compute
     using System.Threading.Tasks;
     using Microsoft.Rest;
     using System.Linq.Expressions;
-    using Microsoft.Azure;
+    using Microsoft.Rest.Azure;
     using Models;
 
     public static partial class VirtualMachinesOperationsExtensions
@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Compute
             /// template that can be used to create similar VMs.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Compute
             /// template that can be used to create similar VMs.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Management.Compute
             /// template that can be used to create similar VMs.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -84,7 +84,7 @@ namespace Microsoft.Azure.Management.Compute
             /// template that can be used to create similar VMs.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -108,7 +108,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The operation to create or update a virtual machine.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -128,7 +128,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The operation to create or update a virtual machine.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -152,7 +152,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The operation to create or update a virtual machine.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -172,7 +172,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The operation to create or update a virtual machine.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -196,7 +196,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The operation to delete a virtual machine.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -213,7 +213,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The operation to delete a virtual machine.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -233,7 +233,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The operation to delete a virtual machine.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -250,7 +250,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The operation to delete a virtual machine.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -270,7 +270,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The operation to get a virtual machine.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -290,7 +290,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The operation to get a virtual machine.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -315,7 +315,7 @@ namespace Microsoft.Azure.Management.Compute
             /// not billed for the compute resources that this Virtual Machine uses.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -333,7 +333,7 @@ namespace Microsoft.Azure.Management.Compute
             /// not billed for the compute resources that this Virtual Machine uses.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -354,7 +354,7 @@ namespace Microsoft.Azure.Management.Compute
             /// not billed for the compute resources that this Virtual Machine uses.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -372,7 +372,7 @@ namespace Microsoft.Azure.Management.Compute
             /// not billed for the compute resources that this Virtual Machine uses.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -392,7 +392,7 @@ namespace Microsoft.Azure.Management.Compute
             /// Sets the state of the VM as Generalized.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -409,7 +409,7 @@ namespace Microsoft.Azure.Management.Compute
             /// Sets the state of the VM as Generalized.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -429,12 +429,12 @@ namespace Microsoft.Azure.Management.Compute
             /// The operation to list virtual machines under a resource group.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
-            public static VirtualMachineListResult List(this IVirtualMachinesOperations operations, string resourceGroupName)
+            public static Page<VirtualMachine> List(this IVirtualMachinesOperations operations, string resourceGroupName)
             {
                 return Task.Factory.StartNew(s => ((IVirtualMachinesOperations)s).ListAsync(resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -443,7 +443,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The operation to list virtual machines under a resource group.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -451,9 +451,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<VirtualMachineListResult> ListAsync( this IVirtualMachinesOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Page<VirtualMachine>> ListAsync( this IVirtualMachinesOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<VirtualMachineListResult> result = await operations.ListWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<Page<VirtualMachine>> result = await operations.ListWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -463,9 +463,9 @@ namespace Microsoft.Azure.Management.Compute
             /// this till nextLink is not null to fetch all the Virtual Machines.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
-            public static VirtualMachineListResult ListAll(this IVirtualMachinesOperations operations)
+            public static Page<VirtualMachine> ListAll(this IVirtualMachinesOperations operations)
             {
                 return Task.Factory.StartNew(s => ((IVirtualMachinesOperations)s).ListAllAsync(), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -476,14 +476,14 @@ namespace Microsoft.Azure.Management.Compute
             /// this till nextLink is not null to fetch all the Virtual Machines.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<VirtualMachineListResult> ListAllAsync( this IVirtualMachinesOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Page<VirtualMachine>> ListAllAsync( this IVirtualMachinesOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<VirtualMachineListResult> result = await operations.ListAllWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<Page<VirtualMachine>> result = await operations.ListAllWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -491,7 +491,7 @@ namespace Microsoft.Azure.Management.Compute
             /// Lists virtual-machine-sizes available to be used for a virtual machine.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -508,7 +508,7 @@ namespace Microsoft.Azure.Management.Compute
             /// Lists virtual-machine-sizes available to be used for a virtual machine.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -529,7 +529,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The operation to power off (stop) a virtual machine.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -546,7 +546,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The operation to power off (stop) a virtual machine.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -566,7 +566,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The operation to power off (stop) a virtual machine.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -583,7 +583,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The operation to power off (stop) a virtual machine.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -603,7 +603,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The operation to restart a virtual machine.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -620,7 +620,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The operation to restart a virtual machine.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -640,7 +640,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The operation to restart a virtual machine.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -657,7 +657,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The operation to restart a virtual machine.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -677,7 +677,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The operation to start a virtual machine.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -694,7 +694,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The operation to start a virtual machine.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -714,7 +714,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The operation to start a virtual machine.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -731,7 +731,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The operation to start a virtual machine.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -751,31 +751,31 @@ namespace Microsoft.Azure.Management.Compute
             /// The operation to list virtual machines under a resource group.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
-            /// <param name='nextLink'>
+            /// <param name='nextPageLink'>
             /// NextLink from the previous successful call to List operation.
             /// </param>
-            public static VirtualMachineListResult ListNext(this IVirtualMachinesOperations operations, string nextLink)
+            public static Page<VirtualMachine> ListNext(this IVirtualMachinesOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((IVirtualMachinesOperations)s).ListNextAsync(nextLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IVirtualMachinesOperations)s).ListNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
             /// The operation to list virtual machines under a resource group.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
-            /// <param name='nextLink'>
+            /// <param name='nextPageLink'>
             /// NextLink from the previous successful call to List operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<VirtualMachineListResult> ListNextAsync( this IVirtualMachinesOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Page<VirtualMachine>> ListNextAsync( this IVirtualMachinesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<VirtualMachineListResult> result = await operations.ListNextWithHttpMessagesAsync(nextLink, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<Page<VirtualMachine>> result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -785,14 +785,14 @@ namespace Microsoft.Azure.Management.Compute
             /// this till nextLink is not null to fetch all the Virtual Machines.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
-            /// <param name='nextLink'>
+            /// <param name='nextPageLink'>
             /// NextLink from the previous successful call to List operation.
             /// </param>
-            public static VirtualMachineListResult ListAllNext(this IVirtualMachinesOperations operations, string nextLink)
+            public static Page<VirtualMachine> ListAllNext(this IVirtualMachinesOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((IVirtualMachinesOperations)s).ListAllNextAsync(nextLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IVirtualMachinesOperations)s).ListAllNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -801,17 +801,17 @@ namespace Microsoft.Azure.Management.Compute
             /// this till nextLink is not null to fetch all the Virtual Machines.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
-            /// <param name='nextLink'>
+            /// <param name='nextPageLink'>
             /// NextLink from the previous successful call to List operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// Cancellation token.
             /// </param>
-            public static async Task<VirtualMachineListResult> ListAllNextAsync( this IVirtualMachinesOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Page<VirtualMachine>> ListAllNextAsync( this IVirtualMachinesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<VirtualMachineListResult> result = await operations.ListAllNextWithHttpMessagesAsync(nextLink, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<Page<VirtualMachine>> result = await operations.ListAllNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

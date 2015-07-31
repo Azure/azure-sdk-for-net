@@ -5,7 +5,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for TransportProtocol
+    /// Defines values for TransportProtocol.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
     public enum TransportProtocol

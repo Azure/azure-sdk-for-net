@@ -7,7 +7,7 @@ namespace Microsoft.Azure.Management.Compute
     using System.Threading.Tasks;
     using Microsoft.Rest;
     using System.Linq.Expressions;
-    using Microsoft.Azure;
+    using Microsoft.Rest.Azure;
     using Models;
 
     public static partial class AvailabilitySetsOperationsExtensions
@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The operation to delete the availability set.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The operation to delete the availability set.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The operation to get the availability set.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The operation to get the availability set.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The operation to list the availability sets.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -105,7 +105,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The operation to list the availability sets.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -123,7 +123,7 @@ namespace Microsoft.Azure.Management.Compute
             /// Lists virtual-machine-sizes available to be used for an availability set.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -140,7 +140,7 @@ namespace Microsoft.Azure.Management.Compute
             /// Lists virtual-machine-sizes available to be used for an availability set.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -161,7 +161,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The operation to create or update the availability set.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -181,7 +181,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The operation to create or update the availability set.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.

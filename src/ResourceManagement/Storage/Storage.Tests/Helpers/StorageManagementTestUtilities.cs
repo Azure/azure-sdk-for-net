@@ -18,7 +18,8 @@ using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
 using Microsoft.Azure.Management.Storage;
 using Microsoft.Azure.Management.Storage.Models;
-using Microsoft.Azure.Test;
+using Microsoft.Rest;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using ResourceGroups.Tests;
 using System;
 using System.Collections.Generic;
@@ -33,7 +34,7 @@ namespace Storage.Tests.Helpers
     public static class StorageManagementTestUtilities
     {
         public static bool IsTestTenant = false;
-        private static SubscriptionCloudCredentials Creds = null;
+        private static TokenCredentials Creds = null;
         private static Uri testUri = null;
 
         // These are used to create default accounts
@@ -47,7 +48,6 @@ namespace Storage.Tests.Helpers
 
         public static ResourceManagementClient GetResourceManagementClient(RecordedDelegatingHandler handler)
         {
-            var env = new CSMTestEnvironmentFactory();
             ResourceManagementClient resourcesClient;
             if (IsTestTenant)
             {
@@ -56,16 +56,13 @@ namespace Storage.Tests.Helpers
             else
             {
                 handler.IsPassThrough = true;
-                resourcesClient = TestBase.GetServiceClient<ResourceManagementClient>(env, handler);
+                resourcesClient = TestBase.GetServiceClient<ResourceManagementClient>(handler);
             }
-            resourcesClient.SubscriptionId = env.GetTestEnvironment().SubscriptionId;
-            resourcesClient.LongRunningOperationRetryTimeout = 0;
             return resourcesClient;
         }
 
         public static StorageManagementClient GetStorageManagementClient(RecordedDelegatingHandler handler)
         {
-            var env = new CSMTestEnvironmentFactory();
             StorageManagementClient storageClient;
             if (IsTestTenant)
             {
@@ -74,15 +71,12 @@ namespace Storage.Tests.Helpers
             else
             {
                 handler.IsPassThrough = true;
-                storageClient = TestBase.GetServiceClient<StorageManagementClient>(env, handler);
+                storageClient = TestBase.GetServiceClient<StorageManagementClient>(handler);
             }
-
-            storageClient.LongRunningOperationRetryTimeout = 0;
-            storageClient.SubscriptionId = env.GetTestEnvironment().SubscriptionId;
             return storageClient;
         }
 
-        private static SubscriptionCloudCredentials GetCreds() 
+        private static TokenCredentials GetCreds() 
         {
             return Creds;
         }

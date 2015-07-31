@@ -11,6 +11,7 @@ using Xunit;
 namespace Networks.Tests
 {
     using System.Linq;
+    using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
     public class UsageTests
     {
@@ -19,9 +20,9 @@ namespace Networks.Tests
         {
             var handler = new RecordedDelegatingHandler {StatusCodeToReturn = HttpStatusCode.OK};
 
-            using (var context = UndoContext.Current)
+            using (MockContext context = MockContext.Start())
             {
-                context.Start();
+                
                 var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(handler);
                 var networkResourceProviderClient = NetworkManagementTestUtilities.GetNetworkResourceProviderClient(handler);
 

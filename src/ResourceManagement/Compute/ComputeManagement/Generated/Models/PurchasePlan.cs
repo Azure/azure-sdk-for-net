@@ -5,9 +5,11 @@ namespace Microsoft.Azure.Management.Compute.Models
     using Newtonsoft.Json;
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
-    using Microsoft.Azure;
+    using Microsoft.Rest.Azure;
 
     /// <summary>
+    /// Used for establishing the purchase context of any 3rd Party artifact
+    /// through MarketPlace.
     /// </summary>
     public partial class PurchasePlan
     {

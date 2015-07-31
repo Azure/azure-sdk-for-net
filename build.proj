@@ -69,15 +69,16 @@
                       Exclude="$(LibrarySourceFolder)\HDInsight\**\*.sln;$(LibrarySourceFolder)\KeyVault\**\*.sln"
                       Condition=" '$(Scope)' == 'all'  " />
     <LibraryFxTargetList Include="$(FxTargetList)" />
+    <AutoRestLibraryFxTargetList Include="portable;net45" />
   </ItemGroup>
   
   <PropertyGroup>
     <NuGetCommand>&quot;$(LibraryToolsFolder)\nuget.exe&quot;</NuGetCommand>
   </PropertyGroup>
 
-  <UsingTask AssemblyFile="$(LibraryToolsFolder)\Microsoft.WindowsAzure.Build.Tasks.dll" TaskName="RegexReplacementTask" />
-  <UsingTask AssemblyFile="$(LibraryToolsFolder)\Microsoft.WindowsAzure.Build.Tasks.dll" TaskName="ValidateStrongNameSignatureTask" />
-
+  <UsingTask TaskName="ValidateStrongNameSignatureTask" AssemblyFile="$(LibraryToolsFolder)\Microsoft.WindowsAzure.Build.Tasks.dll"  />
+  <UsingTask TaskName="FilterOutAutoRestLibraries" AssemblyFile="$(LibraryToolsFolder)\Microsoft.WindowsAzure.Build.Tasks.dll"  />
+  
   <!--
   CI build related
   -->
@@ -91,27 +92,41 @@
   <UsingTask Condition=" $(OnPremiseBuild) " TaskName="CorporateValidation" AssemblyFile="$(CIToolsPath)\Microsoft.WindowsAzure.Tools.Build.Tasks.OnPremise.dll" />
   <Import Condition=" $(OnPremiseBuild) " Project="$(CIToolsPath)\Microsoft.WindowsAzure.Build.OnPremise.msbuild" />
 
-  <Target Name="Build" DependsOnTargets="RestoreNugetPackages">
+  <Target Name="PrepareForAutoRestLibraries">
+    <FilterOutAutoRestLibraries AllLibraries="@(LibrariesToBuild)" AutoRestMark="AutoRestProjects">
+      <Output TaskParameter="AutoRestLibraries" ItemName="AutoRestLibraries" />
+      <Output TaskParameter="NonAutoRestLibraries" ItemName="NonAutoRestLibraries" />
+    </FilterOutAutoRestLibraries>    
+  </Target>
+  
+  <Target Name="Build" DependsOnTargets="RestoreNugetPackages;BuildMsBuildTask;PrepareForAutoRestLibraries">
     <PropertyGroup>
       <_ExtraPropertyList>CodeSign=$(CodeSign)</_ExtraPropertyList>
     </PropertyGroup>
-    <CallTarget Targets="BuildMsBuildTask" />
     <CallTarget Targets="BuildServerPreparation" Condition=" '$(CodeSign)' == 'true' " />
+
     <!--The solution contains configurations for each platform such as Net40-Debug, Net45-Release, etc
     So when invoke msbuild, feed the right configuration name-->   
-    <MSBuild Projects="@(LibrariesToBuild)"
+    <MSBuild Projects="@(NonAutoRestLibraries)"
              Properties="Configuration=%(LibraryFxTargetList.Identity)-$(Configuration);Platform=Any CPU;$(_ExtraPropertyList)"
+             Targets="Build" />
+
+    <MSBuild Projects="@(AutoRestLibraries)"
+             Properties="Configuration=%(AutoRestLibraryFxTargetList.Identity)-$(Configuration);Platform=Any CPU;$(_ExtraPropertyList)"
              Targets="Build" />
 
     <CallTarget Targets="CodeSignBinaries" Condition=" '$(CodeSign)' == 'true' " />
 
   </Target>
 
-  <Target Name="Clean" DependsOnTargets="RestoreNugetPackages">
-    <MSBuild Projects="@(LibrariesToBuild)"
+  <Target Name="Clean" DependsOnTargets="RestoreNugetPackages;BuildMsBuildTask;PrepareForAutoRestLibraries">
+    <MSBuild Projects="@(NonAutoRestLibraries)"
              Properties="Configuration=%(LibraryFxTargetList.Identity)-$(Configuration);Platform=Any CPU"
-             Targets="Clean"/>
+             Targets="Clean" />
     
+    <MSBuild Projects="@(AutoRestLibraries)"
+             Properties="Configuration=%(AutoRestLibraryFxTargetList.Identity)-$(Configuration);Platform=Any CPU;$(_ExtraPropertyList)"
+             Targets="Clean" />
     <RemoveDir Directories="$(BinariesFolder)" />
   </Target>
 
@@ -122,7 +137,7 @@
        <TestPartialName>$([System.IO.Path]::GetFileName($(Scope)))</TestPartialName>
      </PropertyGroup>
     <ItemGroup>
-      <!--TODO: improve inclue the logic to be more explicit -->
+      <!--TODO: improve the logic to be more explicit -->
       <TestDlls Include=".\src\**\*.Tests\bin\net45-$(Configuration)\*.Tests.dll" Condition=" '$(Scope)' == 'All' " />
       <TestDlls Include=".\src\$(Scope)\*.Tests\bin\net45-$(Configuration)\*$(TestPartialName)*.Tests.dll" 
                 Condition=" '$(Scope)' != 'All' " />

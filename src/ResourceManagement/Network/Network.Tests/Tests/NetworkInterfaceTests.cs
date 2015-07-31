@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Net;
-using Microsoft.Azure;
+using Microsoft.Rest.Azure;
 using Microsoft.Azure.Management.Network;
 using Microsoft.Azure.Management.Network.Models;
 using Microsoft.Azure.Management.Resources;
@@ -9,6 +10,7 @@ using Microsoft.Azure.Test;
 using Networks.Tests.Helpers;
 using ResourceGroups.Tests;
 using Xunit;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
 namespace Networks.Tests
 {
@@ -19,9 +21,9 @@ namespace Networks.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (var context = UndoContext.Current)
+            using (MockContext context = MockContext.Start())
             {
-                context.Start();
+                
                 var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(handler);
                 var networkResourceProviderClient = NetworkManagementTestUtilities.GetNetworkResourceProviderClient(handler);
 
@@ -139,23 +141,23 @@ namespace Networks.Tests
 
                 // Get all Nics
                 var getListNicResponse = networkResourceProviderClient.NetworkInterfaces.List(resourceGroupName);
-                Assert.Equal(1, getListNicResponse.Value.Count);
-                Assert.Equal(getNicResponse.Name, getListNicResponse.Value[0].Name);
-                Assert.Equal(getNicResponse.Etag, getListNicResponse.Value[0].Etag);
-                Assert.Equal(getNicResponse.IpConfigurations[0].Etag, getListNicResponse.Value[0].IpConfigurations[0].Etag);
+                Assert.Equal(1, getListNicResponse.Count());
+                Assert.Equal(getNicResponse.Name, getListNicResponse.First().Name);
+                Assert.Equal(getNicResponse.Etag, getListNicResponse.First().Etag);
+                Assert.Equal(getNicResponse.IpConfigurations[0].Etag, getListNicResponse.First().IpConfigurations[0].Etag);
 
                 // Get all Nics in subscription
                 var listNicSubscription = networkResourceProviderClient.NetworkInterfaces.ListAll();
-                Assert.Equal(1, getListNicResponse.Value.Count);
-                Assert.Equal(getNicResponse.Name, listNicSubscription.Value[0].Name);
-                Assert.Equal(getNicResponse.Etag, listNicSubscription.Value[0].Etag);
-                Assert.Equal(listNicSubscription.Value[0].IpConfigurations[0].Etag, getListNicResponse.Value[0].IpConfigurations[0].Etag);
+                Assert.Equal(1, getListNicResponse.Count());
+                Assert.Equal(getNicResponse.Name, listNicSubscription.First().Name);
+                Assert.Equal(getNicResponse.Etag, listNicSubscription.First().Etag);
+                Assert.Equal(listNicSubscription.First().IpConfigurations[0].Etag, getListNicResponse.First().IpConfigurations[0].Etag);
 
                 // Delete Nic
                 networkResourceProviderClient.NetworkInterfaces.Delete(resourceGroupName, nicName);
 
                 getListNicResponse = networkResourceProviderClient.NetworkInterfaces.List(resourceGroupName);
-                Assert.Equal(0, getListNicResponse.Value.Count);
+                Assert.Equal(0, getListNicResponse.Count());
 
                 // Delete PublicIPAddress
                 networkResourceProviderClient.PublicIpAddresses.Delete(resourceGroupName, publicIpName);
@@ -170,9 +172,9 @@ namespace Networks.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (var context = UndoContext.Current)
+            using (MockContext context = MockContext.Start())
             {
-                context.Start();
+                
                 var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(handler);
                 var networkResourceProviderClient = NetworkManagementTestUtilities.GetNetworkResourceProviderClient(handler);
 
@@ -276,7 +278,7 @@ namespace Networks.Tests
                 networkResourceProviderClient.NetworkInterfaces.Delete(resourceGroupName, nicName);
 
                 var getListNicResponse = networkResourceProviderClient.NetworkInterfaces.List(resourceGroupName);
-                Assert.Null(getListNicResponse.Value);
+                Assert.Null(getListNicResponse);
 
                 // Delete VirtualNetwork
                 networkResourceProviderClient.VirtualNetworks.Delete(resourceGroupName, vnetName);

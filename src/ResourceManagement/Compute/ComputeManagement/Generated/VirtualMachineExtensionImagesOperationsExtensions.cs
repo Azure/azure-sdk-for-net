@@ -7,7 +7,7 @@ namespace Microsoft.Azure.Management.Compute
     using System.Threading.Tasks;
     using Microsoft.Rest;
     using System.Linq.Expressions;
-    using Microsoft.Azure;
+    using Microsoft.Rest.Azure;
     using Models;
 
     public static partial class VirtualMachineExtensionImagesOperationsExtensions
@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Compute
             /// Gets a virtual machine extension image.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='location'>
             /// </param>
@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Compute
             /// Gets a virtual machine extension image.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='location'>
             /// </param>
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.Compute
             /// Gets a list of virtual machine extension image versions.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='location'>
             /// </param>
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.Management.Compute
             /// Gets a list of virtual machine extension image versions.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='location'>
             /// </param>
@@ -110,7 +110,7 @@ namespace Microsoft.Azure.Management.Compute
             /// Gets a list of virtual machine extension image types.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='location'>
             /// </param>
@@ -125,7 +125,7 @@ namespace Microsoft.Azure.Management.Compute
             /// Gets a list of virtual machine extension image types.
             /// </summary>
             /// <param name='operations'>
-            /// The operations group for this extension method
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='location'>
             /// </param>

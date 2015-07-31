@@ -13,14 +13,14 @@
 // limitations under the License.
 //
 
-using Microsoft.Azure;
+using System.Linq;
+using System.Net;
+using Microsoft.Rest.Azure;
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Test;
-using System.Linq;
-using System.Net;
 using Xunit;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
 namespace Compute.Tests
 {
@@ -44,9 +44,8 @@ namespace Compute.Tests
         [Trait("Name", "TestVMScenarioOperations")]
         public void TestVMScenarioOperations()
         {
-            using (var context = UndoContext.Current)
+            using (MockContext context = MockContext.Start())
             {
-                context.Start();
                 EnsureClientsInitialized();
 
                 ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
@@ -71,7 +70,7 @@ namespace Compute.Tests
                     ValidateVMInstanceView(inputVM, getVMWithInstanceViewResponse);
 
                     var listResponse = m_CrpClient.VirtualMachines.List(rgName);
-                    ValidateVM(inputVM, listResponse.Value.FirstOrDefault(x => x.Name == inputVM.Name),
+                    ValidateVM(inputVM, listResponse.FirstOrDefault(x => x.Name == inputVM.Name),
                         Helpers.GetVMReferenceId(m_subId, rgName, inputVM.Name));
 
                     var listVMSizesResponse = m_CrpClient.VirtualMachines.ListAvailableSizes(rgName, inputVM.Name);

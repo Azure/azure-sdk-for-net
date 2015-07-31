@@ -40,11 +40,9 @@
             "description": "The name of the availability set."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -79,11 +77,9 @@
             "description": "The name of the availability set."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -113,11 +109,9 @@
             "description": "The name of the resource group."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -154,11 +148,9 @@
             "description": "The name of the availability set."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -204,11 +196,9 @@
             "description": "Parameters supplied to the Create Availability Set operation."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -261,11 +251,9 @@
             "type": "string"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -300,11 +288,9 @@
             "type": "string"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -336,11 +322,9 @@
             "type": "string"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -384,11 +368,9 @@
             "type": "string"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -458,11 +440,9 @@
             "type": "string"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -513,11 +493,9 @@
             "type": "string"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -578,11 +556,9 @@
             "type": "string"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -621,11 +597,9 @@
             "type": "string"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -681,11 +655,9 @@
             "description": "Parameters supplied to the Create Virtual Machine Extension operation."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -734,19 +706,17 @@
             "description": "The name of the virtual machine extension."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
-          "204": {
+          "200": {
             "description": ""
           },
-          "200": {
+          "204": {
             "description": ""
           },
           "202": {
@@ -791,11 +761,9 @@
             "description": "Name of the property to expand. Allowed value is null or 'instanceView'."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -825,11 +793,9 @@
             "description": "The location upon which resource usage is queried."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -859,11 +825,9 @@
             "description": "The location upon which virtual-machine-sizes is queried."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -909,23 +873,21 @@
             "description": "Parameters supplied to the Capture Virtual Machine operation."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
-          "202": {
-            "description": ""
-          },
           "200": {
             "description": "",
             "schema": {
               "$ref": "#/definitions/ComputeLongRunningOperationResult"
             }
+          },
+          "202": {
+            "description": ""
           }
         },
         "x-ms-long-running-operation": true
@@ -963,11 +925,9 @@
             "description": "Parameters supplied to the Create Virtual Machine operation."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -1009,11 +969,9 @@
             "description": "The name of the virtual machine."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -1059,11 +1017,9 @@
             "description": "Name of the property to expand. Allowed value is null or 'instanceView'."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -1100,11 +1056,9 @@
             "description": "The name of the virtual machine."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -1139,11 +1093,9 @@
             "description": "The name of the virtual machine."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -1170,11 +1122,9 @@
             "description": "The name of the resource group."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -1198,11 +1148,9 @@
         "description": "Gets the list of Virtual Machines in the subscription. Use nextLink property in the response to get the next page of Virtual Machines. Do this till nextLink is not null to fetch all the Virtual Machines.",
         "parameters": [
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -1240,11 +1188,9 @@
             "description": "The name of the virtual machine."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -1281,11 +1227,9 @@
             "description": "The name of the virtual machine."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -1320,11 +1264,9 @@
             "description": "The name of the virtual machine."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
@@ -1359,11 +1301,9 @@
             "description": "The name of the virtual machine."
           },
           {
-            "in": "query",
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "in": "query",
             "$ref": "#/parameters/SubscriptionIdParameter"
           }
         ],
