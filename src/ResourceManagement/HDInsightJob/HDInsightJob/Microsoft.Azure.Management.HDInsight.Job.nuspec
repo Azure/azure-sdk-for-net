@@ -16,6 +16,9 @@
         <reference file="Microsoft.Azure.Management.HDInsight.Job.dll" />
       </group>
     </references>
+	<dependencies> 
+       <dependency id="Microsoft.Azure.Common" version="[2.1.0,3.0)" />
+	</dependencies>
   </metadata>
   <files>
     <file src="ResourceManagement\HDInsightJob\HDInsightJob\**\*.cs" target="src" />
