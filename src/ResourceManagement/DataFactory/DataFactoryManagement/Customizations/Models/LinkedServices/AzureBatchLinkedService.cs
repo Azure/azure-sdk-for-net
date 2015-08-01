@@ -31,6 +31,12 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         public string AccountName { get; set; }
 
         /// <summary>
+        /// Required. The Azure Batch URI.
+        /// </summary>
+        [AdfRequired]
+        public string BatchUri { get; set; }
+
+        /// <summary>
         /// Required. The azure storage linked service name.
         /// </summary>
         [AdfRequired]
@@ -48,17 +54,20 @@ namespace Microsoft.Azure.Management.DataFactories.Models
 
         public AzureBatchLinkedService(
             string accountName, 
+            string batchUri, 
             string accessKey, 
             string poolName, 
             string linkedServiceName)
             : this()
         {
             Ensure.IsNotNullOrEmpty(accountName, "accountName");
+            Ensure.IsNotNullOrEmpty(batchUri, "batchUri");
             Ensure.IsNotNullOrEmpty(accessKey, "accessKey");
             Ensure.IsNotNullOrEmpty(poolName, "poolName");
             Ensure.IsNotNullOrEmpty(linkedServiceName, "linkedServiceName");
 
             this.AccountName = accountName;
+            this.BatchUri = batchUri;
             this.AccessKey = accessKey;
             this.PoolName = poolName;
             this.LinkedServiceName = linkedServiceName;
