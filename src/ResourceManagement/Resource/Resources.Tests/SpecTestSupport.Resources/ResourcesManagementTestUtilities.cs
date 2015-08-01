@@ -31,9 +31,9 @@ namespace Microsoft.Azure.Test
         /// </summary>
         /// <param name="testBase">the test class</param>
         /// <returns>A resource management client, created from the current context (environment variables)</returns>
-        public static ResourceManagementClient GetResourceManagementClient(this TestBase testBase)
+        public static ResourceManagementClient GetResourceManagementClient(this TestBase testBase, MockContext context)
         {
-            var client = TestBase.GetServiceClient<ResourceManagementClient>();
+            var client = context.GetServiceClient<ResourceManagementClient>();
             return client;
         }
 
@@ -42,10 +42,10 @@ namespace Microsoft.Azure.Test
         /// </summary>
         /// <param name="handler"></param>
         /// <returns>A resource management client, created from the current context (environment variables)</returns>
-        public static ResourceManagementClient GetResourceManagementClientWithHandler(this TestBase testBase, RecordedDelegatingHandler handler)
+        public static ResourceManagementClient GetResourceManagementClientWithHandler(this TestBase testBase, MockContext context, RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
-            var client = TestBase.GetServiceClient<ResourceManagementClient>(handler);
+            var client = context.GetServiceClient<ResourceManagementClient>(handler);
             return client;
         }
 
@@ -54,9 +54,9 @@ namespace Microsoft.Azure.Test
         /// </summary>
         /// <param name="testBase">the test class</param>
         /// <returns>A subscription client, created from the current context (environment variables)</returns>
-        public static SubscriptionClient GetSubscriptionClient(this TestBase testBase)
+        public static SubscriptionClient GetSubscriptionClient(this TestBase testBase, MockContext context)
         {
-            var client = TestBase.GetServiceClient<SubscriptionClient>();
+            var client = context.GetServiceClient<SubscriptionClient>();
             return client;
         }
 
@@ -65,10 +65,10 @@ namespace Microsoft.Azure.Test
         /// </summary>
         /// <param name="testBase">the test class</param>
         /// <returns>A subscription client, created from the current context (environment variables)</returns>
-        public static SubscriptionClient GetSubscriptionClientWithHandler(this TestBase testBase, RecordedDelegatingHandler handler)
+        public static SubscriptionClient GetSubscriptionClientWithHandler(this TestBase testBase, MockContext context, RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
-            var client = TestBase.GetServiceClient<SubscriptionClient>(handler);
+            var client = context.GetServiceClient<SubscriptionClient>(handler);
             return client;
         }
 

@@ -9,6 +9,7 @@ using System.Net.Http;
 using Newtonsoft.Json.Linq;
 using System.Threading;
 using Microsoft.Rest.Azure.Authentication;
+using Microsoft.IdentityModel.Clients.ActiveDirectory;
 
 namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
 {
@@ -75,14 +76,16 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                         if (testEnv.UserName != null && password != null)
                         {
                             ServiceClientTracing.Information("Using AAD auth with username and password combination");
-                            testEnv.Credentials = new UserTokenCredentials(testEnv.ClientId,
-                                testEnv.Tenant, testEnv.UserName, password, testEnv.AsAzureEnvironment(), null);
+                            testEnv.Credentials = UserTokenProvider.LoginSilentAsync(testEnv.ClientId,
+                                testEnv.Tenant, testEnv.UserName, password, testEnv.AsAzureEnvironment(), null)
+                                .ConfigureAwait(false).GetAwaiter().GetResult();
                         }
                         else if (testEnv.ServicePrincipal != null && password != null)
                         {
                             ServiceClientTracing.Information("Using AAD auth with service principal and password combination");
-                            testEnv.Credentials = new ApplicationTokenCredentials(testEnv.ServicePrincipal,
-                                testEnv.Tenant, password, testEnv.AsAzureEnvironment());
+                            testEnv.Credentials = ApplicationTokenProvider.LoginSilentAsync(testEnv.Tenant, 
+                                testEnv.ServicePrincipal, password, testEnv.AsAzureEnvironment())
+                                .ConfigureAwait(false).GetAwaiter().GetResult();
                         }
                     }
                 }//end-of-if connectionString present
@@ -91,8 +94,15 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                 {
                     //will authenticate the user if the connection string is nullOrEmpty and the mode is not playback
                     ServiceClientTracing.Information("Using AAD auth with pop-up dialog using default environment...");
-                    testEnv.Credentials = new UserTokenCredentials(testEnv.ClientId,
-                        testEnv.Tenant, new Uri("urn:ietf:wg:oauth:2.0:oob"), testEnv.AsAzureEnvironment());
+                    var clientSettings = new ActiveDirectoryClientSettings
+                    {
+                        ClientId = testEnv.ClientId,
+                        PromptBehavior = PromptBehavior.Auto,
+                        ClientRedirectUri = new Uri("urn:ietf:wg:oauth:2.0:oob")
+                    };
+                    testEnv.Credentials = UserTokenProvider.LoginWithPromptAsync(testEnv.Tenant, 
+                            clientSettings, testEnv.AsAzureEnvironment())
+                            .ConfigureAwait(false).GetAwaiter().GetResult();
                 }
 
                 //Getting subscriptions from server
