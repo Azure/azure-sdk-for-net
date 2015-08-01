@@ -218,7 +218,7 @@ namespace HDInsight.Tests.Helpers
             {
                 ClusterSizeInNodes = 3,
                 ClusterType = HDInsightClusterType.Hadoop,
-                DataNodeSize = "Large",
+                WorkerNodeSize = "Large",
                 DefaultStorageAccountName = StorageAccountName,
                 DefaultStorageAccountKey = StorageAccountKey,
                 OSType = OSType.Windows,
@@ -242,7 +242,7 @@ namespace HDInsight.Tests.Helpers
             {
                 ClusterSizeInNodes = 3,
                 ClusterType = HDInsightClusterType.Hadoop,
-                DataNodeSize = "Large",
+                WorkerNodeSize = "Large",
                 DefaultStorageAccountName = StorageAccountName,
                 DefaultStorageAccountKey = StorageAccountKey,
                 OSType = OSType.Linux,
