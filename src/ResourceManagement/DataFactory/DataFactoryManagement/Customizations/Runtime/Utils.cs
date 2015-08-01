@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Management.DataFactories.Runtime
             JsonSerializerSettings settings = ConversionCommon.DefaultSerializerSettings;
             settings.MissingMemberHandling = MissingMemberHandling.Ignore;
 
-            foreach (JsonConverter jsonConverter in Utils.GetConverters(true, true))
+            foreach (JsonConverter jsonConverter in Utils.GetConverters(true, true, true))
             {
                 settings.Converters.Add(jsonConverter);
             }

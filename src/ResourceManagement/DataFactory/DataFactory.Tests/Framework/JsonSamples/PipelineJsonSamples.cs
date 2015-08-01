@@ -366,7 +366,6 @@ namespace DataFactory.Tests.Framework.JsonSamples
                         writeBatchTimeout: ""01:00:00"",
                         sinkRetryCount: 3,
                         sinkRetryWait: ""00:00:01"",
-                        sinkPartitionData: true,
                         sqlWriterStoredProcedureName: ""MySprocName"",
                         sqlWriterTableType: ""MyTableType""
                     }
@@ -380,7 +379,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
                 outputs: 
                 [ 
                     {
-                        name: ""ProcessedBlob""
+                        name: ""ProcessedSQL""
                     }
                 ],
                 linkedServiceName: ""MyLinkedServiceName""
@@ -410,9 +409,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
                         type: ""BlobSource"",
                         sourceRetryCount: ""2"",
                         sourceRetryWait: ""00:00:01"",
-                        blobColumnSeparators: ""My column separators"",
-                        treatEmptyAsNull: ""False"",
-                        nullValues: ""My null values""
+                        treatEmptyAsNull: ""False""
                     },
                     sink: 
                     {
@@ -420,8 +417,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
                         writeBatchSize: 1000000,
                         writeBatchTimeout: ""01:00:00"",
                         sinkRetryCount: 3,
-                        sinkRetryWait: ""00:00:01"",
-                        sinkPartitionData: true
+                        sinkRetryWait: ""00:00:01""
                     }
                 },
                 inputs: 
@@ -840,10 +836,8 @@ namespace DataFactory.Tests.Framework.JsonSamples
                         type: ""BlobSource"",
                         sourceRetryCount: ""2"",
                         sourceRetryWait: ""00:00:01"",
-                        blobColumnSeparators: ""My column separators"",
-                        treatEmptyAsNull: ""False"",
-                        nullValues: ""My null values"",
-                        recursive: true
+                        recursive: true,
+                        treatEmptyAsNull: ""False""
                     },
                     sink: 
                     {

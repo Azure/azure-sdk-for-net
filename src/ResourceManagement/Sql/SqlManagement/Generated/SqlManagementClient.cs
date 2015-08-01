@@ -222,6 +222,19 @@ namespace Microsoft.Azure.Management.Sql
             get { return this._secureConnection; }
         }
         
+        private IServerAdministratorOperations _serverAdministrators;
+        
+        /// <summary>
+        /// Represents all the operations for operating on Azure SQL Server
+        /// Active Directory Administrators.  Contains operations to: Create,
+        /// Retrieve, Update, and Delete Azure SQL Server Active Directory
+        /// Administrators.
+        /// </summary>
+        public virtual IServerAdministratorOperations ServerAdministrators
+        {
+            get { return this._serverAdministrators; }
+        }
+        
         private IServerOperations _servers;
         
         /// <summary>
@@ -296,6 +309,7 @@ namespace Microsoft.Azure.Management.Sql
             this._recommendedIndexes = new RecommendedIndexOperations(this);
             this._databaseReplicationLinks = new ReplicationLinkOperations(this);
             this._secureConnection = new SecureConnectionPolicyOperations(this);
+            this._serverAdministrators = new ServerAdministratorOperations(this);
             this._servers = new ServerOperations(this);
             this._serverUpgrades = new ServerUpgradeOperations(this);
             this._serviceObjectives = new ServiceObjectiveOperations(this);
@@ -377,6 +391,7 @@ namespace Microsoft.Azure.Management.Sql
             this._recommendedIndexes = new RecommendedIndexOperations(this);
             this._databaseReplicationLinks = new ReplicationLinkOperations(this);
             this._secureConnection = new SecureConnectionPolicyOperations(this);
+            this._serverAdministrators = new ServerAdministratorOperations(this);
             this._servers = new ServerOperations(this);
             this._serverUpgrades = new ServerUpgradeOperations(this);
             this._serviceObjectives = new ServiceObjectiveOperations(this);

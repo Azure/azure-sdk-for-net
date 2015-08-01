@@ -261,6 +261,26 @@ namespace DataFactory.Tests.UnitTests
                 Assert.Throws<InvalidOperationException>(() => this.TestLinkedServiceValidation(json));
             Assert.Contains("is required", ex.Message);
         }
+
+        [Theory]
+        [InlineData(@"{
+    name: ""MyLinkedService"",
+    properties: 
+    {
+        type: ""AzureSqlDatabase"", 
+        typeProperties: {
+            connectionString: null
+        }
+    }
+}")]
+        [Trait(TraitName.TestType, TestType.Unit)]
+        [Trait(TraitName.Function, TestType.Conversion)]
+
+        public void CanConvertLinkedServiceWithNullTypePropertyValuesTest(string json)
+        {
+            JsonSampleInfo sample = new JsonSampleInfo("LinkedServiceWithNullTypePropertyValues", json, null);
+            this.TestLinkedServiceJson(sample);
+        }
 #endif 
 
         #endregion Tests

@@ -106,6 +106,31 @@ namespace DataFactory.Tests.UnitTests
             Assert.IsType<GenericDataset>(table.Properties.TypeProperties);
         }
 
+        [Theory]
+        [InlineData(@"{
+    name: ""MyTable"",
+    properties: 
+    {
+        type: ""AzureBlob"", 
+        linkedServiceName: ""MyBlobLinkedService"",
+        typeProperties: {
+            connectionString: null
+        }, 
+        availability: { 
+            frequency: ""Day"", 
+            interval: 1
+        }
+    }
+}")]
+        [Trait(TraitName.TestType, TestType.Unit)]
+        [Trait(TraitName.Function, TestType.Conversion)]
+
+        public void CanConvertTableWithNullTypePropertyValuesTest(string json)
+        {
+            JsonSampleInfo sample = new JsonSampleInfo("TableWithNullTypePropertyValues", json, null);
+            this.TestTableJson(sample);
+        }
+
         private void TestTableJson(JsonSampleInfo info)
         {
             string json = info.Json;

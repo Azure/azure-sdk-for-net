@@ -163,6 +163,18 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._inputEndpoints = value; }
         }
         
+        private string _iPForwarding;
+        
+        /// <summary>
+        /// Optional. Gets or sets the IP Forwarding status for this role.
+        /// Optional
+        /// </summary>
+        public string IPForwarding
+        {
+            get { return this._iPForwarding; }
+            set { this._iPForwarding = value; }
+        }
+        
         private IList<NetworkInterface> _networkInterfaces;
         
         /// <summary>

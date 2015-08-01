@@ -51,10 +51,10 @@
     <Compile Include="Customizations\Operations\DataSlices\IDataSliceOperations.cs" />
     <Compile Include="Customizations\DataFactoryManagementClient.Registration.cs" />
     <Compile Include="Customizations\Runtime\ActivityConfiguration.cs" />
+    <Compile Include="Customizations\Runtime\ActivityConfigurationConverter.cs" />
     <Compile Include="Customizations\Runtime\ActivityExecutor.cs" />
     <Compile Include="Customizations\Runtime\ActivityLogger.cs" />
-    <Compile Include="Customizations\Runtime\DataSet.cs" />
-    <Compile Include="Customizations\Runtime\DataSetConverter.cs" />
+    <Compile Include="Customizations\Runtime\ResolvedTable.cs" />
     <Compile Include="Customizations\Runtime\DotNetActivityApiVersionAttribute.cs" />
     <Compile Include="Customizations\Runtime\IActivityLogger.cs" />
     <Compile Include="Customizations\Runtime\IDotNetActivity.cs" />

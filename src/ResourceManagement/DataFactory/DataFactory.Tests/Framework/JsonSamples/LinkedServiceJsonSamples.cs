@@ -211,7 +211,8 @@ namespace DataFactory.Tests.Framework.JsonSamples
         type: ""AzureBatch"",
         hubName: ""hubName"",
         typeProperties: {
-            accountName: ""MyAzureBatchAccount"",
+            accountName: ""myaccount"",
+            batchUri: ""myaccount.region.batch.windows.com"",
             accessKey: ""accessKey"",
             poolName: ""MyAzureBatchPool"",
             linkedServiceName: ""MyStorageAssetName""
