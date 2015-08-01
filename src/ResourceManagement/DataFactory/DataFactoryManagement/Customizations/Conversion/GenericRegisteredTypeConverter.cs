@@ -108,7 +108,7 @@ namespace Microsoft.Azure.Management.DataFactories.Conversion
             }
         }
 
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        protected override object ReadJsonWrapper(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
             JObject obj = JObject.Load(reader);
 
