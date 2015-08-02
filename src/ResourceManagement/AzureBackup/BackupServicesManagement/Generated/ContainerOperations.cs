@@ -705,6 +705,8 @@ namespace Microsoft.Azure.Management.BackupServices
             url = url + "Microsoft.Backup";
             url = url + "/";
             url = url + "BackupVault";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(this.Client.ResourceName);
             url = url + "/registeredContainers/";
             url = url + Uri.EscapeDataString(containerName);
             List<string> queryParameters = new List<string>();

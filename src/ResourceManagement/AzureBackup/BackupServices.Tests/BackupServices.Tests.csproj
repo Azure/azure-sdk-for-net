@@ -14,6 +14,7 @@
     <Compile Include="ScenarioTests\CSMAzureBackupItem.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ScenarioTests\CSMContainerTests.cs" />
     <Compile Include="ScenarioTests\JobsTests.cs" />
     <Compile Include="ScenarioTests\CSMProtectionPolicyTests.cs" />
     <Compile Include="ScenarioTests\RecoveryPointTests.cs" />
