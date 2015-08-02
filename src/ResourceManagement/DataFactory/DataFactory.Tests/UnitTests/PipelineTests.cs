@@ -179,6 +179,38 @@ namespace DataFactory.Tests.UnitTests
             Assert.Null(((CopyActivity)pipeline.Properties.Activities[0].TypeProperties).Source);
         }
 
+        [Theory]
+        [InlineData(@"{
+    name: ""MyPipelineName"",
+    properties: 
+    {
+        activities:
+        [
+            {
+                type: ""Copy"",
+                name: ""TestActivity"",
+                description: ""Test activity description"", 
+                typeProperties:
+                {
+                    source: null,
+                    sink: null
+                },
+                inputs: [ { name: ""InputSqlDA"" } ],
+                outputs: [ { name: ""OutputBlobDA"" } ],
+                linkedServiceName: ""MyLinkedServiceName""
+            }
+        ]
+    }
+}")]
+        [Trait(TraitName.TestType, TestType.Unit)]
+        [Trait(TraitName.Function, TestType.Conversion)]
+
+        public void CanConvertPipelineWithNullTypePropertyValuesTest(string json)
+        {
+            JsonSampleInfo sample = new JsonSampleInfo("PipelineWithNullTypePropertyValues", json, null);
+            this.TestPipelineJson(sample);
+        }
+
         [Theory, InlineData(PipelineJsonSamples.HDInsightPipeline)]
         [Trait(TraitName.TestType, TestType.Unit)]
         [Trait(TraitName.Function, TestType.Conversion)]
