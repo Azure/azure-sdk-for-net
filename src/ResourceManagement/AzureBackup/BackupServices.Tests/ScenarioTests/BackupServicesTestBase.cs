@@ -36,31 +36,94 @@ namespace BackupServices.Tests
             var testEnvironment = factory.GetTestEnvironment();
             ServicePointManager.ServerCertificateValidationCallback = IgnoreCertificateErrorHandler;
 
-            BackupServicesManagementClient client;
-
             string resourceName = ConfigurationManager.AppSettings["ResourceName"];
             string resourceGroupName = ConfigurationManager.AppSettings["ResourceGroupName"];
-            if (testEnvironment.UsesCustomUri())
+
+            if (typeof(T) == typeof(BackupServicesManagementClient))
             {
-                client = new BackupServicesManagementClient(
-                    resourceName,
-                    resourceGroupName,
-                    testEnvironment.Credentials as SubscriptionCloudCredentials,
-                    testEnvironment.BaseUri);
+                BackupServicesManagementClient client;
+                if (testEnvironment.UsesCustomUri())
+                {
+                    client = new BackupServicesManagementClient(
+                        resourceName,
+                        resourceGroupName,
+                        testEnvironment.Credentials as SubscriptionCloudCredentials,
+                        testEnvironment.BaseUri);
+                }
+                else
+                {
+                    client = new BackupServicesManagementClient(
+                        resourceName,
+                        resourceGroupName,
+                        testEnvironment.Credentials as SubscriptionCloudCredentials);
+                }
+
+                return GetServiceClient<T>(factory, client);
             }
             else
             {
-                client = new BackupServicesManagementClient(
-                    resourceName,
-                    resourceGroupName,
-                    testEnvironment.Credentials as SubscriptionCloudCredentials);
-            }
+                BackupVaultServicesManagementClient client;
+                if (testEnvironment.UsesCustomUri())
+                {
+                    client = new BackupVaultServicesManagementClient(
+                        resourceName,
+                        resourceGroupName,
+                        testEnvironment.Credentials as SubscriptionCloudCredentials,
+                        testEnvironment.BaseUri);
+                }
+                else
+                {
+                    client = new BackupVaultServicesManagementClient(
+                        resourceName,
+                        resourceGroupName,
+                        testEnvironment.Credentials as SubscriptionCloudCredentials);
+                }
 
-            return GetServiceClient<T>(factory, client);
+                return GetServiceClient<T>(factory, client);
+            }
         }
 
-
         public static T GetServiceClient<T>(TestEnvironmentFactory factory, BackupServicesManagementClient client) where T : class
+        {
+            TestEnvironment testEnvironment = factory.GetTestEnvironment();
+
+            HttpMockServer instance;
+            try
+            {
+                instance = HttpMockServer.CreateInstance();
+            }
+            catch (ApplicationException)
+            {
+                HttpMockServer.Initialize("TestEnvironment", "InitialCreation");
+                instance = HttpMockServer.CreateInstance();
+            }
+            T obj2 = typeof(T).GetMethod("WithHandler", new Type[1]
+            {
+                typeof (DelegatingHandler)
+            }).Invoke((object)client, new object[1]
+            {
+                (object) instance
+            }) as T;
+
+            if (HttpMockServer.Mode == HttpRecorderMode.Record)
+            {
+                HttpMockServer.Variables[TestEnvironment.SubscriptionIdKey] = testEnvironment.SubscriptionId;
+            }
+
+            if (HttpMockServer.Mode == HttpRecorderMode.Playback)
+            {
+                PropertyInfo property1 = typeof(T).GetProperty("LongRunningOperationInitialTimeout", typeof(int));
+                PropertyInfo property2 = typeof(T).GetProperty("LongRunningOperationRetryTimeout", typeof(int));
+                if (property1 != (PropertyInfo)null && property2 != (PropertyInfo)null)
+                {
+                    property1.SetValue((object)obj2, (object)0);
+                    property2.SetValue((object)obj2, (object)0);
+                }
+            }
+            return obj2;
+        }
+
+        public static T GetServiceClient<T>(TestEnvironmentFactory factory, BackupVaultServicesManagementClient client) where T : class
         {
             TestEnvironment testEnvironment = factory.GetTestEnvironment();
 
