@@ -36,7 +36,7 @@ namespace BackupServices.Tests
             {
                 undoContext.Start();
 
-                BackupServicesManagementClient client = GetServiceClient<BackupServicesManagementClient>();
+                BackupVaultServicesManagementClient client = GetServiceClient<BackupVaultServicesManagementClient>();
 
                 string subscriptionId = ConfigurationManager.AppSettings["SubscriptionId"];
                 string resourceName = ConfigurationManager.AppSettings["ResourceName"];
@@ -91,7 +91,7 @@ namespace BackupServices.Tests
             {
                 undoContext.Start();
 
-                BackupServicesManagementClient client = GetServiceClient<BackupServicesManagementClient>();
+                BackupVaultServicesManagementClient client = GetServiceClient<BackupVaultServicesManagementClient>();
 
                 UpdateVaultStorageTypeRequest updateVaultStorageTypeRequest = new UpdateVaultStorageTypeRequest()
                 {
@@ -116,7 +116,7 @@ namespace BackupServices.Tests
             {
                 undoContext.Start();
 
-                BackupServicesManagementClient client = GetServiceClient<BackupServicesManagementClient>();
+                BackupVaultServicesManagementClient client = GetServiceClient<BackupVaultServicesManagementClient>();
 
                 string location = ConfigurationManager.AppSettings["Location"];
                 string resourceGroupName = ConfigurationManager.AppSettings["resourceGroupName"];
@@ -168,7 +168,7 @@ namespace BackupServices.Tests
             {
                 undoContext.Start();
 
-                BackupServicesManagementClient client = GetServiceClient<BackupServicesManagementClient>();
+                BackupVaultServicesManagementClient client = GetServiceClient<BackupVaultServicesManagementClient>();
 
                 string resourceGroupName = ConfigurationManager.AppSettings["resourceGroupName"];
                 string location = ConfigurationManager.AppSettings["Location"];
@@ -226,7 +226,7 @@ namespace BackupServices.Tests
             {
                 undoContext.Start();
 
-                BackupServicesManagementClient client = GetServiceClient<BackupServicesManagementClient>();
+                BackupVaultServicesManagementClient client = GetServiceClient<BackupVaultServicesManagementClient>();
 
                 string resourceGroupName = ConfigurationManager.AppSettings["resourceGroupName"];
                 string resourceName = ConfigurationManager.AppSettings["ResourceName"];
@@ -265,7 +265,7 @@ namespace BackupServices.Tests
             {
                 undoContext.Start();
 
-                BackupServicesManagementClient client = GetServiceClient<BackupServicesManagementClient>();
+                BackupVaultServicesManagementClient client = GetServiceClient<BackupVaultServicesManagementClient>();
 
                 string resourceGroupName = ConfigurationManager.AppSettings["resourceGroupName"];
                 string resourceName = ConfigurationManager.AppSettings["ResourceName"];
@@ -293,7 +293,7 @@ namespace BackupServices.Tests
             {
                 undoContext.Start();
 
-                BackupServicesManagementClient client = GetServiceClient<BackupServicesManagementClient>();
+                BackupVaultServicesManagementClient client = GetServiceClient<BackupVaultServicesManagementClient>();
 
                 string armResourceId = ConfigurationManager.AppSettings["ARMResourceId"];
                 string location = ConfigurationManager.AppSettings["Location"];
@@ -327,7 +327,7 @@ namespace BackupServices.Tests
             {
                 undoContext.Start();
 
-                BackupServicesManagementClient client = GetServiceClient<BackupServicesManagementClient>();
+                BackupVaultServicesManagementClient client = GetServiceClient<BackupVaultServicesManagementClient>();
 
                 string resourceGroupName = ConfigurationManager.AppSettings["resourceGroupName"];
                 string armResourceId = ConfigurationManager.AppSettings["ARMResourceId"];

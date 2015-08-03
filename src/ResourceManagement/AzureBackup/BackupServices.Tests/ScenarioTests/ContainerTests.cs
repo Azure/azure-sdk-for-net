@@ -16,6 +16,7 @@
 using Microsoft.Azure.Management.BackupServices.Models;
 using Microsoft.Azure.Management.BackupServices;
 using Microsoft.Azure.Test;
+using System.Linq;
 using System.Net;
 using Xunit;
 using System.Configuration;
@@ -23,7 +24,7 @@ using System;
 
 namespace BackupServices.Tests
 {
-    public class CSMContainerTest : BackupServicesTestsBase
+    public class ContainerTests : BackupServicesTestsBase
     {
         [Fact]
         public void RegisterContainerTest()

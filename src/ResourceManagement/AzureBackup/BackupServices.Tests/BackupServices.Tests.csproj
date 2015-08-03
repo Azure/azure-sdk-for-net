@@ -14,7 +14,7 @@
     <Compile Include="ScenarioTests\CSMAzureBackupItem.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ScenarioTests\CSMContainerTests.cs" />
+    <Compile Include="ScenarioTests\ContainerTests.cs" />
     <Compile Include="ScenarioTests\JobsTests.cs" />
     <Compile Include="ScenarioTests\CSMProtectionPolicyTests.cs" />
     <Compile Include="ScenarioTests\RecoveryPointTests.cs" />
@@ -49,6 +49,18 @@
   <ItemGroup>
     <None Include="app.config">
       <SubType>Designer</SubType>
+    </None>
+    <None Include="SessionRecords\BackupServices.Tests.ContainerTests\EnableContainerReregistrationSetsReregisterFlag.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\BackupServices.Tests.ContainerTests\ListMarsContainersByTypeAndFriendlyNameReturnsSameContainer.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\BackupServices.Tests.ContainerTests\ListMarsContainersByTypeReturnsNonZeroContainers.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\BackupServices.Tests.ContainerTests\UnregisterContainerDeletesContainer.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\BackupServices.Tests.VaultTests\CreateOrUpdateVaultReturnsValidCodeTest.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
