@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.RestClient.ClustersResource
+namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.RestClient.IaasClusters
 {
     using System.Net;
     using System.Net.Http;
@@ -16,19 +16,15 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.RestCl
     using System.Threading.Tasks;
     using Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.Data;
     using Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.Data.Rdfe;
-    using Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.RestClient.ClustersResource;
     using Microsoft.WindowsAzure.Management.HDInsight.Contracts;
-    using Microsoft.WindowsAzure.Management.HDInsight.Contracts.May2014;
-    using Microsoft.WindowsAzure.Management.HDInsight.Contracts.May2014.Components;
     using Microsoft.WindowsAzure.Management.HDInsight.Framework.Rest;
 
 
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.WindowsAzure.Management.HDInsight.Framework.Rest.CodeGen.HttpRestClient" +
         "CodeGenerator", "1.0.0.0")]
-    internal class RdfeClustersResourceRestClient : HttpRestClient<IRdfeClustersResourceRestClient>, IRdfeClustersResourceRestClient
+    internal class RdfeIaasClustersRestClient : HttpRestClient<IRdfeIaasClustersRestClient>, IRdfeIaasClustersRestClient
     {
-
-        public RdfeClustersResourceRestClient(System.Uri baseUri, Microsoft.WindowsAzure.Management.HDInsight.Framework.Rest.HttpRestClientConfiguration configuration) :
+        public RdfeIaasClustersRestClient(System.Uri baseUri, HttpRestClientConfiguration configuration) :
             base(baseUri, configuration)
         {
         }
@@ -64,42 +60,15 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.RestCl
         }
 
         [System.Runtime.CompilerServices.MethodImplAttribute(72)]
-        public Task<PassthroughResponse> ChangeClusterSize(string subscriptionId, string cloudServiceName, string resourceNamespace, string dnsName, string roleAction, ClusterRoleCollection clusterRoleCollection, CancellationToken cancellationToken)
-        {
-            return
-                ((Task<PassthroughResponse>)
-                 (base.CreateAndInvokeRestRequestForParentMethodAsync<PassthroughResponse>(subscriptionId, cloudServiceName, resourceNamespace, dnsName, roleAction, clusterRoleCollection, cancellationToken)));
-        }
-
-        [System.Runtime.CompilerServices.MethodImplAttribute(72)]
         public virtual Task<PassthroughResponse> GetCluster(string subscriptionId, string cloudServiceName, string resourceNamespace, string dnsName, CancellationToken token)
         {
             return ((Task<PassthroughResponse>)(base.CreateAndInvokeRestRequestForParentMethodAsync<PassthroughResponse>(subscriptionId, cloudServiceName, resourceNamespace, dnsName, token)));
         }
 
         [System.Runtime.CompilerServices.MethodImplAttribute(72)]
-        public virtual Task<PassthroughResponse> UpdateComponent(string subscriptionId, string cloudServiceName, string resourceNamespace, string dnsName, string componentName, ClusterComponent request, CancellationToken cancellationToken)
+        public virtual Task<Operation> GetRdfeOperationStatus(string subscriptionId, string operationId, CancellationToken cancellationToken)
         {
-            return ((Task<PassthroughResponse>)(base.CreateAndInvokeRestRequestForParentMethodAsync<PassthroughResponse>(subscriptionId, cloudServiceName, resourceNamespace, dnsName, componentName, request, cancellationToken)));
-        }
-
-        [System.Runtime.CompilerServices.MethodImplAttribute(72)]
-        public virtual Task<PassthroughResponse> CheckOperation(string subscriptionId, string cloudServiceName, string resourceNamespace, string dnsName, string operationId, CancellationToken cancellationToken)
-        {
-            return ((Task<PassthroughResponse>)(base.CreateAndInvokeRestRequestForParentMethodAsync<PassthroughResponse>(subscriptionId, cloudServiceName, resourceNamespace, dnsName, operationId, cancellationToken)));
-        }
-
-        [System.Runtime.CompilerServices.MethodImplAttribute(72)]
-        public Task<PassthroughResponse> EnableDisableRdp(string subscriptionId, string cloudServiceName, string resourceNamespace, string clusterDnsName,
-            string actionType, ClusterRoleCollection roleCollection, CancellationToken cancellationToken)
-        {
-            return ((Task<PassthroughResponse>)(base.CreateAndInvokeRestRequestForParentMethodAsync<PassthroughResponse>(subscriptionId, cloudServiceName, resourceNamespace, clusterDnsName, actionType, roleCollection)));
-        }
-
-        [System.Runtime.CompilerServices.MethodImplAttribute(72)]
-        public virtual Task<Data.Rdfe.Operation> GetRdfeOperationStatus(string subscriptionId, string operationId, CancellationToken cancellationToken)
-        {
-            return ((Task<Data.Rdfe.Operation>)(base.CreateAndInvokeRestRequestForParentMethodAsync<Data.Rdfe.Operation>(subscriptionId, operationId, cancellationToken)));
+            return ((Task<Operation>)(base.CreateAndInvokeRestRequestForParentMethodAsync<Operation>(subscriptionId, operationId, cancellationToken)));
         }
     }
 }

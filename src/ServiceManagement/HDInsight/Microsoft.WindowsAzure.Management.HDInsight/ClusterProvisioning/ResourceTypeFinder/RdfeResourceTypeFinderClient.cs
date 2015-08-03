@@ -69,6 +69,8 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.Resour
                                 return RdfeResourceType.Containers;
                             case "CLUSTERS":
                                 return RdfeResourceType.Clusters;
+                            case "IAASCLUSTERS":
+                                return RdfeResourceType.IaasClusters;
                             default:
                                 return RdfeResourceType.Unknown;
                         }

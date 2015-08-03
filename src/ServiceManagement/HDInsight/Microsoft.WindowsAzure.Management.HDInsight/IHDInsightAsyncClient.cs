@@ -46,6 +46,12 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         Task<Collection<string>> ListAvailableLocationsAsync();
 
         /// <summary>
+        /// Queries the locations where HDInsight deployments for the specified OS type have been enabled for the subscription.
+        /// </summary>
+        /// <returns>List of Windows Azure locations.</returns>
+        Task<Collection<string>> ListAvailableLocationsAsync(OSType osType);
+
+        /// <summary>
         /// Queries the HDInsight Clusters registered.
         /// </summary>
         /// <returns>Task that returns a list of HDInsight Clusters.</returns>
@@ -83,7 +89,15 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         /// </summary>
         /// <param name="clusterCreateParameters">Request object that encapsulates all the configurations.</param>
         /// <returns>Object that will manage the deployment and returns an object that represents the HDInsight Cluster created.</returns>
+        [Obsolete("ClusterCreateParameters is deprecated. Please use ClusterCreateParametersV2 for creating clusters in HdInsight.")]
         Task<ClusterDetails> CreateClusterAsync(ClusterCreateParameters clusterCreateParameters);
+
+        /// <summary>
+        /// Submits a request to create an HDInsight cluster and waits for it to complete.
+        /// </summary>
+        /// <param name="clusterCreateParameters">Request object that encapsulates all the configurations.</param>
+        /// <returns>Object that will manage the deployment and returns an object that represents the HDInsight Cluster created.</returns>
+        Task<ClusterDetails> CreateClusterAsync(ClusterCreateParametersV2 clusterCreateParameters);
 
         /// <summary>
         /// Submits a request to delete an HDInsight cluster.
@@ -144,5 +158,24 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         /// A task that can be used to wait for the request to complete.
         /// </returns>
         Task DisableHttpAsync(string dnsName, string location);
+
+        /// <summary>
+        /// Enables Rdp access on the HDInsight cluster.
+        /// </summary>
+        /// <param name="dnsName">The Dns name of the cluster</param>
+        /// <param name="location">The location of the cluster</param>
+        /// <param name="rdpUserName">Rdp username of the cluster</param>
+        /// <param name="rdpPassword">Rdp password of the cluseter</param>
+        /// <param name="expiry">The time when the Rdp access on the cluster will expire</param>
+        /// <returns>A task that can be used to wait for the request to complete</returns>>
+        Task EnableRdpAsync(string dnsName, string location, string rdpUserName, string rdpPassword, DateTime expiry);
+
+        /// <summary>
+        /// Disables the Rdp access on the HDInsight cluster
+        /// </summary>
+        /// <param name="dnsName">The Dns name of the cluster</param>
+        /// <param name="location">The location of the cluster</param>
+        /// <returns>A task that can be used to wait for the request to complete</returns>
+        Task DisableRdpAsync(string dnsName, string location);
     }
 }

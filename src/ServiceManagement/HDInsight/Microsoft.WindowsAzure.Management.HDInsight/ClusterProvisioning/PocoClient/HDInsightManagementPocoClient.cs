@@ -100,7 +100,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
             return result;
         }
 
-        public async Task CreateContainer(ClusterCreateParameters details)
+        public async Task CreateContainer(ClusterCreateParametersV2 details)
         {
             this.LogMessage("Create Cluster Requested", Severity.Informational, Verbosity.Diagnostic);
             // Validates that the AzureStorage Configurations are valid and optionally append FQDN suffix to the storage account name
@@ -109,10 +109,13 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
             // Validates that the config actions' Uris are downloadable.
             UriEndpointValidator.ValidateAndResolveConfigActionEndpointUris(details);
 
-            var overrideHandlers = ServiceLocator.Instance.Locate<IHDInsightClusterOverrideManager>().GetHandlers(this.credentials, this.Context, this.ignoreSslErrors);
+            var overrideHandlers =
+                ServiceLocator.Instance.Locate<IHDInsightClusterOverrideManager>()
+                    .GetHandlers(this.credentials, this.Context, this.ignoreSslErrors);
 
             var rdfeCapabilitiesClient =
-                ServiceLocator.Instance.Locate<IRdfeServiceRestClientFactory>().Create(this.credentials, this.Context, this.ignoreSslErrors);
+                ServiceLocator.Instance.Locate<IRdfeServiceRestClientFactory>()
+                    .Create(this.credentials, this.Context, this.ignoreSslErrors);
             var capabilities = await rdfeCapabilitiesClient.GetResourceProviderProperties();
             if (!this.HasClusterCreateCapability(capabilities))
             {
@@ -125,6 +128,15 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
             {
                 throw new InvalidOperationException(string.Format(
                     "Your subscription cannot create customized clusters, please contact Support"));
+            }
+
+            if (!new[] {"ExtraLarge", "Large"}.Contains(details.HeadNodeSize, StringComparer.OrdinalIgnoreCase)
+                || !string.Equals(details.DataNodeSize, "Large", StringComparison.OrdinalIgnoreCase)
+                || details.ZookeeperNodeSize.IsNotNullOrEmpty())
+            {
+                throw new InvalidOperationException(string.Format(
+                    "Illegal node size specification for container resource. Headnode: [{0}], Datanode: [{1}], Zookeeper: [{2}]",
+                    details.HeadNodeSize, details.DataNodeSize, details.ZookeeperNodeSize));
             }
 
             // Validates the region for the cluster creation
@@ -148,7 +160,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
 
             // Creates the cluster
             var client = ServiceLocator.Instance.Locate<IHDInsightManagementRestClientFactory>().Create(this.credentials, this.Context, this.ignoreSslErrors);
-            if (details.ClusterType == ClusterType.HBase || details.ClusterType == ClusterType.Storm)
+            if (details.ClusterType == ClusterType.HBase || details.ClusterType == ClusterType.Storm || details.ClusterType == ClusterType.Spark)
             {
                 string payload = overrideHandlers.PayloadConverter.SerializeClusterCreateRequestV3(details);
                 await client.CreateContainer(details.Name, details.Location, payload, 3);
@@ -202,46 +214,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
             return resultId.Data;
         }
 
-        // This method is used by the NonPublic SDK.  Be aware of breaking changes to that project when you alter it.
-        internal static async Task EnableDisableUser(IHDInsightSubscriptionAbstractionContext context,
-                                                     UserChangeRequestUserType requestType,
-                                                     UserChangeRequestOperationType operation,
-                                                     string dnsName,
-                                                     string location,
-                                                     string userName,
-                                                     string password,
-                                                     DateTimeOffset expiration)
-        {
-            var client = ServiceLocator.Instance.Locate<IHDInsightManagementPocoClientFactory>().Create(context.Credentials, context, false);
-            Guid operationId = await EnableDisableUserPocoCall(context, requestType, operation, dnsName, location, userName, password, expiration);
-            await client.WaitForOperationCompleteOrError(dnsName, location, operationId, TimeSpan.FromHours(1), context.CancellationToken);
-        }
-
-        // This method is used by the NonPublic SDK.  Be aware of braking changes to that project when you alter it.
-        private static async Task<Guid> EnableDisableUserPocoCall(IHDInsightSubscriptionAbstractionContext context,
-                                                                  UserChangeRequestUserType requestType,
-                                                                  UserChangeRequestOperationType operation,
-                                                                  string dnsName,
-                                                                  string location,
-                                                                  string userName,
-                                                                  string password,
-                                                                  DateTimeOffset expiration)
-        {
-            var client = ServiceLocator.Instance.Locate<IHDInsightManagementPocoClientFactory>().Create(context.Credentials, context, false);
-            var operationId = await client.EnableDisableProtocol(requestType, operation, dnsName, location, userName, password, expiration);
-            return operationId;
-        }
-
-        // This method is used by the NonPublic SDK.  Be aware of braking changes to that project when you alter it.
-        internal static void RegisterUserChangeRequestHandler(Type credentialsType,
-                                                              UserChangeRequestUserType changeType,
-                                                              Func<IHDInsightSubscriptionAbstractionContext, string, string, Uri> uriBuilder,
-                                                              Func<UserChangeRequestOperationType, string, string, DateTimeOffset, string> payloadConverter)
-        {
-            var manager = ServiceLocator.Instance.Locate<IUserChangeRequestManager>();
-            manager.RegisterUserChangeRequestHandler(credentialsType, changeType, uriBuilder, payloadConverter);
-        }
-
         public async Task<Guid> EnableHttp(string dnsName, string location, string httpUserName, string httpPassword)
         {
             return await this.EnableDisableProtocol(UserChangeRequestUserType.Http,
@@ -264,6 +236,24 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
                                                     DateTimeOffset.MinValue);
         }
 
+        public async Task<Guid> EnableRdp(string dnsName, string location, string rdpUserName, string rdpPassword, DateTime expiry)
+        {
+            var client = ServiceLocator.Instance.Locate<IHDInsightManagementPocoClientFactory>()
+                .Create(this.credentials, this.Context, false);
+            var operationId = await client.EnableDisableProtocol(UserChangeRequestUserType.Rdp,
+                UserChangeRequestOperationType.Enable, dnsName, location, rdpUserName, rdpPassword, expiry);
+            return operationId;
+        }
+
+        public async Task<Guid> DisableRdp(string dnsName, string location)
+        {
+            var client = ServiceLocator.Instance.Locate<IHDInsightManagementPocoClientFactory>()
+                .Create(this.credentials, this.Context, false);
+            var operationId =  await client.EnableDisableProtocol(UserChangeRequestUserType.Rdp,
+                UserChangeRequestOperationType.Disable, dnsName, location, string.Empty, string.Empty, DateTime.MinValue);
+            return operationId;
+        }
+
         public async Task<bool> IsComplete(string dnsName, string location, Guid operationId)
         {
             var status = await this.GetStatus(dnsName, location, operationId);
@@ -278,6 +268,13 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
             var responseObject = overrideHandlers.PayloadConverter.DeserializeConnectivityStatus(response.Content);
             return responseObject.Data;
         }
+
+        /// <inheritdoc />
+        public async Task<Data.Rdfe.Operation> GetRdfeOperationStatus(Guid operationId)
+        {
+            throw new NotImplementedException();
+        }
+
 
         private bool HasClusterCreateCapability(IEnumerable<KeyValuePair<string, string>> capabilities)
         {

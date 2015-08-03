@@ -25,6 +25,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.InversionOfControl
     using Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.ResourceTypeFinder;
     using Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.RestClient;
     using Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.RestClient.ClustersResource;
+    using Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.RestClient.IaasClusters;
     using Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.VersionFinder;
     using Microsoft.WindowsAzure.Management.HDInsight.Framework.Core.Library;
     using Microsoft.WindowsAzure.Management.HDInsight.Framework.ServiceLocation;
@@ -76,9 +77,15 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.InversionOfControl
             manager.RegisterType<IJobSubmissionCache, JobSubmissionCache>();
             manager.RegisterType<IRdfeClustersResourceRestClientFactory, RdfeClustersResourceRestClientFactory>();
             manager.RegisterType<IRdfeResourceTypeFinderFactory, RdfeResourceTypeFinderClientFactory>();
+            manager.RegisterType<IRdfeIaasClustersRestClientFactory, RdfeIaasClustersRestClientFactory>();
             
             var changeManager = new UserChangeRequestManager();
-            changeManager.RegisterUserChangeRequestHandler(typeof(HDInsightCertificateCredential), UserChangeRequestUserType.Http, HttpChangeRequestUriBuilder, PayloadConverter.SerializeConnectivityRequest);
+            changeManager.RegisterUserChangeRequestHandler(typeof (HDInsightCertificateCredential),
+                UserChangeRequestUserType.Http, HttpChangeRequestUriBuilder,
+                PayloadConverter.SerializeHttpConnectivityRequest);
+            changeManager.RegisterUserChangeRequestHandler(typeof (HDInsightCertificateCredential),
+                UserChangeRequestUserType.Rdp, RdpChangeRequestUriBuilder,
+                PayloadConverter.SerializeRdpConnectivityRequest);
             manager.RegisterInstance<IUserChangeRequestManager>(changeManager);
             var hadoopManager = locator.Locate<IHadoopClientFactoryManager>();
             hadoopManager.RegisterFactory<JobSubmissionCertificateCredential, IHDInsightHadoopClientFactory, HDInsightHadoopClientFactory>();
@@ -87,8 +94,19 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.InversionOfControl
 
         internal static Uri HttpChangeRequestUriBuilder(IHDInsightSubscriptionAbstractionContext context, string dnsName, string location)
         {
-            var overrideHandlers = ServiceLocator.Instance.Locate<IHDInsightClusterOverrideManager>().GetHandlers(context.Credentials, context, false);
+            var overrideHandlers =
+                ServiceLocator.Instance.Locate<IHDInsightClusterOverrideManager>()
+                    .GetHandlers(context.Credentials, context, false);
             return overrideHandlers.UriBuilder.GetEnableDisableHttpUri(dnsName, location);
+        }
+
+        internal static Uri RdpChangeRequestUriBuilder(IHDInsightSubscriptionAbstractionContext context, string dnsName,
+            string location)
+        {
+            var overrideHandlers =
+                ServiceLocator.Instance.Locate<IHDInsightClusterOverrideManager>()
+                    .GetHandlers(context.Credentials, context, false);
+            return overrideHandlers.UriBuilder.GetEnableDisableRdpUri(dnsName, location);
         }
     }
 }

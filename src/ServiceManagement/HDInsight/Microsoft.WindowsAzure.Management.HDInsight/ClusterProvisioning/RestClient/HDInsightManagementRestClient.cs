@@ -142,7 +142,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.RestCl
         }
 
         // Method = "PUT", UriTemplate = "{subscriptionId}/cloudservices/{cloudServiceName}/resources/{resourceProviderNamespace}/{resourceType}/{resourceName}"
-        public async Task<IHttpResponseMessageAbstraction> CreateResource(IHttpClientAbstraction client, string resourceId, string resourceType, string location, string clusterPayload, int schemaVersion = 2)
+        public async Task<IHttpResponseMessageAbstraction> CreateResource(IHttpClientAbstraction client, string resourceId, string resourceType, string location, string clusterPayload, int schemaVersion = 3)
         {
             var overrideHandlers = ServiceLocator.Instance.Locate<IHDInsightClusterOverrideManager>().GetHandlers(this.credentials, this.context, this.ignoreSslErrors);
             var uriBuilder = overrideHandlers.UriBuilder;
@@ -165,7 +165,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.RestCl
         }
 
         // Method = "PUT", UriTemplate = "{subscriptionId}/cloudservices/{cloudServiceName}/resources/{resourceProviderNamespace}/{resourceType}/{resourceName}"
-        public async Task<IHttpResponseMessageAbstraction> CreateContainer(string dnsName, string location, string clusterPayload, int schemaVersion = 2)
+        public async Task<IHttpResponseMessageAbstraction> CreateContainer(string dnsName, string location, string clusterPayload, int schemaVersion=2)
         {
             var result = await OperationExecutor.ExecuteOperationWithRetry(
                     () => this.CreateResource(this.CreateClient(), dnsName, "containers", location, clusterPayload, schemaVersion),

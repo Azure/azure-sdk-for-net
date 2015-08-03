@@ -35,6 +35,11 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.Data
         Storm,
 
         /// <summary>
+        /// Hadoop with Spark cluster type.
+        /// </summary>
+        Spark,
+
+        /// <summary>
         /// Unknown cluster flavor.
         /// </summary>
         Unknown

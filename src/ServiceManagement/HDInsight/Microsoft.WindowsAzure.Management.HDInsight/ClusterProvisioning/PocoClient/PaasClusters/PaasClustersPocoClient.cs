@@ -12,7 +12,10 @@
 // 
 // See the Apache Version 2.0 License for specific language governing
 // permissions and limitations under the License.
-namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoClient.ClustersResource
+
+using Microsoft.WindowsAzure.Management.HDInsight.Framework.Core.Library;
+
+namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoClient.PaasClusters
 {
     using System;
     using System.Collections;
@@ -35,18 +38,17 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
     using Microsoft.WindowsAzure.Management.HDInsight.Framework.ServiceLocation;
     using Microsoft.WindowsAzure.Management.HDInsight.Logging;
 
-    internal class ClustersPocoClient : IHDInsightManagementPocoClient
+    internal class PaasClustersPocoClient : IHDInsightManagementPocoClient
     {
         private readonly IRdfeClustersResourceRestClient rdfeClustersRestClient;
         private readonly IHDInsightSubscriptionCredentials credentials;
         internal const string ClustersResourceType = "CLUSTERS";
         private readonly bool ignoreSslErrors;
         private const string ResourceAlreadyExists = "The condition specified by the ETag is not satisfied.";
-        private const string ClustersContractCapabilityPattern = @"CAPABILITY_FEATURE_CLUSTERS_CONTRACT_(\d+)_SDK";
-        private const string ClusterConfigActionCapabilitityName = "CAPABILITY_FEATURE_POWERSHELL_SCRIPT_ACTION_SDK";
-        private static readonly Regex ClustersContractCapabilityRegex = new Regex(ClustersContractCapabilityPattern, RegexOptions.IgnoreCase | RegexOptions.Compiled);
         internal const string ResizeCapabilityEnabled = "ResizeEnabled";
+        public const string ClusterConfigActionCapabilitityName = "CAPABILITY_FEATURE_POWERSHELL_SCRIPT_ACTION_SDK";
         private const string ResizeRoleAction = "Resize";
+        private const string EnableRdpAction = "EnableRdp";
 
         /// <inheritdoc />
         public event EventHandler<ClusterProvisioningStatusEventArgs> ClusterProvisioning;
@@ -64,12 +66,12 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
             this.OnClusterProvisioning(e);
         }
 
-        internal ClustersPocoClient(IHDInsightSubscriptionCredentials credentials, bool ignoreSslErrors, IAbstractionContext context, List<string> capabilities)
-            : this(credentials, ignoreSslErrors, context, capabilities, ServiceLocator.Instance.Locate<IRdfeClustersResourceRestClientFactory>().Create(credentials, context, ignoreSslErrors, GetSchemaVersion(capabilities)))
+        internal PaasClustersPocoClient(IHDInsightSubscriptionCredentials credentials, bool ignoreSslErrors, IAbstractionContext context, List<string> capabilities)
+            : this(credentials, ignoreSslErrors, context, capabilities, ServiceLocator.Instance.Locate<IRdfeClustersResourceRestClientFactory>().Create(credentials, context, ignoreSslErrors, SchemaVersionUtils.GetSchemaVersion(capabilities)))
         {
         }
 
-        internal ClustersPocoClient(
+        internal PaasClustersPocoClient(
             IHDInsightSubscriptionCredentials credentials,
             bool ignoreSslErrors,
             IAbstractionContext context,
@@ -103,7 +105,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
             this.rdfeClustersRestClient = clustersResourceRestClient;
             this.capabilities = capabilities;
         }
-        
+
         protected virtual void OnClusterProvisioning(ClusterProvisioningStatusEventArgs e)
         {
             var handler = this.ClusterProvisioning;
@@ -191,15 +193,31 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
 
         internal static bool HasCorrectSchemaVersionForConfigAction(IEnumerable<string> capabilities)
         {
-            return capabilities.Contains(HDInsightClient.ClustersContractCapabilityVersion2, StringComparer.OrdinalIgnoreCase);
+            string resizeCapability;
+            SchemaVersionUtils.SupportedSchemaVersions.TryGetValue(2, out resizeCapability);
+            if (resizeCapability == null)
+            {
+                return false;
+            }
+            return capabilities.Contains(resizeCapability, StringComparer.OrdinalIgnoreCase);
         }
 
+        internal static bool HasCorrectSchemaVersionForNewVMSizes(IEnumerable<string> capabilities)
+        {
+            string vmSizesCapability;
+            SchemaVersionUtils.SupportedSchemaVersions.TryGetValue(3, out vmSizesCapability);
+            if (vmSizesCapability == null)
+            {
+                return false;
+            }
+            return capabilities.Contains(vmSizesCapability, StringComparer.OrdinalIgnoreCase);
+        }
         /// <summary>
         /// Creates the container.
         /// </summary>
         /// <param name="clusterCreateParameters">The cluster create parameters.</param>
         /// <returns>A task.</returns>
-        public async Task CreateContainer(HDInsight.ClusterCreateParameters clusterCreateParameters)
+        public async Task CreateContainer(HDInsight.ClusterCreateParametersV2 clusterCreateParameters)
         {
             if (clusterCreateParameters == null)
             {
@@ -220,6 +238,19 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
             {
                 throw new ArgumentException("clusterCreateParameters.ClusterSizeInNodes must be > 0");
             }
+
+            //allow zookeeper to be specified only for Hbase and Storm clusters
+            if (clusterCreateParameters.ZookeeperNodeSize != null)
+            {
+                if (clusterCreateParameters.ClusterType != ClusterType.HBase &&
+                    clusterCreateParameters.ClusterType != ClusterType.Storm)
+                {
+                    throw new ArgumentException(
+                        string.Format("clusterCreateParameters.ZookeeperNodeSize must be null for {0} clusters.",
+                        clusterCreateParameters.ClusterType));
+                }
+            }
+
             try
             {
                 //Validate 
@@ -230,8 +261,8 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
                 {
                     this.LogMessage("Validating parameters for config actions.", Severity.Informational, Verbosity.Detailed);
 
-                    if (!ClustersPocoClient.HasClusterConfigActionCapability(this.capabilities) ||
-                        !ClustersPocoClient.HasCorrectSchemaVersionForConfigAction(this.capabilities))
+                    if (!HasClusterConfigActionCapability(this.capabilities) ||
+                        !HasCorrectSchemaVersionForConfigAction(this.capabilities))
                     {
                         throw new NotSupportedException("Your subscription does not support config actions.");
                     }
@@ -240,6 +271,44 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
 
                     // Validates that the config actions' Uris are downloadable.
                     UriEndpointValidator.ValidateAndResolveConfigActionEndpointUris(clusterCreateParameters);
+                }
+
+                //Validate Rdp settings in case any of the RdpUsername or RdpPassword or RdpAccessExpiry is specified.
+                if (!string.IsNullOrEmpty(clusterCreateParameters.RdpUsername) ||
+                    !string.IsNullOrEmpty(clusterCreateParameters.RdpPassword) ||
+                    clusterCreateParameters.RdpAccessExpiry.IsNotNull())
+                {
+                    if(string.IsNullOrEmpty(clusterCreateParameters.RdpUsername))
+                    {
+                        throw new ArgumentException(
+                            "clusterCreateParameters.RdpUsername cannot be null or empty in case either RdpPassword or RdpAccessExpiry is specified",
+                            "clusterCreateParameters");
+                    }
+                    if (string.IsNullOrEmpty(clusterCreateParameters.RdpPassword))
+                    {
+                        throw new ArgumentException(
+                            "clusterCreateParameters.RdpPassword cannot be null or empty in case either RdpUsername or RdpAccessExpiry is specified",
+                            "clusterCreateParameters");
+                    }
+                    if (clusterCreateParameters.RdpAccessExpiry.IsNull())
+                    {
+                        throw new ArgumentException(
+                            "clusterCreateParameters.RdpAccessExpiry cannot be null or empty in case either RdpUsername or RdpPassword is specified",
+                            "clusterCreateParameters");
+                    }
+                    if (clusterCreateParameters.RdpAccessExpiry < DateTime.UtcNow)
+                    {
+                        throw new ArgumentException(
+                            "clusterCreateParameters.RdpAccessExpiry should be a time in future.",
+                            "clusterCreateParameters");
+                    }
+                }
+
+                //Validate if new vm sizes are used and if the schema is on.
+                if (CreateHasNewVMSizesSpecified(clusterCreateParameters) &&
+                    !HasCorrectSchemaVersionForNewVMSizes(this.capabilities))
+                {
+                    throw new NotSupportedException("Your subscription does not support new VM sizes.");
                 }
 
                 var rdfeCapabilitiesClient =
@@ -261,9 +330,9 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
                 await this.CreateCloudServiceAsyncIfNotExists(clusterCreateParameters.Location);
 
                 var wireCreateParameters = PayloadConverterClusters.CreateWireClusterCreateParametersFromUserType(clusterCreateParameters);
-                var rdfeResourceInputFromWireInput = PayloadConverterClusters.CreateRdfeResourceInputFromWireInput(wireCreateParameters, GetSchemaVersion(this.capabilities));
+                var rdfeResourceInputFromWireInput = PayloadConverterClusters.CreateRdfeResourceInputFromWireInput(wireCreateParameters, SchemaVersionUtils.GetSchemaVersion(this.capabilities));
 
-                await
+                var resp = await
                     this.rdfeClustersRestClient.CreateCluster(
                         this.credentials.SubscriptionId.ToString(),
                         this.GetCloudServiceName(clusterCreateParameters.Location),
@@ -271,12 +340,47 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
                         clusterCreateParameters.Name,
                         rdfeResourceInputFromWireInput,
                         this.Context.CancellationToken);
+
+                // Retrieve the request id (or operation id) from the PUT Response. The request id will be used to poll on operation status.
+                IEnumerable<String> requestIds;
+                if (resp.Headers.TryGetValues("x-ms-request-id", out requestIds))
+                {
+                    Guid operationId;
+                    if (!Guid.TryParse(requestIds.First(), out operationId))
+                    {
+                        throw new InvalidOperationException("Could not retrieve a valid operation id for the PUT (cluster create) operation.");
+                    }
+
+                    // Wait for the operation specified by the request id to complete (succeed or fail).
+                    TimeSpan interval = TimeSpan.FromSeconds(1);
+                    TimeSpan timeout = TimeSpan.FromMinutes(5);
+                    await this.WaitForRdfeOperationToComplete(operationId, interval, timeout, Context.CancellationToken);
+                }
             }
             catch (InvalidExpectedStatusCodeException iEx)
             {
                 string content = iEx.Response.Content != null ? iEx.Response.Content.ReadAsStringAsync().Result : string.Empty;
                 throw new HttpLayerException(iEx.ReceivedStatusCode, content);
             }
+        }
+
+        private static bool CreateHasNewVMSizesSpecified(ClusterCreateParametersV2 clusterCreateParameters)
+        {
+            return new[]
+            {
+                clusterCreateParameters.HeadNodeSize, 
+                clusterCreateParameters.DataNodeSize, 
+                clusterCreateParameters.ZookeeperNodeSize
+            }
+            .Except(
+                new[]
+                {
+                    "ExtraLarge", 
+                    "Large", 
+                    "Medium", 
+                    "Small", 
+                    "ExtraSmall"
+                }, StringComparer.OrdinalIgnoreCase).Any(ns => ns.IsNotNullOrEmpty());
         }
 
         /// <summary>
@@ -359,7 +463,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
                             this.GetCloudServiceName(service.GeoRegion),
                             this.credentials.DeploymentNamespace,
                             dnsName,
-                            this.Context.CancellationToken);                    
+                            this.Context.CancellationToken);
                 }
             }
             catch (InvalidExpectedStatusCodeException iEx)
@@ -412,16 +516,10 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
             {
                 throw new ArgumentNullException("dnsName", "The dns name cannot be null or empty.");
             }
-            
+
             if (newSize < 1)
             {
                 throw new ArgumentOutOfRangeException("newSize", "The new node count must be at least 1.");
-            }
-
-            if (!this.capabilities.Contains(HDInsightClient.ClustersContractCapabilityVersion2))
-            {
-                throw new NotSupportedException(
-                    string.Format(CultureInfo.CurrentCulture, "This subscription is missing the capability {0} and therefore does not support a change cluster size operation.", HDInsightClient.ClustersContractCapabilityVersion2));
             }
 
             try
@@ -431,7 +529,9 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
 
                 var cluster = clusterResult.ResultOfGetClusterCall;
 
-                if (cluster.ClusterCapabilities == null || 
+                SchemaVersionUtils.EnsureSchemaVersionSupportsResize(this.capabilities);
+
+                if (cluster.ClusterCapabilities == null ||
                     !cluster.ClusterCapabilities.Contains(ResizeCapabilityEnabled, StringComparer.OrdinalIgnoreCase))
                 {
                     throw new NotSupportedException(
@@ -453,7 +553,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
 
                 this.LogMessage("Sending passthrough request to RDFE", Severity.Informational, Verbosity.Detailed);
 
-                var resp = this.SafeGetDataFromPassthroughResponse<Operation>(
+                var resp = this.SafeGetDataFromPassthroughResponse<Contracts.May2014.Operation>(
                     await this.rdfeClustersRestClient.ChangeClusterSize(
                     this.credentials.SubscriptionId.ToString(),
                     cloudServiceName,
@@ -463,7 +563,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
                     clusterRoleCollection,
                     this.Context.CancellationToken));
                 var operationId = Guid.Parse(resp.OperationId);
-                if (resp.Status.Equals(OperationStatus.Failed))
+                if (resp.Status.Equals(Contracts.May2014.OperationStatus.Failed))
                 {
                     var message = string.Format("ChangeClusterSize operation with operation ID {0} failed with the following response:\n{1}", operationId, resp.ErrorDetails.ErrorMessage);
                     this.LogMessage(message, Severity.Error, Verbosity.Detailed);
@@ -479,30 +579,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
             }
         }
 
-        internal static string GetSchemaVersion(List<string> capabilities)
-        {
-            if (capabilities == null)
-            {
-                throw new ArgumentNullException("capabilities");
-            }
-
-            List<Match> matches = capabilities.Select(s => ClustersContractCapabilityRegex.Match(s)).Where(match => match.Success).ToList();
-            if (matches.Count == 0)
-            {
-                throw new NotSupportedException(
-                    string.Format(CultureInfo.CurrentCulture, "This subscription is not enabled for the clusters contract. The capability {0} is missing.", HDInsightClient.ClustersContractCapabilityVersion1));
-            }
-
-            var schemaVersions = matches.Select(m => int.Parse(m.Groups[1].Value, CultureInfo.CurrentCulture)).ToList();
-
-            if (!schemaVersions.Any())
-            {
-                throw new NotSupportedException(
-                    string.Format(CultureInfo.CurrentCulture, "This subscription is not enabled for the clusters contract. The capability {0} is missing.", HDInsightClient.ClustersContractCapabilityVersion1));
-            }
-
-            return string.Format(CultureInfo.CurrentCulture, "{0}.0", schemaVersions.Max());
-        }
 
         public Task<Guid> EnableDisableProtocol(
             UserChangeRequestUserType protocol,
@@ -542,6 +618,119 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
         public Task<Guid> DisableHttp(string dnsName, string location)
         {
             return this.EnableDisableHttp(dnsName, null, null, false);
+        }
+
+        /// <summary>
+        /// Enables Rdp user on the HDInsight cluster.
+        /// </summary>
+        /// <param name="dnsName">The DNS name of the cluster</param>
+        /// <param name="location">The location of the cluster</param>
+        /// <param name="rdpUserName">The username of the rdp user on the cluster</param>
+        /// <param name="rdpPassword">The password of the rdo user on the cluster</param>
+        /// <param name="expiry">The time when the rdp access will expire on the cluster</param>
+        /// <returns>A task that can be used to wait for the request to complete</returns>
+        public async Task<Guid> EnableRdp(string dnsName, string location, string rdpUserName, string rdpPassword, DateTime expiry)
+        {
+            try
+            {
+                var clusterResult = string.IsNullOrEmpty(location) ? await this.GetCluster(dnsName) : await this.GetCluster(dnsName, location);
+                var cloudServiceName = this.GetCloudServiceName(clusterResult.ClusterDetails.Location);
+                var cluster = clusterResult.ResultOfGetClusterCall;
+                var clusterRoleCollection = cluster.ClusterRoleCollection;
+
+                var remoteDesktopSettings = new RemoteDesktopSettings
+                {
+                    AuthenticationCredential = new UsernamePasswordCredential
+                    {
+                        Username = rdpUserName,
+                        Password = rdpPassword,
+                    },
+                    IsEnabled = true,
+                    RemoteAccessExpiry = expiry,
+                };
+
+                foreach (var role in clusterRoleCollection)
+                {
+                    role.RemoteDesktopSettings = remoteDesktopSettings;
+                }
+
+                this.LogMessage("Sending passthrough request to RDFE", Severity.Informational, Verbosity.Detailed);
+
+                var resp = this.SafeGetDataFromPassthroughResponse<Contracts.May2014.Operation>(
+                    await this.rdfeClustersRestClient.EnableDisableRdp(
+                        this.credentials.SubscriptionId.ToString(),
+                        cloudServiceName,
+                        credentials.DeploymentNamespace,
+                        dnsName,
+                        EnableRdpAction,
+                        clusterRoleCollection, this.Context.CancellationToken));
+                var operationId = Guid.Parse(resp.OperationId);
+                if (resp.Status.Equals(Contracts.May2014.OperationStatus.Failed))
+                {
+                    var message = string.Format("EnableRdp operation with operation ID {0} failed with the following response:\n{1}", operationId, resp.ErrorDetails.ErrorMessage);
+                    this.LogMessage(message, Severity.Error, Verbosity.Detailed);
+                    throw new InvalidOperationException(message);
+                }
+                return operationId;
+            }
+            catch (InvalidExpectedStatusCodeException iEx)
+            {
+                this.LogException(iEx);
+                string content = iEx.Response.Content != null ? iEx.Response.Content.ReadAsStringAsync().Result : string.Empty;
+                throw new HttpLayerException(iEx.ReceivedStatusCode, content);
+            }
+        }
+
+        /// <summary>
+        /// Disables the Rdp user on the HDInsight cluster.
+        /// </summary>
+        /// <param name="dnsName">The DNS name of the cluster</param>
+        /// <param name="location">The location of the cluster</param>
+        /// <returns>A task that can be used to wait for the request to complete</returns>
+        public async Task<Guid> DisableRdp(string dnsName, string location)
+        {
+            try
+            {
+                var clusterResult = string.IsNullOrEmpty(location) ? await this.GetCluster(dnsName) : await this.GetCluster(dnsName, location);
+                var cloudServiceName = this.GetCloudServiceName(clusterResult.ClusterDetails.Location);
+                var cluster = clusterResult.ResultOfGetClusterCall;
+                var clusterRoleCollection = cluster.ClusterRoleCollection;
+
+                var remoteDesktopSettings = new RemoteDesktopSettings
+                {
+                    IsEnabled = false,    
+                };
+
+                foreach (var role in clusterRoleCollection)
+                {
+                    role.RemoteDesktopSettings = remoteDesktopSettings;
+                }
+
+                this.LogMessage("Sending passthrough request to RDFE", Severity.Informational, Verbosity.Detailed);
+
+                var resp = this.SafeGetDataFromPassthroughResponse<Contracts.May2014.Operation>(
+                    await this.rdfeClustersRestClient.EnableDisableRdp(
+                    this.credentials.SubscriptionId.ToString(),
+                    cloudServiceName,
+                    credentials.DeploymentNamespace,
+                    dnsName,
+                    EnableRdpAction,
+                    clusterRoleCollection, this.Context.CancellationToken));
+                var operationId = Guid.Parse(resp.OperationId);
+                if (resp.Status.Equals(Contracts.May2014.OperationStatus.Failed))
+                {
+                    var message = string.Format("EnableRdp operation with operation ID {0} failed with the following response:\n{1}", operationId, resp.ErrorDetails.ErrorMessage);
+                    this.LogMessage(message, Severity.Error, Verbosity.Detailed);
+                    throw new InvalidOperationException(message);
+                }
+                return operationId;
+            }
+            catch (InvalidExpectedStatusCodeException iEx)
+            {
+                this.LogException(iEx);
+                string content = iEx.Response.Content != null ? iEx.Response.Content.ReadAsStringAsync().Result : string.Empty;
+                throw new HttpLayerException(iEx.ReceivedStatusCode, content);
+            }
         }
 
         /// <summary>
@@ -608,7 +797,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
                         operationId.ToString(),
                         this.Context.CancellationToken);
 
-                var operationStatus = (Operation)response.Data;
+                var operationStatus = (Contracts.May2014.Operation)response.Data;
 
                 PayloadErrorDetails payloadErrorDetails = null;
                 if (response.Error != null)
@@ -633,6 +822,15 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
                 string content = iEx.Response.Content != null ? iEx.Response.Content.ReadAsStringAsync().Result : string.Empty;
                 throw new HttpLayerException(iEx.ReceivedStatusCode, content);
             }
+        }
+
+        /// <inheritdoc />
+        public async Task<Data.Rdfe.Operation> GetRdfeOperationStatus(Guid operationId)
+        {
+            return await this.rdfeClustersRestClient.GetRdfeOperationStatus(
+                    this.credentials.SubscriptionId.ToString(),
+                    operationId.ToString(),
+                    this.Context.CancellationToken);
         }
 
         private static UserChangeRequestOperationStatus ConvertOperationStatusToUserChangeOperationState(string operationStatus)
@@ -693,7 +891,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
 
             return new GetClusterResult(clusterDetails, clusterFromGetClusterCall);
         }
-        
+
         private async Task<GetClusterResult> GetCluster(string dnsName)
         {
             var cloudServices = await this.ListCloudServices();
@@ -889,7 +1087,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
 
                 var cloudServiceName = this.GetCloudServiceName(clusterResult.ClusterDetails.Location);
 
-                var resp = this.SafeGetDataFromPassthroughResponse<Operation>(
+                var resp = this.SafeGetDataFromPassthroughResponse<Contracts.May2014.Operation>(
                     await this.rdfeClustersRestClient.UpdateComponent(
                     this.credentials.SubscriptionId.ToString(),
                     cloudServiceName,
@@ -959,6 +1157,5 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
         }
 
         public ILogger Logger { get; private set; }
-
     }
 }

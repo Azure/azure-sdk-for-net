@@ -21,6 +21,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.Resour
         Unknown,
         Clusters,
         Containers,
+        IaasClusters,
     }
 
     /// <summary>

@@ -28,6 +28,11 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         /// <summary> 
         /// The datanodes of the cluster.
         /// </summary> 
-        DataNode
+        DataNode,
+
+        /// <summary> 
+        /// The zookerper nodes of the cluster.
+        /// </summary> 
+        ZookeperNode
     }
 }
