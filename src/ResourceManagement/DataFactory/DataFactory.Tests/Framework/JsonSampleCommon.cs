@@ -188,6 +188,17 @@ namespace DataFactory.Tests.Framework
                     sampleCount));
         }
 
+        public static void TestJsonSample(JsonSampleInfo sampleInfo, Action<JsonSampleInfo> testMethod)
+        {
+            AdfTestLogger.LogInformation(string.Format(
+                CultureInfo.InvariantCulture,
+                "Testing JSON sample '{0}': {1}",
+                sampleInfo.Name,
+                sampleInfo.Json));
+
+            testMethod(sampleInfo);
+        }
+
         public static string RemoveSchemaProperty(string json)
         {
             JObject temp = JObject.Parse(json);

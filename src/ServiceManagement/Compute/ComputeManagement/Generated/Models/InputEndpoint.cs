@@ -172,6 +172,17 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._virtualIPAddress = value; }
         }
         
+        private string _virtualIPName;
+        
+        /// <summary>
+        /// Optional. Virtual IP Name for this endpoint.
+        /// </summary>
+        public string VirtualIPName
+        {
+            get { return this._virtualIPName; }
+            set { this._virtualIPName = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the InputEndpoint class.
         /// </summary>

@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.DataFactories.Runtime
     {
         public string ApiVersion
         {
-            get { return "2015-07-01-preview"; }
+            get { return "2015-08-01"; }
         }
     }
 }
