@@ -150,46 +150,57 @@
     <ProjectReference Include="..\Microsoft.Hadoop.Client\Microsoft.Hadoop.Client.csproj">
       <Project>{7C2E800C-09E5-484A-BB08-6C17578E7E45}</Project>
       <Name>Microsoft.Hadoop.Client</Name>
+      <Properties>SkipValidatePackageReferences=true</Properties>
     </ProjectReference>
     <ProjectReference Include="..\Microsoft.HadoopAppliance.Client\Microsoft.HadoopAppliance.Client.csproj">
       <Project>{ebeda7e0-2c02-497c-ba2e-47030bcf2f2f}</Project>
       <Name>Microsoft.HadoopAppliance.Client</Name>
+      <Properties>SkipValidatePackageReferences=true</Properties>
     </ProjectReference>
     <ProjectReference Include="..\Microsoft.HDInsight.Net.Http.Formatting\Microsoft.HDInsight.Net.Http.Formatting.csproj">
       <Project>{148bd053-7fdc-4e8c-bcc8-016ea61fcaaa}</Project>
       <Name>Microsoft.HDInsight.Net.Http.Formatting</Name>
+      <Properties>SkipValidatePackageReferences=true</Properties>
     </ProjectReference>
     <ProjectReference Include="..\Microsoft.WindowsAzure.Management.Configuration\Microsoft.WindowsAzure.Management.Configuration.csproj">
       <Project>{65a36203-ff6a-46a7-ac05-300dee22589d}</Project>
       <Name>Microsoft.WindowsAzure.Management.Configuration</Name>
+      <Properties>SkipValidatePackageReferences=true</Properties>
     </ProjectReference>
     <ProjectReference Include="..\Microsoft.WindowsAzure.Management.HDInsight.Contracts\Microsoft.WindowsAzure.Management.HDInsight.Contracts.csproj">
       <Project>{d85f1e93-c3dd-4319-9247-c64b5b13b877}</Project>
       <Name>Microsoft.WindowsAzure.Management.HDInsight.Contracts</Name>
+      <Properties>SkipValidatePackageReferences=true</Properties>
     </ProjectReference>
     <ProjectReference Include="..\Microsoft.WindowsAzure.Management.HDInsight.Framework.Core\Microsoft.WindowsAzure.Management.HDInsight.Framework.Core.csproj">
       <Project>{55787775-8b25-436f-b9b9-c2b60ef80b20}</Project>
       <Name>Microsoft.WindowsAzure.Management.HDInsight.Framework.Core</Name>
+      <Properties>SkipValidatePackageReferences=true</Properties>
     </ProjectReference>
     <ProjectReference Include="..\Microsoft.WindowsAzure.Management.HDinsight.Framework\Microsoft.WindowsAzure.Management.HDInsight.Framework.csproj">
       <Project>{db09f70b-fd28-4cc8-86b3-883d71ca9a02}</Project>
       <Name>Microsoft.WindowsAzure.Management.HDInsight.Framework</Name>
+      <Properties>SkipValidatePackageReferences=true</Properties>
     </ProjectReference>
     <ProjectReference Include="..\Microsoft.WindowsAzure.Management.HDInsight.Framework.Internal\Microsoft.WindowsAzure.Management.HDInsight.Framework.Internal.csproj">
       <Project>{e8003299-b766-44ec-a870-6080682762ee}</Project>
       <Name>Microsoft.WindowsAzure.Management.HDInsight.Framework.Internal</Name>
+      <Properties>SkipValidatePackageReferences=true</Properties>
     </ProjectReference>
     <ProjectReference Include="..\Microsoft.WindowsAzure.Management.HDInsight.TestUtilities\Microsoft.WindowsAzure.Management.HDInsight.TestUtilities.csproj">
       <Project>{7DD88C8B-37EA-4353-8ED7-6971118D5FC3}</Project>
       <Name>Microsoft.WindowsAzure.Management.HDInsight.TestUtilities</Name>
+      <Properties>SkipValidatePackageReferences=true</Properties>
     </ProjectReference>
     <ProjectReference Include="..\Microsoft.WindowsAzure.Management.HDInsight\Microsoft.WindowsAzure.Management.HDInsight.csproj">
       <Project>{cf2838ec-af11-477b-a7e6-f59a70a0e67f}</Project>
       <Name>Microsoft.WindowsAzure.Management.HDInsight</Name>
+      <Properties>SkipValidatePackageReferences=true</Properties>
     </ProjectReference>
     <ProjectReference Include="..\procdetails\procdetails.csproj">
       <Project>{fa6ec96e-2a3c-40ed-877b-e35d0f9b765e}</Project>
       <Name>procdetails</Name>
+      <Properties>SkipValidatePackageReferences=true</Properties>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

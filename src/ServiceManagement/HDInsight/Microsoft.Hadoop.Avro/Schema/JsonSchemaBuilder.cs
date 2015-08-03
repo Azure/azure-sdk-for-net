@@ -145,7 +145,7 @@ namespace Microsoft.Hadoop.Avro.Schema
                     case Token.Map:
                         return this.ParseMapType(token, parent, namedSchemas);
                     case Token.Fixed:
-                        return this.ParseFixedType(token, parent);
+                        return this.ParseFixedType(token, parent, namedSchemas);
                     default:
                         throw new SerializationException(
                             string.Format(CultureInfo.InvariantCulture, "Invalid type specified: '{0}'.", type));
@@ -415,7 +415,7 @@ namespace Microsoft.Hadoop.Avro.Schema
             return result;
         }
 
-        private FixedSchema ParseFixedType(JObject type, NamedSchema parent)
+        private FixedSchema ParseFixedType(JObject type, NamedSchema parent, Dictionary<string, NamedSchema> namedSchemas)
         {
             var name = type.RequiredProperty<string>(Token.Name);
             var nspace = this.GetNamespace(type, parent, name);
@@ -433,6 +433,8 @@ namespace Microsoft.Hadoop.Avro.Schema
 
             var customAttributes = type.GetAttributesNotIn(StandardProperties.Record);
             var result = new FixedSchema(attributes, size, typeof(byte[]), customAttributes);
+
+            namedSchemas.Add(result.FullName, result);
             return result;
         }
 
