@@ -33,6 +33,8 @@
     <Compile Include="Generated\INetworkResourceProviderClient.cs" />
     <Compile Include="Generated\INetworkSecurityGroupOperations.cs" />
     <Compile Include="Generated\IPublicIpAddressOperations.cs" />
+    <Compile Include="Generated\IRouteOperations.cs" />
+    <Compile Include="Generated\IRouteTableOperations.cs" />
     <Compile Include="Generated\ISecurityRuleOperations.cs" />
     <Compile Include="Generated\ISubnetOperations.cs" />
     <Compile Include="Generated\IUsageOperations.cs" />
@@ -49,11 +51,11 @@
     <Compile Include="Generated\Models\ApplicationGatewayBackendAddressPool.cs" />
     <Compile Include="Generated\Models\ApplicationGatewayBackendHttpSettings.cs" />
     <Compile Include="Generated\Models\ApplicationGatewayCookieBasedAffinity.cs" />
-    <Compile Include="Generated\Models\ApplicationGatewayFrontendIpConfiguration.cs" />
+    <Compile Include="Generated\Models\ApplicationGatewayFrontendIPConfiguration.cs" />
     <Compile Include="Generated\Models\ApplicationGatewayFrontendPort.cs" />
     <Compile Include="Generated\Models\ApplicationGatewayGetResponse.cs" />
     <Compile Include="Generated\Models\ApplicationGatewayHttpListener.cs" />
-    <Compile Include="Generated\Models\ApplicationGatewayIpConfiguration.cs" />
+    <Compile Include="Generated\Models\ApplicationGatewayIPConfiguration.cs" />
     <Compile Include="Generated\Models\ApplicationGatewayListResponse.cs" />
     <Compile Include="Generated\Models\ApplicationGatewayOperationalState.cs" />
     <Compile Include="Generated\Models\ApplicationGatewayProtocol.cs" />
@@ -112,6 +114,15 @@
     <Compile Include="Generated\Models\ResourceProperties.cs" />
     <Compile Include="Generated\Models\ResourceProviderErrorResponse.cs" />
     <Compile Include="Generated\Models\RetriableOperationResponse.cs" />
+    <Compile Include="Generated\Models\Route.cs" />
+    <Compile Include="Generated\Models\RouteGetResponse.cs" />
+    <Compile Include="Generated\Models\RouteListResponse.cs" />
+    <Compile Include="Generated\Models\RouteNextHopType.cs" />
+    <Compile Include="Generated\Models\RoutePutResponse.cs" />
+    <Compile Include="Generated\Models\RouteTable.cs" />
+    <Compile Include="Generated\Models\RouteTableGetResponse.cs" />
+    <Compile Include="Generated\Models\RouteTableListResponse.cs" />
+    <Compile Include="Generated\Models\RouteTablePutResponse.cs" />
     <Compile Include="Generated\Models\SecurityRule.cs" />
     <Compile Include="Generated\Models\SecurityRuleAccess.cs" />
     <Compile Include="Generated\Models\SecurityRuleDirection.cs" />
@@ -154,6 +165,10 @@
     <Compile Include="Generated\NetworkSecurityGroupOperationsExtensions.cs" />
     <Compile Include="Generated\PublicIpAddressOperations.cs" />
     <Compile Include="Generated\PublicIpAddressOperationsExtensions.cs" />
+    <Compile Include="Generated\RouteOperations.cs" />
+    <Compile Include="Generated\RouteOperationsExtensions.cs" />
+    <Compile Include="Generated\RouteTableOperations.cs" />
+    <Compile Include="Generated\RouteTableOperationsExtensions.cs" />
     <Compile Include="Generated\SecurityRuleOperations.cs" />
     <Compile Include="Generated\SecurityRuleOperationsExtensions.cs" />
     <Compile Include="Generated\SubnetOperations.cs" />
@@ -169,7 +184,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Microsoft.Azure.Management.Network.nuspec" />
+    <None Include="Microsoft.Azure.Management.Network.nuspec">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Microsoft.Azure.Management.Network.nuget.proj" />
     <None Include="packages.config" />
   </ItemGroup>

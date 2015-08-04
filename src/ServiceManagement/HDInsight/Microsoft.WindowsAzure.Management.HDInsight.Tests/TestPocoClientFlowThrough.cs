@@ -65,7 +65,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests
         {
             return underlying.ListContainer(dnsName, location);
         }
-        
+		
         public Task CreateContainer(ClusterCreateParametersV2 details)
         {
             this.LastCreateRequest = details;
@@ -137,6 +137,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests
         public ILogger Logger
         {
             get { return underlying.Logger; }
-        }               
+        }
     }
 }

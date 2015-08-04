@@ -140,7 +140,6 @@
         <AdditionalStorageAccounts/>
       </CreationDetails>
     </Environments>
-
     <AlternativeEnvironment>
       <Endpoint>https://altenv.test.dnsdemo4.com:8443</Endpoint>
       <Namespace>hadoopservicesnightly</Namespace>

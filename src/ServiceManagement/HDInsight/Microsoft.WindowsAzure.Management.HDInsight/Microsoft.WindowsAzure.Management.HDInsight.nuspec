@@ -18,11 +18,12 @@
     <references>
       <group targetFramework="net45">
         <reference file="Microsoft.WindowsAzure.Management.HDInsight.dll" />
-        <reference file="Microsoft.WindowsAzure.Management.HDInsight.xml" />
+        <reference file="Microsoft.WindowsAzure.Management.HDInsight.Contracts.dll" />
       </group>
     </references>
     <dependencies>
       <dependency id="Microsoft.Hadoop.Client" />
+      <dependency id="BouncyCastle" version="1.7.0" />
     </dependencies>
   </metadata>
   <files>
@@ -30,5 +31,8 @@
     <file src="..\binaries\net45\Microsoft.WindowsAzure.Management.HDInsight.dll" target="lib\net45" />
     <file src="..\binaries\net45\Microsoft.WindowsAzure.Management.HDInsight.pdb" target="lib\net45" />
     <file src="..\binaries\net45\Microsoft.WindowsAzure.Management.HDInsight.xml" target="lib\net45" />
+    <file src="..\binaries\net45\Microsoft.WindowsAzure.Management.HDInsight.Contracts.dll" target="lib\net45" />
+    <file src="..\binaries\net45\Microsoft.WindowsAzure.Management.HDInsight.Contracts.pdb" target="lib\net45" />
+    <file src="..\binaries\net45\Microsoft.WindowsAzure.Management.HDInsight.Contracts.xml" target="lib\net45" />
   </files>
 </package>

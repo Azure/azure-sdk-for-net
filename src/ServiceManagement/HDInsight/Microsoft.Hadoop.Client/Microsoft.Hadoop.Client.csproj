@@ -51,6 +51,9 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="HadoopApplicationHistoryClient\RestDataContract\HadoopApplicationHistoryRestReadClient.cs" />
     <Compile Include="PigJobCreateParameters.cs" />
     <Compile Include="QueryJobCreateParameters.cs" />

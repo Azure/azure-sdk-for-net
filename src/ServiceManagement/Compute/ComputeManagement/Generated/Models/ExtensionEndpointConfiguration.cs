@@ -47,6 +47,21 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._inputEndpoints = value; }
         }
         
+        private IList<ExtensionEndpointConfiguration.InstanceInputEndpoint> _instanceInputEndpoints;
+        
+        /// <summary>
+        /// Optional. Optional. A list of instance input endpoints required by
+        /// this extension. Supported on WebRole or WorkerRole, but ignored on
+        /// VmRole. Each instance input endpoint will be automatically added
+        /// to the service definition of the deployment utilizing this
+        /// extension.
+        /// </summary>
+        public IList<ExtensionEndpointConfiguration.InstanceInputEndpoint> InstanceInputEndpoints
+        {
+            get { return this._instanceInputEndpoints; }
+            set { this._instanceInputEndpoints = value; }
+        }
+        
         private IList<ExtensionEndpointConfiguration.InternalEndpoint> _internalEndpoints;
         
         /// <summary>
@@ -68,6 +83,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         public ExtensionEndpointConfiguration()
         {
             this.InputEndpoints = new LazyList<ExtensionEndpointConfiguration.InputEndpoint>();
+            this.InstanceInputEndpoints = new LazyList<ExtensionEndpointConfiguration.InstanceInputEndpoint>();
             this.InternalEndpoints = new LazyList<ExtensionEndpointConfiguration.InternalEndpoint>();
         }
         
@@ -76,7 +92,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public partial class InputEndpoint
         {
-            private int _localPort;
+            private string _localPort;
             
             /// <summary>
             /// Required. Required for each input endpoint. Specifies a port
@@ -84,7 +100,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             /// to be between 1-65535 inclusive, or '*' indicating any port
             /// number automatically allocated by Windows Azure.
             /// </summary>
-            public int LocalPort
+            public string LocalPort
             {
                 get { return this._localPort; }
                 set { this._localPort = value; }
@@ -134,6 +150,89 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             /// Initializes a new instance of the InputEndpoint class.
             /// </summary>
             public InputEndpoint()
+            {
+            }
+        }
+        
+        /// <summary>
+        /// The extension's instance input endpoint configuration.
+        /// </summary>
+        public partial class InstanceInputEndpoint
+        {
+            private int _fixedPortMax;
+            
+            /// <summary>
+            /// Required. Required for each instance input endpoint. Specifies
+            /// a max port valuefor the instance input endpoint port range
+            /// used for instance endpointdistribution by. Its value has to be
+            /// between 1-65535 inclusiveand should be unique range that can
+            /// be injected without conflict.Should also be equal or higher
+            /// than FixedPortMin.
+            /// </summary>
+            public int FixedPortMax
+            {
+                get { return this._fixedPortMax; }
+                set { this._fixedPortMax = value; }
+            }
+            
+            private int _fixedPortMin;
+            
+            /// <summary>
+            /// Required. Required for each instance input endpoint. Specifies
+            /// a min port valuefor the instance input endpoint port range
+            /// used for instance endpointdistribution by. Its value has to be
+            /// between 1-65535 inclusiveand should be unique range that can
+            /// be injected without conflict.
+            /// </summary>
+            public int FixedPortMin
+            {
+                get { return this._fixedPortMin; }
+                set { this._fixedPortMin = value; }
+            }
+            
+            private string _localPort;
+            
+            /// <summary>
+            /// Required. Required for each instance input endpoint. Specifies
+            /// a port used for internal connections on the endpoint. Its
+            /// value has to be between 1-65535 inclusive, or '*' indicating
+            /// any port number automatically allocated by Windows Azure.
+            /// </summary>
+            public string LocalPort
+            {
+                get { return this._localPort; }
+                set { this._localPort = value; }
+            }
+            
+            private string _name;
+            
+            /// <summary>
+            /// Required. Required for each instance input endpoint. A unique
+            /// name for the instance input endpoint.
+            /// </summary>
+            public string Name
+            {
+                get { return this._name; }
+                set { this._name = value; }
+            }
+            
+            private string _protocol;
+            
+            /// <summary>
+            /// Required. Required for each instance input endpoint. Transport
+            /// protocol for the endpoint. Its value has to be one of the
+            /// following: 'tcp', 'udp', 'http', 'https'.
+            /// </summary>
+            public string Protocol
+            {
+                get { return this._protocol; }
+                set { this._protocol = value; }
+            }
+            
+            /// <summary>
+            /// Initializes a new instance of the InstanceInputEndpoint class.
+            /// </summary>
+            public InstanceInputEndpoint()
             {
             }
         }

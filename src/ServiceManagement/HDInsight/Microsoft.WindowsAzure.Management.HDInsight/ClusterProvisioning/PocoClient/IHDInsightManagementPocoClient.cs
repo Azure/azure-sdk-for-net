@@ -112,7 +112,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
         /// <returns>
         /// A task that can be used to wait for the delete request to complete.
         /// </returns>
-        Task DeleteContainer(string dnsName, string location);       
+        Task DeleteContainer(string dnsName, string location);
 
         /// <summary>
         /// Changes the size of the cluster.

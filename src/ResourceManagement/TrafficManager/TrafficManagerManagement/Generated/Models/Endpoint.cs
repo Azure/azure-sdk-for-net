@@ -26,14 +26,14 @@ using Microsoft.Azure.Management.TrafficManager.Models;
 namespace Microsoft.Azure.Management.TrafficManager.Models
 {
     /// <summary>
-    /// An Endpoint.
+    /// Class respresenting a Traffic Manager endpoint.
     /// </summary>
     public partial class Endpoint
     {
         private string _id;
         
         /// <summary>
-        /// Optional. Gets or sets the ID of the resource.
+        /// Optional. Gets or sets the ID of the Traffic Manager endpoint.
         /// </summary>
         public string Id
         {
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
         private string _name;
         
         /// <summary>
-        /// Optional. Gets or sets the name of the resource.
+        /// Optional. Gets or sets the name of the Traffic Manager endpoint.
         /// </summary>
         public string Name
         {
@@ -55,7 +55,8 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
         private EndpointProperties _properties;
         
         /// <summary>
-        /// Required. Gets or sets the properties of the endpoint.
+        /// Optional. Gets or sets the properties of the Traffic Manager
+        /// endpoint.
         /// </summary>
         public EndpointProperties Properties
         {
@@ -66,7 +67,8 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
         private string _type;
         
         /// <summary>
-        /// Optional. Gets or sets the type of the resource.
+        /// Optional. Gets or sets the endpoint type of the Traffic Manager
+        /// endpoint.
         /// </summary>
         public string Type
         {
@@ -79,20 +81,6 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
         /// </summary>
         public Endpoint()
         {
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the Endpoint class with required
-        /// arguments.
-        /// </summary>
-        public Endpoint(EndpointProperties properties)
-            : this()
-        {
-            if (properties == null)
-            {
-                throw new ArgumentNullException("properties");
-            }
-            this.Properties = properties;
         }
     }
 }

@@ -63,7 +63,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities
                 cloudServiceList.Add(cloudService);
             }
 
-            return this.Request.CreateResponse(HttpStatusCode.Accepted, cloudServiceList);;
+            return this.Request.CreateResponse(HttpStatusCode.Accepted, cloudServiceList);
         }
 
         [System.Web.Http.Route("~/{subscriptionId}/cloudservices/{cloudServiceName}/resources/{resourceNamespace}/clusters/{dnsName}")]

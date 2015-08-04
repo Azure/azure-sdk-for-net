@@ -17,6 +17,7 @@ namespace Microsoft.Hadoop.Avro.Schema
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.Linq;
     using Newtonsoft.Json;
 
     /// <summary>
@@ -43,6 +44,7 @@ namespace Microsoft.Hadoop.Avro.Schema
             {
                 throw new ArgumentNullException("schemas");
             }
+
             this.schemas = schemas;
         }
 
@@ -69,7 +71,24 @@ namespace Microsoft.Hadoop.Avro.Schema
         internal override void ToJsonSafe(JsonTextWriter writer, HashSet<NamedSchema> seenSchemas)
         {
             writer.WriteStartArray();
-            this.schemas.ForEach(_ => _.ToJson(writer, seenSchemas));
+
+            var existingSchemas = new List<TypeSchema>();
+            for (int i = 0; i < this.schemas.Count; i++)
+            {
+                var typeSchema = this.schemas[i];
+
+                // according to avro spec http://avro.apache.org/docs/current/spec.html#Unions
+                // Unions may not contain more than one schema with the same type, except for the named types record, fixed and enum. 
+                // For example, unions containing two array types or two map types are not permitted, but two types with different names are permitted            
+                if (existingSchemas.Any(s => IsSameTypeAs(s, typeSchema)))
+                {
+                    continue;
+                }
+                
+                existingSchemas.Add(typeSchema);
+                typeSchema.ToJson(writer, seenSchemas);
+            }
+            
             writer.WriteEndArray();
         }
 
@@ -79,6 +98,37 @@ namespace Microsoft.Hadoop.Avro.Schema
         internal override string Type
         {
             get { return Token.Union; }
+        }
+
+        /// <summary>
+        /// according to avro spec http://avro.apache.org/docs/current/spec.html#Unions
+        ///  Unions may not contain more than one schema with the same type, except for the named types record, fixed and enum. 
+        ///  For example, unions containing two array types or two map types are not permitted, but two types with different names are permitted                            
+        /// </summary>
+        /// <param name="existingSchema">the schema that's already processed.</param>
+        /// <param name="typeSchema">the schema to check whether it's duplicate according to avro union spec.</param>
+        /// <returns>true if existingSchema is same type as typeSchema according to avro spec on union</returns>
+        internal static bool IsSameTypeAs(TypeSchema existingSchema, TypeSchema typeSchema)
+        {
+            // only add ArraySchema at most once based on above Avro spec for union
+            var arraySchema = typeSchema as ArraySchema;
+            var mapSchema = typeSchema as MapSchema;
+            if (arraySchema != null)
+            {
+                // find previous array schema index with the same ItemSchema
+                return existingSchema is ArraySchema 
+                    && IsSameTypeAs(((ArraySchema) existingSchema).ItemSchema, arraySchema.ItemSchema);
+            }
+            
+            if (mapSchema != null)
+            {
+                // find previous map schema index with the same ItemSchema
+                return existingSchema is MapSchema
+                    && IsSameTypeAs(((MapSchema) existingSchema).KeySchema, mapSchema.KeySchema)
+                    && IsSameTypeAs(((MapSchema) existingSchema).ValueSchema, mapSchema.ValueSchema);
+            }
+
+            return existingSchema.Type == typeSchema.Type;
         }
     }
 }

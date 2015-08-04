@@ -425,6 +425,9 @@ namespace Compute.Tests
 
                 Assert.True(vmOut.StorageProfile.OSDisk.Caching
                          == vm.StorageProfile.OSDisk.Caching);
+
+                Assert.True(vmOut.StorageProfile.OSDisk.DiskSizeGB
+                    == vm.StorageProfile.OSDisk.DiskSizeGB);
             }
 
             if (vm.StorageProfile.DataDisks != null &&
@@ -448,6 +451,8 @@ namespace Compute.Tests
                         Assert.Equal(dataDisk.SourceImage.Uri, dataDiskOut.SourceImage.Uri);
                     }
                     // ReSharper enable PossibleNullReferenceException
+
+                    Assert.True(dataDiskOut.DiskSizeGB == dataDisk.DiskSizeGB);
                 }
             }
 

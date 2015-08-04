@@ -731,7 +731,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.HadoopClientTests
                 var mockClient = new Mock<IHDInsightManagementRestClient>();
                 var callCount = 0;
                 mockClient.Setup(x => x.ListCloudServices())
-                          .Returns(() => 
+                          .Returns(() =>
                           {
                               callCount++;
                               return underlying.ListCloudServices();

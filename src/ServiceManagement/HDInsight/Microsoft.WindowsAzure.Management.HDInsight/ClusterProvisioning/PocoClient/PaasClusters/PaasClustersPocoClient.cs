@@ -698,7 +698,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
 
                 var remoteDesktopSettings = new RemoteDesktopSettings
                 {
-                    IsEnabled = false,    
+                    IsEnabled = false, 
                 };
 
                 foreach (var role in clusterRoleCollection)

@@ -141,8 +141,8 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
                     }
                 }
             }
-            while ((result == PollResult.Continue || result == PollResult.Null || result == PollResult.Unknown) && 
-                   DateTime.Now - start < timeout && 
+            while ((result == PollResult.Continue || result == PollResult.Null || result == PollResult.Unknown) &&
+                   DateTime.Now - start < timeout &&
                    pollingFailures <= MaxPollingFailuresCount);
             if (pollingFailures > MaxPollingFailuresCount)
             {
@@ -322,7 +322,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
         /// <param name="cluster">HDInsight cluster.</param>
         /// <param name="states">Acceptable states at which the polling can stop.</param>
         /// <returns>True, if we want polling to continue, false otherwise.</returns>
-        [SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", 
+        [SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters",
             MessageId = "Microsoft.WindowsAzure.Management.HDInsight.Logging.LogProviderExtensions.LogMessage(Microsoft.WindowsAzure.Management.HDInsight.Logging.ILogProvider,System.String,Microsoft.WindowsAzure.Management.HDInsight.Logging.Severity,Microsoft.WindowsAzure.Management.HDInsight.Logging.Verbosity)",
             Justification = "This is for logging the literal is acceptable. [TGS]")]
         internal static PollResult PollSignal(this IHDInsightManagementPocoClient client, ClusterDetails cluster, params ClusterState[] states)

@@ -92,7 +92,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
             var result = clusters.FirstOrDefault(cluster => cluster.Name.Equals(dnsName, StringComparison.OrdinalIgnoreCase));
             return result;
         }
-        
+
         public async Task<ClusterDetails> ListContainer(string dnsName, string location)
         {
             var clusters = await this.ListContainers();

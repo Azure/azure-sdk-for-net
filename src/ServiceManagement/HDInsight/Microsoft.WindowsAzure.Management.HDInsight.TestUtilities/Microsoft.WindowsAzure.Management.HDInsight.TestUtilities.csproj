@@ -48,6 +48,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="ApplianceTestsBase.cs" />
     <Compile Include="Assert2.cs" />
     <Compile Include="AzureTestCredentials.cs" />
@@ -160,8 +163,15 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config">
-      <SubType>Designer</SubType>
+    <None Include="app.config" />
+    <None Include="creds\certs\emrcert.cer">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="creds\certs\invalid.cer">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="creds\certs\sdkcli.cer">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="creds\certs\emrcert.cer" />
     <None Include="creds\certs\invalid.cer" />

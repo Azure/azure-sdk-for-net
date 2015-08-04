@@ -107,7 +107,7 @@ namespace Microsoft.Hadoop.Avro
             {
                 return new TypeSerializationInfo
                 {
-                    Name = StripAvroNonCompatibleCharacters(type.Name),
+                    Name = StripAvroNonCompatibleCharacters(type.AvroSchemaName()),
                     Namespace = StripAvroNonCompatibleCharacters(type.Namespace),
                     Nullable = canContainNull
                 };
@@ -123,7 +123,7 @@ namespace Microsoft.Hadoop.Avro
                     string.Format(CultureInfo.InvariantCulture, "Type '{0}' is not supported by the resolver.", type));
             }
 
-            var name = StripAvroNonCompatibleCharacters(dataContract.Name ?? type.Name);
+            var name = StripAvroNonCompatibleCharacters(dataContract.Name ?? type.AvroSchemaName());
             var nspace = StripAvroNonCompatibleCharacters(dataContract.Namespace ?? type.Namespace);
             return new TypeSerializationInfo
             {

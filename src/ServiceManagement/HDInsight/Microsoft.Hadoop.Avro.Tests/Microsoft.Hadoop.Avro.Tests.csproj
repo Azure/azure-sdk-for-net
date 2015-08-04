@@ -70,6 +70,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="AvroContainerTests.cs" />
     <Compile Include="AvroSerializerTests.cs" />
     <Compile Include="AvroToolsTests\AvroToolsTests.cs" />
@@ -94,12 +97,14 @@
     <Compile Include="SchemaTests\SchemaDefaultValuesTests.cs" />
     <Compile Include="SchemaTests\SchemaEvolutionTests.cs" />
     <Compile Include="SchemaTests\SchemaTests.cs" />
+    <Compile Include="TestClasses\AvroCustomContractResolver.cs" />
     <Compile Include="TestClasses\TestClassesForAvroUnion.cs" />
     <Compile Include="TestClasses\TestClassesForIntegrationWithHive.cs" />
     <Compile Include="TestClasses\TestClassesForSchemaMatching.cs" />
     <Compile Include="TestClasses\TestClassesCollections.cs" />
     <Compile Include="TestClasses\TestClassesForKnownTypes.cs" />
     <Compile Include="TestClasses\TestClassesForSurrogates.cs" />
+    <Compile Include="TypeExtensionsTest.cs" />
     <Compile Include="Utilities.cs" />
     <Compile Include="PerformanceTests.cs" />
     <Compile Include="SequentialContainerTests.cs" />
