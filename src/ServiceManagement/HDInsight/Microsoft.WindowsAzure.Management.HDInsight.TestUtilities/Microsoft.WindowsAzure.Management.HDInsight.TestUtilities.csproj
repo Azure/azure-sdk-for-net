@@ -160,6 +160,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="creds\certs\emrcert.cer" />
     <None Include="creds\certs\invalid.cer" />
     <None Include="creds\certs\sdkcli.cer" />
