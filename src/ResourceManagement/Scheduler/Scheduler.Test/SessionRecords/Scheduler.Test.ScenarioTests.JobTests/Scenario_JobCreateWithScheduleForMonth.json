@@ -12,8 +12,14 @@
         "Content-Length": [
           "293"
         ],
+        "x-ms-client-request-id": [
+          "c45d8666-3ba2-4c67-b3e2-c97a56878bd4"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Scheduler.SchedulerManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.Scheduler.SchedulerManagementClient/0.9.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/jc1\",\r\n  \"type\": \"Microsoft.Scheduler/jobCollections\",\r\n  \"name\": \"jc1\",\r\n  \"location\": \"South Central US\",\r\n  \"properties\": {\r\n    \"sku\": {\r\n      \"name\": \"Standard\"\r\n    },\r\n    \"state\": \"Enabled\",\r\n    \"quota\": {\r\n      \"maxJobCount\": 50,\r\n      \"maxRecurrence\": {\r\n        \"frequency\": \"minute\",\r\n        \"interval\": 1\r\n      }\r\n    }\r\n  }\r\n}",
@@ -31,16 +37,16 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "ef326968-65ea-4955-a447-853cdf154112"
+          "00000000-0000-0000-0000-000000000000"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1199"
+          "1194"
         ],
         "x-ms-correlation-request-id": [
-          "5fc3da85-0c0d-4efd-99a7-c52d9cd665a6"
+          "0dc20eea-7e5e-4ed8-b5fd-2a542e9a165c"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20150717T190830Z:5fc3da85-0c0d-4efd-99a7-c52d9cd665a6"
+          "WESTUS:20150804T230841Z:0dc20eea-7e5e-4ed8-b5fd-2a542e9a165c"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -49,7 +55,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 17 Jul 2015 19:08:29 GMT"
+          "Tue, 04 Aug 2015 23:08:40 GMT"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -75,11 +81,17 @@
         "Content-Length": [
           "1152"
         ],
+        "x-ms-client-request-id": [
+          "857e8a86-6651-4c85-979f-47e7bfed317a"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Scheduler.SchedulerManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.Scheduler.SchedulerManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/jc1/jobs/j1\",\r\n  \"type\": \"Microsoft.Scheduler/jobCollections/jobs\",\r\n  \"name\": \"jc1/j1\",\r\n  \"properties\": {\r\n    \"startTime\": \"2015-07-13T00:00:00Z\",\r\n    \"action\": {\r\n      \"queueMessage\": {\r\n        \"storageAccount\": \"schedulersdktest\",\r\n        \"queueName\": \"queue1\",\r\n        \"message\": \"some message!\"\r\n      },\r\n      \"type\": \"StorageQueue\",\r\n      \"retryPolicy\": {\r\n        \"retryType\": \"fixed\",\r\n        \"retryInterval\": \"00:01:00\",\r\n        \"retryCount\": 2\r\n      },\r\n      \"errorAction\": {\r\n        \"request\": {\r\n          \"uri\": \"http://www.bing.com/\",\r\n          \"method\": \"GET\"\r\n        },\r\n        \"type\": \"Http\"\r\n      }\r\n    },\r\n    \"recurrence\": {\r\n      \"frequency\": \"month\",\r\n      \"count\": 10000,\r\n      \"endTime\": \"2015-10-10T10:10:10Z\",\r\n      \"interval\": 1,\r\n      \"schedule\": {\r\n        \"minutes\": [\r\n          0,\r\n          10,\r\n          20,\r\n          30,\r\n          40,\r\n          50\r\n        ],\r\n        \"hours\": [\r\n          5,\r\n          10,\r\n          15,\r\n          20\r\n        ],\r\n        \"monthDays\": [\r\n          15,\r\n          30\r\n        ]\r\n      }\r\n    },\r\n    \"state\": \"enabled\",\r\n    \"status\": {\r\n      \"nextExecutionTime\": \"2015-07-30T05:00:00Z\",\r\n      \"executionCount\": 0,\r\n      \"failureCount\": 0,\r\n      \"faultedCount\": 0\r\n    }\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/jc1/jobs/j1\",\r\n  \"type\": \"Microsoft.Scheduler/jobCollections/jobs\",\r\n  \"name\": \"jc1/j1\",\r\n  \"properties\": {\r\n    \"startTime\": \"2015-07-13T00:00:00Z\",\r\n    \"action\": {\r\n      \"queueMessage\": {\r\n        \"storageAccount\": \"schedulersdktest\",\r\n        \"queueName\": \"queue1\",\r\n        \"message\": \"some message!\"\r\n      },\r\n      \"type\": \"StorageQueue\",\r\n      \"retryPolicy\": {\r\n        \"retryType\": \"fixed\",\r\n        \"retryInterval\": \"00:01:00\",\r\n        \"retryCount\": 2\r\n      },\r\n      \"errorAction\": {\r\n        \"request\": {\r\n          \"uri\": \"http://www.bing.com/\",\r\n          \"method\": \"GET\"\r\n        },\r\n        \"type\": \"Http\"\r\n      }\r\n    },\r\n    \"recurrence\": {\r\n      \"frequency\": \"month\",\r\n      \"count\": 10000,\r\n      \"endTime\": \"2015-10-10T10:10:10Z\",\r\n      \"interval\": 1,\r\n      \"schedule\": {\r\n        \"minutes\": [\r\n          0,\r\n          10,\r\n          20,\r\n          30,\r\n          40,\r\n          50\r\n        ],\r\n        \"hours\": [\r\n          5,\r\n          10,\r\n          15,\r\n          20\r\n        ],\r\n        \"monthDays\": [\r\n          15,\r\n          30\r\n        ]\r\n      }\r\n    },\r\n    \"state\": \"enabled\",\r\n    \"status\": {\r\n      \"nextExecutionTime\": \"2015-08-15T05:00:00Z\",\r\n      \"executionCount\": 0,\r\n      \"failureCount\": 0,\r\n      \"faultedCount\": 0\r\n    }\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "875"
@@ -97,13 +109,13 @@
           "00000000-0000-0000-0000-000000000000"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1198"
+          "1193"
         ],
         "x-ms-correlation-request-id": [
-          "8935b5b0-0cae-40a0-9f90-7639d2b2ba1b"
+          "aab8582e-7159-4cd7-86cf-d7dc479559bd"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20150717T190830Z:8935b5b0-0cae-40a0-9f90-7639d2b2ba1b"
+          "WESTUS:20150804T230842Z:aab8582e-7159-4cd7-86cf-d7dc479559bd"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -112,7 +124,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 17 Jul 2015 19:08:30 GMT"
+          "Tue, 04 Aug 2015 23:08:41 GMT"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -132,11 +144,17 @@
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "649e0620-53f2-4818-bfc7-e6f3440c5b3c"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Scheduler.SchedulerManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.Scheduler.SchedulerManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/jc1/jobs/j1\",\r\n  \"type\": \"Microsoft.Scheduler/jobCollections/jobs\",\r\n  \"name\": \"jc1/j1\",\r\n  \"properties\": {\r\n    \"startTime\": \"2015-07-13T00:00:00Z\",\r\n    \"action\": {\r\n      \"queueMessage\": {\r\n        \"storageAccount\": \"schedulersdktest\",\r\n        \"queueName\": \"queue1\",\r\n        \"message\": \"some message!\"\r\n      },\r\n      \"type\": \"StorageQueue\",\r\n      \"retryPolicy\": {\r\n        \"retryType\": \"fixed\",\r\n        \"retryInterval\": \"00:01:00\",\r\n        \"retryCount\": 2\r\n      },\r\n      \"errorAction\": {\r\n        \"request\": {\r\n          \"uri\": \"http://www.bing.com/\",\r\n          \"method\": \"GET\"\r\n        },\r\n        \"type\": \"Http\"\r\n      }\r\n    },\r\n    \"recurrence\": {\r\n      \"frequency\": \"month\",\r\n      \"count\": 10000,\r\n      \"endTime\": \"2015-10-10T10:10:10Z\",\r\n      \"interval\": 1,\r\n      \"schedule\": {\r\n        \"minutes\": [\r\n          0,\r\n          10,\r\n          20,\r\n          30,\r\n          40,\r\n          50\r\n        ],\r\n        \"hours\": [\r\n          5,\r\n          10,\r\n          15,\r\n          20\r\n        ],\r\n        \"monthDays\": [\r\n          15,\r\n          30\r\n        ]\r\n      }\r\n    },\r\n    \"state\": \"enabled\",\r\n    \"status\": {\r\n      \"nextExecutionTime\": \"2015-07-30T05:00:00Z\",\r\n      \"executionCount\": 0,\r\n      \"failureCount\": 0,\r\n      \"faultedCount\": 0\r\n    }\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/6c55a6f0-6593-472f-9b3e-a51a9a757b40/resourceGroups/CS-SouthCentralUS-scheduler/providers/Microsoft.Scheduler/jobCollections/jc1/jobs/j1\",\r\n  \"type\": \"Microsoft.Scheduler/jobCollections/jobs\",\r\n  \"name\": \"jc1/j1\",\r\n  \"properties\": {\r\n    \"startTime\": \"2015-07-13T00:00:00Z\",\r\n    \"action\": {\r\n      \"queueMessage\": {\r\n        \"storageAccount\": \"schedulersdktest\",\r\n        \"queueName\": \"queue1\",\r\n        \"message\": \"some message!\"\r\n      },\r\n      \"type\": \"StorageQueue\",\r\n      \"retryPolicy\": {\r\n        \"retryType\": \"fixed\",\r\n        \"retryInterval\": \"00:01:00\",\r\n        \"retryCount\": 2\r\n      },\r\n      \"errorAction\": {\r\n        \"request\": {\r\n          \"uri\": \"http://www.bing.com/\",\r\n          \"method\": \"GET\"\r\n        },\r\n        \"type\": \"Http\"\r\n      }\r\n    },\r\n    \"recurrence\": {\r\n      \"frequency\": \"month\",\r\n      \"count\": 10000,\r\n      \"endTime\": \"2015-10-10T10:10:10Z\",\r\n      \"interval\": 1,\r\n      \"schedule\": {\r\n        \"minutes\": [\r\n          0,\r\n          10,\r\n          20,\r\n          30,\r\n          40,\r\n          50\r\n        ],\r\n        \"hours\": [\r\n          5,\r\n          10,\r\n          15,\r\n          20\r\n        ],\r\n        \"monthDays\": [\r\n          15,\r\n          30\r\n        ]\r\n      }\r\n    },\r\n    \"state\": \"enabled\",\r\n    \"status\": {\r\n      \"nextExecutionTime\": \"2015-08-15T05:00:00Z\",\r\n      \"executionCount\": 0,\r\n      \"failureCount\": 0,\r\n      \"faultedCount\": 0\r\n    }\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "875"
@@ -151,16 +169,16 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "3a5aa77c-25e7-4f89-8a26-c19052e923d3"
+          "8c7e918e-4b1f-4c68-9085-f8d34d9d88c7"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14886"
+          "14860"
         ],
         "x-ms-correlation-request-id": [
-          "1077e4ea-46fb-4f91-ad79-35cdc988ab34"
+          "7acbc960-5bfa-4153-a486-df48f7993070"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20150717T190830Z:1077e4ea-46fb-4f91-ad79-35cdc988ab34"
+          "WESTUS:20150804T230842Z:7acbc960-5bfa-4153-a486-df48f7993070"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -169,7 +187,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 17 Jul 2015 19:08:30 GMT"
+          "Tue, 04 Aug 2015 23:08:41 GMT"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -189,8 +207,14 @@
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "cfd0a9ca-3829-4cbc-9a66-42e7a0adaacb"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Scheduler.SchedulerManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.Scheduler.SchedulerManagementClient/0.9.0.0"
         ]
       },
       "ResponseBody": "",
@@ -205,16 +229,16 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "c8321d6e-fb43-4221-9a06-8133ff35585a"
+          "c428c06c-3800-4c48-95fe-dbd33caba99c"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1197"
+          "1192"
         ],
         "x-ms-correlation-request-id": [
-          "d8a46c96-8169-4ff0-a153-2996f4b0f4c9"
+          "0f36c8b6-f91f-4c26-9d3e-12b8ebe80fb1"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20150717T190831Z:d8a46c96-8169-4ff0-a153-2996f4b0f4c9"
+          "WESTUS:20150804T230844Z:0f36c8b6-f91f-4c26-9d3e-12b8ebe80fb1"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -223,7 +247,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 17 Jul 2015 19:08:31 GMT"
+          "Tue, 04 Aug 2015 23:08:43 GMT"
         ],
         "Server": [
           "Microsoft-IIS/8.5"

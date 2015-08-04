@@ -19,6 +19,7 @@
 
 using Microsoft.Azure;
 using Microsoft.Azure.Management.Scheduler;
+using Microsoft.Rest;
 using Scheduler.Test.Helpers;
 using System;
 
@@ -28,9 +29,11 @@ namespace Scheduler.Test.InMemoryTests
     {
         protected SchedulerManagementClient GetSchedulerManagementClient(RecordedDelegatingHandler handler)
         {
-            var tokenCredential = new TokenCloudCredentials(Guid.NewGuid().ToString(), "abc123");
+            var tokenCredential = new TokenCredentials(Guid.NewGuid().ToString(), "abc123");
             handler.IsPassThrough = false;
-            return new SchedulerManagementClient(credentials: tokenCredential, handlers: handler);
+            var schedulerManagementClient = new SchedulerManagementClient(credentials: tokenCredential, handlers: handler);
+            schedulerManagementClient.SubscriptionId = "12345";
+            return schedulerManagementClient;
         }
     }
 }

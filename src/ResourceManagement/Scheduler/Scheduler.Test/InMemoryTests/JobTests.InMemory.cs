@@ -21,6 +21,7 @@ using Microsoft.Azure;
 using Microsoft.Azure.Management.Scheduler;
 using Microsoft.Azure.Management.Scheduler.Models;
 using Microsoft.Rest;
+using Microsoft.Rest.Azure;
 using Scheduler.Test.Helpers;
 using System;
 using System.Linq;
@@ -754,17 +755,6 @@ namespace Scheduler.Test.InMemoryTests
                        }
                    }
                }));
-        }
-
-        [Fact]
-        public void InMemory_JobListNextThrowsException()
-        {
-            var response = new HttpResponseMessage(HttpStatusCode.BadRequest);
-            var handler = new RecordedDelegatingHandler(response);
-            var client = this.GetSchedulerManagementClient(handler);
-
-            Assert.Throws<ValidationException>(() => client.Jobs.ListNext(null));
-            Assert.Throws<CloudException>(() => client.Jobs.ListNext("https://wa/subscriptions/subId/templateDeployments?$skiptoken=983fknw"));
         }
 
         [Fact]

@@ -1,5 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\..\..\packages\xunit.core.2.0.0\build\portable-net45+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS\xunit.core.props" Condition="Exists('..\..\..\..\packages\xunit.core.2.0.0\build\portable-net45+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS\xunit.core.props')" />
+  <Import Project="..\..\..\..\packages\xunit.runner.visualstudio.2.0.0\build\net20\xunit.runner.visualstudio.props" Condition="Exists('..\..\..\..\packages\xunit.runner.visualstudio.2.0.0\build\net20\xunit.runner.visualstudio.props')" />
   <PropertyGroup>
     <SDKTestProject>true</SDKTestProject>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -25,26 +27,22 @@
     </Reference>
     <Reference Include="System.Threading.Tasks">
     </Reference>
-    <Reference Include="Microsoft.Azure.Test.Framework">
-      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Azure.Test.Framework.2.0.5658.29898-prerelease\lib\net45\Microsoft.Azure.Test.Framework.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Azure.Test.HttpRecorder">
-      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Azure.Test.HttpRecorder.2.0.5658.29898-prerelease\lib\net45\Microsoft.Azure.Test.HttpRecorder.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.IdentityModel.Clients.ActiveDirectory">
-      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.IdentityModel.Clients.ActiveDirectory.2.18.206251556\lib\net45\Microsoft.IdentityModel.Clients.ActiveDirectory.dll</HintPath>
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.IdentityModel.Clients.ActiveDirectory.3.5.207081303-alpha\lib\net45\Microsoft.IdentityModel.Clients.ActiveDirectory.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.IdentityModel.Clients.ActiveDirectory.WindowsForms">
-      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.IdentityModel.Clients.ActiveDirectory.2.18.206251556\lib\net45\Microsoft.IdentityModel.Clients.ActiveDirectory.WindowsForms.dll</HintPath>
+    <Reference Include="Microsoft.IdentityModel.Clients.ActiveDirectory.Platform">
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.IdentityModel.Clients.ActiveDirectory.3.5.207081303-alpha\lib\net45\Microsoft.IdentityModel.Clients.ActiveDirectory.Platform.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>$(LibraryNugetPackageFolder)\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>$(LibraryNugetPackageFolder)\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Rest.ClientRuntime">
-      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Rest.ClientRuntime.1.0.2\lib\net45\Microsoft.Rest.ClientRuntime.dll</HintPath>
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Rest.ClientRuntime.1.1.1\lib\net45\Microsoft.Rest.ClientRuntime.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Rest.ClientRuntime.Azure">
-      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Rest.ClientRuntime.Azure.1.0.3\lib\net45\Microsoft.Rest.ClientRuntime.Azure.dll</HintPath>
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Rest.ClientRuntime.Azure.1.0.18-preview\lib\net45\Microsoft.Rest.ClientRuntime.Azure.dll</HintPath>
     </Reference>
     <Reference Include="xunit.abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
       <HintPath>$(LibraryNugetPackageFolder)\xunit.abstractions.2.0.0\lib\net35\xunit.abstractions.dll</HintPath>
@@ -60,13 +58,16 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\ClientRuntime.Azure.TestFramework\TestFramework\ClientRuntime.Azure.TestFramework.csproj">
+      <Project>{f144a258-3c38-447a-993e-967f74a1a76c}</Project>
+      <Name>ClientRuntime.Azure.TestFramework</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SchedulerManagement\SchedulerManagement.csproj">
       <Project>{241fdb3f-ca94-42b3-ad19-d4cd7ff02d59}</Project>
       <Name>SchedulerManagement</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="SessionRecords\Scheduler.Test.ScenarioTests.JobCollectionTests\Scenario_JobCollectionCreateUpdateDelete.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -80,6 +81,7 @@
     <None Include="SessionRecords\Scheduler.Test.ScenarioTests.JobCollectionTests\Scenario_JobCollectionListBySubscription.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\Scheduler.Test.ScenarioTests.JobCollectionTests\Scenario_JobCollectionPatch.json" />
     <None Include="SessionRecords\Scheduler.Test.ScenarioTests.JobTests\Scenario_JobCreateHttpJobWithBasicAuth.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -116,4 +118,5 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(LibraryNugetPackageFolder)\xunit.runner.visualstudio.0.99.9-build1021\build\net20\xunit.runner.visualstudio.props" Condition="Exists('$(LibraryNugetPackageFolder)\xunit.runner.visualstudio.0.99.9-build1021\build\net20\xunit.runner.visualstudio.props')" />
 </Project>

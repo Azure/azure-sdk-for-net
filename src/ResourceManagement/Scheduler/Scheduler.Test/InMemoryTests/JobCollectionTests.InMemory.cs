@@ -21,6 +21,7 @@ using Microsoft.Azure;
 using Microsoft.Azure.Management.Scheduler;
 using Microsoft.Azure.Management.Scheduler.Models;
 using Microsoft.Rest;
+using Microsoft.Rest.Azure;
 using Scheduler.Test.Helpers;
 using System.Linq;
 using System.Net;
