@@ -52,6 +52,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HadoopApplicationHistoryClient\RestDataContract\HadoopApplicationHistoryRestReadClient.cs" />
+    <Compile Include="PigJobCreateParameters.cs" />
+    <Compile Include="QueryJobCreateParameters.cs" />
+    <Compile Include="SqoopJobCreateParameters.cs" />
+    <Compile Include="StreamingMapReduceJobCreateParameters.cs" />
+    <Compile Include="WaitJobStatusEventArgs.cs" />
+    <Compile Include="WindowsAzureStorageAccountCredentials.cs" />
     <Compile Include="YarnApplicationEntities\ApplicationAttemptDetails.cs" />
     <Compile Include="YarnApplicationEntities\ApplicationAttemptList.cs" />
     <Compile Include="YarnApplicationEntities\ApplicationDetails.cs" />
@@ -97,8 +103,6 @@
     <Compile Include="HadoopStorageRestClient\IHadoopStorageRestClientFactory.cs" />
     <Compile Include="IHadoopClientBase.cs" />
     <Compile Include="IStorageClientCredential.cs" />
-    <Compile Include="QueryJobCreateParameters.cs" />
-    <Compile Include="SqoopJobCreateParameters.cs" />
     <Compile Include="HiveJobCreateParameters.cs" />
     <Compile Include="IJobSubmissionClientBase.cs" />
     <Compile Include="IHadoopClientExtensions.cs" />
@@ -126,14 +130,10 @@
     <Compile Include="HardCodes.cs" />
     <Compile Include="JobStatusCode.cs" />
     <Compile Include="MapReduceJobCreateParameters.cs" />
-    <Compile Include="PigJobCreateParameters.cs" />
     <Compile Include="Storage\IStorageAbstraction.cs" />
     <Compile Include="Storage\IWabStorageAbstractionFactory.cs" />
     <Compile Include="Storage\WabStorageAbstraction.cs" />
     <Compile Include="Storage\WabStorageAbstractionFactory.cs" />
-    <Compile Include="StreamingMapReduceJobCreateParameters.cs" />
-    <Compile Include="WaitJobStatusEventArgs.cs" />
-    <Compile Include="WindowsAzureStorageAccountCredentials.cs" />
     <Compile Include="WebHCatResources\WebHCatHardCodes.cs" />
     <None Include="HadoopJobSubmissionRestCleint\Local\HadoopLocalJobSubmissionRestClientFactory.cs" />
     <Compile Include="HadoopJobSubmissionRestCleint\Remote\HadoopRemoteJobSubmissionRestClient.cs" />
@@ -152,9 +152,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ClientImplementation\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Microsoft.WindowsAzure.Management.HDInsight.Framework.Core\Microsoft.WindowsAzure.Management.HDInsight.Framework.Core.csproj">
       <Project>{55787775-8b25-436f-b9b9-c2b60ef80b20}</Project>

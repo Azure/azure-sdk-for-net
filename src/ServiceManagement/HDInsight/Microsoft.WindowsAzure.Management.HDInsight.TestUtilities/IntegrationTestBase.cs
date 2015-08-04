@@ -43,6 +43,11 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities
     using Microsoft.WindowsAzure.Management.HDInsight.Tests.RestSimulator;
     using Microsoft.WindowsAzure.Management.HDInsight.TestUtilities.RestSimulator;
 
+    [DeploymentItem(@"creds\creds.xml", @"creds\")]
+    [DeploymentItem(@"creds\certs\invalid.cer", @"creds\certs")]
+    [DeploymentItem(@"creds\certs\sdkcli.cer", @"creds\certs")]
+    [DeploymentItem(@"creds\certs\emrcert.cer", @"creds\certs")]
+    [TestClass]
     public class IntegrationTestBase : TestsBase
     {
         public IntegrationTestBase()
@@ -213,18 +218,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities
             {
                 client.DeleteCluster(cluster.Name);
             }
-
-            // Next get the live clusters.
-            runManager.MockingLevel = ServiceLocationMockingLevel.ApplyNoMocking;
-            factory = ServiceLocator.Instance.Locate<ClusterProvisioning.IHDInsightClientFactory>();
-            client = factory.Create(new HDInsightCertificateCredential(creds.SubscriptionId, new X509Certificate2(creds.Certificate)));
-            clusters = client.ListClusters().ToList();
-            var liveClusters = clusters.Where(c => c.Name.StartsWith(ClusterPrefix, StringComparison.OrdinalIgnoreCase));
-
-            foreach (var cluster in liveClusters)
-            {
-                client.DeleteCluster(cluster.Name);
-            }
         }
 
         private static List<Type> types = new List<Type>();
@@ -255,8 +248,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities
             }
 
             // Sets the certificate
-            var defaultCertificate = new X509Certificate2(IntegrationTestBase.TestCredentials.Certificate); ;
-
+            var defaultCertificate = new X509Certificate2(IntegrationTestBase.TestCredentials.Certificate);
 
             // Sets the test static properties
             IntegrationTestBase.ClusterPrefix = string.Format("CLITest-{0}", Environment.GetEnvironmentVariable("computername") ?? "unknown");
@@ -330,7 +322,26 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities
             return retval;
         }
 
-        public static ClusterCreateParameters GetRandomCluster()
+        public static ClusterCreateParametersV2 GetRandomCluster()
+        {
+            // Creates the cluster
+            return new ClusterCreateParametersV2
+            {
+                Name = GetRandomClusterName(),
+                UserName = TestCredentials.AzureUserName,
+                Password = GetRandomValidPassword(),
+                Location = "West US",
+                Version = "default",
+                DefaultStorageAccountName = TestCredentials.Environments[0].DefaultStorageAccount.Name,
+                DefaultStorageAccountKey = TestCredentials.Environments[0].DefaultStorageAccount.Key,
+                DefaultStorageContainer = TestCredentials.Environments[0].DefaultStorageAccount.Container,
+                ClusterSizeInNodes = 3,
+                HeadNodeSize = "ExtraLarge",
+                DataNodeSize = "Large",
+            };
+        }
+
+        public static ClusterCreateParameters GetRandomClusterOldSchema()
         {
             // Creates the cluster
             return new ClusterCreateParameters

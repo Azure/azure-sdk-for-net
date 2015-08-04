@@ -12,9 +12,9 @@
 // 
 // See the Apache Version 2.0 License for specific language governing
 // permissions and limitations under the License.
+
 namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities
 {
-    using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Xml;
@@ -23,6 +23,30 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities
     public class IntegrationTestManager
     {
         private Dictionary<string, AzureTestCredentials> credentialSets = new Dictionary<string, AzureTestCredentials>();
+        public IntegrationTestManager()
+        {
+            string file = this.GetConfigPath();
+            if (!string.IsNullOrEmpty(file))
+            {
+                if (File.Exists(file))
+                {
+                    XmlSerializer ser = new XmlSerializer(typeof(List<AzureTestCredentials>));
+                    using (var stream = File.OpenRead(file))
+                    using (var xmlReader = XmlReader.Create(stream))
+                    {
+                        List<AzureTestCredentials> list = (List<AzureTestCredentials>)ser.Deserialize(xmlReader);
+                        foreach (var cred in list)
+                        {
+                            this.credentialSets.Add(cred.CredentialsName, cred);
+                        }
+                    }
+                }
+                else
+                {
+                    this.MakeFile(file);
+                }
+            }
+        }
 
         public AzureTestCredentials GetCredentials(string name)
         {
@@ -108,7 +132,8 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities
 
         private string GetConfigPath()
         {
-            return null;
+            return "creds/creds.xml";
+            //return Environment.GetEnvironmentVariable("MS_HADOOP_TEST_AZURECONFIG");
         }
     }
 }
