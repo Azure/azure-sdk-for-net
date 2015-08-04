@@ -53,6 +53,18 @@
     <None Include="SessionRecords\BackupServices.Tests.ContainerTests\EnableContainerReregistrationSetsReregisterFlag.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\BackupServices.Tests.ContainerTests\ListContainersByFriendlyNameAndStatusReturnsValidResponse.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\BackupServices.Tests.ContainerTests\ListContainersByFriendlyNameReturnsValidResponse.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\BackupServices.Tests.ContainerTests\ListContainersByStatusReturnsValidResponse.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\BackupServices.Tests.ContainerTests\ListContainersReturnsNonZeroContainers.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\BackupServices.Tests.ContainerTests\ListMarsContainersByTypeAndFriendlyNameReturnsSameContainer.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
