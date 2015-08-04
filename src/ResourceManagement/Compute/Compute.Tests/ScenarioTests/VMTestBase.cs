@@ -48,7 +48,7 @@ namespace Compute.Tests
         protected string m_location;
         ImageReference m_windowsImageReference, m_linuxImageReference;
 
-        protected void EnsureClientsInitialized()
+        protected void EnsureClientsInitialized(MockContext context)
         {
             if (!m_initialized)
             {
@@ -58,10 +58,10 @@ namespace Compute.Tests
                     {
                         var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-                        m_ResourcesClient = ComputeManagementTestUtilities.GetResourceManagementClient(handler);
-                        m_CrpClient = ComputeManagementTestUtilities.GetComputeManagementClient(handler);
-                        m_SrpClient = ComputeManagementTestUtilities.GetStorageManagementClient(handler);
-                        m_NrpClient = ComputeManagementTestUtilities.GetNetworkResourceProviderClient(handler);
+                        m_ResourcesClient = ComputeManagementTestUtilities.GetResourceManagementClient(context, handler);
+                        m_CrpClient = ComputeManagementTestUtilities.GetComputeManagementClient(context, handler);
+                        m_SrpClient = ComputeManagementTestUtilities.GetStorageManagementClient(context, handler);
+                        m_NrpClient = ComputeManagementTestUtilities.GetNetworkResourceProviderClient(context, handler);
 
                         m_subId = m_CrpClient.SubscriptionId;
                         m_location = ComputeManagementTestUtilities.DefaultLocation;

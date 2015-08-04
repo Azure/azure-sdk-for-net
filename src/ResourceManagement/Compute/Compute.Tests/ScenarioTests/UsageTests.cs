@@ -43,7 +43,7 @@ namespace Compute.Tests
         {
             using (MockContext context = MockContext.Start())
             {
-                EnsureClientsInitialized();
+                EnsureClientsInitialized(context);
 
                 ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
                 // Create resource group

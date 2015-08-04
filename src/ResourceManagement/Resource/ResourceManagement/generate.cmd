@@ -8,10 +8,10 @@ setlocal
 set autoRestVersion=0.11.0-Nightly20150727
 set source=-Source https://www.myget.org/F/autorest/api/v2
 
-set resSpecFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/arm-resources/2014-04-01-preview/swagger/resources.json?token=AFvFAUt8kd8h4EHb6NQ9pfECnwPrhv9wks5Vv8qQwA=="
-set authSpecFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/arm-authorization/2015-01-01/swagger/authorization.json?token=AFvFAdC1UDb8X4apaW2jBlybnEIsDIEjks5Vv_eWwA=="
-set featureSpecFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/arm-features/2014-08-01-preview/swagger/features.json?token=AFvFAdK0vX5j75nicb0DQY5ihN425UExks5Vv_fGwA=="
-set subscriptionSpecFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/arm-subscriptions/2014-04-01-preview/swagger/subscriptions.json?token=AFvFAbQmNVtX9zfhY0EO8vcXdF6iOyyKks5Vv_flwA=="
+set resSpecFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/arm-resources/2014-04-01-preview/swagger/resources.json"
+set authSpecFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/arm-authorization/2015-01-01/swagger/authorization.json"
+set featureSpecFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/arm-features/2014-08-01-preview/swagger/features.json"
+set subscriptionSpecFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/arm-subscriptions/2014-04-01-preview/swagger/subscriptions.json"
 
 set repoRoot=%~dp0..\..\..\..
 set generateFolder=%~dp0Generated
