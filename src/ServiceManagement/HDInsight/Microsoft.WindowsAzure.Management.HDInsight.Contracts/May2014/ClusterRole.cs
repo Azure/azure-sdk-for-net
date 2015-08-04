@@ -20,11 +20,32 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Contracts.May2014
     [DataContract(Namespace = Constants.HdInsightManagementNamespace)]
     internal class ClusterRole : RestDataContract
     {
+        private string vmSizeAsString;
+
         [DataMember]
         public string FriendlyName { get; set; }
 
         [DataMember]
         public VmSize VMSize { get; set; }
+
+        [DataMember]
+        public string VMSizeAsString 
+        { get { return vmSizeAsString; }
+            set
+            {
+                vmSizeAsString = value;
+
+                VmSize legacy;
+                if (VmSize.TryParse(vmSizeAsString, out legacy) && legacy <= VmSize.ExtraLarge)
+                {
+                    VMSize = legacy;
+                }
+                else
+                {
+                    VMSize = VmSize.ExtraLarge;
+                }
+            } 
+        }
         
         [DataMember]
         public int InstanceCount { get; set; }

@@ -355,25 +355,25 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
         #region Not Supported Operations
 
         /// <inheritdoc />
-        public async Task<Guid> ChangeClusterSize(string dnsName, string location, int newSize)
+        public Task<Guid> ChangeClusterSize(string dnsName, string location, int newSize)
         {
             throw new NotSupportedException(UnSupportedOperationMessage);
         }
 
         /// <inheritdoc />
-        public async Task<Guid> EnableDisableProtocol(UserChangeRequestUserType protocol, UserChangeRequestOperationType operation, string dnsName, string location, string userName, string password, DateTimeOffset expiration)
+        public Task<Guid> EnableDisableProtocol(UserChangeRequestUserType protocol, UserChangeRequestOperationType operation, string dnsName, string location, string userName, string password, DateTimeOffset expiration)
         {
             throw new NotSupportedException(UnSupportedOperationMessage);
         }
 
         /// <inheritdoc />
-        public async Task<Guid> EnableHttp(string dnsName, string location, string httpUserName, string httpPassword)
+        public Task<Guid> EnableHttp(string dnsName, string location, string httpUserName, string httpPassword)
         {
             throw new NotSupportedException(UnSupportedOperationMessage);
         }
 
         /// <inheritdoc />
-        public async Task<Guid> DisableHttp(string dnsName, string location)
+        public Task<Guid> DisableHttp(string dnsName, string location)
         {
             throw new NotSupportedException(UnSupportedOperationMessage);
         }
@@ -389,13 +389,13 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
         }
 
         /// <inheritdoc />
-        public async Task<UserChangeRequestStatus> GetStatus(string dnsName, string location, Guid operationId)
+        public Task<UserChangeRequestStatus> GetStatus(string dnsName, string location, Guid operationId)
         {
             throw new NotSupportedException(UnSupportedOperationMessage);
         }
 
         /// <inheritdoc />
-        public async Task<bool> IsComplete(string dnsName, string location, Guid operationId)
+        public Task<bool> IsComplete(string dnsName, string location, Guid operationId)
         {
             throw new NotSupportedException(UnSupportedOperationMessage);
         }

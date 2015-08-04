@@ -13,6 +13,10 @@
   </PropertyGroup>
   <Import Project="..\..\..\..\tools\Library.Settings.targets" />
   <ItemGroup>
+    <Reference Include="BouncyCastle.Crypto, Version=1.7.4137.9688, Culture=neutral, PublicKeyToken=a4292a325f69b123, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(SolutionDir)\packages\BouncyCastle.1.7.0\lib\Net40-Client\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.WindowsAzure.Common">
       <HintPath>$(LibraryNugetPackageFolder)\Microsoft.WindowsAzure.Common.1.3.0\lib\net45\Microsoft.WindowsAzure.Common.dll</HintPath>
     </Reference>
@@ -35,6 +39,8 @@
     <Compile Include="ClusterProvisioning\Data\Iaas\JsonHelper.cs" />
     <Compile Include="ClusterProvisioning\Data\Iaas\OpenSshToX509CertificateHelper.cs" />
     <Compile Include="ClusterProvisioning\Data\Iaas\PayloadConverterIaasClusters.cs" />
+    <Compile Include="ClusterProvisioning\Data\OSType.cs" />
+    <Compile Include="ClusterProvisioning\Data\Rdfe\Operation.cs" />
     <Compile Include="ClusterProvisioning\Data\ScriptAction.cs" />
     <Compile Include="ClusterProvisioning\Data\NodeVMSize.cs" />
     <Compile Include="ClusterProvisioning\Data\PayloadConverterClusters.cs" />
@@ -53,11 +59,10 @@
     <Compile Include="ClusterProvisioning\Data\Rdfe\UsageMeterCollection.cs" />
     <Compile Include="ClusterProvisioning\Data\Resource.cs" />
     <Compile Include="ClusterProvisioning\PocoClient\AsvValidationHelper.cs" />
-    <Compile Include="ClusterProvisioning\PocoClient\ClustersResource\ClustersPocoClient.cs" />
-    <Compile Include="ClusterProvisioning\PocoClient\ClustersResource\Extensions\WabStorageAccountConfigurationExtensions.cs" />
     <Compile Include="ClusterProvisioning\PocoClient\IaasClusters\IaasClustersPocoClient.cs" />
     <Compile Include="ClusterProvisioning\PocoClient\PaasClusters\Extensions\WabStorageAccountConfigurationExtensions.cs" />
     <Compile Include="ClusterProvisioning\PocoClient\PaasClusters\PaasClustersPocoClient.cs" />
+    <Compile Include="ClusterProvisioning\PocoClient\SchemaVersionUtils.cs" />
     <Compile Include="ClusterProvisioning\PocoClient\UriEndpointValidator.cs" />
     <Compile Include="ClusterProvisioning\ResourceTypeFinder\IRdfeResourceTypeFinderFactory.cs" />
     <Compile Include="ClusterProvisioning\ResourceTypeFinder\IRdfeResourceTypeFinderClient.cs" />
@@ -219,6 +224,7 @@
       <Name>Microsoft.WindowsAzure.Management.HDInsight.Framework</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(LibraryFxTarget)' == 'portable' " />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(LibraryFxTarget)' != 'portable' " />
   <Import Project="$(LibraryNugetPackageFolder)\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('$(LibraryNugetPackageFolder)\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />

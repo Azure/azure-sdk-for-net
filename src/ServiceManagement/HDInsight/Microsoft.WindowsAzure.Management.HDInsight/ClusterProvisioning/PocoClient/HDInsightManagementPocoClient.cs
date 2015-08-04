@@ -270,7 +270,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
         }
 
         /// <inheritdoc />
-        public async Task<Data.Rdfe.Operation> GetRdfeOperationStatus(Guid operationId)
+        public Task<Data.Rdfe.Operation> GetRdfeOperationStatus(Guid operationId)
         {
             throw new NotImplementedException();
         }

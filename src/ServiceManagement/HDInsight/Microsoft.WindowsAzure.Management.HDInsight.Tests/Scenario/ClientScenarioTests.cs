@@ -56,38 +56,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.Scenario
         }
 
         [TestMethod]
-        [TestCategory("Production")]
-        [TestCategory(TestRunMode.Nightly)]
-        [TestCategory("Scenario")]
-        public void ListAvailableLocations_AgainstAzure()
-        {
-            this.ApplyIndividualTestMockingOnly();
-            ListAvailableLocations();
-        }
-
-        [TestMethod]
-        [TestCategory("Production")]
-        [TestCategory(TestRunMode.Nightly)]
-        [TestCategory("Scenario")]
-        [ExpectedException(typeof(TimeoutException))]
-        public void ListClustersFailsOnTimeout_AgainstAzure()
-        {
-            this.ApplyIndividualTestMockingOnly();
-            ListClustersFailsOnTimeout();
-        }
-
-        [TestMethod]
-        [TestCategory("Production")]
-        [TestCategory(TestRunMode.Nightly)]
-        [TestCategory("Scenario")]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void ListClustersFailsOnSpecifiedTimeoutTooSmall_AgainstAzure()
-        {
-            this.ApplyIndividualTestMockingOnly();
-            ListClustersFailsOnSpecifiedTimeoutTooSmall();
-        }
-
-        [TestMethod]
         [TestCategory(TestRunMode.CheckIn)]
         [TestCategory("Scenario")]
         [TestCategory("Defect(2, 1829869)")]
@@ -265,30 +233,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.Scenario
         }
 
         [TestMethod]
-        [TestCategory("Production")]
-        [TestCategory(TestRunMode.Nightly)]
-        [TestCategory("Scenario")]
-        [TestCategory("LongRunning")]
-        [Timeout(AzureTestTimeout)] // ms
-        public void CreateDeleteContainer_SyncClientWithTimeouts_AgainstAzure()
-        {
-            this.ApplyIndividualTestMockingOnly();
-            CreateDeleteContainer_SyncClientWithTimeouts();
-        }
-
-        [TestMethod]
-        [TestCategory("Production")]
-        [TestCategory(TestRunMode.Nightly)]
-        [TestCategory("Scenario")]
-        [TestCategory("LongRunning")]
-        [Timeout(AzureTestTimeout)] // ms
-        public void CreateDeleteContainer_BasicClusterAsyncClient_AgainstAzure()
-        {
-            this.ApplyIndividualTestMockingOnly();
-            CreateDeleteContainer_BasicClusterAsyncClient();
-        }
-
-        [TestMethod]
         [TestCategory("CheckIn")]
         [TestCategory("Scenario")]
         [Timeout(30 * 1000)] // ms
@@ -326,6 +270,23 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.Scenario
         [TestCategory("CheckIn")]
         [TestCategory("Scenario")]
         [Timeout(30 * 1000)] // ms
+        public void CreateDeleteContainer_SyncClient_OldAPI()
+        {
+            // Creates the client
+            IHDInsightCertificateCredential credentials = IntegrationTestBase.GetValidCredentials();
+            var client = HDInsightClient.Connect(new HDInsightCertificateCredential(credentials.SubscriptionId, credentials.Certificate));
+            client.PollingInterval = TimeSpan.FromMilliseconds(100);
+            TestValidAdvancedClusterOldAPI(
+                client.ListClusters,
+                client.GetCluster,
+                client.CreateCluster,
+                client.DeleteCluster);
+        }
+
+        [TestMethod]
+        [TestCategory("CheckIn")]
+        [TestCategory("Scenario")]
+        [Timeout(30 * 1000)] // ms
         public void CreateDeleteContainer_AsyncClient()
         {
             // Creates the client
@@ -344,6 +305,24 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.Scenario
         [TestCategory("CheckIn")]
         [TestCategory("Scenario")]
         [Timeout(30 * 1000)] // ms
+        public void CreateDeleteContainer_AsyncClient_DeprecatedAPI()
+        {
+            // Creates the client
+            IHDInsightCertificateCredential credentials = IntegrationTestBase.GetValidCredentials();
+            var client = HDInsightClient.Connect(new HDInsightCertificateCredential(credentials.SubscriptionId, credentials.Certificate));
+            client.PollingInterval = TimeSpan.FromMilliseconds(100);
+
+            TestValidAdvancedClusterOldAPI(
+                () => client.ListClustersAsync().WaitForResult(),
+                dnsName => client.GetClusterAsync(dnsName).WaitForResult(),
+                cluster => client.CreateClusterAsync(cluster).WaitForResult(),
+                dnsName => client.DeleteClusterAsync(dnsName).WaitForResult());
+        }
+
+        [TestMethod]
+        [TestCategory("CheckIn")]
+        [TestCategory("Scenario")]
+        [Timeout(30 * 1000)] // ms
         public void AttemptCreateContainerWhenClusterAlreadyExists_AsyncClient()
         {
             // Creates the client
@@ -351,7 +330,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.Scenario
             var client = HDInsightClient.Connect(new HDInsightCertificateCredential(credentials.SubscriptionId, credentials.Certificate));
             client.PollingInterval = TimeSpan.FromMilliseconds(100);
 
-            ClusterCreateParameters cluster = GetRandomCluster();
+            ClusterCreateParametersV2 cluster = GetRandomCluster();
             cluster.DefaultStorageContainer = "thiscontainerdoesnotexist";
             client.CreateClusterAsync(cluster).WaitForResult();
 
@@ -386,46 +365,22 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.Scenario
         }
 
         [TestMethod]
-        [TestCategory("Manual")]
-        [TestCategory("Production")]
+        [TestCategory("CheckIn")]
         [TestCategory("Scenario")]
-        [TestCategory("LongRunning")]
-        [Timeout(AzureTestTimeout)]  // ms
-        public void CreateDeleteContainer_SyncClient_AgainstManualEnvironment()
+        [Timeout(30 * 1000)] // ms
+        public void CreateDeleteContainer_BasicClusterAsyncClient_DeprecatedAPI()
         {
-            // Dissables the simulator
-            this.ApplyIndividualTestMockingOnly();
-
-            // Sets the simulator
-            var runManager = ServiceLocator.Instance.Locate<IServiceLocationIndividualTestManager>();
-            runManager.Override<IHDInsightSubscriptionCredentialsFactory>(new AlternativeEnvironmentIHDInsightSubscriptionCertificateCredentialsFactory());
-
             // Creates the client
-            var creds = IntegrationTestBase.GetCredentialsForEnvironmentType(EnvironmentType.Current);
+            IHDInsightCertificateCredential credentials = IntegrationTestBase.GetValidCredentials();
+            var client = HDInsightClient.Connect(new HDInsightCertificateCredential(credentials.SubscriptionId, credentials.Certificate));
+            client.PollingInterval = TimeSpan.FromMilliseconds(100);
 
-            if (creds == null)
-                Assert.Inconclusive("Alternative Azure Endpoint wasn't set up");
-
-            var client = HDInsightClient.Connect(new HDInsightCertificateCredential(creds.SubscriptionId, IntegrationTestBase.GetValidCredentials().Certificate));
-            client.PollingInterval = TimeSpan.FromSeconds(1);
-
-            // Runs the test
-            TestValidAdvancedCluster(
-                client.ListClusters,
-                client.GetCluster,
-                client.CreateCluster,
-                client.DeleteCluster);
-        }
-
-        [TestMethod]
-        [TestCategory("Production")]
-        [TestCategory(TestRunMode.Nightly)]
-        [TestCategory("Scenario")]
-        [Timeout(AzureTestTimeout)] // ms
-        public void ValidCreateDeleteContainerWithOnlyHiveMetastore_WorksOnSdk_AgainstAzure()
-        {
-            this.ApplyIndividualTestMockingOnly();
-            this.ValidCreateDeleteContainerWithOnlyHiveMetastore_WorksOnSdk();
+            TestClusterEndToEndOldAPI(
+                GetRandomClusterOldSchema(),
+                () => client.ListClustersAsync().WaitForResult(),
+                dnsName => client.GetClusterAsync(dnsName).WaitForResult(),
+                cluster => client.CreateClusterAsync(cluster).WaitForResult(),
+                dnsName => client.DeleteClusterAsync(dnsName).WaitForResult());
         }
 
         [TestMethod]
@@ -459,17 +414,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.Scenario
                     client.DeleteCluster(clusterRequest.Name);
                 }
             }
-        }
-
-        [TestMethod]
-        [TestCategory("Production")]
-        [TestCategory(TestRunMode.Nightly)]
-        [TestCategory("Scenario")]
-        [Timeout(30 * 1000)] // ms
-        public void InvalidCreateDeleteContainer_FailsOnServer_AgainstAzure()
-        {
-            this.ApplyIndividualTestMockingOnly();
-            InvalidCreateDeleteContainer_FailsOnServer();
         }
 
         [TestMethod]
@@ -510,6 +454,26 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.Scenario
         public void InvalidCreateDeleteContainer_UnknownState()
         {
             var clusterRequest = GetRandomCluster();
+            clusterRequest.Name = "unknownclustername";
+            clusterRequest.AdditionalStorageAccounts.Add(new WabStorageAccountConfiguration(TestCredentials.Environments[0].AdditionalStorageAccounts[0].Name, TestCredentials.Environments[0].AdditionalStorageAccounts[0].Key));
+
+            IHDInsightCertificateCredential credentials = IntegrationTestBase.GetValidCredentials();
+            var client = HDInsightClient.Connect(new HDInsightCertificateCredential(credentials.SubscriptionId, credentials.Certificate));
+            client.PollingInterval = TimeSpan.FromMilliseconds(100);
+
+            client.CreateCluster(clusterRequest);
+            var retCluster = client.GetCluster(clusterRequest.Name);
+            Assert.AreEqual(retCluster.State, ClusterState.Unknown);
+            client.DeleteCluster(clusterRequest.Name);
+        }
+
+        [TestMethod]
+        [TestCategory("CheckIn")]
+        [TestCategory("Scenario")]
+        [Timeout(30 * 1000)] // ms
+        public void InvalidCreateDeleteContainer_UnknownState_DeprecatedAPI()
+        {
+            var clusterRequest = GetRandomClusterOldSchema();
             clusterRequest.Name = "unknownclustername";
             clusterRequest.AdditionalStorageAccounts.Add(new WabStorageAccountConfiguration(TestCredentials.Environments[0].AdditionalStorageAccounts[0].Name, TestCredentials.Environments[0].AdditionalStorageAccounts[0].Key));
 
@@ -567,6 +531,46 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.Scenario
             }
         }
 
+        [TestMethod]
+        [TestCategory("CheckIn")]
+        public void EnableRdpAccess_ExpiryDateInPast()
+        {
+            IHDInsightCertificateCredential credentials = IntegrationTestBase.GetValidCredentials();
+            var client = HDInsightClient.Connect(new HDInsightCertificateCredential(credentials.SubscriptionId, credentials.Certificate));
+            var expiry = DateTime.Now.Subtract(TimeSpan.FromMilliseconds(1));
+            try
+            {
+                client.EnableRdp("randomDnsName", "randomLocation", "randomRdpUsername", "randomRdpPassword",
+                    DateTime.Now.Subtract(TimeSpan.FromMilliseconds(1)));
+                throw new Exception("EnableRdp should have thrown");
+            }
+            catch (ArgumentOutOfRangeException c)
+            {
+                Assert.IsTrue(c.Message.Equals(string.Format("DateTime expiry needs to be sometime in future. Given expiry: {0}\r\nParameter name: expiry", expiry.ToString())));
+            }
+        }
+
+        [TestMethod]
+        [TestCategory("CheckIn")]
+        public void CreateClusterWithNewVMSizes_VersionTooLow()
+        {
+            var clusterRequest = GetRandomCluster();
+            Version version = new Version(3, 0);
+            clusterRequest.Version = version.ToString();
+            clusterRequest.DataNodeSize = "Medium";
+
+            IHDInsightCertificateCredential credentials = IntegrationTestBase.GetValidCredentials();
+            var client = HDInsightClient.Connect(new HDInsightCertificateCredential(credentials.SubscriptionId, credentials.Certificate));
+            try
+            {
+                client.CreateCluster(clusterRequest);
+            }
+            catch (InvalidOperationException ioex)
+            {
+                Assert.AreEqual(ioex.Message,
+                    "Cannot use various VM sizes with cluster version '3.0'. Custom VM sizes are only supported for cluster versions 3.1 and above.");
+            }
+        }
 
         [TestMethod]
         [TestCategory("CheckIn")]
@@ -735,58 +739,16 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.Scenario
             client.CreateCluster(clusterRequest);
         }
 
-        // This is disabled because scenario test doesn't support creating 3.x clusters
-        /*
         [TestMethod]
         [TestCategory("CheckIn")]
-        public void CreateHBaseCluster_VersionValid()
+        public void CreateCluster_VersionValid_DeprecatedAPI()
         {
-            var clusterRequest = GetRandomCluster();
-            clusterRequest.ClusterType = ClusterType.HBase;
-            clusterRequest.Version = "3.1";
+            var clusterRequest = GetRandomClusterOldSchema();
             IHDInsightCertificateCredential credentials = IntegrationTestBase.GetValidCredentials();
             var client = HDInsightClient.Connect(new HDInsightCertificateCredential(credentials.SubscriptionId, credentials.Certificate));
             client.CreateCluster(clusterRequest);
         }
-
-        [TestMethod]
-        [TestCategory("Production")]
-        [TestCategory(TestRunMode.Nightly)]
-        [TestCategory("Scenario")]
-        public void CreateHBaseCluster_AgainstAzure()
-        {
-            this.ApplyIndividualTestMockingOnly();
-            CreateHBaseCluster_VersionValid();
-        }
-        */
-
-        // This is disabled because scenario test doesn't support creating 3.x clusters
-        /*
-        [TestMethod]
-        [TestCategory("CheckIn")]
-        public void CreateStormCluster()
-        {
-            var clusterRequest = GetRandomCluster();
-            clusterRequest.ClusterType = ClusterType.Storm;
-            clusterRequest.Version = "3.1";
-            var client = HDInsightClient.Connect(IntegrationTestBase.GetValidCredentials());
-            client.CreateCluster(clusterRequest);
-        }
-        */
-
-        // This is disabled because storm has not been pushed to production yet
-        /*
-        [TestMethod]
-        [TestCategory("Production")]
-        [TestCategory(TestRunMode.Nightly)]
-        [TestCategory("Scenario")]
-        public void CreateStormCluster_AgainstAzure()
-        {
-            this.ApplyIndividualTestMockingOnly();
-            CreateStormCluster();
-        }
-        */
-
+        
         [TestMethod]
         [TestCategory("CheckIn")]
         public void CreateCluster_RaisesEvents()
@@ -882,7 +844,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.Scenario
             Assert.AreEqual(jobDetailsObject.JobId, "job_201307101453_0189");
         }
 
-        private void TestValidAdvancedCluster(Func<ICollection<ClusterDetails>> getClusters, Func<string, ClusterDetails> getCluster, Func<ClusterCreateParameters, ClusterDetails> createCluster, Action<string> deleteCluster)
+        private void TestValidAdvancedCluster(Func<ICollection<ClusterDetails>> getClusters, Func<string, ClusterDetails> getCluster, Func<ClusterCreateParametersV2, ClusterDetails> createCluster, Action<string> deleteCluster)
         {
             // ClusterName
             var cluster = GetRandomCluster();
@@ -898,6 +860,24 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.Scenario
                                                            TestCredentials.AzurePassword.Replace("-", ""));
 
             this.TestClusterEndToEnd(cluster, getClusters, getCluster, createCluster, deleteCluster);
+        }
+
+        private void TestValidAdvancedClusterOldAPI(Func<ICollection<ClusterDetails>> getClusters, Func<string, ClusterDetails> getCluster, Func<ClusterCreateParameters, ClusterDetails> createCluster, Action<string> deleteCluster)
+        {
+            // ClusterName
+            var cluster = GetRandomClusterOldSchema();
+            cluster.AdditionalStorageAccounts.Add(new WabStorageAccountConfiguration(TestCredentials.Environments[0].AdditionalStorageAccounts[0].Name,
+                                                                                  TestCredentials.Environments[0].AdditionalStorageAccounts[0].Key));
+            cluster.OozieMetastore = new Metastore(TestCredentials.Environments[0].OozieStores[0].SqlServer,
+                                                            TestCredentials.Environments[0].OozieStores[0].Database,
+                                                            TestCredentials.AzureUserName,
+                                                            TestCredentials.AzurePassword.Replace("-", ""));
+            cluster.HiveMetastore = new Metastore(TestCredentials.Environments[0].HiveStores[0].SqlServer,
+                                                           TestCredentials.Environments[0].HiveStores[0].Database,
+                                                           TestCredentials.AzureUserName,
+                                                           TestCredentials.AzurePassword.Replace("-", ""));
+
+            this.TestClusterEndToEndOldAPI(cluster, getClusters, getCluster, createCluster, deleteCluster);
         }
 
         internal static ClusterDetails GetHttpAccessEnabledCluster()
@@ -991,7 +971,37 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.Scenario
             //return testCluster;
         }
 
-        private void TestClusterEndToEnd(ClusterCreateParameters cluster, Func<ICollection<ClusterDetails>> getClusters, Func<string, ClusterDetails> getCluster, Func<ClusterCreateParameters, ClusterDetails> createCluster, Action<string> deleteCluster)
+        private void TestClusterEndToEnd(ClusterCreateParametersV2 cluster, Func<ICollection<ClusterDetails>> getClusters, Func<string, ClusterDetails> getCluster, Func<ClusterCreateParametersV2, ClusterDetails> createCluster, Action<string> deleteCluster)
+        {
+            // TODO: DROP ALL THE TABLES IN THE METASTORE TABLES
+
+            // Verifies it doesn't exist
+            var listResult = getClusters();
+            int matchingContainers = listResult.Count(container => container.Name.Equals(cluster.Name));
+            Assert.AreEqual(0, matchingContainers);
+
+            // Creates the cluster
+            var result = createCluster(cluster);
+            Assert.IsNotNull(result);
+            Assert.IsNotNull(getCluster(cluster.Name));
+
+            //validate that we get the storage accounts back from the service.
+            var defaultStorageAccount = result.DefaultStorageAccount;
+            Assert.IsNotNull(defaultStorageAccount, cluster.DefaultStorageAccountName);
+            Assert.AreEqual(cluster.DefaultStorageAccountKey, defaultStorageAccount.Key);
+            Assert.AreEqual(cluster.DefaultStorageContainer, defaultStorageAccount.Container);
+            // TODO: USE HADOOP SDK TO LAUNCH A JOB USING BOTH STORAGE ACCOUNTS
+
+            // TODO: QUERY SQL METASTORES TO SEE THAT THE DATABASES GOT INITIALIZED
+
+            // Deletes the cluster
+            deleteCluster(cluster.Name);
+
+            // Verifies it doesn't exist
+            Assert.IsNull(getCluster(cluster.Name));
+        }
+
+        private void TestClusterEndToEndOldAPI(ClusterCreateParameters cluster, Func<ICollection<ClusterDetails>> getClusters, Func<string, ClusterDetails> getCluster, Func<ClusterCreateParameters, ClusterDetails> createCluster, Action<string> deleteCluster)
         {
             // TODO: DROP ALL THE TABLES IN THE METASTORE TABLES
 

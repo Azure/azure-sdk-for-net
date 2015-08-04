@@ -12,24 +12,10 @@
 // 
 // See the Apache Version 2.0 License for specific language governing
 // permissions and limitations under the License.
-namespace Microsoft.WindowsAzure.Management.HDInsight.Tests
+namespace Microsoft.WindowsAzure.Management.HDInsight.Contracts.Iaas.Jan2015
 {
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using Microsoft.WindowsAzure.Management.HDInsight.TestUtilities;
-
-    [TestClass]
-    public static class TestSetupCleanup
+    internal static class Constants
     {
-        [AssemblyInitialize]
-        public static void AssemblyInit(TestContext context)
-        {
-            IntegrationTestBase.TestRunSetup();
-        }
-
-        [AssemblyCleanup]
-        public static void AssemblyCleanup()
-        {
-            IntegrationTestBase.TestRunCleanup();
-        }
+        public const string HdInsightManagementNamespace = "http://schemas.microsoft.com/hdinsight/2014/05/management";
     }
 }

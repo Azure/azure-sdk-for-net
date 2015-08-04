@@ -27,7 +27,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.RestCl
         /// <param name="credentials">The credentials.</param>
         /// <param name="context">The context.</param>
         /// <param name="ignoreSslErrors">If set to <c>true</c> ignore SSL errors.</param>
-        /// <param name="schemaVersion">The schema version.</param>
         /// <returns>
         /// An instance of IRdfeIaasClustersRestClient.
         /// </returns>
@@ -40,7 +39,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.RestCl
         /// <param name="credentials">The credentials.</param>
         /// <param name="context">The context.</param>
         /// <param name="ignoreSslErrors">If set to <c>true</c> ignore SSL errors.</param>
-        /// <param name="schemaVersion">The schema version.</param>
         /// <returns>
         /// An instance of IRdfeIaasClustersRestClient.
         /// </returns>
