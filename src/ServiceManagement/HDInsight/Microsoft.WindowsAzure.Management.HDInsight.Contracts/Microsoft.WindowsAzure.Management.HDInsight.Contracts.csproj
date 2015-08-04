@@ -15,6 +15,7 @@
   <ItemGroup>
     <Compile Include="DataContractSerDeUtils.cs" />
     <Compile Include="ErrorDetails.cs" />
+    <Compile Include="GlobalSupressions.cs" />
     <Compile Include="HttpUserChangeRequest.cs" />
     <Compile Include="Iaas\Jan2015\Constants.cs" />
     <Compile Include="Iaas\Jan2015\Credentials\ConnectivityCredential.cs" />
