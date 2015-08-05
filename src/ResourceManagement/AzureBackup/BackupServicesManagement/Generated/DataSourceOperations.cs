@@ -498,7 +498,7 @@ namespace Microsoft.Azure.Management.BackupServices
             }
             if (csmparameters != null && csmparameters.Type != null)
             {
-                odataFilter.Add("type eq '" + Uri.EscapeDataString(csmparameters.Type) + "'");
+                odataFilter.Add("itemType eq '" + Uri.EscapeDataString(csmparameters.Type) + "'");
             }
             if (odataFilter.Count > 0)
             {
