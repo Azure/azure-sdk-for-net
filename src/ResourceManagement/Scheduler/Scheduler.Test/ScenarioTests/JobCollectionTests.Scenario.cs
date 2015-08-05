@@ -40,7 +40,7 @@ namespace Scheduler.Test.ScenarioTests
         {
             using (MockContext context = MockContext.Start())
             {
-                const string jobCollectionName = "jc1";
+                string jobCollectionName = TestUtilities.GenerateName("jc1");
                 string id = string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Scheduler/jobCollections/{2}", subscriptionId, resourceGroupName, jobCollectionName);
                 
                 var client = TestBase.GetServiceClient<SchedulerManagementClient>();
@@ -133,7 +133,7 @@ namespace Scheduler.Test.ScenarioTests
         {
             using (MockContext context = MockContext.Start())
             {
-                const string jobCollectionName = "jc1";
+                string jobCollectionName = TestUtilities.GenerateName("jc1");
                 string id = string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Scheduler/jobCollections/{2}", subscriptionId, resourceGroupName, jobCollectionName);
                 var tags = new Dictionary<string, string>();
                 tags.Add("department", "marketing");
@@ -198,8 +198,8 @@ namespace Scheduler.Test.ScenarioTests
         {
             using (MockContext context = MockContext.Start())
             {
-                const string jobCollectionName1 = "jc1";
-                const string jobCollectionName2 = "jc2";
+                string jobCollectionName1 = TestUtilities.GenerateName("jc1");
+                string jobCollectionName2 = TestUtilities.GenerateName("jc2");
                 string id1 = string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Scheduler/jobCollections/{2}", subscriptionId, resourceGroupName, jobCollectionName1);
                 string id2 = string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Scheduler/jobCollections/{2}", subscriptionId, resourceGroupName, jobCollectionName2);
                 var tags = new Dictionary<string, string>();
@@ -326,8 +326,8 @@ namespace Scheduler.Test.ScenarioTests
         {
             using (MockContext context = MockContext.Start())
             {
-                const string jobCollectionName1 = "jc1";
-                const string jobCollectionName2 = "jc2";
+                string jobCollectionName1 = TestUtilities.GenerateName("jc1");
+                string jobCollectionName2 = TestUtilities.GenerateName("jc2");
                 string id1 = string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Scheduler/jobCollections/{2}", subscriptionId, resourceGroupName, jobCollectionName1);
                 string id2 = string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Scheduler/jobCollections/{2}", subscriptionId, resourceGroupName, jobCollectionName2);
                 var tags = new Dictionary<string, string>();
@@ -427,8 +427,8 @@ namespace Scheduler.Test.ScenarioTests
         {
             using (MockContext context = MockContext.Start())
             {
-                const string jobCollectionName1 = "jc1";
-                const string jobCollectionName2 = "jc2";
+                string jobCollectionName1 = TestUtilities.GenerateName("jc1");
+                string jobCollectionName2 = TestUtilities.GenerateName("jc2");
                 string id1 = string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Scheduler/jobCollections/{2}", subscriptionId, resourceGroupName, jobCollectionName1);
                 string id2 = string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Scheduler/jobCollections/{2}", subscriptionId, resourceGroupName, jobCollectionName2);
                 var tags = new Dictionary<string, string>();

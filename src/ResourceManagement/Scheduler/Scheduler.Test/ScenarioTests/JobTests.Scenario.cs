@@ -36,19 +36,19 @@ namespace Scheduler.Test.ScenarioTests
         private const string resourceGroupName = "CS-SouthCentralUS-scheduler";
         private const string type = "Microsoft.Scheduler/jobCollections/jobs";
         private const string location = "South Central US";
-        private const string jobCollectionName = "jc1";
 
         [Fact]
         public void Scenario_JobCreateWithScheduleForDay()
         {
             using (MockContext context = MockContext.Start())
             {
-                const string jobName = "j1";
+                string jobCollectionName = TestUtilities.GenerateName("jc1");
+                string jobName = TestUtilities.GenerateName("j1");
                 string jobDefinitionname = string.Format("{0}/{1}", jobCollectionName, jobName);
                 string id = string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Scheduler/jobCollections/{2}/jobs/{3}", subscriptionId, resourceGroupName, jobCollectionName, jobName);
 
                 var client = TestBase.GetServiceClient<SchedulerManagementClient>();
-                this.CreateJobCollection(client);
+                this.CreateJobCollection(client, jobCollectionName);
 
                 var result = client.Jobs.CreateOrUpdate(
                     resourceGroupName: resourceGroupName,
@@ -155,12 +155,13 @@ namespace Scheduler.Test.ScenarioTests
         {
             using (MockContext context = MockContext.Start())
             {
-                const string jobName = "j1";
+                string jobCollectionName = TestUtilities.GenerateName("jc1");
+                string jobName = TestUtilities.GenerateName("j1");
                 string jobDefinitionname = string.Format("{0}/{1}", jobCollectionName, jobName);
                 string id = string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Scheduler/jobCollections/{2}/jobs/{3}", subscriptionId, resourceGroupName, jobCollectionName, jobName);
 
                 var client = TestBase.GetServiceClient<SchedulerManagementClient>();
-                this.CreateJobCollection(client);
+                this.CreateJobCollection(client, jobCollectionName);
 
                 var result = client.Jobs.CreateOrUpdate(
                     resourceGroupName: resourceGroupName,
@@ -263,12 +264,13 @@ namespace Scheduler.Test.ScenarioTests
         {
             using (MockContext context = MockContext.Start())
             {
-                const string jobName = "j1";
+                string jobCollectionName = TestUtilities.GenerateName("jc1");
+                string jobName = TestUtilities.GenerateName("j1");
                 string jobDefinitionname = string.Format("{0}/{1}", jobCollectionName, jobName);
                 string id = string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Scheduler/jobCollections/{2}/jobs/{3}", subscriptionId, resourceGroupName, jobCollectionName, jobName);
 
                 var client = TestBase.GetServiceClient<SchedulerManagementClient>();
-                this.CreateJobCollection(client);
+                this.CreateJobCollection(client, jobCollectionName);
 
                 var result = client.Jobs.CreateOrUpdate(
                     resourceGroupName: resourceGroupName,
@@ -386,12 +388,13 @@ namespace Scheduler.Test.ScenarioTests
         {
             using (MockContext context = MockContext.Start())
             {
-                const string jobName = "j1";
+                string jobCollectionName = TestUtilities.GenerateName("jc1");
+                string jobName = TestUtilities.GenerateName("j1");
                 string jobDefinitionname = string.Format("{0}/{1}", jobCollectionName, jobName);
                 string id = string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Scheduler/jobCollections/{2}/jobs/{3}", subscriptionId, resourceGroupName, jobCollectionName, jobName);
 
                 var client = TestBase.GetServiceClient<SchedulerManagementClient>();
-                this.CreateJobCollection(client);
+                this.CreateJobCollection(client, jobCollectionName);
 
                 var result = client.Jobs.CreateOrUpdate(
                     resourceGroupName: resourceGroupName,
@@ -529,12 +532,13 @@ namespace Scheduler.Test.ScenarioTests
         {
             using (MockContext context = MockContext.Start())
             {
-                const string jobName = "j1";
+                string jobCollectionName = TestUtilities.GenerateName("jc1");
+                string jobName = TestUtilities.GenerateName("j1");
                 string jobDefinitionname = string.Format("{0}/{1}", jobCollectionName, jobName);
                 string id = string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Scheduler/jobCollections/{2}/jobs/{3}", subscriptionId, resourceGroupName, jobCollectionName, jobName);
 
                 var client = TestBase.GetServiceClient<SchedulerManagementClient>();
-                this.CreateJobCollection(client);
+                this.CreateJobCollection(client, jobCollectionName);
 
                 var header = new Dictionary<string, string>();
                 header.Add("content-type", "application/xml");
@@ -657,12 +661,13 @@ namespace Scheduler.Test.ScenarioTests
         {
             using (MockContext context = MockContext.Start())
             {
-                const string jobName = "j1";
+                string jobCollectionName = TestUtilities.GenerateName("jc1");
+                string jobName = TestUtilities.GenerateName("j1");
                 string jobDefinitionname = string.Format("{0}/{1}", jobCollectionName, jobName);
                 string id = string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Scheduler/jobCollections/{2}/jobs/{3}", subscriptionId, resourceGroupName, jobCollectionName, jobName);
 
                 var client = TestBase.GetServiceClient<SchedulerManagementClient>();
-                this.CreateJobCollection(client);
+                this.CreateJobCollection(client, jobCollectionName);
 
                 var header = new Dictionary<string, string>();
                 header.Add("content-type", "application/xml");
@@ -792,12 +797,13 @@ namespace Scheduler.Test.ScenarioTests
         {
             using (MockContext context = MockContext.Start())
             {
-                const string jobName = "j1";
+                string jobCollectionName = TestUtilities.GenerateName("jc1");
+                string jobName = TestUtilities.GenerateName("j1");
                 string jobDefinitionname = string.Format("{0}/{1}", jobCollectionName, jobName);
                 string id = string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Scheduler/jobCollections/{2}/jobs/{3}", subscriptionId, resourceGroupName, jobCollectionName, jobName);
 
                 var client = TestBase.GetServiceClient<SchedulerManagementClient>();
-                this.CreateJobCollection(client);
+                this.CreateJobCollection(client, jobCollectionName);
 
                 var header = new Dictionary<string, string>();
                 header.Add("content-type", "application/xml");
@@ -929,12 +935,13 @@ namespace Scheduler.Test.ScenarioTests
         {
             using (MockContext context = MockContext.Start())
             {
-                const string jobName = "j1";
+                string jobCollectionName = TestUtilities.GenerateName("jc1");
+                string jobName = TestUtilities.GenerateName("j1");
                 string jobDefinitionname = string.Format("{0}/{1}", jobCollectionName, jobName);
                 string id = string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Scheduler/jobCollections/{2}/jobs/{3}", subscriptionId, resourceGroupName, jobCollectionName, jobName);
 
                 var client = TestBase.GetServiceClient<SchedulerManagementClient>();
-                this.CreateJobCollection(client);
+                this.CreateJobCollection(client, jobCollectionName);
 
                 var header = new Dictionary<string, string>();
                 header.Add("content-type", "application/xml");
@@ -1067,12 +1074,13 @@ namespace Scheduler.Test.ScenarioTests
         {
             using (MockContext context = MockContext.Start())
             {
-                const string jobName = "j1";
+                string jobCollectionName = TestUtilities.GenerateName("jc1");
+                string jobName = TestUtilities.GenerateName("j1");
                 string jobDefinitionname = string.Format("{0}/{1}", jobCollectionName, jobName);
                 string id = string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Scheduler/jobCollections/{2}/jobs/{3}", subscriptionId, resourceGroupName, jobCollectionName, jobName);
 
                 var client = TestBase.GetServiceClient<SchedulerManagementClient>();
-                this.CreateJobCollection(client);
+                this.CreateJobCollection(client, jobCollectionName);
 
                 var result = client.Jobs.CreateOrUpdate(
                     resourceGroupName: resourceGroupName,
@@ -1194,15 +1202,16 @@ namespace Scheduler.Test.ScenarioTests
         {
             using (MockContext context = MockContext.Start())
             {
-                const string jobName1 = "j1";
-                const string jobName2 = "j2";
+                string jobCollectionName = TestUtilities.GenerateName("jc1");
+                string jobName1 = TestUtilities.GenerateName("j1");
+                string jobName2 = TestUtilities.GenerateName("j2");
                 string jobDefinitionName1 = string.Format("{0}/{1}", jobCollectionName, jobName1);
                 string jobDefinitionName2 = string.Format("{0}/{1}", jobCollectionName, jobName2);
                 string id1 = string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Scheduler/jobCollections/{2}/jobs/{3}", subscriptionId, resourceGroupName, jobCollectionName, jobName1);
                 string id2 = string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Scheduler/jobCollections/{2}/jobs/{3}", subscriptionId, resourceGroupName, jobCollectionName, jobName2);
 
                 var client = TestBase.GetServiceClient<SchedulerManagementClient>();
-                this.CreateJobCollection(client);
+                this.CreateJobCollection(client, jobCollectionName);
 
                 client.Jobs.CreateOrUpdate(
                     resourceGroupName: resourceGroupName,
@@ -1322,7 +1331,7 @@ namespace Scheduler.Test.ScenarioTests
             }
         }
 
-        private void CreateJobCollection(SchedulerManagementClient client)
+        private void CreateJobCollection(SchedulerManagementClient client, string jobCollectionName)
         {
             client.JobCollections.CreateOrUpdate(
                 resourceGroupName: resourceGroupName,
