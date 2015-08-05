@@ -437,7 +437,7 @@ namespace Microsoft.Azure.Search.Tests
             Run(() =>
             {
                 SearchIndexClient client = Data.GetSearchIndexClient();
-                IEnumerable<string> hotelIds = IndexThousandsOfDocuments(client);
+                IEnumerable<string> hotelIds = IndexDocuments(client, 2001);
 
                 var searchParameters =
                     new SearchParameters()
@@ -474,7 +474,7 @@ namespace Microsoft.Azure.Search.Tests
             Run(() =>
             {
                 SearchIndexClient client = Data.GetSearchIndexClient();
-                IEnumerable<string> hotelIds = IndexThousandsOfDocuments(client);
+                IEnumerable<string> hotelIds = IndexDocuments(client, 2001);
 
                 var searchParameters =
                     new SearchParameters()
@@ -506,6 +506,47 @@ namespace Microsoft.Azure.Search.Tests
 
         [Fact]
         [Trait(TestTraits.AcceptanceType, TestTraits.LiveBVT)]
+        public void CanContinueSearchWithoutTop()
+        {
+            Run(() =>
+            {
+                SearchIndexClient client = Data.GetSearchIndexClient();
+                IEnumerable<string> hotelIds = IndexDocuments(client, 167);
+
+                var searchParameters =
+                    new SearchParameters()
+                    {
+                        OrderBy = new[] { "hotelId asc" },
+                        Select = new[] { "hotelId" }
+                    };
+
+                IEnumerable<string> expectedIds =
+                    Data.TestDocuments.Select(d => d.HotelId).Concat(hotelIds).OrderBy(id => id);
+
+                DocumentSearchResponse<Hotel> response = client.Documents.Search<Hotel>("*", searchParameters);
+                AssertKeySequenceEqual(response, expectedIds.Take(50).ToArray());
+
+                Assert.NotNull(response.ContinuationToken);
+
+                response = client.Documents.ContinueSearch<Hotel>(response.ContinuationToken);
+                AssertKeySequenceEqual(response, expectedIds.Skip(50).Take(50).ToArray());
+
+                Assert.NotNull(response.ContinuationToken);
+
+                response = client.Documents.ContinueSearch<Hotel>(response.ContinuationToken);
+                AssertKeySequenceEqual(response, expectedIds.Skip(100).Take(50).ToArray());
+
+                Assert.NotNull(response.ContinuationToken);
+
+                response = client.Documents.ContinueSearch<Hotel>(response.ContinuationToken);
+                AssertKeySequenceEqual(response, expectedIds.Skip(150).ToArray());
+
+                Assert.Null(response.ContinuationToken);
+            });
+        }
+
+        [Fact]
+        [Trait(TestTraits.AcceptanceType, TestTraits.LiveBVT)]
         public void CanSearchWithMinimumCoverage()
         {
             Run(() =>
@@ -520,25 +561,32 @@ namespace Microsoft.Azure.Search.Tests
             });
         }
 
-        private IEnumerable<string> IndexThousandsOfDocuments(SearchIndexClient client)
+        private IEnumerable<string> IndexDocuments(SearchIndexClient client, int totalDocCount)
         {
             int existingDocumentCount = Data.TestDocuments.Length;
 
             IEnumerable<string> hotelIds =
-                Enumerable.Range(existingDocumentCount + 1, 2001 - existingDocumentCount).Select(id => id.ToString());
+                Enumerable.Range(existingDocumentCount + 1, totalDocCount - existingDocumentCount)
+                .Select(id => id.ToString());
 
             IEnumerable<Hotel> hotels = hotelIds.Select(id => new Hotel() { HotelId = id });
-            IEnumerable<IndexAction<Hotel>> actions = hotels.Select(h => IndexAction.Create(h));
+            List<IndexAction<Hotel>> actions = hotels.Select(h => IndexAction.Create(h)).ToList();
 
-            var batch = IndexBatch.Create(actions.Take(1000));
-            client.Documents.Index(batch);
+            for (int i = 0; i < actions.Count; i += 1000)
+            {
+                IEnumerable<IndexAction<Hotel>> nextActions = actions.Skip(i).Take(1000);
 
-            SearchTestUtilities.WaitForIndexing();
+                if (!nextActions.Any())
+                {
+                    break;
+                }
 
-            batch = IndexBatch.Create(actions.Skip(1000));
-            client.Documents.Index(batch);
+                var batch = IndexBatch.Create(nextActions);
+                client.Documents.Index(batch);
 
-            SearchTestUtilities.WaitForIndexing();
+                SearchTestUtilities.WaitForIndexing();
+            }
+
             return hotelIds;
         }
 
