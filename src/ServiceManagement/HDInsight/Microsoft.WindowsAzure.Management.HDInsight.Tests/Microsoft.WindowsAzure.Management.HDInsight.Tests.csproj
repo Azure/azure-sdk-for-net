@@ -36,6 +36,32 @@
     <Compile Include="Configuration\PayloadConverterTests.cs" />
     <Compile Include="ConnectionCredentials\AccessTokenTests.cs" />
     <Compile Include="DynamicXml\DynaXmlNamespaceTableTests.cs" />
+    <Compile Include="HadoopClientTests\RemoteHadoopPocoClient.cs" />
+    <Compile Include="Json\JsonParserTests.cs" />
+    <Compile Include="HadoopClientTests\TimothyTests.cs" />
+    <Compile Include="MiscellaneousTests\MiscellaneousTests.cs" />
+    <Compile Include="ProcDetails\SerializerTest.cs" />
+    <Compile Include="HadoopClientTests\ApiSecurityPocoClientTests.cs" />
+    <Compile Include="HadoopClientTests\PayloadConverterTests.cs" />
+    <Compile Include="HadoopClientTests\RemoteHadoopRestLayer.cs" />
+    <Compile Include="PublicCertificateTests\PublicCertificateTests.cs" />
+    <Compile Include="SchemaVersionTests.cs" />
+    <Compile Include="ServiceLocation\EchoServiceForTest.cs" />
+    <Compile Include="ServiceLocation\IEchoServiceForTest.cs" />
+    <Compile Include="ServiceLocation\ServiceLocationForTestRegistrar.cs" />
+    <Compile Include="ServiceLocation\ServiceLocatorTests.cs" />
+    <Compile Include="StepDefinitions\DynaXmlSteps.cs" />
+    <Compile Include="StepDefinitions\JsonParserSteps.cs" />
+    <Compile Include="StepDefinitions\PayloadConverterSteps.cs" />
+    <Compile Include="StepDefinitions\SpecFlowSetup.cs" />
+    <Compile Include="StepDefinitions\StorageSimulatorSteps.cs" />
+    <Compile Include="StepDefinitions\UriResolverSteps.cs" />
+    <Compile Include="DynamicXml\DynaXmlBuilderTest.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scenario\ClientScenarioTests.cs" />
+    <Compile Include="Scenario\CmdletScenarioTests.cs" />
+    <Compile Include="NoDuplicateRegistrars.cs" />
+
     <Compile Include="Gherkin\UriResolver.feature.cs">
       <DependentUpon>UriResolver.feature</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -80,32 +106,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>StorageAccountAbstraction.feature</DependentUpon>
     </Compile>
-    <Compile Include="HadoopClientTests\RdpTests.cs" />
-    <Compile Include="HadoopClientTests\RemoteHadoopPocoClient.cs" />
-    <Compile Include="Json\JsonParserTests.cs" />
-    <Compile Include="HadoopClientTests\TimothyTests.cs" />
-    <Compile Include="MiscellaneousTests\MiscellaneousTests.cs" />
-    <Compile Include="ProcDetails\SerializerTest.cs" />
-    <Compile Include="HadoopClientTests\ApiSecurityPocoClientTests.cs" />
-    <Compile Include="HadoopClientTests\PayloadConverterTests.cs" />
-    <Compile Include="HadoopClientTests\RemoteHadoopRestLayer.cs" />
-    <Compile Include="PublicCertificateTests\PublicCertificateTests.cs" />
-    <Compile Include="SchemaVersionTests.cs" />
-    <Compile Include="ServiceLocation\EchoServiceForTest.cs" />
-    <Compile Include="ServiceLocation\IEchoServiceForTest.cs" />
-    <Compile Include="ServiceLocation\ServiceLocationForTestRegistrar.cs" />
-    <Compile Include="ServiceLocation\ServiceLocatorTests.cs" />
-    <Compile Include="StepDefinitions\DynaXmlSteps.cs" />
-    <Compile Include="StepDefinitions\JsonParserSteps.cs" />
-    <Compile Include="StepDefinitions\PayloadConverterSteps.cs" />
-    <Compile Include="StepDefinitions\SpecFlowSetup.cs" />
-    <Compile Include="StepDefinitions\StorageSimulatorSteps.cs" />
-    <Compile Include="StepDefinitions\UriResolverSteps.cs" />
-    <Compile Include="DynamicXml\DynaXmlBuilderTest.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Scenario\ClientScenarioTests.cs" />
-    <Compile Include="Scenario\CmdletScenarioTests.cs" />
-    <Compile Include="NoDuplicateRegistrars.cs" />
     <None Include="Gherkin\UriResolver.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>UriResolver.feature.cs</LastGenOutput>

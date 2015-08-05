@@ -333,15 +333,12 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
                 throw new NotSupportedException(string.Format("SSH is not supported for clusters with OSType {0}", this.OSType));
             }
 
-<<<<<<< HEAD
             // If OSType == Linux then SSH credentials must be specified
             if (this.OSType == HDInsight.OSType.Linux && String.IsNullOrEmpty(this.SshUserName))
             {
                 throw new InvalidOperationException(string.Format("SSH credentials must be specified for clusters with OSType {0}.", this.OSType));
             }
 
-=======
->>>>>>> a76ead9fb862917573d600cc4c65709eaa992cc2
             // if SSH user name is specified then either SSH password or SSH public key must be specified
             if (!String.IsNullOrEmpty(this.SshUserName) && String.IsNullOrEmpty(this.SshPassword) && String.IsNullOrEmpty(this.SshPublicKey))
             {

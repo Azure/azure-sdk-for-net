@@ -44,8 +44,6 @@
     <Compile Include="ClusterProvisioning\Data\Iaas\OpenSshToX509CertificateHelper.cs" />
     <Compile Include="ClusterProvisioning\Data\Iaas\PayloadConverterIaasClusters.cs" />
     <Compile Include="ClusterProvisioning\Data\OSType.cs" />
-    <Compile Include="ClusterProvisioning\Data\OSType.cs" />
-    <Compile Include="ClusterProvisioning\Data\Iaas\PayloadConverterIaasClusters.cs" />
     <Compile Include="ClusterProvisioning\Data\Rdfe\Operation.cs" />
     <Compile Include="ClusterProvisioning\Data\ScriptAction.cs" />
     <Compile Include="ClusterProvisioning\Data\NodeVMSize.cs" />
@@ -82,7 +80,6 @@
     <Compile Include="ClusterProvisioning\RestClient\ClustersResource\IRDFEClustersResourceRestClientFactory.cs" />
     <Compile Include="ClusterProvisioning\RestClient\ClustersResource\RdfeClustersResourceRestClient.cs" />
     <Compile Include="ClusterProvisioning\RestClient\ClustersResource\RdfeClustersResourceRestClientFactory.cs" />
-    <Compile Include="ClusterProvisioning\RestClient\CustomHeaderHandler.cs" />
     <Compile Include="ClusterProvisioning\RestClient\IaasClusters\IRdfeIaasClustersRestClient.cs" />
     <Compile Include="ClusterProvisioning\RestClient\IaasClusters\IRdfeIaasClustersRestClientFactory.cs" />
     <Compile Include="ClusterProvisioning\RestClient\IaasClusters\RdfeIaasClustersRestClient.cs" />
