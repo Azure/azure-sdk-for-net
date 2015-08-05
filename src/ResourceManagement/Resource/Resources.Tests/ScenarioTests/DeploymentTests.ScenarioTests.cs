@@ -32,10 +32,10 @@ namespace ResourceGroups.Tests
         const string GoodWebsiteTemplateUri = "https://testtemplates.blob.core.windows.net/templates/good-website.js";
         const string BadTemplateUri = "https://testtemplates.blob.core.windows.net/templates/bad-website-1.js";
 
-        public ResourceManagementClient GetResourceManagementClient(RecordedDelegatingHandler handler)
+        public ResourceManagementClient GetResourceManagementClient(MockContext context, RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
-            return this.GetResourceManagementClientWithHandler(handler);
+            return this.GetResourceManagementClientWithHandler(context, handler);
         }
 
         [Fact]
@@ -60,7 +60,7 @@ namespace ResourceGroups.Tests
 
             using (MockContext context = MockContext.Start())
             {
-                var client = GetResourceManagementClient(handler);
+                var client = GetResourceManagementClient(context, handler);
                 var parameters = new Deployment
                 {
                     Properties = new DeploymentProperties()
@@ -92,7 +92,7 @@ namespace ResourceGroups.Tests
 
             using (MockContext context = MockContext.Start())
             {
-                var client = GetResourceManagementClient(handler);
+                var client = GetResourceManagementClient(context, handler);
                 string resourceName = TestUtilities.GenerateName("csmr");
 
                 var parameters = new Deployment
@@ -143,7 +143,7 @@ namespace ResourceGroups.Tests
 
             using (MockContext context = MockContext.Start())
             {
-                var client = GetResourceManagementClient(handler);
+                var client = GetResourceManagementClient(context, handler);
                 string groupName = TestUtilities.GenerateName("csmrg");
                 string deploymentName = TestUtilities.GenerateName("csmd");
 
@@ -182,7 +182,7 @@ namespace ResourceGroups.Tests
 
             using (MockContext context = MockContext.Start())
             {
-                var client = GetResourceManagementClient(handler);
+                var client = GetResourceManagementClient(context, handler);
                 string groupName = TestUtilities.GenerateName("csmrg");
                 string deploymentName = TestUtilities.GenerateName("csmd");
 
@@ -218,7 +218,7 @@ namespace ResourceGroups.Tests
 
             using (MockContext context = MockContext.Start())
             {
-                var client = GetResourceManagementClient(handler);
+                var client = GetResourceManagementClient(context, handler);
 
                 string groupName = TestUtilities.GenerateName("csmrg");
                 string deploymentName = TestUtilities.GenerateName("csmd");
@@ -264,7 +264,7 @@ namespace ResourceGroups.Tests
 
             using (MockContext context = MockContext.Start())
             {
-                var client = GetResourceManagementClient(handler);
+                var client = GetResourceManagementClient(context, handler);
                 var parameters = new Deployment
                 {
                     Properties = new DeploymentProperties()
@@ -303,7 +303,7 @@ namespace ResourceGroups.Tests
 
             using (MockContext context = MockContext.Start())
             {
-                var client = GetResourceManagementClient(handler);
+                var client = GetResourceManagementClient(context, handler);
                 string resourceName = TestUtilities.GenerateName("csmr");
 
                 var parameters = new Deployment
@@ -355,7 +355,7 @@ namespace ResourceGroups.Tests
                 string groupName = TestUtilities.GenerateName("csmrg");
                 string deploymentName = TestUtilities.GenerateName("csmd");
 
-                var client = GetResourceManagementClient(handler);
+                var client = GetResourceManagementClient(context, handler);
                 var parameters = new Deployment
                 {
                     Properties = new DeploymentProperties()

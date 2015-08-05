@@ -30,10 +30,10 @@ namespace ResourceGroups.Tests
     public class LiveProviderTests : TestBase
     {
         private const string ProviderName = "microsoft.insights";
-        public ResourceManagementClient GetResourceManagementClient(RecordedDelegatingHandler handler)
+        public ResourceManagementClient GetResourceManagementClient(MockContext context, RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
-            return this.GetResourceManagementClientWithHandler(handler);
+            return this.GetResourceManagementClientWithHandler(context, handler);
         }
 
         [Fact]
@@ -43,7 +43,7 @@ namespace ResourceGroups.Tests
             {
                 var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
 
-                var client = GetResourceManagementClient(handler);
+                var client = GetResourceManagementClient(context, handler);
 
                 var reg = client.Providers.Register(ProviderName);
                 Assert.NotNull(reg);
@@ -73,7 +73,7 @@ namespace ResourceGroups.Tests
             {
                 var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-                var client = GetResourceManagementClient(handler);
+                var client = GetResourceManagementClient(context, handler);
 
                 var reg = client.Providers.Register(ProviderName);
                 Assert.NotNull(reg);
@@ -104,7 +104,7 @@ namespace ResourceGroups.Tests
             var handler = new RecordedDelegatingHandler() {StatusCodeToReturn = HttpStatusCode.OK};
             using (MockContext context = MockContext.Start())
             {
-                var client = GetResourceManagementClient(handler);
+                var client = GetResourceManagementClient(context, handler);
 
                 client.Providers.Register(ProviderName);
 
@@ -120,7 +120,7 @@ namespace ResourceGroups.Tests
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
             using (MockContext context = MockContext.Start())
             {
-                var client = GetResourceManagementClient(handler);
+                var client = GetResourceManagementClient(context, handler);
 
                 var registerResult = client.Providers.Register(ProviderName);
 
@@ -147,7 +147,7 @@ namespace ResourceGroups.Tests
 
                 var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-                var client = GetResourceManagementClient(handler);
+                var client = GetResourceManagementClient(context, handler);
                 var insightsProvider = client.Providers.Get(ProviderName);
 
                 // Validate result

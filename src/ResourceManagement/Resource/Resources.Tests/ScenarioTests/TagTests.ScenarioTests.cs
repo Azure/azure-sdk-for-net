@@ -28,10 +28,10 @@ namespace ResourceGroups.Tests
     {
         const string DefaultLocation = "South Central US";
 
-        public ResourceManagementClient GetResourceManagementClient(RecordedDelegatingHandler handler)
+        public ResourceManagementClient GetResourceManagementClient(MockContext context, RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
-            var client = this.GetResourceManagementClientWithHandler(handler);
+            var client = this.GetResourceManagementClientWithHandler(context, handler);
             if (HttpMockServer.Mode == HttpRecorderMode.Playback)
             {
                 client.LongRunningOperationRetryTimeout = 0;
@@ -49,7 +49,7 @@ namespace ResourceGroups.Tests
             {
                 string tagName = TestUtilities.GenerateName("csmtg");
 
-                var client = GetResourceManagementClient(handler);
+                var client = GetResourceManagementClient(context, handler);
                 var createResult = client.Tags.CreateOrUpdate(tagName);
 
                 Assert.Equal(tagName, createResult.TagName);
@@ -71,7 +71,7 @@ namespace ResourceGroups.Tests
                 string tagName = TestUtilities.GenerateName("csmtg");
                 string tagValue = TestUtilities.GenerateName("csmtgv");
 
-                var client = GetResourceManagementClient(handler);
+                var client = GetResourceManagementClient(context, handler);
                 var createNameResult = client.Tags.CreateOrUpdate(tagName);
                 var createValueResult = client.Tags.CreateOrUpdateValue(tagName, tagValue);
 
@@ -96,7 +96,7 @@ namespace ResourceGroups.Tests
                 string tagName = TestUtilities.GenerateName("csmtg");
                 string tagValue = TestUtilities.GenerateName("csmtgv");
 
-                var client = GetResourceManagementClient(handler);
+                var client = GetResourceManagementClient(context, handler);
                 Assert.Throws<CloudException>(() => client.Tags.CreateOrUpdateValue(tagName, tagValue));
             }
         }

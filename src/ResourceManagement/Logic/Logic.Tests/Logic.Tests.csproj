@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\..\..\packages\xunit.core.2.0.0\build\portable-net45+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS\xunit.core.props" Condition="Exists('..\..\..\..\packages\xunit.core.2.0.0\build\portable-net45+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS\xunit.core.props')" />
+  <Import Project="..\..\..\..\packages\xunit.runner.visualstudio.2.0.0\build\net20\xunit.runner.visualstudio.props" Condition="Exists('..\..\..\..\packages\xunit.runner.visualstudio.2.0.0\build\net20\xunit.runner.visualstudio.props')" />
+  <PropertyGroup>
+    <SDKTestProject>true</SDKTestProject>
+    <AutoRestProjects>true</AutoRestProjects>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{07FD28BF-5DE5-432D-99A1-1FD5EE738446}</ProjectGuid>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Test.Azure.Management.Logic</RootNamespace>
+    <AssemblyName>Test.Azure.Management.Logic</AssemblyName>
+    <OutputType>Library</OutputType>
+    <FileAlignment>512</FileAlignment>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <Import Project="..\..\..\..\tools\Library.Settings.targets" />
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="Microsoft.IdentityModel.Clients.ActiveDirectory">
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.IdentityModel.Clients.ActiveDirectory.2.18.206251556\lib\net45\Microsoft.IdentityModel.Clients.ActiveDirectory.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Rest.ClientRuntime">
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Rest.ClientRuntime.1.2.0\lib\net45\Microsoft.Rest.ClientRuntime.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Rest.ClientRuntime.Azure">
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Rest.ClientRuntime.Azure.1.0.20\lib\net45\Microsoft.Rest.ClientRuntime.Azure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>$(LibraryNugetPackageFolder)\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="xunit.abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <HintPath>$(LibraryNugetPackageFolder)\xunit.abstractions.2.0.0\lib\net35\xunit.abstractions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="xunit.assert, Version=2.0.0.2929, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <HintPath>$(LibraryNugetPackageFolder)\xunit.assert.2.0.0\lib\portable-net45+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS\xunit.assert.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="xunit.core, Version=2.0.0.2929, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <HintPath>$(LibraryNugetPackageFolder)\xunit.extensibility.core.2.0.0\lib\portable-net45+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS\xunit.core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\ClientRuntime.Azure.TestFramework\TestFramework\ClientRuntime.Azure.TestFramework.csproj">
+      <Project>{f144a258-3c38-447a-993e-967f74a1a76c}</Project>
+      <Name>ClientRuntime.Azure.TestFramework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LogicManagement\LogicManagement.csproj">
+      <Project>{9ba56208-b184-4b1d-830f-16146bbd8dd7}</Project>
+      <Name>LogicManagement</Name>
+      <Properties>SkipValidatePackageReferences=true</Properties>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="SessionRecords\Test.Azure.Management.Logic.WorkflowAccessKeysScenarioTests\CreateAndDelete.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Test.Azure.Management.Logic.WorkflowAccessKeysScenarioTests\CreateAndList.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Test.Azure.Management.Logic.WorkflowAccessKeysScenarioTests\RegenerateAndListSecretKeys.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Test.Azure.Management.Logic.WorkflowRunActionsScenarioTests\ListAndGetActions.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Test.Azure.Management.Logic.WorkflowRunsScenarioTests\RunGetAndListRuns.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Test.Azure.Management.Logic.WorkflowsScenarioTests\CreateAndDeleteWorkflow.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Test.Azure.Management.Logic.WorkflowsScenarioTests\CreateAndEnableDisableWorkflow.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Test.Azure.Management.Logic.WorkflowsScenarioTests\DeleteAllWorkflows.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Test.Azure.Management.Logic.WorkflowsScenarioTests\ListWorkflow.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Test.Azure.Management.Logic.WorkflowsScenarioTests\UpdateAndRunWorkflow.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Test.Azure.Management.Logic.WorkflowsScenarioTests\ValidateAndRunWorkflow.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Test.Azure.Management.Logic.WorkflowTriggerHistoriesScenarioTests\GetHistory.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Test.Azure.Management.Logic.WorkflowTriggerHistoriesScenarioTests\ListHistory.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Test.Azure.Management.Logic.WorkflowTriggersScenarioTests\GetAndListTriggers.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Test.Azure.Management.Logic.WorkflowTriggersScenarioTests\ListNoTrigger.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Test.Azure.Management.Logic.WorkflowTriggersScenarioTests\RunTrigger.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Test.Azure.Management.Logic.WorkflowVersionsScenarioTests\CreateAndGetWorkflowVersion.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="InMemoryTests\Base.InMemoryTests.cs" />
+    <Compile Include="InMemoryTests\WorkflowAccessKeys.InMemoryTests.cs" />
+    <Compile Include="InMemoryTests\WorkflowRunActions.InMemoryTests.cs" />
+    <Compile Include="InMemoryTests\WorkflowRuns.InMemoryTests.cs" />
+    <Compile Include="InMemoryTests\Workflows.InMemoryTests.cs" />
+    <Compile Include="InMemoryTests\WorkflowTriggerHistories.InMemoryTests.cs" />
+    <Compile Include="InMemoryTests\WorkflowTriggers.InMemoryTests.cs" />
+    <Compile Include="InMemoryTests\WorkflowVersions.InMemoryTests.cs" />
+    <Compile Include="ScenarioTests\Base.ScenarioTests.cs" />
+    <Compile Include="ScenarioTests\WorkflowAccessKeys.ScenarioTests.cs" />
+    <Compile Include="ScenarioTests\WorkflowRunAction.ScenarioTests.cs" />
+    <Compile Include="ScenarioTests\WorkflowRuns.ScenarioTests.cs" />
+    <Compile Include="ScenarioTests\Workflows.ScenarioTests.cs" />
+    <Compile Include="ScenarioTests\WorkflowTriggerHistories.ScenarioTests.cs" />
+    <Compile Include="ScenarioTests\WorkflowTriggers.ScenarioTests.cs" />
+    <Compile Include="ScenarioTests\WorkflowVersions.ScenarioTests.cs" />
+    <Compile Include="Utilities\ValidationUtilities.cs" />
+    <Compile Include="Utilities\RecordedDelegatingHandler.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(LibraryNugetPackageFolder)\xunit.runner.visualstudio.0.99.9-build1021\build\net20\xunit.runner.visualstudio.props" Condition="Exists('$(LibraryNugetPackageFolder)\xunit.runner.visualstudio.0.99.9-build1021\build\net20\xunit.runner.visualstudio.props')" />
+</Project>

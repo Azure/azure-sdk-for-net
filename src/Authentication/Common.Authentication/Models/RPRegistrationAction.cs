@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Common.Authentication.Models
         /// Registers resource providers for Sparta.
         /// </summary>
         /// <typeparam name="T">The client type</typeparam>
-        private void RegisterResourceManagerProviders<T>(AzureProfile profile) where T : ServiceClient<T>
+        private void RegisterResourceManagerProviders<T>(AzureProfile profile) 
         {
             var providersToRegister = RequiredResourceLookup.RequiredProvidersForResourceManager<T>();
             var registeredProviders = profile.Context.Subscription.GetPropertyAsArray(AzureSubscription.Property.RegisteredResourceProviders);
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Common.Authentication.Models
         /// Registers resource providers for RDFE.
         /// </summary>
         /// <typeparam name="T">The client type</typeparam>
-        private void RegisterServiceManagementProviders<T>(AzureProfile profile) where T : ServiceClient<T>
+        private void RegisterServiceManagementProviders<T>(AzureProfile profile) 
         {
             var credentials = AzureSession.AuthenticationFactory.GetSubscriptionCloudCredentials(profile.Context);
             var providersToRegister = RequiredResourceLookup.RequiredProvidersForServiceManagement<T>();
@@ -138,5 +138,16 @@ namespace Microsoft.Azure.Common.Authentication.Models
         }
 
         public IClientFactory ClientFactory { get; set; }
+
+
+        public void ApplyArm<TClient>(TClient client, AzureProfile profile, AzureEnvironment.Endpoint endpoint) where TClient : Rest.ServiceClient<TClient>
+        {
+            Debug.Assert(ClientFactory != null);
+
+            if (endpoint == AzureEnvironment.Endpoint.ResourceManager)
+            {
+                RegisterResourceManagerProviders<TClient>(profile);
+            }
+        }
     }
 }

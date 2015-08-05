@@ -12,15 +12,14 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
-using Microsoft.Azure.Common.Authentication.Models;
-using Microsoft.Azure.Common.Authentication.Properties;
 using System;
 using System.Linq;
 using System.Security;
 using Hyak.Common;
 using Microsoft.Rest;
+using Microsoft.Azure.Common.Authentication.Models;
+using Microsoft.Azure.Common.Authentication.Properties;
 using Microsoft.Rest.Azure.Authentication;
-using Microsoft.IdentityModel.Clients.ActiveDirectory;
 
 namespace Microsoft.Azure.Common.Authentication.Factories
 {
@@ -120,10 +119,6 @@ namespace Microsoft.Azure.Common.Authentication.Factories
 
         public ServiceClientCredentials GetServiceClientCredentials(AzureContext context)
         {
-            if (context.Subscription == null)
-            {
-                throw new ApplicationException(Resources.InvalidDefaultSubscription);
-            }
 
             if (context.Account == null)
             {
@@ -158,7 +153,7 @@ namespace Microsoft.Azure.Common.Authentication.Factories
                 /*TracingAdapter.Information(Resources.UPNAuthenticationTokenTrace,
                     token.LoginType, token.TenantId, token.UserId);*/
 
-                var env = new ActiveDirectoryEnvironment
+                var env = new ActiveDirectoryServiceSettings
                 {
                     AuthenticationEndpoint = context.Environment.GetEndpointAsUri(AzureEnvironment.Endpoint.ActiveDirectory),
                     TokenAudience = context.Environment.GetEndpointAsUri(AzureEnvironment.Endpoint.ActiveDirectoryServiceEndpointResourceId),
@@ -167,22 +162,19 @@ namespace Microsoft.Azure.Common.Authentication.Factories
 
                 if(context.Account.Type == AzureAccount.AccountType.User)
                 {
-                    return new UserTokenCredentials(
-                            AdalConfiguration.PowerShellClientId,
-                            tenant,
-                            AdalConfiguration.PowerShellRedirectUri,
-                            env,
-                            new PlatformParameters(PromptBehavior.Never, null), 
-                            AzureSession.TokenCache);
+                    return Rest.Azure.Authentication.UserTokenProvider.CreateCredentialsFromCache(
+                        AdalConfiguration.PowerShellClientId, tenant, context.Account.Id, env, AzureSession.TokenCache)
+                        .ConfigureAwait(false).GetAwaiter().GetResult();
                 }
-                else if (context.Account.Type == AzureAccount.AccountType.ServicePrincipal)
+                
+                if (context.Account.Type == AzureAccount.AccountType.ServicePrincipal)
                 {
-                    return new Microsoft.Rest.Azure.Authentication.ApplicationTokenCredentials(
-                            context.Account.Id,
-                            tenant,
-                            UserTokenProvider.ConvertToString(ServicePrincipalKeyStore.GetKey(context.Account.Id, tenant)),
-                            env);
+                    return ApplicationTokenProvider.LoginSilentAsync(
+                        tenant, context.Account.Id,
+                        new KeyStoreApplicationCredentialProvider(tenant),
+                        env, AzureSession.TokenCache).ConfigureAwait(false).GetAwaiter().GetResult();
                 }
+
                 throw new NotSupportedException(context.Account.Type.ToString());
             }
             catch (Exception ex)

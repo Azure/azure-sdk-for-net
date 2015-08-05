@@ -38,7 +38,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework.Test.Authentication
             Environment.SetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION", envString);
             using (MockContext context = MockContext.Start())
             {
-                var client = TestBase.GetServiceClient<SimpleClient>(TestEnvironmentFactory.GetTestEnvironment());
+                var client = context.GetServiceClient<SimpleClient>(TestEnvironmentFactory.GetTestEnvironment());
                 var response = client.CsmGetLocation();
                 Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             }
@@ -91,8 +91,8 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework.Test.Authentication
             Environment.SetEnvironmentVariable("TEST_ORGID_AUTHENTICATION", "");
             Environment.SetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION", "Environment=Next;SubscriptionId=ee39cb6d-d45b-4694-825a-f4d6f87ed72a;RawToken=abc");
             HttpMockServer.Initialize("Microsoft.Rest.ClientRuntime.Azure.TestFramework.Test.Authentication.Subscription", "CsmTests.json");
-            var client = TestBase.GetServiceClient<SimpleClient>();
-            Assert.Equal(3, client.HttpMessageHandlers.Count());
+            var client = MockContext.Start().GetServiceClient<SimpleClient>();
+            Assert.Equal(4, client.HttpMessageHandlers.Count());
             Assert.True(client.HttpMessageHandlers.First() is HttpMockServer);
         }
 
@@ -104,8 +104,8 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework.Test.Authentication
             Environment.SetEnvironmentVariable("TEST_ORGID_AUTHENTICATION", "");
             Environment.SetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION", "Environment=Next;SubscriptionId=ee39cb6d-d45b-4694-825a-f4d6f87ed72a;RawToken=abc");
             HttpMockServer.Initialize("Microsoft.Rest.ClientRuntime.Azure.TestFramework.Test.Authentication.Subscription", "CsmTests.json");
-            var client = TestBase.GetServiceClient<SimpleClient>(new MockHandler());
-            Assert.Equal(4, client.HttpMessageHandlers.Count());
+            var client = MockContext.Start().GetServiceClient<SimpleClient>(new MockHandler());
+            Assert.Equal(5, client.HttpMessageHandlers.Count());
             Assert.True(client.HttpMessageHandlers.First() is MockHandler);
         }
         

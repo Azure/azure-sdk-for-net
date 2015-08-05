@@ -32,10 +32,10 @@ namespace ResourceGroups.Tests
     {
         const string DefaultLocation = "South Central US";
 
-        public ResourceManagementClient GetResourceManagementClient(RecordedDelegatingHandler handler)
+        public ResourceManagementClient GetResourceManagementClient(MockContext context, RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
-            var client = this.GetResourceManagementClientWithHandler(handler);
+            var client = this.GetResourceManagementClientWithHandler(context, handler);
             return client;
         }
 
@@ -46,7 +46,7 @@ namespace ResourceGroups.Tests
             {
                 var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Created };
 
-                var client = GetResourceManagementClient(handler);
+                var client = GetResourceManagementClient(context, handler);
                 string location = ResourcesManagementTestUtilities.GetResourceLocation(client, "Microsoft.Web/sites");
                 var resourceGroupName = TestUtilities.GenerateName("csmrg");
                 var resourceName = TestUtilities.GenerateName("csmr");
@@ -79,7 +79,7 @@ namespace ResourceGroups.Tests
             using (MockContext context = MockContext.Start())
             {
                 string groupName = TestUtilities.GenerateName("csmrg");
-                ResourceManagementClient client = this.GetResourceManagementClient(new RecordedDelegatingHandler());
+                ResourceManagementClient client = this.GetResourceManagementClient(context, new RecordedDelegatingHandler());
                 var result = client.ResourceGroups.CreateOrUpdate(groupName, 
                     new ResourceGroup
                         {
@@ -109,7 +109,7 @@ namespace ResourceGroups.Tests
             using (MockContext context = MockContext.Start())
             {
                 string groupName = TestUtilities.GenerateName("csmrg");
-                var client = GetResourceManagementClient(handler);
+                var client = GetResourceManagementClient(context, handler);
                 client.SetRetryPolicy(new RetryPolicy<HttpStatusCodeErrorDetectionStrategy>(1));
 
                 var checkExistenceFirst = client.ResourceGroups.CheckExistence(groupName);
@@ -130,7 +130,7 @@ namespace ResourceGroups.Tests
             {
                 var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Created };
 
-                var client = GetResourceManagementClient(handler);
+                var client = GetResourceManagementClient(context, handler);
 
                 var resourceGroupName = TestUtilities.GenerateName("csmrg");
                 var createResult = client.ResourceGroups.CreateOrUpdate(resourceGroupName, new ResourceGroup { Location = DefaultLocation });

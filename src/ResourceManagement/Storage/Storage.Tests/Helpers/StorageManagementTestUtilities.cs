@@ -46,7 +46,7 @@ namespace Storage.Tests.Helpers
                 {"key2","value2"}
             };
 
-        public static ResourceManagementClient GetResourceManagementClient(RecordedDelegatingHandler handler)
+        public static ResourceManagementClient GetResourceManagementClient(MockContext context, RecordedDelegatingHandler handler)
         {
             ResourceManagementClient resourcesClient;
             if (IsTestTenant)
@@ -56,12 +56,12 @@ namespace Storage.Tests.Helpers
             else
             {
                 handler.IsPassThrough = true;
-                resourcesClient = TestBase.GetServiceClient<ResourceManagementClient>(handler);
+                resourcesClient = context.GetServiceClient<ResourceManagementClient>(handler);
             }
             return resourcesClient;
         }
 
-        public static StorageManagementClient GetStorageManagementClient(RecordedDelegatingHandler handler)
+        public static StorageManagementClient GetStorageManagementClient(MockContext context, RecordedDelegatingHandler handler)
         {
             StorageManagementClient storageClient;
             if (IsTestTenant)
@@ -71,7 +71,7 @@ namespace Storage.Tests.Helpers
             else
             {
                 handler.IsPassThrough = true;
-                storageClient = TestBase.GetServiceClient<StorageManagementClient>(handler);
+                storageClient = context.GetServiceClient<StorageManagementClient>(handler);
             }
             return storageClient;
         }

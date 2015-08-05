@@ -27,8 +27,8 @@ namespace Networks.Tests
             {
                 
 
-                var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(handler);
-                var networkResourceProviderClient = NetworkManagementTestUtilities.GetNetworkResourceProviderClient(handler);
+                var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler);
+                var networkResourceProviderClient = NetworkManagementTestUtilities.GetNetworkResourceProviderClient(context, handler);
 
                 var location = NetworkManagementTestUtilities.GetResourceLocation(resourcesClient, "Microsoft.Network/virtualnetworkgateways");
 
@@ -139,8 +139,8 @@ namespace Networks.Tests
             {
                 
 
-                var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(handler);
-                var networkResourceProviderClient = NetworkManagementTestUtilities.GetNetworkResourceProviderClient(handler);
+                var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler);
+                var networkResourceProviderClient = NetworkManagementTestUtilities.GetNetworkResourceProviderClient(context, handler);
 
                 var location = NetworkManagementTestUtilities.GetResourceLocation(resourcesClient, "Microsoft.Network/localNetworkGateways");
 
@@ -233,8 +233,8 @@ namespace Networks.Tests
             {
                 
 
-                var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(handler);
-                var networkResourceProviderClient = NetworkManagementTestUtilities.GetNetworkResourceProviderClient(handler);
+                var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler);
+                var networkResourceProviderClient = NetworkManagementTestUtilities.GetNetworkResourceProviderClient(context, handler);
 
                 var location = NetworkManagementTestUtilities.GetResourceLocation(resourcesClient, "Microsoft.Network/connections");
 
@@ -399,8 +399,8 @@ namespace Networks.Tests
             {
                 
 
-                var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(handler);
-                var networkResourceProviderClient = NetworkManagementTestUtilities.GetNetworkResourceProviderClient(handler);
+                var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler);
+                var networkResourceProviderClient = NetworkManagementTestUtilities.GetNetworkResourceProviderClient(context, handler);
 
                 var location = NetworkManagementTestUtilities.GetResourceLocation(resourcesClient, "Microsoft.Network/connections");
 

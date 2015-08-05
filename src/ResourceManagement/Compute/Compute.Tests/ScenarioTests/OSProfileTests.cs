@@ -179,7 +179,7 @@ namespace Compute.Tests
         {
             using (MockContext context = MockContext.Start())
             {
-                EnsureClientsInitialized();
+                EnsureClientsInitialized(context);
 
                 string rgName = TestUtilities.GenerateName(TestPrefix);
                 string keyVaultName = TestUtilities.GenerateName(TestPrefix);
@@ -218,7 +218,7 @@ namespace Compute.Tests
         {
             using (MockContext context = MockContext.Start())
             {
-                EnsureClientsInitialized();
+                EnsureClientsInitialized(context);
 
                 string rgName = TestUtilities.GenerateName(TestPrefix);
                 string sshPath = null;

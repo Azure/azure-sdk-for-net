@@ -23,9 +23,9 @@ namespace Networks.Tests
             using (MockContext context = MockContext.Start())
             {
                 
-                var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(handler);
+                var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler);
                 var networkResourceProviderClient =
-                    NetworkManagementTestUtilities.GetNetworkResourceProviderClient(handler);
+                    NetworkManagementTestUtilities.GetNetworkResourceProviderClient(context, handler);
 
                 var location = NetworkManagementTestUtilities.GetResourceLocation(resourcesClient,
                     "Microsoft.Network/virtualNetworks");
