@@ -21,5 +21,6 @@ namespace Microsoft.Azure.Common.Authentication.Models
         IClientFactory ClientFactory { get; set; }
 
         void Apply<TClient>(TClient client, AzureProfile profile, AzureEnvironment.Endpoint endpoint) where TClient : ServiceClient<TClient>;
+        void ApplyArm<TClient>(TClient client, AzureProfile profile, AzureEnvironment.Endpoint endpoint) where TClient : Microsoft.Rest.ServiceClient<TClient>;
     }
 }

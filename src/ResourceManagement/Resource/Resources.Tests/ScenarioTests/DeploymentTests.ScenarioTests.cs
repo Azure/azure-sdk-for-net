@@ -17,14 +17,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Runtime.Serialization.Formatters;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
 using Microsoft.Azure.Test;
-using Newtonsoft.Json;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Newtonsoft.Json.Linq;
 using Xunit;
-using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
 namespace ResourceGroups.Tests
 {
@@ -34,10 +32,10 @@ namespace ResourceGroups.Tests
         const string GoodWebsiteTemplateUri = "https://testtemplates.blob.core.windows.net/templates/good-website.js";
         const string BadTemplateUri = "https://testtemplates.blob.core.windows.net/templates/bad-website-1.js";
 
-        public ResourceManagementClient GetResourceManagementClient(RecordedDelegatingHandler handler)
+        public ResourceManagementClient GetResourceManagementClient(MockContext context, RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
-            return this.GetResourceManagementClientWithHandler(handler);
+            return this.GetResourceManagementClientWithHandler(context, handler);
         }
 
         [Fact]
@@ -62,7 +60,7 @@ namespace ResourceGroups.Tests
 
             using (MockContext context = MockContext.Start())
             {
-                var client = GetResourceManagementClient(handler);
+                var client = GetResourceManagementClient(context, handler);
                 var parameters = new Deployment
                 {
                     Properties = new DeploymentProperties()
@@ -94,7 +92,7 @@ namespace ResourceGroups.Tests
 
             using (MockContext context = MockContext.Start())
             {
-                var client = GetResourceManagementClient(handler);
+                var client = GetResourceManagementClient(context, handler);
                 string resourceName = TestUtilities.GenerateName("csmr");
 
                 var parameters = new Deployment
@@ -145,7 +143,7 @@ namespace ResourceGroups.Tests
 
             using (MockContext context = MockContext.Start())
             {
-                var client = GetResourceManagementClient(handler);
+                var client = GetResourceManagementClient(context, handler);
                 string groupName = TestUtilities.GenerateName("csmrg");
                 string deploymentName = TestUtilities.GenerateName("csmd");
 
@@ -184,7 +182,7 @@ namespace ResourceGroups.Tests
 
             using (MockContext context = MockContext.Start())
             {
-                var client = GetResourceManagementClient(handler);
+                var client = GetResourceManagementClient(context, handler);
                 string groupName = TestUtilities.GenerateName("csmrg");
                 string deploymentName = TestUtilities.GenerateName("csmd");
 
@@ -220,7 +218,7 @@ namespace ResourceGroups.Tests
 
             using (MockContext context = MockContext.Start())
             {
-                var client = GetResourceManagementClient(handler);
+                var client = GetResourceManagementClient(context, handler);
 
                 string groupName = TestUtilities.GenerateName("csmrg");
                 string deploymentName = TestUtilities.GenerateName("csmd");
@@ -266,7 +264,7 @@ namespace ResourceGroups.Tests
 
             using (MockContext context = MockContext.Start())
             {
-                var client = GetResourceManagementClient(handler);
+                var client = GetResourceManagementClient(context, handler);
                 var parameters = new Deployment
                 {
                     Properties = new DeploymentProperties()
@@ -305,7 +303,7 @@ namespace ResourceGroups.Tests
 
             using (MockContext context = MockContext.Start())
             {
-                var client = GetResourceManagementClient(handler);
+                var client = GetResourceManagementClient(context, handler);
                 string resourceName = TestUtilities.GenerateName("csmr");
 
                 var parameters = new Deployment
@@ -357,7 +355,7 @@ namespace ResourceGroups.Tests
                 string groupName = TestUtilities.GenerateName("csmrg");
                 string deploymentName = TestUtilities.GenerateName("csmd");
 
-                var client = GetResourceManagementClient(handler);
+                var client = GetResourceManagementClient(context, handler);
                 var parameters = new Deployment
                 {
                     Properties = new DeploymentProperties()

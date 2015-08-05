@@ -16,10 +16,10 @@ namespace Networks.Tests.Helpers
         /// </summary>
         /// <param name="handler"></param>
         /// <returns>A resource management client, created from the current context (environment variables)</returns>
-        public static NetworkResourceProviderClient GetNetworkResourceProviderClient(RecordedDelegatingHandler handler)
+        public static NetworkResourceProviderClient GetNetworkResourceProviderClient(MockContext context, RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
-            var client = TestBase.GetServiceClient<NetworkResourceProviderClient>(handler);
+            var client = context.GetServiceClient<NetworkResourceProviderClient>(handler);
             return client;
         }
 

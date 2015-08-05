@@ -36,8 +36,8 @@ namespace Storage.Tests
 
             using (MockContext context = MockContext.Start())
             {
-                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(handler);
-                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(handler);
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
 
                 // Create resource group
                 var rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
@@ -79,8 +79,8 @@ namespace Storage.Tests
 
             using (MockContext context = MockContext.Start())
             {
-                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(handler);
-                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(handler);
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
 
                 // Create resource group
                 var rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
@@ -106,8 +106,8 @@ namespace Storage.Tests
 
             using (MockContext context = MockContext.Start())
             {
-                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(handler);
-                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(handler);
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
 
                 // Create resource group
                 var rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
@@ -159,8 +159,8 @@ namespace Storage.Tests
 
             using (MockContext context = MockContext.Start())
             {
-                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(handler);
-                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(handler);
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
 
                 // Create resource group
                 var rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
@@ -187,8 +187,8 @@ namespace Storage.Tests
 
             using (MockContext context = MockContext.Start())
             {
-                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(handler);
-                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(handler);
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
 
 
                 // Create resource group and storage account
@@ -218,8 +218,8 @@ namespace Storage.Tests
 
             using (MockContext context = MockContext.Start())
             {
-                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(handler);
-                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(handler);
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
 
                 // Create resource group
                 string rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
@@ -250,8 +250,8 @@ namespace Storage.Tests
 
             using (MockContext context = MockContext.Start())
             {
-                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(handler);
-                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(handler);
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
 
                 // Create resource group
                 string rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
@@ -284,7 +284,7 @@ namespace Storage.Tests
 
             using (MockContext context = MockContext.Start())
             {
-                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
                 
                 // Check valid name
                 string accountName = TestUtilities.GenerateName("sto");
@@ -302,7 +302,7 @@ namespace Storage.Tests
                     + "characters in length and use numbers and lower-case letters only.", checkNameRequest.Message);
                 
                 // Check name of account that already exists
-                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(handler);
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
                 string rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
 
                 accountName = StorageManagementTestUtilities.CreateStorageAccount(storageMgmtClient, rgname);
@@ -320,8 +320,8 @@ namespace Storage.Tests
 
             using (MockContext context = MockContext.Start())
             {
-                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(handler);
-                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(handler);
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
 
                 // Create resource group
                 var rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);

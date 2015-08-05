@@ -60,7 +60,7 @@ namespace Compute.Tests
         {
             using (MockContext context = MockContext.Start())
             {
-                Initialize();
+                Initialize(context);
 
                 try
                 {
@@ -83,11 +83,11 @@ namespace Compute.Tests
             }
         }
 
-        private void Initialize()
+        private void Initialize(MockContext context)
         {
             handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
-            resourcesClient = ComputeManagementTestUtilities.GetResourceManagementClient(handler);
-            computeClient = ComputeManagementTestUtilities.GetComputeManagementClient(handler);
+            resourcesClient = ComputeManagementTestUtilities.GetResourceManagementClient(context, handler);
+            computeClient = ComputeManagementTestUtilities.GetComputeManagementClient(context, handler);
 
             subId = computeClient.SubscriptionId;
             location = ComputeManagementTestUtilities.DefaultLocation;

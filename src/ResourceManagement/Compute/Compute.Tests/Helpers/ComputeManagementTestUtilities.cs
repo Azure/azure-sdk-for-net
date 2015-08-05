@@ -28,34 +28,34 @@ namespace Compute.Tests
     {
         public static string DefaultLocation = "SoutheastAsia";
 
-        public static ComputeManagementClient GetComputeManagementClient(RecordedDelegatingHandler handler = null)
+        public static ComputeManagementClient GetComputeManagementClient(MockContext context, RecordedDelegatingHandler handler = null)
         {
             if (handler != null)
             {
                 handler.IsPassThrough = true;
             }
-            return TestBase.GetServiceClient<ComputeManagementClient>(
+            return context.GetServiceClient<ComputeManagementClient>(
                 handler ?? new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
         }
         
-        public static ResourceManagementClient GetResourceManagementClient(RecordedDelegatingHandler handler)
+        public static ResourceManagementClient GetResourceManagementClient(MockContext context, RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
-            var client = TestBase.GetServiceClient<ResourceManagementClient>(handler);
+            var client = context.GetServiceClient<ResourceManagementClient>(handler);
             return client;
         }
 
-        public static NetworkResourceProviderClient GetNetworkResourceProviderClient(RecordedDelegatingHandler handler)
+        public static NetworkResourceProviderClient GetNetworkResourceProviderClient(MockContext context, RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
-            var client = TestBase.GetServiceClient<NetworkResourceProviderClient>(handler);
+            var client = context.GetServiceClient<NetworkResourceProviderClient>(handler);
             return client;
         }
 
-        public static StorageManagementClient GetStorageManagementClient(RecordedDelegatingHandler handler)
+        public static StorageManagementClient GetStorageManagementClient(MockContext context, RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
-            var client = TestBase.GetServiceClient<StorageManagementClient>(handler);
+            var client = context.GetServiceClient<StorageManagementClient>(handler);
             return client;
         }
 

@@ -89,7 +89,7 @@ namespace Compute.Tests
             using (MockContext context = MockContext.Start())
             {
                 ComputeManagementClient _pirClient =
-                    ComputeManagementTestUtilities.GetComputeManagementClient(
+                    ComputeManagementTestUtilities.GetComputeManagementClient(context,
                         new RecordedDelegatingHandler {StatusCodeToReturn = HttpStatusCode.OK});
 
                 var vmimageext = _pirClient.VirtualMachineExtensionImages.Get(
@@ -115,7 +115,7 @@ namespace Compute.Tests
             using (MockContext context = MockContext.Start())
             {
                 ComputeManagementClient _pirClient =
-                    ComputeManagementTestUtilities.GetComputeManagementClient(
+                    ComputeManagementTestUtilities.GetComputeManagementClient(context,
                         new RecordedDelegatingHandler {StatusCodeToReturn = HttpStatusCode.OK});
 
                 var vmextimg = _pirClient.VirtualMachineExtensionImages.ListTypes(
@@ -133,7 +133,7 @@ namespace Compute.Tests
             using (MockContext context = MockContext.Start())
             {
                 ComputeManagementClient _pirClient =
-                    ComputeManagementTestUtilities.GetComputeManagementClient(
+                    ComputeManagementTestUtilities.GetComputeManagementClient(context,
                         new RecordedDelegatingHandler {StatusCodeToReturn = HttpStatusCode.OK});
 
                 var vmextimg = _pirClient.VirtualMachineExtensionImages.ListVersions(
@@ -152,7 +152,7 @@ namespace Compute.Tests
             using (MockContext context = MockContext.Start())
             {
                 ComputeManagementClient _pirClient =
-                    ComputeManagementTestUtilities.GetComputeManagementClient(
+                    ComputeManagementTestUtilities.GetComputeManagementClient(context,
                         new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
                 // Filter: startswith - Positive Test

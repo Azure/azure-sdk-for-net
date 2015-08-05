@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Common.Authentication
         private const string StorageProviderNamespace = "Microsoft.Storage";
         private const string WebAppProviderNamespace = "Microsoft.Web";
 
-        internal static IList<string> RequiredProvidersForServiceManagement<T>() where T : ServiceClient<T>
+        internal static IList<string> RequiredProvidersForServiceManagement<T>() 
         {
             if (typeof(T).FullName.EndsWith("WebSiteManagementClient"))
             {
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Common.Authentication
             return new string[0];
         }
 
-        internal static IList<string> RequiredProvidersForResourceManager<T>() where T : ServiceClient<T>
+        internal static IList<string> RequiredProvidersForResourceManager<T>() 
         {
             if (typeof(T).FullName.EndsWith("ResourceManagementClient"))
             {

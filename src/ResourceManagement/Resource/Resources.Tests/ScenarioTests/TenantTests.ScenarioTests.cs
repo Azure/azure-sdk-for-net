@@ -15,20 +15,20 @@
 
 using System.Linq;
 using System.Net;
-using Microsoft.Azure.Subscriptions;
+using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Test;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.Rest.TransientFaultHandling;
 using Xunit;
-using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
 namespace ResourceGroups.Tests
 {
     public class LiveTenantTests : TestBase
     {
-        public SubscriptionClient GetSubscriptionClient(RecordedDelegatingHandler handler)
+        public SubscriptionClient GetSubscriptionClient(MockContext context, RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
-            var client = this.GetSubscriptionClientWithHandler(handler);
+            var client = this.GetSubscriptionClientWithHandler(context, handler);
 
             return client;
         }
@@ -42,7 +42,7 @@ namespace ResourceGroups.Tests
 
             using (MockContext context = MockContext.Start())
             {
-                var client = GetSubscriptionClient(handler);
+                var client = GetSubscriptionClient(context, handler);
                 client.SetRetryPolicy(new RetryPolicy<HttpStatusCodeErrorDetectionStrategy>(1));
 
                 var tenants = client.Tenants.ListWithHttpMessagesAsync().ConfigureAwait(false).GetAwaiter().GetResult();
