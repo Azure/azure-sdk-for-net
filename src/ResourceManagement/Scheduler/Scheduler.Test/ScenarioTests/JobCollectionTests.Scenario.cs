@@ -42,8 +42,8 @@ namespace Scheduler.Test.ScenarioTests
             {
                 string jobCollectionName = TestUtilities.GenerateName("jc1");
                 string id = string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Scheduler/jobCollections/{2}", subscriptionId, resourceGroupName, jobCollectionName);
-                
-                var client = TestBase.GetServiceClient<SchedulerManagementClient>();
+
+                var client = context.GetServiceClient<SchedulerManagementClient>();
                 
                 var createResult = client.JobCollections.CreateOrUpdate(
                     resourceGroupName: resourceGroupName,
@@ -138,7 +138,7 @@ namespace Scheduler.Test.ScenarioTests
                 var tags = new Dictionary<string, string>();
                 tags.Add("department", "marketing");
 
-                var client = TestBase.GetServiceClient<SchedulerManagementClient>();
+                var client = context.GetServiceClient<SchedulerManagementClient>();
                 
                 var createResult = client.JobCollections.CreateOrUpdate(
                     resourceGroupName: resourceGroupName,
@@ -205,7 +205,7 @@ namespace Scheduler.Test.ScenarioTests
                 var tags = new Dictionary<string, string>();
                 tags.Add("department", "marketing");
 
-                var client = TestBase.GetServiceClient<SchedulerManagementClient>();
+                var client = context.GetServiceClient<SchedulerManagementClient>();
 
                 var createResult1 = client.JobCollections.CreateOrUpdate(
                     resourceGroupName: resourceGroupName,
@@ -333,7 +333,7 @@ namespace Scheduler.Test.ScenarioTests
                 var tags = new Dictionary<string, string>();
                 tags.Add("department", "marketing");
 
-                var client = TestBase.GetServiceClient<SchedulerManagementClient>();
+                var client = context.GetServiceClient<SchedulerManagementClient>();
 
                 var createResult1 = client.JobCollections.CreateOrUpdate(
                     resourceGroupName: resourceGroupName,
@@ -434,7 +434,7 @@ namespace Scheduler.Test.ScenarioTests
                 var tags = new Dictionary<string, string>();
                 tags.Add("department", "marketing");
 
-                var client = TestBase.GetServiceClient<SchedulerManagementClient>();
+                var client = context.GetServiceClient<SchedulerManagementClient>();
 
                 var createResult1 = client.JobCollections.CreateOrUpdate(
                     resourceGroupName: resourceGroupName,

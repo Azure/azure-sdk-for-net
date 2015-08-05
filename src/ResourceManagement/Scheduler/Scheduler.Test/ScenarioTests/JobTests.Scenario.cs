@@ -47,7 +47,7 @@ namespace Scheduler.Test.ScenarioTests
                 string jobDefinitionname = string.Format("{0}/{1}", jobCollectionName, jobName);
                 string id = string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Scheduler/jobCollections/{2}/jobs/{3}", subscriptionId, resourceGroupName, jobCollectionName, jobName);
 
-                var client = TestBase.GetServiceClient<SchedulerManagementClient>();
+                var client = context.GetServiceClient<SchedulerManagementClient>();
                 this.CreateJobCollection(client, jobCollectionName);
 
                 var result = client.Jobs.CreateOrUpdate(
@@ -160,7 +160,7 @@ namespace Scheduler.Test.ScenarioTests
                 string jobDefinitionname = string.Format("{0}/{1}", jobCollectionName, jobName);
                 string id = string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Scheduler/jobCollections/{2}/jobs/{3}", subscriptionId, resourceGroupName, jobCollectionName, jobName);
 
-                var client = TestBase.GetServiceClient<SchedulerManagementClient>();
+                var client = context.GetServiceClient<SchedulerManagementClient>();
                 this.CreateJobCollection(client, jobCollectionName);
 
                 var result = client.Jobs.CreateOrUpdate(
@@ -269,7 +269,7 @@ namespace Scheduler.Test.ScenarioTests
                 string jobDefinitionname = string.Format("{0}/{1}", jobCollectionName, jobName);
                 string id = string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Scheduler/jobCollections/{2}/jobs/{3}", subscriptionId, resourceGroupName, jobCollectionName, jobName);
 
-                var client = TestBase.GetServiceClient<SchedulerManagementClient>();
+                var client = context.GetServiceClient<SchedulerManagementClient>();
                 this.CreateJobCollection(client, jobCollectionName);
 
                 var result = client.Jobs.CreateOrUpdate(
@@ -393,7 +393,7 @@ namespace Scheduler.Test.ScenarioTests
                 string jobDefinitionname = string.Format("{0}/{1}", jobCollectionName, jobName);
                 string id = string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Scheduler/jobCollections/{2}/jobs/{3}", subscriptionId, resourceGroupName, jobCollectionName, jobName);
 
-                var client = TestBase.GetServiceClient<SchedulerManagementClient>();
+                var client = context.GetServiceClient<SchedulerManagementClient>();
                 this.CreateJobCollection(client, jobCollectionName);
 
                 var result = client.Jobs.CreateOrUpdate(
@@ -537,7 +537,7 @@ namespace Scheduler.Test.ScenarioTests
                 string jobDefinitionname = string.Format("{0}/{1}", jobCollectionName, jobName);
                 string id = string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Scheduler/jobCollections/{2}/jobs/{3}", subscriptionId, resourceGroupName, jobCollectionName, jobName);
 
-                var client = TestBase.GetServiceClient<SchedulerManagementClient>();
+                var client = context.GetServiceClient<SchedulerManagementClient>();
                 this.CreateJobCollection(client, jobCollectionName);
 
                 var header = new Dictionary<string, string>();
@@ -666,7 +666,7 @@ namespace Scheduler.Test.ScenarioTests
                 string jobDefinitionname = string.Format("{0}/{1}", jobCollectionName, jobName);
                 string id = string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Scheduler/jobCollections/{2}/jobs/{3}", subscriptionId, resourceGroupName, jobCollectionName, jobName);
 
-                var client = TestBase.GetServiceClient<SchedulerManagementClient>();
+                var client = context.GetServiceClient<SchedulerManagementClient>();
                 this.CreateJobCollection(client, jobCollectionName);
 
                 var header = new Dictionary<string, string>();
@@ -802,7 +802,7 @@ namespace Scheduler.Test.ScenarioTests
                 string jobDefinitionname = string.Format("{0}/{1}", jobCollectionName, jobName);
                 string id = string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Scheduler/jobCollections/{2}/jobs/{3}", subscriptionId, resourceGroupName, jobCollectionName, jobName);
 
-                var client = TestBase.GetServiceClient<SchedulerManagementClient>();
+                var client = context.GetServiceClient<SchedulerManagementClient>();
                 this.CreateJobCollection(client, jobCollectionName);
 
                 var header = new Dictionary<string, string>();
@@ -940,7 +940,7 @@ namespace Scheduler.Test.ScenarioTests
                 string jobDefinitionname = string.Format("{0}/{1}", jobCollectionName, jobName);
                 string id = string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Scheduler/jobCollections/{2}/jobs/{3}", subscriptionId, resourceGroupName, jobCollectionName, jobName);
 
-                var client = TestBase.GetServiceClient<SchedulerManagementClient>();
+                var client = context.GetServiceClient<SchedulerManagementClient>();
                 this.CreateJobCollection(client, jobCollectionName);
 
                 var header = new Dictionary<string, string>();
@@ -1079,7 +1079,7 @@ namespace Scheduler.Test.ScenarioTests
                 string jobDefinitionname = string.Format("{0}/{1}", jobCollectionName, jobName);
                 string id = string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Scheduler/jobCollections/{2}/jobs/{3}", subscriptionId, resourceGroupName, jobCollectionName, jobName);
 
-                var client = TestBase.GetServiceClient<SchedulerManagementClient>();
+                var client = context.GetServiceClient<SchedulerManagementClient>();
                 this.CreateJobCollection(client, jobCollectionName);
 
                 var result = client.Jobs.CreateOrUpdate(
@@ -1210,7 +1210,7 @@ namespace Scheduler.Test.ScenarioTests
                 string id1 = string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Scheduler/jobCollections/{2}/jobs/{3}", subscriptionId, resourceGroupName, jobCollectionName, jobName1);
                 string id2 = string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Scheduler/jobCollections/{2}/jobs/{3}", subscriptionId, resourceGroupName, jobCollectionName, jobName2);
 
-                var client = TestBase.GetServiceClient<SchedulerManagementClient>();
+                var client = context.GetServiceClient<SchedulerManagementClient>();
                 this.CreateJobCollection(client, jobCollectionName);
 
                 client.Jobs.CreateOrUpdate(
@@ -1294,7 +1294,7 @@ namespace Scheduler.Test.ScenarioTests
                 string jobDefinitionName = string.Format("{0}/{1}", existingJobCollectionName, existingJobName);
                 string id = string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Scheduler/jobCollections/{2}/jobs/{3}", subscriptionId, resourceGroupName, existingJobCollectionName, existingJobName);
 
-                var client = TestBase.GetServiceClient<SchedulerManagementClient>();
+                var client = context.GetServiceClient<SchedulerManagementClient>();
 
                 var listResult = client.Jobs.ListJobHistory(resourceGroupName, existingJobCollectionName, existingJobName);
                 var listTopResult = client.Jobs.ListJobHistory(resourceGroupName, existingJobCollectionName, existingJobName, top: 5);
