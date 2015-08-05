@@ -30,7 +30,7 @@
     <Compile Include="ClientAbstractionTests\SyncTests.cs" />
     <Compile Include="ClustersTests\ClustersPocoClientTests.cs" />
     <Compile Include="ClustersTests\ClustersRestClientTests.cs" />
-    <Compile Include="ClustersTests\ClustersTestsBase.cs" />
+    <Compile Include="ClustersTests\ClustersTestsBase.cs" /> 
     <Compile Include="HadoopClientTests\RdpTests.cs" />
     <Compile Include="ConnectionCredentials\AlternativeEnvironmentIHDInsightSubscriptionCertificateCredentialsFactory.cs" />
     <Compile Include="Configuration\PayloadConverterTests.cs" />
