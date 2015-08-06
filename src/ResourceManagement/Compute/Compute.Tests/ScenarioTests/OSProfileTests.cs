@@ -174,7 +174,7 @@ namespace Compute.Tests
 
         // See recording instructions in HyakSpec\ReadMe.txt. The key vault URLs produced by the script are plugged
         // into SecretVaultHelper, below.
-        [Fact]
+        [Fact(Skip = "Secret Vault")]
         public void TestVMWithWindowsOSProfile()
         {
             using (MockContext context = MockContext.Start())

@@ -80,7 +80,19 @@ namespace Compute.Tests
                         }; 
                     };
 
-                    var vm1 = CreateVM_NoAsyncTracking(rgName, asName, storageAccountOutput, dummyImageRef, out inputVM, useVMMImage);
+                    VirtualMachine vm1 = null;
+                    inputVM = null;
+                    try
+                    {
+                        vm1 = CreateVM_NoAsyncTracking(rgName, asName, storageAccountOutput, dummyImageRef, out inputVM, useVMMImage);
+                    }
+                    catch (Exception ex)
+                    {
+                        if (ex.Message.Contains("Legal terms have not been accepted for this item on this subscription."))
+                        {
+                            return;
+                        }
+                    }
 
                     // Validate the VMM Plan field
                     ValidateMarketplaceVMPlanField(vm1, img);
