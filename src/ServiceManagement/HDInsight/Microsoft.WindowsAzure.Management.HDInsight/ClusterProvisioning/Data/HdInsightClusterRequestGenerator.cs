@@ -133,7 +133,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.Data
             if (inputs.ConfigActions != null && inputs.ConfigActions.Count > 0)
             {
                 CustomActionComponent configAction = new CustomActionComponent { HeadNodeRole = headnodeRole, WorkerNodeRole = workernodeRole };
-                AddConfigActionComponent(configAction, inputs, headnodeRole, workernodeRole);
+                AddConfigActionComponent(configAction, inputs, headnodeRole, workernodeRole, zookeeperRole);
                 cluster.Components.Add(configAction);
             }
 
@@ -240,7 +240,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.Data
             if (inputs.ConfigActions != null && inputs.ConfigActions.Count > 0)
             {
                 CustomActionComponent configAction = new CustomActionComponent { HeadNodeRole = headnodeRole, WorkerNodeRole = workernodeRole };
-                AddConfigActionComponent(configAction, inputs, headnodeRole, workernodeRole);
+                AddConfigActionComponent(configAction, inputs, headnodeRole, workernodeRole, zookeeperRole);
                 cluster.Components.Add(configAction);
             }
 
@@ -386,7 +386,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.Data
             }
         }
 
-        private static void AddConfigActionComponent(CustomActionComponent configAction, HDInsight.ClusterCreateParametersV2 inputs, ClusterRole headnodeRole, ClusterRole workernodeRole)
+        private static void AddConfigActionComponent(CustomActionComponent configAction, HDInsight.ClusterCreateParametersV2 inputs, ClusterRole headnodeRole, ClusterRole workernodeRole, ClusterRole zookeperRole)
         {
             configAction.CustomActions = new CustomActionList();
 
@@ -424,6 +424,18 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.Data
                     else if (clusterRoleType == ClusterNodeType.DataNode)
                     {
                         newConfigAction.ClusterRoleCollection.Add(workernodeRole);
+                    }
+                    else if (clusterRoleType == ClusterNodeType.ZookeperNode)
+                    {
+                        if (inputs.ClusterType.Equals(ClusterType.HBase) || inputs.ClusterType.Equals(ClusterType.Storm))
+                        {
+                            newConfigAction.ClusterRoleCollection.Add(zookeperRole);
+                        }
+                        else
+                        {
+                            throw new NotSupportedException(string.Format("Customization of zookeper nodes only supported for cluster types {0} and {1}",
+                                ClusterType.HBase.ToString(), ClusterType.Storm.ToString()));
+                        }
                     }
                     else
                     {

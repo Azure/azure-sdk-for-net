@@ -278,7 +278,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
                     !string.IsNullOrEmpty(clusterCreateParameters.RdpPassword) ||
                     clusterCreateParameters.RdpAccessExpiry.IsNotNull())
                 {
-                    if (string.IsNullOrEmpty(clusterCreateParameters.RdpUsername))
+                    if(string.IsNullOrEmpty(clusterCreateParameters.RdpUsername))
                     {
                         throw new ArgumentException(
                             "clusterCreateParameters.RdpUsername cannot be null or empty in case either RdpPassword or RdpAccessExpiry is specified",
@@ -698,7 +698,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
 
                 var remoteDesktopSettings = new RemoteDesktopSettings
                 {
-                    IsEnabled = false,
+                    IsEnabled = false, 
                 };
 
                 foreach (var role in clusterRoleCollection)

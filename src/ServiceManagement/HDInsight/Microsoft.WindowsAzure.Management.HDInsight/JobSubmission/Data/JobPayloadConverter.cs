@@ -25,7 +25,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.JobSubmission.Data
     using System.Threading.Tasks;
     using System.Xml;
     using Microsoft.Hadoop.Client;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Microsoft.WindowsAzure.Management.HDInsight;
     using Microsoft.WindowsAzure.Management.HDInsight.Framework.Core.Library;
     using Microsoft.WindowsAzure.Management.HDInsight.Framework.Core.Library.DynamicXml.Reader;
@@ -343,9 +342,8 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.JobSubmission.Data
                                 retval.Query = element.InnerText;
                                 break;
                             case "StatusCode":
-                                var statusCode = JobStatusCode.Unknown;
-                                Assert.IsTrue(Enum.TryParse(element.InnerText, true, out statusCode));
-                                retval.StatusCode = statusCode;
+                                JobStatusCode statusCode;
+                                retval.StatusCode = Enum.TryParse(element.InnerText, true, out statusCode) ? statusCode : JobStatusCode.Unknown;
                                 break;
                             case "SubmissionTime":
                                 var submissionTime = element.InnerText;
