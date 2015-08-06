@@ -29,5 +29,10 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// Number of header lines to skip from each blob.
         /// </summary>
         public int? SkipHeaderLineCount { get; set; }
+
+        /// <summary>		
+        /// Optional. If true, files under the folder path will be read recursively.		
+        /// </summary>		
+        public bool? Recursive { get; set; }
     }
 }
