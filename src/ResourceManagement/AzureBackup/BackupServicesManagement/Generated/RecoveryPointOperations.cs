@@ -158,6 +158,7 @@ namespace Microsoft.Azure.Management.BackupServices
                 
                 // Set Headers
                 httpRequest.Headers.Add("Accept-Language", "en-us");
+                httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -260,10 +261,6 @@ namespace Microsoft.Azure.Management.BackupServices
                         
                     }
                     result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-client-request-id"))
-                    {
-                        customRequestHeaders.ClientRequestId = httpResponse.Headers.GetValues("x-ms-client-request-id").FirstOrDefault();
-                    }
                     
                     if (shouldTrace)
                     {
@@ -378,6 +375,7 @@ namespace Microsoft.Azure.Management.BackupServices
                 
                 // Set Headers
                 httpRequest.Headers.Add("Accept-Language", "en-us");
+                httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -518,10 +516,6 @@ namespace Microsoft.Azure.Management.BackupServices
                         
                     }
                     result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-client-request-id"))
-                    {
-                        customRequestHeaders.ClientRequestId = httpResponse.Headers.GetValues("x-ms-client-request-id").FirstOrDefault();
-                    }
                     
                     if (shouldTrace)
                     {
