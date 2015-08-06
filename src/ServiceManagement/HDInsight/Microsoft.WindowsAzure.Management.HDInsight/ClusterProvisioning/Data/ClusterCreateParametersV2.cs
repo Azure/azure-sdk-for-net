@@ -297,6 +297,12 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         /// </summary>
         internal void ValidateClusterCreateParameters()
         {
+            // if OSType == Linux then Version must be specified
+            if (this.OSType == HDInsight.OSType.Linux && string.IsNullOrEmpty(this.Version))
+            {
+                throw new InvalidOperationException("Cluster version was not supplied and must be specified.");
+            }
+
             // if OSType == Linux then Username must be "admin"
             if (this.OSType == HDInsight.OSType.Linux && this.UserName != "admin")
             {
@@ -325,6 +331,12 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
             if (this.OSType == HDInsight.OSType.Windows && !String.IsNullOrEmpty(this.SshUserName))
             {
                 throw new NotSupportedException(string.Format("SSH is not supported for clusters with OSType {0}", this.OSType));
+            }
+
+            // If OSType == Linux then SSH credentials must be specified
+            if (this.OSType == HDInsight.OSType.Linux && String.IsNullOrEmpty(this.SshUserName))
+            {
+                throw new InvalidOperationException(string.Format("SSH credentials must be specified for clusters with OSType {0}.", this.OSType));
             }
 
             // if SSH user name is specified then either SSH password or SSH public key must be specified

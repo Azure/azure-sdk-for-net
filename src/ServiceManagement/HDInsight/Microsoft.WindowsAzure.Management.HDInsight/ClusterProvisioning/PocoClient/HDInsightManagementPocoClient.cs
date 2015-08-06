@@ -130,7 +130,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
                     "Your subscription cannot create customized clusters, please contact Support"));
             }
 
-            if (!new[] { "ExtraLarge", "Large" }.Contains(details.HeadNodeSize, StringComparer.OrdinalIgnoreCase)
+            if (!new[] {"ExtraLarge", "Large"}.Contains(details.HeadNodeSize, StringComparer.OrdinalIgnoreCase)
                 || !string.Equals(details.DataNodeSize, "Large", StringComparison.OrdinalIgnoreCase)
                 || details.ZookeeperNodeSize.IsNotNullOrEmpty())
             {
@@ -249,7 +249,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
         {
             var client = ServiceLocator.Instance.Locate<IHDInsightManagementPocoClientFactory>()
                 .Create(this.credentials, this.Context, false);
-            var operationId = await client.EnableDisableProtocol(UserChangeRequestUserType.Rdp,
+            var operationId =  await client.EnableDisableProtocol(UserChangeRequestUserType.Rdp,
                 UserChangeRequestOperationType.Disable, dnsName, location, string.Empty, string.Empty, DateTime.MinValue);
             return operationId;
         }

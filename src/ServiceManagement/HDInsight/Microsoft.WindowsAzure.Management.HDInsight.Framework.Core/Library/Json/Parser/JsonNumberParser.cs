@@ -191,7 +191,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Framework.Core.Library.Jso
                 {
                     if (asLong >= -324 && asLong <= 308)
                     {
-                        if (double.TryParse(str, out asDouble))
+                        if (double.TryParse(str, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out asDouble))
                         {
                             return true;
                         }
@@ -200,7 +200,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Framework.Core.Library.Jso
             }
             else
             {
-                if (double.TryParse(str, out asDouble))
+                if (double.TryParse(str, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out asDouble))
                 {
                     return true;
                 }
