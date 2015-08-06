@@ -146,7 +146,7 @@ namespace Compute.Tests
             }
         }
 
-        [Fact(Skip="TODO: AutoRest")]
+        [Fact]
         public void TestExtImgListVersionsFilters()
         {
             using (MockContext context = MockContext.Start())
@@ -156,12 +156,21 @@ namespace Compute.Tests
                         new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
                 // Filter: startswith - Positive Test
-                parameters.FilterExpression = "$filter=startswith(name,'1.1')";
+                parameters.FilterExpression = null;
+                var extImages = _pirClient.VirtualMachineExtensionImages.ListVersions(
+                    parameters.Location,
+                    parameters.PublisherName,
+                    parameters.Type);
+                Assert.True(extImages.Count > 0);
+
+                string ver = extImages.First().Name;
+
+                parameters.FilterExpression = "$filter=startswith(name,'" + ver + "')";
                 var vmextimg = _pirClient.VirtualMachineExtensionImages.ListVersions(
                     parameters.Location,
                     parameters.PublisherName,
                     parameters.Type,
-                    f => f.Name.StartsWith("1.1"));
+                    f => f.Name.StartsWith(ver));
                 Assert.True(vmextimg.Count > 0);
                 Assert.True(vmextimg.Count(vmi => vmi.Name == "2.0") != 0);
 
