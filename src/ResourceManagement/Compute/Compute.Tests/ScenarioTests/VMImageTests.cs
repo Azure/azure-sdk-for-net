@@ -79,7 +79,7 @@ namespace Compute.Tests
             }
         }
 
-        [Fact(Skip = "TODO: AutoRest")]
+        [Fact]
         public void TestVMImageListFilters()
         {
             using (MockContext context = MockContext.Start())

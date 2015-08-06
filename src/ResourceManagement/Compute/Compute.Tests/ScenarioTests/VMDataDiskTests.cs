@@ -29,7 +29,7 @@ namespace Compute.Tests
 {
     public class VMDataDiskTests : VMTestBase
     {
-        [Fact(Skip = "TODO: AutoRest")]
+        [Fact]
         public void TestVMDataDiskScenario()
         {
             using (MockContext context = MockContext.Start())

@@ -47,7 +47,7 @@ namespace Compute.Tests
             return vmExtension;
         }
 
-        [Fact(Skip = "TODO: AutoRest")]
+        [Fact]
         public void TestVMExtensionOperations()
         {
             using (MockContext context = MockContext.Start())

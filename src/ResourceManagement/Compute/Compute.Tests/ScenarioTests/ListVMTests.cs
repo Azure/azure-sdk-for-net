@@ -24,7 +24,7 @@ namespace Compute.Tests
 {
     public class ListVMTests: VMTestBase
     {
-        [Fact(Skip = "TODO: AutoRest")]
+        [Fact]
         public void TestListVMInSubscription()
         {
             using (MockContext context = MockContext.Start())

@@ -146,7 +146,7 @@ namespace Compute.Tests
             }
         }
 
-        [Fact(Skip="TODO: AutoRest")]
+        [Fact]
         public void TestExtImgListVersionsFilters()
         {
             using (MockContext context = MockContext.Start())

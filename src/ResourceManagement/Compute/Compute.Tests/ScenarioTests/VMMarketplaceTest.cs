@@ -40,7 +40,7 @@ namespace Compute.Tests
             return m_CrpClient.VirtualMachineImages.Get(m_location, vmmPublisherName, vmmOfferName, vmmSku, imageRef.Version);
         }
 
-        [Fact(Skip = "TODO: AutoRest")]
+        [Fact]
         public void TestVMMarketplace()
         {
             using (MockContext context = MockContext.Start())
