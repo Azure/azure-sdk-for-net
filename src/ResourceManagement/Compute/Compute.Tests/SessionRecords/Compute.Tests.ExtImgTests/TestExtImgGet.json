@@ -7,7 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "9c41cf52-cce9-47d8-8e13-56488835ee67"
+          "63efb7a5-e58c-4b9b-8a8e-534751b1fab9"
         ],
         "accept-language": [
           "en-US"
@@ -34,7 +34,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "87689b71-9327-4492-bc79-d563523b87aa"
+          "4dcb7bc4-2dbe-4ce0-9b9e-b565b3570247"
         ],
         "Cache-Control": [
           "no-cache"
@@ -44,16 +44,16 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14999"
+          "14998"
         ],
         "x-ms-correlation-request-id": [
-          "eed3cf49-0bb4-43b8-bb36-f684218beae2"
+          "fbbb259c-e054-4681-bcf2-482ebed59caf"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20150805T225508Z:eed3cf49-0bb4-43b8-bb36-f684218beae2"
+          "WESTUS:20150806T092402Z:fbbb259c-e054-4681-bcf2-482ebed59caf"
         ],
         "Date": [
-          "Wed, 05 Aug 2015 22:55:08 GMT"
+          "Thu, 06 Aug 2015 09:24:02 GMT"
         ]
       },
       "StatusCode": 200
