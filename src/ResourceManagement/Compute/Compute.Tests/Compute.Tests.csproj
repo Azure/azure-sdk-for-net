@@ -58,6 +58,9 @@
     <None Include="SessionRecords\Compute.Tests.ExtImgTests\TestExtImgListVersionsNoFilter.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\Compute.Tests.ListVMTests\TestListVMInSubscriptionWithPaging.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\Compute.Tests.UsageTests\TestListUsages.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -67,7 +70,7 @@
     <None Include="SessionRecords\Compute.Tests.VMDataDiskTests\TestVMDataDiskScenario.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="SessionRecords\Compute.Tests.VMDiskSizeTests\TestVMDiskSizeScenario.json" >
+    <None Include="SessionRecords\Compute.Tests.VMDiskSizeTests\TestVMDiskSizeScenario.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Compute.Tests.VMMarketplaceTest\TestVMMarketplace.json">
