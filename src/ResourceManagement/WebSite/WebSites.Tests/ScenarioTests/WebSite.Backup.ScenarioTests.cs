@@ -25,29 +25,17 @@ using Xunit;
 
 namespace WebSites.Tests.ScenarioTests
 {
-    public class BackupRestoreScenarioTests
+    public class BackupRestoreScenarioTests : TestBase
     {
-        public WebSiteManagementClient GetWebSitesClient(RecordedDelegatingHandler handler)
-        {
-            handler.IsPassThrough = true;
-            return TestBase.GetServiceClient<WebSiteManagementClient>(TestEnvironmentFactory.GetTestEnvironment(), handler);
-        }
-
-        public ResourceManagementClient GetResourcesClient(RecordedDelegatingHandler handler)
-        {
-            handler.IsPassThrough = true;
-            return TestBase.GetServiceClient<ResourceManagementClient>(TestEnvironmentFactory.GetTestEnvironment(), handler);
-        }
-
         [Fact(Skip = "Backup/Restore feature is not allowed in current site mode.")]
         public void ListBackupsAndScheduledBackupRoundTrip()
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext.Start())
+            using (var context = MockContext.Start())
             {
-                var webSitesClient = GetWebSitesClient(handler);
-                var resourcesClient = GetResourcesClient(handler);
+                var webSitesClient = this.GetWebSiteManagementClientWithHandler(context, handler);
+                var resourcesClient = this.GetResourceManagementClientWithHandler(context, handler);
 
                 string farmName = TestUtilities.GenerateName("csmsf");
                 string resourceGroupName = TestUtilities.GenerateName("csmrg");

@@ -31,7 +31,7 @@ using Xunit;
 
 namespace WebSites.Tests.ScenarioTests
 {
-    public class WebSiteScenarioTests
+    public class WebSiteScenarioTests : TestBase
     {
         private delegate void WebsiteTestDelegate(string webSiteName, string resourceGroupName, string webHostingPlanName, string location, WebSiteManagementClient webSitesClient, ResourceManagementClient resourcesClient);
 
@@ -334,14 +334,14 @@ namespace WebSites.Tests.ScenarioTests
                 });
         }
 
-        private void RunWebsiteTestScenario(WebsiteTestDelegate testAction, string sku = "Shared")
+        private void RunWebsiteTestScenario(WebsiteTestDelegate testAction, string skuTier = "Shared", string skuName = "D1")
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext.Start(4))
+            using (var context = MockContext.Start(3))
             {
-                WebSiteManagementClient webSitesClient = ResourceGroupHelper.GetWebSitesClient(handler);
-                ResourceManagementClient resourcesClient = ResourceGroupHelper.GetResourcesClient(handler);
+                var webSitesClient = this.GetWebSiteManagementClientWithHandler(context, handler);
+                var resourcesClient = this.GetResourceManagementClientWithHandler(context, handler);
 
                 var webSiteName = TestUtilities.GenerateName("csmws");
                 var resourceGroupName = TestUtilities.GenerateName("csmrg");
@@ -363,7 +363,8 @@ namespace WebSites.Tests.ScenarioTests
                         Location = location,
                         Sku = new SkuDescription()
                         {
-                            Tier = sku
+                            Name = skuName,
+                            Tier = skuTier
                         }
                     });
 
@@ -389,10 +390,10 @@ namespace WebSites.Tests.ScenarioTests
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext.Start())
+            using (var context = MockContext.Start())
             {
-                var webSitesClient = ResourceGroupHelper.GetWebSitesClient(handler);
-                var resourcesClient = ResourceGroupHelper.GetResourcesClient(handler);
+                var webSitesClient = this.GetWebSiteManagementClientWithHandler(context, handler);
+                var resourcesClient = this.GetResourceManagementClientWithHandler(context, handler);
 
                 var whpName = TestUtilities.GenerateName("cswhp");
                 var resourceGroupName = TestUtilities.GenerateName("csmrg");

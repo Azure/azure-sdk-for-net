@@ -26,17 +26,17 @@ using Xunit;
 
 namespace WebSites.Tests.ScenarioTests
 {
-    public class WebHostingPlanScenarioTests
+    public class WebHostingPlanScenarioTests : TestBase
     {
         [Fact]
         public void CreateAndVerifyWebHostingPlan()
         {
             var handler = new RecordedDelegatingHandler {StatusCodeToReturn = HttpStatusCode.OK};
 
-            using (MockContext.Start())
+            using (var context = MockContext.Start())
             {
-                var webSitesClient = ResourceGroupHelper.GetWebSitesClient(handler);
-                var resourcesClient = ResourceGroupHelper.GetResourcesClient(handler);
+                var webSitesClient = this.GetWebSiteManagementClientWithHandler(context, handler);
+                var resourcesClient = this.GetResourceManagementClientWithHandler(context, handler);
 
                 string webHostingPlanName = TestUtilities.GenerateName("csmsf");
                 string resourceGroupName = TestUtilities.GenerateName("csmrg");
@@ -75,10 +75,10 @@ namespace WebSites.Tests.ScenarioTests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext.Start())
+            using (var context = MockContext.Start())
             {
-                var webSitesClient = ResourceGroupHelper.GetWebSitesClient(handler);
-                var resourcesClient = ResourceGroupHelper.GetResourcesClient(handler);
+                var webSitesClient = this.GetWebSiteManagementClientWithHandler(context, handler);
+                var resourcesClient = this.GetResourceManagementClientWithHandler(context, handler);
 
                 string whpName1 = TestUtilities.GenerateName("csmwhp");
                 string whpName2 = TestUtilities.GenerateName("csmwhp");
@@ -98,6 +98,7 @@ namespace WebSites.Tests.ScenarioTests
                     Location = location,
                     Sku = new SkuDescription
                     {
+                        Name = "D1",
                         Tier = "Shared"
                     }
                 });
@@ -128,10 +129,10 @@ namespace WebSites.Tests.ScenarioTests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext.Start())
+            using (var context = MockContext.Start())
             {
-                var webSitesClient = ResourceGroupHelper.GetWebSitesClient(handler);
-                var resourcesClient = ResourceGroupHelper.GetResourcesClient(handler);
+                var webSitesClient = this.GetWebSiteManagementClientWithHandler(context, handler);
+                var resourcesClient = this.GetResourceManagementClientWithHandler(context, handler);
 
                 string whpName = TestUtilities.GenerateName("csmsf");
                 string resourceGroupName = TestUtilities.GenerateName("csmrg");
@@ -171,10 +172,10 @@ namespace WebSites.Tests.ScenarioTests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext.Start())
+            using (var context = MockContext.Start())
             {
-                var webSitesClient = ResourceGroupHelper.GetWebSitesClient(handler);
-                var resourcesClient = ResourceGroupHelper.GetResourcesClient(handler);
+                var webSitesClient = this.GetWebSiteManagementClientWithHandler(context, handler);
+                var resourcesClient = this.GetResourceManagementClientWithHandler(context, handler);
 
                 string webSiteName = TestUtilities.GenerateName("csmws");
                 string webHostingPlanName = TestUtilities.GenerateName("csmsf");

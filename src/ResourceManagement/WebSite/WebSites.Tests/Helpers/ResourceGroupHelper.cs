@@ -18,23 +18,58 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.WebSites;
+using Microsoft.Rest;
+using Microsoft.Rest.Azure;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
 namespace WebSites.Tests.Helpers
 {
     public static class ResourceGroupHelper
     {
-
-        public static WebSiteManagementClient GetWebSitesClient(RecordedDelegatingHandler handler)
+        /// <summary>
+        /// Default constructor for management clients, using the TestSupport Infrastructure
+        /// </summary>
+        /// <param name="testBase">the test class</param>
+        /// <returns>A resource management client, created from the current context (environment variables)</returns>
+        public static ResourceManagementClient GetResourceManagementClient(this TestBase testBase, MockContext context)
         {
-            handler.IsPassThrough = true;
-            return TestBase.GetServiceClient<WebSiteManagementClient>(TestEnvironmentFactory.GetTestEnvironment(), handler);
+            var client = context.GetServiceClient<ResourceManagementClient>();
+            return client;
         }
 
-        public static ResourceManagementClient GetResourcesClient(RecordedDelegatingHandler handler)
+        /// <summary>
+        /// Default constructor for management clients, using the TestSupport Infrastructure
+        /// </summary>
+        /// <param name="handler"></param>
+        /// <returns>A resource management client, created from the current context (environment variables)</returns>
+        public static ResourceManagementClient GetResourceManagementClientWithHandler(this TestBase testBase, MockContext context, RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
-            return TestBase.GetServiceClient<ResourceManagementClient>(TestEnvironmentFactory.GetTestEnvironment(), handler);
+            var client = context.GetServiceClient<ResourceManagementClient>(handler);
+            return client;
+        }
+
+        /// <summary>
+        /// Default constructor for management clients, using the TestSupport Infrastructure
+        /// </summary>
+        /// <param name="testBase">the test class</param>
+        /// <returns>A resource management client, created from the current context (environment variables)</returns>
+        public static WebSiteManagementClient GetWebSiteManagementClient(this TestBase testBase, MockContext context)
+        {
+            var client = context.GetServiceClient<WebSiteManagementClient>();
+            return client;
+        }
+
+        /// <summary>
+        /// Default constructor for management clients, using the TestSupport Infrastructure
+        /// </summary>
+        /// <param name="handler"></param>
+        /// <returns>A resource management client, created from the current context (environment variables)</returns>
+        public static WebSiteManagementClient GetWebSiteManagementClientWithHandler(this TestBase testBase, MockContext context, RecordedDelegatingHandler handler)
+        {
+            handler.IsPassThrough = true;
+            var client = context.GetServiceClient<WebSiteManagementClient>(handler);
+            return client;
         }
 
         /// <summary>
