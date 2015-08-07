@@ -125,7 +125,7 @@
     <Compile Include="InMemoryTests\WorkflowVersions.InMemoryTests.cs" />
     <Compile Include="ScenarioTests\Base.ScenarioTests.cs" />
     <Compile Include="ScenarioTests\WorkflowAccessKeys.ScenarioTests.cs" />
-    <Compile Include="ScenarioTests\WorkflowRunAction.ScenarioTests.cs" />
+    <Compile Include="ScenarioTests\WorkflowRunActions.ScenarioTests.cs" />
     <Compile Include="ScenarioTests\WorkflowRuns.ScenarioTests.cs" />
     <Compile Include="ScenarioTests\Workflows.ScenarioTests.cs" />
     <Compile Include="ScenarioTests\WorkflowTriggerHistories.ScenarioTests.cs" />
