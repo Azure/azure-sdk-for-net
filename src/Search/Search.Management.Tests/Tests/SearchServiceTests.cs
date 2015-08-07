@@ -14,10 +14,8 @@
 // 
 
 using System.Linq;
-using System.Net;
 using Microsoft.Azure.Management.Search.Models;
 using Microsoft.Azure.Search.Tests.Utilities;
-using Microsoft.Azure.Test;
 using Xunit;
 
 namespace Microsoft.Azure.Management.Search.Tests
@@ -40,25 +38,25 @@ namespace Microsoft.Azure.Management.Search.Tests
                         Location = Data.Location,
                         Properties = new SearchServiceProperties()
                         {
-                            Sku = new Sku(SkuType.Free),
+                            Sku = new Sku() { Name = SkuType.Free },
                             ReplicaCount = 1,
                             PartitionCount = 1
                         }
                     };
 
-                SearchServiceCreateOrUpdateResponse createServiceResponse =
+                SearchServiceResource service =
                     searchMgmt.Services.CreateOrUpdate(Data.ResourceGroupName, serviceName1, createServiceParameters);
-                Assert.Equal(HttpStatusCode.Created, createServiceResponse.StatusCode);
+                Assert.NotNull(service);
 
-                createServiceResponse =
+                service =
                     searchMgmt.Services.CreateOrUpdate(Data.ResourceGroupName, serviceName2, createServiceParameters);
-                Assert.Equal(HttpStatusCode.Created, createServiceResponse.StatusCode);
+                Assert.NotNull(service);
 
-                SearchServiceListResponse servicesListResponse = searchMgmt.Services.List(Data.ResourceGroupName);
-                Assert.Equal(HttpStatusCode.OK, servicesListResponse.StatusCode);
-                Assert.Equal(2, servicesListResponse.Services.Count);
-                Assert.Contains(serviceName1, servicesListResponse.Services.Select(s => s.Name));
-                Assert.Contains(serviceName2, servicesListResponse.Services.Select(s => s.Name));
+                SearchServiceListResult servicesListResult = searchMgmt.Services.List(Data.ResourceGroupName);
+                Assert.NotNull(servicesListResult);
+                Assert.Equal(2, servicesListResult.Value.Count);
+                Assert.Contains(serviceName1, servicesListResult.Value.Select(s => s.Name));
+                Assert.Contains(serviceName2, servicesListResult.Value.Select(s => s.Name));
             });
         }
     }

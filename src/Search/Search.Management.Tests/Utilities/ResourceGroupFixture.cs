@@ -14,39 +14,33 @@
 // 
 
 using System.Linq;
-using System.Net;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
-using Microsoft.Azure.Test;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Xunit;
 
 namespace Microsoft.Azure.Search.Tests.Utilities
 {
-    public class ResourceGroupFixture
+    public class ResourceGroupFixture : IResourceFixture
     {
         private const string SearchNamespace = "Microsoft.Search";
 
-        public ResourceGroupFixture()
+        public virtual void Initialize(MockContext context)
         {
-            ResourceManagementClient client = 
-                TestBase.GetServiceClient<ResourceManagementClient>(new CSMTestEnvironmentFactory());
+            ResourceManagementClient client = context.GetServiceClient<ResourceManagementClient>();
 
-            // Register subscription
-            AzureOperationResponse registerResponse = client.Providers.Register(SearchNamespace);
-            Assert.Equal(HttpStatusCode.OK, registerResponse.StatusCode);
-
-            // Get a valid location for search services.
-            ProviderGetResult providerResult = client.Providers.Get(SearchNamespace);
-            Assert.Equal(HttpStatusCode.OK, providerResult.StatusCode);
+            // Register subscription and get a valid location for search services.
+            Provider provider = client.Providers.Register(SearchNamespace);
+            Assert.NotNull(provider);
 
             // We only support one resource type.
-            Location = providerResult.Provider.ResourceTypes.First().Locations.First();
+            Location = provider.ResourceTypes.First().Locations.First();
 
             // Create resource group
             ResourceGroupName = TestUtilities.GenerateName();
-            ResourceGroupCreateOrUpdateResult resourceGroupResult =
-                client.ResourceGroups.CreateOrUpdate(ResourceGroupName, new ResourceGroup(Location));
-            Assert.Equal(HttpStatusCode.Created, resourceGroupResult.StatusCode);
+            ResourceGroup resourceGroup =
+                client.ResourceGroups.CreateOrUpdate(ResourceGroupName, new ResourceGroup() { Location = Location });
+            Assert.NotNull(resourceGroup);
         }
 
         public string Location { get; private set; }

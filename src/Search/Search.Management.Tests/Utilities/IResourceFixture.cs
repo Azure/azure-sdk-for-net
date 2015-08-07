@@ -13,23 +13,20 @@
 // limitations under the License. 
 // 
 
-using Microsoft.Azure.Test;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
 namespace Microsoft.Azure.Search.Tests.Utilities
 {
     /// <summary>
-    /// Discovery extensions - used to discover and construct available undo handlers in the current app domain.
+    /// Common interface that enables initialization of test fixtures that need mock service clients.
     /// </summary>
-    [UndoHandlerFactory]
-    public static class UndoContextDiscoveryExtensions
+    public interface IResourceFixture
     {
         /// <summary>
-        /// Create the undo handler for Search Service operations.
+        /// Initializes the test fixture.
         /// </summary>
-        /// <returns>An undo handler for Search Service operations.</returns>
-        public static OperationUndoHandler CreateSearchServiceUndoHandler()
-        {
-            return new SearchServiceUndoHandler();
-        }
+        /// <param name="context">Mock context used by the fixture to obtain service clients that it needs for
+        /// initialization.</param>
+        void Initialize(MockContext context);
     }
 }

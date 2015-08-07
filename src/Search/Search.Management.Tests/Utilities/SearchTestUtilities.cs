@@ -14,7 +14,7 @@
 // 
 
 using System;
-using Microsoft.Azure.Test;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
 namespace Microsoft.Azure.Search.Tests.Utilities
 {
