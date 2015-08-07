@@ -32,8 +32,8 @@
     <file src="..\binaries\portable\Microsoft.Azure.Management.WebSites.dll" target="lib\portable-net403+win8+wpa81" />
     <file src="..\binaries\portable\Microsoft.Azure.Management.WebSites.pdb" target="lib\portable-net403+win8+wpa81" />
     <file src="..\binaries\portable\Microsoft.Azure.Management.WebSites.xml" target="lib\portable-net403+win8+wpa81" />
-    <file src="..\binaries\net40\Microsoft.Azure.Management.WebSites.dll" target="lib\net45" />
-    <file src="..\binaries\net40\Microsoft.Azure.Management.WebSites.pdb" target="lib\net45" />
-    <file src="..\binaries\net40\Microsoft.Azure.Management.WebSites.xml" target="lib\net45" />
+    <file src="..\binaries\net45\Microsoft.Azure.Management.WebSites.dll" target="lib\net45" />
+    <file src="..\binaries\net45\Microsoft.Azure.Management.WebSites.pdb" target="lib\net45" />
+    <file src="..\binaries\net45\Microsoft.Azure.Management.WebSites.xml" target="lib\net45" />
   </files>
 </package>
