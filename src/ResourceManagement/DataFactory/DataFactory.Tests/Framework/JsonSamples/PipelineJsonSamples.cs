@@ -836,6 +836,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
                         type: ""BlobSource"",
                         sourceRetryCount: ""2"",
                         sourceRetryWait: ""00:00:01"",
+                        recursive: true,
                         treatEmptyAsNull: ""False""
                     },
                     sink: 
@@ -850,6 +851,52 @@ namespace DataFactory.Tests.Framework.JsonSamples
                 [ 
                     {
                         name: ""RawBlob""
+                    }
+                ],
+                outputs: 
+                [ 
+                    {
+                        name: ""ProcessedFileSink""
+                    }
+                ],
+                linkedServiceName: ""MyLinkedServiceName""
+            }
+        ]
+    }
+}
+";
+        [JsonSample]
+        public const string CopyFileSystemSourceToFileSystemSink = @"
+{
+    name: ""MyPipelineName"",
+    properties:
+    {
+        description : ""Copy from File to File"",
+        hubName: ""MyHDIHub"",
+        activities:
+        [
+            {
+                type: ""Copy"",
+                name: ""MyActivityName"",
+                typeProperties:
+                {
+                    source: 
+                    {
+                        type: ""FileSystemSource"",
+                        recursive: false
+                    },
+                    sink: 
+                    {
+                        type: ""FileSystemSink"",
+                        writeBatchSize: 1000000,
+                        writeBatchTimeout: ""01:00:00"",
+                        copyBehavior: ""FlattenHierarchy""                                                
+                    }
+                },
+                inputs: 
+                [ 
+                    {
+                        name: ""RawFileSource""
                     }
                 ],
                 outputs: 
