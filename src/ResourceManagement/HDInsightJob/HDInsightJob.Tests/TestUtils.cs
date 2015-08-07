@@ -26,7 +26,7 @@ namespace HDInsightJob.Tests
         public static string ClusterName = "hdisdk-resize1.hdinsight-stable.azure-test.net";
         public static string UserName = "";
         public static string Password = "";
-        public static string StorageAccountName = "giyerwestus1";//".blob.core.windows.net";
+        public static string StorageAccountName = "giyerwestus1";
         public static string StorageAccountKey = "";
         public static string DefaultContainer = "giyertestcsmv2";
 
