@@ -24,7 +24,7 @@
       </group>
     </references>
     <dependencies>
-      <dependency id="Microsoft.Rest.ClientRuntime.Azure" version="[1.0.18-preview,2.0)" />
+      <dependency id="Microsoft.Rest.ClientRuntime.Azure" version="[1.0.20,2.0)" />
     </dependencies>
   </metadata>
   <files>
