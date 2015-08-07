@@ -15,5 +15,25 @@
     <description>Provides job collection and job management capabilities for Microsoft Azure Scheduler.</description>
     <copyright>Copyright © Microsoft Corporation</copyright>
     <tags>Microsoft Azure scheduler management "job collection" "job" REST HTTP client azureofficial windowsazureofficial</tags>
+    <references>
+      <group targetFramework="portable-net403+win8+wpa81">
+        <reference file="Microsoft.Azure.Management.Scheduler.dll" />
+      </group>
+      <group targetFramework="net45">
+        <reference file="Microsoft.Azure.Management.Scheduler.dll" />
+      </group>
+    </references>
+    <dependencies>
+      <dependency id="Microsoft.Rest.ClientRuntime.Azure" version="[1.0.20,2.0)" />
+    </dependencies>
   </metadata>
+  <files>
+    <file src="ResourceManagement\Scheduler\SchedulerManagement\**\*.cs" target="src" />
+    <file src="..\binaries\portable\Microsoft.Azure.Management.Scheduler.dll" target="lib\portable-net403+win8+wpa81" />
+    <file src="..\binaries\portable\Microsoft.Azure.Management.Scheduler.pdb" target="lib\portable-net403+win8+wpa81" />
+    <file src="..\binaries\portable\Microsoft.Azure.Management.Scheduler.xml" target="lib\portable-net403+win8+wpa81" />
+    <file src="..\binaries\net45\Microsoft.Azure.Management.Scheduler.dll" target="lib\net45" />
+    <file src="..\binaries\net45\Microsoft.Azure.Management.Scheduler.pdb" target="lib\net45" />
+    <file src="..\binaries\net45\Microsoft.Azure.Management.Scheduler.xml" target="lib\net45" />
+  </files>
 </package>
