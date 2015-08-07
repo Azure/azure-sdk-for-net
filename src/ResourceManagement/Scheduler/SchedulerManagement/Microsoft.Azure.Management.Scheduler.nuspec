@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata minClientVersion="2.5">
+    <id>Microsoft.Azure.Management.Scheduler</id>
+    <title>Microsoft Azure Scheduler Management Library</title>
+    <releaseNotes>__BASELINE_RELEASE_NOTES__</releaseNotes>
+    <version>$version$</version>
+    <authors>Microsoft</authors>
+    <owners>azure-sdk, Microsoft</owners>
+    <licenseUrl>http://aka.ms/windowsazureapache2</licenseUrl>
+    <projectUrl>https://github.com/Azure/azure-sdk-for-net</projectUrl>
+    <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <summary>Provides job collection and job management capabilities for Microsoft Azure Scheduler.</summary>
+    <description>Provides job collection and job management capabilities for Microsoft Azure Scheduler.</description>
+    <copyright>Copyright © Microsoft Corporation</copyright>
+    <tags>Microsoft Azure scheduler management "job collection" "job" REST HTTP client azureofficial windowsazureofficial</tags>
+  </metadata>
+</package>

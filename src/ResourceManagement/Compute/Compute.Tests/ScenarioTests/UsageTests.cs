@@ -38,7 +38,7 @@ namespace Compute.Tests
     /// </summary>
     public class UsageTests : VMTestBase
     {
-        [Fact(Skip = "TODO: AutoRest")]
+        [Fact]
         public void TestListUsages()
         {
             using (MockContext context = MockContext.Start())
