@@ -24,10 +24,10 @@ namespace HDInsightJob.Tests
     public static class TestUtils
     {
         public static string ClusterName = "hdisdk-resize1.hdinsight-stable.azure-test.net";
-        public static string UserName = "hadoopuser";
-        public static string Password = "Password1!";
+        public static string UserName = "";
+        public static string Password = "";
         public static string StorageAccountName = "giyerwestus1";//".blob.core.windows.net";
-        public static string StorageAccountKey = "O9EQvp3A3AjXq/W27rst1GQfLllhp01qlJMJfSU1hVW2K42gUeiUUn2D8zX2lU3taiXSSfqkZlcPv+nQcYUxYw==";
+        public static string StorageAccountKey = "";
         public static string DefaultContainer = "giyertestcsmv2";
 
         public static HDInsightJobManagementClient GetHDInsightJobManagementClient(string dnsName, BasicAuthenticationCloudCredentials creds)
