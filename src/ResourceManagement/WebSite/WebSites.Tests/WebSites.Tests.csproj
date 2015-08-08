@@ -32,61 +32,61 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="SessionRecords\WebSites.Tests.ScenarioTests.SourceControlsScenarioTests\TestUpdateSourceControlUpdates.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\WebSites.Tests.ScenarioTests.WebHostingPlanScenarioTests\CreateAndDeleteWebHostingPlan.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\WebSites.Tests.ScenarioTests.BackupRestoreScenarioTests\ListBackupsAndScheduledBackupRoundTrip.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\WebSites.Tests.ScenarioTests.WebHostingPlanScenarioTests\CreateAndVerifyListOfWebHostingPlan.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\WebSites.Tests.ScenarioTests.WebHostingPlanScenarioTests\CreateAndVerifyWebHostingPlan.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\WebSites.Tests.ScenarioTests.WebHostingPlanScenarioTests\GetAndSetAdminSiteWebHostingPlan.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\WebSites.Tests.ScenarioTests.WebSiteScenarioTests\CloneSite.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\WebSites.Tests.ScenarioTests.WebSiteScenarioTests\CreateAndDeleteWebsite.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\WebSites.Tests.ScenarioTests.WebSiteScenarioTests\CreateAndVerifyGetOnAWebsite.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\WebSites.Tests.ScenarioTests.WebSiteScenarioTests\CreateAndVerifyListOfWebsites.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\WebSites.Tests.ScenarioTests.WebSiteScenarioTests\GetAndSetSiteLimits.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\WebSites.Tests.ScenarioTests.WebSiteScenarioTests\GetAndSetNonSensitiveSiteConfigs.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\WebSites.Tests.ScenarioTests.WebSiteScenarioTests\GetAndSetSlotSettingsConfigs.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\WebSites.Tests.ScenarioTests.WebSiteScenarioTests\GetSiteMetrics.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\WebSites.Tests.ScenarioTests.WebSiteScenarioTests\GetAndSetSensitiveSiteConfigs.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\WebSites.Tests.ScenarioTests.WebSiteScenarioTests\LinkAndUnlinkSourceControlToWebsiteShouldSucceed.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\WebSites.Tests.ScenarioTests.WebSiteSlotScenarioTests\CreateAndDeleteWebSiteSlot.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\WebSites.Tests.ScenarioTests.WebSiteSlotScenarioTests\CreateAndVerifyGetOnAWebsiteSlot.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\WebSites.Tests.ScenarioTests.WebSiteSlotScenarioTests\CreateAndVerifyListOfSlots.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
