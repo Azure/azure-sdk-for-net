@@ -90,19 +90,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
         [TestCategory("Integration")]
         [TestCategory("CheckIn")]
         [TestCategory("RestAsvClient")]
-        [ExpectedException(typeof(ConfigurationErrorsException))]
-        public async Task ICanPerformA_NegativeValidateAccount_WrongKey_RestAsvClientAbstraction()
-        {
-            var client = ServiceLocator.Instance.Locate<IAsvValidatorClientFactory>().Create();
-            await client.ValidateAccount(IntegrationTestBase.TestCredentials.Environments[0].DefaultStorageAccount.Name,
-                                         IntegrationTestBase.TestCredentials.Environments[0].AdditionalStorageAccounts[0].Key);
-
-        }
-
-        [TestMethod]
-        [TestCategory("Integration")]
-        [TestCategory("CheckIn")]
-        [TestCategory("RestAsvClient")]
         public async Task ICanPerformA_PositiveCreateContainer_WithNonExistantContainer()
         {
             var storageCreds = new WindowsAzureStorageAccountCredentials()

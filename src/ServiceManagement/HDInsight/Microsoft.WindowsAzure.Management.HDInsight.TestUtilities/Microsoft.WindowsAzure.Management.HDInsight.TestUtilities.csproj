@@ -163,7 +163,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="creds\certs\emrcert.cer">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -173,7 +172,13 @@
     <None Include="creds\certs\sdkcli.cer">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="creds\certs\emrcert.cer" />
+    <None Include="creds\certs\invalid.cer" />
+    <None Include="creds\certs\sdkcli.cer" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="creds\creds.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(LibraryFxTarget)' == 'portable' " />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(LibraryFxTarget)' != 'portable' " />

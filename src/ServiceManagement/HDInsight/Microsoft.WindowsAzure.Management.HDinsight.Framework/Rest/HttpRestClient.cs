@@ -192,6 +192,11 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Framework.Rest
                 {
                     using (var resp = await client.SendAsync(requestMessage, cancellationToken))
                     {
+                        if (returnType == typeof(HttpResponseMessage))
+                        {
+                            return (T)(object)resp;
+                        }
+
                         if (returnType != typeof(void))
                         {
                             retVal = (T)await resp.Content.ReadAsAsync(returnType, requestParametersFromMethod.ResponseFormatter.ResponseFormatters);

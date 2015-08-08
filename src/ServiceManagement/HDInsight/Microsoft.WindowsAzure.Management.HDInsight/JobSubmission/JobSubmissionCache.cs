@@ -1,15 +1,15 @@
 ﻿namespace Microsoft.WindowsAzure.Management.HDInsight.JobSubmission
 {
     using System;
+    using System.Collections.Concurrent;
     using System.Collections.Generic;
-    using Microsoft.Hadoop.Client;
-
+    
     /// <summary>
     /// Provides a cache for JobSubmission details needed by the system.
     /// </summary>
     internal class JobSubmissionCache : IJobSubmissionCache
     {
-        private Dictionary<Guid, Dictionary<string, JobSubmissionClusterDetails>> cache = new Dictionary<Guid, Dictionary<string, JobSubmissionClusterDetails>>();
+        private ConcurrentDictionary<Guid, Dictionary<string, JobSubmissionClusterDetails>> cache = new ConcurrentDictionary<Guid, Dictionary<string, JobSubmissionClusterDetails>>();
 
         /// <inheritdoc />
         public JobSubmissionClusterDetails GetCredentails(Guid subscriptionId, string cluster)
@@ -30,7 +30,7 @@
             if (!this.cache.TryGetValue(subscriptionId, out clusterCache))
             {
                 clusterCache = new Dictionary<string, JobSubmissionClusterDetails>();
-                this.cache.Add(subscriptionId, clusterCache);
+                this.cache.TryAdd(subscriptionId, clusterCache);
             }
             clusterCache[cluster] = credential;
         }

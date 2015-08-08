@@ -12,38 +12,49 @@
 // 
 // See the Apache Version 2.0 License for specific language governing
 // permissions and limitations under the License.
-namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.RestClient
+
+using System;
+using System.Security.Cryptography;
+using System.Text;
+
+namespace Microsoft.WindowsAzure.Management.HDInsight.Tests
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Globalization;
-    using System.Linq;
-    using System.Security.Cryptography;
-    using System.Text;
-    using Microsoft.WindowsAzure.Management.HDInsight;
-    using Microsoft.WindowsAzure.Management.HDInsight.Framework.Core.Library;
+    using System.IO;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Microsoft.WindowsAzure.Management.HDInsight.Framework.Core.Library.Json;
+    using Microsoft.WindowsAzure.Management.HDInsight.TestUtilities;
 
-    internal class CloudServiceNameResolver : ICloudServiceNameResolver
+    [TestClass]
+    public class MiscellaneousTests
     {
-        // TODO: REMOVE THIS AND HAVE A LOOKUP ON AZURE LOGIC
-        public string GetCloudServiceName(Guid subscriptionId, string extensionPrefix, string region)
+        [TestMethod]
+        [TestCategory("CheckIn")]
+        [TestCategory("Defect")]
+        public void TestSHA256ManagedVsSHA256CryptoServiceProvider()
         {
-            region.ArgumentNotNullOrEmpty("region");
-            string hashedSubId = string.Empty;
-
-            using (SHA256CryptoServiceProvider sha256 = new SHA256CryptoServiceProvider())
+            Guid subscriptionId;
+            string hashedSubIdCryptoServiceProvider;
+            string hashedSubIdManaged;
+            for (var i = 0; i < 1000; i++)
             {
-                hashedSubId = Base32NoPaddingEncode(sha256.ComputeHash(Encoding.UTF8.GetBytes(subscriptionId.ToString())));
-            }
+                subscriptionId = Guid.NewGuid();
+                using (SHA256CryptoServiceProvider sha256 = new SHA256CryptoServiceProvider())
+                {
+                    hashedSubIdCryptoServiceProvider =
+                        Base32NoPaddingEncode(sha256.ComputeHash(Encoding.UTF8.GetBytes(subscriptionId.ToString())));
+                }
 
-            return string.Format(CultureInfo.InvariantCulture,
-                                 "{0}{1}-{2}",
-                                 extensionPrefix,
-                                 hashedSubId,
-                                 region.Replace(' ', '-'));
+                using (SHA256 sha256 = SHA256.Create())
+                {
+                    hashedSubIdManaged =
+                        Base32NoPaddingEncode(sha256.ComputeHash(Encoding.UTF8.GetBytes(subscriptionId.ToString())));
+                }
+                Assert.IsTrue(String.Compare(hashedSubIdManaged, hashedSubIdCryptoServiceProvider, StringComparison.Ordinal) == 0,
+                    string.Format("hashedSubIdManaged {0} is not same as hashedSubIdCryptoServiceProvider {1}",
+                        hashedSubIdManaged, hashedSubIdCryptoServiceProvider));
+            }
         }
 
-        // TODO: REMOVE THIS AND HAVE A LOOKUP ON AZURE LOGIC
         private static string Base32NoPaddingEncode(byte[] data)
         {
             const string Base32StandardAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
