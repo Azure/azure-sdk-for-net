@@ -1,0 +1,342 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="CannotHaveNullInList" xml:space="preserve">
+    <value>A null '{0}' is not valid.</value>
+  </data>
+  <data name="CannotUseMediaRangeForSupportedMediaType" xml:space="preserve">
+    <value>The '{0}' of '{1}' cannot be used as a supported media type because it is a media range.</value>
+  </data>
+  <data name="CannotUseNullValueType" xml:space="preserve">
+    <value>The '{0}' type cannot accept a null value for the value type '{1}'.</value>
+  </data>
+  <data name="ErrorReadingFormUrlEncodedStream" xml:space="preserve">
+    <value>Error reading HTML form URL-encoded data stream.</value>
+  </data>
+  <data name="FormUrlEncodedParseError" xml:space="preserve">
+    <value>Error parsing HTML form URL-encoded data, byte {0}.</value>
+  </data>
+  <data name="HttpInvalidStatusCode" xml:space="preserve">
+    <value>Invalid HTTP status code: '{0}'. The status code must be between {1} and {2}.</value>
+  </data>
+  <data name="HttpInvalidVersion" xml:space="preserve">
+    <value>Invalid HTTP version: '{0}'. The version must start with the characters '{1}'.</value>
+  </data>
+  <data name="HttpMessageContentAlreadyRead" xml:space="preserve">
+    <value>The '{0}' of the '{1}' has already been read.</value>
+  </data>
+  <data name="HttpMessageContentStreamMustBeSeekable" xml:space="preserve">
+    <value>The '{0}' must be seekable in order to create an '{1}' instance containing an entity body.  </value>
+  </data>
+  <data name="HttpMessageErrorReading" xml:space="preserve">
+    <value>Error reading HTTP message.</value>
+  </data>
+  <data name="HttpMessageInvalidMediaType" xml:space="preserve">
+    <value>Invalid '{0}' instance provided. It does not have a content type header with a value of '{1}'.</value>
+  </data>
+  <data name="HttpMessageParserEmptyUri" xml:space="preserve">
+    <value>HTTP Request URI cannot be an empty string.</value>
+  </data>
+  <data name="HttpMessageParserError" xml:space="preserve">
+    <value>Error parsing HTTP message header byte {0} of message {1}.</value>
+  </data>
+  <data name="HttpMessageParserInvalidHostCount" xml:space="preserve">
+    <value>An invalid number of '{0}' header fields were present in the HTTP Request. It must contain exactly one '{0}' header field but found {1}.</value>
+  </data>
+  <data name="HttpMessageParserInvalidUriScheme" xml:space="preserve">
+    <value>Invalid URI scheme: '{0}'. The URI scheme must be a valid '{1}' scheme.</value>
+  </data>
+  <data name="MimeMultipartParserBadBoundary" xml:space="preserve">
+    <value>MIME multipart boundary cannot end with an empty space.</value>
+  </data>
+  <data name="MultipartFormDataStreamProviderNoContentDisposition" xml:space="preserve">
+    <value>Did not find required '{0}' header field in MIME multipart body part.</value>
+  </data>
+  <data name="MultipartStreamProviderInvalidLocalFileName" xml:space="preserve">
+    <value>Could not determine a valid local file name for the multipart body part.</value>
+  </data>
+  <data name="NonNullUriRequiredForMediaTypeMapping" xml:space="preserve">
+    <value>A non-null request URI must be provided to determine if a '{0}' matches a given request or response message.</value>
+  </data>
+  <data name="NoReadSerializerAvailable" xml:space="preserve">
+    <value>No MediaTypeFormatter is available to read an object of type '{0}' from content with media type '{1}'.</value>
+  </data>
+  <data name="ObjectAndTypeDisagree" xml:space="preserve">
+    <value>An object of type '{0}' cannot be used with a type parameter of '{1}'.</value>
+  </data>
+  <data name="ReadAsMimeMultipartArgumentNoBoundary" xml:space="preserve">
+    <value>Invalid '{0}' instance provided. It does not have a '{1}' content-type header with a '{2}' parameter.</value>
+  </data>
+  <data name="ReadAsMimeMultipartArgumentNoContentType" xml:space="preserve">
+    <value>Invalid '{0}' instance provided. It does not have a content-type header value. '{0}' instances must have a content-type header starting with '{1}'.</value>
+  </data>
+  <data name="ReadAsMimeMultipartArgumentNoMultipart" xml:space="preserve">
+    <value>Invalid '{0}' instance provided. It does not have a content type header starting with '{1}'.</value>
+  </data>
+  <data name="ReadAsMimeMultipartErrorReading" xml:space="preserve">
+    <value>Error reading MIME multipart body part.</value>
+  </data>
+  <data name="ReadAsMimeMultipartErrorWriting" xml:space="preserve">
+    <value>Error writing MIME multipart body part to output stream.</value>
+  </data>
+  <data name="ReadAsMimeMultipartHeaderParseError" xml:space="preserve">
+    <value>Error parsing MIME multipart body part header byte {0} of data segment {1}.</value>
+  </data>
+  <data name="ReadAsMimeMultipartParseError" xml:space="preserve">
+    <value>Error parsing MIME multipart message byte {0} of data segment {1}.</value>
+  </data>
+  <data name="ReadAsMimeMultipartStreamProviderException" xml:space="preserve">
+    <value>The stream provider of type '{0}' threw an exception.</value>
+  </data>
+  <data name="ReadAsMimeMultipartStreamProviderNull" xml:space="preserve">
+    <value>The stream provider of type '{0}' returned null. It must return a writable '{1}' instance.</value>
+  </data>
+  <data name="ReadAsMimeMultipartStreamProviderReadOnly" xml:space="preserve">
+    <value>The stream provider of type '{0}' returned a read-only stream. It must return a writable '{1}' instance.</value>
+  </data>
+  <data name="ReadAsMimeMultipartUnexpectedTermination" xml:space="preserve">
+    <value>Unexpected end of MIME multipart stream. MIME multipart message is not complete.</value>
+  </data>
+  <data name="SerializerCannotSerializeType" xml:space="preserve">
+    <value>The '{0}' serializer cannot serialize the type '{1}'.</value>
+  </data>
+  <data name="UnsupportedIndent" xml:space="preserve">
+    <value>Indentation is not supported by '{0}'.</value>
+  </data>
+  <data name="MediaTypeFormatterCannotRead" xml:space="preserve">
+    <value>The media type formatter of type '{0}' does not support reading because it does not implement the ReadFromStreamAsync method.</value>
+  </data>
+  <data name="MediaTypeFormatterCannotWrite" xml:space="preserve">
+    <value>The media type formatter of type '{0}' does not support writing because it does not implement the WriteToStreamAsync method.</value>
+  </data>
+  <data name="MediaTypeFormatterCannotReadSync" xml:space="preserve">
+    <value>The media type formatter of type '{0}' does not support reading because it does not implement the ReadFromStream method.</value>
+  </data>
+  <data name="MediaTypeFormatterCannotWriteSync" xml:space="preserve">
+    <value>The media type formatter of type '{0}' does not support writing because it does not implement the WriteToStream method.</value>
+  </data>
+  <data name="ObjectContent_FormatterCannotWriteType" xml:space="preserve">
+    <value>The configured formatter '{0}' cannot write an object of type '{1}'.</value>
+  </data>
+  <data name="FormUrlEncodedMismatchingTypes" xml:space="preserve">
+    <value>Mismatched types at node '{0}'.</value>
+  </data>
+  <data name="InvalidArrayInsert" xml:space="preserve">
+    <value>Invalid array at node '{0}'.</value>
+  </data>
+  <data name="JQuery13CompatModeNotSupportNestedJson" xml:space="preserve">
+    <value>Traditional style array without '[]' is not supported with nested object at location {0}.</value>
+  </data>
+  <data name="MaxDepthExceeded" xml:space="preserve">
+    <value>The maximum read depth ({0}) has been exceeded because the form url-encoded data being read has more levels of nesting than is allowed.</value>
+  </data>
+  <data name="NestedBracketNotValid" xml:space="preserve">
+    <value>Nested bracket is not valid for '{0}' data at position {1}.</value>
+  </data>
+  <data name="QueryStringNameShouldNotNull" xml:space="preserve">
+    <value>Query string name cannot be null.</value>
+  </data>
+  <data name="UnMatchedBracketNotValid" xml:space="preserve">
+    <value>There is an unmatched opened bracket for the '{0}' at position {1}.</value>
+  </data>
+  <data name="MediaTypeFormatterNoEncoding" xml:space="preserve">
+    <value>No encoding found for media type formatter '{0}'. There must be at least one supported encoding registered in order for the media type formatter to read or write content.</value>
+  </data>
+  <data name="CookieInvalidName" xml:space="preserve">
+    <value>The specified value is not a valid cookie name.</value>
+  </data>
+  <data name="CookieNull" xml:space="preserve">
+    <value>Cookie cannot be null.</value>
+  </data>
+  <data name="MaxHttpCollectionKeyLimitReached" xml:space="preserve">
+    <value>The number of keys in a NameValueCollection has exceeded the limit of '{0}'. You can adjust it by modifying the MaxHttpCollectionKeys property on the '{1}' class.</value>
+  </data>
+  <data name="AsyncResult_CallbackThrewException" xml:space="preserve">
+    <value>Async Callback threw an exception.</value>
+  </data>
+  <data name="AsyncResult_MultipleCompletes" xml:space="preserve">
+    <value>The IAsyncResult implementation '{0}' tried to complete a single operation multiple times. This could be caused by an incorrect application IAsyncResult implementation or other extensibility code, such as an IAsyncResult that returns incorrect CompletedSynchronously values or invokes the AsyncCallback multiple times.</value>
+  </data>
+  <data name="AsyncResult_MultipleEnds" xml:space="preserve">
+    <value>End cannot be called twice on an AsyncResult.</value>
+  </data>
+  <data name="AsyncResult_ResultMismatch" xml:space="preserve">
+    <value>An incorrect IAsyncResult was provided to an 'End' method. The IAsyncResult object passed to 'End' must be the one returned from the matching 'Begin' or passed to the callback provided to 'Begin'.</value>
+  </data>
+  <data name="DelegatingHandlerArrayContainsNullItem" xml:space="preserve">
+    <value>The '{0}' list is invalid because it contains one or more null items.</value>
+  </data>
+  <data name="DelegatingHandlerArrayHasNonNullInnerHandler" xml:space="preserve">
+    <value>The '{0}' list is invalid because the property '{1}' of '{2}' is not null.</value>
+  </data>
+  <data name="ReadAsHttpMessageUnexpectedTermination" xml:space="preserve">
+    <value>Unexpected end of HTTP message stream. HTTP message is not complete.</value>
+  </data>
+  <data name="ByteRangeStreamContentNotBytesRange" xml:space="preserve">
+    <value>The range unit '{0}' is not valid. The range must have a unit of '{1}'.</value>
+  </data>
+  <data name="ByteRangeStreamInvalidFrom" xml:space="preserve">
+    <value>The 'From' value of the range must be less than or equal to {0}.</value>
+  </data>
+  <data name="ByteRangeStreamNoneOverlap" xml:space="preserve">
+    <value>None of the requested ranges ({0}) overlap with the current extent of the selected resource.</value>
+  </data>
+  <data name="ByteRangeStreamNoOverlap" xml:space="preserve">
+    <value>The requested range ({0}) does not overlap with the current extent of the selected resource.</value>
+  </data>
+  <data name="ByteRangeStreamNotSeekable" xml:space="preserve">
+    <value>The stream over which '{0}' provides a range view must be seekable.</value>
+  </data>
+  <data name="ByteRangeStreamReadOnly" xml:space="preserve">
+    <value>This is a read-only stream.</value>
+  </data>
+  <data name="ByteRangeStreamContentNoRanges" xml:space="preserve">
+    <value>Found zero byte ranges. There must be at least one byte range provided.</value>
+  </data>
+  <data name="ByteRangeStreamEmpty" xml:space="preserve">
+    <value>The stream over which '{0}' provides a range view must have a length greater than or equal to 1.</value>
+  </data>
+  <data name="XmlMediaTypeFormatter_InvalidSerializerType" xml:space="preserve">
+    <value>The object of type '{0}' returned by {1} must be an instance of either XmlObjectSerializer or XmlSerializer.</value>
+  </data>
+  <data name="XmlMediaTypeFormatter_NullReturnedSerializer" xml:space="preserve">
+    <value>The object returned by {0} must not be a null value.</value>
+  </data>
+  <data name="JsonSerializerFactoryReturnedNull" xml:space="preserve">
+    <value>The '{0}' method returned null. It must return a JSON serializer instance.</value>
+  </data>
+  <data name="JsonSerializerFactoryThrew" xml:space="preserve">
+    <value>The '{0}' method threw an exception when attempting to create a JSON serializer.</value>
+  </data>
+  <data name="MediaTypeFormatter_JsonReaderFactoryReturnedNull" xml:space="preserve">
+    <value>The '{0}' method returned null. It must return a JSON reader instance.</value>
+  </data>
+  <data name="MediaTypeFormatter_JsonWriterFactoryReturnedNull" xml:space="preserve">
+    <value>The '{0}' method returned null. It must return a JSON writer instance.</value>
+  </data>
+  <data name="MediaTypeFormatter_BsonParseError_MissingData" xml:space="preserve">
+    <value>Error parsing BSON data; unable to read content as a {0}.</value>
+  </data>
+  <data name="MediaTypeFormatter_BsonParseError_UnexpectedData" xml:space="preserve">
+    <value>Error parsing BSON data; unexpected dictionary content: {0} entries, first key '{1}'.</value>
+  </data>
+  <data name="RemoteStreamInfoCannotBeNull" xml:space="preserve">
+    <value>The '{0}' method in '{1}' returned null. It must return a RemoteStreamResult instance containing a writable stream and a valid URL.</value>
+  </data>
+</root>

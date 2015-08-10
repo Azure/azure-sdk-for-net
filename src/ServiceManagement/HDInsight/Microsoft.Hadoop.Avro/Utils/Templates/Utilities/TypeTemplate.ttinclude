@@ -1,0 +1,162 @@
+﻿<#+    internal void GenerateType(TypeSchema typeSchema, bool isDeclaration, bool inAttribute, bool startRhs)
+    {
+        if (typeSchema is PrimitiveTypeSchema)
+        {
+            #><#= Utilities.GetAlias(typeSchema.RuntimeType) #><#+
+            return;
+        }
+        var namedSchema = typeSchema as NamedSchema;
+        if (namedSchema != null)
+        {
+            if(typeSchema is FixedSchema)
+            {
+                #>byte[]<#+
+            }
+            else
+            {
+                #><#= Utilities.Validate(string.Concat(Utilities.GetNamespace(this, namedSchema.Namespace), ".", (namedSchema.Name))) #><#+
+            }
+            return;
+        }
+        var mapSchema = typeSchema as MapSchema;
+        if (mapSchema != null)
+        {
+            if(!inAttribute && isDeclaration && !startRhs)
+            {
+                #>I<#+
+            }
+            #>Dictionary<string, <#+ GenerateType(mapSchema.ValueSchema, isDeclaration, inAttribute, false); #>><#+
+            return;
+        }
+        var arraySchema = typeSchema as ArraySchema;
+        if (arraySchema != null)
+        {
+            if(!inAttribute && isDeclaration && !startRhs)
+            {
+                #>I<#+
+            }
+            #>List<<#+ GenerateType(arraySchema.ItemSchema, isDeclaration, inAttribute, false); #>><#+
+            return;
+        }
+        var unionSchema = typeSchema as UnionSchema;
+        if (unionSchema.Schemas.Count == 2 && unionSchema.Schemas[0] is NullSchema && unionSchema.Schemas[1] is PrimitiveTypeSchema)
+        {
+            if(unionSchema.Schemas[1] is StringSchema || unionSchema.Schemas[1] is BytesSchema)
+            {
+                #><#= Utilities.GetAlias(unionSchema.Schemas[1].RuntimeType) #><#+
+            }
+            else
+            {
+                #>Nullable<<#+ GenerateType((dynamic)unionSchema.Schemas[1], isDeclaration, inAttribute, false); #>><#+
+            }
+        }
+        else if (unionSchema.Schemas.Count == 2 && unionSchema.Schemas[1] is NullSchema && unionSchema.Schemas[0] is PrimitiveTypeSchema)
+        {
+            if(unionSchema.Schemas[0] is StringSchema || unionSchema.Schemas[0] is BytesSchema)
+            {
+                #><#= Utilities.GetAlias(unionSchema.Schemas[0].RuntimeType) #><#+
+            }
+            else
+            {
+                #>Nullable<<#+ GenerateType((dynamic)unionSchema.Schemas[0], isDeclaration, inAttribute, false); #>><#+
+            }
+        }
+        else
+        {
+            #>object<#+;
+        }
+    }
+
+    internal void GenerateTypeAttributes(TypeSchema typeSchema)
+    {
+        var fixedSchema = typeSchema as FixedSchema;
+        if(fixedSchema != null)
+        {
+                #>
+
+        [AvroFixed(<#= fixedSchema.Size #>, "<#= fixedSchema.Name #>", "<#= fixedSchema.Namespace #>")]<#+
+        }
+
+        var unionSchema = typeSchema as UnionSchema;
+        if(unionSchema == null)
+        {
+            return;
+        }
+        if (unionSchema.Schemas.Count == 2 && ((unionSchema.Schemas[0] is NullSchema && unionSchema.Schemas[1] is PrimitiveTypeSchema)
+            || (unionSchema.Schemas[1] is NullSchema && unionSchema.Schemas[0] is PrimitiveTypeSchema)))
+        {
+            return;
+        }
+        else
+        {
+            if(unionSchema.Schemas.Any())
+            {
+                #>
+
+        [AvroUnion(<#+
+                for (int i = 0; i < unionSchema.Schemas.Count; i++)
+                {
+                    if(unionSchema.Schemas[i] is NullSchema)
+                    {
+                    #>typeof(AvroNull)<#+
+                    }
+                    else
+                    {
+                    #>typeof(<#+ GenerateType(unionSchema.Schemas[i], false, true, false); #>)<#+
+                    }
+                    if(i < unionSchema.Schemas.Count - 1)
+                    {
+                        #>, <#+
+                    }
+                }
+                #>)]<#+
+            }
+        }
+    }
+
+    internal void GenerateKnownTypesAttributes(IList<RecordField> fields)
+    {
+        var schemata = new List<TypeSchema>();
+        foreach(var field in fields)
+        {
+            GetKnownTypeSchemata(field.TypeSchema, ref schemata);
+        }
+
+        foreach (var schema in schemata)
+        {
+            #>
+
+    [KnownType(typeof(<#+
+                GenerateType(schema, true, false, true);
+                #>))]<#+
+        }
+    }
+
+    private void GetKnownTypeSchemata(TypeSchema schema, ref List<TypeSchema> result)
+    {
+        while (true)
+        {
+            if (result.Any(s => s.ToString() == schema.ToString()))
+            {
+                return;
+            }
+
+            var mapSchema = schema as MapSchema;
+            if (mapSchema != null)
+            {
+                result.Add(schema);
+                schema = mapSchema.ValueSchema;
+                continue;
+            }
+
+            var arraySchema = schema as ArraySchema;
+            if (arraySchema != null)
+            {
+                result.Add(schema);
+                schema = arraySchema.ItemSchema;
+                continue;
+            }
+            break;
+        }
+    }
+#>

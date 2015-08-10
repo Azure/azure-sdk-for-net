@@ -1,0 +1,249 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{44E3641F-1854-4863-B29A-26A0AA0E2588}</ProjectGuid>
+    <RootNamespace>Microsoft.WindowsAzure.Management.HDInsight.Tests</RootNamespace>
+    <AssemblyName>Microsoft.WindowsAzure.Management.HDInsight.Tests</AssemblyName>
+  </PropertyGroup>
+  <Import Project="..\..\..\..\tools\Library.Settings.targets" />
+  <Import Project="$(LibraryToolsFolder)\Test.Dependencies.target" />
+  <ItemGroup>
+    <Compile Include="..\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="ApplianceTests\HadoopApplianceStorageClientTests.cs" />
+    <Compile Include="ClientAbstractionTests\AsvValidatorClientTests.cs" />
+    <Compile Include="ClientAbstractionTests\HttpRetryTests.cs" />
+    <Compile Include="ClientAbstractionTests\JobsPayloadConverterTests.cs" />
+    <Compile Include="ClientAbstractionTests\RdfeServiceRestClientTests.cs" />
+    <Compile Include="ClientAbstractionTests\StorageAbstractionTests.cs" />
+    <Compile Include="ClientAbstractionTests\StringLogWriter.cs" />
+    <Compile Include="ClientAbstractionTests\VersionFinderClientTests.cs" />
+    <None Include="ClientAbstractionTests\JobPocoClientTests.cs" />
+    <Compile Include="ClientAbstractionTests\LocationFinderClientTests.cs" />
+    <Compile Include="ClientAbstractionTests\SubscriptionRegistrationTests.cs" />
+    <Compile Include="ClientAbstractionTests\HttpClientTests.cs" />
+    <Compile Include="ClientAbstractionTests\PayloadTests.cs" />
+    <Compile Include="ClientAbstractionTests\PocoClientTests.cs" />
+    <Compile Include="ClientAbstractionTests\RestClientTests.cs" />
+    <Compile Include="BasicTests.cs" />
+    <Compile Include="ClientAbstractionTests\SyncTests.cs" />
+    <Compile Include="ClustersTests\ClustersPocoClientTests.cs" />
+    <Compile Include="ClustersTests\ClustersRestClientTests.cs" />
+    <Compile Include="ClustersTests\ClustersTestsBase.cs" /> 
+    <Compile Include="HadoopClientTests\RdpTests.cs" />
+    <Compile Include="ConnectionCredentials\AlternativeEnvironmentIHDInsightSubscriptionCertificateCredentialsFactory.cs" />
+    <Compile Include="Configuration\PayloadConverterTests.cs" />
+    <Compile Include="ConnectionCredentials\AccessTokenTests.cs" />
+    <Compile Include="DynamicXml\DynaXmlNamespaceTableTests.cs" />
+    <Compile Include="HadoopClientTests\RemoteHadoopPocoClient.cs" />
+    <Compile Include="Json\JsonParserTests.cs" />
+    <Compile Include="HadoopClientTests\TimothyTests.cs" />
+    <Compile Include="MiscellaneousTests\MiscellaneousTests.cs" />
+    <Compile Include="ProcDetails\SerializerTest.cs" />
+    <Compile Include="HadoopClientTests\ApiSecurityPocoClientTests.cs" />
+    <Compile Include="HadoopClientTests\PayloadConverterTests.cs" />
+    <Compile Include="HadoopClientTests\RemoteHadoopRestLayer.cs" />
+    <Compile Include="PublicCertificateTests\PublicCertificateTests.cs" />
+    <Compile Include="SchemaVersionTests.cs" />
+    <Compile Include="ServiceLocation\EchoServiceForTest.cs" />
+    <Compile Include="ServiceLocation\IEchoServiceForTest.cs" />
+    <Compile Include="ServiceLocation\ServiceLocationForTestRegistrar.cs" />
+    <Compile Include="ServiceLocation\ServiceLocatorTests.cs" />
+    <Compile Include="StepDefinitions\DynaXmlSteps.cs" />
+    <Compile Include="StepDefinitions\JsonParserSteps.cs" />
+    <Compile Include="StepDefinitions\PayloadConverterSteps.cs" />
+    <Compile Include="StepDefinitions\SpecFlowSetup.cs" />
+    <Compile Include="StepDefinitions\StorageSimulatorSteps.cs" />
+    <Compile Include="StepDefinitions\UriResolverSteps.cs" />
+    <Compile Include="DynamicXml\DynaXmlBuilderTest.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scenario\ClientScenarioTests.cs" />
+    <Compile Include="Scenario\CmdletScenarioTests.cs" />
+    <Compile Include="NoDuplicateRegistrars.cs" />
+
+    <Compile Include="Gherkin\UriResolver.feature.cs">
+      <DependentUpon>UriResolver.feature</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Gherkin\DynaXml\DynaXmlNamespace.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DynaXmlNamespace.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Gherkin\JsonParser\ParseJsonNumbers.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ParseJsonNumbers.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Gherkin\JsonParser\ParseJsonOtherPrimitives.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ParseJsonOtherPrimitives.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Gherkin\PayloadConverter\JobPayloadConverter_JobCreation.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>JobPayloadConverter_JobCreation.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Gherkin\PayloadConverter\JobPayloadConverter_JobDetails.feature.cs">
+      <DependentUpon>JobPayloadConverter_JobDetails.feature</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Gherkin\PayloadConverter\JobPayloadConverter_JobList.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>JobPayloadConverter_JobList.feature</DependentUpon>
+    </Compile>
+    <Compile Include="HadoopApplicationHistoryTests\HadoopApplicationHistoryTests.cs" />
+    <Compile Include="HadoopClientTests\DuplicateDnsNameTests.cs" />
+    <Compile Include="HadoopClientTests\HDInsightPocoClient.cs" />
+    <Compile Include="HadoopClientTests\HadoopClientLayerTests.cs" />
+    <Compile Include="Gherkin\StorageAccountAbstraction.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StorageAccountAbstraction.feature</DependentUpon>
+    </Compile>
+    <None Include="Gherkin\UriResolver.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>UriResolver.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Gherkin\DynaXml\DynaXmlNamespace.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>DynaXmlNamespace.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Gherkin\JsonParser\ParseJsonNumbers.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>ParseJsonNumbers.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Gherkin\JsonParser\ParseJsonOtherPrimitives.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>ParseJsonOtherPrimitives.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Gherkin\PayloadConverter\JobPayloadConverter_JobCreation.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>JobPayloadConverter_JobCreation.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Gherkin\PayloadConverter\JobPayloadConverter_JobDetails.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>JobPayloadConverter_JobDetails.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Gherkin\PayloadConverter\JobPayloadConverter_JobList.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>JobPayloadConverter_JobList.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Gherkin\StorageAccountAbstraction.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>StorageAccountAbstraction.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Scenario\ScenarioTests.cs" />
+    <Compile Include="StepDefinitions\PowerShellCmdletSteps.cs" />
+    <Compile Include="TestPocoClientFactoryFlowThrough.cs" />
+    <Compile Include="TestPocoClientFlowThrough.cs" />
+    <Compile Include="TestSetupCleanup.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Microsoft.Hadoop.Client\Microsoft.Hadoop.Client.csproj">
+      <Project>{7C2E800C-09E5-484A-BB08-6C17578E7E45}</Project>
+      <Name>Microsoft.Hadoop.Client</Name>
+      <Properties>SkipValidatePackageReferences=true</Properties>
+    </ProjectReference>
+    <ProjectReference Include="..\Microsoft.HadoopAppliance.Client\Microsoft.HadoopAppliance.Client.csproj">
+      <Project>{ebeda7e0-2c02-497c-ba2e-47030bcf2f2f}</Project>
+      <Name>Microsoft.HadoopAppliance.Client</Name>
+      <Properties>SkipValidatePackageReferences=true</Properties>
+    </ProjectReference>
+    <ProjectReference Include="..\Microsoft.HDInsight.Net.Http.Formatting\Microsoft.HDInsight.Net.Http.Formatting.csproj">
+      <Project>{148bd053-7fdc-4e8c-bcc8-016ea61fcaaa}</Project>
+      <Name>Microsoft.HDInsight.Net.Http.Formatting</Name>
+      <Properties>SkipValidatePackageReferences=true</Properties>
+    </ProjectReference>
+    <ProjectReference Include="..\Microsoft.WindowsAzure.Management.Configuration\Microsoft.WindowsAzure.Management.Configuration.csproj">
+      <Project>{65a36203-ff6a-46a7-ac05-300dee22589d}</Project>
+      <Name>Microsoft.WindowsAzure.Management.Configuration</Name>
+      <Properties>SkipValidatePackageReferences=true</Properties>
+    </ProjectReference>
+    <ProjectReference Include="..\Microsoft.WindowsAzure.Management.HDInsight.Contracts\Microsoft.WindowsAzure.Management.HDInsight.Contracts.csproj">
+      <Project>{d85f1e93-c3dd-4319-9247-c64b5b13b877}</Project>
+      <Name>Microsoft.WindowsAzure.Management.HDInsight.Contracts</Name>
+      <Properties>SkipValidatePackageReferences=true</Properties>
+    </ProjectReference>
+    <ProjectReference Include="..\Microsoft.WindowsAzure.Management.HDInsight.Framework.Core\Microsoft.WindowsAzure.Management.HDInsight.Framework.Core.csproj">
+      <Project>{55787775-8b25-436f-b9b9-c2b60ef80b20}</Project>
+      <Name>Microsoft.WindowsAzure.Management.HDInsight.Framework.Core</Name>
+      <Properties>SkipValidatePackageReferences=true</Properties>
+    </ProjectReference>
+    <ProjectReference Include="..\Microsoft.WindowsAzure.Management.HDinsight.Framework\Microsoft.WindowsAzure.Management.HDInsight.Framework.csproj">
+      <Project>{db09f70b-fd28-4cc8-86b3-883d71ca9a02}</Project>
+      <Name>Microsoft.WindowsAzure.Management.HDInsight.Framework</Name>
+      <Properties>SkipValidatePackageReferences=true</Properties>
+    </ProjectReference>
+    <ProjectReference Include="..\Microsoft.WindowsAzure.Management.HDInsight.Framework.Internal\Microsoft.WindowsAzure.Management.HDInsight.Framework.Internal.csproj">
+      <Project>{e8003299-b766-44ec-a870-6080682762ee}</Project>
+      <Name>Microsoft.WindowsAzure.Management.HDInsight.Framework.Internal</Name>
+      <Properties>SkipValidatePackageReferences=true</Properties>
+    </ProjectReference>
+    <ProjectReference Include="..\Microsoft.WindowsAzure.Management.HDInsight.TestUtilities\Microsoft.WindowsAzure.Management.HDInsight.TestUtilities.csproj">
+      <Project>{7DD88C8B-37EA-4353-8ED7-6971118D5FC3}</Project>
+      <Name>Microsoft.WindowsAzure.Management.HDInsight.TestUtilities</Name>
+      <Properties>SkipValidatePackageReferences=true</Properties>
+    </ProjectReference>
+    <ProjectReference Include="..\Microsoft.WindowsAzure.Management.HDInsight\Microsoft.WindowsAzure.Management.HDInsight.csproj">
+      <Project>{cf2838ec-af11-477b-a7e6-f59a70a0e67f}</Project>
+      <Name>Microsoft.WindowsAzure.Management.HDInsight</Name>
+      <Properties>SkipValidatePackageReferences=true</Properties>
+    </ProjectReference>
+    <ProjectReference Include="..\procdetails\procdetails.csproj">
+      <Project>{fa6ec96e-2a3c-40ed-877b-e35d0f9b765e}</Project>
+      <Name>procdetails</Name>
+      <Properties>SkipValidatePackageReferences=true</Properties>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Json\1599940_repro.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Owin">
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Owin.2.0.2\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.HttpListener">
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Owin.Host.HttpListener.2.0.2\lib\net45\Microsoft.Owin.Host.HttpListener.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Hosting">
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Owin.Hosting.2.0.2\lib\net45\Microsoft.Owin.Hosting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
+    <Reference Include="Moq">
+      <HintPath>$(LibraryNugetPackageFolder)\Moq.4.0.10827\lib\NET40\Moq.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin">
+      <HintPath>$(LibraryNugetPackageFolder)\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Management.Automation, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.AspNet.WebApi.Client.5.2.2\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.AspNet.WebApi.Core.5.2.2\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.Owin">
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.AspNet.WebApi.Owin.5.2.2\lib\net45\System.Web.Http.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="TechTalk.SpecFlow">
+      <HintPath>$(LibraryNugetPackageFolder)\SpecFlow.1.9.0\lib\net35\TechTalk.SpecFlow.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+</Project>

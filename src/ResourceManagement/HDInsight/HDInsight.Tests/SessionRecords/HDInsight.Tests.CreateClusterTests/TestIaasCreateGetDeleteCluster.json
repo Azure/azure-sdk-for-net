@@ -1,0 +1,2007 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourcegroups/hdi4370?api-version=2014-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzMxMmMxMzItZmM0MC00OTNmLTljOTctODJkODAyNTZhMzEzL3Jlc291cmNlZ3JvdXBzL2hkaTQzNzA/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1wcmV2aWV3",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"West US\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "29"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/hdi4370\",\r\n  \"name\": \"hdi4370\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "167"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1091"
+        ],
+        "x-ms-request-id": [
+          "517d9eba-7b16-4b89-9cda-cb40e1e6423d"
+        ],
+        "x-ms-correlation-request-id": [
+          "517d9eba-7b16-4b89-9cda-cb40e1e6423d"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150527T040335Z:517d9eba-7b16-4b89-9cda-cb40e1e6423d"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 27 May 2015 04:03:35 GMT"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/hdi4370/providers/Microsoft.HDInsight/clusters/hdisdk-iaascluster?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzMxMmMxMzItZmM0MC00OTNmLTljOTctODJkODAyNTZhMzEzL3Jlc291cmNlR3JvdXBzL2hkaTQzNzAvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWlhYXNjbHVzdGVyP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"West US\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.2\",\r\n    \"osType\": \"Linux\",\r\n    \"clusterDefinition\": {\r\n      \"kind\": \"Hadoop\",\r\n      \"configurations\": {\r\n        \"core-site\": {\r\n          \"fs.defaultFS\": \"wasb://giyertestcsmv2@giyerwestus1.blob.core.windows.net\",\r\n          \"fs.azure.account.key.giyerwestus1.blob.core.windows.net\": \"O9EQvp3A3AjXq/W27rst1GQfLllhp01qlJMJfSU1hVW2K42gUeiUUn2D8zX2lU3taiXSSfqkZlcPv+nQcYUxYw==\"\r\n        },\r\n        \"gateway\": {\r\n          \"restAuthCredential.isEnabled\": \"true\",\r\n          \"restAuthCredential.username\": \"hadoopuser\",\r\n          \"restAuthCredential.password\": \"Password1!\"\r\n        }\r\n      }\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"headnode\",\r\n          \"minInstanceCount\": 1,\r\n          \"targetInstanceCount\": 1,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"hadoop\",\r\n              \"sshProfile\": {\r\n                \"publicKeys\": [\r\n                  {\r\n                    \"certificateData\": \"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDQdxir92ao4neLuSJH9eOqYF+8GaOhhfmqGKBd4dEuqyrd6ppXmihWZHY/HzMSfkRqQuYJsaJFRFo3P0ExasQoiBbnNOfsxOVrtjoW9NxG5JXeQrFatuYkhLnpLwjL+hNtZ9UWJPMJE2+xSO6Nb7QaOgY1ADfvK2eISAbbuMm1PM/zCQVg3Io2bSlD+DW4rLZZ389VHfzUSd6HNz4oS7czWLpOI/v0faMFMWTcimcN73vJSB5etTf7/JPqwNLq49ZCj0FddjjfeFeCK7z1eYQyfdJ/+wLInSsddfcJ6rXlQourQZfI0BvIn4x+XYpqMNtK6UnQylzwZ5NCu6oxx/c9\"\r\n                  }\r\n                ]\r\n              }\r\n            }\r\n          },\r\n          \"virtualNetworkProfile\": {\r\n            \"id\": \"vnetid\",\r\n            \"subnet\": \"subnetname\"\r\n          },\r\n          \"scriptActions\": []\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"minInstanceCount\": 1,\r\n          \"targetInstanceCount\": 1,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"linuxOperatingSystemProfile\": {\r\n              \"username\": \"hadoop\",\r\n              \"sshProfile\": {\r\n                \"publicKeys\": [\r\n                  {\r\n                    \"certificateData\": \"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDQdxir92ao4neLuSJH9eOqYF+8GaOhhfmqGKBd4dEuqyrd6ppXmihWZHY/HzMSfkRqQuYJsaJFRFo3P0ExasQoiBbnNOfsxOVrtjoW9NxG5JXeQrFatuYkhLnpLwjL+hNtZ9UWJPMJE2+xSO6Nb7QaOgY1ADfvK2eISAbbuMm1PM/zCQVg3Io2bSlD+DW4rLZZ389VHfzUSd6HNz4oS7czWLpOI/v0faMFMWTcimcN73vJSB5etTf7/JPqwNLq49ZCj0FddjjfeFeCK7z1eYQyfdJ/+wLInSsddfcJ6rXlQourQZfI0BvIn4x+XYpqMNtK6UnQylzwZ5NCu6oxx/c9\"\r\n                  }\r\n                ]\r\n              }\r\n            }\r\n          },\r\n          \"scriptActions\": []\r\n        }\r\n      ]\r\n    }\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Content-Length": [
+          "2797"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/hdi4370/providers/Microsoft.HDInsight/clusters/hdisdk-iaascluster\",\r\n  \"name\": \"hdisdk-iaascluster\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"West US\",\r\n  \"etag\": \"5c80beb8-0547-4595-9aff-6a7d3b3f0d32\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.2.1000.0.4790444\",\r\n    \"osType\": \"Linux\",\r\n    \"clusterDefinition\": {\r\n      \"blueprint\": \"https://blueprints.azurehdinsight.net/hadoop-3.2.1000.0.4790444.json\",\r\n      \"kind\": \"hadoop\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"headnode\",\r\n          \"targetInstanceCount\": 1,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 1,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"InProgress\",\r\n    \"clusterState\": \"Accepted\",\r\n    \"createdDate\": \"2015-05-27T04:03:51.97\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 0\r\n    }\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "825"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-hdi-clusteruri": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/hdi4370/providers/Microsoft.HDInsight/clusters/hdisdk-iaascluster?api-version=2015-03-01-preview"
+        ],
+        "x-ms-request-id": [
+          "90402778-844b-485a-8bea-577896e77b8f"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1090"
+        ],
+        "x-ms-correlation-request-id": [
+          "ded1379d-2cf6-4b80-bad5-2068aff72f43"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150527T040353Z:ded1379d-2cf6-4b80-bad5-2068aff72f43"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 27 May 2015 04:03:53 GMT"
+        ],
+        "ETag": [
+          "\"5c80beb8-0547-4595-9aff-6a7d3b3f0d32\""
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/hdi4370/providers/Microsoft.HDInsight/clusters/hdisdk-iaascluster?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzMxMmMxMzItZmM0MC00OTNmLTljOTctODJkODAyNTZhMzEzL3Jlc291cmNlR3JvdXBzL2hkaTQzNzAvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWlhYXNjbHVzdGVyP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/hdi4370/providers/Microsoft.HDInsight/clusters/hdisdk-iaascluster\",\r\n  \"name\": \"hdisdk-iaascluster\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"West US\",\r\n  \"etag\": \"5c80beb8-0547-4595-9aff-6a7d3b3f0d32\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.2.1000.0.4790444\",\r\n    \"osType\": \"Linux\",\r\n    \"clusterDefinition\": {\r\n      \"blueprint\": \"https://blueprints.azurehdinsight.net/hadoop-3.2.1000.0.4790444.json\",\r\n      \"kind\": \"hadoop\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"headnode\",\r\n          \"targetInstanceCount\": 1,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 1,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"InProgress\",\r\n    \"clusterState\": \"Accepted\",\r\n    \"createdDate\": \"2015-05-27T04:03:51.97\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 0\r\n    }\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "825"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "0e640ae4-ff0a-42d4-b796-b845b39c251c"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14915"
+        ],
+        "x-ms-correlation-request-id": [
+          "9fb9352b-a259-4a38-ac48-b1a8245538df"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150527T040354Z:9fb9352b-a259-4a38-ac48-b1a8245538df"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 27 May 2015 04:03:53 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/hdi4370/providers/Microsoft.HDInsight/clusters/hdisdk-iaascluster?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzMxMmMxMzItZmM0MC00OTNmLTljOTctODJkODAyNTZhMzEzL3Jlc291cmNlR3JvdXBzL2hkaTQzNzAvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWlhYXNjbHVzdGVyP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/hdi4370/providers/Microsoft.HDInsight/clusters/hdisdk-iaascluster\",\r\n  \"name\": \"hdisdk-iaascluster\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"West US\",\r\n  \"etag\": \"5c80beb8-0547-4595-9aff-6a7d3b3f0d32\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.2.1000.0.4790444\",\r\n    \"osType\": \"Linux\",\r\n    \"clusterDefinition\": {\r\n      \"blueprint\": \"https://blueprints.azurehdinsight.net/hadoop-3.2.1000.0.4790444.json\",\r\n      \"kind\": \"hadoop\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"headnode\",\r\n          \"targetInstanceCount\": 1,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 1,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"InProgress\",\r\n    \"clusterState\": \"ClusterStorageConfiguration\",\r\n    \"createdDate\": \"2015-05-27T04:03:51.97\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 8\r\n    },\r\n    \"connectivityEndpoints\": [\r\n      {\r\n        \"name\": \"SSH\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-iaascluster-ssh.hdinsight-stable.azure-test.net\",\r\n        \"port\": 22\r\n      },\r\n      {\r\n        \"name\": \"HTTPS\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-iaascluster.hdinsight-stable.azure-test.net\",\r\n        \"port\": 443\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1089"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "daae249b-ffed-474f-87d6-c26e7c26444b"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14914"
+        ],
+        "x-ms-correlation-request-id": [
+          "c882744a-a021-4434-9607-c8132f2b5ba9"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150527T040424Z:c882744a-a021-4434-9607-c8132f2b5ba9"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 27 May 2015 04:04:24 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/hdi4370/providers/Microsoft.HDInsight/clusters/hdisdk-iaascluster?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzMxMmMxMzItZmM0MC00OTNmLTljOTctODJkODAyNTZhMzEzL3Jlc291cmNlR3JvdXBzL2hkaTQzNzAvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWlhYXNjbHVzdGVyP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/hdi4370/providers/Microsoft.HDInsight/clusters/hdisdk-iaascluster\",\r\n  \"name\": \"hdisdk-iaascluster\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"West US\",\r\n  \"etag\": \"5c80beb8-0547-4595-9aff-6a7d3b3f0d32\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.2.1000.0.4790444\",\r\n    \"osType\": \"Linux\",\r\n    \"clusterDefinition\": {\r\n      \"blueprint\": \"https://blueprints.azurehdinsight.net/hadoop-3.2.1000.0.4790444.json\",\r\n      \"kind\": \"hadoop\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"headnode\",\r\n          \"targetInstanceCount\": 1,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 1,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"InProgress\",\r\n    \"clusterState\": \"AzureVMConfiguration\",\r\n    \"createdDate\": \"2015-05-27T04:03:51.97\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 8\r\n    },\r\n    \"connectivityEndpoints\": [\r\n      {\r\n        \"name\": \"SSH\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-iaascluster-ssh.hdinsight-stable.azure-test.net\",\r\n        \"port\": 22\r\n      },\r\n      {\r\n        \"name\": \"HTTPS\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-iaascluster.hdinsight-stable.azure-test.net\",\r\n        \"port\": 443\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1082"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "9b015c62-1cf3-4f0f-b4f4-f8d909bd8db1"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14912"
+        ],
+        "x-ms-correlation-request-id": [
+          "7c720bee-4cac-490f-b387-4027f4aa43d2"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150527T040455Z:7c720bee-4cac-490f-b387-4027f4aa43d2"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 27 May 2015 04:04:55 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/hdi4370/providers/Microsoft.HDInsight/clusters/hdisdk-iaascluster?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzMxMmMxMzItZmM0MC00OTNmLTljOTctODJkODAyNTZhMzEzL3Jlc291cmNlR3JvdXBzL2hkaTQzNzAvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWlhYXNjbHVzdGVyP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/hdi4370/providers/Microsoft.HDInsight/clusters/hdisdk-iaascluster\",\r\n  \"name\": \"hdisdk-iaascluster\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"West US\",\r\n  \"etag\": \"5c80beb8-0547-4595-9aff-6a7d3b3f0d32\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.2.1000.0.4790444\",\r\n    \"osType\": \"Linux\",\r\n    \"clusterDefinition\": {\r\n      \"blueprint\": \"https://blueprints.azurehdinsight.net/hadoop-3.2.1000.0.4790444.json\",\r\n      \"kind\": \"hadoop\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"headnode\",\r\n          \"targetInstanceCount\": 1,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 1,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"InProgress\",\r\n    \"clusterState\": \"AzureVMConfiguration\",\r\n    \"createdDate\": \"2015-05-27T04:03:51.97\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 8\r\n    },\r\n    \"connectivityEndpoints\": [\r\n      {\r\n        \"name\": \"SSH\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-iaascluster-ssh.hdinsight-stable.azure-test.net\",\r\n        \"port\": 22\r\n      },\r\n      {\r\n        \"name\": \"HTTPS\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-iaascluster.hdinsight-stable.azure-test.net\",\r\n        \"port\": 443\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1082"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "b4764730-b3a3-4957-8b50-fcb1f21a1d2b"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14913"
+        ],
+        "x-ms-correlation-request-id": [
+          "e29f971c-fb0e-488a-95d0-0bd63baa96a6"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150527T040526Z:e29f971c-fb0e-488a-95d0-0bd63baa96a6"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 27 May 2015 04:05:26 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/hdi4370/providers/Microsoft.HDInsight/clusters/hdisdk-iaascluster?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzMxMmMxMzItZmM0MC00OTNmLTljOTctODJkODAyNTZhMzEzL3Jlc291cmNlR3JvdXBzL2hkaTQzNzAvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWlhYXNjbHVzdGVyP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/hdi4370/providers/Microsoft.HDInsight/clusters/hdisdk-iaascluster\",\r\n  \"name\": \"hdisdk-iaascluster\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"West US\",\r\n  \"etag\": \"5c80beb8-0547-4595-9aff-6a7d3b3f0d32\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.2.1000.0.4790444\",\r\n    \"osType\": \"Linux\",\r\n    \"clusterDefinition\": {\r\n      \"blueprint\": \"https://blueprints.azurehdinsight.net/hadoop-3.2.1000.0.4790444.json\",\r\n      \"kind\": \"hadoop\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"headnode\",\r\n          \"targetInstanceCount\": 1,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 1,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"InProgress\",\r\n    \"clusterState\": \"AzureVMConfiguration\",\r\n    \"createdDate\": \"2015-05-27T04:03:51.97\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 8\r\n    },\r\n    \"connectivityEndpoints\": [\r\n      {\r\n        \"name\": \"SSH\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-iaascluster-ssh.hdinsight-stable.azure-test.net\",\r\n        \"port\": 22\r\n      },\r\n      {\r\n        \"name\": \"HTTPS\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-iaascluster.hdinsight-stable.azure-test.net\",\r\n        \"port\": 443\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1082"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "b1586008-c31e-4043-9d14-cd8e2dd7fcc1"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14912"
+        ],
+        "x-ms-correlation-request-id": [
+          "7201239a-f34d-4269-94c5-5dc47828d381"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150527T040557Z:7201239a-f34d-4269-94c5-5dc47828d381"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 27 May 2015 04:05:56 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/hdi4370/providers/Microsoft.HDInsight/clusters/hdisdk-iaascluster?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzMxMmMxMzItZmM0MC00OTNmLTljOTctODJkODAyNTZhMzEzL3Jlc291cmNlR3JvdXBzL2hkaTQzNzAvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWlhYXNjbHVzdGVyP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/hdi4370/providers/Microsoft.HDInsight/clusters/hdisdk-iaascluster\",\r\n  \"name\": \"hdisdk-iaascluster\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"West US\",\r\n  \"etag\": \"5c80beb8-0547-4595-9aff-6a7d3b3f0d32\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.2.1000.0.4790444\",\r\n    \"osType\": \"Linux\",\r\n    \"clusterDefinition\": {\r\n      \"blueprint\": \"https://blueprints.azurehdinsight.net/hadoop-3.2.1000.0.4790444.json\",\r\n      \"kind\": \"hadoop\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"headnode\",\r\n          \"targetInstanceCount\": 1,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 1,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"InProgress\",\r\n    \"clusterState\": \"AzureVMConfiguration\",\r\n    \"createdDate\": \"2015-05-27T04:03:51.97\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 8\r\n    },\r\n    \"connectivityEndpoints\": [\r\n      {\r\n        \"name\": \"SSH\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-iaascluster-ssh.hdinsight-stable.azure-test.net\",\r\n        \"port\": 22\r\n      },\r\n      {\r\n        \"name\": \"HTTPS\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-iaascluster.hdinsight-stable.azure-test.net\",\r\n        \"port\": 443\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1082"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "0864cb83-8b87-471a-b339-7feab1c84f93"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14911"
+        ],
+        "x-ms-correlation-request-id": [
+          "c5c8a3ad-30d5-49d9-b6f3-36e735205777"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150527T040628Z:c5c8a3ad-30d5-49d9-b6f3-36e735205777"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 27 May 2015 04:06:27 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/hdi4370/providers/Microsoft.HDInsight/clusters/hdisdk-iaascluster?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzMxMmMxMzItZmM0MC00OTNmLTljOTctODJkODAyNTZhMzEzL3Jlc291cmNlR3JvdXBzL2hkaTQzNzAvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWlhYXNjbHVzdGVyP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/hdi4370/providers/Microsoft.HDInsight/clusters/hdisdk-iaascluster\",\r\n  \"name\": \"hdisdk-iaascluster\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"West US\",\r\n  \"etag\": \"5c80beb8-0547-4595-9aff-6a7d3b3f0d32\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.2.1000.0.4790444\",\r\n    \"osType\": \"Linux\",\r\n    \"clusterDefinition\": {\r\n      \"blueprint\": \"https://blueprints.azurehdinsight.net/hadoop-3.2.1000.0.4790444.json\",\r\n      \"kind\": \"hadoop\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"headnode\",\r\n          \"targetInstanceCount\": 1,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 1,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"InProgress\",\r\n    \"clusterState\": \"AzureVMConfiguration\",\r\n    \"createdDate\": \"2015-05-27T04:03:51.97\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 8\r\n    },\r\n    \"connectivityEndpoints\": [\r\n      {\r\n        \"name\": \"SSH\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-iaascluster-ssh.hdinsight-stable.azure-test.net\",\r\n        \"port\": 22\r\n      },\r\n      {\r\n        \"name\": \"HTTPS\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-iaascluster.hdinsight-stable.azure-test.net\",\r\n        \"port\": 443\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1082"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "653b4a1a-1774-4ed9-8633-c0969321c701"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14910"
+        ],
+        "x-ms-correlation-request-id": [
+          "f4374224-c48b-4040-9fb1-00f556b66435"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150527T040658Z:f4374224-c48b-4040-9fb1-00f556b66435"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 27 May 2015 04:06:58 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/hdi4370/providers/Microsoft.HDInsight/clusters/hdisdk-iaascluster?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzMxMmMxMzItZmM0MC00OTNmLTljOTctODJkODAyNTZhMzEzL3Jlc291cmNlR3JvdXBzL2hkaTQzNzAvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWlhYXNjbHVzdGVyP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/hdi4370/providers/Microsoft.HDInsight/clusters/hdisdk-iaascluster\",\r\n  \"name\": \"hdisdk-iaascluster\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"West US\",\r\n  \"etag\": \"5c80beb8-0547-4595-9aff-6a7d3b3f0d32\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.2.1000.0.4790444\",\r\n    \"osType\": \"Linux\",\r\n    \"clusterDefinition\": {\r\n      \"blueprint\": \"https://blueprints.azurehdinsight.net/hadoop-3.2.1000.0.4790444.json\",\r\n      \"kind\": \"hadoop\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"headnode\",\r\n          \"targetInstanceCount\": 1,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 1,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"InProgress\",\r\n    \"clusterState\": \"AzureVMConfiguration\",\r\n    \"createdDate\": \"2015-05-27T04:03:51.97\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 8\r\n    },\r\n    \"connectivityEndpoints\": [\r\n      {\r\n        \"name\": \"SSH\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-iaascluster-ssh.hdinsight-stable.azure-test.net\",\r\n        \"port\": 22\r\n      },\r\n      {\r\n        \"name\": \"HTTPS\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-iaascluster.hdinsight-stable.azure-test.net\",\r\n        \"port\": 443\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1082"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "9ed879c4-dd19-44e7-a549-97e6c9597ae7"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14905"
+        ],
+        "x-ms-correlation-request-id": [
+          "1c3fb704-84ca-4921-abfc-fbca43c194f3"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150527T040729Z:1c3fb704-84ca-4921-abfc-fbca43c194f3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 27 May 2015 04:07:29 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/hdi4370/providers/Microsoft.HDInsight/clusters/hdisdk-iaascluster?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzMxMmMxMzItZmM0MC00OTNmLTljOTctODJkODAyNTZhMzEzL3Jlc291cmNlR3JvdXBzL2hkaTQzNzAvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWlhYXNjbHVzdGVyP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/hdi4370/providers/Microsoft.HDInsight/clusters/hdisdk-iaascluster\",\r\n  \"name\": \"hdisdk-iaascluster\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"West US\",\r\n  \"etag\": \"5c80beb8-0547-4595-9aff-6a7d3b3f0d32\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.2.1000.0.4790444\",\r\n    \"osType\": \"Linux\",\r\n    \"clusterDefinition\": {\r\n      \"blueprint\": \"https://blueprints.azurehdinsight.net/hadoop-3.2.1000.0.4790444.json\",\r\n      \"kind\": \"hadoop\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"headnode\",\r\n          \"targetInstanceCount\": 1,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 1,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"InProgress\",\r\n    \"clusterState\": \"AzureVMConfiguration\",\r\n    \"createdDate\": \"2015-05-27T04:03:51.97\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 8\r\n    },\r\n    \"connectivityEndpoints\": [\r\n      {\r\n        \"name\": \"SSH\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-iaascluster-ssh.hdinsight-stable.azure-test.net\",\r\n        \"port\": 22\r\n      },\r\n      {\r\n        \"name\": \"HTTPS\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-iaascluster.hdinsight-stable.azure-test.net\",\r\n        \"port\": 443\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1082"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "f79ae090-1343-4371-a2ff-ce1c2c5d7cc1"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14900"
+        ],
+        "x-ms-correlation-request-id": [
+          "053dcac4-1fd1-43de-a89e-671833b19b72"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150527T040800Z:053dcac4-1fd1-43de-a89e-671833b19b72"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 27 May 2015 04:07:59 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/hdi4370/providers/Microsoft.HDInsight/clusters/hdisdk-iaascluster?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzMxMmMxMzItZmM0MC00OTNmLTljOTctODJkODAyNTZhMzEzL3Jlc291cmNlR3JvdXBzL2hkaTQzNzAvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWlhYXNjbHVzdGVyP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/hdi4370/providers/Microsoft.HDInsight/clusters/hdisdk-iaascluster\",\r\n  \"name\": \"hdisdk-iaascluster\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"West US\",\r\n  \"etag\": \"5c80beb8-0547-4595-9aff-6a7d3b3f0d32\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.2.1000.0.4790444\",\r\n    \"osType\": \"Linux\",\r\n    \"clusterDefinition\": {\r\n      \"blueprint\": \"https://blueprints.azurehdinsight.net/hadoop-3.2.1000.0.4790444.json\",\r\n      \"kind\": \"hadoop\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"headnode\",\r\n          \"targetInstanceCount\": 1,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 1,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"InProgress\",\r\n    \"clusterState\": \"AzureVMConfiguration\",\r\n    \"createdDate\": \"2015-05-27T04:03:51.97\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 8\r\n    },\r\n    \"connectivityEndpoints\": [\r\n      {\r\n        \"name\": \"SSH\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-iaascluster-ssh.hdinsight-stable.azure-test.net\",\r\n        \"port\": 22\r\n      },\r\n      {\r\n        \"name\": \"HTTPS\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-iaascluster.hdinsight-stable.azure-test.net\",\r\n        \"port\": 443\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1082"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "5fde17d0-116e-496d-8c54-6295b81b1df8"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14896"
+        ],
+        "x-ms-correlation-request-id": [
+          "07638949-3e50-47e1-a20f-e6d8e07cdad8"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150527T040830Z:07638949-3e50-47e1-a20f-e6d8e07cdad8"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 27 May 2015 04:08:30 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/hdi4370/providers/Microsoft.HDInsight/clusters/hdisdk-iaascluster?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzMxMmMxMzItZmM0MC00OTNmLTljOTctODJkODAyNTZhMzEzL3Jlc291cmNlR3JvdXBzL2hkaTQzNzAvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWlhYXNjbHVzdGVyP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/hdi4370/providers/Microsoft.HDInsight/clusters/hdisdk-iaascluster\",\r\n  \"name\": \"hdisdk-iaascluster\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"West US\",\r\n  \"etag\": \"5c80beb8-0547-4595-9aff-6a7d3b3f0d32\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.2.1000.0.4790444\",\r\n    \"osType\": \"Linux\",\r\n    \"clusterDefinition\": {\r\n      \"blueprint\": \"https://blueprints.azurehdinsight.net/hadoop-3.2.1000.0.4790444.json\",\r\n      \"kind\": \"hadoop\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"headnode\",\r\n          \"targetInstanceCount\": 1,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 1,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"InProgress\",\r\n    \"clusterState\": \"AzureVMConfiguration\",\r\n    \"createdDate\": \"2015-05-27T04:03:51.97\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 8\r\n    },\r\n    \"connectivityEndpoints\": [\r\n      {\r\n        \"name\": \"SSH\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-iaascluster-ssh.hdinsight-stable.azure-test.net\",\r\n        \"port\": 22\r\n      },\r\n      {\r\n        \"name\": \"HTTPS\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-iaascluster.hdinsight-stable.azure-test.net\",\r\n        \"port\": 443\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1082"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "dd0984eb-2d33-4604-a81f-50ff9145c8f6"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14892"
+        ],
+        "x-ms-correlation-request-id": [
+          "c19b672d-6a4d-4184-b7a3-9a3b327c18f6"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150527T040901Z:c19b672d-6a4d-4184-b7a3-9a3b327c18f6"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 27 May 2015 04:09:01 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/hdi4370/providers/Microsoft.HDInsight/clusters/hdisdk-iaascluster?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzMxMmMxMzItZmM0MC00OTNmLTljOTctODJkODAyNTZhMzEzL3Jlc291cmNlR3JvdXBzL2hkaTQzNzAvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWlhYXNjbHVzdGVyP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/hdi4370/providers/Microsoft.HDInsight/clusters/hdisdk-iaascluster\",\r\n  \"name\": \"hdisdk-iaascluster\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"West US\",\r\n  \"etag\": \"5c80beb8-0547-4595-9aff-6a7d3b3f0d32\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.2.1000.0.4790444\",\r\n    \"osType\": \"Linux\",\r\n    \"clusterDefinition\": {\r\n      \"blueprint\": \"https://blueprints.azurehdinsight.net/hadoop-3.2.1000.0.4790444.json\",\r\n      \"kind\": \"hadoop\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"headnode\",\r\n          \"targetInstanceCount\": 1,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 1,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"InProgress\",\r\n    \"clusterState\": \"HdInsightConfiguration\",\r\n    \"createdDate\": \"2015-05-27T04:03:51.97\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 8\r\n    },\r\n    \"connectivityEndpoints\": [\r\n      {\r\n        \"name\": \"SSH\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-iaascluster-ssh.hdinsight-stable.azure-test.net\",\r\n        \"port\": 22\r\n      },\r\n      {\r\n        \"name\": \"HTTPS\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-iaascluster.hdinsight-stable.azure-test.net\",\r\n        \"port\": 443\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1084"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "58c4c597-aba1-47c3-b0a4-fe0d668f943e"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14891"
+        ],
+        "x-ms-correlation-request-id": [
+          "e9887a13-5149-42f7-9124-c9ad4aab5e96"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150527T040931Z:e9887a13-5149-42f7-9124-c9ad4aab5e96"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 27 May 2015 04:09:31 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/hdi4370/providers/Microsoft.HDInsight/clusters/hdisdk-iaascluster?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzMxMmMxMzItZmM0MC00OTNmLTljOTctODJkODAyNTZhMzEzL3Jlc291cmNlR3JvdXBzL2hkaTQzNzAvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWlhYXNjbHVzdGVyP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/hdi4370/providers/Microsoft.HDInsight/clusters/hdisdk-iaascluster\",\r\n  \"name\": \"hdisdk-iaascluster\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"West US\",\r\n  \"etag\": \"5c80beb8-0547-4595-9aff-6a7d3b3f0d32\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.2.1000.0.4790444\",\r\n    \"osType\": \"Linux\",\r\n    \"clusterDefinition\": {\r\n      \"blueprint\": \"https://blueprints.azurehdinsight.net/hadoop-3.2.1000.0.4790444.json\",\r\n      \"kind\": \"hadoop\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"headnode\",\r\n          \"targetInstanceCount\": 1,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 1,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"InProgress\",\r\n    \"clusterState\": \"HdInsightConfiguration\",\r\n    \"createdDate\": \"2015-05-27T04:03:51.97\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 8\r\n    },\r\n    \"connectivityEndpoints\": [\r\n      {\r\n        \"name\": \"SSH\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-iaascluster-ssh.hdinsight-stable.azure-test.net\",\r\n        \"port\": 22\r\n      },\r\n      {\r\n        \"name\": \"HTTPS\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-iaascluster.hdinsight-stable.azure-test.net\",\r\n        \"port\": 443\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1084"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "fa363419-98bf-4262-afc3-15bf2eec130c"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14895"
+        ],
+        "x-ms-correlation-request-id": [
+          "585bacc3-935a-4e9a-a604-fa3b5ef4c05d"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150527T041002Z:585bacc3-935a-4e9a-a604-fa3b5ef4c05d"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 27 May 2015 04:10:01 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/hdi4370/providers/Microsoft.HDInsight/clusters/hdisdk-iaascluster?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzMxMmMxMzItZmM0MC00OTNmLTljOTctODJkODAyNTZhMzEzL3Jlc291cmNlR3JvdXBzL2hkaTQzNzAvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWlhYXNjbHVzdGVyP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/hdi4370/providers/Microsoft.HDInsight/clusters/hdisdk-iaascluster\",\r\n  \"name\": \"hdisdk-iaascluster\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"West US\",\r\n  \"etag\": \"5c80beb8-0547-4595-9aff-6a7d3b3f0d32\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.2.1000.0.4790444\",\r\n    \"osType\": \"Linux\",\r\n    \"clusterDefinition\": {\r\n      \"blueprint\": \"https://blueprints.azurehdinsight.net/hadoop-3.2.1000.0.4790444.json\",\r\n      \"kind\": \"hadoop\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"headnode\",\r\n          \"targetInstanceCount\": 1,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 1,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"InProgress\",\r\n    \"clusterState\": \"HdInsightConfiguration\",\r\n    \"createdDate\": \"2015-05-27T04:03:51.97\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 8\r\n    },\r\n    \"connectivityEndpoints\": [\r\n      {\r\n        \"name\": \"SSH\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-iaascluster-ssh.hdinsight-stable.azure-test.net\",\r\n        \"port\": 22\r\n      },\r\n      {\r\n        \"name\": \"HTTPS\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-iaascluster.hdinsight-stable.azure-test.net\",\r\n        \"port\": 443\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1084"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "ffc46c1e-2f2f-4c74-904a-1b9cebd3a8d8"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14894"
+        ],
+        "x-ms-correlation-request-id": [
+          "555681cc-4927-4b80-bc19-6ed3828785bb"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150527T041032Z:555681cc-4927-4b80-bc19-6ed3828785bb"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 27 May 2015 04:10:32 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/hdi4370/providers/Microsoft.HDInsight/clusters/hdisdk-iaascluster?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzMxMmMxMzItZmM0MC00OTNmLTljOTctODJkODAyNTZhMzEzL3Jlc291cmNlR3JvdXBzL2hkaTQzNzAvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWlhYXNjbHVzdGVyP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/hdi4370/providers/Microsoft.HDInsight/clusters/hdisdk-iaascluster\",\r\n  \"name\": \"hdisdk-iaascluster\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"West US\",\r\n  \"etag\": \"5c80beb8-0547-4595-9aff-6a7d3b3f0d32\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.2.1000.0.4790444\",\r\n    \"osType\": \"Linux\",\r\n    \"clusterDefinition\": {\r\n      \"blueprint\": \"https://blueprints.azurehdinsight.net/hadoop-3.2.1000.0.4790444.json\",\r\n      \"kind\": \"hadoop\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"headnode\",\r\n          \"targetInstanceCount\": 1,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 1,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"InProgress\",\r\n    \"clusterState\": \"HdInsightConfiguration\",\r\n    \"createdDate\": \"2015-05-27T04:03:51.97\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 8\r\n    },\r\n    \"connectivityEndpoints\": [\r\n      {\r\n        \"name\": \"SSH\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-iaascluster-ssh.hdinsight-stable.azure-test.net\",\r\n        \"port\": 22\r\n      },\r\n      {\r\n        \"name\": \"HTTPS\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-iaascluster.hdinsight-stable.azure-test.net\",\r\n        \"port\": 443\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1084"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "2a5f8263-cab7-4042-b965-52dd1924f912"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14892"
+        ],
+        "x-ms-correlation-request-id": [
+          "06e9b5c3-ed84-4df1-bfd0-6131bf40114a"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150527T041103Z:06e9b5c3-ed84-4df1-bfd0-6131bf40114a"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 27 May 2015 04:11:03 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/hdi4370/providers/Microsoft.HDInsight/clusters/hdisdk-iaascluster?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzMxMmMxMzItZmM0MC00OTNmLTljOTctODJkODAyNTZhMzEzL3Jlc291cmNlR3JvdXBzL2hkaTQzNzAvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWlhYXNjbHVzdGVyP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/hdi4370/providers/Microsoft.HDInsight/clusters/hdisdk-iaascluster\",\r\n  \"name\": \"hdisdk-iaascluster\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"West US\",\r\n  \"etag\": \"5c80beb8-0547-4595-9aff-6a7d3b3f0d32\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.2.1000.0.4790444\",\r\n    \"osType\": \"Linux\",\r\n    \"clusterDefinition\": {\r\n      \"blueprint\": \"https://blueprints.azurehdinsight.net/hadoop-3.2.1000.0.4790444.json\",\r\n      \"kind\": \"hadoop\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"headnode\",\r\n          \"targetInstanceCount\": 1,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 1,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"InProgress\",\r\n    \"clusterState\": \"HdInsightConfiguration\",\r\n    \"createdDate\": \"2015-05-27T04:03:51.97\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 8\r\n    },\r\n    \"connectivityEndpoints\": [\r\n      {\r\n        \"name\": \"SSH\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-iaascluster-ssh.hdinsight-stable.azure-test.net\",\r\n        \"port\": 22\r\n      },\r\n      {\r\n        \"name\": \"HTTPS\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-iaascluster.hdinsight-stable.azure-test.net\",\r\n        \"port\": 443\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1084"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "e9a92311-bc6e-4151-a8f0-3dc98fd089c4"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14890"
+        ],
+        "x-ms-correlation-request-id": [
+          "e80a44a2-8647-47d3-a8a4-56b12d5352dc"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150527T041133Z:e80a44a2-8647-47d3-a8a4-56b12d5352dc"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 27 May 2015 04:11:33 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/hdi4370/providers/Microsoft.HDInsight/clusters/hdisdk-iaascluster?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzMxMmMxMzItZmM0MC00OTNmLTljOTctODJkODAyNTZhMzEzL3Jlc291cmNlR3JvdXBzL2hkaTQzNzAvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWlhYXNjbHVzdGVyP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/hdi4370/providers/Microsoft.HDInsight/clusters/hdisdk-iaascluster\",\r\n  \"name\": \"hdisdk-iaascluster\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"West US\",\r\n  \"etag\": \"5c80beb8-0547-4595-9aff-6a7d3b3f0d32\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.2.1000.0.4790444\",\r\n    \"osType\": \"Linux\",\r\n    \"clusterDefinition\": {\r\n      \"blueprint\": \"https://blueprints.azurehdinsight.net/hadoop-3.2.1000.0.4790444.json\",\r\n      \"kind\": \"hadoop\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"headnode\",\r\n          \"targetInstanceCount\": 1,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 1,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"InProgress\",\r\n    \"clusterState\": \"HdInsightConfiguration\",\r\n    \"createdDate\": \"2015-05-27T04:03:51.97\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 8\r\n    },\r\n    \"connectivityEndpoints\": [\r\n      {\r\n        \"name\": \"SSH\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-iaascluster-ssh.hdinsight-stable.azure-test.net\",\r\n        \"port\": 22\r\n      },\r\n      {\r\n        \"name\": \"HTTPS\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-iaascluster.hdinsight-stable.azure-test.net\",\r\n        \"port\": 443\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1084"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "3336e8a0-8f04-448c-99ae-17fc3829ce18"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14889"
+        ],
+        "x-ms-correlation-request-id": [
+          "11662464-398c-46e9-866d-b511901c32c8"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150527T041204Z:11662464-398c-46e9-866d-b511901c32c8"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 27 May 2015 04:12:04 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/hdi4370/providers/Microsoft.HDInsight/clusters/hdisdk-iaascluster?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzMxMmMxMzItZmM0MC00OTNmLTljOTctODJkODAyNTZhMzEzL3Jlc291cmNlR3JvdXBzL2hkaTQzNzAvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWlhYXNjbHVzdGVyP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/hdi4370/providers/Microsoft.HDInsight/clusters/hdisdk-iaascluster\",\r\n  \"name\": \"hdisdk-iaascluster\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"West US\",\r\n  \"etag\": \"5c80beb8-0547-4595-9aff-6a7d3b3f0d32\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.2.1000.0.4790444\",\r\n    \"osType\": \"Linux\",\r\n    \"clusterDefinition\": {\r\n      \"blueprint\": \"https://blueprints.azurehdinsight.net/hadoop-3.2.1000.0.4790444.json\",\r\n      \"kind\": \"hadoop\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"headnode\",\r\n          \"targetInstanceCount\": 1,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 1,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"InProgress\",\r\n    \"clusterState\": \"HdInsightConfiguration\",\r\n    \"createdDate\": \"2015-05-27T04:03:51.97\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 8\r\n    },\r\n    \"connectivityEndpoints\": [\r\n      {\r\n        \"name\": \"SSH\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-iaascluster-ssh.hdinsight-stable.azure-test.net\",\r\n        \"port\": 22\r\n      },\r\n      {\r\n        \"name\": \"HTTPS\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-iaascluster.hdinsight-stable.azure-test.net\",\r\n        \"port\": 443\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1084"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "9e1b2e41-f934-4caa-a6c4-842069856043"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14888"
+        ],
+        "x-ms-correlation-request-id": [
+          "c66df0ea-660c-4c08-bf3e-8f21db1c6db6"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150527T041235Z:c66df0ea-660c-4c08-bf3e-8f21db1c6db6"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 27 May 2015 04:12:35 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/hdi4370/providers/Microsoft.HDInsight/clusters/hdisdk-iaascluster?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzMxMmMxMzItZmM0MC00OTNmLTljOTctODJkODAyNTZhMzEzL3Jlc291cmNlR3JvdXBzL2hkaTQzNzAvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWlhYXNjbHVzdGVyP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/hdi4370/providers/Microsoft.HDInsight/clusters/hdisdk-iaascluster\",\r\n  \"name\": \"hdisdk-iaascluster\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"West US\",\r\n  \"etag\": \"5c80beb8-0547-4595-9aff-6a7d3b3f0d32\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.2.1000.0.4790444\",\r\n    \"osType\": \"Linux\",\r\n    \"clusterDefinition\": {\r\n      \"blueprint\": \"https://blueprints.azurehdinsight.net/hadoop-3.2.1000.0.4790444.json\",\r\n      \"kind\": \"hadoop\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"headnode\",\r\n          \"targetInstanceCount\": 1,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 1,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"InProgress\",\r\n    \"clusterState\": \"HdInsightConfiguration\",\r\n    \"createdDate\": \"2015-05-27T04:03:51.97\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 8\r\n    },\r\n    \"connectivityEndpoints\": [\r\n      {\r\n        \"name\": \"SSH\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-iaascluster-ssh.hdinsight-stable.azure-test.net\",\r\n        \"port\": 22\r\n      },\r\n      {\r\n        \"name\": \"HTTPS\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-iaascluster.hdinsight-stable.azure-test.net\",\r\n        \"port\": 443\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1084"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "b38b5fa5-2980-410b-a484-1986957d444c"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14887"
+        ],
+        "x-ms-correlation-request-id": [
+          "cee27661-e7bb-45f4-b6f3-34e13a3a87a2"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150527T041305Z:cee27661-e7bb-45f4-b6f3-34e13a3a87a2"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 27 May 2015 04:13:05 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/hdi4370/providers/Microsoft.HDInsight/clusters/hdisdk-iaascluster?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzMxMmMxMzItZmM0MC00OTNmLTljOTctODJkODAyNTZhMzEzL3Jlc291cmNlR3JvdXBzL2hkaTQzNzAvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWlhYXNjbHVzdGVyP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/hdi4370/providers/Microsoft.HDInsight/clusters/hdisdk-iaascluster\",\r\n  \"name\": \"hdisdk-iaascluster\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"West US\",\r\n  \"etag\": \"5c80beb8-0547-4595-9aff-6a7d3b3f0d32\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.2.1000.0.4790444\",\r\n    \"osType\": \"Linux\",\r\n    \"clusterDefinition\": {\r\n      \"blueprint\": \"https://blueprints.azurehdinsight.net/hadoop-3.2.1000.0.4790444.json\",\r\n      \"kind\": \"hadoop\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"headnode\",\r\n          \"targetInstanceCount\": 1,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 1,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"InProgress\",\r\n    \"clusterState\": \"HdInsightConfiguration\",\r\n    \"createdDate\": \"2015-05-27T04:03:51.97\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 8\r\n    },\r\n    \"connectivityEndpoints\": [\r\n      {\r\n        \"name\": \"SSH\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-iaascluster-ssh.hdinsight-stable.azure-test.net\",\r\n        \"port\": 22\r\n      },\r\n      {\r\n        \"name\": \"HTTPS\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-iaascluster.hdinsight-stable.azure-test.net\",\r\n        \"port\": 443\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1084"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "51168a00-c373-4d12-a985-bdaead7df672"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14886"
+        ],
+        "x-ms-correlation-request-id": [
+          "88733c6b-e6f5-4af3-af76-f89cef1bfafa"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150527T041336Z:88733c6b-e6f5-4af3-af76-f89cef1bfafa"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 27 May 2015 04:13:35 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/hdi4370/providers/Microsoft.HDInsight/clusters/hdisdk-iaascluster?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzMxMmMxMzItZmM0MC00OTNmLTljOTctODJkODAyNTZhMzEzL3Jlc291cmNlR3JvdXBzL2hkaTQzNzAvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWlhYXNjbHVzdGVyP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/hdi4370/providers/Microsoft.HDInsight/clusters/hdisdk-iaascluster\",\r\n  \"name\": \"hdisdk-iaascluster\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"West US\",\r\n  \"etag\": \"5c80beb8-0547-4595-9aff-6a7d3b3f0d32\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.2.1000.0.4790444\",\r\n    \"osType\": \"Linux\",\r\n    \"clusterDefinition\": {\r\n      \"blueprint\": \"https://blueprints.azurehdinsight.net/hadoop-3.2.1000.0.4790444.json\",\r\n      \"kind\": \"hadoop\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"headnode\",\r\n          \"targetInstanceCount\": 1,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 1,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"InProgress\",\r\n    \"clusterState\": \"HdInsightConfiguration\",\r\n    \"createdDate\": \"2015-05-27T04:03:51.97\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 8\r\n    },\r\n    \"connectivityEndpoints\": [\r\n      {\r\n        \"name\": \"SSH\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-iaascluster-ssh.hdinsight-stable.azure-test.net\",\r\n        \"port\": 22\r\n      },\r\n      {\r\n        \"name\": \"HTTPS\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-iaascluster.hdinsight-stable.azure-test.net\",\r\n        \"port\": 443\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1084"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "146b81ad-01c9-477c-bf37-d4ccea3f5151"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14885"
+        ],
+        "x-ms-correlation-request-id": [
+          "9fc1cc53-3cae-4f9e-a9d5-8632ed320ac2"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150527T041406Z:9fc1cc53-3cae-4f9e-a9d5-8632ed320ac2"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 27 May 2015 04:14:06 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/hdi4370/providers/Microsoft.HDInsight/clusters/hdisdk-iaascluster?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzMxMmMxMzItZmM0MC00OTNmLTljOTctODJkODAyNTZhMzEzL3Jlc291cmNlR3JvdXBzL2hkaTQzNzAvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWlhYXNjbHVzdGVyP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/hdi4370/providers/Microsoft.HDInsight/clusters/hdisdk-iaascluster\",\r\n  \"name\": \"hdisdk-iaascluster\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"West US\",\r\n  \"etag\": \"5c80beb8-0547-4595-9aff-6a7d3b3f0d32\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.2.1000.0.4790444\",\r\n    \"osType\": \"Linux\",\r\n    \"clusterDefinition\": {\r\n      \"blueprint\": \"https://blueprints.azurehdinsight.net/hadoop-3.2.1000.0.4790444.json\",\r\n      \"kind\": \"hadoop\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"headnode\",\r\n          \"targetInstanceCount\": 1,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 1,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"InProgress\",\r\n    \"clusterState\": \"HdInsightConfiguration\",\r\n    \"createdDate\": \"2015-05-27T04:03:51.97\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 8\r\n    },\r\n    \"connectivityEndpoints\": [\r\n      {\r\n        \"name\": \"SSH\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-iaascluster-ssh.hdinsight-stable.azure-test.net\",\r\n        \"port\": 22\r\n      },\r\n      {\r\n        \"name\": \"HTTPS\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-iaascluster.hdinsight-stable.azure-test.net\",\r\n        \"port\": 443\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1084"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "7b13304b-429b-4690-a5ea-63ab1cca6774"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14884"
+        ],
+        "x-ms-correlation-request-id": [
+          "8a5ff355-91e8-460f-949a-b9a5cf29d2a8"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150527T041437Z:8a5ff355-91e8-460f-949a-b9a5cf29d2a8"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 27 May 2015 04:14:36 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/hdi4370/providers/Microsoft.HDInsight/clusters/hdisdk-iaascluster?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzMxMmMxMzItZmM0MC00OTNmLTljOTctODJkODAyNTZhMzEzL3Jlc291cmNlR3JvdXBzL2hkaTQzNzAvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWlhYXNjbHVzdGVyP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/hdi4370/providers/Microsoft.HDInsight/clusters/hdisdk-iaascluster\",\r\n  \"name\": \"hdisdk-iaascluster\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"West US\",\r\n  \"etag\": \"5c80beb8-0547-4595-9aff-6a7d3b3f0d32\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.2.1000.0.4790444\",\r\n    \"osType\": \"Linux\",\r\n    \"clusterDefinition\": {\r\n      \"blueprint\": \"https://blueprints.azurehdinsight.net/hadoop-3.2.1000.0.4790444.json\",\r\n      \"kind\": \"hadoop\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"headnode\",\r\n          \"targetInstanceCount\": 1,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 1,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"InProgress\",\r\n    \"clusterState\": \"HdInsightConfiguration\",\r\n    \"createdDate\": \"2015-05-27T04:03:51.97\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 8\r\n    },\r\n    \"connectivityEndpoints\": [\r\n      {\r\n        \"name\": \"SSH\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-iaascluster-ssh.hdinsight-stable.azure-test.net\",\r\n        \"port\": 22\r\n      },\r\n      {\r\n        \"name\": \"HTTPS\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-iaascluster.hdinsight-stable.azure-test.net\",\r\n        \"port\": 443\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1084"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "a5a5095e-a197-409c-8176-50b4f830ddd2"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14886"
+        ],
+        "x-ms-correlation-request-id": [
+          "1b096c42-73a0-48f0-a764-8474210953e1"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150527T041508Z:1b096c42-73a0-48f0-a764-8474210953e1"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 27 May 2015 04:15:08 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/hdi4370/providers/Microsoft.HDInsight/clusters/hdisdk-iaascluster?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzMxMmMxMzItZmM0MC00OTNmLTljOTctODJkODAyNTZhMzEzL3Jlc291cmNlR3JvdXBzL2hkaTQzNzAvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWlhYXNjbHVzdGVyP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/hdi4370/providers/Microsoft.HDInsight/clusters/hdisdk-iaascluster\",\r\n  \"name\": \"hdisdk-iaascluster\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"West US\",\r\n  \"etag\": \"5c80beb8-0547-4595-9aff-6a7d3b3f0d32\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.2.1000.0.4790444\",\r\n    \"osType\": \"Linux\",\r\n    \"clusterDefinition\": {\r\n      \"blueprint\": \"https://blueprints.azurehdinsight.net/hadoop-3.2.1000.0.4790444.json\",\r\n      \"kind\": \"hadoop\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"headnode\",\r\n          \"targetInstanceCount\": 1,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 1,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"InProgress\",\r\n    \"clusterState\": \"HdInsightConfiguration\",\r\n    \"createdDate\": \"2015-05-27T04:03:51.97\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 8\r\n    },\r\n    \"connectivityEndpoints\": [\r\n      {\r\n        \"name\": \"SSH\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-iaascluster-ssh.hdinsight-stable.azure-test.net\",\r\n        \"port\": 22\r\n      },\r\n      {\r\n        \"name\": \"HTTPS\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-iaascluster.hdinsight-stable.azure-test.net\",\r\n        \"port\": 443\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1084"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "ddaa1c5c-7446-41f4-be18-dae8e843c6d7"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14884"
+        ],
+        "x-ms-correlation-request-id": [
+          "d63ad5f1-7592-4f32-ae2c-7cc9721a32cc"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150527T041538Z:d63ad5f1-7592-4f32-ae2c-7cc9721a32cc"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 27 May 2015 04:15:38 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/hdi4370/providers/Microsoft.HDInsight/clusters/hdisdk-iaascluster?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzMxMmMxMzItZmM0MC00OTNmLTljOTctODJkODAyNTZhMzEzL3Jlc291cmNlR3JvdXBzL2hkaTQzNzAvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWlhYXNjbHVzdGVyP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/hdi4370/providers/Microsoft.HDInsight/clusters/hdisdk-iaascluster\",\r\n  \"name\": \"hdisdk-iaascluster\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"West US\",\r\n  \"etag\": \"5c80beb8-0547-4595-9aff-6a7d3b3f0d32\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.2.1000.0.4790444\",\r\n    \"osType\": \"Linux\",\r\n    \"clusterDefinition\": {\r\n      \"blueprint\": \"https://blueprints.azurehdinsight.net/hadoop-3.2.1000.0.4790444.json\",\r\n      \"kind\": \"hadoop\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"headnode\",\r\n          \"targetInstanceCount\": 1,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 1,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"clusterState\": \"Running\",\r\n    \"createdDate\": \"2015-05-27T04:03:51.97\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 8\r\n    },\r\n    \"connectivityEndpoints\": [\r\n      {\r\n        \"name\": \"SSH\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-iaascluster-ssh.hdinsight-stable.azure-test.net\",\r\n        \"port\": 22\r\n      },\r\n      {\r\n        \"name\": \"HTTPS\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-iaascluster.hdinsight-stable.azure-test.net\",\r\n        \"port\": 443\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1068"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "1ab05fff-6f67-4425-9b32-09ddc857466f"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14882"
+        ],
+        "x-ms-correlation-request-id": [
+          "8a1fc0da-023b-419b-9354-af86dde9a70e"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150527T041609Z:8a1fc0da-023b-419b-9354-af86dde9a70e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 27 May 2015 04:16:09 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/hdi4370/providers/Microsoft.HDInsight/clusters/hdisdk-iaascluster?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzMxMmMxMzItZmM0MC00OTNmLTljOTctODJkODAyNTZhMzEzL3Jlc291cmNlR3JvdXBzL2hkaTQzNzAvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWlhYXNjbHVzdGVyP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/hdi4370/providers/Microsoft.HDInsight/clusters/hdisdk-iaascluster\",\r\n  \"name\": \"hdisdk-iaascluster\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"West US\",\r\n  \"etag\": \"5c80beb8-0547-4595-9aff-6a7d3b3f0d32\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.2.1000.0.4790444\",\r\n    \"osType\": \"Linux\",\r\n    \"clusterDefinition\": {\r\n      \"blueprint\": \"https://blueprints.azurehdinsight.net/hadoop-3.2.1000.0.4790444.json\",\r\n      \"kind\": \"hadoop\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"headnode\",\r\n          \"targetInstanceCount\": 1,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 1,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"clusterState\": \"Running\",\r\n    \"createdDate\": \"2015-05-27T04:03:51.97\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 8\r\n    },\r\n    \"connectivityEndpoints\": [\r\n      {\r\n        \"name\": \"SSH\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-iaascluster-ssh.hdinsight-stable.azure-test.net\",\r\n        \"port\": 22\r\n      },\r\n      {\r\n        \"name\": \"HTTPS\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-iaascluster.hdinsight-stable.azure-test.net\",\r\n        \"port\": 443\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1068"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "8dda9318-081f-47e7-8d87-b4afdaf0b1a4"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14881"
+        ],
+        "x-ms-correlation-request-id": [
+          "c00bd994-94cf-459c-b7ee-e8ee26c351c8"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150527T041610Z:c00bd994-94cf-459c-b7ee-e8ee26c351c8"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 27 May 2015 04:16:10 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/hdi4370/providers/Microsoft.HDInsight/clusters/hdisdk-iaascluster?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzMxMmMxMzItZmM0MC00OTNmLTljOTctODJkODAyNTZhMzEzL3Jlc291cmNlR3JvdXBzL2hkaTQzNzAvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWlhYXNjbHVzdGVyP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "60"
+        ],
+        "x-ms-request-id": [
+          "a266e1fb-c9af-4790-9970-fe9af85a513d"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1087"
+        ],
+        "x-ms-correlation-request-id": [
+          "ad54340f-65a9-4a74-a040-72d2bd3856e3"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150527T041619Z:ad54340f-65a9-4a74-a040-72d2bd3856e3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 27 May 2015 04:16:18 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/hdi4370/providers/Microsoft.HDInsight/clusters/hdisdk-iaascluster/operationresults/ac10e7e0-b094-44bf-8f74-9a8dbd7c00e6-0?api-version=2015-03-01-preview"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/hdi4370/providers/Microsoft.HDInsight/clusters/hdisdk-iaascluster/operationresults/ac10e7e0-b094-44bf-8f74-9a8dbd7c00e6-0?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzMxMmMxMzItZmM0MC00OTNmLTljOTctODJkODAyNTZhMzEzL3Jlc291cmNlR3JvdXBzL2hkaTQzNzAvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWlhYXNjbHVzdGVyL29wZXJhdGlvbnJlc3VsdHMvYWMxMGU3ZTAtYjA5NC00NGJmLThmNzQtOWE4ZGJkN2MwMGU2LTA/YXBpLXZlcnNpb249MjAxNS0wMy0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2015-03-01-preview"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "60"
+        ],
+        "x-ms-request-id": [
+          "9e521d71-4086-4606-bc89-f62709d9f2f6"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14880"
+        ],
+        "x-ms-correlation-request-id": [
+          "63e62362-88f8-42f4-85f2-7746ebe181a9"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150527T041620Z:63e62362-88f8-42f4-85f2-7746ebe181a9"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 27 May 2015 04:16:19 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/hdi4370/providers/Microsoft.HDInsight/clusters/hdisdk-iaascluster/operationresults/ac10e7e0-b094-44bf-8f74-9a8dbd7c00e6-0?api-version=2015-03-01-preview"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/hdi4370/providers/Microsoft.HDInsight/clusters/hdisdk-iaascluster/operationresults/ac10e7e0-b094-44bf-8f74-9a8dbd7c00e6-0?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzMxMmMxMzItZmM0MC00OTNmLTljOTctODJkODAyNTZhMzEzL3Jlc291cmNlR3JvdXBzL2hkaTQzNzAvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWlhYXNjbHVzdGVyL29wZXJhdGlvbnJlc3VsdHMvYWMxMGU3ZTAtYjA5NC00NGJmLThmNzQtOWE4ZGJkN2MwMGU2LTA/YXBpLXZlcnNpb249MjAxNS0wMy0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2015-03-01-preview"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "60"
+        ],
+        "x-ms-request-id": [
+          "3d314803-0705-4d8c-bd17-ee3fc411503e"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14878"
+        ],
+        "x-ms-correlation-request-id": [
+          "08815064-2ea9-4441-b293-7d97598c13f1"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150527T041650Z:08815064-2ea9-4441-b293-7d97598c13f1"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 27 May 2015 04:16:50 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/hdi4370/providers/Microsoft.HDInsight/clusters/hdisdk-iaascluster/operationresults/ac10e7e0-b094-44bf-8f74-9a8dbd7c00e6-0?api-version=2015-03-01-preview"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/hdi4370/providers/Microsoft.HDInsight/clusters/hdisdk-iaascluster/operationresults/ac10e7e0-b094-44bf-8f74-9a8dbd7c00e6-0?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzMxMmMxMzItZmM0MC00OTNmLTljOTctODJkODAyNTZhMzEzL3Jlc291cmNlR3JvdXBzL2hkaTQzNzAvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWlhYXNjbHVzdGVyL29wZXJhdGlvbnJlc3VsdHMvYWMxMGU3ZTAtYjA5NC00NGJmLThmNzQtOWE4ZGJkN2MwMGU2LTA/YXBpLXZlcnNpb249MjAxNS0wMy0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2015-03-01-preview"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "60"
+        ],
+        "x-ms-request-id": [
+          "58929337-4bb9-41f2-9df7-f47d6bedc264"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14873"
+        ],
+        "x-ms-correlation-request-id": [
+          "cbbf3c3b-b10d-4d2f-b20e-3ef41ae3bc7d"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150527T041720Z:cbbf3c3b-b10d-4d2f-b20e-3ef41ae3bc7d"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 27 May 2015 04:17:20 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/hdi4370/providers/Microsoft.HDInsight/clusters/hdisdk-iaascluster/operationresults/ac10e7e0-b094-44bf-8f74-9a8dbd7c00e6-0?api-version=2015-03-01-preview"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/hdi4370/providers/Microsoft.HDInsight/clusters/hdisdk-iaascluster/operationresults/ac10e7e0-b094-44bf-8f74-9a8dbd7c00e6-0?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzMxMmMxMzItZmM0MC00OTNmLTljOTctODJkODAyNTZhMzEzL3Jlc291cmNlR3JvdXBzL2hkaTQzNzAvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWlhYXNjbHVzdGVyL29wZXJhdGlvbnJlc3VsdHMvYWMxMGU3ZTAtYjA5NC00NGJmLThmNzQtOWE4ZGJkN2MwMGU2LTA/YXBpLXZlcnNpb249MjAxNS0wMy0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2015-03-01-preview"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "60"
+        ],
+        "x-ms-request-id": [
+          "9bf2c746-7d47-4ed8-bd1e-0801982b3500"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14869"
+        ],
+        "x-ms-correlation-request-id": [
+          "b3158bc9-a58c-4df8-b0cf-4d17d7d3cfa9"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150527T041750Z:b3158bc9-a58c-4df8-b0cf-4d17d7d3cfa9"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 27 May 2015 04:17:50 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/hdi4370/providers/Microsoft.HDInsight/clusters/hdisdk-iaascluster/operationresults/ac10e7e0-b094-44bf-8f74-9a8dbd7c00e6-0?api-version=2015-03-01-preview"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/hdi4370/providers/Microsoft.HDInsight/clusters/hdisdk-iaascluster/operationresults/ac10e7e0-b094-44bf-8f74-9a8dbd7c00e6-0?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzMxMmMxMzItZmM0MC00OTNmLTljOTctODJkODAyNTZhMzEzL3Jlc291cmNlR3JvdXBzL2hkaTQzNzAvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWlhYXNjbHVzdGVyL29wZXJhdGlvbnJlc3VsdHMvYWMxMGU3ZTAtYjA5NC00NGJmLThmNzQtOWE4ZGJkN2MwMGU2LTA/YXBpLXZlcnNpb249MjAxNS0wMy0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2015-03-01-preview"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "60"
+        ],
+        "x-ms-request-id": [
+          "72bd2fb5-303b-46aa-9608-c7beb55f5651"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14865"
+        ],
+        "x-ms-correlation-request-id": [
+          "457cdc9b-569e-420a-b4c2-f6bd2695321b"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150527T041820Z:457cdc9b-569e-420a-b4c2-f6bd2695321b"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 27 May 2015 04:18:20 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/hdi4370/providers/Microsoft.HDInsight/clusters/hdisdk-iaascluster/operationresults/ac10e7e0-b094-44bf-8f74-9a8dbd7c00e6-0?api-version=2015-03-01-preview"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/hdi4370/providers/Microsoft.HDInsight/clusters/hdisdk-iaascluster/operationresults/ac10e7e0-b094-44bf-8f74-9a8dbd7c00e6-0?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzMxMmMxMzItZmM0MC00OTNmLTljOTctODJkODAyNTZhMzEzL3Jlc291cmNlR3JvdXBzL2hkaTQzNzAvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWlhYXNjbHVzdGVyL29wZXJhdGlvbnJlc3VsdHMvYWMxMGU3ZTAtYjA5NC00NGJmLThmNzQtOWE4ZGJkN2MwMGU2LTA/YXBpLXZlcnNpb249MjAxNS0wMy0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2015-03-01-preview"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "60"
+        ],
+        "x-ms-request-id": [
+          "12489c29-f1bd-4c00-a23d-3412c3bad81d"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14863"
+        ],
+        "x-ms-correlation-request-id": [
+          "23910f9a-a7b6-4e95-b37c-e301187cd972"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150527T041850Z:23910f9a-a7b6-4e95-b37c-e301187cd972"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 27 May 2015 04:18:50 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/hdi4370/providers/Microsoft.HDInsight/clusters/hdisdk-iaascluster/operationresults/ac10e7e0-b094-44bf-8f74-9a8dbd7c00e6-0?api-version=2015-03-01-preview"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/3312c132-fc40-493f-9c97-82d80256a313/resourceGroups/hdi4370/providers/Microsoft.HDInsight/clusters/hdisdk-iaascluster/operationresults/ac10e7e0-b094-44bf-8f74-9a8dbd7c00e6-0?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzMxMmMxMzItZmM0MC00OTNmLTljOTctODJkODAyNTZhMzEzL3Jlc291cmNlR3JvdXBzL2hkaTQzNzAvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWlhYXNjbHVzdGVyL29wZXJhdGlvbnJlc3VsdHMvYWMxMGU3ZTAtYjA5NC00NGJmLThmNzQtOWE4ZGJkN2MwMGU2LTA/YXBpLXZlcnNpb249MjAxNS0wMy0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2015-03-01-preview"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.HDInsight.HDInsightManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "83cb76b7-7e4d-47bc-809b-a88af6040459"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14860"
+        ],
+        "x-ms-correlation-request-id": [
+          "542d4008-7f1e-4f17-9a4b-04f2423bcfe5"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150527T041921Z:542d4008-7f1e-4f17-9a4b-04f2423bcfe5"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 27 May 2015 04:19:21 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 204
+    }
+  ],
+  "Names": {
+    "CreateResourceGroup": [
+      "hdi4370"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "3312c132-fc40-493f-9c97-82d80256a313"
+  }
+}

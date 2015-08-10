@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <LibraryFxTarget>net45</LibraryFxTarget>
+    <ProjectGuid>{D85F1E93-C3DD-4319-9247-C64B5B13B877}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Microsoft.WindowsAzure.Management.HDInsight.Contracts</RootNamespace>
+    <AssemblyName>Microsoft.WindowsAzure.Management.HDInsight.Contracts</AssemblyName>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <Import Project="..\..\..\..\tools\Library.Settings.targets" />
+  <ItemGroup>
+    <Compile Include="..\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="DataContractSerDeUtils.cs" />
+    <Compile Include="ErrorDetails.cs" />
+    <Compile Include="GlobalSupressions.cs" />
+    <Compile Include="HttpUserChangeRequest.cs" />
+    <Compile Include="Iaas\Jan2015\Constants.cs" />
+    <Compile Include="Iaas\Jan2015\Credentials\ConnectivityCredential.cs" />
+    <Compile Include="Iaas\Jan2015\Credentials\SSHConnectivityCredential.cs" />
+    <Compile Include="Iaas\Jan2015\Credentials\SSHFullConnectivityCredential.cs" />
+    <Compile Include="Iaas\Jan2015\Credentials\WebConnectivityCredential.cs" />
+    <Compile Include="Iaas\Jan2015\Endpoints\ConnectivityEndpoint.cs" />
+    <Compile Include="Iaas\Jan2015\Endpoints\SSHConnectivityEndpoint.cs" />
+    <Compile Include="Iaas\Jan2015\Endpoints\WebConnectivityEndpoint.cs" />
+    <Compile Include="Iaas\Jan2015\IaasCluster.cs" />
+    <Compile Include="Iaas\Jan2015\IaasClusterDocumentTypes.cs" />
+    <Compile Include="Iaas\Jan2015\IaasClusterError.cs" />
+    <Compile Include="March2013\ASVAccount.cs" />
+    <Compile Include="March2013\AzureClusterDeploymentAction.cs" />
+    <Compile Include="March2013\ClusterContainer.cs" />
+    <Compile Include="March2013\ClusterContainerState.cs" />
+    <Compile Include="March2013\ClusterDeployment.cs" />
+    <Compile Include="March2013\ClusterDeploymentState.cs" />
+    <Compile Include="March2013\ClusterNodeSize.cs" />
+    <Compile Include="March2013\ClusterNodeType.cs" />
+    <Compile Include="March2013\Constants.cs" />
+    <Compile Include="March2013\HdInsightSubscriptionMetadata.cs" />
+    <Compile Include="March2013\NodeStatus.cs" />
+    <Compile Include="March2013\NodeVMSize.cs" />
+    <Compile Include="March2013\SqlAzureMetastore.cs" />
+    <Compile Include="March2013\SqlMetastoreType.cs" />
+    <Compile Include="May2013\AzureClusterDeploymentAction.cs" />
+    <Compile Include="May2013\AzureDatabaseReference.cs" />
+    <Compile Include="May2013\BlobContainerReference.cs" />
+    <Compile Include="May2013\CapacitySchedulerConfiguration.cs" />
+    <Compile Include="May2013\ClusterContainer.cs" />
+    <Compile Include="May2013\ClusterDeployment.cs" />
+    <Compile Include="May2013\ClusterRole.cs" />
+    <Compile Include="May2013\ClusterRoleType.cs" />
+    <Compile Include="May2013\ClusterState.cs" />
+    <Compile Include="May2013\ComponentSettings.cs" />
+    <Compile Include="May2013\ConfigurationPropertyList.cs" />
+    <Compile Include="May2013\Constants.cs" />
+    <Compile Include="May2013\ContainerError.cs" />
+    <Compile Include="May2013\Core.cs" />
+    <Compile Include="May2013\Hdfs.cs" />
+    <Compile Include="May2013\HdInsightSubscriptionMetadata.cs" />
+    <Compile Include="May2013\Hive.cs" />
+    <Compile Include="May2013\MapReduce.cs" />
+    <Compile Include="May2013\NodeStatus.cs" />
+    <Compile Include="May2013\NodeVMSize.cs" />
+    <Compile Include="May2013\Oozie.cs" />
+    <Compile Include="May2013\Property.cs" />
+    <Compile Include="May2013\Yarn.cs" />
+    <Compile Include="May2014\Cluster.cs" />
+    <Compile Include="May2014\ClusterCreateParameters.cs" />
+    <Compile Include="May2014\ClusterState.cs" />
+    <Compile Include="May2014\ComponentSet.cs" />
+    <Compile Include="May2014\Components\CustomActionComponent.cs" />
+    <Compile Include="May2014\Components\CustomActions\CustomAction.cs" />
+    <Compile Include="May2014\Components\CustomActions\CustomActionList.cs" />
+    <Compile Include="May2014\Components\CustomActions\ScriptCustomAction.cs" />
+    <Compile Include="May2014\Components\GatewayComponent.cs" />
+    <Compile Include="May2014\Components\HadoopCoreComponent.cs" />
+    <Compile Include="May2014\Components\SparkComponent.cs" />
+    <Compile Include="May2014\Components\StormComponent.cs" />
+    <Compile Include="May2014\Components\ZookeeperComponent.cs" />
+    <Compile Include="May2014\Networking\AddressAssignment.cs" />
+    <Compile Include="May2014\Networking\AddressAssignments.cs" />
+    <Compile Include="May2014\Networking\Subnet.cs" />
+    <Compile Include="May2014\Networking\Subnets.cs" />
+    <Compile Include="May2014\Operation.cs" />
+    <Compile Include="May2014\Resources\AbstractResourceT.cs" />
+    <Compile Include="May2014\Resources\BlobContainerResourceSet.cs" />
+    <Compile Include="May2014\Components\HBaseComponent.cs" />
+    <Compile Include="May2014\Components\HdfsComponent.cs" />
+    <Compile Include="May2014\Components\HiveComponent.cs" />
+    <Compile Include="May2014\Components\OozieComponent.cs" />
+    <Compile Include="May2014\Components\YarnApplications\MapReduceApplication.cs" />
+    <Compile Include="May2014\Components\YarnApplications\YarnApplication.cs" />
+    <Compile Include="May2014\Components\YarnComponent.cs" />
+    <Compile Include="May2014\ConfigurationPropertyList.cs" />
+    <Compile Include="May2014\Components\ClusterComponent.cs" />
+    <Compile Include="May2014\Constants.cs" />
+    <Compile Include="May2014\ErrorDetails.cs" />
+    <Compile Include="May2014\ClusterRole.cs" />
+    <Compile Include="May2014\Components\MapReduceComponent.cs" />
+    <Compile Include="May2014\Resources\AbstractResource.cs" />
+    <Compile Include="May2014\Resources\BlobContainerResource.cs" />
+    <Compile Include="May2014\Resources\CredentialBackedResources\BlobContainerCredentialBackedResource.cs" />
+    <Compile Include="May2014\ClusterBase.cs" />
+    <Compile Include="May2014\Resources\CredentialBackedResources\SqlAzureDatabaseCredentialBackedResource.cs" />
+    <Compile Include="May2014\Resources\VirtualNetworkResource.cs" />
+    <Compile Include="May2014\UsernamePasswordCredential.cs" />
+    <Compile Include="May2014\Resources\CredentialBackedResources\VirtualNetworkCredentialBackedResource.cs" />
+    <Compile Include="May2014\Property.cs" />
+    <Compile Include="May2014\RemoteDesktopSettings.cs" />
+    <Compile Include="May2014\Resources\SqlAzureDatabaseResource.cs" />
+    <Compile Include="May2014\RestCollectionDataContract.cs" />
+    <Compile Include="May2014\RestDataContract.cs" />
+    <Compile Include="May2014\ClusterRoleCollection.cs" />
+    <Compile Include="May2014\Validation\ValidationExtensions.cs" />
+    <Compile Include="May2014\Validation\CompositeValidationResult.cs" />
+    <Compile Include="May2014\Validation\ValidateResourceDefined.cs" />
+    <Compile Include="May2014\Validation\ValidationObjectAttribute.cs" />
+    <Compile Include="May2014\Networking\VirtualNetworkConfiguration.cs" />
+    <Compile Include="May2014\VmSize.cs" />
+    <Compile Include="PassthroughResponse.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RdpUserChangeRequest.cs" />
+    <Compile Include="UserChangeOperationState.cs" />
+    <Compile Include="UserChangeOperationStatusResponse.cs" />
+    <Compile Include="UserChangeOperationType.cs" />
+    <Compile Include="UserChangeRequest.cs" />
+    <Compile Include="UserType.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="May2014\Components\DashboardComponent.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <PropertyGroup>
+    <StyleCopEnabled>false</StyleCopEnabled>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(LibraryFxTarget)' == 'portable' " />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(LibraryFxTarget)' != 'portable' " />
+  <Import Project="$(LibraryNugetPackageFolder)\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('$(LibraryNugetPackageFolder)\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
+</Project>

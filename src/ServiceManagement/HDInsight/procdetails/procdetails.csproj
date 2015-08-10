@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <LibraryFxTarget>net45</LibraryFxTarget>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{FA6EC96E-2A3C-40ED-877B-E35D0F9B765E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ProcDetailsTestApplication</RootNamespace>
+    <AssemblyName>Procdetails</AssemblyName>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <Import Project="..\..\..\..\tools\Library.Settings.targets" />
+  <ItemGroup>
+    <Reference Include="Microsoft.WindowsAzure.Common">
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.WindowsAzure.Common.1.3.0\lib\net45\Microsoft.WindowsAzure.Common.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="Entries.cs" />
+    <Compile Include="ProcDetails.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sections.cs" />
+    <Compile Include="SectionsSerializer.cs" />
+    <Compile Include="SiteXmlSerializer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="FxCopCustomDictionary.xml" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(LibraryFxTarget)' == 'portable' " />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(LibraryFxTarget)' != 'portable' " />
+  <Import Project="$(LibraryNugetPackageFolder)\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('$(LibraryNugetPackageFolder)\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
+</Project>
