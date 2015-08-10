@@ -127,10 +127,6 @@ namespace Microsoft.Azure.Management.Sql
             {
                 throw new ArgumentNullException("parameters.Properties.Login");
             }
-            if (parameters.Properties.Sid == null)
-            {
-                throw new ArgumentNullException("parameters.Properties.Sid");
-            }
             
             // Tracing
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -206,9 +202,11 @@ namespace Microsoft.Azure.Management.Sql
                 
                 propertiesValue["login"] = parameters.Properties.Login;
                 
-                propertiesValue["sid"] = parameters.Properties.Sid;
+                propertiesValue["sid"] = parameters.Properties.Sid.ToString();
                 
                 propertiesValue["administratorType"] = parameters.Properties.AdministratorType;
+                
+                propertiesValue["tenantId"] = parameters.Properties.TenantId.ToString();
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
@@ -306,8 +304,15 @@ namespace Microsoft.Azure.Management.Sql
                                 JToken sidValue = propertiesValue2["sid"];
                                 if (sidValue != null && sidValue.Type != JTokenType.Null)
                                 {
-                                    string sidInstance = ((string)sidValue);
+                                    Guid sidInstance = Guid.Parse(((string)sidValue));
                                     propertiesInstance.Sid = sidInstance;
+                                }
+                                
+                                JToken tenantIdValue = propertiesValue2["tenantId"];
+                                if (tenantIdValue != null && tenantIdValue.Type != JTokenType.Null)
+                                {
+                                    Guid tenantIdInstance = Guid.Parse(((string)tenantIdValue));
+                                    propertiesInstance.TenantId = tenantIdInstance;
                                 }
                             }
                             
@@ -365,11 +370,11 @@ namespace Microsoft.Azure.Management.Sql
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
-                    if (statusCode == HttpStatusCode.Created)
+                    if (statusCode == HttpStatusCode.OK)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
-                    if (statusCode == HttpStatusCode.OK)
+                    if (statusCode == HttpStatusCode.Created)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
@@ -943,8 +948,15 @@ namespace Microsoft.Azure.Management.Sql
                                 JToken sidValue = propertiesValue["sid"];
                                 if (sidValue != null && sidValue.Type != JTokenType.Null)
                                 {
-                                    string sidInstance = ((string)sidValue);
+                                    Guid sidInstance = Guid.Parse(((string)sidValue));
                                     propertiesInstance.Sid = sidInstance;
+                                }
+                                
+                                JToken tenantIdValue = propertiesValue["tenantId"];
+                                if (tenantIdValue != null && tenantIdValue.Type != JTokenType.Null)
+                                {
+                                    Guid tenantIdInstance = Guid.Parse(((string)tenantIdValue));
+                                    propertiesInstance.TenantId = tenantIdInstance;
                                 }
                             }
                             
@@ -1143,11 +1155,11 @@ namespace Microsoft.Azure.Management.Sql
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
-                    if (statusCode == HttpStatusCode.OK)
+                    if (statusCode == HttpStatusCode.NoContent)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
-                    if (statusCode == HttpStatusCode.NoContent)
+                    if (statusCode == HttpStatusCode.OK)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
@@ -1319,8 +1331,15 @@ namespace Microsoft.Azure.Management.Sql
                                 JToken sidValue = propertiesValue["sid"];
                                 if (sidValue != null && sidValue.Type != JTokenType.Null)
                                 {
-                                    string sidInstance = ((string)sidValue);
+                                    Guid sidInstance = Guid.Parse(((string)sidValue));
                                     propertiesInstance.Sid = sidInstance;
+                                }
+                                
+                                JToken tenantIdValue = propertiesValue["tenantId"];
+                                if (tenantIdValue != null && tenantIdValue.Type != JTokenType.Null)
+                                {
+                                    Guid tenantIdInstance = Guid.Parse(((string)tenantIdValue));
+                                    propertiesInstance.TenantId = tenantIdInstance;
                                 }
                             }
                             
@@ -1370,11 +1389,11 @@ namespace Microsoft.Azure.Management.Sql
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
-                    if (statusCode == HttpStatusCode.OK)
+                    if (statusCode == HttpStatusCode.Created)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
-                    if (statusCode == HttpStatusCode.Created)
+                    if (statusCode == HttpStatusCode.OK)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
@@ -1564,8 +1583,15 @@ namespace Microsoft.Azure.Management.Sql
                                         JToken sidValue = propertiesValue["sid"];
                                         if (sidValue != null && sidValue.Type != JTokenType.Null)
                                         {
-                                            string sidInstance = ((string)sidValue);
+                                            Guid sidInstance = Guid.Parse(((string)sidValue));
                                             propertiesInstance.Sid = sidInstance;
+                                        }
+                                        
+                                        JToken tenantIdValue = propertiesValue["tenantId"];
+                                        if (tenantIdValue != null && tenantIdValue.Type != JTokenType.Null)
+                                        {
+                                            Guid tenantIdInstance = Guid.Parse(((string)tenantIdValue));
+                                            propertiesInstance.TenantId = tenantIdInstance;
                                         }
                                     }
                                     

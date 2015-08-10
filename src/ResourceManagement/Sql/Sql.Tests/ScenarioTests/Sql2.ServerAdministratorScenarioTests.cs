@@ -54,7 +54,8 @@ namespace Sql2.Tests.ScenarioTests
                        string AdministratorDefaultType = "activeDirectory";
                        string ActiveDirectoryDefaultName = "activeDirectory";
                        string activeDirectoryServerAdminLogin = "testAADaccount";
-                       string activeDirectoryServerAdminSid = "4dc34af5-6a71-4838-a983-14cdf8852ff9";
+                       Guid activeDirectoryServerAdminSid = new Guid("4dc34af5-6a71-4838-a983-14cdf8852ff9");
+                       Guid activeDirectoryTenantId = new Guid("A0C03064-E4CB-4AB8-AF32-12203273FF1D");
 
                        ///////////////////////////////////////////////////////////////////////
                        // Update Azure SQL Server Active Directory Administrator
@@ -64,19 +65,20 @@ namespace Sql2.Tests.ScenarioTests
                            {
                                Login = activeDirectoryServerAdminLogin,
                                Sid = activeDirectoryServerAdminSid,
-                               AdministratorType = AdministratorDefaultType
+                               AdministratorType = AdministratorDefaultType,
+                               TenantId = activeDirectoryTenantId,
                            },
                        });
 
                        TestUtilities.ValidateOperationResponse(createResponse, HttpStatusCode.OK);
-                       VerifyServerAdministratorInformation(activeDirectoryServerAdminLogin, activeDirectoryServerAdminSid, createResponse.ServerAdministrator);
+                       VerifyServerAdministratorInformation(activeDirectoryServerAdminLogin, activeDirectoryServerAdminSid, activeDirectoryTenantId, createResponse.ServerAdministrator);
 
                        // Get single server active directory administrator
                        var getAdminResponse = sqlClient.ServerAdministrators.Get(resGroupName, server.Name, ActiveDirectoryDefaultName);
 
                        // Verify that the Get request contains the right information.
                        TestUtilities.ValidateOperationResponse(getAdminResponse, HttpStatusCode.OK);
-                       VerifyServerAdministratorInformation(activeDirectoryServerAdminLogin, activeDirectoryServerAdminSid, getAdminResponse.Administrator);
+                       VerifyServerAdministratorInformation(activeDirectoryServerAdminLogin, activeDirectoryServerAdminSid, activeDirectoryTenantId, getAdminResponse.Administrator);
 
                        // Get list Azure SQL Server Active Directory Administrator
                        var getAdminResponseList = sqlClient.ServerAdministrators.List(resGroupName, server.Name);
@@ -86,7 +88,7 @@ namespace Sql2.Tests.ScenarioTests
 
                        // Verify that the Get request contains the right information.
                        TestUtilities.ValidateOperationResponse(getAdminResponseList, HttpStatusCode.OK);
-                       VerifyServerAdministratorInformation(activeDirectoryServerAdminLogin, activeDirectoryServerAdminSid, getAdminResponseList.Administrators[0]);
+                       VerifyServerAdministratorInformation(activeDirectoryServerAdminLogin, activeDirectoryServerAdminSid, activeDirectoryTenantId, getAdminResponseList.Administrators[0]);
                        ///////////////////////////////////////////////////////////////////////
 
                        ///////////////////////////////////////////////////////////////////////
@@ -111,13 +113,15 @@ namespace Sql2.Tests.ScenarioTests
         /// Verify that the Server Administrator object matches the provided values
         /// </summary>
         /// <param name="activeDirectoryAdminLogin">The expected admin login</param>
-        /// <param name="acitveDirectoryAdminSid">The expected password</param>
+        /// <param name="acitveDirectoryAdminSid">The expected Active Directory User or Group Sid</param>
+        /// <param name="activeDirectoryTenantId">The expected Active Directory tenant id</param>
         /// <param name="serverAdministrator">The actual server object</param>
-        private static void VerifyServerAdministratorInformation(string activeDirectoryAdminLogin, string acitveDirectoryAdminSid, ServerAdministrator serverAdministrator)
+        private static void VerifyServerAdministratorInformation(string activeDirectoryAdminLogin, Guid acitveDirectoryAdminSid, Guid activeDirectoryTenantId, ServerAdministrator serverAdministrator)
         {
             Assert.NotEmpty(serverAdministrator.Id);
             Assert.Equal(activeDirectoryAdminLogin, serverAdministrator.Properties.Login);
             Assert.Equal(acitveDirectoryAdminSid, serverAdministrator.Properties.Sid);
+            Assert.Equal(activeDirectoryTenantId, serverAdministrator.Properties.TenantId);
         }
     }
 }
