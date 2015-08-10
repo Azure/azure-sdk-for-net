@@ -217,6 +217,9 @@
     <None Include="SessionRecords\Microsoft.Azure.Search.Tests.SearchTests\CanContinueSearchForStaticallyTypedDocuments.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\Microsoft.Azure.Search.Tests.SearchTests\CanContinueSearchWithoutTop.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\Microsoft.Azure.Search.Tests.SearchTests\CanFilter.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

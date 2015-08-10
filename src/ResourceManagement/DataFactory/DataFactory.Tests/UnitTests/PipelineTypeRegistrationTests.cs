@@ -15,17 +15,17 @@
 // 
 
 using System;
-using System.Globalization;
-using System.Reflection;
+using System.Collections.Generic;
 using DataFactory.Tests.Framework;
 using DataFactory.Tests.UnitTests.TestClasses;
 using Microsoft.Azure.Management.DataFactories;
 using Microsoft.Azure.Management.DataFactories.Models;
 using Xunit;
+using Xunit.Extensions;
 
 namespace DataFactory.Tests.UnitTests
 {
-    public class PipelineTypeRegistrationTests : UnitTestBase
+    public class PipelineTypeRegistrationTests : TypeRegistrationTestBase<ActivityTypeProperties, GenericActivity>
     {
         private PipelineOperations Operations
         {
@@ -35,30 +35,40 @@ namespace DataFactory.Tests.UnitTests
             }
         }
 
-        [Fact]
-        [Trait(TraitName.TestType, TestType.Unit)]
-        [Trait(TraitName.Function, TestType.Registration)]
-        public void CanRegisterActivityTypeForPipeline()
+        public static IEnumerable<object[]> ReservedTypes
         {
-            this.Client.RegisterType<MyActivityType>(true);
-
-            Assert.True(
-                this.Client.TypeIsRegistered<MyActivityType>(),
-                string.Format(
-                    CultureInfo.InvariantCulture,
-                    "Type '{0}' was not successfully registered.",
-                    typeof(MyActivityType).Name));
+            get
+            {
+                return ReservedTypesList.Value;
+            }
         }
 
         [Fact]
         [Trait(TraitName.TestType, TestType.Unit)]
         [Trait(TraitName.Function, TestType.Registration)]
-        public void RegisteringActivityTypeForPipelineWithReservedNameThrowsException()
+        public void CanRegisterActivityTypeForPipeline()
         {
-            InvalidOperationException ex = Assert.Throws<InvalidOperationException>(
-                () => this.Client.RegisterType<HDInsightHiveActivity>());
+            this.TestCanRegisterType<MyActivityType>();
+        }
 
-            Assert.True(ex.Message.Contains("cannot be locally registered because it has the same name"));
+        [Theory]
+        [PropertyData("ReservedTypes")]
+        [Trait(TraitName.TestType, TestType.Unit)]
+        [Trait(TraitName.Function, TestType.Registration)]
+        public void RegisteringActivityTypeForPipelineWithReservedNameThrowsException<T>(Type type, T registeredType)
+            where T : ActivityTypeProperties
+        {
+            this.TestRegisteringTypeWithReservedNameThrowsException<T>();
+        }
+
+        [Theory]
+        [PropertyData("ReservedTypes")]
+        [Trait(TraitName.TestType, TestType.Unit)]
+        [Trait(TraitName.Function, TestType.Registration)]
+        public void ReservedActivityTypeIsRegisteredTest<T>(Type type, T registeredType)
+            where T : ActivityTypeProperties
+        {
+            this.TestReservedTypeIsRegistered<T>();
         }
 
         [Fact]
@@ -66,37 +76,16 @@ namespace DataFactory.Tests.UnitTests
         [Trait(TraitName.Function, TestType.Registration)]
         public void RegisteringActivityTypeForPipelineTwiceThrowsException()
         {
-            try
-            {
-                this.Client.RegisterType<MyActivityType>();
-                this.Client.RegisterType<MyActivityType>();
-            }
-            catch (InvalidOperationException ex)
-            {
-                Assert.True(ex.Message.Contains("is already registered"));
-            }
+            this.RegisteringTypeTwiceWithoutForceThrowsException<MyActivityType>();
         }
 
-        [Fact]
+        [Theory]
+        [PropertyData("ReservedTypes")]
         [Trait(TraitName.TestType, TestType.Unit)]
         [Trait(TraitName.Function, TestType.Registration)]
-        public void CanGetRegisteredActivityCaseInsensitive()
+        public void CanGetRegisteredActivityCaseInsensitive<T>(Type type, T registeredType)
         {
-            AdfTypeNameAttribute att = typeof(CopyActivity).GetCustomAttribute<AdfTypeNameAttribute>(true);
-            Assert.NotNull(att);
-
-            // Get the type named used for de/ser
-            string typeName = att.TypeName;
-            Assert.NotNull(typeName);
-            Assert.NotEmpty(typeName);
-
-            // Ensure that the type name is not already all lowercase
-            string typeNameLower = typeName.ToLowerInvariant();
-            Assert.NotEqual(typeName, typeNameLower, StringComparer.Ordinal);
-
-            Type type;
-            Assert.True(this.Operations.Converter.TryGetRegisteredType(typeNameLower, out type));
-            Assert.Equal(typeof(CopyActivity), type);
+            this.TestCanGetRegisteredTypeCaseInsensitive(this.Operations.Converter, type);
         }
     }
 }

@@ -13,6 +13,7 @@
     <Compile Include="ScenarioTests\Sql2.BackupScenarioTests.cs" />
     <Compile Include="ScenarioTests\Sql2.ElasticPoolScenarioTests.cs" />
     <Compile Include="ScenarioTests\Sql2.RecommendedIndexScenarioTests.cs" />
+    <Compile Include="ScenarioTests\Sql2.ServerAdministratorScenarioTests.cs" />
     <Compile Include="ScenarioTests\Sql2.ServiceTierAdvisorScenarioTests.cs" />
     <Compile Include="ScenarioTests\Sql2.RecommendedElasticPoolScenarioTests.cs" />
     <Compile Include="ScenarioTests\Sql2.SecureConnectionScenarioTest.cs" />
@@ -92,6 +93,9 @@
     <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2SecureConnectionScenarioTest\SecureConnectionPolicyLifecycleTest.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2ServerAdministratorScenarioTests\ServerAdministratorCRUDTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2ServerUpgradeScenarioTest\NegativeTest.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -133,4 +137,8 @@
       <Name>SqlManagement</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Data" />
+  </ItemGroup>
+  <ItemGroup />
 </Project>

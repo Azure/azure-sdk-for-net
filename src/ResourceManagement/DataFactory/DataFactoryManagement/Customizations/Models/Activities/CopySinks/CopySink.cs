@@ -44,11 +44,6 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// </summary>
         public TimeSpan? SinkRetryWait { get; set; }
 
-        /// <summary>
-        /// Sink partition data.
-        /// </summary>
-        public bool? SinkPartitionData { get; set; }
-
         protected CopySink()
         {
         }

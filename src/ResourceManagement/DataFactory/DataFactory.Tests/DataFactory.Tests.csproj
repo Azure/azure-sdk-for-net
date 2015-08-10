@@ -8,6 +8,11 @@
   <Import Project="..\..\..\..\tools\Library.Settings.targets" />
   <Import Project="$(LibraryToolsFolder)\Test.Dependencies.target" />
   <ItemGroup>
+    <Reference Include="xunit.extensions">
+      <HintPath>$(LibraryNugetPackageFolder)\xunit.extensions.1.9.2\lib\net20\xunit.extensions.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Framework\Common.cs" />
     <Compile Include="Framework\CustomIsoDateTimeConverter.cs" />
     <Compile Include="Framework\DateTimeExtensions.cs" />
@@ -15,6 +20,7 @@
     <Compile Include="Framework\JsonSampleAttribute.cs" />
     <Compile Include="Framework\JsonSampleCommon.cs" />
     <Compile Include="Framework\JsonSampleInfo.cs" />
+    <Compile Include="Framework\JsonSamples\JsonSampleCollection.cs" />
     <Compile Include="Framework\JsonSamples\JsonSampleType.cs" />
     <Compile Include="Framework\JsonSamples\PipelineJsonSamples.cs" />
     <Compile Include="Framework\JsonSamples\CustomLinkedServiceJsonSamples.cs" />
@@ -32,9 +38,9 @@
     <Compile Include="ScenarioTests\BasicDelegatingHandler.cs" />
     <Compile Include="ScenarioTests\PipelineTests.cs" />
     <Compile Include="ScenarioTests\TestHelper.cs" />
+    <Compile Include="UnitTests\ActivityConfigurationTests.cs" />
     <Compile Include="UnitTests\ActivityTypeTests.cs" />
     <Compile Include="UnitTests\ComputeTypeTests.cs" />
-    <Compile Include="UnitTests\DataSetTests.cs" />
     <Compile Include="UnitTests\LinkedServiceTests.cs" />
     <Compile Include="UnitTests\LinkedServiceTypeRegistrationTests.cs" />
     <Compile Include="UnitTests\PipelineTests.cs" />
@@ -48,9 +54,11 @@
     <Compile Include="UnitTests\TestClasses\MyLinkedServiceTypeWithListProperty.cs" />
     <Compile Include="UnitTests\TestClasses\MyTableType.cs" />
     <Compile Include="UnitTests\RegistrationTestUtilities.cs" />
+    <Compile Include="UnitTests\TypeRegistrationTestBase.cs" />
     <Compile Include="UnitTests\UnitTestBase.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
     <None Include="Resources\DA_CuratedWikiData.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

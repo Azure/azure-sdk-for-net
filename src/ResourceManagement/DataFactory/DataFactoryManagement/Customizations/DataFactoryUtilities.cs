@@ -22,24 +22,6 @@ namespace Microsoft.Azure.Management.DataFactories
 {
     internal static class DataFactoryUtilities
     {
-        public static OperationStatus ToOperationStatus(this string provisioningState)
-        {
-            switch (provisioningState)
-            {
-                case DataFactoryConstants.ProvisioningStateSucceeded:
-                    return OperationStatus.Succeeded;
-
-                default:
-                    return OperationStatus.Failed;
-            }
-        }
-
-        public static void CopyRuntimeProperties(AzureOperationResponse source, AzureOperationResponse target)
-        {
-            target.RequestId = source.RequestId;
-            target.StatusCode = source.StatusCode;
-        }
-
         public static string GetResourceTypeName(Type type)
         {
 #if NET45

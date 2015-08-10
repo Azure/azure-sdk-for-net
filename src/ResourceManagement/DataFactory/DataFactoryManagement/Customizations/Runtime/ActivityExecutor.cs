@@ -13,9 +13,12 @@
 // limitations under the License.
 //
 
+using Microsoft.Azure.Management.DataFactories.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Globalization;
+using System.Linq;
 
 namespace Microsoft.Azure.Management.DataFactories.Runtime
 {
@@ -26,20 +29,55 @@ namespace Microsoft.Azure.Management.DataFactories.Runtime
             ActivityConfiguration activityConfiguration = Utils.GetActivityConfiguration(configuration);
 
             IDotNetActivity activityImplementation = job as IDotNetActivity;
-            if (job == null)
-            {
-                throw new InvalidOperationException(string.Format(CultureInfo.InvariantCulture,
-                    "The type {0} in does not implement IDotNetActivity. Check the configuration and try again.", job == null ? "<null>" : job.GetType().FullName));
-            }
+            Ensure.IsNotNull(job, "job",
+                string.Format(
+                    CultureInfo.InvariantCulture,
+                    "The type {0} in does not implement IDotNetActivity. Check the configuration and try again.",
+                    job == null ? "<null>" : job.GetType().FullName));
 
             ActivityLogger logger = new ActivityLogger(logAction);
 
+            Collection<LinkedService> linkedServices = new Collection<LinkedService>();
+            Collection<Table> tables = new Collection<Table>();
+
+            PopulateCollections(activityConfiguration.Inputs, linkedServices, tables);
+            PopulateCollections(activityConfiguration.Outputs, linkedServices, tables);
+
+            Activity activity = null;
+            
+            if(activityConfiguration.Pipeline != null &&
+               activityConfiguration.Pipeline.Properties != null &&
+               activityConfiguration.Pipeline.Properties.Activities != null)
+            {
+                activity = activityConfiguration.Pipeline.Properties.Activities.FirstOrDefault();
+            }
+
             return activityImplementation.Execute(
-                activityConfiguration.InputDataSets,
-                activityConfiguration.OutputDataSets,
-                activityConfiguration.ExtendedProperties,
+                linkedServices,
+                tables,
+                activity,
                 logger);
         }
-    }
 
+        private static void PopulateCollections(IEnumerable<ResolvedTable> resolvedTables, ICollection<LinkedService> linkedServices, ICollection<Table> tables)
+        {
+            if (resolvedTables == null)
+            {
+                return;
+            }
+
+            foreach (ResolvedTable resolvedTable in resolvedTables)
+            {
+                if (resolvedTable.LinkedService != null)
+                {
+                    linkedServices.Add(resolvedTable.LinkedService);
+                }
+
+                if (resolvedTable.Table != null)
+                {
+                    tables.Add(resolvedTable.Table);
+                }
+            }
+        }
+    }
 }

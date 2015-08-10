@@ -166,6 +166,13 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                 }
                             }
                         }
+                        if (activitiesParameterItem.Scheduler != null)
+                        {
+                            if (activitiesParameterItem.Scheduler.Frequency == null)
+                            {
+                                throw new ArgumentNullException("parameters.Pipeline.Properties.Activities.Scheduler.Frequency");
+                            }
+                        }
                         if (activitiesParameterItem.Type == null)
                         {
                             throw new ArgumentNullException("parameters.Pipeline.Properties.Activities.Type");
@@ -208,7 +215,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                 url = url + Uri.EscapeDataString(parameters.Pipeline.Name);
             }
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-07-01-preview");
+            queryParameters.Add("api-version=2015-08-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -371,6 +378,31 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                             activityOutputValue["name"] = outputsItem.Name;
                                         }
                                         activityValue["outputs"] = outputsArray;
+                                    }
+                                }
+                                
+                                if (activitiesItem.Scheduler != null)
+                                {
+                                    JObject schedulerValue = new JObject();
+                                    activityValue["scheduler"] = schedulerValue;
+                                    
+                                    schedulerValue["frequency"] = activitiesItem.Scheduler.Frequency;
+                                    
+                                    schedulerValue["interval"] = activitiesItem.Scheduler.Interval;
+                                    
+                                    if (activitiesItem.Scheduler.AnchorDateTime != null)
+                                    {
+                                        schedulerValue["anchorDateTime"] = activitiesItem.Scheduler.AnchorDateTime.Value;
+                                    }
+                                    
+                                    if (activitiesItem.Scheduler.Offset != null)
+                                    {
+                                        schedulerValue["offset"] = activitiesItem.Scheduler.Offset.Value.ToString();
+                                    }
+                                    
+                                    if (activitiesItem.Scheduler.Style != null)
+                                    {
+                                        schedulerValue["style"] = activitiesItem.Scheduler.Style;
                                     }
                                 }
                             }
@@ -639,6 +671,48 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                                 }
                                             }
                                         }
+                                        
+                                        JToken schedulerValue2 = activitiesValue["scheduler"];
+                                        if (schedulerValue2 != null && schedulerValue2.Type != JTokenType.Null)
+                                        {
+                                            Scheduler schedulerInstance = new Scheduler();
+                                            activityInstance.Scheduler = schedulerInstance;
+                                            
+                                            JToken frequencyValue = schedulerValue2["frequency"];
+                                            if (frequencyValue != null && frequencyValue.Type != JTokenType.Null)
+                                            {
+                                                string frequencyInstance = ((string)frequencyValue);
+                                                schedulerInstance.Frequency = frequencyInstance;
+                                            }
+                                            
+                                            JToken intervalValue = schedulerValue2["interval"];
+                                            if (intervalValue != null && intervalValue.Type != JTokenType.Null)
+                                            {
+                                                uint intervalInstance = ((uint)intervalValue);
+                                                schedulerInstance.Interval = intervalInstance;
+                                            }
+                                            
+                                            JToken anchorDateTimeValue = schedulerValue2["anchorDateTime"];
+                                            if (anchorDateTimeValue != null && anchorDateTimeValue.Type != JTokenType.Null)
+                                            {
+                                                DateTime anchorDateTimeInstance = ((DateTime)anchorDateTimeValue);
+                                                schedulerInstance.AnchorDateTime = anchorDateTimeInstance;
+                                            }
+                                            
+                                            JToken offsetValue = schedulerValue2["offset"];
+                                            if (offsetValue != null && offsetValue.Type != JTokenType.Null)
+                                            {
+                                                TimeSpan offsetInstance = TimeSpan.Parse(((string)offsetValue), CultureInfo.InvariantCulture);
+                                                schedulerInstance.Offset = offsetInstance;
+                                            }
+                                            
+                                            JToken styleValue = schedulerValue2["style"];
+                                            if (styleValue != null && styleValue.Type != JTokenType.Null)
+                                            {
+                                                string styleInstance = ((string)styleValue);
+                                                schedulerInstance.Style = styleInstance;
+                                            }
+                                        }
                                     }
                                 }
                                 
@@ -828,7 +902,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + "/datapipelines/";
             url = url + Uri.EscapeDataString(dataPipelineName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-07-01-preview");
+            queryParameters.Add("api-version=2015-08-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1084,6 +1158,48 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                                 }
                                             }
                                         }
+                                        
+                                        JToken schedulerValue = activitiesValue["scheduler"];
+                                        if (schedulerValue != null && schedulerValue.Type != JTokenType.Null)
+                                        {
+                                            Scheduler schedulerInstance = new Scheduler();
+                                            activityInstance.Scheduler = schedulerInstance;
+                                            
+                                            JToken frequencyValue = schedulerValue["frequency"];
+                                            if (frequencyValue != null && frequencyValue.Type != JTokenType.Null)
+                                            {
+                                                string frequencyInstance = ((string)frequencyValue);
+                                                schedulerInstance.Frequency = frequencyInstance;
+                                            }
+                                            
+                                            JToken intervalValue = schedulerValue["interval"];
+                                            if (intervalValue != null && intervalValue.Type != JTokenType.Null)
+                                            {
+                                                uint intervalInstance = ((uint)intervalValue);
+                                                schedulerInstance.Interval = intervalInstance;
+                                            }
+                                            
+                                            JToken anchorDateTimeValue = schedulerValue["anchorDateTime"];
+                                            if (anchorDateTimeValue != null && anchorDateTimeValue.Type != JTokenType.Null)
+                                            {
+                                                DateTime anchorDateTimeInstance = ((DateTime)anchorDateTimeValue);
+                                                schedulerInstance.AnchorDateTime = anchorDateTimeInstance;
+                                            }
+                                            
+                                            JToken offsetValue = schedulerValue["offset"];
+                                            if (offsetValue != null && offsetValue.Type != JTokenType.Null)
+                                            {
+                                                TimeSpan offsetInstance = TimeSpan.Parse(((string)offsetValue), CultureInfo.InvariantCulture);
+                                                schedulerInstance.Offset = offsetInstance;
+                                            }
+                                            
+                                            JToken styleValue = schedulerValue["style"];
+                                            if (styleValue != null && styleValue.Type != JTokenType.Null)
+                                            {
+                                                string styleInstance = ((string)styleValue);
+                                                schedulerInstance.Style = styleInstance;
+                                            }
+                                        }
                                     }
                                 }
                                 
@@ -1261,7 +1377,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + "/datapipelines/";
             url = url + Uri.EscapeDataString(dataPipelineName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-07-01-preview");
+            queryParameters.Add("api-version=2015-08-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1671,7 +1787,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + "/datapipelines/";
             url = url + Uri.EscapeDataString(dataPipelineName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-07-01-preview");
+            queryParameters.Add("api-version=2015-08-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1922,6 +2038,48 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                                 }
                                             }
                                         }
+                                        
+                                        JToken schedulerValue = activitiesValue["scheduler"];
+                                        if (schedulerValue != null && schedulerValue.Type != JTokenType.Null)
+                                        {
+                                            Scheduler schedulerInstance = new Scheduler();
+                                            activityInstance.Scheduler = schedulerInstance;
+                                            
+                                            JToken frequencyValue = schedulerValue["frequency"];
+                                            if (frequencyValue != null && frequencyValue.Type != JTokenType.Null)
+                                            {
+                                                string frequencyInstance = ((string)frequencyValue);
+                                                schedulerInstance.Frequency = frequencyInstance;
+                                            }
+                                            
+                                            JToken intervalValue = schedulerValue["interval"];
+                                            if (intervalValue != null && intervalValue.Type != JTokenType.Null)
+                                            {
+                                                uint intervalInstance = ((uint)intervalValue);
+                                                schedulerInstance.Interval = intervalInstance;
+                                            }
+                                            
+                                            JToken anchorDateTimeValue = schedulerValue["anchorDateTime"];
+                                            if (anchorDateTimeValue != null && anchorDateTimeValue.Type != JTokenType.Null)
+                                            {
+                                                DateTime anchorDateTimeInstance = ((DateTime)anchorDateTimeValue);
+                                                schedulerInstance.AnchorDateTime = anchorDateTimeInstance;
+                                            }
+                                            
+                                            JToken offsetValue = schedulerValue["offset"];
+                                            if (offsetValue != null && offsetValue.Type != JTokenType.Null)
+                                            {
+                                                TimeSpan offsetInstance = TimeSpan.Parse(((string)offsetValue), CultureInfo.InvariantCulture);
+                                                schedulerInstance.Offset = offsetInstance;
+                                            }
+                                            
+                                            JToken styleValue = schedulerValue["style"];
+                                            if (styleValue != null && styleValue.Type != JTokenType.Null)
+                                            {
+                                                string styleInstance = ((string)styleValue);
+                                                schedulerInstance.Style = styleInstance;
+                                            }
+                                        }
                                     }
                                 }
                                 
@@ -2056,7 +2214,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                 
                 // Set Headers
                 httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
-                httpRequest.Headers.Add("x-ms-version", "2015-07-01-preview");
+                httpRequest.Headers.Add("x-ms-version", "2015-08-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2280,6 +2438,48 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                                 }
                                             }
                                         }
+                                        
+                                        JToken schedulerValue = activitiesValue["scheduler"];
+                                        if (schedulerValue != null && schedulerValue.Type != JTokenType.Null)
+                                        {
+                                            Scheduler schedulerInstance = new Scheduler();
+                                            activityInstance.Scheduler = schedulerInstance;
+                                            
+                                            JToken frequencyValue = schedulerValue["frequency"];
+                                            if (frequencyValue != null && frequencyValue.Type != JTokenType.Null)
+                                            {
+                                                string frequencyInstance = ((string)frequencyValue);
+                                                schedulerInstance.Frequency = frequencyInstance;
+                                            }
+                                            
+                                            JToken intervalValue = schedulerValue["interval"];
+                                            if (intervalValue != null && intervalValue.Type != JTokenType.Null)
+                                            {
+                                                uint intervalInstance = ((uint)intervalValue);
+                                                schedulerInstance.Interval = intervalInstance;
+                                            }
+                                            
+                                            JToken anchorDateTimeValue = schedulerValue["anchorDateTime"];
+                                            if (anchorDateTimeValue != null && anchorDateTimeValue.Type != JTokenType.Null)
+                                            {
+                                                DateTime anchorDateTimeInstance = ((DateTime)anchorDateTimeValue);
+                                                schedulerInstance.AnchorDateTime = anchorDateTimeInstance;
+                                            }
+                                            
+                                            JToken offsetValue = schedulerValue["offset"];
+                                            if (offsetValue != null && offsetValue.Type != JTokenType.Null)
+                                            {
+                                                TimeSpan offsetInstance = TimeSpan.Parse(((string)offsetValue), CultureInfo.InvariantCulture);
+                                                schedulerInstance.Offset = offsetInstance;
+                                            }
+                                            
+                                            JToken styleValue = schedulerValue["style"];
+                                            if (styleValue != null && styleValue.Type != JTokenType.Null)
+                                            {
+                                                string styleInstance = ((string)styleValue);
+                                                schedulerInstance.Style = styleInstance;
+                                            }
+                                        }
                                     }
                                 }
                                 
@@ -2449,7 +2649,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + Uri.EscapeDataString(dataFactoryName);
             url = url + "/datapipelines";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-07-01-preview");
+            queryParameters.Add("api-version=2015-08-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2703,6 +2903,48 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                                             string nameInstance4 = ((string)nameValue4);
                                                             activityOutputInstance.Name = nameInstance4;
                                                         }
+                                                    }
+                                                }
+                                                
+                                                JToken schedulerValue = activitiesValue["scheduler"];
+                                                if (schedulerValue != null && schedulerValue.Type != JTokenType.Null)
+                                                {
+                                                    Scheduler schedulerInstance = new Scheduler();
+                                                    activityInstance.Scheduler = schedulerInstance;
+                                                    
+                                                    JToken frequencyValue = schedulerValue["frequency"];
+                                                    if (frequencyValue != null && frequencyValue.Type != JTokenType.Null)
+                                                    {
+                                                        string frequencyInstance = ((string)frequencyValue);
+                                                        schedulerInstance.Frequency = frequencyInstance;
+                                                    }
+                                                    
+                                                    JToken intervalValue = schedulerValue["interval"];
+                                                    if (intervalValue != null && intervalValue.Type != JTokenType.Null)
+                                                    {
+                                                        uint intervalInstance = ((uint)intervalValue);
+                                                        schedulerInstance.Interval = intervalInstance;
+                                                    }
+                                                    
+                                                    JToken anchorDateTimeValue = schedulerValue["anchorDateTime"];
+                                                    if (anchorDateTimeValue != null && anchorDateTimeValue.Type != JTokenType.Null)
+                                                    {
+                                                        DateTime anchorDateTimeInstance = ((DateTime)anchorDateTimeValue);
+                                                        schedulerInstance.AnchorDateTime = anchorDateTimeInstance;
+                                                    }
+                                                    
+                                                    JToken offsetValue = schedulerValue["offset"];
+                                                    if (offsetValue != null && offsetValue.Type != JTokenType.Null)
+                                                    {
+                                                        TimeSpan offsetInstance = TimeSpan.Parse(((string)offsetValue), CultureInfo.InvariantCulture);
+                                                        schedulerInstance.Offset = offsetInstance;
+                                                    }
+                                                    
+                                                    JToken styleValue = schedulerValue["style"];
+                                                    if (styleValue != null && styleValue.Type != JTokenType.Null)
+                                                    {
+                                                        string styleInstance = ((string)styleValue);
+                                                        schedulerInstance.Style = styleInstance;
                                                     }
                                                 }
                                             }
@@ -3080,6 +3322,48 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                                         }
                                                     }
                                                 }
+                                                
+                                                JToken schedulerValue = activitiesValue["scheduler"];
+                                                if (schedulerValue != null && schedulerValue.Type != JTokenType.Null)
+                                                {
+                                                    Scheduler schedulerInstance = new Scheduler();
+                                                    activityInstance.Scheduler = schedulerInstance;
+                                                    
+                                                    JToken frequencyValue = schedulerValue["frequency"];
+                                                    if (frequencyValue != null && frequencyValue.Type != JTokenType.Null)
+                                                    {
+                                                        string frequencyInstance = ((string)frequencyValue);
+                                                        schedulerInstance.Frequency = frequencyInstance;
+                                                    }
+                                                    
+                                                    JToken intervalValue = schedulerValue["interval"];
+                                                    if (intervalValue != null && intervalValue.Type != JTokenType.Null)
+                                                    {
+                                                        uint intervalInstance = ((uint)intervalValue);
+                                                        schedulerInstance.Interval = intervalInstance;
+                                                    }
+                                                    
+                                                    JToken anchorDateTimeValue = schedulerValue["anchorDateTime"];
+                                                    if (anchorDateTimeValue != null && anchorDateTimeValue.Type != JTokenType.Null)
+                                                    {
+                                                        DateTime anchorDateTimeInstance = ((DateTime)anchorDateTimeValue);
+                                                        schedulerInstance.AnchorDateTime = anchorDateTimeInstance;
+                                                    }
+                                                    
+                                                    JToken offsetValue = schedulerValue["offset"];
+                                                    if (offsetValue != null && offsetValue.Type != JTokenType.Null)
+                                                    {
+                                                        TimeSpan offsetInstance = TimeSpan.Parse(((string)offsetValue), CultureInfo.InvariantCulture);
+                                                        schedulerInstance.Offset = offsetInstance;
+                                                    }
+                                                    
+                                                    JToken styleValue = schedulerValue["style"];
+                                                    if (styleValue != null && styleValue.Type != JTokenType.Null)
+                                                    {
+                                                        string styleInstance = ((string)styleValue);
+                                                        schedulerInstance.Style = styleInstance;
+                                                    }
+                                                }
                                             }
                                         }
                                         
@@ -3267,7 +3551,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + Uri.EscapeDataString(dataPipelineName);
             url = url + "/resume";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-07-01-preview");
+            queryParameters.Add("api-version=2015-08-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -3467,7 +3751,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             queryParameters.Add("end=" + Uri.EscapeDataString(parameters.ActivePeriodEndTime));
             queryParameters.Add("autoResolve=" + Uri.EscapeDataString(parameters.AutoResolve.ToString().ToLower()));
             queryParameters.Add("forceRecalc=" + Uri.EscapeDataString(parameters.ForceRecalc.ToString().ToLower()));
-            queryParameters.Add("api-version=2015-07-01-preview");
+            queryParameters.Add("api-version=2015-08-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -3646,7 +3930,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + Uri.EscapeDataString(dataPipelineName);
             url = url + "/pause";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-07-01-preview");
+            queryParameters.Add("api-version=2015-08-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);

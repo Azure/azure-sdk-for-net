@@ -49,11 +49,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         public TableListResponse(string nextLink)
             : this()
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException("nextLink");
-            }
-
+            Ensure.IsNotNull(nextLink, "nextLink");
             this.NextLink = nextLink;
         }
 
@@ -62,7 +58,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
             Ensure.IsNotNull(internalResponse, "internalResponse");
             Ensure.IsNotNull(internalResponse.Tables, "internalResponse.Tables");
 
-            DataFactoryUtilities.CopyRuntimeProperties(internalResponse, this);
+            DataFactoryOperationUtilities.CopyRuntimeProperties(internalResponse, this);
             this.NextLink = internalResponse.NextLink;
             this.Tables = internalResponse.Tables.Select(
                     internalTable => ((TableOperations)client.Tables).Converter.ToWrapperType(internalTable)).ToList();

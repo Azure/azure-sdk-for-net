@@ -19,7 +19,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
     /// <summary>
     /// Contains InternalLinkedService JSON samples. Samples added here will automatically be hit by the serialization unit tests. 
     /// </summary>
-    public class LinkedServiceJsonSamples
+    public class LinkedServiceJsonSamples : JsonSampleCollection<LinkedServiceJsonSamples>
     {
         [JsonSample]
         public const string HDInsightBYOCLinkedService = @"
@@ -99,6 +99,21 @@ namespace DataFactory.Tests.Framework.JsonSamples
     properties:
     {
         type: ""AzureSqlDatabase"",
+        hubName: ""testHub"",
+        typeProperties:
+        {
+            connectionString: ""MyConnectionString"",
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string AzureSqlDataWarehouseLinkedService = @"
+{
+    name: ""Test-Windows-Azure-SQLDW-LinkedService"",
+    properties:
+    {
+        type: ""AzureSqlDW"",
         hubName: ""testHub"",
         typeProperties:
         {
@@ -196,7 +211,8 @@ namespace DataFactory.Tests.Framework.JsonSamples
         type: ""AzureBatch"",
         hubName: ""hubName"",
         typeProperties: {
-            accountName: ""MyAzureBatchAccount"",
+            accountName: ""myaccount"",
+            batchUri: ""myaccount.region.batch.windows.com"",
             accessKey: ""accessKey"",
             poolName: ""MyAzureBatchPool"",
             linkedServiceName: ""MyStorageAssetName""

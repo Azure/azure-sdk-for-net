@@ -105,6 +105,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 {
                     foreach (ExtensionEndpointConfiguration.InputEndpoint inputEndpointsParameterItem in parameters.ExtensionEndpoints.InputEndpoints)
                     {
+                        if (inputEndpointsParameterItem.LocalPort == null)
+                        {
+                            throw new ArgumentNullException("parameters.ExtensionEndpoints.InputEndpoints.LocalPort");
+                        }
                         if (inputEndpointsParameterItem.Name == null)
                         {
                             throw new ArgumentNullException("parameters.ExtensionEndpoints.InputEndpoints.Name");
@@ -112,6 +116,24 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         if (inputEndpointsParameterItem.Protocol == null)
                         {
                             throw new ArgumentNullException("parameters.ExtensionEndpoints.InputEndpoints.Protocol");
+                        }
+                    }
+                }
+                if (parameters.ExtensionEndpoints.InstanceInputEndpoints != null)
+                {
+                    foreach (ExtensionEndpointConfiguration.InstanceInputEndpoint instanceInputEndpointsParameterItem in parameters.ExtensionEndpoints.InstanceInputEndpoints)
+                    {
+                        if (instanceInputEndpointsParameterItem.LocalPort == null)
+                        {
+                            throw new ArgumentNullException("parameters.ExtensionEndpoints.InstanceInputEndpoints.LocalPort");
+                        }
+                        if (instanceInputEndpointsParameterItem.Name == null)
+                        {
+                            throw new ArgumentNullException("parameters.ExtensionEndpoints.InstanceInputEndpoints.Name");
+                        }
+                        if (instanceInputEndpointsParameterItem.Protocol == null)
+                        {
+                            throw new ArgumentNullException("parameters.ExtensionEndpoints.InstanceInputEndpoints.Protocol");
                         }
                     }
                 }
@@ -299,7 +321,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 inputEndpointElement.Add(portElement);
                                 
                                 XElement localPortElement = new XElement(XName.Get("LocalPort", "http://schemas.microsoft.com/windowsazure"));
-                                localPortElement.Value = inputEndpointsItem.LocalPort.ToString();
+                                localPortElement.Value = inputEndpointsItem.LocalPort;
                                 inputEndpointElement.Add(localPortElement);
                             }
                             endpointsElement.Add(inputEndpointsSequenceElement);
@@ -329,6 +351,40 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 internalEndpointElement.Add(portElement2);
                             }
                             endpointsElement.Add(internalEndpointsSequenceElement);
+                        }
+                    }
+                    
+                    if (parameters.ExtensionEndpoints.InstanceInputEndpoints != null)
+                    {
+                        if (parameters.ExtensionEndpoints.InstanceInputEndpoints is ILazyCollection == false || ((ILazyCollection)parameters.ExtensionEndpoints.InstanceInputEndpoints).IsInitialized)
+                        {
+                            XElement instanceInputEndpointsSequenceElement = new XElement(XName.Get("InstanceInputEndpoints", "http://schemas.microsoft.com/windowsazure"));
+                            foreach (ExtensionEndpointConfiguration.InstanceInputEndpoint instanceInputEndpointsItem in parameters.ExtensionEndpoints.InstanceInputEndpoints)
+                            {
+                                XElement instanceInputEndpointElement = new XElement(XName.Get("InstanceInputEndpoint", "http://schemas.microsoft.com/windowsazure"));
+                                instanceInputEndpointsSequenceElement.Add(instanceInputEndpointElement);
+                                
+                                XElement nameElement3 = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                nameElement3.Value = instanceInputEndpointsItem.Name;
+                                instanceInputEndpointElement.Add(nameElement3);
+                                
+                                XElement protocolElement3 = new XElement(XName.Get("Protocol", "http://schemas.microsoft.com/windowsazure"));
+                                protocolElement3.Value = instanceInputEndpointsItem.Protocol;
+                                instanceInputEndpointElement.Add(protocolElement3);
+                                
+                                XElement localPortElement2 = new XElement(XName.Get("LocalPort", "http://schemas.microsoft.com/windowsazure"));
+                                localPortElement2.Value = instanceInputEndpointsItem.LocalPort;
+                                instanceInputEndpointElement.Add(localPortElement2);
+                                
+                                XElement fixedPortMinElement = new XElement(XName.Get("FixedPortMin", "http://schemas.microsoft.com/windowsazure"));
+                                fixedPortMinElement.Value = instanceInputEndpointsItem.FixedPortMin.ToString();
+                                instanceInputEndpointElement.Add(fixedPortMinElement);
+                                
+                                XElement fixedPortMaxElement = new XElement(XName.Get("FixedPortMax", "http://schemas.microsoft.com/windowsazure"));
+                                fixedPortMaxElement.Value = instanceInputEndpointsItem.FixedPortMax.ToString();
+                                instanceInputEndpointElement.Add(fixedPortMaxElement);
+                            }
+                            endpointsElement.Add(instanceInputEndpointsSequenceElement);
                         }
                     }
                 }
@@ -376,9 +432,9 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         XElement localResourceElement = new XElement(XName.Get("LocalResource", "http://schemas.microsoft.com/windowsazure"));
                         localResourcesSequenceElement.Add(localResourceElement);
                         
-                        XElement nameElement3 = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                        nameElement3.Value = localResourcesItem.Name;
-                        localResourceElement.Add(nameElement3);
+                        XElement nameElement4 = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                        nameElement4.Value = localResourcesItem.Name;
+                        localResourceElement.Add(nameElement4);
                         
                         if (localResourcesItem.SizeInMB != null)
                         {
@@ -407,7 +463,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 if (parameters.SampleConfig != null)
                 {
                     XElement sampleConfigElement = new XElement(XName.Get("SampleConfig", "http://schemas.microsoft.com/windowsazure"));
-                    sampleConfigElement.Value = parameters.SampleConfig;
+                    sampleConfigElement.Value = TypeConversion.ToBase64String(parameters.SampleConfig);
                     extensionImageElement.Add(sampleConfigElement);
                 }
                 
@@ -736,6 +792,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 {
                     foreach (ExtensionEndpointConfiguration.InputEndpoint inputEndpointsParameterItem in parameters.ExtensionEndpoints.InputEndpoints)
                     {
+                        if (inputEndpointsParameterItem.LocalPort == null)
+                        {
+                            throw new ArgumentNullException("parameters.ExtensionEndpoints.InputEndpoints.LocalPort");
+                        }
                         if (inputEndpointsParameterItem.Name == null)
                         {
                             throw new ArgumentNullException("parameters.ExtensionEndpoints.InputEndpoints.Name");
@@ -743,6 +803,24 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         if (inputEndpointsParameterItem.Protocol == null)
                         {
                             throw new ArgumentNullException("parameters.ExtensionEndpoints.InputEndpoints.Protocol");
+                        }
+                    }
+                }
+                if (parameters.ExtensionEndpoints.InstanceInputEndpoints != null)
+                {
+                    foreach (ExtensionEndpointConfiguration.InstanceInputEndpoint instanceInputEndpointsParameterItem in parameters.ExtensionEndpoints.InstanceInputEndpoints)
+                    {
+                        if (instanceInputEndpointsParameterItem.LocalPort == null)
+                        {
+                            throw new ArgumentNullException("parameters.ExtensionEndpoints.InstanceInputEndpoints.LocalPort");
+                        }
+                        if (instanceInputEndpointsParameterItem.Name == null)
+                        {
+                            throw new ArgumentNullException("parameters.ExtensionEndpoints.InstanceInputEndpoints.Name");
+                        }
+                        if (instanceInputEndpointsParameterItem.Protocol == null)
+                        {
+                            throw new ArgumentNullException("parameters.ExtensionEndpoints.InstanceInputEndpoints.Protocol");
                         }
                     }
                 }
@@ -936,7 +1014,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 inputEndpointElement.Add(portElement);
                                 
                                 XElement localPortElement = new XElement(XName.Get("LocalPort", "http://schemas.microsoft.com/windowsazure"));
-                                localPortElement.Value = inputEndpointsItem.LocalPort.ToString();
+                                localPortElement.Value = inputEndpointsItem.LocalPort;
                                 inputEndpointElement.Add(localPortElement);
                             }
                             endpointsElement.Add(inputEndpointsSequenceElement);
@@ -966,6 +1044,40 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 internalEndpointElement.Add(portElement2);
                             }
                             endpointsElement.Add(internalEndpointsSequenceElement);
+                        }
+                    }
+                    
+                    if (parameters.ExtensionEndpoints.InstanceInputEndpoints != null)
+                    {
+                        if (parameters.ExtensionEndpoints.InstanceInputEndpoints is ILazyCollection == false || ((ILazyCollection)parameters.ExtensionEndpoints.InstanceInputEndpoints).IsInitialized)
+                        {
+                            XElement instanceInputEndpointsSequenceElement = new XElement(XName.Get("InstanceInputEndpoints", "http://schemas.microsoft.com/windowsazure"));
+                            foreach (ExtensionEndpointConfiguration.InstanceInputEndpoint instanceInputEndpointsItem in parameters.ExtensionEndpoints.InstanceInputEndpoints)
+                            {
+                                XElement instanceInputEndpointElement = new XElement(XName.Get("InstanceInputEndpoint", "http://schemas.microsoft.com/windowsazure"));
+                                instanceInputEndpointsSequenceElement.Add(instanceInputEndpointElement);
+                                
+                                XElement nameElement3 = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                nameElement3.Value = instanceInputEndpointsItem.Name;
+                                instanceInputEndpointElement.Add(nameElement3);
+                                
+                                XElement protocolElement3 = new XElement(XName.Get("Protocol", "http://schemas.microsoft.com/windowsazure"));
+                                protocolElement3.Value = instanceInputEndpointsItem.Protocol;
+                                instanceInputEndpointElement.Add(protocolElement3);
+                                
+                                XElement localPortElement2 = new XElement(XName.Get("LocalPort", "http://schemas.microsoft.com/windowsazure"));
+                                localPortElement2.Value = instanceInputEndpointsItem.LocalPort;
+                                instanceInputEndpointElement.Add(localPortElement2);
+                                
+                                XElement fixedPortMinElement = new XElement(XName.Get("FixedPortMin", "http://schemas.microsoft.com/windowsazure"));
+                                fixedPortMinElement.Value = instanceInputEndpointsItem.FixedPortMin.ToString();
+                                instanceInputEndpointElement.Add(fixedPortMinElement);
+                                
+                                XElement fixedPortMaxElement = new XElement(XName.Get("FixedPortMax", "http://schemas.microsoft.com/windowsazure"));
+                                fixedPortMaxElement.Value = instanceInputEndpointsItem.FixedPortMax.ToString();
+                                instanceInputEndpointElement.Add(fixedPortMaxElement);
+                            }
+                            endpointsElement.Add(instanceInputEndpointsSequenceElement);
                         }
                     }
                 }
@@ -1013,9 +1125,9 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         XElement localResourceElement = new XElement(XName.Get("LocalResource", "http://schemas.microsoft.com/windowsazure"));
                         localResourcesSequenceElement.Add(localResourceElement);
                         
-                        XElement nameElement3 = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                        nameElement3.Value = localResourcesItem.Name;
-                        localResourceElement.Add(nameElement3);
+                        XElement nameElement4 = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                        nameElement4.Value = localResourcesItem.Name;
+                        localResourceElement.Add(nameElement4);
                         
                         if (localResourcesItem.SizeInMB != null)
                         {
@@ -1044,7 +1156,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 if (parameters.SampleConfig != null)
                 {
                     XElement sampleConfigElement = new XElement(XName.Get("SampleConfig", "http://schemas.microsoft.com/windowsazure"));
-                    sampleConfigElement.Value = parameters.SampleConfig;
+                    sampleConfigElement.Value = TypeConversion.ToBase64String(parameters.SampleConfig);
                     extensionImageElement.Add(sampleConfigElement);
                 }
                 
