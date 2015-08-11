@@ -13,14 +13,11 @@
 // ----------------------------------------------------------------------------------
 
 using Microsoft.Azure.Common.Authentication;
-using Microsoft.Azure.Common.Authentication.Factories;
 using Microsoft.Azure.Common.Authentication.Models;
 using Microsoft.WindowsAzure.Management.Storage;
 using System;
 using System.Collections.Generic;
-using System.Net.Http.Headers;
 using System.Security;
-using System.Linq;
 using Xunit;
 
 namespace Common.Authentication.Test
@@ -28,7 +25,7 @@ namespace Common.Authentication.Test
     public class ClientFactoryTests
     {
         private string subscriptionId;
-        
+
         private string userAccount;
 
         private SecureString password;
@@ -79,7 +76,7 @@ namespace Common.Authentication.Test
                     Environment = "AzureCloud",
                     Id = Guid.Parse(subscriptionId),
                     Properties = new Dictionary<AzureSubscription.Property, string>() { { AzureSubscription.Property.Tenants, "common" } }
-                }, 
+                },
                 new AzureAccount()
                 {
                     Id = userAccount,
@@ -88,13 +85,13 @@ namespace Common.Authentication.Test
                 },
                 AzureEnvironment.PublicEnvironments["AzureCloud"]
             );
-            
+
             // Add registration action to make sure we register for the used provider (if required)
             // AzureSession.ClientFactory.AddAction(new RPRegistrationAction());
 
             // Authenticate!
             AzureSession.AuthenticationFactory.Authenticate(context.Account, context.Environment, "common", password, ShowDialog.Always);
-            
+
             // Create the client
             var client = AzureSession.ClientFactory.CreateClient<StorageManagementClient>(context, AzureEnvironment.Endpoint.ServiceManagement);
 
@@ -105,24 +102,5 @@ namespace Common.Authentication.Test
                 Assert.NotNull(storageAccount);
             }
         }
-
-        [Fact]
-        public void VerifyProductInfoHeaderValueEquality()
-        {
-            ClientFactory factory = new ClientFactory();
-            factory.AddUserAgent("test1", "123");
-            factory.AddUserAgent("test2", "123");
-            factory.AddUserAgent("test1", "123");
-            factory.AddUserAgent("test1", "456");
-            factory.AddUserAgent("test3");
-            factory.AddUserAgent("tesT3");
-            
-            Assert.Equal(4, factory.UserAgents.Count);
-            Assert.True(factory.UserAgents.Any(u => u.Product.Name == "test1" && u.Product.Version == "123"));
-            Assert.True(factory.UserAgents.Any(u => u.Product.Name == "test2" && u.Product.Version == "123"));
-            Assert.True(factory.UserAgents.Any(u => u.Product.Name == "test1" && u.Product.Version == "456"));
-            Assert.True(factory.UserAgents.Any(u => u.Product.Name == "test3" && u.Product.Version == null));
-        }
     }
 }
-;
