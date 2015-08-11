@@ -20,34 +20,36 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Azure.Management.Sql.Models;
+using Hyak.Common;
+using Microsoft.Azure;
+using Microsoft.WindowsAzure.Management.RemoteApp.Models;
 
-namespace Microsoft.Azure.Management.Sql.Models
+namespace Microsoft.WindowsAzure.Management.RemoteApp.Models
 {
     /// <summary>
-    /// Represents the properties of an Azure SQL auditing policy.
+    /// List of virtual machines in a given collection.
     /// </summary>
-    public partial class DatabaseAuditingPolicyProperties : BaseAuditingPolicyProperties
+    public partial class CollectionVmsListResult : AzureOperationResponse
     {
-        private string _useServerDefault;
+        private IList<RemoteAppVm> _vms;
         
         /// <summary>
-        /// Optional. Indicates whether the default server auditing policy is
-        /// used for that Azure SQL Database.
+        /// Optional. The list of virtual machines in collection.
         /// </summary>
-        public string UseServerDefault
+        public IList<RemoteAppVm> Vms
         {
-            get { return this._useServerDefault; }
-            set { this._useServerDefault = value; }
+            get { return this._vms; }
+            set { this._vms = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the DatabaseAuditingPolicyProperties
-        /// class.
+        /// Initializes a new instance of the CollectionVmsListResult class.
         /// </summary>
-        public DatabaseAuditingPolicyProperties()
+        public CollectionVmsListResult()
         {
+            this.Vms = new LazyList<RemoteAppVm>();
         }
     }
 }

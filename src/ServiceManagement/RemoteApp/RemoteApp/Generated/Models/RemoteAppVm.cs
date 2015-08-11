@@ -20,34 +20,45 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Azure.Management.Sql.Models;
+using Hyak.Common;
 
-namespace Microsoft.Azure.Management.Sql.Models
+namespace Microsoft.WindowsAzure.Management.RemoteApp.Models
 {
     /// <summary>
-    /// Represents the properties of an Azure SQL auditing policy.
+    /// Collection VM details.
     /// </summary>
-    public partial class DatabaseAuditingPolicyProperties : BaseAuditingPolicyProperties
+    public partial class RemoteAppVm
     {
-        private string _useServerDefault;
+        private IList<string> _loggedOnUserUpns;
         
         /// <summary>
-        /// Optional. Indicates whether the default server auditing policy is
-        /// used for that Azure SQL Database.
+        /// Optional. List of users logged into VM.
         /// </summary>
-        public string UseServerDefault
+        public IList<string> LoggedOnUserUpns
         {
-            get { return this._useServerDefault; }
-            set { this._useServerDefault = value; }
+            get { return this._loggedOnUserUpns; }
+            set { this._loggedOnUserUpns = value; }
+        }
+        
+        private string _virtualMachineName;
+        
+        /// <summary>
+        /// Optional. Name of the VM.
+        /// </summary>
+        public string VirtualMachineName
+        {
+            get { return this._virtualMachineName; }
+            set { this._virtualMachineName = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the DatabaseAuditingPolicyProperties
-        /// class.
+        /// Initializes a new instance of the RemoteAppVm class.
         /// </summary>
-        public DatabaseAuditingPolicyProperties()
+        public RemoteAppVm()
         {
+            this.LoggedOnUserUpns = new LazyList<string>();
         }
     }
 }
