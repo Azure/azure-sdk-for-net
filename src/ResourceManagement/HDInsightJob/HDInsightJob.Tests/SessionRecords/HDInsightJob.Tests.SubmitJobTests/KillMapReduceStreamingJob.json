@@ -1,0 +1,169 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/templeton/v1/mapreduce/jar?user.name=hadoopuser",
+      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9tYXByZWR1Y2UvamFyP3VzZXIubmFtZT1oYWRvb3B1c2Vy",
+      "RequestMethod": "POST",
+      "RequestBody": "user.name=hadoopuser&jar=/example/jars/hadoop-mapreduce-examples.jar&class=pi&define=mapreduce.map.maxattempts%3D10&define=mapreduce.reduce.maxattempts%3D10&define=mapreduce.task.timeout%3D60000&arg=10&arg=1000&statusdir=&enablelog=&LibJars=&Files=",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/text"
+        ],
+        "Content-Length": [
+          "248"
+        ],
+        "accept": [
+          "application/json"
+        ],
+        "useragent": [
+          "xplat MapReduce job submission"
+        ],
+        "User-Agent": [
+          "xplat",
+          "MapReduce",
+          "job",
+          "submission"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"job_1435101021696_0045\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "31"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "x-ms-hdi-servedby": [
+          "GATEWAY0"
+        ],
+        "x-ms-hdi-active": [
+          "headnode0.hdisdk-resize1.d6.internal.cloudapp.net"
+        ],
+        "x-ms-leader-detect-time": [
+          "0"
+        ],
+        "Set-Cookie": [
+          "hadoop.auth=\"u=hadoopuser&p=hadoopuser&t=simple&e=1435732431490&s=2n2x46kI1xq+3FQV4B3nP3f769Y=\"; Version=1; Path=/; Expires=Wed, 01-Jul-2015 06:33:51 GMT; HttpOnly"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ARR/2.5",
+          "ASP.NET"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 30 Jun 2015 20:33:53 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/templeton/v1/jobs/job_1435101021696_0045?user.name=hadoopuser",
+      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDM1MTAxMDIxNjk2XzAwNDU/dXNlci5uYW1lPWhhZG9vcHVzZXI=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "accept": [
+          "application/json"
+        ],
+        "useragent": [
+          "xplat get job"
+        ],
+        "User-Agent": [
+          "xplat",
+          "get",
+          "job"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": {\r\n    \"jobID\": {\r\n      \"jtIdentifier\": \"1435101021696\",\r\n      \"id\": 45\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobId\": \"job_1435101021696_0045\",\r\n    \"runState\": 4,\r\n    \"finishTime\": 0,\r\n    \"priority\": \"NORMAL\",\r\n    \"state\": \"PREP\",\r\n    \"trackingUrl\": \"http://headnodehost:9014/proxy/application_1435101021696_0045/\",\r\n    \"numReservedSlots\": 0,\r\n    \"reservedMem\": 0,\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"numUsedSlots\": 0,\r\n    \"username\": \"hadoopuser\",\r\n    \"jobFile\": \"/user/hadoopuser/.staging/job_1435101021696_0045/job.xml\",\r\n    \"startTime\": 1435696434170,\r\n    \"retired\": false,\r\n    \"neededMem\": 0,\r\n    \"usedMem\": 0,\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"historyFile\": \"\",\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 0.0,\r\n    \"jobComplete\": false,\r\n    \"uber\": false,\r\n    \"jobACLs\": {},\r\n    \"queue\": \"default\"\r\n  },\r\n  \"profile\": {\r\n    \"url\": \"http://headnodehost:9014/proxy/application_1435101021696_0045/\",\r\n    \"jobFile\": \"/user/hadoopuser/.staging/job_1435101021696_0045/job.xml\",\r\n    \"jobID\": {\r\n      \"jtIdentifier\": \"1435101021696\",\r\n      \"id\": 45\r\n    },\r\n    \"user\": \"hadoopuser\",\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1435101021696_0045\"\r\n  },\r\n  \"id\": \"job_1435101021696_0045\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"hadoopuser\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"\",\r\n    \"define\": [\r\n      \"mapreduce.map.maxattempts=10\",\r\n      \"mapreduce.reduce.maxattempts=10\",\r\n      \"mapreduce.task.timeout=60000\"\r\n    ],\r\n    \"arg\": [\r\n      \"10\",\r\n      \"1000\"\r\n    ],\r\n    \"files\": null,\r\n    \"enablelog\": \"false\",\r\n    \"libjars\": null,\r\n    \"user.name\": \"hadoopuser\",\r\n    \"jar\": \"/example/jars/hadoop-mapreduce-examples.jar\",\r\n    \"callback\": null,\r\n    \"class\": \"pi\"\r\n  },\r\n  \"msg\": null\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1482"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "x-ms-hdi-servedby": [
+          "GATEWAY0"
+        ],
+        "x-ms-hdi-active": [
+          "headnode0.hdisdk-resize1.d6.internal.cloudapp.net"
+        ],
+        "x-ms-leader-detect-time": [
+          "0"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ARR/2.5",
+          "ASP.NET"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 30 Jun 2015 20:33:53 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/templeton/v1/jobs/job_1435101021696_0045?user.name=hadoopuser",
+      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDM1MTAxMDIxNjk2XzAwNDU/dXNlci5uYW1lPWhhZG9vcHVzZXI=",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "accept": [
+          "application/json"
+        ],
+        "useragent": [
+          "xplat get job"
+        ],
+        "User-Agent": [
+          "xplat",
+          "get",
+          "job"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": {\r\n    \"jobID\": {\r\n      \"jtIdentifier\": \"1435101021696\",\r\n      \"id\": 45\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobId\": \"job_1435101021696_0045\",\r\n    \"runState\": 5,\r\n    \"finishTime\": 1435696435481,\r\n    \"priority\": \"NORMAL\",\r\n    \"state\": \"KILLED\",\r\n    \"trackingUrl\": \"headnodehost:9014/cluster/app/application_1435101021696_0045\",\r\n    \"numReservedSlots\": 0,\r\n    \"reservedMem\": 0,\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"numUsedSlots\": 0,\r\n    \"username\": \"hadoopuser\",\r\n    \"jobFile\": \"/user/hadoopuser/.staging/job_1435101021696_0045/job.xml\",\r\n    \"startTime\": 1435696434170,\r\n    \"retired\": false,\r\n    \"neededMem\": 0,\r\n    \"usedMem\": 0,\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"historyFile\": \"\",\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 0.0,\r\n    \"jobComplete\": true,\r\n    \"uber\": false,\r\n    \"jobACLs\": {},\r\n    \"queue\": \"default\"\r\n  },\r\n  \"profile\": {\r\n    \"url\": null,\r\n    \"jobFile\": \"/user/hadoopuser/.staging/job_1435101021696_0045/job.xml\",\r\n    \"jobID\": {\r\n      \"jtIdentifier\": \"1435101021696\",\r\n      \"id\": 45\r\n    },\r\n    \"user\": \"hadoopuser\",\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1435101021696_0045\"\r\n  },\r\n  \"id\": \"job_1435101021696_0045\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"hadoopuser\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"\",\r\n    \"define\": [\r\n      \"mapreduce.map.maxattempts=10\",\r\n      \"mapreduce.reduce.maxattempts=10\",\r\n      \"mapreduce.task.timeout=60000\"\r\n    ],\r\n    \"arg\": [\r\n      \"10\",\r\n      \"1000\"\r\n    ],\r\n    \"files\": null,\r\n    \"enablelog\": \"false\",\r\n    \"libjars\": null,\r\n    \"user.name\": \"hadoopuser\",\r\n    \"jar\": \"/example/jars/hadoop-mapreduce-examples.jar\",\r\n    \"callback\": null,\r\n    \"class\": \"pi\"\r\n  },\r\n  \"msg\": null\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1433"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "x-ms-hdi-servedby": [
+          "GATEWAY0"
+        ],
+        "x-ms-hdi-active": [
+          "headnode0.hdisdk-resize1.d6.internal.cloudapp.net"
+        ],
+        "x-ms-leader-detect-time": [
+          "0"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ARR/2.5",
+          "ASP.NET"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 30 Jun 2015 20:33:54 GMT"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}
