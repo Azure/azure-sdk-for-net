@@ -10,9 +10,6 @@
   <ItemGroup>
     <Compile Include="ComputeOperationTests.cs" />
     <Compile Include="IntegrationTests.Compute.cs" />
-    <None Include="MockSessionRecords.ps1">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ExtensionImageTests.cs" />
     <Compile Include="PirTests.cs" />
@@ -20,6 +17,7 @@
     <Compile Include="TestFixtureData.cs" />
     <Compile Include="HostedServiceOperationTests.cs" />
     <Compile Include="TestUtilities\ComputeManagementClientUndoHandlers.cs" />
+    <Compile Include="TestUtilities\ComputeManagementTestUtilities.cs" />
     <Compile Include="TestUtilities\ManagementTestUtilities.cs" />
     <Compile Include="TestUtilities\StorageTestUtilities.cs" />
     <Compile Include="TestUtilities\TestLogTracingInterceptor.cs" />
@@ -113,9 +111,6 @@
     <None Include="SessionRecords\Microsoft.WindowsAzure.Management.Compute.Testing.VirtualMachineReproTests\CanCreateVMWithVMImage.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="SessionRecords\Microsoft.WindowsAzure.Management.Compute.Testing.VirtualMachineReproTests\CanUpdateHostedServiceExtendedProperties.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="SessionRecords\Microsoft.WindowsAzure.Management.Compute.Testing.VirtualMachineReproTests\CanUpdateVMInputEndpoints.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -147,11 +142,4 @@
       <Name>ComputeManagement</Name>
     </ProjectReference>
   </ItemGroup>
-  <Target Name="AfterBuild">
-    <PropertyGroup>
-      <PowerShellExe Condition=" '$(PowerShellExe)'=='' ">%WINDIR%\System32\WindowsPowerShell\v1.0\powershell.exe</PowerShellExe>
-      <MockSessionRecordScriptPath>"$(OutputPath)\MockSessionRecords.ps1"</MockSessionRecordScriptPath>
-    </PropertyGroup>
-    <Exec Command="$(PowerShellExe) $(MockSessionRecordScriptPath)" />
-  </Target>
 </Project>

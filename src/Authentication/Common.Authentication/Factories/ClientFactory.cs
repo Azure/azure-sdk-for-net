@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Common.Authentication.Factories
                 profileClient.GetEnvironmentOrDefault(subscription.Environment));
 
             var creds = AzureSession.AuthenticationFactory.GetServiceClientCredentials(context);
-            TClient client = CreateCustomArmClient<TClient>(context.Environment.GetEndpointAsUri(endpoint), creds, new DelegatingHandler[] { });
+            TClient client = CreateCustomArmClient<TClient>(context.Environment.GetEndpointAsUri(endpoint), creds, new DelegatingHandler[]{});
 
             foreach (IClientAction action in actions.Values)
             {
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Common.Authentication.Factories
             }
 
             var creds = AzureSession.AuthenticationFactory.GetServiceClientCredentials(context);
-            TClient client = CreateCustomArmClient<TClient>(context.Environment.GetEndpointAsUri(endpoint), creds, new DelegatingHandler[] { });
+            TClient client = CreateCustomArmClient<TClient>(context.Environment.GetEndpointAsUri(endpoint), creds, new DelegatingHandler[]{});
 
             var subscriptionId = typeof(TClient).GetProperty("SubscriptionId");
             if (subscriptionId != null && context.Subscription != null)
@@ -90,7 +90,7 @@ namespace Microsoft.Azure.Common.Authentication.Factories
             {
                 types.Add(obj.GetType());
             }
-
+            
             var constructor = typeof(TClient).GetConstructor(types.ToArray());
 
             if (constructor == null)

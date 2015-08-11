@@ -181,20 +181,6 @@ namespace Microsoft.WindowsAzure.Management.RemoteApp
         Task<CollectionSessionListResult> ListSessionsAsync(string collectionName, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Gets the list of all virtual machines in the collection.
-        /// </summary>
-        /// <param name='collectionName'>
-        /// The RemoteApp collection name where vms exist.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// List of virtual machines in a given collection.
-        /// </returns>
-        Task<CollectionVmsListResult> ListVmsAsync(string collectionName, CancellationToken cancellationToken);
-        
-        /// <summary>
         /// Logs off the session associated with the user UPN
         /// </summary>
         /// <param name='collectionName'>
@@ -222,23 +208,6 @@ namespace Microsoft.WindowsAzure.Management.RemoteApp
         /// The list of locations.
         /// </returns>
         Task<RegionListResult> RegionListAsync(CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Restarts VM associated with a collection.
-        /// </summary>
-        /// <param name='collectionName'>
-        /// The RemoteApp collection name containing the VM to be restarted.
-        /// </param>
-        /// <param name='details'>
-        /// The details of VM to be restarted.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The response containing the operation tracking id.
-        /// </returns>
-        Task<OperationResultWithTrackingId> RestartVmAsync(string collectionName, RestartVmCommandParameter details, CancellationToken cancellationToken);
         
         /// <summary>
         /// Sends message to the session associated with the user UPN

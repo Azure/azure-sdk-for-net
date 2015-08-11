@@ -25,15 +25,14 @@ using System.Linq;
 namespace Microsoft.Azure.Management.TrafficManager.Models
 {
     /// <summary>
-    /// Class containing the properties of a Traffic Manager endpoint.
+    /// Properties of an endpoint.
     /// </summary>
     public partial class EndpointProperties
     {
         private string _endpointLocation;
         
         /// <summary>
-        /// Optional. Specifies the location of the external or nested
-        /// endpoints when using the ‘Performance’ traffic routing method.
+        /// Optional. Gets or sets the location of the endpoint.
         /// </summary>
         public string EndpointLocation
         {
@@ -44,7 +43,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
         private string _endpointMonitorStatus;
         
         /// <summary>
-        /// Optional. Gets or sets the monitoring status of the endpoint.
+        /// Optional. Gets or sets the monitor status of the endpoint.
         /// </summary>
         public string EndpointMonitorStatus
         {
@@ -55,10 +54,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
         private string _endpointStatus;
         
         /// <summary>
-        /// Optional. Gets or sets the status of the endpoint..  If the
-        /// endpoint is Enabled, it is probed for endpoint health and is
-        /// included in the traffic routing method.  Possible values are
-        /// 'Enabled' and 'Disabled'.
+        /// Required. Gets or sets the status of the endpoint.
         /// </summary>
         public string EndpointStatus
         {
@@ -69,11 +65,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
         private uint? _priority;
         
         /// <summary>
-        /// Optional. Gets or sets the priority of this endpoint when using the
-        /// ‘Priority’ traffic routing method. Possible values are from 1 to
-        /// 1000, lower values represent higher priority. This is an optional
-        /// parameter.  If specified, it must be specified on all endpoints,
-        /// and no two endpoints can share the same priority value.
+        /// Optional. Gets or sets the priority of the endpoint.
         /// </summary>
         public uint? Priority
         {
@@ -84,9 +76,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
         private string _target;
         
         /// <summary>
-        /// Optional. Gets or sets the fully-qualified DNS name of the
-        /// endpoint.  Traffic Manager returns this value in DNS responses to
-        /// direct traffic to this endpoint.
+        /// Required. Gets or sets the target of the endpoint.
         /// </summary>
         public string Target
         {
@@ -97,8 +87,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
         private string _targetResourceId;
         
         /// <summary>
-        /// Optional. Gets or sets the Azure Resource URI of the of the
-        /// endpoint.  Not applicable to endpoints of type 'ExternalEndpoints'.
+        /// Optional. Gets or sets the targetResourceId of the endpoint.
         /// </summary>
         public string TargetResourceId
         {
@@ -109,9 +98,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
         private uint? _weight;
         
         /// <summary>
-        /// Optional. Gets or sets the weight of this endpoint when using the
-        /// 'Weighted' traffic routing method. Possible values are from 1 to
-        /// 1000.
+        /// Optional. Gets or sets the weight of the endpoint.
         /// </summary>
         public uint? Weight
         {
@@ -124,6 +111,25 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
         /// </summary>
         public EndpointProperties()
         {
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the EndpointProperties class with
+        /// required arguments.
+        /// </summary>
+        public EndpointProperties(string target, string endpointStatus)
+            : this()
+        {
+            if (target == null)
+            {
+                throw new ArgumentNullException("target");
+            }
+            if (endpointStatus == null)
+            {
+                throw new ArgumentNullException("endpointStatus");
+            }
+            this.Target = target;
+            this.EndpointStatus = endpointStatus;
         }
     }
 }

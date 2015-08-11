@@ -85,26 +85,5 @@ namespace Compute.Tests
                 }
             }
         }
-
-        [Fact]
-        public void TestListVMInSubscriptionWithPaging()
-        {
-            using (var context = UndoContext.Current)
-            {
-                context.Start();
-                EnsureClientsInitialized();
-
-                var listResponse = m_CrpClient.VirtualMachines.ListAll(new ListParameters());
-                Assert.True(listResponse.StatusCode == HttpStatusCode.OK);
-
-                while (!string.IsNullOrEmpty(listResponse.NextLink))
-                {
-                    Assert.True(listResponse.VirtualMachines.Count == 50);
-                    listResponse = m_CrpClient.VirtualMachines.ListNext(listResponse.NextLink);
-                }
-
-                Assert.True(listResponse.VirtualMachines.Count <= 50);
-            }
-        }
     }
 }

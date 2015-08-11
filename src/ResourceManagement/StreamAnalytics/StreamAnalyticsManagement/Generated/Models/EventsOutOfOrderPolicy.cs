@@ -25,8 +25,7 @@ using System.Linq;
 namespace Microsoft.Azure.Management.StreamAnalytics.Models
 {
     /// <summary>
-    /// Indicates the policy to apply to events that arrive out of order in the
-    /// input event stream.
+    /// The events out of order policy.
     /// </summary>
     public static partial class EventsOutOfOrderPolicy
     {

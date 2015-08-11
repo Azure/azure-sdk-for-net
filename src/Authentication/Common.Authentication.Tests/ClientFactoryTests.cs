@@ -25,7 +25,7 @@ namespace Common.Authentication.Test
     public class ClientFactoryTests
     {
         private string subscriptionId;
-
+        
         private string userAccount;
 
         private SecureString password;
@@ -76,7 +76,7 @@ namespace Common.Authentication.Test
                     Environment = "AzureCloud",
                     Id = Guid.Parse(subscriptionId),
                     Properties = new Dictionary<AzureSubscription.Property, string>() { { AzureSubscription.Property.Tenants, "common" } }
-                },
+                }, 
                 new AzureAccount()
                 {
                     Id = userAccount,
@@ -85,13 +85,13 @@ namespace Common.Authentication.Test
                 },
                 AzureEnvironment.PublicEnvironments["AzureCloud"]
             );
-
+            
             // Add registration action to make sure we register for the used provider (if required)
             // AzureSession.ClientFactory.AddAction(new RPRegistrationAction());
 
             // Authenticate!
             AzureSession.AuthenticationFactory.Authenticate(context.Account, context.Environment, "common", password, ShowDialog.Always);
-
+            
             // Create the client
             var client = AzureSession.ClientFactory.CreateClient<StorageManagementClient>(context, AzureEnvironment.Endpoint.ServiceManagement);
 

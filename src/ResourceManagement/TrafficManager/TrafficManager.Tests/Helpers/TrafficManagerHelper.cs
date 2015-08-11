@@ -99,8 +99,10 @@ namespace Microsoft.Azure.Management.TrafficManager.Testing.Helpers
             };
         }
 
-        public static Profile GenerateDefaultProfile(string profileName, string relativeName = null)
+        public static Profile GenerateDefaultProfile(string profileName)
         {
+            string relativeName = TestUtilities.GenerateName("foohydratestrelativeName");
+
             return TrafficManagerHelper.BuildProfile(
                 id: null,
                 name: profileName,
@@ -111,7 +113,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Testing.Helpers
                 trafficRoutingMethod: "Performance",
                 dnsConfig: new DnsConfig
                 {
-                    RelativeName = relativeName ?? TestUtilities.GenerateName("foohydratestrelativeName"),
+                    RelativeName = relativeName,
                     Ttl = 35
                 }, 
                 monitorConfig: new MonitorConfig
@@ -122,30 +124,20 @@ namespace Microsoft.Azure.Management.TrafficManager.Testing.Helpers
                 }, 
                 endpoints: new []
                 {
-                    GenerateDefaultEndpoint()
+                    new Endpoint
+                    {
+                        Id = null,
+                        Name = "My external endpoint",
+                        Type = "Microsoft.network/TrafficManagerProfiles/ExternalEndpoints",
+                        Properties = new EndpointProperties
+                        {
+                            TargetResourceId = null,
+                            Target = "foobar.contoso.com",
+                            EndpointLocation = "North Europe",
+                            EndpointStatus = "Enabled"
+                        }
+                    } 
                 });
-        }
-
-        public static Endpoint GenerateDefaultEndpoint(string name = null)
-        {
-            return new Endpoint
-            {
-                Id = null,
-                Name = name ?? "My external endpoint",
-                Type = "Microsoft.network/TrafficManagerProfiles/ExternalEndpoints",
-                Properties = new EndpointProperties
-                {
-                    TargetResourceId = null,
-                    Target = "foobar.contoso.com",
-                    EndpointLocation = "North Europe",
-                    EndpointStatus = "Enabled"
-                }
-            };
-        }
-
-        public static string ExtractResourceGroupFromId(string id)
-        {
-            return id.Split('/')[4];
         }
     }
 }

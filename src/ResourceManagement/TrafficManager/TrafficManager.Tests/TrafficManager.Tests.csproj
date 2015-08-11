@@ -10,7 +10,6 @@
   <ItemGroup>
     <Compile Include="Helpers\TrafficManagerHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ScenarioTests\EndpointScenarioTests.cs" />
     <Compile Include="ScenarioTests\ProfileScenarioTests.cs">
       <SubType>Code</SubType>
     </Compile>

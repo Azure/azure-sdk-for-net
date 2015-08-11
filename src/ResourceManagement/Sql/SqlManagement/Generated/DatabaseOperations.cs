@@ -224,16 +224,6 @@ namespace Microsoft.Azure.Management.Sql
                     propertiesValue["elasticPoolName"] = parameters.Properties.ElasticPoolName;
                 }
                 
-                if (parameters.Properties.SourceDatabaseId != null)
-                {
-                    propertiesValue["sourceDatabaseId"] = parameters.Properties.SourceDatabaseId;
-                }
-                
-                if (parameters.Properties.CreateMode != null)
-                {
-                    propertiesValue["createMode"] = parameters.Properties.CreateMode;
-                }
-                
                 databaseCreateOrUpdateParametersValue["location"] = parameters.Location;
                 
                 if (parameters.Tags != null)
@@ -1109,13 +1099,6 @@ namespace Microsoft.Azure.Management.Sql
                                             }
                                         }
                                     }
-                                }
-                                
-                                JToken defaultSecondaryLocationValue = propertiesValue2["defaultSecondaryLocation"];
-                                if (defaultSecondaryLocationValue != null && defaultSecondaryLocationValue.Type != JTokenType.Null)
-                                {
-                                    string defaultSecondaryLocationInstance = ((string)defaultSecondaryLocationValue);
-                                    propertiesInstance.DefaultSecondaryLocation = defaultSecondaryLocationInstance;
                                 }
                             }
                             
@@ -2377,13 +2360,6 @@ namespace Microsoft.Azure.Management.Sql
                                         }
                                     }
                                 }
-                                
-                                JToken defaultSecondaryLocationValue = propertiesValue["defaultSecondaryLocation"];
-                                if (defaultSecondaryLocationValue != null && defaultSecondaryLocationValue.Type != JTokenType.Null)
-                                {
-                                    string defaultSecondaryLocationInstance = ((string)defaultSecondaryLocationValue);
-                                    propertiesInstance.DefaultSecondaryLocation = defaultSecondaryLocationInstance;
-                                }
                             }
                             
                             JToken idValue8 = responseDoc["id"];
@@ -3397,13 +3373,6 @@ namespace Microsoft.Azure.Management.Sql
                                                 }
                                             }
                                         }
-                                        
-                                        JToken defaultSecondaryLocationValue = propertiesValue["defaultSecondaryLocation"];
-                                        if (defaultSecondaryLocationValue != null && defaultSecondaryLocationValue.Type != JTokenType.Null)
-                                        {
-                                            string defaultSecondaryLocationInstance = ((string)defaultSecondaryLocationValue);
-                                            propertiesInstance.DefaultSecondaryLocation = defaultSecondaryLocationInstance;
-                                        }
                                     }
                                     
                                     JToken idValue8 = valueValue["id"];
@@ -4386,13 +4355,6 @@ namespace Microsoft.Azure.Management.Sql
                                         }
                                     }
                                 }
-                                
-                                JToken defaultSecondaryLocationValue = propertiesValue["defaultSecondaryLocation"];
-                                if (defaultSecondaryLocationValue != null && defaultSecondaryLocationValue.Type != JTokenType.Null)
-                                {
-                                    string defaultSecondaryLocationInstance = ((string)defaultSecondaryLocationValue);
-                                    propertiesInstance.DefaultSecondaryLocation = defaultSecondaryLocationInstance;
-                                }
                             }
                             
                             JToken idValue8 = responseDoc["id"];
@@ -4441,11 +4403,11 @@ namespace Microsoft.Azure.Management.Sql
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
-                    if (statusCode == HttpStatusCode.OK)
+                    if (statusCode == HttpStatusCode.Created)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
-                    if (statusCode == HttpStatusCode.Created)
+                    if (statusCode == HttpStatusCode.OK)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
@@ -5413,13 +5375,6 @@ namespace Microsoft.Azure.Management.Sql
                                             }
                                         }
                                     }
-                                }
-                                
-                                JToken defaultSecondaryLocationValue = propertiesValue["defaultSecondaryLocation"];
-                                if (defaultSecondaryLocationValue != null && defaultSecondaryLocationValue.Type != JTokenType.Null)
-                                {
-                                    string defaultSecondaryLocationInstance = ((string)defaultSecondaryLocationValue);
-                                    propertiesInstance.DefaultSecondaryLocation = defaultSecondaryLocationInstance;
                                 }
                             }
                             
@@ -6419,13 +6374,6 @@ namespace Microsoft.Azure.Management.Sql
                                                     }
                                                 }
                                             }
-                                        }
-                                        
-                                        JToken defaultSecondaryLocationValue = propertiesValue["defaultSecondaryLocation"];
-                                        if (defaultSecondaryLocationValue != null && defaultSecondaryLocationValue.Type != JTokenType.Null)
-                                        {
-                                            string defaultSecondaryLocationInstance = ((string)defaultSecondaryLocationValue);
-                                            propertiesInstance.DefaultSecondaryLocation = defaultSecondaryLocationInstance;
                                         }
                                     }
                                     
@@ -7437,13 +7385,6 @@ namespace Microsoft.Azure.Management.Sql
                                                     }
                                                 }
                                             }
-                                        }
-                                        
-                                        JToken defaultSecondaryLocationValue = propertiesValue["defaultSecondaryLocation"];
-                                        if (defaultSecondaryLocationValue != null && defaultSecondaryLocationValue.Type != JTokenType.Null)
-                                        {
-                                            string defaultSecondaryLocationInstance = ((string)defaultSecondaryLocationValue);
-                                            propertiesInstance.DefaultSecondaryLocation = defaultSecondaryLocationInstance;
                                         }
                                     }
                                     

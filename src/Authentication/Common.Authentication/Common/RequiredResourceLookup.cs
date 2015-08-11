@@ -82,7 +82,7 @@ namespace Microsoft.Azure.Common.Authentication
                 return new[] { NetworkProviderNamespace };
             }
 
-            if (typeof(T).FullName.EndsWith("DataFactoryManagementClient"))
+            if (typeof(T).FullName.EndsWith("DataPipelineManagementClient"))
             {
                 return new[] { DataFactoryProviderNamespace };
             }

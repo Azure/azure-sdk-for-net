@@ -59,7 +59,7 @@ namespace AzureRedisCache.Tests
             Assert.Contains(fixture.RedisCacheName, responseCreate.Resource.Properties.HostName);
             Assert.Equal(6379, responseCreate.Resource.Properties.Port);
             Assert.Equal(6380, responseCreate.Resource.Properties.SslPort);
-            Assert.False(responseCreate.Resource.Properties.EnableNonSslPort.Value);
+            Assert.False(responseCreate.Resource.Properties.EnableNonSslPort);
             
             // wait for maximum 30 minutes for cache to create
             for (int i = 0; i < 60; i++)
@@ -108,7 +108,7 @@ namespace AzureRedisCache.Tests
             Assert.Contains(fixture.RedisCacheName, responseUpdate.Resource.Properties.HostName);
             Assert.Equal(6379, responseUpdate.Resource.Properties.Port);
             Assert.Equal(6380, responseUpdate.Resource.Properties.SslPort);
-            Assert.True(responseUpdate.Resource.Properties.EnableNonSslPort.Value);
+            Assert.True(responseUpdate.Resource.Properties.EnableNonSslPort);
 
             AzureOperationResponse responseDelete = _client.Redis.Delete(resourceGroupName: fixture.ResourceGroupName, name: fixture.RedisCacheName);
                 

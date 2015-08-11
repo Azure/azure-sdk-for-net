@@ -2609,13 +2609,6 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                                 string loadBalancerDistributionInstance = loadBalancerDistributionElement.Value;
                                                                 inputEndpointInstance.LoadBalancerDistribution = loadBalancerDistributionInstance;
                                                             }
-                                                            
-                                                            XElement virtualIPNameElement = inputEndpointsElement.Element(XName.Get("VirtualIPName", "http://schemas.microsoft.com/windowsazure"));
-                                                            if (virtualIPNameElement != null)
-                                                            {
-                                                                string virtualIPNameInstance = virtualIPNameElement.Value;
-                                                                inputEndpointInstance.VirtualIPName = virtualIPNameInstance;
-                                                            }
                                                         }
                                                     }
                                                     
@@ -2704,35 +2697,14 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                                     }
                                                                 }
                                                             }
-                                                            
-                                                            XElement networkSecurityGroupElement = networkInterfacesElement2.Element(XName.Get("NetworkSecurityGroup", "http://schemas.microsoft.com/windowsazure"));
-                                                            if (networkSecurityGroupElement != null)
-                                                            {
-                                                                string networkSecurityGroupInstance = networkSecurityGroupElement.Value;
-                                                                networkInterfaceInstance2.NetworkSecurityGroup = networkSecurityGroupInstance;
-                                                            }
-                                                            
-                                                            XElement iPForwardingElement = networkInterfacesElement2.Element(XName.Get("IPForwarding", "http://schemas.microsoft.com/windowsazure"));
-                                                            if (iPForwardingElement != null)
-                                                            {
-                                                                string iPForwardingInstance = iPForwardingElement.Value;
-                                                                networkInterfaceInstance2.IPForwarding = iPForwardingInstance;
-                                                            }
                                                         }
                                                     }
                                                     
-                                                    XElement networkSecurityGroupElement2 = configurationSetsElement.Element(XName.Get("NetworkSecurityGroup", "http://schemas.microsoft.com/windowsazure"));
-                                                    if (networkSecurityGroupElement2 != null)
+                                                    XElement networkSecurityGroupElement = configurationSetsElement.Element(XName.Get("NetworkSecurityGroup", "http://schemas.microsoft.com/windowsazure"));
+                                                    if (networkSecurityGroupElement != null)
                                                     {
-                                                        string networkSecurityGroupInstance2 = networkSecurityGroupElement2.Value;
-                                                        configurationSetInstance.NetworkSecurityGroup = networkSecurityGroupInstance2;
-                                                    }
-                                                    
-                                                    XElement iPForwardingElement2 = configurationSetsElement.Element(XName.Get("IPForwarding", "http://schemas.microsoft.com/windowsazure"));
-                                                    if (iPForwardingElement2 != null)
-                                                    {
-                                                        string iPForwardingInstance2 = iPForwardingElement2.Value;
-                                                        configurationSetInstance.IPForwarding = iPForwardingInstance2;
+                                                        string networkSecurityGroupInstance = networkSecurityGroupElement.Value;
+                                                        configurationSetInstance.NetworkSecurityGroup = networkSecurityGroupInstance;
                                                     }
                                                     
                                                     XElement computerNameElement = configurationSetsElement.Element(XName.Get("ComputerName", "http://schemas.microsoft.com/windowsazure"));
@@ -3403,13 +3375,6 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                 virtualIPInstance.Address = addressInstance3;
                                             }
                                             
-                                            XElement isDnsProgrammedElement = virtualIPsElement.Element(XName.Get("IsDnsProgrammed", "http://schemas.microsoft.com/windowsazure"));
-                                            if (isDnsProgrammedElement != null && !string.IsNullOrEmpty(isDnsProgrammedElement.Value))
-                                            {
-                                                bool isDnsProgrammedInstance = bool.Parse(isDnsProgrammedElement.Value);
-                                                virtualIPInstance.IsDnsProgrammed = isDnsProgrammedInstance;
-                                            }
-                                            
                                             XElement nameElement12 = virtualIPsElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
                                             if (nameElement12 != null)
                                             {
@@ -3417,11 +3382,11 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                 virtualIPInstance.Name = nameInstance12;
                                             }
                                             
-                                            XElement reservedIPNameElement = virtualIPsElement.Element(XName.Get("ReservedIPName", "http://schemas.microsoft.com/windowsazure"));
-                                            if (reservedIPNameElement != null)
+                                            XElement isDnsProgrammedElement = virtualIPsElement.Element(XName.Get("IsDnsProgrammed", "http://schemas.microsoft.com/windowsazure"));
+                                            if (isDnsProgrammedElement != null && !string.IsNullOrEmpty(isDnsProgrammedElement.Value))
                                             {
-                                                string reservedIPNameInstance = reservedIPNameElement.Value;
-                                                virtualIPInstance.ReservedIPName = reservedIPNameInstance;
+                                                bool isDnsProgrammedInstance = bool.Parse(isDnsProgrammedElement.Value);
+                                                virtualIPInstance.IsDnsProgrammed = isDnsProgrammedInstance;
                                             }
                                         }
                                     }
@@ -4280,7 +4245,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                             XElement localPortElement = inputEndpointsElement.Element(XName.Get("LocalPort", "http://schemas.microsoft.com/windowsazure"));
                                             if (localPortElement != null)
                                             {
-                                                string localPortInstance = localPortElement.Value;
+                                                int localPortInstance = int.Parse(localPortElement.Value, CultureInfo.InvariantCulture);
                                                 inputEndpointInstance.LocalPort = localPortInstance;
                                             }
                                         }
@@ -4313,51 +4278,6 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                             {
                                                 int portInstance2 = int.Parse(portElement2.Value, CultureInfo.InvariantCulture);
                                                 internalEndpointInstance.Port = portInstance2;
-                                            }
-                                        }
-                                    }
-                                    
-                                    XElement instanceInputEndpointsSequenceElement = endpointsElement.Element(XName.Get("InstanceInputEndpoints", "http://schemas.microsoft.com/windowsazure"));
-                                    if (instanceInputEndpointsSequenceElement != null)
-                                    {
-                                        foreach (XElement instanceInputEndpointsElement in instanceInputEndpointsSequenceElement.Elements(XName.Get("InstanceInputEndpoint", "http://schemas.microsoft.com/windowsazure")))
-                                        {
-                                            ExtensionEndpointConfiguration.InstanceInputEndpoint instanceInputEndpointInstance = new ExtensionEndpointConfiguration.InstanceInputEndpoint();
-                                            endpointsInstance.InstanceInputEndpoints.Add(instanceInputEndpointInstance);
-                                            
-                                            XElement nameElement3 = instanceInputEndpointsElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                                            if (nameElement3 != null)
-                                            {
-                                                string nameInstance3 = nameElement3.Value;
-                                                instanceInputEndpointInstance.Name = nameInstance3;
-                                            }
-                                            
-                                            XElement protocolElement3 = instanceInputEndpointsElement.Element(XName.Get("Protocol", "http://schemas.microsoft.com/windowsazure"));
-                                            if (protocolElement3 != null)
-                                            {
-                                                string protocolInstance3 = protocolElement3.Value;
-                                                instanceInputEndpointInstance.Protocol = protocolInstance3;
-                                            }
-                                            
-                                            XElement localPortElement2 = instanceInputEndpointsElement.Element(XName.Get("LocalPort", "http://schemas.microsoft.com/windowsazure"));
-                                            if (localPortElement2 != null)
-                                            {
-                                                string localPortInstance2 = localPortElement2.Value;
-                                                instanceInputEndpointInstance.LocalPort = localPortInstance2;
-                                            }
-                                            
-                                            XElement fixedPortMinElement = instanceInputEndpointsElement.Element(XName.Get("FixedPortMin", "http://schemas.microsoft.com/windowsazure"));
-                                            if (fixedPortMinElement != null)
-                                            {
-                                                int fixedPortMinInstance = int.Parse(fixedPortMinElement.Value, CultureInfo.InvariantCulture);
-                                                instanceInputEndpointInstance.FixedPortMin = fixedPortMinInstance;
-                                            }
-                                            
-                                            XElement fixedPortMaxElement = instanceInputEndpointsElement.Element(XName.Get("FixedPortMax", "http://schemas.microsoft.com/windowsazure"));
-                                            if (fixedPortMaxElement != null)
-                                            {
-                                                int fixedPortMaxInstance = int.Parse(fixedPortMaxElement.Value, CultureInfo.InvariantCulture);
-                                                instanceInputEndpointInstance.FixedPortMax = fixedPortMaxInstance;
                                             }
                                         }
                                     }
@@ -4406,11 +4326,11 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                         ExtensionLocalResourceConfiguration localResourceInstance = new ExtensionLocalResourceConfiguration();
                                         extensionImageInstance.LocalResources.Add(localResourceInstance);
                                         
-                                        XElement nameElement4 = localResourcesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                                        if (nameElement4 != null)
+                                        XElement nameElement3 = localResourcesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                        if (nameElement3 != null)
                                         {
-                                            string nameInstance4 = nameElement4.Value;
-                                            localResourceInstance.Name = nameInstance4;
+                                            string nameInstance3 = nameElement3.Value;
+                                            localResourceInstance.Name = nameInstance3;
                                         }
                                         
                                         XElement sizeInMBElement = localResourcesElement.Element(XName.Get("SizeInMB", "http://schemas.microsoft.com/windowsazure"));
@@ -4439,7 +4359,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 XElement sampleConfigElement = extensionImagesElement.Element(XName.Get("SampleConfig", "http://schemas.microsoft.com/windowsazure"));
                                 if (sampleConfigElement != null)
                                 {
-                                    string sampleConfigInstance = TypeConversion.FromBase64String(sampleConfigElement.Value);
+                                    string sampleConfigInstance = sampleConfigElement.Value;
                                     extensionImageInstance.SampleConfig = sampleConfigInstance;
                                 }
                                 
@@ -4979,7 +4899,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                             XElement localPortElement = inputEndpointsElement.Element(XName.Get("LocalPort", "http://schemas.microsoft.com/windowsazure"));
                                             if (localPortElement != null)
                                             {
-                                                string localPortInstance = localPortElement.Value;
+                                                int localPortInstance = int.Parse(localPortElement.Value, CultureInfo.InvariantCulture);
                                                 inputEndpointInstance.LocalPort = localPortInstance;
                                             }
                                         }
@@ -5012,51 +4932,6 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                             {
                                                 int portInstance2 = int.Parse(portElement2.Value, CultureInfo.InvariantCulture);
                                                 internalEndpointInstance.Port = portInstance2;
-                                            }
-                                        }
-                                    }
-                                    
-                                    XElement instanceInputEndpointsSequenceElement = endpointsElement.Element(XName.Get("InstanceInputEndpoints", "http://schemas.microsoft.com/windowsazure"));
-                                    if (instanceInputEndpointsSequenceElement != null)
-                                    {
-                                        foreach (XElement instanceInputEndpointsElement in instanceInputEndpointsSequenceElement.Elements(XName.Get("InstanceInputEndpoint", "http://schemas.microsoft.com/windowsazure")))
-                                        {
-                                            ExtensionEndpointConfiguration.InstanceInputEndpoint instanceInputEndpointInstance = new ExtensionEndpointConfiguration.InstanceInputEndpoint();
-                                            endpointsInstance.InstanceInputEndpoints.Add(instanceInputEndpointInstance);
-                                            
-                                            XElement nameElement3 = instanceInputEndpointsElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                                            if (nameElement3 != null)
-                                            {
-                                                string nameInstance3 = nameElement3.Value;
-                                                instanceInputEndpointInstance.Name = nameInstance3;
-                                            }
-                                            
-                                            XElement protocolElement3 = instanceInputEndpointsElement.Element(XName.Get("Protocol", "http://schemas.microsoft.com/windowsazure"));
-                                            if (protocolElement3 != null)
-                                            {
-                                                string protocolInstance3 = protocolElement3.Value;
-                                                instanceInputEndpointInstance.Protocol = protocolInstance3;
-                                            }
-                                            
-                                            XElement localPortElement2 = instanceInputEndpointsElement.Element(XName.Get("LocalPort", "http://schemas.microsoft.com/windowsazure"));
-                                            if (localPortElement2 != null)
-                                            {
-                                                string localPortInstance2 = localPortElement2.Value;
-                                                instanceInputEndpointInstance.LocalPort = localPortInstance2;
-                                            }
-                                            
-                                            XElement fixedPortMinElement = instanceInputEndpointsElement.Element(XName.Get("FixedPortMin", "http://schemas.microsoft.com/windowsazure"));
-                                            if (fixedPortMinElement != null)
-                                            {
-                                                int fixedPortMinInstance = int.Parse(fixedPortMinElement.Value, CultureInfo.InvariantCulture);
-                                                instanceInputEndpointInstance.FixedPortMin = fixedPortMinInstance;
-                                            }
-                                            
-                                            XElement fixedPortMaxElement = instanceInputEndpointsElement.Element(XName.Get("FixedPortMax", "http://schemas.microsoft.com/windowsazure"));
-                                            if (fixedPortMaxElement != null)
-                                            {
-                                                int fixedPortMaxInstance = int.Parse(fixedPortMaxElement.Value, CultureInfo.InvariantCulture);
-                                                instanceInputEndpointInstance.FixedPortMax = fixedPortMaxInstance;
                                             }
                                         }
                                     }
@@ -5105,11 +4980,11 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                         ExtensionLocalResourceConfiguration localResourceInstance = new ExtensionLocalResourceConfiguration();
                                         extensionImageInstance.LocalResources.Add(localResourceInstance);
                                         
-                                        XElement nameElement4 = localResourcesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                                        if (nameElement4 != null)
+                                        XElement nameElement3 = localResourcesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                        if (nameElement3 != null)
                                         {
-                                            string nameInstance4 = nameElement4.Value;
-                                            localResourceInstance.Name = nameInstance4;
+                                            string nameInstance3 = nameElement3.Value;
+                                            localResourceInstance.Name = nameInstance3;
                                         }
                                         
                                         XElement sizeInMBElement = localResourcesElement.Element(XName.Get("SizeInMB", "http://schemas.microsoft.com/windowsazure"));
@@ -5138,7 +5013,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 XElement sampleConfigElement = extensionImagesElement.Element(XName.Get("SampleConfig", "http://schemas.microsoft.com/windowsazure"));
                                 if (sampleConfigElement != null)
                                 {
-                                    string sampleConfigInstance = TypeConversion.FromBase64String(sampleConfigElement.Value);
+                                    string sampleConfigInstance = sampleConfigElement.Value;
                                     extensionImageInstance.SampleConfig = sampleConfigInstance;
                                 }
                                 

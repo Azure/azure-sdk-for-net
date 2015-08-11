@@ -51,6 +51,17 @@ namespace Microsoft.Azure.Management.Sql.Models
             set { this._exemptPrincipals = value; }
         }
         
+        private string _maskingLevel;
+        
+        /// <summary>
+        /// Required. Gets or sets the masking level
+        /// </summary>
+        public string MaskingLevel
+        {
+            get { return this._maskingLevel; }
+            set { this._maskingLevel = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the DataMaskingPolicyProperties class.
         /// </summary>
@@ -62,7 +73,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Initializes a new instance of the DataMaskingPolicyProperties class
         /// with required arguments.
         /// </summary>
-        public DataMaskingPolicyProperties(string dataMaskingState, string exemptPrincipals)
+        public DataMaskingPolicyProperties(string dataMaskingState, string exemptPrincipals, string maskingLevel)
             : this()
         {
             if (dataMaskingState == null)
@@ -73,8 +84,13 @@ namespace Microsoft.Azure.Management.Sql.Models
             {
                 throw new ArgumentNullException("exemptPrincipals");
             }
+            if (maskingLevel == null)
+            {
+                throw new ArgumentNullException("maskingLevel");
+            }
             this.DataMaskingState = dataMaskingState;
             this.ExemptPrincipals = exemptPrincipals;
+            this.MaskingLevel = maskingLevel;
         }
     }
 }

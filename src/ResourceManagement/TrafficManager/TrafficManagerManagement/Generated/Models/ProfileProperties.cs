@@ -27,15 +27,14 @@ using Microsoft.Azure.Management.TrafficManager.Models;
 namespace Microsoft.Azure.Management.TrafficManager.Models
 {
     /// <summary>
-    /// Class containing the properties of a Traffic Manager profile.
+    /// Represents the properties of the zone.
     /// </summary>
     public partial class ProfileProperties
     {
         private DnsConfig _dnsConfig;
         
         /// <summary>
-        /// Optional. Gets or sets the DNS settings of the Traffic Manager
-        /// profile.
+        /// Required. Gets or sets the dns config of the profile.
         /// </summary>
         public DnsConfig DnsConfig
         {
@@ -46,8 +45,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
         private IList<Endpoint> _endpoints;
         
         /// <summary>
-        /// Optional. Gets or sets the list of endpoints in the Traffic Manager
-        /// profile.
+        /// Optional. Gets or sets the list of endpoints in a profile.
         /// </summary>
         public IList<Endpoint> Endpoints
         {
@@ -58,8 +56,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
         private MonitorConfig _monitorConfig;
         
         /// <summary>
-        /// Optional. Gets or sets the endpoint monitoring settings of the
-        /// Traffic Manager profile.
+        /// Required. Gets or sets the monitor config of the profile.
         /// </summary>
         public MonitorConfig MonitorConfig
         {
@@ -70,8 +67,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
         private string _profileStatus;
         
         /// <summary>
-        /// Optional. Gets or sets the status of the Traffic Manager profile.
-        /// Possible values are 'Enabled' and 'Disabled'.
+        /// Optional. Gets or sets the status of the profile.
         /// </summary>
         public string ProfileStatus
         {
@@ -82,9 +78,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
         private string _trafficRoutingMethod;
         
         /// <summary>
-        /// Optional. Gets or sets the traffic routing method of the Traffic
-        /// Manager profile.  Possible values are 'Performance', 'Weighted',
-        /// or 'Priority'.
+        /// Required. Gets or sets the load balancing method of the profile.
         /// </summary>
         public string TrafficRoutingMethod
         {
@@ -97,6 +91,30 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
         /// </summary>
         public ProfileProperties()
         {
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the ProfileProperties class with
+        /// required arguments.
+        /// </summary>
+        public ProfileProperties(string trafficRoutingMethod, DnsConfig dnsConfig, MonitorConfig monitorConfig)
+            : this()
+        {
+            if (trafficRoutingMethod == null)
+            {
+                throw new ArgumentNullException("trafficRoutingMethod");
+            }
+            if (dnsConfig == null)
+            {
+                throw new ArgumentNullException("dnsConfig");
+            }
+            if (monitorConfig == null)
+            {
+                throw new ArgumentNullException("monitorConfig");
+            }
+            this.TrafficRoutingMethod = trafficRoutingMethod;
+            this.DnsConfig = dnsConfig;
+            this.MonitorConfig = monitorConfig;
         }
     }
 }

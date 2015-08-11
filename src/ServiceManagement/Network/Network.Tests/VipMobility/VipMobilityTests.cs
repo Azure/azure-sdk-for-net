@@ -28,7 +28,7 @@ namespace Network.Tests
     using Xunit;
     using System.Linq;
     using Microsoft.Azure.Test.HttpRecorder;
-    using AZT = Microsoft.Azure.Test;
+    using AZT=Microsoft.Azure.Test;
     using Microsoft.Azure;
     using Microsoft.WindowsAzure.Management.Network;
 
@@ -68,7 +68,7 @@ namespace Network.Tests
                             Label = "TestLabel",
                             DeploymentName = deploymentName,
                             ServiceName = serviceName,
-                            Location = location
+                            Location = "uswest"
                         };
 
                         OperationStatusResponse reserveIpCreate = _testFixture.NetworkClient.ReservedIPs.Create(reservedIpCreatePars);

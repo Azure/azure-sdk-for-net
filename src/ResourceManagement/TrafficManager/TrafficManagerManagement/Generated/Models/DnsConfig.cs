@@ -25,17 +25,14 @@ using System.Linq;
 namespace Microsoft.Azure.Management.TrafficManager.Models
 {
     /// <summary>
-    /// Class containing DNS settings in a Traffic Manager profile.
+    /// A DnsConfig.
     /// </summary>
     public partial class DnsConfig
     {
         private string _fqdn;
         
         /// <summary>
-        /// Optional. Gets or sets the fully-qualified domain name (FQDN) of
-        /// the Traffic Manager profile.  This is formed from the
-        /// concatenation of the RelativeName with the DNS domain used by
-        /// Azure Traffic Manager.
+        /// Optional. Gets or sets the fqdn of the dns config.
         /// </summary>
         public string Fqdn
         {
@@ -46,10 +43,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
         private string _relativeName;
         
         /// <summary>
-        /// Required. Gets or sets the relative DNS name provided by this
-        /// Traffic Manager profile.  This value is combined with the DNS
-        /// domain name used by Azure Traffic Manager to form the
-        /// fully-qualified domain name (FQDN) of the profile.
+        /// Required. Gets or sets the relative name of the dns config.
         /// </summary>
         public string RelativeName
         {
@@ -60,9 +54,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
         private uint _ttl;
         
         /// <summary>
-        /// Required. Gets or sets the DNS Ttime-To-Live (TTL), in seconds.
-        /// This informs the local DNS resolvers and DNS clients how long to
-        /// cache DNS responses provided by this Traffic Manager profile.
+        /// Required. Gets or sets the ttl of the dns config.
         /// </summary>
         public uint Ttl
         {

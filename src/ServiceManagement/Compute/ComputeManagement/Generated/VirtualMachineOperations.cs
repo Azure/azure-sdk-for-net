@@ -465,13 +465,6 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                     loadBalancerDistributionElement.Value = inputEndpointsItem.LoadBalancerDistribution;
                                     inputEndpointElement.Add(loadBalancerDistributionElement);
                                 }
-                                
-                                if (inputEndpointsItem.VirtualIPName != null)
-                                {
-                                    XElement virtualIPNameElement = new XElement(XName.Get("VirtualIPName", "http://schemas.microsoft.com/windowsazure"));
-                                    virtualIPNameElement.Value = inputEndpointsItem.VirtualIPName;
-                                    inputEndpointElement.Add(virtualIPNameElement);
-                                }
                             }
                             provisioningConfigurationElement.Add(inputEndpointsSequenceElement);
                         }
@@ -578,20 +571,6 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                         networkInterfaceElement.Add(iPConfigurationsSequenceElement);
                                     }
                                 }
-                                
-                                if (networkInterfacesItem.NetworkSecurityGroup != null)
-                                {
-                                    XElement networkSecurityGroupElement = new XElement(XName.Get("NetworkSecurityGroup", "http://schemas.microsoft.com/windowsazure"));
-                                    networkSecurityGroupElement.Value = networkInterfacesItem.NetworkSecurityGroup;
-                                    networkInterfaceElement.Add(networkSecurityGroupElement);
-                                }
-                                
-                                if (networkInterfacesItem.IPForwarding != null)
-                                {
-                                    XElement iPForwardingElement = new XElement(XName.Get("IPForwarding", "http://schemas.microsoft.com/windowsazure"));
-                                    iPForwardingElement.Value = networkInterfacesItem.IPForwarding;
-                                    networkInterfaceElement.Add(iPForwardingElement);
-                                }
                             }
                             provisioningConfigurationElement.Add(networkInterfacesSequenceElement);
                         }
@@ -599,16 +578,9 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     
                     if (parameters.ProvisioningConfiguration.NetworkSecurityGroup != null)
                     {
-                        XElement networkSecurityGroupElement2 = new XElement(XName.Get("NetworkSecurityGroup", "http://schemas.microsoft.com/windowsazure"));
-                        networkSecurityGroupElement2.Value = parameters.ProvisioningConfiguration.NetworkSecurityGroup;
-                        provisioningConfigurationElement.Add(networkSecurityGroupElement2);
-                    }
-                    
-                    if (parameters.ProvisioningConfiguration.IPForwarding != null)
-                    {
-                        XElement iPForwardingElement2 = new XElement(XName.Get("IPForwarding", "http://schemas.microsoft.com/windowsazure"));
-                        iPForwardingElement2.Value = parameters.ProvisioningConfiguration.IPForwarding;
-                        provisioningConfigurationElement.Add(iPForwardingElement2);
+                        XElement networkSecurityGroupElement = new XElement(XName.Get("NetworkSecurityGroup", "http://schemas.microsoft.com/windowsazure"));
+                        networkSecurityGroupElement.Value = parameters.ProvisioningConfiguration.NetworkSecurityGroup;
+                        provisioningConfigurationElement.Add(networkSecurityGroupElement);
                     }
                     
                     if (parameters.ProvisioningConfiguration.ComputerName != null)
@@ -1505,13 +1477,6 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                             loadBalancerDistributionElement.Value = inputEndpointsItem.LoadBalancerDistribution;
                                             inputEndpointElement.Add(loadBalancerDistributionElement);
                                         }
-                                        
-                                        if (inputEndpointsItem.VirtualIPName != null)
-                                        {
-                                            XElement virtualIPNameElement = new XElement(XName.Get("VirtualIPName", "http://schemas.microsoft.com/windowsazure"));
-                                            virtualIPNameElement.Value = inputEndpointsItem.VirtualIPName;
-                                            inputEndpointElement.Add(virtualIPNameElement);
-                                        }
                                     }
                                     configurationSetElement.Add(inputEndpointsSequenceElement);
                                 }
@@ -1618,20 +1583,6 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                 networkInterfaceElement.Add(iPConfigurationsSequenceElement);
                                             }
                                         }
-                                        
-                                        if (networkInterfacesItem.NetworkSecurityGroup != null)
-                                        {
-                                            XElement networkSecurityGroupElement = new XElement(XName.Get("NetworkSecurityGroup", "http://schemas.microsoft.com/windowsazure"));
-                                            networkSecurityGroupElement.Value = networkInterfacesItem.NetworkSecurityGroup;
-                                            networkInterfaceElement.Add(networkSecurityGroupElement);
-                                        }
-                                        
-                                        if (networkInterfacesItem.IPForwarding != null)
-                                        {
-                                            XElement iPForwardingElement = new XElement(XName.Get("IPForwarding", "http://schemas.microsoft.com/windowsazure"));
-                                            iPForwardingElement.Value = networkInterfacesItem.IPForwarding;
-                                            networkInterfaceElement.Add(iPForwardingElement);
-                                        }
                                     }
                                     configurationSetElement.Add(networkInterfacesSequenceElement);
                                 }
@@ -1639,16 +1590,9 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             
                             if (configurationSetsItem.NetworkSecurityGroup != null)
                             {
-                                XElement networkSecurityGroupElement2 = new XElement(XName.Get("NetworkSecurityGroup", "http://schemas.microsoft.com/windowsazure"));
-                                networkSecurityGroupElement2.Value = configurationSetsItem.NetworkSecurityGroup;
-                                configurationSetElement.Add(networkSecurityGroupElement2);
-                            }
-                            
-                            if (configurationSetsItem.IPForwarding != null)
-                            {
-                                XElement iPForwardingElement2 = new XElement(XName.Get("IPForwarding", "http://schemas.microsoft.com/windowsazure"));
-                                iPForwardingElement2.Value = configurationSetsItem.IPForwarding;
-                                configurationSetElement.Add(iPForwardingElement2);
+                                XElement networkSecurityGroupElement = new XElement(XName.Get("NetworkSecurityGroup", "http://schemas.microsoft.com/windowsazure"));
+                                networkSecurityGroupElement.Value = configurationSetsItem.NetworkSecurityGroup;
+                                configurationSetElement.Add(networkSecurityGroupElement);
                             }
                             
                             if (configurationSetsItem.ComputerName != null)
@@ -2653,13 +2597,6 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                     loadBalancerDistributionElement.Value = inputEndpointsItem.LoadBalancerDistribution;
                                                     inputEndpointElement.Add(loadBalancerDistributionElement);
                                                 }
-                                                
-                                                if (inputEndpointsItem.VirtualIPName != null)
-                                                {
-                                                    XElement virtualIPNameElement = new XElement(XName.Get("VirtualIPName", "http://schemas.microsoft.com/windowsazure"));
-                                                    virtualIPNameElement.Value = inputEndpointsItem.VirtualIPName;
-                                                    inputEndpointElement.Add(virtualIPNameElement);
-                                                }
                                             }
                                             configurationSetElement.Add(inputEndpointsSequenceElement);
                                         }
@@ -2766,20 +2703,6 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                         networkInterfaceElement.Add(iPConfigurationsSequenceElement);
                                                     }
                                                 }
-                                                
-                                                if (networkInterfacesItem.NetworkSecurityGroup != null)
-                                                {
-                                                    XElement networkSecurityGroupElement = new XElement(XName.Get("NetworkSecurityGroup", "http://schemas.microsoft.com/windowsazure"));
-                                                    networkSecurityGroupElement.Value = networkInterfacesItem.NetworkSecurityGroup;
-                                                    networkInterfaceElement.Add(networkSecurityGroupElement);
-                                                }
-                                                
-                                                if (networkInterfacesItem.IPForwarding != null)
-                                                {
-                                                    XElement iPForwardingElement = new XElement(XName.Get("IPForwarding", "http://schemas.microsoft.com/windowsazure"));
-                                                    iPForwardingElement.Value = networkInterfacesItem.IPForwarding;
-                                                    networkInterfaceElement.Add(iPForwardingElement);
-                                                }
                                             }
                                             configurationSetElement.Add(networkInterfacesSequenceElement);
                                         }
@@ -2787,16 +2710,9 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                     
                                     if (configurationSetsItem.NetworkSecurityGroup != null)
                                     {
-                                        XElement networkSecurityGroupElement2 = new XElement(XName.Get("NetworkSecurityGroup", "http://schemas.microsoft.com/windowsazure"));
-                                        networkSecurityGroupElement2.Value = configurationSetsItem.NetworkSecurityGroup;
-                                        configurationSetElement.Add(networkSecurityGroupElement2);
-                                    }
-                                    
-                                    if (configurationSetsItem.IPForwarding != null)
-                                    {
-                                        XElement iPForwardingElement2 = new XElement(XName.Get("IPForwarding", "http://schemas.microsoft.com/windowsazure"));
-                                        iPForwardingElement2.Value = configurationSetsItem.IPForwarding;
-                                        configurationSetElement.Add(iPForwardingElement2);
+                                        XElement networkSecurityGroupElement = new XElement(XName.Get("NetworkSecurityGroup", "http://schemas.microsoft.com/windowsazure"));
+                                        networkSecurityGroupElement.Value = configurationSetsItem.NetworkSecurityGroup;
+                                        configurationSetElement.Add(networkSecurityGroupElement);
                                     }
                                     
                                     if (configurationSetsItem.ComputerName != null)
@@ -4947,13 +4863,6 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                             loadBalancerDistributionElement.Value = inputEndpointsItem.LoadBalancerDistribution;
                                             inputEndpointElement.Add(loadBalancerDistributionElement);
                                         }
-                                        
-                                        if (inputEndpointsItem.VirtualIPName != null)
-                                        {
-                                            XElement virtualIPNameElement = new XElement(XName.Get("VirtualIPName", "http://schemas.microsoft.com/windowsazure"));
-                                            virtualIPNameElement.Value = inputEndpointsItem.VirtualIPName;
-                                            inputEndpointElement.Add(virtualIPNameElement);
-                                        }
                                     }
                                     configurationSetElement.Add(inputEndpointsSequenceElement);
                                 }
@@ -5060,20 +4969,6 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                 networkInterfaceElement.Add(iPConfigurationsSequenceElement);
                                             }
                                         }
-                                        
-                                        if (networkInterfacesItem.NetworkSecurityGroup != null)
-                                        {
-                                            XElement networkSecurityGroupElement = new XElement(XName.Get("NetworkSecurityGroup", "http://schemas.microsoft.com/windowsazure"));
-                                            networkSecurityGroupElement.Value = networkInterfacesItem.NetworkSecurityGroup;
-                                            networkInterfaceElement.Add(networkSecurityGroupElement);
-                                        }
-                                        
-                                        if (networkInterfacesItem.IPForwarding != null)
-                                        {
-                                            XElement iPForwardingElement = new XElement(XName.Get("IPForwarding", "http://schemas.microsoft.com/windowsazure"));
-                                            iPForwardingElement.Value = networkInterfacesItem.IPForwarding;
-                                            networkInterfaceElement.Add(iPForwardingElement);
-                                        }
                                     }
                                     configurationSetElement.Add(networkInterfacesSequenceElement);
                                 }
@@ -5081,16 +4976,9 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             
                             if (configurationSetsItem.NetworkSecurityGroup != null)
                             {
-                                XElement networkSecurityGroupElement2 = new XElement(XName.Get("NetworkSecurityGroup", "http://schemas.microsoft.com/windowsazure"));
-                                networkSecurityGroupElement2.Value = configurationSetsItem.NetworkSecurityGroup;
-                                configurationSetElement.Add(networkSecurityGroupElement2);
-                            }
-                            
-                            if (configurationSetsItem.IPForwarding != null)
-                            {
-                                XElement iPForwardingElement2 = new XElement(XName.Get("IPForwarding", "http://schemas.microsoft.com/windowsazure"));
-                                iPForwardingElement2.Value = configurationSetsItem.IPForwarding;
-                                configurationSetElement.Add(iPForwardingElement2);
+                                XElement networkSecurityGroupElement = new XElement(XName.Get("NetworkSecurityGroup", "http://schemas.microsoft.com/windowsazure"));
+                                networkSecurityGroupElement.Value = configurationSetsItem.NetworkSecurityGroup;
+                                configurationSetElement.Add(networkSecurityGroupElement);
                             }
                             
                             if (configurationSetsItem.ComputerName != null)
@@ -5916,13 +5804,6 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 XElement loadBalancerDistributionElement = new XElement(XName.Get("LoadBalancerDistribution", "http://schemas.microsoft.com/windowsazure"));
                                 loadBalancerDistributionElement.Value = loadBalancedEndpointsItem.LoadBalancerDistribution;
                                 inputEndpointElement.Add(loadBalancerDistributionElement);
-                            }
-                            
-                            if (loadBalancedEndpointsItem.VirtualIPName != null)
-                            {
-                                XElement virtualIPNameElement = new XElement(XName.Get("VirtualIPName", "http://schemas.microsoft.com/windowsazure"));
-                                virtualIPNameElement.Value = loadBalancedEndpointsItem.VirtualIPName;
-                                inputEndpointElement.Add(virtualIPNameElement);
                             }
                         }
                     }
@@ -6876,13 +6757,6 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                 string loadBalancerDistributionInstance = loadBalancerDistributionElement.Value;
                                                 inputEndpointInstance.LoadBalancerDistribution = loadBalancerDistributionInstance;
                                             }
-                                            
-                                            XElement virtualIPNameElement = inputEndpointsElement.Element(XName.Get("VirtualIPName", "http://schemas.microsoft.com/windowsazure"));
-                                            if (virtualIPNameElement != null)
-                                            {
-                                                string virtualIPNameInstance = virtualIPNameElement.Value;
-                                                inputEndpointInstance.VirtualIPName = virtualIPNameInstance;
-                                            }
                                         }
                                     }
                                     
@@ -6971,35 +6845,14 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                     }
                                                 }
                                             }
-                                            
-                                            XElement networkSecurityGroupElement = networkInterfacesElement.Element(XName.Get("NetworkSecurityGroup", "http://schemas.microsoft.com/windowsazure"));
-                                            if (networkSecurityGroupElement != null)
-                                            {
-                                                string networkSecurityGroupInstance = networkSecurityGroupElement.Value;
-                                                networkInterfaceInstance.NetworkSecurityGroup = networkSecurityGroupInstance;
-                                            }
-                                            
-                                            XElement iPForwardingElement = networkInterfacesElement.Element(XName.Get("IPForwarding", "http://schemas.microsoft.com/windowsazure"));
-                                            if (iPForwardingElement != null)
-                                            {
-                                                string iPForwardingInstance = iPForwardingElement.Value;
-                                                networkInterfaceInstance.IPForwarding = iPForwardingInstance;
-                                            }
                                         }
                                     }
                                     
-                                    XElement networkSecurityGroupElement2 = configurationSetsElement.Element(XName.Get("NetworkSecurityGroup", "http://schemas.microsoft.com/windowsazure"));
-                                    if (networkSecurityGroupElement2 != null)
+                                    XElement networkSecurityGroupElement = configurationSetsElement.Element(XName.Get("NetworkSecurityGroup", "http://schemas.microsoft.com/windowsazure"));
+                                    if (networkSecurityGroupElement != null)
                                     {
-                                        string networkSecurityGroupInstance2 = networkSecurityGroupElement2.Value;
-                                        configurationSetInstance.NetworkSecurityGroup = networkSecurityGroupInstance2;
-                                    }
-                                    
-                                    XElement iPForwardingElement2 = configurationSetsElement.Element(XName.Get("IPForwarding", "http://schemas.microsoft.com/windowsazure"));
-                                    if (iPForwardingElement2 != null)
-                                    {
-                                        string iPForwardingInstance2 = iPForwardingElement2.Value;
-                                        configurationSetInstance.IPForwarding = iPForwardingInstance2;
+                                        string networkSecurityGroupInstance = networkSecurityGroupElement.Value;
+                                        configurationSetInstance.NetworkSecurityGroup = networkSecurityGroupInstance;
                                     }
                                     
                                     XElement computerNameElement = configurationSetsElement.Element(XName.Get("ComputerName", "http://schemas.microsoft.com/windowsazure"));

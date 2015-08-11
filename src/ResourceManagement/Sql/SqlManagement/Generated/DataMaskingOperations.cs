@@ -123,6 +123,10 @@ namespace Microsoft.Azure.Management.Sql
             {
                 throw new ArgumentNullException("parameters.Properties.ExemptPrincipals");
             }
+            if (parameters.Properties.MaskingLevel == null)
+            {
+                throw new ArgumentNullException("parameters.Properties.MaskingLevel");
+            }
             
             // Tracing
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -200,6 +204,8 @@ namespace Microsoft.Azure.Management.Sql
                 propertiesValue["dataMaskingState"] = parameters.Properties.DataMaskingState;
                 
                 propertiesValue["exemptPrincipals"] = parameters.Properties.ExemptPrincipals;
+                
+                propertiesValue["maskingLevel"] = parameters.Properties.MaskingLevel;
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
@@ -406,11 +412,6 @@ namespace Microsoft.Azure.Management.Sql
                 
                 propertiesValue["id"] = parameters.Properties.Id;
                 
-                if (parameters.Properties.SchemaName != null)
-                {
-                    propertiesValue["schemaName"] = parameters.Properties.SchemaName;
-                }
-                
                 if (parameters.Properties.TableName != null)
                 {
                     propertiesValue["tableName"] = parameters.Properties.TableName;
@@ -419,6 +420,11 @@ namespace Microsoft.Azure.Management.Sql
                 if (parameters.Properties.ColumnName != null)
                 {
                     propertiesValue["columnName"] = parameters.Properties.ColumnName;
+                }
+                
+                if (parameters.Properties.AliasName != null)
+                {
+                    propertiesValue["aliasName"] = parameters.Properties.AliasName;
                 }
                 
                 propertiesValue["maskingFunction"] = parameters.Properties.MaskingFunction;
@@ -842,6 +848,13 @@ namespace Microsoft.Azure.Management.Sql
                                     string exemptPrincipalsInstance = ((string)exemptPrincipalsValue);
                                     propertiesInstance.ExemptPrincipals = exemptPrincipalsInstance;
                                 }
+                                
+                                JToken maskingLevelValue = propertiesValue["maskingLevel"];
+                                if (maskingLevelValue != null && maskingLevelValue.Type != JTokenType.Null)
+                                {
+                                    string maskingLevelInstance = ((string)maskingLevelValue);
+                                    propertiesInstance.MaskingLevel = maskingLevelInstance;
+                                }
                             }
                             
                             JToken idValue = responseDoc["id"];
@@ -1080,13 +1093,6 @@ namespace Microsoft.Azure.Management.Sql
                                     propertiesInstance.Id = idInstance;
                                 }
                                 
-                                JToken schemaNameValue = propertiesValue["schemaName"];
-                                if (schemaNameValue != null && schemaNameValue.Type != JTokenType.Null)
-                                {
-                                    string schemaNameInstance = ((string)schemaNameValue);
-                                    propertiesInstance.SchemaName = schemaNameInstance;
-                                }
-                                
                                 JToken tableNameValue = propertiesValue["tableName"];
                                 if (tableNameValue != null && tableNameValue.Type != JTokenType.Null)
                                 {
@@ -1099,6 +1105,13 @@ namespace Microsoft.Azure.Management.Sql
                                 {
                                     string columnNameInstance = ((string)columnNameValue);
                                     propertiesInstance.ColumnName = columnNameInstance;
+                                }
+                                
+                                JToken aliasNameValue = propertiesValue["aliasName"];
+                                if (aliasNameValue != null && aliasNameValue.Type != JTokenType.Null)
+                                {
+                                    string aliasNameInstance = ((string)aliasNameValue);
+                                    propertiesInstance.AliasName = aliasNameInstance;
                                 }
                                 
                                 JToken maskingFunctionValue = propertiesValue["maskingFunction"];
@@ -1376,13 +1389,6 @@ namespace Microsoft.Azure.Management.Sql
                                             propertiesInstance.Id = idInstance;
                                         }
                                         
-                                        JToken schemaNameValue = propertiesValue["schemaName"];
-                                        if (schemaNameValue != null && schemaNameValue.Type != JTokenType.Null)
-                                        {
-                                            string schemaNameInstance = ((string)schemaNameValue);
-                                            propertiesInstance.SchemaName = schemaNameInstance;
-                                        }
-                                        
                                         JToken tableNameValue = propertiesValue["tableName"];
                                         if (tableNameValue != null && tableNameValue.Type != JTokenType.Null)
                                         {
@@ -1395,6 +1401,13 @@ namespace Microsoft.Azure.Management.Sql
                                         {
                                             string columnNameInstance = ((string)columnNameValue);
                                             propertiesInstance.ColumnName = columnNameInstance;
+                                        }
+                                        
+                                        JToken aliasNameValue = propertiesValue["aliasName"];
+                                        if (aliasNameValue != null && aliasNameValue.Type != JTokenType.Null)
+                                        {
+                                            string aliasNameInstance = ((string)aliasNameValue);
+                                            propertiesInstance.AliasName = aliasNameInstance;
                                         }
                                         
                                         JToken maskingFunctionValue = propertiesValue["maskingFunction"];

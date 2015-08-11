@@ -110,7 +110,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             }
             cancellationToken.ThrowIfCancellationRequested();
             OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
-            int delayInSeconds = 30;
+            int delayInSeconds = 90;
             if (client.LongRunningOperationInitialTimeout >= 0)
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
@@ -265,13 +265,6 @@ namespace Microsoft.WindowsAzure.Management.Network
                     XElement deploymentNameElement = new XElement(XName.Get("DeploymentName", "http://schemas.microsoft.com/windowsazure"));
                     deploymentNameElement.Value = parameters.DeploymentName;
                     reservedIPAssociationElement.Add(deploymentNameElement);
-                }
-                
-                if (parameters.VirtualIPName != null)
-                {
-                    XElement virtualIPNameElement = new XElement(XName.Get("VirtualIPName", "http://schemas.microsoft.com/windowsazure"));
-                    virtualIPNameElement.Value = parameters.VirtualIPName;
-                    reservedIPAssociationElement.Add(virtualIPNameElement);
                 }
                 
                 requestContent = requestDoc.ToString();
@@ -454,13 +447,6 @@ namespace Microsoft.WindowsAzure.Management.Network
                     XElement locationElement = new XElement(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
                     locationElement.Value = parameters.Location;
                     reservedIPElement.Add(locationElement);
-                }
-                
-                if (parameters.VirtualIPName != null)
-                {
-                    XElement virtualIPNameElement = new XElement(XName.Get("VirtualIPName", "http://schemas.microsoft.com/windowsazure"));
-                    virtualIPNameElement.Value = parameters.VirtualIPName;
-                    reservedIPElement.Add(virtualIPNameElement);
                 }
                 
                 requestContent = requestDoc.ToString();
@@ -763,13 +749,6 @@ namespace Microsoft.WindowsAzure.Management.Network
                     reservedIPAssociationElement.Add(deploymentNameElement);
                 }
                 
-                if (parameters.VirtualIPName != null)
-                {
-                    XElement virtualIPNameElement = new XElement(XName.Get("VirtualIPName", "http://schemas.microsoft.com/windowsazure"));
-                    virtualIPNameElement.Value = parameters.VirtualIPName;
-                    reservedIPAssociationElement.Add(virtualIPNameElement);
-                }
-                
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
@@ -1061,7 +1040,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             }
             cancellationToken.ThrowIfCancellationRequested();
             OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
-            int delayInSeconds = 30;
+            int delayInSeconds = 90;
             if (client.LongRunningOperationInitialTimeout >= 0)
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
@@ -1282,13 +1261,6 @@ namespace Microsoft.WindowsAzure.Management.Network
                                 string locationInstance = locationElement.Value;
                                 result.Location = locationInstance;
                             }
-                            
-                            XElement virtualIPNameElement = reservedIPElement.Element(XName.Get("VirtualIPName", "http://schemas.microsoft.com/windowsazure"));
-                            if (virtualIPNameElement != null)
-                            {
-                                string virtualIPNameInstance = virtualIPNameElement.Value;
-                                result.VirtualIPName = virtualIPNameInstance;
-                            }
                         }
                         
                     }
@@ -1486,13 +1458,6 @@ namespace Microsoft.WindowsAzure.Management.Network
                                 {
                                     string locationInstance = locationElement.Value;
                                     reservedIPInstance.Location = locationInstance;
-                                }
-                                
-                                XElement virtualIPNameElement = reservedIPsElement.Element(XName.Get("VirtualIPName", "http://schemas.microsoft.com/windowsazure"));
-                                if (virtualIPNameElement != null)
-                                {
-                                    string virtualIPNameInstance = virtualIPNameElement.Value;
-                                    reservedIPInstance.VirtualIPName = virtualIPNameInstance;
                                 }
                             }
                         }

@@ -179,7 +179,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
                     },
                     new InputEndpoint()
                     {
-                        LocalPort = 24,
+                        LocalPort = 22,
                         Name = "SSH1",
                         Port = 52224,
                         Protocol = InputEndpointTransportProtocol.Tcp,

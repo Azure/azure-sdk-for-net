@@ -20,6 +20,7 @@ using Microsoft.WindowsAzure.Management.Storage;
 using Microsoft.WindowsAzure.Management.Storage.Models;
 using Microsoft.WindowsAzure.Testing;
 using Xunit;
+using ComputeManagementTestUtilities = Microsoft.WindowsAzure.Testing.ComputeManagementTestUtilities;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Testing
 {
@@ -43,12 +44,6 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
                 var mgmt = fixture.GetManagementClient();
                 var compute = ComputeManagementTestUtilities.GetComputeManagementClient(fixture);
                 var storage = fixture.GetStorageManagementClient();
-
-                // Test only in Dogfood environment
-                if (compute.BaseUri.ToString().Contains(".management.core.windows.net"))
-                {
-                    return;
-                }
 
                 try
                 {
@@ -193,12 +188,6 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
                 var mgmt = fixture.GetManagementClient();
                 var compute = ComputeManagementTestUtilities.GetComputeManagementClient(fixture);
                 var storage = fixture.GetStorageManagementClient();
-
-                // Test only in Dogfood environment
-                if (compute.BaseUri.ToString().Contains(".management.core.windows.net"))
-                {
-                    return;
-                }
 
                 try
                 {

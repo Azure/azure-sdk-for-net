@@ -134,18 +134,18 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
                                     ThumbprintRequired = true
                                 },
                                 LocalResources = new List<ExtensionLocalResourceConfiguration>
+                            {
+                                new ExtensionLocalResourceConfiguration
                                 {
-                                    new ExtensionLocalResourceConfiguration
-                                    {
-                                        Name = "Test1",
-                                        SizeInMB = 100
-                                    },
-                                    new ExtensionLocalResourceConfiguration
-                                    {
-                                        Name = "Test2",
-                                        SizeInMB = 200
-                                    }
+                                    Name = "Test1",
+                                    SizeInMB = 100
                                 },
+                                new ExtensionLocalResourceConfiguration
+                                {
+                                    Name = "Test2",
+                                    SizeInMB = 200
+                                }
+                            },
                                 DisallowMajorVersionUpgrade = true,
                                 SampleConfig = sampleConfigStr,
                                 PublishedDate = DateTime.Now,
@@ -158,56 +158,37 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
                                 ExtensionEndpoints = new ExtensionEndpointConfiguration
                                 {
                                     InputEndpoints = new List<ExtensionEndpointConfiguration.InputEndpoint>
+                                {
+                                    new ExtensionEndpointConfiguration.InputEndpoint
                                     {
-                                        new ExtensionEndpointConfiguration.InputEndpoint
-                                        {
-                                            Name = "Test1",
-                                            Port = 1111,
-                                            LocalPort = "*",
-                                            Protocol = "tcp"
-                                        },
-                                        new ExtensionEndpointConfiguration.InputEndpoint
-                                        {
-                                            Name = "Test2",
-                                            Port = 2222,
-                                            LocalPort = "22222",
-                                            Protocol = "tcp"
-                                        }
+                                        Name = "Test1",
+                                        Port = 1111,
+                                        LocalPort = 11111,
+                                        Protocol = "tcp"
                                     },
-                                    InternalEndpoints = new List<ExtensionEndpointConfiguration.InternalEndpoint>
+                                    new ExtensionEndpointConfiguration.InputEndpoint
                                     {
-                                        new ExtensionEndpointConfiguration.InternalEndpoint
-                                        {
-                                            Name = "Test1",
-                                            Port = 1111,
-                                            Protocol = "tcp"
-                                        },
-                                        new ExtensionEndpointConfiguration.InternalEndpoint
-                                        {
-                                            Name = "Test2",
-                                            Port = 2222,
-                                            Protocol = "tcp"
-                                        },
-                                    },
-                                    InstanceInputEndpoints = new List<ExtensionEndpointConfiguration.InstanceInputEndpoint>
-                                    {
-                                        new ExtensionEndpointConfiguration.InstanceInputEndpoint
-                                        {
-                                            Name = "Test1",
-                                            Protocol = "tcp",
-                                            LocalPort = "111",
-                                            FixedPortMin = 100,
-                                            FixedPortMax = 1000
-                                        },
-                                        new ExtensionEndpointConfiguration.InstanceInputEndpoint
-                                        {
-                                            Name = "Test2",
-                                            Protocol = "tcp",
-                                            LocalPort = "22",
-                                            FixedPortMin = 2000,
-                                            FixedPortMax = 10000
-                                        }
+                                        Name = "Test2",
+                                        Port = 2222,
+                                        LocalPort = 22222,
+                                        Protocol = "tcp"
                                     }
+                                },
+                                    InternalEndpoints = new List<ExtensionEndpointConfiguration.InternalEndpoint>
+                                {
+                                    new ExtensionEndpointConfiguration.InternalEndpoint
+                                    {
+                                        Name = "Test1",
+                                        Port = 1111,
+                                        Protocol = "tcp"
+                                    },
+                                    new ExtensionEndpointConfiguration.InternalEndpoint
+                                    {
+                                        Name = "Test2",
+                                        Port = 2222,
+                                        Protocol = "tcp"
+                                    }
+                                }
                                 },
                                 IsJsonExtension = false,
                                 CompanyName = providerName,
@@ -316,14 +297,14 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
                                     {
                                         Name = "Test1",
                                         Port = 1111,
-                                        LocalPort = "11111",
+                                        LocalPort = 11111,
                                         Protocol = "tcp"
                                     },
                                     new ExtensionEndpointConfiguration.InputEndpoint
                                     {
                                         Name = "Test2",
                                         Port = 2222,
-                                        LocalPort = "*",
+                                        LocalPort = 22222,
                                         Protocol = "tcp"
                                     }
                                 },
@@ -340,25 +321,6 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
                                         Name = "Test2",
                                         Port = 2222,
                                         Protocol = "tcp"
-                                    }
-                                },
-                                InstanceInputEndpoints = new List<ExtensionEndpointConfiguration.InstanceInputEndpoint>
-                                {
-                                    new ExtensionEndpointConfiguration.InstanceInputEndpoint
-                                    {
-                                        Name = "Test1",
-                                        Protocol = "tcp",
-                                        LocalPort = "11",
-                                        FixedPortMin = 100,
-                                        FixedPortMax = 1000
-                                    },
-                                    new ExtensionEndpointConfiguration.InstanceInputEndpoint
-                                    {
-                                        Name = "Test2",
-                                        Protocol = "tcp",
-                                        LocalPort = "22",
-                                        FixedPortMin = 2000,
-                                        FixedPortMax = 10000
                                     }
                                 }
                             },

@@ -78,17 +78,6 @@ namespace Microsoft.Azure.Management.Sql.Models
             set { this._databaseId = value; }
         }
         
-        private string _defaultSecondaryLocation;
-        
-        /// <summary>
-        /// Optional. Gets the default secondary region for this database.
-        /// </summary>
-        public string DefaultSecondaryLocation
-        {
-            get { return this._defaultSecondaryLocation; }
-            set { this._defaultSecondaryLocation = value; }
-        }
-        
         private DateTime _earliestRestoreDate;
         
         /// <summary>

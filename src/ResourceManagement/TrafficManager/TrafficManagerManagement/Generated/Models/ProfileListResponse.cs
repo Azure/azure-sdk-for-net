@@ -29,17 +29,15 @@ using Microsoft.Azure.Management.TrafficManager.Models;
 namespace Microsoft.Azure.Management.TrafficManager.Models
 {
     /// <summary>
-    /// The response to a Traffic Manager profile 'ListAll' or
-    /// 'ListAllInResourceGroup' operation.
+    /// The response to a Profile ProfileListAll operation.
     /// </summary>
     public partial class ProfileListResponse : AzureOperationResponse, IEnumerable<Profile>
     {
         private IList<Profile> _profiles;
         
         /// <summary>
-        /// Required. Gets or sets information about the Traffic Manager
-        /// profiles in the response to the 'ListAll' or
-        /// 'ListAllInResourceGroup' operation.
+        /// Required. Gets or sets information about the Profiles in the
+        /// response.
         /// </summary>
         public IList<Profile> Profiles
         {

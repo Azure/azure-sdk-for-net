@@ -58,7 +58,7 @@ namespace Microsoft.Azure.KeyVault
 
             if ( result == null )
             {
-                result = await _inner.ResolveKeyAsync( kid, token ).ConfigureAwait( false );
+                result = await _inner.ResolveKeyAsync( kid, token );
 
                 if ( result != null )
                 {

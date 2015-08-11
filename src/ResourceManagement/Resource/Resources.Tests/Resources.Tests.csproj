@@ -70,12 +70,6 @@
     <None Include="SessionRecords\ResourceGroups.Tests.LiveProviderTests\ProviderListValidateMessage.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="SessionRecords\ResourceGroups.Tests.LiveProviderTests\ProviderOperationsMetadataGetAll.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="SessionRecords\ResourceGroups.Tests.LiveProviderTests\ProviderOperationsMetadataGetById.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="SessionRecords\ResourceGroups.Tests.LiveProviderTests\VerifyProviderRegister.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
