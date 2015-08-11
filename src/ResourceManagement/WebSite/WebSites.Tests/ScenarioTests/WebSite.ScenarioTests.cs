@@ -35,7 +35,7 @@ namespace WebSites.Tests.ScenarioTests
     {
         private delegate void WebsiteTestDelegate(string webSiteName, string resourceGroupName, string webHostingPlanName, string location, WebSiteManagementClient webSitesClient, ResourceManagementClient resourcesClient);
 
-        [Fact(Skip = "TEMPORARILY DISABLING TESTS DUE TO ENVIRONMENT ISSUE")]
+        [Fact]
         public void CreateAndVerifyGetOnAWebsite()
         {
             RunWebsiteTestScenario(
@@ -55,7 +55,7 @@ namespace WebSites.Tests.ScenarioTests
                 });
         }
 
-        [Fact(Skip = "TEMPORARILY DISABLING TESTS DUE TO ENVIRONMENT ISSUE")]
+        [Fact]
         public void CreateAndVerifyListOfWebsites()
         {
             RunWebsiteTestScenario(
@@ -71,7 +71,7 @@ namespace WebSites.Tests.ScenarioTests
                 });
         }
 
-        [Fact(Skip = "TEMPORARILY DISABLING TESTS DUE TO ENVIRONMENT ISSUE")]
+        [Fact(Skip = "Test ERROR, please investigate")]
         public void CreateAndDeleteWebsite()
         {
             RunWebsiteTestScenario(
@@ -142,7 +142,7 @@ namespace WebSites.Tests.ScenarioTests
                 });
         }
 
-        [Fact(Skip = "TEMPORARILY DISABLING TESTS DUE TO ENVIRONMENT ISSUE")]
+        [Fact(Skip = "Test ERROR, please investigate")]
         public void GetAndSetNonSensitiveSiteConfigs()
         {
             RunWebsiteTestScenario(
@@ -266,7 +266,7 @@ namespace WebSites.Tests.ScenarioTests
                 });
         }
 
-        [Fact(Skip = "TEMPORARILY DISABLING TESTS DUE TO ENVIRONMENT ISSUE")]
+        [Fact]
         public void GetAndSetSlotSettingsConfigs()
         {
             RunWebsiteTestScenario(
@@ -385,7 +385,7 @@ namespace WebSites.Tests.ScenarioTests
             }
         }
 
-        [Fact(Skip = "TEMPORARILY DISABLING TESTS DUE TO ENVIRONMENT ISSUE")]
+        [Fact]
         public void GetAndSetSiteLimits()
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
