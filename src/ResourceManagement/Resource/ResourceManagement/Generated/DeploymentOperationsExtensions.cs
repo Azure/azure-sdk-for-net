@@ -32,6 +32,58 @@ namespace Microsoft.Azure.Management.Resources
     public static partial class DeploymentOperationsExtensions
     {
         /// <summary>
+        /// Begin deleting deployment.To determine whether the operation has
+        /// finished processing the request, call
+        /// GetLongRunningOperationStatus.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Resources.IDeploymentOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group. The name is case
+        /// insensitive.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required. The name of the deployment to be deleted.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static LongRunningOperationResponse BeginDeleting(this IDeploymentOperations operations, string resourceGroupName, string deploymentName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IDeploymentOperations)s).BeginDeletingAsync(resourceGroupName, deploymentName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Begin deleting deployment.To determine whether the operation has
+        /// finished processing the request, call
+        /// GetLongRunningOperationStatus.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Resources.IDeploymentOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group. The name is case
+        /// insensitive.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required. The name of the deployment to be deleted.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static Task<LongRunningOperationResponse> BeginDeletingAsync(this IDeploymentOperations operations, string resourceGroupName, string deploymentName)
+        {
+            return operations.BeginDeletingAsync(resourceGroupName, deploymentName, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Cancel a currently running template deployment.
         /// </summary>
         /// <param name='operations'>
@@ -133,6 +185,56 @@ namespace Microsoft.Azure.Management.Resources
         public static Task<DeploymentOperationsCreateResult> CreateOrUpdateAsync(this IDeploymentOperations operations, string resourceGroupName, string deploymentName, Deployment parameters)
         {
             return operations.CreateOrUpdateAsync(resourceGroupName, deploymentName, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Delete deployment and all of its resources.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Resources.IDeploymentOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group. The name is case
+        /// insensitive.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required. The name of the deployment to be deleted.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static AzureOperationResponse Delete(this IDeploymentOperations operations, string resourceGroupName, string deploymentName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IDeploymentOperations)s).DeleteAsync(resourceGroupName, deploymentName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Delete deployment and all of its resources.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Resources.IDeploymentOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group. The name is case
+        /// insensitive.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required. The name of the deployment to be deleted.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<AzureOperationResponse> DeleteAsync(this IDeploymentOperations operations, string resourceGroupName, string deploymentName)
+        {
+            return operations.DeleteAsync(resourceGroupName, deploymentName, CancellationToken.None);
         }
         
         /// <summary>
