@@ -104,7 +104,7 @@ tools/*.dll
 
 # Sensitive files
 *.keys
-#*.pfx
+*.pfx
 
 # Backup & report files from converting an old project file to a newer
 # Visual Studio version. Backup files are not needed, because we have git ;-)
@@ -126,7 +126,7 @@ packages/repositories.config
 src/*/readme.txt
 
 build.out
-#.nuget/
+.nuget/
 
 # Azure Project
 csx/
