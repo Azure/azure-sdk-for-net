@@ -119,6 +119,60 @@ namespace Microsoft.WindowsAzure.Scheduler
                         throw new ArgumentNullException("parameters.Action.ErrorAction.Request.Uri");
                     }
                 }
+                if (parameters.Action.ErrorAction.ServiceBusQueueMessage != null)
+                {
+                    if (parameters.Action.ErrorAction.ServiceBusQueueMessage.Authentication == null)
+                    {
+                        throw new ArgumentNullException("parameters.Action.ErrorAction.ServiceBusQueueMessage.Authentication");
+                    }
+                    if (parameters.Action.ErrorAction.ServiceBusQueueMessage.Authentication.SasKey == null)
+                    {
+                        throw new ArgumentNullException("parameters.Action.ErrorAction.ServiceBusQueueMessage.Authentication.SasKey");
+                    }
+                    if (parameters.Action.ErrorAction.ServiceBusQueueMessage.Authentication.SasKeyName == null)
+                    {
+                        throw new ArgumentNullException("parameters.Action.ErrorAction.ServiceBusQueueMessage.Authentication.SasKeyName");
+                    }
+                    if (parameters.Action.ErrorAction.ServiceBusQueueMessage.Message == null)
+                    {
+                        throw new ArgumentNullException("parameters.Action.ErrorAction.ServiceBusQueueMessage.Message");
+                    }
+                    if (parameters.Action.ErrorAction.ServiceBusQueueMessage.Namespace == null)
+                    {
+                        throw new ArgumentNullException("parameters.Action.ErrorAction.ServiceBusQueueMessage.Namespace");
+                    }
+                    if (parameters.Action.ErrorAction.ServiceBusQueueMessage.QueueName == null)
+                    {
+                        throw new ArgumentNullException("parameters.Action.ErrorAction.ServiceBusQueueMessage.QueueName");
+                    }
+                }
+                if (parameters.Action.ErrorAction.ServiceBusTopicMessage != null)
+                {
+                    if (parameters.Action.ErrorAction.ServiceBusTopicMessage.Authentication == null)
+                    {
+                        throw new ArgumentNullException("parameters.Action.ErrorAction.ServiceBusTopicMessage.Authentication");
+                    }
+                    if (parameters.Action.ErrorAction.ServiceBusTopicMessage.Authentication.SasKey == null)
+                    {
+                        throw new ArgumentNullException("parameters.Action.ErrorAction.ServiceBusTopicMessage.Authentication.SasKey");
+                    }
+                    if (parameters.Action.ErrorAction.ServiceBusTopicMessage.Authentication.SasKeyName == null)
+                    {
+                        throw new ArgumentNullException("parameters.Action.ErrorAction.ServiceBusTopicMessage.Authentication.SasKeyName");
+                    }
+                    if (parameters.Action.ErrorAction.ServiceBusTopicMessage.Message == null)
+                    {
+                        throw new ArgumentNullException("parameters.Action.ErrorAction.ServiceBusTopicMessage.Message");
+                    }
+                    if (parameters.Action.ErrorAction.ServiceBusTopicMessage.Namespace == null)
+                    {
+                        throw new ArgumentNullException("parameters.Action.ErrorAction.ServiceBusTopicMessage.Namespace");
+                    }
+                    if (parameters.Action.ErrorAction.ServiceBusTopicMessage.TopicPath == null)
+                    {
+                        throw new ArgumentNullException("parameters.Action.ErrorAction.ServiceBusTopicMessage.TopicPath");
+                    }
+                }
             }
             if (parameters.Action.QueueMessage != null)
             {
@@ -148,6 +202,60 @@ namespace Microsoft.WindowsAzure.Scheduler
                 if (parameters.Action.Request.Uri == null)
                 {
                     throw new ArgumentNullException("parameters.Action.Request.Uri");
+                }
+            }
+            if (parameters.Action.ServiceBusQueueMessage != null)
+            {
+                if (parameters.Action.ServiceBusQueueMessage.Authentication == null)
+                {
+                    throw new ArgumentNullException("parameters.Action.ServiceBusQueueMessage.Authentication");
+                }
+                if (parameters.Action.ServiceBusQueueMessage.Authentication.SasKey == null)
+                {
+                    throw new ArgumentNullException("parameters.Action.ServiceBusQueueMessage.Authentication.SasKey");
+                }
+                if (parameters.Action.ServiceBusQueueMessage.Authentication.SasKeyName == null)
+                {
+                    throw new ArgumentNullException("parameters.Action.ServiceBusQueueMessage.Authentication.SasKeyName");
+                }
+                if (parameters.Action.ServiceBusQueueMessage.Message == null)
+                {
+                    throw new ArgumentNullException("parameters.Action.ServiceBusQueueMessage.Message");
+                }
+                if (parameters.Action.ServiceBusQueueMessage.Namespace == null)
+                {
+                    throw new ArgumentNullException("parameters.Action.ServiceBusQueueMessage.Namespace");
+                }
+                if (parameters.Action.ServiceBusQueueMessage.QueueName == null)
+                {
+                    throw new ArgumentNullException("parameters.Action.ServiceBusQueueMessage.QueueName");
+                }
+            }
+            if (parameters.Action.ServiceBusTopicMessage != null)
+            {
+                if (parameters.Action.ServiceBusTopicMessage.Authentication == null)
+                {
+                    throw new ArgumentNullException("parameters.Action.ServiceBusTopicMessage.Authentication");
+                }
+                if (parameters.Action.ServiceBusTopicMessage.Authentication.SasKey == null)
+                {
+                    throw new ArgumentNullException("parameters.Action.ServiceBusTopicMessage.Authentication.SasKey");
+                }
+                if (parameters.Action.ServiceBusTopicMessage.Authentication.SasKeyName == null)
+                {
+                    throw new ArgumentNullException("parameters.Action.ServiceBusTopicMessage.Authentication.SasKeyName");
+                }
+                if (parameters.Action.ServiceBusTopicMessage.Message == null)
+                {
+                    throw new ArgumentNullException("parameters.Action.ServiceBusTopicMessage.Message");
+                }
+                if (parameters.Action.ServiceBusTopicMessage.Namespace == null)
+                {
+                    throw new ArgumentNullException("parameters.Action.ServiceBusTopicMessage.Namespace");
+                }
+                if (parameters.Action.ServiceBusTopicMessage.TopicPath == null)
+                {
+                    throw new ArgumentNullException("parameters.Action.ServiceBusTopicMessage.TopicPath");
                 }
             }
             
@@ -375,6 +483,212 @@ namespace Microsoft.WindowsAzure.Scheduler
                         
                         queueMessageValue["message"] = parameters.Action.ErrorAction.QueueMessage.Message;
                     }
+                    
+                    if (parameters.Action.ErrorAction.ServiceBusTopicMessage != null)
+                    {
+                        JObject serviceBusTopicMessageValue = new JObject();
+                        errorActionValue["serviceBusTopicMessage"] = serviceBusTopicMessageValue;
+                        
+                        serviceBusTopicMessageValue["topicPath"] = parameters.Action.ErrorAction.ServiceBusTopicMessage.TopicPath;
+                        
+                        serviceBusTopicMessageValue["namespace"] = parameters.Action.ErrorAction.ServiceBusTopicMessage.Namespace;
+                        
+                        serviceBusTopicMessageValue["transportType"] = SchedulerClient.JobServiceBusTransportTypeToString(parameters.Action.ErrorAction.ServiceBusTopicMessage.TransportType);
+                        
+                        JObject authenticationValue2 = new JObject();
+                        serviceBusTopicMessageValue["authentication"] = authenticationValue2;
+                        
+                        authenticationValue2["sasKeyName"] = parameters.Action.ErrorAction.ServiceBusTopicMessage.Authentication.SasKeyName;
+                        
+                        authenticationValue2["sasKey"] = parameters.Action.ErrorAction.ServiceBusTopicMessage.Authentication.SasKey;
+                        
+                        authenticationValue2["type"] = SchedulerClient.JobServiceBusAuthenticationTypeToString(parameters.Action.ErrorAction.ServiceBusTopicMessage.Authentication.Type);
+                        
+                        serviceBusTopicMessageValue["message"] = parameters.Action.ErrorAction.ServiceBusTopicMessage.Message;
+                        
+                        if (parameters.Action.ErrorAction.ServiceBusTopicMessage.BrokeredMessageProperties != null)
+                        {
+                            JObject brokeredMessagePropertiesValue = new JObject();
+                            serviceBusTopicMessageValue["brokeredMessageProperties"] = brokeredMessagePropertiesValue;
+                            
+                            if (parameters.Action.ErrorAction.ServiceBusTopicMessage.BrokeredMessageProperties.ContentType != null)
+                            {
+                                brokeredMessagePropertiesValue["contentType"] = parameters.Action.ErrorAction.ServiceBusTopicMessage.BrokeredMessageProperties.ContentType;
+                            }
+                            
+                            if (parameters.Action.ErrorAction.ServiceBusTopicMessage.BrokeredMessageProperties.CorrelationId != null)
+                            {
+                                brokeredMessagePropertiesValue["correlationId"] = parameters.Action.ErrorAction.ServiceBusTopicMessage.BrokeredMessageProperties.CorrelationId;
+                            }
+                            
+                            brokeredMessagePropertiesValue["forcePersistence"] = parameters.Action.ErrorAction.ServiceBusTopicMessage.BrokeredMessageProperties.ForcePersistence;
+                            
+                            if (parameters.Action.ErrorAction.ServiceBusTopicMessage.BrokeredMessageProperties.Label != null)
+                            {
+                                brokeredMessagePropertiesValue["label"] = parameters.Action.ErrorAction.ServiceBusTopicMessage.BrokeredMessageProperties.Label;
+                            }
+                            
+                            if (parameters.Action.ErrorAction.ServiceBusTopicMessage.BrokeredMessageProperties.MessageId != null)
+                            {
+                                brokeredMessagePropertiesValue["messageId"] = parameters.Action.ErrorAction.ServiceBusTopicMessage.BrokeredMessageProperties.MessageId;
+                            }
+                            
+                            if (parameters.Action.ErrorAction.ServiceBusTopicMessage.BrokeredMessageProperties.PartitionKey != null)
+                            {
+                                brokeredMessagePropertiesValue["partitionKey"] = parameters.Action.ErrorAction.ServiceBusTopicMessage.BrokeredMessageProperties.PartitionKey;
+                            }
+                            
+                            if (parameters.Action.ErrorAction.ServiceBusTopicMessage.BrokeredMessageProperties.ReplyTo != null)
+                            {
+                                brokeredMessagePropertiesValue["replyTo"] = parameters.Action.ErrorAction.ServiceBusTopicMessage.BrokeredMessageProperties.ReplyTo;
+                            }
+                            
+                            if (parameters.Action.ErrorAction.ServiceBusTopicMessage.BrokeredMessageProperties.ReplyToSessionId != null)
+                            {
+                                brokeredMessagePropertiesValue["replyToSessionId"] = parameters.Action.ErrorAction.ServiceBusTopicMessage.BrokeredMessageProperties.ReplyToSessionId;
+                            }
+                            
+                            if (parameters.Action.ErrorAction.ServiceBusTopicMessage.BrokeredMessageProperties.ScheduledEnqueueTimeUtc != null)
+                            {
+                                brokeredMessagePropertiesValue["scheduledEnqueueTimeUtc"] = parameters.Action.ErrorAction.ServiceBusTopicMessage.BrokeredMessageProperties.ScheduledEnqueueTimeUtc.Value;
+                            }
+                            
+                            if (parameters.Action.ErrorAction.ServiceBusTopicMessage.BrokeredMessageProperties.SessionId != null)
+                            {
+                                brokeredMessagePropertiesValue["sessionId"] = parameters.Action.ErrorAction.ServiceBusTopicMessage.BrokeredMessageProperties.SessionId;
+                            }
+                            
+                            if (parameters.Action.ErrorAction.ServiceBusTopicMessage.BrokeredMessageProperties.TimeToLive != null)
+                            {
+                                brokeredMessagePropertiesValue["timeToLive"] = parameters.Action.ErrorAction.ServiceBusTopicMessage.BrokeredMessageProperties.TimeToLive.Value;
+                            }
+                            
+                            if (parameters.Action.ErrorAction.ServiceBusTopicMessage.BrokeredMessageProperties.To != null)
+                            {
+                                brokeredMessagePropertiesValue["to"] = parameters.Action.ErrorAction.ServiceBusTopicMessage.BrokeredMessageProperties.To;
+                            }
+                            
+                            if (parameters.Action.ErrorAction.ServiceBusTopicMessage.BrokeredMessageProperties.ViaPartitionKey != null)
+                            {
+                                brokeredMessagePropertiesValue["viaPartitionKey"] = parameters.Action.ErrorAction.ServiceBusTopicMessage.BrokeredMessageProperties.ViaPartitionKey;
+                            }
+                        }
+                        
+                        if (parameters.Action.ErrorAction.ServiceBusTopicMessage.CustomMessageProperties != null)
+                        {
+                            JObject customMessagePropertiesDictionary = new JObject();
+                            foreach (KeyValuePair<string, string> pair2 in parameters.Action.ErrorAction.ServiceBusTopicMessage.CustomMessageProperties)
+                            {
+                                string customMessagePropertiesKey = pair2.Key;
+                                string customMessagePropertiesValue = pair2.Value;
+                                customMessagePropertiesDictionary[customMessagePropertiesKey] = customMessagePropertiesValue;
+                            }
+                            serviceBusTopicMessageValue["customMessageProperties"] = customMessagePropertiesDictionary;
+                        }
+                    }
+                    
+                    if (parameters.Action.ErrorAction.ServiceBusQueueMessage != null)
+                    {
+                        JObject serviceBusQueueMessageValue = new JObject();
+                        errorActionValue["serviceBusQueueMessage"] = serviceBusQueueMessageValue;
+                        
+                        serviceBusQueueMessageValue["queueName"] = parameters.Action.ErrorAction.ServiceBusQueueMessage.QueueName;
+                        
+                        serviceBusQueueMessageValue["namespace"] = parameters.Action.ErrorAction.ServiceBusQueueMessage.Namespace;
+                        
+                        serviceBusQueueMessageValue["transportType"] = SchedulerClient.JobServiceBusTransportTypeToString(parameters.Action.ErrorAction.ServiceBusQueueMessage.TransportType);
+                        
+                        JObject authenticationValue3 = new JObject();
+                        serviceBusQueueMessageValue["authentication"] = authenticationValue3;
+                        
+                        authenticationValue3["sasKeyName"] = parameters.Action.ErrorAction.ServiceBusQueueMessage.Authentication.SasKeyName;
+                        
+                        authenticationValue3["sasKey"] = parameters.Action.ErrorAction.ServiceBusQueueMessage.Authentication.SasKey;
+                        
+                        authenticationValue3["type"] = SchedulerClient.JobServiceBusAuthenticationTypeToString(parameters.Action.ErrorAction.ServiceBusQueueMessage.Authentication.Type);
+                        
+                        serviceBusQueueMessageValue["message"] = parameters.Action.ErrorAction.ServiceBusQueueMessage.Message;
+                        
+                        if (parameters.Action.ErrorAction.ServiceBusQueueMessage.BrokeredMessageProperties != null)
+                        {
+                            JObject brokeredMessagePropertiesValue2 = new JObject();
+                            serviceBusQueueMessageValue["brokeredMessageProperties"] = brokeredMessagePropertiesValue2;
+                            
+                            if (parameters.Action.ErrorAction.ServiceBusQueueMessage.BrokeredMessageProperties.ContentType != null)
+                            {
+                                brokeredMessagePropertiesValue2["contentType"] = parameters.Action.ErrorAction.ServiceBusQueueMessage.BrokeredMessageProperties.ContentType;
+                            }
+                            
+                            if (parameters.Action.ErrorAction.ServiceBusQueueMessage.BrokeredMessageProperties.CorrelationId != null)
+                            {
+                                brokeredMessagePropertiesValue2["correlationId"] = parameters.Action.ErrorAction.ServiceBusQueueMessage.BrokeredMessageProperties.CorrelationId;
+                            }
+                            
+                            brokeredMessagePropertiesValue2["forcePersistence"] = parameters.Action.ErrorAction.ServiceBusQueueMessage.BrokeredMessageProperties.ForcePersistence;
+                            
+                            if (parameters.Action.ErrorAction.ServiceBusQueueMessage.BrokeredMessageProperties.Label != null)
+                            {
+                                brokeredMessagePropertiesValue2["label"] = parameters.Action.ErrorAction.ServiceBusQueueMessage.BrokeredMessageProperties.Label;
+                            }
+                            
+                            if (parameters.Action.ErrorAction.ServiceBusQueueMessage.BrokeredMessageProperties.MessageId != null)
+                            {
+                                brokeredMessagePropertiesValue2["messageId"] = parameters.Action.ErrorAction.ServiceBusQueueMessage.BrokeredMessageProperties.MessageId;
+                            }
+                            
+                            if (parameters.Action.ErrorAction.ServiceBusQueueMessage.BrokeredMessageProperties.PartitionKey != null)
+                            {
+                                brokeredMessagePropertiesValue2["partitionKey"] = parameters.Action.ErrorAction.ServiceBusQueueMessage.BrokeredMessageProperties.PartitionKey;
+                            }
+                            
+                            if (parameters.Action.ErrorAction.ServiceBusQueueMessage.BrokeredMessageProperties.ReplyTo != null)
+                            {
+                                brokeredMessagePropertiesValue2["replyTo"] = parameters.Action.ErrorAction.ServiceBusQueueMessage.BrokeredMessageProperties.ReplyTo;
+                            }
+                            
+                            if (parameters.Action.ErrorAction.ServiceBusQueueMessage.BrokeredMessageProperties.ReplyToSessionId != null)
+                            {
+                                brokeredMessagePropertiesValue2["replyToSessionId"] = parameters.Action.ErrorAction.ServiceBusQueueMessage.BrokeredMessageProperties.ReplyToSessionId;
+                            }
+                            
+                            if (parameters.Action.ErrorAction.ServiceBusQueueMessage.BrokeredMessageProperties.ScheduledEnqueueTimeUtc != null)
+                            {
+                                brokeredMessagePropertiesValue2["scheduledEnqueueTimeUtc"] = parameters.Action.ErrorAction.ServiceBusQueueMessage.BrokeredMessageProperties.ScheduledEnqueueTimeUtc.Value;
+                            }
+                            
+                            if (parameters.Action.ErrorAction.ServiceBusQueueMessage.BrokeredMessageProperties.SessionId != null)
+                            {
+                                brokeredMessagePropertiesValue2["sessionId"] = parameters.Action.ErrorAction.ServiceBusQueueMessage.BrokeredMessageProperties.SessionId;
+                            }
+                            
+                            if (parameters.Action.ErrorAction.ServiceBusQueueMessage.BrokeredMessageProperties.TimeToLive != null)
+                            {
+                                brokeredMessagePropertiesValue2["timeToLive"] = parameters.Action.ErrorAction.ServiceBusQueueMessage.BrokeredMessageProperties.TimeToLive.Value;
+                            }
+                            
+                            if (parameters.Action.ErrorAction.ServiceBusQueueMessage.BrokeredMessageProperties.To != null)
+                            {
+                                brokeredMessagePropertiesValue2["to"] = parameters.Action.ErrorAction.ServiceBusQueueMessage.BrokeredMessageProperties.To;
+                            }
+                            
+                            if (parameters.Action.ErrorAction.ServiceBusQueueMessage.BrokeredMessageProperties.ViaPartitionKey != null)
+                            {
+                                brokeredMessagePropertiesValue2["viaPartitionKey"] = parameters.Action.ErrorAction.ServiceBusQueueMessage.BrokeredMessageProperties.ViaPartitionKey;
+                            }
+                        }
+                        
+                        if (parameters.Action.ErrorAction.ServiceBusQueueMessage.CustomMessageProperties != null)
+                        {
+                            JObject customMessagePropertiesDictionary2 = new JObject();
+                            foreach (KeyValuePair<string, string> pair3 in parameters.Action.ErrorAction.ServiceBusQueueMessage.CustomMessageProperties)
+                            {
+                                string customMessagePropertiesKey2 = pair3.Key;
+                                string customMessagePropertiesValue2 = pair3.Value;
+                                customMessagePropertiesDictionary2[customMessagePropertiesKey2] = customMessagePropertiesValue2;
+                            }
+                            serviceBusQueueMessageValue["customMessageProperties"] = customMessagePropertiesDictionary2;
+                        }
+                    }
                 }
                 
                 if (parameters.Action.Request != null)
@@ -391,10 +705,10 @@ namespace Microsoft.WindowsAzure.Scheduler
                         if (parameters.Action.Request.Headers is ILazyCollection == false || ((ILazyCollection)parameters.Action.Request.Headers).IsInitialized)
                         {
                             JObject headersDictionary2 = new JObject();
-                            foreach (KeyValuePair<string, string> pair2 in parameters.Action.Request.Headers)
+                            foreach (KeyValuePair<string, string> pair4 in parameters.Action.Request.Headers)
                             {
-                                string headersKey2 = pair2.Key;
-                                string headersValue2 = pair2.Value;
+                                string headersKey2 = pair4.Key;
+                                string headersValue2 = pair4.Value;
                                 headersDictionary2[headersKey2] = headersValue2;
                             }
                             requestValue2["headers"] = headersDictionary2;
@@ -408,80 +722,80 @@ namespace Microsoft.WindowsAzure.Scheduler
                     
                     if (parameters.Action.Request.Authentication != null)
                     {
-                        JObject authenticationValue2 = new JObject();
-                        requestValue2["authentication"] = authenticationValue2;
+                        JObject authenticationValue4 = new JObject();
+                        requestValue2["authentication"] = authenticationValue4;
                         if (parameters.Action.Request.Authentication is ClientCertAuthentication)
                         {
-                            authenticationValue2["type"] = "ClientCertificate";
+                            authenticationValue4["type"] = "ClientCertificate";
                             ClientCertAuthentication derived4 = ((ClientCertAuthentication)parameters.Action.Request.Authentication);
                             
                             if (derived4.Password != null)
                             {
-                                authenticationValue2["password"] = derived4.Password;
+                                authenticationValue4["password"] = derived4.Password;
                             }
                             
                             if (derived4.Pfx != null)
                             {
-                                authenticationValue2["pfx"] = derived4.Pfx;
+                                authenticationValue4["pfx"] = derived4.Pfx;
                             }
                             
                             if (derived4.CertificateThumbprint != null)
                             {
-                                authenticationValue2["certificateThumbprint"] = derived4.CertificateThumbprint;
+                                authenticationValue4["certificateThumbprint"] = derived4.CertificateThumbprint;
                             }
                             
                             if (derived4.CertificateExpiration != null)
                             {
-                                authenticationValue2["certificateExpiration"] = derived4.CertificateExpiration.Value;
+                                authenticationValue4["certificateExpiration"] = derived4.CertificateExpiration.Value;
                             }
                             
                             if (derived4.CertificateSubjectName != null)
                             {
-                                authenticationValue2["certificateSubjectName"] = derived4.CertificateSubjectName;
+                                authenticationValue4["certificateSubjectName"] = derived4.CertificateSubjectName;
                             }
                             
-                            authenticationValue2["type"] = SchedulerClient.HttpAuthenticationTypeToString(derived4.Type);
+                            authenticationValue4["type"] = SchedulerClient.HttpAuthenticationTypeToString(derived4.Type);
                         }
                         if (parameters.Action.Request.Authentication is AADOAuthAuthentication)
                         {
-                            authenticationValue2["type"] = "ActiveDirectoryOAuth";
+                            authenticationValue4["type"] = "ActiveDirectoryOAuth";
                             AADOAuthAuthentication derived5 = ((AADOAuthAuthentication)parameters.Action.Request.Authentication);
                             
                             if (derived5.Secret != null)
                             {
-                                authenticationValue2["secret"] = derived5.Secret;
+                                authenticationValue4["secret"] = derived5.Secret;
                             }
                             
                             if (derived5.Tenant != null)
                             {
-                                authenticationValue2["tenant"] = derived5.Tenant;
+                                authenticationValue4["tenant"] = derived5.Tenant;
                             }
                             
                             if (derived5.Audience != null)
                             {
-                                authenticationValue2["audience"] = derived5.Audience;
+                                authenticationValue4["audience"] = derived5.Audience;
                             }
                             
                             if (derived5.ClientId != null)
                             {
-                                authenticationValue2["clientId"] = derived5.ClientId;
+                                authenticationValue4["clientId"] = derived5.ClientId;
                             }
                             
-                            authenticationValue2["type"] = SchedulerClient.HttpAuthenticationTypeToString(derived5.Type);
+                            authenticationValue4["type"] = SchedulerClient.HttpAuthenticationTypeToString(derived5.Type);
                         }
                         if (parameters.Action.Request.Authentication is BasicAuthentication)
                         {
-                            authenticationValue2["type"] = "Basic";
+                            authenticationValue4["type"] = "Basic";
                             BasicAuthentication derived6 = ((BasicAuthentication)parameters.Action.Request.Authentication);
                             
-                            authenticationValue2["username"] = derived6.Username;
+                            authenticationValue4["username"] = derived6.Username;
                             
                             if (derived6.Password != null)
                             {
-                                authenticationValue2["password"] = derived6.Password;
+                                authenticationValue4["password"] = derived6.Password;
                             }
                             
-                            authenticationValue2["type"] = SchedulerClient.HttpAuthenticationTypeToString(derived6.Type);
+                            authenticationValue4["type"] = SchedulerClient.HttpAuthenticationTypeToString(derived6.Type);
                         }
                     }
                 }
@@ -498,6 +812,212 @@ namespace Microsoft.WindowsAzure.Scheduler
                     queueMessageValue2["sasToken"] = parameters.Action.QueueMessage.SasToken;
                     
                     queueMessageValue2["message"] = parameters.Action.QueueMessage.Message;
+                }
+                
+                if (parameters.Action.ServiceBusTopicMessage != null)
+                {
+                    JObject serviceBusTopicMessageValue2 = new JObject();
+                    actionValue["serviceBusTopicMessage"] = serviceBusTopicMessageValue2;
+                    
+                    serviceBusTopicMessageValue2["topicPath"] = parameters.Action.ServiceBusTopicMessage.TopicPath;
+                    
+                    serviceBusTopicMessageValue2["namespace"] = parameters.Action.ServiceBusTopicMessage.Namespace;
+                    
+                    serviceBusTopicMessageValue2["transportType"] = SchedulerClient.JobServiceBusTransportTypeToString(parameters.Action.ServiceBusTopicMessage.TransportType);
+                    
+                    JObject authenticationValue5 = new JObject();
+                    serviceBusTopicMessageValue2["authentication"] = authenticationValue5;
+                    
+                    authenticationValue5["sasKeyName"] = parameters.Action.ServiceBusTopicMessage.Authentication.SasKeyName;
+                    
+                    authenticationValue5["sasKey"] = parameters.Action.ServiceBusTopicMessage.Authentication.SasKey;
+                    
+                    authenticationValue5["type"] = SchedulerClient.JobServiceBusAuthenticationTypeToString(parameters.Action.ServiceBusTopicMessage.Authentication.Type);
+                    
+                    serviceBusTopicMessageValue2["message"] = parameters.Action.ServiceBusTopicMessage.Message;
+                    
+                    if (parameters.Action.ServiceBusTopicMessage.BrokeredMessageProperties != null)
+                    {
+                        JObject brokeredMessagePropertiesValue3 = new JObject();
+                        serviceBusTopicMessageValue2["brokeredMessageProperties"] = brokeredMessagePropertiesValue3;
+                        
+                        if (parameters.Action.ServiceBusTopicMessage.BrokeredMessageProperties.ContentType != null)
+                        {
+                            brokeredMessagePropertiesValue3["contentType"] = parameters.Action.ServiceBusTopicMessage.BrokeredMessageProperties.ContentType;
+                        }
+                        
+                        if (parameters.Action.ServiceBusTopicMessage.BrokeredMessageProperties.CorrelationId != null)
+                        {
+                            brokeredMessagePropertiesValue3["correlationId"] = parameters.Action.ServiceBusTopicMessage.BrokeredMessageProperties.CorrelationId;
+                        }
+                        
+                        brokeredMessagePropertiesValue3["forcePersistence"] = parameters.Action.ServiceBusTopicMessage.BrokeredMessageProperties.ForcePersistence;
+                        
+                        if (parameters.Action.ServiceBusTopicMessage.BrokeredMessageProperties.Label != null)
+                        {
+                            brokeredMessagePropertiesValue3["label"] = parameters.Action.ServiceBusTopicMessage.BrokeredMessageProperties.Label;
+                        }
+                        
+                        if (parameters.Action.ServiceBusTopicMessage.BrokeredMessageProperties.MessageId != null)
+                        {
+                            brokeredMessagePropertiesValue3["messageId"] = parameters.Action.ServiceBusTopicMessage.BrokeredMessageProperties.MessageId;
+                        }
+                        
+                        if (parameters.Action.ServiceBusTopicMessage.BrokeredMessageProperties.PartitionKey != null)
+                        {
+                            brokeredMessagePropertiesValue3["partitionKey"] = parameters.Action.ServiceBusTopicMessage.BrokeredMessageProperties.PartitionKey;
+                        }
+                        
+                        if (parameters.Action.ServiceBusTopicMessage.BrokeredMessageProperties.ReplyTo != null)
+                        {
+                            brokeredMessagePropertiesValue3["replyTo"] = parameters.Action.ServiceBusTopicMessage.BrokeredMessageProperties.ReplyTo;
+                        }
+                        
+                        if (parameters.Action.ServiceBusTopicMessage.BrokeredMessageProperties.ReplyToSessionId != null)
+                        {
+                            brokeredMessagePropertiesValue3["replyToSessionId"] = parameters.Action.ServiceBusTopicMessage.BrokeredMessageProperties.ReplyToSessionId;
+                        }
+                        
+                        if (parameters.Action.ServiceBusTopicMessage.BrokeredMessageProperties.ScheduledEnqueueTimeUtc != null)
+                        {
+                            brokeredMessagePropertiesValue3["scheduledEnqueueTimeUtc"] = parameters.Action.ServiceBusTopicMessage.BrokeredMessageProperties.ScheduledEnqueueTimeUtc.Value;
+                        }
+                        
+                        if (parameters.Action.ServiceBusTopicMessage.BrokeredMessageProperties.SessionId != null)
+                        {
+                            brokeredMessagePropertiesValue3["sessionId"] = parameters.Action.ServiceBusTopicMessage.BrokeredMessageProperties.SessionId;
+                        }
+                        
+                        if (parameters.Action.ServiceBusTopicMessage.BrokeredMessageProperties.TimeToLive != null)
+                        {
+                            brokeredMessagePropertiesValue3["timeToLive"] = parameters.Action.ServiceBusTopicMessage.BrokeredMessageProperties.TimeToLive.Value;
+                        }
+                        
+                        if (parameters.Action.ServiceBusTopicMessage.BrokeredMessageProperties.To != null)
+                        {
+                            brokeredMessagePropertiesValue3["to"] = parameters.Action.ServiceBusTopicMessage.BrokeredMessageProperties.To;
+                        }
+                        
+                        if (parameters.Action.ServiceBusTopicMessage.BrokeredMessageProperties.ViaPartitionKey != null)
+                        {
+                            brokeredMessagePropertiesValue3["viaPartitionKey"] = parameters.Action.ServiceBusTopicMessage.BrokeredMessageProperties.ViaPartitionKey;
+                        }
+                    }
+                    
+                    if (parameters.Action.ServiceBusTopicMessage.CustomMessageProperties != null)
+                    {
+                        JObject customMessagePropertiesDictionary3 = new JObject();
+                        foreach (KeyValuePair<string, string> pair5 in parameters.Action.ServiceBusTopicMessage.CustomMessageProperties)
+                        {
+                            string customMessagePropertiesKey3 = pair5.Key;
+                            string customMessagePropertiesValue3 = pair5.Value;
+                            customMessagePropertiesDictionary3[customMessagePropertiesKey3] = customMessagePropertiesValue3;
+                        }
+                        serviceBusTopicMessageValue2["customMessageProperties"] = customMessagePropertiesDictionary3;
+                    }
+                }
+                
+                if (parameters.Action.ServiceBusQueueMessage != null)
+                {
+                    JObject serviceBusQueueMessageValue2 = new JObject();
+                    actionValue["serviceBusQueueMessage"] = serviceBusQueueMessageValue2;
+                    
+                    serviceBusQueueMessageValue2["queueName"] = parameters.Action.ServiceBusQueueMessage.QueueName;
+                    
+                    serviceBusQueueMessageValue2["namespace"] = parameters.Action.ServiceBusQueueMessage.Namespace;
+                    
+                    serviceBusQueueMessageValue2["transportType"] = SchedulerClient.JobServiceBusTransportTypeToString(parameters.Action.ServiceBusQueueMessage.TransportType);
+                    
+                    JObject authenticationValue6 = new JObject();
+                    serviceBusQueueMessageValue2["authentication"] = authenticationValue6;
+                    
+                    authenticationValue6["sasKeyName"] = parameters.Action.ServiceBusQueueMessage.Authentication.SasKeyName;
+                    
+                    authenticationValue6["sasKey"] = parameters.Action.ServiceBusQueueMessage.Authentication.SasKey;
+                    
+                    authenticationValue6["type"] = SchedulerClient.JobServiceBusAuthenticationTypeToString(parameters.Action.ServiceBusQueueMessage.Authentication.Type);
+                    
+                    serviceBusQueueMessageValue2["message"] = parameters.Action.ServiceBusQueueMessage.Message;
+                    
+                    if (parameters.Action.ServiceBusQueueMessage.BrokeredMessageProperties != null)
+                    {
+                        JObject brokeredMessagePropertiesValue4 = new JObject();
+                        serviceBusQueueMessageValue2["brokeredMessageProperties"] = brokeredMessagePropertiesValue4;
+                        
+                        if (parameters.Action.ServiceBusQueueMessage.BrokeredMessageProperties.ContentType != null)
+                        {
+                            brokeredMessagePropertiesValue4["contentType"] = parameters.Action.ServiceBusQueueMessage.BrokeredMessageProperties.ContentType;
+                        }
+                        
+                        if (parameters.Action.ServiceBusQueueMessage.BrokeredMessageProperties.CorrelationId != null)
+                        {
+                            brokeredMessagePropertiesValue4["correlationId"] = parameters.Action.ServiceBusQueueMessage.BrokeredMessageProperties.CorrelationId;
+                        }
+                        
+                        brokeredMessagePropertiesValue4["forcePersistence"] = parameters.Action.ServiceBusQueueMessage.BrokeredMessageProperties.ForcePersistence;
+                        
+                        if (parameters.Action.ServiceBusQueueMessage.BrokeredMessageProperties.Label != null)
+                        {
+                            brokeredMessagePropertiesValue4["label"] = parameters.Action.ServiceBusQueueMessage.BrokeredMessageProperties.Label;
+                        }
+                        
+                        if (parameters.Action.ServiceBusQueueMessage.BrokeredMessageProperties.MessageId != null)
+                        {
+                            brokeredMessagePropertiesValue4["messageId"] = parameters.Action.ServiceBusQueueMessage.BrokeredMessageProperties.MessageId;
+                        }
+                        
+                        if (parameters.Action.ServiceBusQueueMessage.BrokeredMessageProperties.PartitionKey != null)
+                        {
+                            brokeredMessagePropertiesValue4["partitionKey"] = parameters.Action.ServiceBusQueueMessage.BrokeredMessageProperties.PartitionKey;
+                        }
+                        
+                        if (parameters.Action.ServiceBusQueueMessage.BrokeredMessageProperties.ReplyTo != null)
+                        {
+                            brokeredMessagePropertiesValue4["replyTo"] = parameters.Action.ServiceBusQueueMessage.BrokeredMessageProperties.ReplyTo;
+                        }
+                        
+                        if (parameters.Action.ServiceBusQueueMessage.BrokeredMessageProperties.ReplyToSessionId != null)
+                        {
+                            brokeredMessagePropertiesValue4["replyToSessionId"] = parameters.Action.ServiceBusQueueMessage.BrokeredMessageProperties.ReplyToSessionId;
+                        }
+                        
+                        if (parameters.Action.ServiceBusQueueMessage.BrokeredMessageProperties.ScheduledEnqueueTimeUtc != null)
+                        {
+                            brokeredMessagePropertiesValue4["scheduledEnqueueTimeUtc"] = parameters.Action.ServiceBusQueueMessage.BrokeredMessageProperties.ScheduledEnqueueTimeUtc.Value;
+                        }
+                        
+                        if (parameters.Action.ServiceBusQueueMessage.BrokeredMessageProperties.SessionId != null)
+                        {
+                            brokeredMessagePropertiesValue4["sessionId"] = parameters.Action.ServiceBusQueueMessage.BrokeredMessageProperties.SessionId;
+                        }
+                        
+                        if (parameters.Action.ServiceBusQueueMessage.BrokeredMessageProperties.TimeToLive != null)
+                        {
+                            brokeredMessagePropertiesValue4["timeToLive"] = parameters.Action.ServiceBusQueueMessage.BrokeredMessageProperties.TimeToLive.Value;
+                        }
+                        
+                        if (parameters.Action.ServiceBusQueueMessage.BrokeredMessageProperties.To != null)
+                        {
+                            brokeredMessagePropertiesValue4["to"] = parameters.Action.ServiceBusQueueMessage.BrokeredMessageProperties.To;
+                        }
+                        
+                        if (parameters.Action.ServiceBusQueueMessage.BrokeredMessageProperties.ViaPartitionKey != null)
+                        {
+                            brokeredMessagePropertiesValue4["viaPartitionKey"] = parameters.Action.ServiceBusQueueMessage.BrokeredMessageProperties.ViaPartitionKey;
+                        }
+                    }
+                    
+                    if (parameters.Action.ServiceBusQueueMessage.CustomMessageProperties != null)
+                    {
+                        JObject customMessagePropertiesDictionary4 = new JObject();
+                        foreach (KeyValuePair<string, string> pair6 in parameters.Action.ServiceBusQueueMessage.CustomMessageProperties)
+                        {
+                            string customMessagePropertiesKey4 = pair6.Key;
+                            string customMessagePropertiesValue4 = pair6.Value;
+                            customMessagePropertiesDictionary4[customMessagePropertiesKey4] = customMessagePropertiesValue4;
+                        }
+                        serviceBusQueueMessageValue2["customMessageProperties"] = customMessagePropertiesDictionary4;
+                    }
                 }
                 
                 if (parameters.Recurrence != null)
@@ -752,50 +1272,50 @@ namespace Microsoft.WindowsAzure.Scheduler
                                             requestInstance.Body = bodyInstance;
                                         }
                                         
-                                        JToken authenticationValue3 = requestValue3["authentication"];
-                                        if (authenticationValue3 != null && authenticationValue3.Type != JTokenType.Null)
+                                        JToken authenticationValue7 = requestValue3["authentication"];
+                                        if (authenticationValue7 != null && authenticationValue7.Type != JTokenType.Null)
                                         {
-                                            string typeName = ((string)authenticationValue3["type"]);
+                                            string typeName = ((string)authenticationValue7["type"]);
                                             if (typeName == "ClientCertificate")
                                             {
                                                 ClientCertAuthentication clientCertAuthenticationInstance = new ClientCertAuthentication();
                                                 
-                                                JToken passwordValue = authenticationValue3["password"];
+                                                JToken passwordValue = authenticationValue7["password"];
                                                 if (passwordValue != null && passwordValue.Type != JTokenType.Null)
                                                 {
                                                     string passwordInstance = ((string)passwordValue);
                                                     clientCertAuthenticationInstance.Password = passwordInstance;
                                                 }
                                                 
-                                                JToken pfxValue = authenticationValue3["pfx"];
+                                                JToken pfxValue = authenticationValue7["pfx"];
                                                 if (pfxValue != null && pfxValue.Type != JTokenType.Null)
                                                 {
                                                     string pfxInstance = ((string)pfxValue);
                                                     clientCertAuthenticationInstance.Pfx = pfxInstance;
                                                 }
                                                 
-                                                JToken certificateThumbprintValue = authenticationValue3["certificateThumbprint"];
+                                                JToken certificateThumbprintValue = authenticationValue7["certificateThumbprint"];
                                                 if (certificateThumbprintValue != null && certificateThumbprintValue.Type != JTokenType.Null)
                                                 {
                                                     string certificateThumbprintInstance = ((string)certificateThumbprintValue);
                                                     clientCertAuthenticationInstance.CertificateThumbprint = certificateThumbprintInstance;
                                                 }
                                                 
-                                                JToken certificateExpirationValue = authenticationValue3["certificateExpiration"];
+                                                JToken certificateExpirationValue = authenticationValue7["certificateExpiration"];
                                                 if (certificateExpirationValue != null && certificateExpirationValue.Type != JTokenType.Null)
                                                 {
                                                     DateTime certificateExpirationInstance = ((DateTime)certificateExpirationValue);
                                                     clientCertAuthenticationInstance.CertificateExpiration = certificateExpirationInstance;
                                                 }
                                                 
-                                                JToken certificateSubjectNameValue = authenticationValue3["certificateSubjectName"];
+                                                JToken certificateSubjectNameValue = authenticationValue7["certificateSubjectName"];
                                                 if (certificateSubjectNameValue != null && certificateSubjectNameValue.Type != JTokenType.Null)
                                                 {
                                                     string certificateSubjectNameInstance = ((string)certificateSubjectNameValue);
                                                     clientCertAuthenticationInstance.CertificateSubjectName = certificateSubjectNameInstance;
                                                 }
                                                 
-                                                JToken typeValue3 = authenticationValue3["type"];
+                                                JToken typeValue3 = authenticationValue7["type"];
                                                 if (typeValue3 != null && typeValue3.Type != JTokenType.Null)
                                                 {
                                                     HttpAuthenticationType typeInstance3 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue3));
@@ -807,35 +1327,35 @@ namespace Microsoft.WindowsAzure.Scheduler
                                             {
                                                 AADOAuthAuthentication aADOAuthAuthenticationInstance = new AADOAuthAuthentication();
                                                 
-                                                JToken secretValue = authenticationValue3["secret"];
+                                                JToken secretValue = authenticationValue7["secret"];
                                                 if (secretValue != null && secretValue.Type != JTokenType.Null)
                                                 {
                                                     string secretInstance = ((string)secretValue);
                                                     aADOAuthAuthenticationInstance.Secret = secretInstance;
                                                 }
                                                 
-                                                JToken tenantValue = authenticationValue3["tenant"];
+                                                JToken tenantValue = authenticationValue7["tenant"];
                                                 if (tenantValue != null && tenantValue.Type != JTokenType.Null)
                                                 {
                                                     string tenantInstance = ((string)tenantValue);
                                                     aADOAuthAuthenticationInstance.Tenant = tenantInstance;
                                                 }
                                                 
-                                                JToken audienceValue = authenticationValue3["audience"];
+                                                JToken audienceValue = authenticationValue7["audience"];
                                                 if (audienceValue != null && audienceValue.Type != JTokenType.Null)
                                                 {
                                                     string audienceInstance = ((string)audienceValue);
                                                     aADOAuthAuthenticationInstance.Audience = audienceInstance;
                                                 }
                                                 
-                                                JToken clientIdValue = authenticationValue3["clientId"];
+                                                JToken clientIdValue = authenticationValue7["clientId"];
                                                 if (clientIdValue != null && clientIdValue.Type != JTokenType.Null)
                                                 {
                                                     string clientIdInstance = ((string)clientIdValue);
                                                     aADOAuthAuthenticationInstance.ClientId = clientIdInstance;
                                                 }
                                                 
-                                                JToken typeValue4 = authenticationValue3["type"];
+                                                JToken typeValue4 = authenticationValue7["type"];
                                                 if (typeValue4 != null && typeValue4.Type != JTokenType.Null)
                                                 {
                                                     HttpAuthenticationType typeInstance4 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue4));
@@ -847,21 +1367,21 @@ namespace Microsoft.WindowsAzure.Scheduler
                                             {
                                                 BasicAuthentication basicAuthenticationInstance = new BasicAuthentication();
                                                 
-                                                JToken usernameValue = authenticationValue3["username"];
+                                                JToken usernameValue = authenticationValue7["username"];
                                                 if (usernameValue != null && usernameValue.Type != JTokenType.Null)
                                                 {
                                                     string usernameInstance = ((string)usernameValue);
                                                     basicAuthenticationInstance.Username = usernameInstance;
                                                 }
                                                 
-                                                JToken passwordValue2 = authenticationValue3["password"];
+                                                JToken passwordValue2 = authenticationValue7["password"];
                                                 if (passwordValue2 != null && passwordValue2.Type != JTokenType.Null)
                                                 {
                                                     string passwordInstance2 = ((string)passwordValue2);
                                                     basicAuthenticationInstance.Password = passwordInstance2;
                                                 }
                                                 
-                                                JToken typeValue5 = authenticationValue3["type"];
+                                                JToken typeValue5 = authenticationValue7["type"];
                                                 if (typeValue5 != null && typeValue5.Type != JTokenType.Null)
                                                 {
                                                     HttpAuthenticationType typeInstance5 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue5));
@@ -906,6 +1426,350 @@ namespace Microsoft.WindowsAzure.Scheduler
                                             queueMessageInstance.Message = messageInstance;
                                         }
                                     }
+                                    
+                                    JToken serviceBusTopicMessageValue3 = errorActionValue2["serviceBusTopicMessage"];
+                                    if (serviceBusTopicMessageValue3 != null && serviceBusTopicMessageValue3.Type != JTokenType.Null)
+                                    {
+                                        JobServiceBusTopicMessage serviceBusTopicMessageInstance = new JobServiceBusTopicMessage();
+                                        errorActionInstance.ServiceBusTopicMessage = serviceBusTopicMessageInstance;
+                                        
+                                        JToken topicPathValue = serviceBusTopicMessageValue3["topicPath"];
+                                        if (topicPathValue != null && topicPathValue.Type != JTokenType.Null)
+                                        {
+                                            string topicPathInstance = ((string)topicPathValue);
+                                            serviceBusTopicMessageInstance.TopicPath = topicPathInstance;
+                                        }
+                                        
+                                        JToken namespaceValue = serviceBusTopicMessageValue3["namespace"];
+                                        if (namespaceValue != null && namespaceValue.Type != JTokenType.Null)
+                                        {
+                                            string namespaceInstance = ((string)namespaceValue);
+                                            serviceBusTopicMessageInstance.Namespace = namespaceInstance;
+                                        }
+                                        
+                                        JToken transportTypeValue = serviceBusTopicMessageValue3["transportType"];
+                                        if (transportTypeValue != null && transportTypeValue.Type != JTokenType.Null)
+                                        {
+                                            JobServiceBusTransportType transportTypeInstance = SchedulerClient.ParseJobServiceBusTransportType(((string)transportTypeValue));
+                                            serviceBusTopicMessageInstance.TransportType = transportTypeInstance;
+                                        }
+                                        
+                                        JToken authenticationValue8 = serviceBusTopicMessageValue3["authentication"];
+                                        if (authenticationValue8 != null && authenticationValue8.Type != JTokenType.Null)
+                                        {
+                                            JobServiceBusAuthentication authenticationInstance = new JobServiceBusAuthentication();
+                                            serviceBusTopicMessageInstance.Authentication = authenticationInstance;
+                                            
+                                            JToken sasKeyNameValue = authenticationValue8["sasKeyName"];
+                                            if (sasKeyNameValue != null && sasKeyNameValue.Type != JTokenType.Null)
+                                            {
+                                                string sasKeyNameInstance = ((string)sasKeyNameValue);
+                                                authenticationInstance.SasKeyName = sasKeyNameInstance;
+                                            }
+                                            
+                                            JToken sasKeyValue = authenticationValue8["sasKey"];
+                                            if (sasKeyValue != null && sasKeyValue.Type != JTokenType.Null)
+                                            {
+                                                string sasKeyInstance = ((string)sasKeyValue);
+                                                authenticationInstance.SasKey = sasKeyInstance;
+                                            }
+                                            
+                                            JToken typeValue6 = authenticationValue8["type"];
+                                            if (typeValue6 != null && typeValue6.Type != JTokenType.Null)
+                                            {
+                                                JobServiceBusAuthenticationType typeInstance6 = SchedulerClient.ParseJobServiceBusAuthenticationType(((string)typeValue6));
+                                                authenticationInstance.Type = typeInstance6;
+                                            }
+                                        }
+                                        
+                                        JToken messageValue2 = serviceBusTopicMessageValue3["message"];
+                                        if (messageValue2 != null && messageValue2.Type != JTokenType.Null)
+                                        {
+                                            string messageInstance2 = ((string)messageValue2);
+                                            serviceBusTopicMessageInstance.Message = messageInstance2;
+                                        }
+                                        
+                                        JToken brokeredMessagePropertiesValue5 = serviceBusTopicMessageValue3["brokeredMessageProperties"];
+                                        if (brokeredMessagePropertiesValue5 != null && brokeredMessagePropertiesValue5.Type != JTokenType.Null)
+                                        {
+                                            JobServiceBusBrokeredMessageProperties brokeredMessagePropertiesInstance = new JobServiceBusBrokeredMessageProperties();
+                                            serviceBusTopicMessageInstance.BrokeredMessageProperties = brokeredMessagePropertiesInstance;
+                                            
+                                            JToken contentTypeValue = brokeredMessagePropertiesValue5["contentType"];
+                                            if (contentTypeValue != null && contentTypeValue.Type != JTokenType.Null)
+                                            {
+                                                string contentTypeInstance = ((string)contentTypeValue);
+                                                brokeredMessagePropertiesInstance.ContentType = contentTypeInstance;
+                                            }
+                                            
+                                            JToken correlationIdValue = brokeredMessagePropertiesValue5["correlationId"];
+                                            if (correlationIdValue != null && correlationIdValue.Type != JTokenType.Null)
+                                            {
+                                                string correlationIdInstance = ((string)correlationIdValue);
+                                                brokeredMessagePropertiesInstance.CorrelationId = correlationIdInstance;
+                                            }
+                                            
+                                            JToken forcePersistenceValue = brokeredMessagePropertiesValue5["forcePersistence"];
+                                            if (forcePersistenceValue != null && forcePersistenceValue.Type != JTokenType.Null)
+                                            {
+                                                bool forcePersistenceInstance = ((bool)forcePersistenceValue);
+                                                brokeredMessagePropertiesInstance.ForcePersistence = forcePersistenceInstance;
+                                            }
+                                            
+                                            JToken labelValue = brokeredMessagePropertiesValue5["label"];
+                                            if (labelValue != null && labelValue.Type != JTokenType.Null)
+                                            {
+                                                string labelInstance = ((string)labelValue);
+                                                brokeredMessagePropertiesInstance.Label = labelInstance;
+                                            }
+                                            
+                                            JToken messageIdValue = brokeredMessagePropertiesValue5["messageId"];
+                                            if (messageIdValue != null && messageIdValue.Type != JTokenType.Null)
+                                            {
+                                                string messageIdInstance = ((string)messageIdValue);
+                                                brokeredMessagePropertiesInstance.MessageId = messageIdInstance;
+                                            }
+                                            
+                                            JToken partitionKeyValue = brokeredMessagePropertiesValue5["partitionKey"];
+                                            if (partitionKeyValue != null && partitionKeyValue.Type != JTokenType.Null)
+                                            {
+                                                string partitionKeyInstance = ((string)partitionKeyValue);
+                                                brokeredMessagePropertiesInstance.PartitionKey = partitionKeyInstance;
+                                            }
+                                            
+                                            JToken replyToValue = brokeredMessagePropertiesValue5["replyTo"];
+                                            if (replyToValue != null && replyToValue.Type != JTokenType.Null)
+                                            {
+                                                string replyToInstance = ((string)replyToValue);
+                                                brokeredMessagePropertiesInstance.ReplyTo = replyToInstance;
+                                            }
+                                            
+                                            JToken replyToSessionIdValue = brokeredMessagePropertiesValue5["replyToSessionId"];
+                                            if (replyToSessionIdValue != null && replyToSessionIdValue.Type != JTokenType.Null)
+                                            {
+                                                string replyToSessionIdInstance = ((string)replyToSessionIdValue);
+                                                brokeredMessagePropertiesInstance.ReplyToSessionId = replyToSessionIdInstance;
+                                            }
+                                            
+                                            JToken scheduledEnqueueTimeUtcValue = brokeredMessagePropertiesValue5["scheduledEnqueueTimeUtc"];
+                                            if (scheduledEnqueueTimeUtcValue != null && scheduledEnqueueTimeUtcValue.Type != JTokenType.Null)
+                                            {
+                                                DateTime scheduledEnqueueTimeUtcInstance = ((DateTime)scheduledEnqueueTimeUtcValue);
+                                                brokeredMessagePropertiesInstance.ScheduledEnqueueTimeUtc = scheduledEnqueueTimeUtcInstance;
+                                            }
+                                            
+                                            JToken sessionIdValue = brokeredMessagePropertiesValue5["sessionId"];
+                                            if (sessionIdValue != null && sessionIdValue.Type != JTokenType.Null)
+                                            {
+                                                string sessionIdInstance = ((string)sessionIdValue);
+                                                brokeredMessagePropertiesInstance.SessionId = sessionIdInstance;
+                                            }
+                                            
+                                            JToken timeToLiveValue = brokeredMessagePropertiesValue5["timeToLive"];
+                                            if (timeToLiveValue != null && timeToLiveValue.Type != JTokenType.Null)
+                                            {
+                                                DateTime timeToLiveInstance = ((DateTime)timeToLiveValue);
+                                                brokeredMessagePropertiesInstance.TimeToLive = timeToLiveInstance;
+                                            }
+                                            
+                                            JToken toValue = brokeredMessagePropertiesValue5["to"];
+                                            if (toValue != null && toValue.Type != JTokenType.Null)
+                                            {
+                                                string toInstance = ((string)toValue);
+                                                brokeredMessagePropertiesInstance.To = toInstance;
+                                            }
+                                            
+                                            JToken viaPartitionKeyValue = brokeredMessagePropertiesValue5["viaPartitionKey"];
+                                            if (viaPartitionKeyValue != null && viaPartitionKeyValue.Type != JTokenType.Null)
+                                            {
+                                                string viaPartitionKeyInstance = ((string)viaPartitionKeyValue);
+                                                brokeredMessagePropertiesInstance.ViaPartitionKey = viaPartitionKeyInstance;
+                                            }
+                                        }
+                                        
+                                        JToken customMessagePropertiesSequenceElement = ((JToken)serviceBusTopicMessageValue3["customMessageProperties"]);
+                                        if (customMessagePropertiesSequenceElement != null && customMessagePropertiesSequenceElement.Type != JTokenType.Null)
+                                        {
+                                            foreach (JProperty property2 in customMessagePropertiesSequenceElement)
+                                            {
+                                                string customMessagePropertiesKey5 = ((string)property2.Name);
+                                                string customMessagePropertiesValue5 = ((string)property2.Value);
+                                                serviceBusTopicMessageInstance.CustomMessageProperties.Add(customMessagePropertiesKey5, customMessagePropertiesValue5);
+                                            }
+                                        }
+                                    }
+                                    
+                                    JToken serviceBusQueueMessageValue3 = errorActionValue2["serviceBusQueueMessage"];
+                                    if (serviceBusQueueMessageValue3 != null && serviceBusQueueMessageValue3.Type != JTokenType.Null)
+                                    {
+                                        JobServiceBusQueueMessage serviceBusQueueMessageInstance = new JobServiceBusQueueMessage();
+                                        errorActionInstance.ServiceBusQueueMessage = serviceBusQueueMessageInstance;
+                                        
+                                        JToken queueNameValue2 = serviceBusQueueMessageValue3["queueName"];
+                                        if (queueNameValue2 != null && queueNameValue2.Type != JTokenType.Null)
+                                        {
+                                            string queueNameInstance2 = ((string)queueNameValue2);
+                                            serviceBusQueueMessageInstance.QueueName = queueNameInstance2;
+                                        }
+                                        
+                                        JToken namespaceValue2 = serviceBusQueueMessageValue3["namespace"];
+                                        if (namespaceValue2 != null && namespaceValue2.Type != JTokenType.Null)
+                                        {
+                                            string namespaceInstance2 = ((string)namespaceValue2);
+                                            serviceBusQueueMessageInstance.Namespace = namespaceInstance2;
+                                        }
+                                        
+                                        JToken transportTypeValue2 = serviceBusQueueMessageValue3["transportType"];
+                                        if (transportTypeValue2 != null && transportTypeValue2.Type != JTokenType.Null)
+                                        {
+                                            JobServiceBusTransportType transportTypeInstance2 = SchedulerClient.ParseJobServiceBusTransportType(((string)transportTypeValue2));
+                                            serviceBusQueueMessageInstance.TransportType = transportTypeInstance2;
+                                        }
+                                        
+                                        JToken authenticationValue9 = serviceBusQueueMessageValue3["authentication"];
+                                        if (authenticationValue9 != null && authenticationValue9.Type != JTokenType.Null)
+                                        {
+                                            JobServiceBusAuthentication authenticationInstance2 = new JobServiceBusAuthentication();
+                                            serviceBusQueueMessageInstance.Authentication = authenticationInstance2;
+                                            
+                                            JToken sasKeyNameValue2 = authenticationValue9["sasKeyName"];
+                                            if (sasKeyNameValue2 != null && sasKeyNameValue2.Type != JTokenType.Null)
+                                            {
+                                                string sasKeyNameInstance2 = ((string)sasKeyNameValue2);
+                                                authenticationInstance2.SasKeyName = sasKeyNameInstance2;
+                                            }
+                                            
+                                            JToken sasKeyValue2 = authenticationValue9["sasKey"];
+                                            if (sasKeyValue2 != null && sasKeyValue2.Type != JTokenType.Null)
+                                            {
+                                                string sasKeyInstance2 = ((string)sasKeyValue2);
+                                                authenticationInstance2.SasKey = sasKeyInstance2;
+                                            }
+                                            
+                                            JToken typeValue7 = authenticationValue9["type"];
+                                            if (typeValue7 != null && typeValue7.Type != JTokenType.Null)
+                                            {
+                                                JobServiceBusAuthenticationType typeInstance7 = SchedulerClient.ParseJobServiceBusAuthenticationType(((string)typeValue7));
+                                                authenticationInstance2.Type = typeInstance7;
+                                            }
+                                        }
+                                        
+                                        JToken messageValue3 = serviceBusQueueMessageValue3["message"];
+                                        if (messageValue3 != null && messageValue3.Type != JTokenType.Null)
+                                        {
+                                            string messageInstance3 = ((string)messageValue3);
+                                            serviceBusQueueMessageInstance.Message = messageInstance3;
+                                        }
+                                        
+                                        JToken brokeredMessagePropertiesValue6 = serviceBusQueueMessageValue3["brokeredMessageProperties"];
+                                        if (brokeredMessagePropertiesValue6 != null && brokeredMessagePropertiesValue6.Type != JTokenType.Null)
+                                        {
+                                            JobServiceBusBrokeredMessageProperties brokeredMessagePropertiesInstance2 = new JobServiceBusBrokeredMessageProperties();
+                                            serviceBusQueueMessageInstance.BrokeredMessageProperties = brokeredMessagePropertiesInstance2;
+                                            
+                                            JToken contentTypeValue2 = brokeredMessagePropertiesValue6["contentType"];
+                                            if (contentTypeValue2 != null && contentTypeValue2.Type != JTokenType.Null)
+                                            {
+                                                string contentTypeInstance2 = ((string)contentTypeValue2);
+                                                brokeredMessagePropertiesInstance2.ContentType = contentTypeInstance2;
+                                            }
+                                            
+                                            JToken correlationIdValue2 = brokeredMessagePropertiesValue6["correlationId"];
+                                            if (correlationIdValue2 != null && correlationIdValue2.Type != JTokenType.Null)
+                                            {
+                                                string correlationIdInstance2 = ((string)correlationIdValue2);
+                                                brokeredMessagePropertiesInstance2.CorrelationId = correlationIdInstance2;
+                                            }
+                                            
+                                            JToken forcePersistenceValue2 = brokeredMessagePropertiesValue6["forcePersistence"];
+                                            if (forcePersistenceValue2 != null && forcePersistenceValue2.Type != JTokenType.Null)
+                                            {
+                                                bool forcePersistenceInstance2 = ((bool)forcePersistenceValue2);
+                                                brokeredMessagePropertiesInstance2.ForcePersistence = forcePersistenceInstance2;
+                                            }
+                                            
+                                            JToken labelValue2 = brokeredMessagePropertiesValue6["label"];
+                                            if (labelValue2 != null && labelValue2.Type != JTokenType.Null)
+                                            {
+                                                string labelInstance2 = ((string)labelValue2);
+                                                brokeredMessagePropertiesInstance2.Label = labelInstance2;
+                                            }
+                                            
+                                            JToken messageIdValue2 = brokeredMessagePropertiesValue6["messageId"];
+                                            if (messageIdValue2 != null && messageIdValue2.Type != JTokenType.Null)
+                                            {
+                                                string messageIdInstance2 = ((string)messageIdValue2);
+                                                brokeredMessagePropertiesInstance2.MessageId = messageIdInstance2;
+                                            }
+                                            
+                                            JToken partitionKeyValue2 = brokeredMessagePropertiesValue6["partitionKey"];
+                                            if (partitionKeyValue2 != null && partitionKeyValue2.Type != JTokenType.Null)
+                                            {
+                                                string partitionKeyInstance2 = ((string)partitionKeyValue2);
+                                                brokeredMessagePropertiesInstance2.PartitionKey = partitionKeyInstance2;
+                                            }
+                                            
+                                            JToken replyToValue2 = brokeredMessagePropertiesValue6["replyTo"];
+                                            if (replyToValue2 != null && replyToValue2.Type != JTokenType.Null)
+                                            {
+                                                string replyToInstance2 = ((string)replyToValue2);
+                                                brokeredMessagePropertiesInstance2.ReplyTo = replyToInstance2;
+                                            }
+                                            
+                                            JToken replyToSessionIdValue2 = brokeredMessagePropertiesValue6["replyToSessionId"];
+                                            if (replyToSessionIdValue2 != null && replyToSessionIdValue2.Type != JTokenType.Null)
+                                            {
+                                                string replyToSessionIdInstance2 = ((string)replyToSessionIdValue2);
+                                                brokeredMessagePropertiesInstance2.ReplyToSessionId = replyToSessionIdInstance2;
+                                            }
+                                            
+                                            JToken scheduledEnqueueTimeUtcValue2 = brokeredMessagePropertiesValue6["scheduledEnqueueTimeUtc"];
+                                            if (scheduledEnqueueTimeUtcValue2 != null && scheduledEnqueueTimeUtcValue2.Type != JTokenType.Null)
+                                            {
+                                                DateTime scheduledEnqueueTimeUtcInstance2 = ((DateTime)scheduledEnqueueTimeUtcValue2);
+                                                brokeredMessagePropertiesInstance2.ScheduledEnqueueTimeUtc = scheduledEnqueueTimeUtcInstance2;
+                                            }
+                                            
+                                            JToken sessionIdValue2 = brokeredMessagePropertiesValue6["sessionId"];
+                                            if (sessionIdValue2 != null && sessionIdValue2.Type != JTokenType.Null)
+                                            {
+                                                string sessionIdInstance2 = ((string)sessionIdValue2);
+                                                brokeredMessagePropertiesInstance2.SessionId = sessionIdInstance2;
+                                            }
+                                            
+                                            JToken timeToLiveValue2 = brokeredMessagePropertiesValue6["timeToLive"];
+                                            if (timeToLiveValue2 != null && timeToLiveValue2.Type != JTokenType.Null)
+                                            {
+                                                DateTime timeToLiveInstance2 = ((DateTime)timeToLiveValue2);
+                                                brokeredMessagePropertiesInstance2.TimeToLive = timeToLiveInstance2;
+                                            }
+                                            
+                                            JToken toValue2 = brokeredMessagePropertiesValue6["to"];
+                                            if (toValue2 != null && toValue2.Type != JTokenType.Null)
+                                            {
+                                                string toInstance2 = ((string)toValue2);
+                                                brokeredMessagePropertiesInstance2.To = toInstance2;
+                                            }
+                                            
+                                            JToken viaPartitionKeyValue2 = brokeredMessagePropertiesValue6["viaPartitionKey"];
+                                            if (viaPartitionKeyValue2 != null && viaPartitionKeyValue2.Type != JTokenType.Null)
+                                            {
+                                                string viaPartitionKeyInstance2 = ((string)viaPartitionKeyValue2);
+                                                brokeredMessagePropertiesInstance2.ViaPartitionKey = viaPartitionKeyInstance2;
+                                            }
+                                        }
+                                        
+                                        JToken customMessagePropertiesSequenceElement2 = ((JToken)serviceBusQueueMessageValue3["customMessageProperties"]);
+                                        if (customMessagePropertiesSequenceElement2 != null && customMessagePropertiesSequenceElement2.Type != JTokenType.Null)
+                                        {
+                                            foreach (JProperty property3 in customMessagePropertiesSequenceElement2)
+                                            {
+                                                string customMessagePropertiesKey6 = ((string)property3.Name);
+                                                string customMessagePropertiesValue6 = ((string)property3.Value);
+                                                serviceBusQueueMessageInstance.CustomMessageProperties.Add(customMessagePropertiesKey6, customMessagePropertiesValue6);
+                                            }
+                                        }
+                                    }
                                 }
                                 
                                 JToken requestValue4 = actionValue2["request"];
@@ -931,10 +1795,10 @@ namespace Microsoft.WindowsAzure.Scheduler
                                     JToken headersSequenceElement2 = ((JToken)requestValue4["headers"]);
                                     if (headersSequenceElement2 != null && headersSequenceElement2.Type != JTokenType.Null)
                                     {
-                                        foreach (JProperty property2 in headersSequenceElement2)
+                                        foreach (JProperty property4 in headersSequenceElement2)
                                         {
-                                            string headersKey4 = ((string)property2.Name);
-                                            string headersValue4 = ((string)property2.Value);
+                                            string headersKey4 = ((string)property4.Name);
+                                            string headersValue4 = ((string)property4.Value);
                                             requestInstance2.Headers.Add(headersKey4, headersValue4);
                                         }
                                     }
@@ -946,54 +1810,54 @@ namespace Microsoft.WindowsAzure.Scheduler
                                         requestInstance2.Body = bodyInstance2;
                                     }
                                     
-                                    JToken authenticationValue4 = requestValue4["authentication"];
-                                    if (authenticationValue4 != null && authenticationValue4.Type != JTokenType.Null)
+                                    JToken authenticationValue10 = requestValue4["authentication"];
+                                    if (authenticationValue10 != null && authenticationValue10.Type != JTokenType.Null)
                                     {
-                                        string typeName2 = ((string)authenticationValue4["type"]);
+                                        string typeName2 = ((string)authenticationValue10["type"]);
                                         if (typeName2 == "ClientCertificate")
                                         {
                                             ClientCertAuthentication clientCertAuthenticationInstance2 = new ClientCertAuthentication();
                                             
-                                            JToken passwordValue3 = authenticationValue4["password"];
+                                            JToken passwordValue3 = authenticationValue10["password"];
                                             if (passwordValue3 != null && passwordValue3.Type != JTokenType.Null)
                                             {
                                                 string passwordInstance3 = ((string)passwordValue3);
                                                 clientCertAuthenticationInstance2.Password = passwordInstance3;
                                             }
                                             
-                                            JToken pfxValue2 = authenticationValue4["pfx"];
+                                            JToken pfxValue2 = authenticationValue10["pfx"];
                                             if (pfxValue2 != null && pfxValue2.Type != JTokenType.Null)
                                             {
                                                 string pfxInstance2 = ((string)pfxValue2);
                                                 clientCertAuthenticationInstance2.Pfx = pfxInstance2;
                                             }
                                             
-                                            JToken certificateThumbprintValue2 = authenticationValue4["certificateThumbprint"];
+                                            JToken certificateThumbprintValue2 = authenticationValue10["certificateThumbprint"];
                                             if (certificateThumbprintValue2 != null && certificateThumbprintValue2.Type != JTokenType.Null)
                                             {
                                                 string certificateThumbprintInstance2 = ((string)certificateThumbprintValue2);
                                                 clientCertAuthenticationInstance2.CertificateThumbprint = certificateThumbprintInstance2;
                                             }
                                             
-                                            JToken certificateExpirationValue2 = authenticationValue4["certificateExpiration"];
+                                            JToken certificateExpirationValue2 = authenticationValue10["certificateExpiration"];
                                             if (certificateExpirationValue2 != null && certificateExpirationValue2.Type != JTokenType.Null)
                                             {
                                                 DateTime certificateExpirationInstance2 = ((DateTime)certificateExpirationValue2);
                                                 clientCertAuthenticationInstance2.CertificateExpiration = certificateExpirationInstance2;
                                             }
                                             
-                                            JToken certificateSubjectNameValue2 = authenticationValue4["certificateSubjectName"];
+                                            JToken certificateSubjectNameValue2 = authenticationValue10["certificateSubjectName"];
                                             if (certificateSubjectNameValue2 != null && certificateSubjectNameValue2.Type != JTokenType.Null)
                                             {
                                                 string certificateSubjectNameInstance2 = ((string)certificateSubjectNameValue2);
                                                 clientCertAuthenticationInstance2.CertificateSubjectName = certificateSubjectNameInstance2;
                                             }
                                             
-                                            JToken typeValue6 = authenticationValue4["type"];
-                                            if (typeValue6 != null && typeValue6.Type != JTokenType.Null)
+                                            JToken typeValue8 = authenticationValue10["type"];
+                                            if (typeValue8 != null && typeValue8.Type != JTokenType.Null)
                                             {
-                                                HttpAuthenticationType typeInstance6 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue6));
-                                                clientCertAuthenticationInstance2.Type = typeInstance6;
+                                                HttpAuthenticationType typeInstance8 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue8));
+                                                clientCertAuthenticationInstance2.Type = typeInstance8;
                                             }
                                             requestInstance2.Authentication = clientCertAuthenticationInstance2;
                                         }
@@ -1001,39 +1865,39 @@ namespace Microsoft.WindowsAzure.Scheduler
                                         {
                                             AADOAuthAuthentication aADOAuthAuthenticationInstance2 = new AADOAuthAuthentication();
                                             
-                                            JToken secretValue2 = authenticationValue4["secret"];
+                                            JToken secretValue2 = authenticationValue10["secret"];
                                             if (secretValue2 != null && secretValue2.Type != JTokenType.Null)
                                             {
                                                 string secretInstance2 = ((string)secretValue2);
                                                 aADOAuthAuthenticationInstance2.Secret = secretInstance2;
                                             }
                                             
-                                            JToken tenantValue2 = authenticationValue4["tenant"];
+                                            JToken tenantValue2 = authenticationValue10["tenant"];
                                             if (tenantValue2 != null && tenantValue2.Type != JTokenType.Null)
                                             {
                                                 string tenantInstance2 = ((string)tenantValue2);
                                                 aADOAuthAuthenticationInstance2.Tenant = tenantInstance2;
                                             }
                                             
-                                            JToken audienceValue2 = authenticationValue4["audience"];
+                                            JToken audienceValue2 = authenticationValue10["audience"];
                                             if (audienceValue2 != null && audienceValue2.Type != JTokenType.Null)
                                             {
                                                 string audienceInstance2 = ((string)audienceValue2);
                                                 aADOAuthAuthenticationInstance2.Audience = audienceInstance2;
                                             }
                                             
-                                            JToken clientIdValue2 = authenticationValue4["clientId"];
+                                            JToken clientIdValue2 = authenticationValue10["clientId"];
                                             if (clientIdValue2 != null && clientIdValue2.Type != JTokenType.Null)
                                             {
                                                 string clientIdInstance2 = ((string)clientIdValue2);
                                                 aADOAuthAuthenticationInstance2.ClientId = clientIdInstance2;
                                             }
                                             
-                                            JToken typeValue7 = authenticationValue4["type"];
-                                            if (typeValue7 != null && typeValue7.Type != JTokenType.Null)
+                                            JToken typeValue9 = authenticationValue10["type"];
+                                            if (typeValue9 != null && typeValue9.Type != JTokenType.Null)
                                             {
-                                                HttpAuthenticationType typeInstance7 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue7));
-                                                aADOAuthAuthenticationInstance2.Type = typeInstance7;
+                                                HttpAuthenticationType typeInstance9 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue9));
+                                                aADOAuthAuthenticationInstance2.Type = typeInstance9;
                                             }
                                             requestInstance2.Authentication = aADOAuthAuthenticationInstance2;
                                         }
@@ -1041,25 +1905,25 @@ namespace Microsoft.WindowsAzure.Scheduler
                                         {
                                             BasicAuthentication basicAuthenticationInstance2 = new BasicAuthentication();
                                             
-                                            JToken usernameValue2 = authenticationValue4["username"];
+                                            JToken usernameValue2 = authenticationValue10["username"];
                                             if (usernameValue2 != null && usernameValue2.Type != JTokenType.Null)
                                             {
                                                 string usernameInstance2 = ((string)usernameValue2);
                                                 basicAuthenticationInstance2.Username = usernameInstance2;
                                             }
                                             
-                                            JToken passwordValue4 = authenticationValue4["password"];
+                                            JToken passwordValue4 = authenticationValue10["password"];
                                             if (passwordValue4 != null && passwordValue4.Type != JTokenType.Null)
                                             {
                                                 string passwordInstance4 = ((string)passwordValue4);
                                                 basicAuthenticationInstance2.Password = passwordInstance4;
                                             }
                                             
-                                            JToken typeValue8 = authenticationValue4["type"];
-                                            if (typeValue8 != null && typeValue8.Type != JTokenType.Null)
+                                            JToken typeValue10 = authenticationValue10["type"];
+                                            if (typeValue10 != null && typeValue10.Type != JTokenType.Null)
                                             {
-                                                HttpAuthenticationType typeInstance8 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue8));
-                                                basicAuthenticationInstance2.Type = typeInstance8;
+                                                HttpAuthenticationType typeInstance10 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue10));
+                                                basicAuthenticationInstance2.Type = typeInstance10;
                                             }
                                             requestInstance2.Authentication = basicAuthenticationInstance2;
                                         }
@@ -1079,11 +1943,11 @@ namespace Microsoft.WindowsAzure.Scheduler
                                         queueMessageInstance2.StorageAccountName = storageAccountInstance2;
                                     }
                                     
-                                    JToken queueNameValue2 = queueMessageValue4["queueName"];
-                                    if (queueNameValue2 != null && queueNameValue2.Type != JTokenType.Null)
+                                    JToken queueNameValue3 = queueMessageValue4["queueName"];
+                                    if (queueNameValue3 != null && queueNameValue3.Type != JTokenType.Null)
                                     {
-                                        string queueNameInstance2 = ((string)queueNameValue2);
-                                        queueMessageInstance2.QueueName = queueNameInstance2;
+                                        string queueNameInstance3 = ((string)queueNameValue3);
+                                        queueMessageInstance2.QueueName = queueNameInstance3;
                                     }
                                     
                                     JToken sasTokenValue2 = queueMessageValue4["sasToken"];
@@ -1093,11 +1957,355 @@ namespace Microsoft.WindowsAzure.Scheduler
                                         queueMessageInstance2.SasToken = sasTokenInstance2;
                                     }
                                     
-                                    JToken messageValue2 = queueMessageValue4["message"];
-                                    if (messageValue2 != null && messageValue2.Type != JTokenType.Null)
+                                    JToken messageValue4 = queueMessageValue4["message"];
+                                    if (messageValue4 != null && messageValue4.Type != JTokenType.Null)
                                     {
-                                        string messageInstance2 = ((string)messageValue2);
-                                        queueMessageInstance2.Message = messageInstance2;
+                                        string messageInstance4 = ((string)messageValue4);
+                                        queueMessageInstance2.Message = messageInstance4;
+                                    }
+                                }
+                                
+                                JToken serviceBusTopicMessageValue4 = actionValue2["serviceBusTopicMessage"];
+                                if (serviceBusTopicMessageValue4 != null && serviceBusTopicMessageValue4.Type != JTokenType.Null)
+                                {
+                                    JobServiceBusTopicMessage serviceBusTopicMessageInstance2 = new JobServiceBusTopicMessage();
+                                    actionInstance.ServiceBusTopicMessage = serviceBusTopicMessageInstance2;
+                                    
+                                    JToken topicPathValue2 = serviceBusTopicMessageValue4["topicPath"];
+                                    if (topicPathValue2 != null && topicPathValue2.Type != JTokenType.Null)
+                                    {
+                                        string topicPathInstance2 = ((string)topicPathValue2);
+                                        serviceBusTopicMessageInstance2.TopicPath = topicPathInstance2;
+                                    }
+                                    
+                                    JToken namespaceValue3 = serviceBusTopicMessageValue4["namespace"];
+                                    if (namespaceValue3 != null && namespaceValue3.Type != JTokenType.Null)
+                                    {
+                                        string namespaceInstance3 = ((string)namespaceValue3);
+                                        serviceBusTopicMessageInstance2.Namespace = namespaceInstance3;
+                                    }
+                                    
+                                    JToken transportTypeValue3 = serviceBusTopicMessageValue4["transportType"];
+                                    if (transportTypeValue3 != null && transportTypeValue3.Type != JTokenType.Null)
+                                    {
+                                        JobServiceBusTransportType transportTypeInstance3 = SchedulerClient.ParseJobServiceBusTransportType(((string)transportTypeValue3));
+                                        serviceBusTopicMessageInstance2.TransportType = transportTypeInstance3;
+                                    }
+                                    
+                                    JToken authenticationValue11 = serviceBusTopicMessageValue4["authentication"];
+                                    if (authenticationValue11 != null && authenticationValue11.Type != JTokenType.Null)
+                                    {
+                                        JobServiceBusAuthentication authenticationInstance3 = new JobServiceBusAuthentication();
+                                        serviceBusTopicMessageInstance2.Authentication = authenticationInstance3;
+                                        
+                                        JToken sasKeyNameValue3 = authenticationValue11["sasKeyName"];
+                                        if (sasKeyNameValue3 != null && sasKeyNameValue3.Type != JTokenType.Null)
+                                        {
+                                            string sasKeyNameInstance3 = ((string)sasKeyNameValue3);
+                                            authenticationInstance3.SasKeyName = sasKeyNameInstance3;
+                                        }
+                                        
+                                        JToken sasKeyValue3 = authenticationValue11["sasKey"];
+                                        if (sasKeyValue3 != null && sasKeyValue3.Type != JTokenType.Null)
+                                        {
+                                            string sasKeyInstance3 = ((string)sasKeyValue3);
+                                            authenticationInstance3.SasKey = sasKeyInstance3;
+                                        }
+                                        
+                                        JToken typeValue11 = authenticationValue11["type"];
+                                        if (typeValue11 != null && typeValue11.Type != JTokenType.Null)
+                                        {
+                                            JobServiceBusAuthenticationType typeInstance11 = SchedulerClient.ParseJobServiceBusAuthenticationType(((string)typeValue11));
+                                            authenticationInstance3.Type = typeInstance11;
+                                        }
+                                    }
+                                    
+                                    JToken messageValue5 = serviceBusTopicMessageValue4["message"];
+                                    if (messageValue5 != null && messageValue5.Type != JTokenType.Null)
+                                    {
+                                        string messageInstance5 = ((string)messageValue5);
+                                        serviceBusTopicMessageInstance2.Message = messageInstance5;
+                                    }
+                                    
+                                    JToken brokeredMessagePropertiesValue7 = serviceBusTopicMessageValue4["brokeredMessageProperties"];
+                                    if (brokeredMessagePropertiesValue7 != null && brokeredMessagePropertiesValue7.Type != JTokenType.Null)
+                                    {
+                                        JobServiceBusBrokeredMessageProperties brokeredMessagePropertiesInstance3 = new JobServiceBusBrokeredMessageProperties();
+                                        serviceBusTopicMessageInstance2.BrokeredMessageProperties = brokeredMessagePropertiesInstance3;
+                                        
+                                        JToken contentTypeValue3 = brokeredMessagePropertiesValue7["contentType"];
+                                        if (contentTypeValue3 != null && contentTypeValue3.Type != JTokenType.Null)
+                                        {
+                                            string contentTypeInstance3 = ((string)contentTypeValue3);
+                                            brokeredMessagePropertiesInstance3.ContentType = contentTypeInstance3;
+                                        }
+                                        
+                                        JToken correlationIdValue3 = brokeredMessagePropertiesValue7["correlationId"];
+                                        if (correlationIdValue3 != null && correlationIdValue3.Type != JTokenType.Null)
+                                        {
+                                            string correlationIdInstance3 = ((string)correlationIdValue3);
+                                            brokeredMessagePropertiesInstance3.CorrelationId = correlationIdInstance3;
+                                        }
+                                        
+                                        JToken forcePersistenceValue3 = brokeredMessagePropertiesValue7["forcePersistence"];
+                                        if (forcePersistenceValue3 != null && forcePersistenceValue3.Type != JTokenType.Null)
+                                        {
+                                            bool forcePersistenceInstance3 = ((bool)forcePersistenceValue3);
+                                            brokeredMessagePropertiesInstance3.ForcePersistence = forcePersistenceInstance3;
+                                        }
+                                        
+                                        JToken labelValue3 = brokeredMessagePropertiesValue7["label"];
+                                        if (labelValue3 != null && labelValue3.Type != JTokenType.Null)
+                                        {
+                                            string labelInstance3 = ((string)labelValue3);
+                                            brokeredMessagePropertiesInstance3.Label = labelInstance3;
+                                        }
+                                        
+                                        JToken messageIdValue3 = brokeredMessagePropertiesValue7["messageId"];
+                                        if (messageIdValue3 != null && messageIdValue3.Type != JTokenType.Null)
+                                        {
+                                            string messageIdInstance3 = ((string)messageIdValue3);
+                                            brokeredMessagePropertiesInstance3.MessageId = messageIdInstance3;
+                                        }
+                                        
+                                        JToken partitionKeyValue3 = brokeredMessagePropertiesValue7["partitionKey"];
+                                        if (partitionKeyValue3 != null && partitionKeyValue3.Type != JTokenType.Null)
+                                        {
+                                            string partitionKeyInstance3 = ((string)partitionKeyValue3);
+                                            brokeredMessagePropertiesInstance3.PartitionKey = partitionKeyInstance3;
+                                        }
+                                        
+                                        JToken replyToValue3 = brokeredMessagePropertiesValue7["replyTo"];
+                                        if (replyToValue3 != null && replyToValue3.Type != JTokenType.Null)
+                                        {
+                                            string replyToInstance3 = ((string)replyToValue3);
+                                            brokeredMessagePropertiesInstance3.ReplyTo = replyToInstance3;
+                                        }
+                                        
+                                        JToken replyToSessionIdValue3 = brokeredMessagePropertiesValue7["replyToSessionId"];
+                                        if (replyToSessionIdValue3 != null && replyToSessionIdValue3.Type != JTokenType.Null)
+                                        {
+                                            string replyToSessionIdInstance3 = ((string)replyToSessionIdValue3);
+                                            brokeredMessagePropertiesInstance3.ReplyToSessionId = replyToSessionIdInstance3;
+                                        }
+                                        
+                                        JToken scheduledEnqueueTimeUtcValue3 = brokeredMessagePropertiesValue7["scheduledEnqueueTimeUtc"];
+                                        if (scheduledEnqueueTimeUtcValue3 != null && scheduledEnqueueTimeUtcValue3.Type != JTokenType.Null)
+                                        {
+                                            DateTime scheduledEnqueueTimeUtcInstance3 = ((DateTime)scheduledEnqueueTimeUtcValue3);
+                                            brokeredMessagePropertiesInstance3.ScheduledEnqueueTimeUtc = scheduledEnqueueTimeUtcInstance3;
+                                        }
+                                        
+                                        JToken sessionIdValue3 = brokeredMessagePropertiesValue7["sessionId"];
+                                        if (sessionIdValue3 != null && sessionIdValue3.Type != JTokenType.Null)
+                                        {
+                                            string sessionIdInstance3 = ((string)sessionIdValue3);
+                                            brokeredMessagePropertiesInstance3.SessionId = sessionIdInstance3;
+                                        }
+                                        
+                                        JToken timeToLiveValue3 = brokeredMessagePropertiesValue7["timeToLive"];
+                                        if (timeToLiveValue3 != null && timeToLiveValue3.Type != JTokenType.Null)
+                                        {
+                                            DateTime timeToLiveInstance3 = ((DateTime)timeToLiveValue3);
+                                            brokeredMessagePropertiesInstance3.TimeToLive = timeToLiveInstance3;
+                                        }
+                                        
+                                        JToken toValue3 = brokeredMessagePropertiesValue7["to"];
+                                        if (toValue3 != null && toValue3.Type != JTokenType.Null)
+                                        {
+                                            string toInstance3 = ((string)toValue3);
+                                            brokeredMessagePropertiesInstance3.To = toInstance3;
+                                        }
+                                        
+                                        JToken viaPartitionKeyValue3 = brokeredMessagePropertiesValue7["viaPartitionKey"];
+                                        if (viaPartitionKeyValue3 != null && viaPartitionKeyValue3.Type != JTokenType.Null)
+                                        {
+                                            string viaPartitionKeyInstance3 = ((string)viaPartitionKeyValue3);
+                                            brokeredMessagePropertiesInstance3.ViaPartitionKey = viaPartitionKeyInstance3;
+                                        }
+                                    }
+                                    
+                                    JToken customMessagePropertiesSequenceElement3 = ((JToken)serviceBusTopicMessageValue4["customMessageProperties"]);
+                                    if (customMessagePropertiesSequenceElement3 != null && customMessagePropertiesSequenceElement3.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property5 in customMessagePropertiesSequenceElement3)
+                                        {
+                                            string customMessagePropertiesKey7 = ((string)property5.Name);
+                                            string customMessagePropertiesValue7 = ((string)property5.Value);
+                                            serviceBusTopicMessageInstance2.CustomMessageProperties.Add(customMessagePropertiesKey7, customMessagePropertiesValue7);
+                                        }
+                                    }
+                                }
+                                
+                                JToken serviceBusQueueMessageValue4 = actionValue2["serviceBusQueueMessage"];
+                                if (serviceBusQueueMessageValue4 != null && serviceBusQueueMessageValue4.Type != JTokenType.Null)
+                                {
+                                    JobServiceBusQueueMessage serviceBusQueueMessageInstance2 = new JobServiceBusQueueMessage();
+                                    actionInstance.ServiceBusQueueMessage = serviceBusQueueMessageInstance2;
+                                    
+                                    JToken queueNameValue4 = serviceBusQueueMessageValue4["queueName"];
+                                    if (queueNameValue4 != null && queueNameValue4.Type != JTokenType.Null)
+                                    {
+                                        string queueNameInstance4 = ((string)queueNameValue4);
+                                        serviceBusQueueMessageInstance2.QueueName = queueNameInstance4;
+                                    }
+                                    
+                                    JToken namespaceValue4 = serviceBusQueueMessageValue4["namespace"];
+                                    if (namespaceValue4 != null && namespaceValue4.Type != JTokenType.Null)
+                                    {
+                                        string namespaceInstance4 = ((string)namespaceValue4);
+                                        serviceBusQueueMessageInstance2.Namespace = namespaceInstance4;
+                                    }
+                                    
+                                    JToken transportTypeValue4 = serviceBusQueueMessageValue4["transportType"];
+                                    if (transportTypeValue4 != null && transportTypeValue4.Type != JTokenType.Null)
+                                    {
+                                        JobServiceBusTransportType transportTypeInstance4 = SchedulerClient.ParseJobServiceBusTransportType(((string)transportTypeValue4));
+                                        serviceBusQueueMessageInstance2.TransportType = transportTypeInstance4;
+                                    }
+                                    
+                                    JToken authenticationValue12 = serviceBusQueueMessageValue4["authentication"];
+                                    if (authenticationValue12 != null && authenticationValue12.Type != JTokenType.Null)
+                                    {
+                                        JobServiceBusAuthentication authenticationInstance4 = new JobServiceBusAuthentication();
+                                        serviceBusQueueMessageInstance2.Authentication = authenticationInstance4;
+                                        
+                                        JToken sasKeyNameValue4 = authenticationValue12["sasKeyName"];
+                                        if (sasKeyNameValue4 != null && sasKeyNameValue4.Type != JTokenType.Null)
+                                        {
+                                            string sasKeyNameInstance4 = ((string)sasKeyNameValue4);
+                                            authenticationInstance4.SasKeyName = sasKeyNameInstance4;
+                                        }
+                                        
+                                        JToken sasKeyValue4 = authenticationValue12["sasKey"];
+                                        if (sasKeyValue4 != null && sasKeyValue4.Type != JTokenType.Null)
+                                        {
+                                            string sasKeyInstance4 = ((string)sasKeyValue4);
+                                            authenticationInstance4.SasKey = sasKeyInstance4;
+                                        }
+                                        
+                                        JToken typeValue12 = authenticationValue12["type"];
+                                        if (typeValue12 != null && typeValue12.Type != JTokenType.Null)
+                                        {
+                                            JobServiceBusAuthenticationType typeInstance12 = SchedulerClient.ParseJobServiceBusAuthenticationType(((string)typeValue12));
+                                            authenticationInstance4.Type = typeInstance12;
+                                        }
+                                    }
+                                    
+                                    JToken messageValue6 = serviceBusQueueMessageValue4["message"];
+                                    if (messageValue6 != null && messageValue6.Type != JTokenType.Null)
+                                    {
+                                        string messageInstance6 = ((string)messageValue6);
+                                        serviceBusQueueMessageInstance2.Message = messageInstance6;
+                                    }
+                                    
+                                    JToken brokeredMessagePropertiesValue8 = serviceBusQueueMessageValue4["brokeredMessageProperties"];
+                                    if (brokeredMessagePropertiesValue8 != null && brokeredMessagePropertiesValue8.Type != JTokenType.Null)
+                                    {
+                                        JobServiceBusBrokeredMessageProperties brokeredMessagePropertiesInstance4 = new JobServiceBusBrokeredMessageProperties();
+                                        serviceBusQueueMessageInstance2.BrokeredMessageProperties = brokeredMessagePropertiesInstance4;
+                                        
+                                        JToken contentTypeValue4 = brokeredMessagePropertiesValue8["contentType"];
+                                        if (contentTypeValue4 != null && contentTypeValue4.Type != JTokenType.Null)
+                                        {
+                                            string contentTypeInstance4 = ((string)contentTypeValue4);
+                                            brokeredMessagePropertiesInstance4.ContentType = contentTypeInstance4;
+                                        }
+                                        
+                                        JToken correlationIdValue4 = brokeredMessagePropertiesValue8["correlationId"];
+                                        if (correlationIdValue4 != null && correlationIdValue4.Type != JTokenType.Null)
+                                        {
+                                            string correlationIdInstance4 = ((string)correlationIdValue4);
+                                            brokeredMessagePropertiesInstance4.CorrelationId = correlationIdInstance4;
+                                        }
+                                        
+                                        JToken forcePersistenceValue4 = brokeredMessagePropertiesValue8["forcePersistence"];
+                                        if (forcePersistenceValue4 != null && forcePersistenceValue4.Type != JTokenType.Null)
+                                        {
+                                            bool forcePersistenceInstance4 = ((bool)forcePersistenceValue4);
+                                            brokeredMessagePropertiesInstance4.ForcePersistence = forcePersistenceInstance4;
+                                        }
+                                        
+                                        JToken labelValue4 = brokeredMessagePropertiesValue8["label"];
+                                        if (labelValue4 != null && labelValue4.Type != JTokenType.Null)
+                                        {
+                                            string labelInstance4 = ((string)labelValue4);
+                                            brokeredMessagePropertiesInstance4.Label = labelInstance4;
+                                        }
+                                        
+                                        JToken messageIdValue4 = brokeredMessagePropertiesValue8["messageId"];
+                                        if (messageIdValue4 != null && messageIdValue4.Type != JTokenType.Null)
+                                        {
+                                            string messageIdInstance4 = ((string)messageIdValue4);
+                                            brokeredMessagePropertiesInstance4.MessageId = messageIdInstance4;
+                                        }
+                                        
+                                        JToken partitionKeyValue4 = brokeredMessagePropertiesValue8["partitionKey"];
+                                        if (partitionKeyValue4 != null && partitionKeyValue4.Type != JTokenType.Null)
+                                        {
+                                            string partitionKeyInstance4 = ((string)partitionKeyValue4);
+                                            brokeredMessagePropertiesInstance4.PartitionKey = partitionKeyInstance4;
+                                        }
+                                        
+                                        JToken replyToValue4 = brokeredMessagePropertiesValue8["replyTo"];
+                                        if (replyToValue4 != null && replyToValue4.Type != JTokenType.Null)
+                                        {
+                                            string replyToInstance4 = ((string)replyToValue4);
+                                            brokeredMessagePropertiesInstance4.ReplyTo = replyToInstance4;
+                                        }
+                                        
+                                        JToken replyToSessionIdValue4 = brokeredMessagePropertiesValue8["replyToSessionId"];
+                                        if (replyToSessionIdValue4 != null && replyToSessionIdValue4.Type != JTokenType.Null)
+                                        {
+                                            string replyToSessionIdInstance4 = ((string)replyToSessionIdValue4);
+                                            brokeredMessagePropertiesInstance4.ReplyToSessionId = replyToSessionIdInstance4;
+                                        }
+                                        
+                                        JToken scheduledEnqueueTimeUtcValue4 = brokeredMessagePropertiesValue8["scheduledEnqueueTimeUtc"];
+                                        if (scheduledEnqueueTimeUtcValue4 != null && scheduledEnqueueTimeUtcValue4.Type != JTokenType.Null)
+                                        {
+                                            DateTime scheduledEnqueueTimeUtcInstance4 = ((DateTime)scheduledEnqueueTimeUtcValue4);
+                                            brokeredMessagePropertiesInstance4.ScheduledEnqueueTimeUtc = scheduledEnqueueTimeUtcInstance4;
+                                        }
+                                        
+                                        JToken sessionIdValue4 = brokeredMessagePropertiesValue8["sessionId"];
+                                        if (sessionIdValue4 != null && sessionIdValue4.Type != JTokenType.Null)
+                                        {
+                                            string sessionIdInstance4 = ((string)sessionIdValue4);
+                                            brokeredMessagePropertiesInstance4.SessionId = sessionIdInstance4;
+                                        }
+                                        
+                                        JToken timeToLiveValue4 = brokeredMessagePropertiesValue8["timeToLive"];
+                                        if (timeToLiveValue4 != null && timeToLiveValue4.Type != JTokenType.Null)
+                                        {
+                                            DateTime timeToLiveInstance4 = ((DateTime)timeToLiveValue4);
+                                            brokeredMessagePropertiesInstance4.TimeToLive = timeToLiveInstance4;
+                                        }
+                                        
+                                        JToken toValue4 = brokeredMessagePropertiesValue8["to"];
+                                        if (toValue4 != null && toValue4.Type != JTokenType.Null)
+                                        {
+                                            string toInstance4 = ((string)toValue4);
+                                            brokeredMessagePropertiesInstance4.To = toInstance4;
+                                        }
+                                        
+                                        JToken viaPartitionKeyValue4 = brokeredMessagePropertiesValue8["viaPartitionKey"];
+                                        if (viaPartitionKeyValue4 != null && viaPartitionKeyValue4.Type != JTokenType.Null)
+                                        {
+                                            string viaPartitionKeyInstance4 = ((string)viaPartitionKeyValue4);
+                                            brokeredMessagePropertiesInstance4.ViaPartitionKey = viaPartitionKeyInstance4;
+                                        }
+                                    }
+                                    
+                                    JToken customMessagePropertiesSequenceElement4 = ((JToken)serviceBusQueueMessageValue4["customMessageProperties"]);
+                                    if (customMessagePropertiesSequenceElement4 != null && customMessagePropertiesSequenceElement4.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property6 in customMessagePropertiesSequenceElement4)
+                                        {
+                                            string customMessagePropertiesKey8 = ((string)property6.Name);
+                                            string customMessagePropertiesValue8 = ((string)property6.Value);
+                                            serviceBusQueueMessageInstance2.CustomMessageProperties.Add(customMessagePropertiesKey8, customMessagePropertiesValue8);
+                                        }
                                     }
                                 }
                             }
@@ -1363,6 +2571,60 @@ namespace Microsoft.WindowsAzure.Scheduler
                         throw new ArgumentNullException("parameters.Action.ErrorAction.Request.Uri");
                     }
                 }
+                if (parameters.Action.ErrorAction.ServiceBusQueueMessage != null)
+                {
+                    if (parameters.Action.ErrorAction.ServiceBusQueueMessage.Authentication == null)
+                    {
+                        throw new ArgumentNullException("parameters.Action.ErrorAction.ServiceBusQueueMessage.Authentication");
+                    }
+                    if (parameters.Action.ErrorAction.ServiceBusQueueMessage.Authentication.SasKey == null)
+                    {
+                        throw new ArgumentNullException("parameters.Action.ErrorAction.ServiceBusQueueMessage.Authentication.SasKey");
+                    }
+                    if (parameters.Action.ErrorAction.ServiceBusQueueMessage.Authentication.SasKeyName == null)
+                    {
+                        throw new ArgumentNullException("parameters.Action.ErrorAction.ServiceBusQueueMessage.Authentication.SasKeyName");
+                    }
+                    if (parameters.Action.ErrorAction.ServiceBusQueueMessage.Message == null)
+                    {
+                        throw new ArgumentNullException("parameters.Action.ErrorAction.ServiceBusQueueMessage.Message");
+                    }
+                    if (parameters.Action.ErrorAction.ServiceBusQueueMessage.Namespace == null)
+                    {
+                        throw new ArgumentNullException("parameters.Action.ErrorAction.ServiceBusQueueMessage.Namespace");
+                    }
+                    if (parameters.Action.ErrorAction.ServiceBusQueueMessage.QueueName == null)
+                    {
+                        throw new ArgumentNullException("parameters.Action.ErrorAction.ServiceBusQueueMessage.QueueName");
+                    }
+                }
+                if (parameters.Action.ErrorAction.ServiceBusTopicMessage != null)
+                {
+                    if (parameters.Action.ErrorAction.ServiceBusTopicMessage.Authentication == null)
+                    {
+                        throw new ArgumentNullException("parameters.Action.ErrorAction.ServiceBusTopicMessage.Authentication");
+                    }
+                    if (parameters.Action.ErrorAction.ServiceBusTopicMessage.Authentication.SasKey == null)
+                    {
+                        throw new ArgumentNullException("parameters.Action.ErrorAction.ServiceBusTopicMessage.Authentication.SasKey");
+                    }
+                    if (parameters.Action.ErrorAction.ServiceBusTopicMessage.Authentication.SasKeyName == null)
+                    {
+                        throw new ArgumentNullException("parameters.Action.ErrorAction.ServiceBusTopicMessage.Authentication.SasKeyName");
+                    }
+                    if (parameters.Action.ErrorAction.ServiceBusTopicMessage.Message == null)
+                    {
+                        throw new ArgumentNullException("parameters.Action.ErrorAction.ServiceBusTopicMessage.Message");
+                    }
+                    if (parameters.Action.ErrorAction.ServiceBusTopicMessage.Namespace == null)
+                    {
+                        throw new ArgumentNullException("parameters.Action.ErrorAction.ServiceBusTopicMessage.Namespace");
+                    }
+                    if (parameters.Action.ErrorAction.ServiceBusTopicMessage.TopicPath == null)
+                    {
+                        throw new ArgumentNullException("parameters.Action.ErrorAction.ServiceBusTopicMessage.TopicPath");
+                    }
+                }
             }
             if (parameters.Action.QueueMessage != null)
             {
@@ -1392,6 +2654,60 @@ namespace Microsoft.WindowsAzure.Scheduler
                 if (parameters.Action.Request.Uri == null)
                 {
                     throw new ArgumentNullException("parameters.Action.Request.Uri");
+                }
+            }
+            if (parameters.Action.ServiceBusQueueMessage != null)
+            {
+                if (parameters.Action.ServiceBusQueueMessage.Authentication == null)
+                {
+                    throw new ArgumentNullException("parameters.Action.ServiceBusQueueMessage.Authentication");
+                }
+                if (parameters.Action.ServiceBusQueueMessage.Authentication.SasKey == null)
+                {
+                    throw new ArgumentNullException("parameters.Action.ServiceBusQueueMessage.Authentication.SasKey");
+                }
+                if (parameters.Action.ServiceBusQueueMessage.Authentication.SasKeyName == null)
+                {
+                    throw new ArgumentNullException("parameters.Action.ServiceBusQueueMessage.Authentication.SasKeyName");
+                }
+                if (parameters.Action.ServiceBusQueueMessage.Message == null)
+                {
+                    throw new ArgumentNullException("parameters.Action.ServiceBusQueueMessage.Message");
+                }
+                if (parameters.Action.ServiceBusQueueMessage.Namespace == null)
+                {
+                    throw new ArgumentNullException("parameters.Action.ServiceBusQueueMessage.Namespace");
+                }
+                if (parameters.Action.ServiceBusQueueMessage.QueueName == null)
+                {
+                    throw new ArgumentNullException("parameters.Action.ServiceBusQueueMessage.QueueName");
+                }
+            }
+            if (parameters.Action.ServiceBusTopicMessage != null)
+            {
+                if (parameters.Action.ServiceBusTopicMessage.Authentication == null)
+                {
+                    throw new ArgumentNullException("parameters.Action.ServiceBusTopicMessage.Authentication");
+                }
+                if (parameters.Action.ServiceBusTopicMessage.Authentication.SasKey == null)
+                {
+                    throw new ArgumentNullException("parameters.Action.ServiceBusTopicMessage.Authentication.SasKey");
+                }
+                if (parameters.Action.ServiceBusTopicMessage.Authentication.SasKeyName == null)
+                {
+                    throw new ArgumentNullException("parameters.Action.ServiceBusTopicMessage.Authentication.SasKeyName");
+                }
+                if (parameters.Action.ServiceBusTopicMessage.Message == null)
+                {
+                    throw new ArgumentNullException("parameters.Action.ServiceBusTopicMessage.Message");
+                }
+                if (parameters.Action.ServiceBusTopicMessage.Namespace == null)
+                {
+                    throw new ArgumentNullException("parameters.Action.ServiceBusTopicMessage.Namespace");
+                }
+                if (parameters.Action.ServiceBusTopicMessage.TopicPath == null)
+                {
+                    throw new ArgumentNullException("parameters.Action.ServiceBusTopicMessage.TopicPath");
                 }
             }
             
@@ -1621,6 +2937,212 @@ namespace Microsoft.WindowsAzure.Scheduler
                         
                         queueMessageValue["message"] = parameters.Action.ErrorAction.QueueMessage.Message;
                     }
+                    
+                    if (parameters.Action.ErrorAction.ServiceBusTopicMessage != null)
+                    {
+                        JObject serviceBusTopicMessageValue = new JObject();
+                        errorActionValue["serviceBusTopicMessage"] = serviceBusTopicMessageValue;
+                        
+                        serviceBusTopicMessageValue["topicPath"] = parameters.Action.ErrorAction.ServiceBusTopicMessage.TopicPath;
+                        
+                        serviceBusTopicMessageValue["namespace"] = parameters.Action.ErrorAction.ServiceBusTopicMessage.Namespace;
+                        
+                        serviceBusTopicMessageValue["transportType"] = SchedulerClient.JobServiceBusTransportTypeToString(parameters.Action.ErrorAction.ServiceBusTopicMessage.TransportType);
+                        
+                        JObject authenticationValue2 = new JObject();
+                        serviceBusTopicMessageValue["authentication"] = authenticationValue2;
+                        
+                        authenticationValue2["sasKeyName"] = parameters.Action.ErrorAction.ServiceBusTopicMessage.Authentication.SasKeyName;
+                        
+                        authenticationValue2["sasKey"] = parameters.Action.ErrorAction.ServiceBusTopicMessage.Authentication.SasKey;
+                        
+                        authenticationValue2["type"] = SchedulerClient.JobServiceBusAuthenticationTypeToString(parameters.Action.ErrorAction.ServiceBusTopicMessage.Authentication.Type);
+                        
+                        serviceBusTopicMessageValue["message"] = parameters.Action.ErrorAction.ServiceBusTopicMessage.Message;
+                        
+                        if (parameters.Action.ErrorAction.ServiceBusTopicMessage.BrokeredMessageProperties != null)
+                        {
+                            JObject brokeredMessagePropertiesValue = new JObject();
+                            serviceBusTopicMessageValue["brokeredMessageProperties"] = brokeredMessagePropertiesValue;
+                            
+                            if (parameters.Action.ErrorAction.ServiceBusTopicMessage.BrokeredMessageProperties.ContentType != null)
+                            {
+                                brokeredMessagePropertiesValue["contentType"] = parameters.Action.ErrorAction.ServiceBusTopicMessage.BrokeredMessageProperties.ContentType;
+                            }
+                            
+                            if (parameters.Action.ErrorAction.ServiceBusTopicMessage.BrokeredMessageProperties.CorrelationId != null)
+                            {
+                                brokeredMessagePropertiesValue["correlationId"] = parameters.Action.ErrorAction.ServiceBusTopicMessage.BrokeredMessageProperties.CorrelationId;
+                            }
+                            
+                            brokeredMessagePropertiesValue["forcePersistence"] = parameters.Action.ErrorAction.ServiceBusTopicMessage.BrokeredMessageProperties.ForcePersistence;
+                            
+                            if (parameters.Action.ErrorAction.ServiceBusTopicMessage.BrokeredMessageProperties.Label != null)
+                            {
+                                brokeredMessagePropertiesValue["label"] = parameters.Action.ErrorAction.ServiceBusTopicMessage.BrokeredMessageProperties.Label;
+                            }
+                            
+                            if (parameters.Action.ErrorAction.ServiceBusTopicMessage.BrokeredMessageProperties.MessageId != null)
+                            {
+                                brokeredMessagePropertiesValue["messageId"] = parameters.Action.ErrorAction.ServiceBusTopicMessage.BrokeredMessageProperties.MessageId;
+                            }
+                            
+                            if (parameters.Action.ErrorAction.ServiceBusTopicMessage.BrokeredMessageProperties.PartitionKey != null)
+                            {
+                                brokeredMessagePropertiesValue["partitionKey"] = parameters.Action.ErrorAction.ServiceBusTopicMessage.BrokeredMessageProperties.PartitionKey;
+                            }
+                            
+                            if (parameters.Action.ErrorAction.ServiceBusTopicMessage.BrokeredMessageProperties.ReplyTo != null)
+                            {
+                                brokeredMessagePropertiesValue["replyTo"] = parameters.Action.ErrorAction.ServiceBusTopicMessage.BrokeredMessageProperties.ReplyTo;
+                            }
+                            
+                            if (parameters.Action.ErrorAction.ServiceBusTopicMessage.BrokeredMessageProperties.ReplyToSessionId != null)
+                            {
+                                brokeredMessagePropertiesValue["replyToSessionId"] = parameters.Action.ErrorAction.ServiceBusTopicMessage.BrokeredMessageProperties.ReplyToSessionId;
+                            }
+                            
+                            if (parameters.Action.ErrorAction.ServiceBusTopicMessage.BrokeredMessageProperties.ScheduledEnqueueTimeUtc != null)
+                            {
+                                brokeredMessagePropertiesValue["scheduledEnqueueTimeUtc"] = parameters.Action.ErrorAction.ServiceBusTopicMessage.BrokeredMessageProperties.ScheduledEnqueueTimeUtc.Value;
+                            }
+                            
+                            if (parameters.Action.ErrorAction.ServiceBusTopicMessage.BrokeredMessageProperties.SessionId != null)
+                            {
+                                brokeredMessagePropertiesValue["sessionId"] = parameters.Action.ErrorAction.ServiceBusTopicMessage.BrokeredMessageProperties.SessionId;
+                            }
+                            
+                            if (parameters.Action.ErrorAction.ServiceBusTopicMessage.BrokeredMessageProperties.TimeToLive != null)
+                            {
+                                brokeredMessagePropertiesValue["timeToLive"] = parameters.Action.ErrorAction.ServiceBusTopicMessage.BrokeredMessageProperties.TimeToLive.Value;
+                            }
+                            
+                            if (parameters.Action.ErrorAction.ServiceBusTopicMessage.BrokeredMessageProperties.To != null)
+                            {
+                                brokeredMessagePropertiesValue["to"] = parameters.Action.ErrorAction.ServiceBusTopicMessage.BrokeredMessageProperties.To;
+                            }
+                            
+                            if (parameters.Action.ErrorAction.ServiceBusTopicMessage.BrokeredMessageProperties.ViaPartitionKey != null)
+                            {
+                                brokeredMessagePropertiesValue["viaPartitionKey"] = parameters.Action.ErrorAction.ServiceBusTopicMessage.BrokeredMessageProperties.ViaPartitionKey;
+                            }
+                        }
+                        
+                        if (parameters.Action.ErrorAction.ServiceBusTopicMessage.CustomMessageProperties != null)
+                        {
+                            JObject customMessagePropertiesDictionary = new JObject();
+                            foreach (KeyValuePair<string, string> pair2 in parameters.Action.ErrorAction.ServiceBusTopicMessage.CustomMessageProperties)
+                            {
+                                string customMessagePropertiesKey = pair2.Key;
+                                string customMessagePropertiesValue = pair2.Value;
+                                customMessagePropertiesDictionary[customMessagePropertiesKey] = customMessagePropertiesValue;
+                            }
+                            serviceBusTopicMessageValue["customMessageProperties"] = customMessagePropertiesDictionary;
+                        }
+                    }
+                    
+                    if (parameters.Action.ErrorAction.ServiceBusQueueMessage != null)
+                    {
+                        JObject serviceBusQueueMessageValue = new JObject();
+                        errorActionValue["serviceBusQueueMessage"] = serviceBusQueueMessageValue;
+                        
+                        serviceBusQueueMessageValue["queueName"] = parameters.Action.ErrorAction.ServiceBusQueueMessage.QueueName;
+                        
+                        serviceBusQueueMessageValue["namespace"] = parameters.Action.ErrorAction.ServiceBusQueueMessage.Namespace;
+                        
+                        serviceBusQueueMessageValue["transportType"] = SchedulerClient.JobServiceBusTransportTypeToString(parameters.Action.ErrorAction.ServiceBusQueueMessage.TransportType);
+                        
+                        JObject authenticationValue3 = new JObject();
+                        serviceBusQueueMessageValue["authentication"] = authenticationValue3;
+                        
+                        authenticationValue3["sasKeyName"] = parameters.Action.ErrorAction.ServiceBusQueueMessage.Authentication.SasKeyName;
+                        
+                        authenticationValue3["sasKey"] = parameters.Action.ErrorAction.ServiceBusQueueMessage.Authentication.SasKey;
+                        
+                        authenticationValue3["type"] = SchedulerClient.JobServiceBusAuthenticationTypeToString(parameters.Action.ErrorAction.ServiceBusQueueMessage.Authentication.Type);
+                        
+                        serviceBusQueueMessageValue["message"] = parameters.Action.ErrorAction.ServiceBusQueueMessage.Message;
+                        
+                        if (parameters.Action.ErrorAction.ServiceBusQueueMessage.BrokeredMessageProperties != null)
+                        {
+                            JObject brokeredMessagePropertiesValue2 = new JObject();
+                            serviceBusQueueMessageValue["brokeredMessageProperties"] = brokeredMessagePropertiesValue2;
+                            
+                            if (parameters.Action.ErrorAction.ServiceBusQueueMessage.BrokeredMessageProperties.ContentType != null)
+                            {
+                                brokeredMessagePropertiesValue2["contentType"] = parameters.Action.ErrorAction.ServiceBusQueueMessage.BrokeredMessageProperties.ContentType;
+                            }
+                            
+                            if (parameters.Action.ErrorAction.ServiceBusQueueMessage.BrokeredMessageProperties.CorrelationId != null)
+                            {
+                                brokeredMessagePropertiesValue2["correlationId"] = parameters.Action.ErrorAction.ServiceBusQueueMessage.BrokeredMessageProperties.CorrelationId;
+                            }
+                            
+                            brokeredMessagePropertiesValue2["forcePersistence"] = parameters.Action.ErrorAction.ServiceBusQueueMessage.BrokeredMessageProperties.ForcePersistence;
+                            
+                            if (parameters.Action.ErrorAction.ServiceBusQueueMessage.BrokeredMessageProperties.Label != null)
+                            {
+                                brokeredMessagePropertiesValue2["label"] = parameters.Action.ErrorAction.ServiceBusQueueMessage.BrokeredMessageProperties.Label;
+                            }
+                            
+                            if (parameters.Action.ErrorAction.ServiceBusQueueMessage.BrokeredMessageProperties.MessageId != null)
+                            {
+                                brokeredMessagePropertiesValue2["messageId"] = parameters.Action.ErrorAction.ServiceBusQueueMessage.BrokeredMessageProperties.MessageId;
+                            }
+                            
+                            if (parameters.Action.ErrorAction.ServiceBusQueueMessage.BrokeredMessageProperties.PartitionKey != null)
+                            {
+                                brokeredMessagePropertiesValue2["partitionKey"] = parameters.Action.ErrorAction.ServiceBusQueueMessage.BrokeredMessageProperties.PartitionKey;
+                            }
+                            
+                            if (parameters.Action.ErrorAction.ServiceBusQueueMessage.BrokeredMessageProperties.ReplyTo != null)
+                            {
+                                brokeredMessagePropertiesValue2["replyTo"] = parameters.Action.ErrorAction.ServiceBusQueueMessage.BrokeredMessageProperties.ReplyTo;
+                            }
+                            
+                            if (parameters.Action.ErrorAction.ServiceBusQueueMessage.BrokeredMessageProperties.ReplyToSessionId != null)
+                            {
+                                brokeredMessagePropertiesValue2["replyToSessionId"] = parameters.Action.ErrorAction.ServiceBusQueueMessage.BrokeredMessageProperties.ReplyToSessionId;
+                            }
+                            
+                            if (parameters.Action.ErrorAction.ServiceBusQueueMessage.BrokeredMessageProperties.ScheduledEnqueueTimeUtc != null)
+                            {
+                                brokeredMessagePropertiesValue2["scheduledEnqueueTimeUtc"] = parameters.Action.ErrorAction.ServiceBusQueueMessage.BrokeredMessageProperties.ScheduledEnqueueTimeUtc.Value;
+                            }
+                            
+                            if (parameters.Action.ErrorAction.ServiceBusQueueMessage.BrokeredMessageProperties.SessionId != null)
+                            {
+                                brokeredMessagePropertiesValue2["sessionId"] = parameters.Action.ErrorAction.ServiceBusQueueMessage.BrokeredMessageProperties.SessionId;
+                            }
+                            
+                            if (parameters.Action.ErrorAction.ServiceBusQueueMessage.BrokeredMessageProperties.TimeToLive != null)
+                            {
+                                brokeredMessagePropertiesValue2["timeToLive"] = parameters.Action.ErrorAction.ServiceBusQueueMessage.BrokeredMessageProperties.TimeToLive.Value;
+                            }
+                            
+                            if (parameters.Action.ErrorAction.ServiceBusQueueMessage.BrokeredMessageProperties.To != null)
+                            {
+                                brokeredMessagePropertiesValue2["to"] = parameters.Action.ErrorAction.ServiceBusQueueMessage.BrokeredMessageProperties.To;
+                            }
+                            
+                            if (parameters.Action.ErrorAction.ServiceBusQueueMessage.BrokeredMessageProperties.ViaPartitionKey != null)
+                            {
+                                brokeredMessagePropertiesValue2["viaPartitionKey"] = parameters.Action.ErrorAction.ServiceBusQueueMessage.BrokeredMessageProperties.ViaPartitionKey;
+                            }
+                        }
+                        
+                        if (parameters.Action.ErrorAction.ServiceBusQueueMessage.CustomMessageProperties != null)
+                        {
+                            JObject customMessagePropertiesDictionary2 = new JObject();
+                            foreach (KeyValuePair<string, string> pair3 in parameters.Action.ErrorAction.ServiceBusQueueMessage.CustomMessageProperties)
+                            {
+                                string customMessagePropertiesKey2 = pair3.Key;
+                                string customMessagePropertiesValue2 = pair3.Value;
+                                customMessagePropertiesDictionary2[customMessagePropertiesKey2] = customMessagePropertiesValue2;
+                            }
+                            serviceBusQueueMessageValue["customMessageProperties"] = customMessagePropertiesDictionary2;
+                        }
+                    }
                 }
                 
                 if (parameters.Action.Request != null)
@@ -1637,10 +3159,10 @@ namespace Microsoft.WindowsAzure.Scheduler
                         if (parameters.Action.Request.Headers is ILazyCollection == false || ((ILazyCollection)parameters.Action.Request.Headers).IsInitialized)
                         {
                             JObject headersDictionary2 = new JObject();
-                            foreach (KeyValuePair<string, string> pair2 in parameters.Action.Request.Headers)
+                            foreach (KeyValuePair<string, string> pair4 in parameters.Action.Request.Headers)
                             {
-                                string headersKey2 = pair2.Key;
-                                string headersValue2 = pair2.Value;
+                                string headersKey2 = pair4.Key;
+                                string headersValue2 = pair4.Value;
                                 headersDictionary2[headersKey2] = headersValue2;
                             }
                             requestValue2["headers"] = headersDictionary2;
@@ -1654,80 +3176,80 @@ namespace Microsoft.WindowsAzure.Scheduler
                     
                     if (parameters.Action.Request.Authentication != null)
                     {
-                        JObject authenticationValue2 = new JObject();
-                        requestValue2["authentication"] = authenticationValue2;
+                        JObject authenticationValue4 = new JObject();
+                        requestValue2["authentication"] = authenticationValue4;
                         if (parameters.Action.Request.Authentication is ClientCertAuthentication)
                         {
-                            authenticationValue2["type"] = "ClientCertificate";
+                            authenticationValue4["type"] = "ClientCertificate";
                             ClientCertAuthentication derived4 = ((ClientCertAuthentication)parameters.Action.Request.Authentication);
                             
                             if (derived4.Password != null)
                             {
-                                authenticationValue2["password"] = derived4.Password;
+                                authenticationValue4["password"] = derived4.Password;
                             }
                             
                             if (derived4.Pfx != null)
                             {
-                                authenticationValue2["pfx"] = derived4.Pfx;
+                                authenticationValue4["pfx"] = derived4.Pfx;
                             }
                             
                             if (derived4.CertificateThumbprint != null)
                             {
-                                authenticationValue2["certificateThumbprint"] = derived4.CertificateThumbprint;
+                                authenticationValue4["certificateThumbprint"] = derived4.CertificateThumbprint;
                             }
                             
                             if (derived4.CertificateExpiration != null)
                             {
-                                authenticationValue2["certificateExpiration"] = derived4.CertificateExpiration.Value;
+                                authenticationValue4["certificateExpiration"] = derived4.CertificateExpiration.Value;
                             }
                             
                             if (derived4.CertificateSubjectName != null)
                             {
-                                authenticationValue2["certificateSubjectName"] = derived4.CertificateSubjectName;
+                                authenticationValue4["certificateSubjectName"] = derived4.CertificateSubjectName;
                             }
                             
-                            authenticationValue2["type"] = SchedulerClient.HttpAuthenticationTypeToString(derived4.Type);
+                            authenticationValue4["type"] = SchedulerClient.HttpAuthenticationTypeToString(derived4.Type);
                         }
                         if (parameters.Action.Request.Authentication is AADOAuthAuthentication)
                         {
-                            authenticationValue2["type"] = "ActiveDirectoryOAuth";
+                            authenticationValue4["type"] = "ActiveDirectoryOAuth";
                             AADOAuthAuthentication derived5 = ((AADOAuthAuthentication)parameters.Action.Request.Authentication);
                             
                             if (derived5.Secret != null)
                             {
-                                authenticationValue2["secret"] = derived5.Secret;
+                                authenticationValue4["secret"] = derived5.Secret;
                             }
                             
                             if (derived5.Tenant != null)
                             {
-                                authenticationValue2["tenant"] = derived5.Tenant;
+                                authenticationValue4["tenant"] = derived5.Tenant;
                             }
                             
                             if (derived5.Audience != null)
                             {
-                                authenticationValue2["audience"] = derived5.Audience;
+                                authenticationValue4["audience"] = derived5.Audience;
                             }
                             
                             if (derived5.ClientId != null)
                             {
-                                authenticationValue2["clientId"] = derived5.ClientId;
+                                authenticationValue4["clientId"] = derived5.ClientId;
                             }
                             
-                            authenticationValue2["type"] = SchedulerClient.HttpAuthenticationTypeToString(derived5.Type);
+                            authenticationValue4["type"] = SchedulerClient.HttpAuthenticationTypeToString(derived5.Type);
                         }
                         if (parameters.Action.Request.Authentication is BasicAuthentication)
                         {
-                            authenticationValue2["type"] = "Basic";
+                            authenticationValue4["type"] = "Basic";
                             BasicAuthentication derived6 = ((BasicAuthentication)parameters.Action.Request.Authentication);
                             
-                            authenticationValue2["username"] = derived6.Username;
+                            authenticationValue4["username"] = derived6.Username;
                             
                             if (derived6.Password != null)
                             {
-                                authenticationValue2["password"] = derived6.Password;
+                                authenticationValue4["password"] = derived6.Password;
                             }
                             
-                            authenticationValue2["type"] = SchedulerClient.HttpAuthenticationTypeToString(derived6.Type);
+                            authenticationValue4["type"] = SchedulerClient.HttpAuthenticationTypeToString(derived6.Type);
                         }
                     }
                 }
@@ -1744,6 +3266,212 @@ namespace Microsoft.WindowsAzure.Scheduler
                     queueMessageValue2["sasToken"] = parameters.Action.QueueMessage.SasToken;
                     
                     queueMessageValue2["message"] = parameters.Action.QueueMessage.Message;
+                }
+                
+                if (parameters.Action.ServiceBusTopicMessage != null)
+                {
+                    JObject serviceBusTopicMessageValue2 = new JObject();
+                    actionValue["serviceBusTopicMessage"] = serviceBusTopicMessageValue2;
+                    
+                    serviceBusTopicMessageValue2["topicPath"] = parameters.Action.ServiceBusTopicMessage.TopicPath;
+                    
+                    serviceBusTopicMessageValue2["namespace"] = parameters.Action.ServiceBusTopicMessage.Namespace;
+                    
+                    serviceBusTopicMessageValue2["transportType"] = SchedulerClient.JobServiceBusTransportTypeToString(parameters.Action.ServiceBusTopicMessage.TransportType);
+                    
+                    JObject authenticationValue5 = new JObject();
+                    serviceBusTopicMessageValue2["authentication"] = authenticationValue5;
+                    
+                    authenticationValue5["sasKeyName"] = parameters.Action.ServiceBusTopicMessage.Authentication.SasKeyName;
+                    
+                    authenticationValue5["sasKey"] = parameters.Action.ServiceBusTopicMessage.Authentication.SasKey;
+                    
+                    authenticationValue5["type"] = SchedulerClient.JobServiceBusAuthenticationTypeToString(parameters.Action.ServiceBusTopicMessage.Authentication.Type);
+                    
+                    serviceBusTopicMessageValue2["message"] = parameters.Action.ServiceBusTopicMessage.Message;
+                    
+                    if (parameters.Action.ServiceBusTopicMessage.BrokeredMessageProperties != null)
+                    {
+                        JObject brokeredMessagePropertiesValue3 = new JObject();
+                        serviceBusTopicMessageValue2["brokeredMessageProperties"] = brokeredMessagePropertiesValue3;
+                        
+                        if (parameters.Action.ServiceBusTopicMessage.BrokeredMessageProperties.ContentType != null)
+                        {
+                            brokeredMessagePropertiesValue3["contentType"] = parameters.Action.ServiceBusTopicMessage.BrokeredMessageProperties.ContentType;
+                        }
+                        
+                        if (parameters.Action.ServiceBusTopicMessage.BrokeredMessageProperties.CorrelationId != null)
+                        {
+                            brokeredMessagePropertiesValue3["correlationId"] = parameters.Action.ServiceBusTopicMessage.BrokeredMessageProperties.CorrelationId;
+                        }
+                        
+                        brokeredMessagePropertiesValue3["forcePersistence"] = parameters.Action.ServiceBusTopicMessage.BrokeredMessageProperties.ForcePersistence;
+                        
+                        if (parameters.Action.ServiceBusTopicMessage.BrokeredMessageProperties.Label != null)
+                        {
+                            brokeredMessagePropertiesValue3["label"] = parameters.Action.ServiceBusTopicMessage.BrokeredMessageProperties.Label;
+                        }
+                        
+                        if (parameters.Action.ServiceBusTopicMessage.BrokeredMessageProperties.MessageId != null)
+                        {
+                            brokeredMessagePropertiesValue3["messageId"] = parameters.Action.ServiceBusTopicMessage.BrokeredMessageProperties.MessageId;
+                        }
+                        
+                        if (parameters.Action.ServiceBusTopicMessage.BrokeredMessageProperties.PartitionKey != null)
+                        {
+                            brokeredMessagePropertiesValue3["partitionKey"] = parameters.Action.ServiceBusTopicMessage.BrokeredMessageProperties.PartitionKey;
+                        }
+                        
+                        if (parameters.Action.ServiceBusTopicMessage.BrokeredMessageProperties.ReplyTo != null)
+                        {
+                            brokeredMessagePropertiesValue3["replyTo"] = parameters.Action.ServiceBusTopicMessage.BrokeredMessageProperties.ReplyTo;
+                        }
+                        
+                        if (parameters.Action.ServiceBusTopicMessage.BrokeredMessageProperties.ReplyToSessionId != null)
+                        {
+                            brokeredMessagePropertiesValue3["replyToSessionId"] = parameters.Action.ServiceBusTopicMessage.BrokeredMessageProperties.ReplyToSessionId;
+                        }
+                        
+                        if (parameters.Action.ServiceBusTopicMessage.BrokeredMessageProperties.ScheduledEnqueueTimeUtc != null)
+                        {
+                            brokeredMessagePropertiesValue3["scheduledEnqueueTimeUtc"] = parameters.Action.ServiceBusTopicMessage.BrokeredMessageProperties.ScheduledEnqueueTimeUtc.Value;
+                        }
+                        
+                        if (parameters.Action.ServiceBusTopicMessage.BrokeredMessageProperties.SessionId != null)
+                        {
+                            brokeredMessagePropertiesValue3["sessionId"] = parameters.Action.ServiceBusTopicMessage.BrokeredMessageProperties.SessionId;
+                        }
+                        
+                        if (parameters.Action.ServiceBusTopicMessage.BrokeredMessageProperties.TimeToLive != null)
+                        {
+                            brokeredMessagePropertiesValue3["timeToLive"] = parameters.Action.ServiceBusTopicMessage.BrokeredMessageProperties.TimeToLive.Value;
+                        }
+                        
+                        if (parameters.Action.ServiceBusTopicMessage.BrokeredMessageProperties.To != null)
+                        {
+                            brokeredMessagePropertiesValue3["to"] = parameters.Action.ServiceBusTopicMessage.BrokeredMessageProperties.To;
+                        }
+                        
+                        if (parameters.Action.ServiceBusTopicMessage.BrokeredMessageProperties.ViaPartitionKey != null)
+                        {
+                            brokeredMessagePropertiesValue3["viaPartitionKey"] = parameters.Action.ServiceBusTopicMessage.BrokeredMessageProperties.ViaPartitionKey;
+                        }
+                    }
+                    
+                    if (parameters.Action.ServiceBusTopicMessage.CustomMessageProperties != null)
+                    {
+                        JObject customMessagePropertiesDictionary3 = new JObject();
+                        foreach (KeyValuePair<string, string> pair5 in parameters.Action.ServiceBusTopicMessage.CustomMessageProperties)
+                        {
+                            string customMessagePropertiesKey3 = pair5.Key;
+                            string customMessagePropertiesValue3 = pair5.Value;
+                            customMessagePropertiesDictionary3[customMessagePropertiesKey3] = customMessagePropertiesValue3;
+                        }
+                        serviceBusTopicMessageValue2["customMessageProperties"] = customMessagePropertiesDictionary3;
+                    }
+                }
+                
+                if (parameters.Action.ServiceBusQueueMessage != null)
+                {
+                    JObject serviceBusQueueMessageValue2 = new JObject();
+                    actionValue["serviceBusQueueMessage"] = serviceBusQueueMessageValue2;
+                    
+                    serviceBusQueueMessageValue2["queueName"] = parameters.Action.ServiceBusQueueMessage.QueueName;
+                    
+                    serviceBusQueueMessageValue2["namespace"] = parameters.Action.ServiceBusQueueMessage.Namespace;
+                    
+                    serviceBusQueueMessageValue2["transportType"] = SchedulerClient.JobServiceBusTransportTypeToString(parameters.Action.ServiceBusQueueMessage.TransportType);
+                    
+                    JObject authenticationValue6 = new JObject();
+                    serviceBusQueueMessageValue2["authentication"] = authenticationValue6;
+                    
+                    authenticationValue6["sasKeyName"] = parameters.Action.ServiceBusQueueMessage.Authentication.SasKeyName;
+                    
+                    authenticationValue6["sasKey"] = parameters.Action.ServiceBusQueueMessage.Authentication.SasKey;
+                    
+                    authenticationValue6["type"] = SchedulerClient.JobServiceBusAuthenticationTypeToString(parameters.Action.ServiceBusQueueMessage.Authentication.Type);
+                    
+                    serviceBusQueueMessageValue2["message"] = parameters.Action.ServiceBusQueueMessage.Message;
+                    
+                    if (parameters.Action.ServiceBusQueueMessage.BrokeredMessageProperties != null)
+                    {
+                        JObject brokeredMessagePropertiesValue4 = new JObject();
+                        serviceBusQueueMessageValue2["brokeredMessageProperties"] = brokeredMessagePropertiesValue4;
+                        
+                        if (parameters.Action.ServiceBusQueueMessage.BrokeredMessageProperties.ContentType != null)
+                        {
+                            brokeredMessagePropertiesValue4["contentType"] = parameters.Action.ServiceBusQueueMessage.BrokeredMessageProperties.ContentType;
+                        }
+                        
+                        if (parameters.Action.ServiceBusQueueMessage.BrokeredMessageProperties.CorrelationId != null)
+                        {
+                            brokeredMessagePropertiesValue4["correlationId"] = parameters.Action.ServiceBusQueueMessage.BrokeredMessageProperties.CorrelationId;
+                        }
+                        
+                        brokeredMessagePropertiesValue4["forcePersistence"] = parameters.Action.ServiceBusQueueMessage.BrokeredMessageProperties.ForcePersistence;
+                        
+                        if (parameters.Action.ServiceBusQueueMessage.BrokeredMessageProperties.Label != null)
+                        {
+                            brokeredMessagePropertiesValue4["label"] = parameters.Action.ServiceBusQueueMessage.BrokeredMessageProperties.Label;
+                        }
+                        
+                        if (parameters.Action.ServiceBusQueueMessage.BrokeredMessageProperties.MessageId != null)
+                        {
+                            brokeredMessagePropertiesValue4["messageId"] = parameters.Action.ServiceBusQueueMessage.BrokeredMessageProperties.MessageId;
+                        }
+                        
+                        if (parameters.Action.ServiceBusQueueMessage.BrokeredMessageProperties.PartitionKey != null)
+                        {
+                            brokeredMessagePropertiesValue4["partitionKey"] = parameters.Action.ServiceBusQueueMessage.BrokeredMessageProperties.PartitionKey;
+                        }
+                        
+                        if (parameters.Action.ServiceBusQueueMessage.BrokeredMessageProperties.ReplyTo != null)
+                        {
+                            brokeredMessagePropertiesValue4["replyTo"] = parameters.Action.ServiceBusQueueMessage.BrokeredMessageProperties.ReplyTo;
+                        }
+                        
+                        if (parameters.Action.ServiceBusQueueMessage.BrokeredMessageProperties.ReplyToSessionId != null)
+                        {
+                            brokeredMessagePropertiesValue4["replyToSessionId"] = parameters.Action.ServiceBusQueueMessage.BrokeredMessageProperties.ReplyToSessionId;
+                        }
+                        
+                        if (parameters.Action.ServiceBusQueueMessage.BrokeredMessageProperties.ScheduledEnqueueTimeUtc != null)
+                        {
+                            brokeredMessagePropertiesValue4["scheduledEnqueueTimeUtc"] = parameters.Action.ServiceBusQueueMessage.BrokeredMessageProperties.ScheduledEnqueueTimeUtc.Value;
+                        }
+                        
+                        if (parameters.Action.ServiceBusQueueMessage.BrokeredMessageProperties.SessionId != null)
+                        {
+                            brokeredMessagePropertiesValue4["sessionId"] = parameters.Action.ServiceBusQueueMessage.BrokeredMessageProperties.SessionId;
+                        }
+                        
+                        if (parameters.Action.ServiceBusQueueMessage.BrokeredMessageProperties.TimeToLive != null)
+                        {
+                            brokeredMessagePropertiesValue4["timeToLive"] = parameters.Action.ServiceBusQueueMessage.BrokeredMessageProperties.TimeToLive.Value;
+                        }
+                        
+                        if (parameters.Action.ServiceBusQueueMessage.BrokeredMessageProperties.To != null)
+                        {
+                            brokeredMessagePropertiesValue4["to"] = parameters.Action.ServiceBusQueueMessage.BrokeredMessageProperties.To;
+                        }
+                        
+                        if (parameters.Action.ServiceBusQueueMessage.BrokeredMessageProperties.ViaPartitionKey != null)
+                        {
+                            brokeredMessagePropertiesValue4["viaPartitionKey"] = parameters.Action.ServiceBusQueueMessage.BrokeredMessageProperties.ViaPartitionKey;
+                        }
+                    }
+                    
+                    if (parameters.Action.ServiceBusQueueMessage.CustomMessageProperties != null)
+                    {
+                        JObject customMessagePropertiesDictionary4 = new JObject();
+                        foreach (KeyValuePair<string, string> pair6 in parameters.Action.ServiceBusQueueMessage.CustomMessageProperties)
+                        {
+                            string customMessagePropertiesKey4 = pair6.Key;
+                            string customMessagePropertiesValue4 = pair6.Value;
+                            customMessagePropertiesDictionary4[customMessagePropertiesKey4] = customMessagePropertiesValue4;
+                        }
+                        serviceBusQueueMessageValue2["customMessageProperties"] = customMessagePropertiesDictionary4;
+                    }
                 }
                 
                 if (parameters.Recurrence != null)
@@ -1998,50 +3726,50 @@ namespace Microsoft.WindowsAzure.Scheduler
                                             requestInstance.Body = bodyInstance;
                                         }
                                         
-                                        JToken authenticationValue3 = requestValue3["authentication"];
-                                        if (authenticationValue3 != null && authenticationValue3.Type != JTokenType.Null)
+                                        JToken authenticationValue7 = requestValue3["authentication"];
+                                        if (authenticationValue7 != null && authenticationValue7.Type != JTokenType.Null)
                                         {
-                                            string typeName = ((string)authenticationValue3["type"]);
+                                            string typeName = ((string)authenticationValue7["type"]);
                                             if (typeName == "ClientCertificate")
                                             {
                                                 ClientCertAuthentication clientCertAuthenticationInstance = new ClientCertAuthentication();
                                                 
-                                                JToken passwordValue = authenticationValue3["password"];
+                                                JToken passwordValue = authenticationValue7["password"];
                                                 if (passwordValue != null && passwordValue.Type != JTokenType.Null)
                                                 {
                                                     string passwordInstance = ((string)passwordValue);
                                                     clientCertAuthenticationInstance.Password = passwordInstance;
                                                 }
                                                 
-                                                JToken pfxValue = authenticationValue3["pfx"];
+                                                JToken pfxValue = authenticationValue7["pfx"];
                                                 if (pfxValue != null && pfxValue.Type != JTokenType.Null)
                                                 {
                                                     string pfxInstance = ((string)pfxValue);
                                                     clientCertAuthenticationInstance.Pfx = pfxInstance;
                                                 }
                                                 
-                                                JToken certificateThumbprintValue = authenticationValue3["certificateThumbprint"];
+                                                JToken certificateThumbprintValue = authenticationValue7["certificateThumbprint"];
                                                 if (certificateThumbprintValue != null && certificateThumbprintValue.Type != JTokenType.Null)
                                                 {
                                                     string certificateThumbprintInstance = ((string)certificateThumbprintValue);
                                                     clientCertAuthenticationInstance.CertificateThumbprint = certificateThumbprintInstance;
                                                 }
                                                 
-                                                JToken certificateExpirationValue = authenticationValue3["certificateExpiration"];
+                                                JToken certificateExpirationValue = authenticationValue7["certificateExpiration"];
                                                 if (certificateExpirationValue != null && certificateExpirationValue.Type != JTokenType.Null)
                                                 {
                                                     DateTime certificateExpirationInstance = ((DateTime)certificateExpirationValue);
                                                     clientCertAuthenticationInstance.CertificateExpiration = certificateExpirationInstance;
                                                 }
                                                 
-                                                JToken certificateSubjectNameValue = authenticationValue3["certificateSubjectName"];
+                                                JToken certificateSubjectNameValue = authenticationValue7["certificateSubjectName"];
                                                 if (certificateSubjectNameValue != null && certificateSubjectNameValue.Type != JTokenType.Null)
                                                 {
                                                     string certificateSubjectNameInstance = ((string)certificateSubjectNameValue);
                                                     clientCertAuthenticationInstance.CertificateSubjectName = certificateSubjectNameInstance;
                                                 }
                                                 
-                                                JToken typeValue3 = authenticationValue3["type"];
+                                                JToken typeValue3 = authenticationValue7["type"];
                                                 if (typeValue3 != null && typeValue3.Type != JTokenType.Null)
                                                 {
                                                     HttpAuthenticationType typeInstance3 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue3));
@@ -2053,35 +3781,35 @@ namespace Microsoft.WindowsAzure.Scheduler
                                             {
                                                 AADOAuthAuthentication aADOAuthAuthenticationInstance = new AADOAuthAuthentication();
                                                 
-                                                JToken secretValue = authenticationValue3["secret"];
+                                                JToken secretValue = authenticationValue7["secret"];
                                                 if (secretValue != null && secretValue.Type != JTokenType.Null)
                                                 {
                                                     string secretInstance = ((string)secretValue);
                                                     aADOAuthAuthenticationInstance.Secret = secretInstance;
                                                 }
                                                 
-                                                JToken tenantValue = authenticationValue3["tenant"];
+                                                JToken tenantValue = authenticationValue7["tenant"];
                                                 if (tenantValue != null && tenantValue.Type != JTokenType.Null)
                                                 {
                                                     string tenantInstance = ((string)tenantValue);
                                                     aADOAuthAuthenticationInstance.Tenant = tenantInstance;
                                                 }
                                                 
-                                                JToken audienceValue = authenticationValue3["audience"];
+                                                JToken audienceValue = authenticationValue7["audience"];
                                                 if (audienceValue != null && audienceValue.Type != JTokenType.Null)
                                                 {
                                                     string audienceInstance = ((string)audienceValue);
                                                     aADOAuthAuthenticationInstance.Audience = audienceInstance;
                                                 }
                                                 
-                                                JToken clientIdValue = authenticationValue3["clientId"];
+                                                JToken clientIdValue = authenticationValue7["clientId"];
                                                 if (clientIdValue != null && clientIdValue.Type != JTokenType.Null)
                                                 {
                                                     string clientIdInstance = ((string)clientIdValue);
                                                     aADOAuthAuthenticationInstance.ClientId = clientIdInstance;
                                                 }
                                                 
-                                                JToken typeValue4 = authenticationValue3["type"];
+                                                JToken typeValue4 = authenticationValue7["type"];
                                                 if (typeValue4 != null && typeValue4.Type != JTokenType.Null)
                                                 {
                                                     HttpAuthenticationType typeInstance4 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue4));
@@ -2093,21 +3821,21 @@ namespace Microsoft.WindowsAzure.Scheduler
                                             {
                                                 BasicAuthentication basicAuthenticationInstance = new BasicAuthentication();
                                                 
-                                                JToken usernameValue = authenticationValue3["username"];
+                                                JToken usernameValue = authenticationValue7["username"];
                                                 if (usernameValue != null && usernameValue.Type != JTokenType.Null)
                                                 {
                                                     string usernameInstance = ((string)usernameValue);
                                                     basicAuthenticationInstance.Username = usernameInstance;
                                                 }
                                                 
-                                                JToken passwordValue2 = authenticationValue3["password"];
+                                                JToken passwordValue2 = authenticationValue7["password"];
                                                 if (passwordValue2 != null && passwordValue2.Type != JTokenType.Null)
                                                 {
                                                     string passwordInstance2 = ((string)passwordValue2);
                                                     basicAuthenticationInstance.Password = passwordInstance2;
                                                 }
                                                 
-                                                JToken typeValue5 = authenticationValue3["type"];
+                                                JToken typeValue5 = authenticationValue7["type"];
                                                 if (typeValue5 != null && typeValue5.Type != JTokenType.Null)
                                                 {
                                                     HttpAuthenticationType typeInstance5 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue5));
@@ -2152,6 +3880,350 @@ namespace Microsoft.WindowsAzure.Scheduler
                                             queueMessageInstance.Message = messageInstance;
                                         }
                                     }
+                                    
+                                    JToken serviceBusTopicMessageValue3 = errorActionValue2["serviceBusTopicMessage"];
+                                    if (serviceBusTopicMessageValue3 != null && serviceBusTopicMessageValue3.Type != JTokenType.Null)
+                                    {
+                                        JobServiceBusTopicMessage serviceBusTopicMessageInstance = new JobServiceBusTopicMessage();
+                                        errorActionInstance.ServiceBusTopicMessage = serviceBusTopicMessageInstance;
+                                        
+                                        JToken topicPathValue = serviceBusTopicMessageValue3["topicPath"];
+                                        if (topicPathValue != null && topicPathValue.Type != JTokenType.Null)
+                                        {
+                                            string topicPathInstance = ((string)topicPathValue);
+                                            serviceBusTopicMessageInstance.TopicPath = topicPathInstance;
+                                        }
+                                        
+                                        JToken namespaceValue = serviceBusTopicMessageValue3["namespace"];
+                                        if (namespaceValue != null && namespaceValue.Type != JTokenType.Null)
+                                        {
+                                            string namespaceInstance = ((string)namespaceValue);
+                                            serviceBusTopicMessageInstance.Namespace = namespaceInstance;
+                                        }
+                                        
+                                        JToken transportTypeValue = serviceBusTopicMessageValue3["transportType"];
+                                        if (transportTypeValue != null && transportTypeValue.Type != JTokenType.Null)
+                                        {
+                                            JobServiceBusTransportType transportTypeInstance = SchedulerClient.ParseJobServiceBusTransportType(((string)transportTypeValue));
+                                            serviceBusTopicMessageInstance.TransportType = transportTypeInstance;
+                                        }
+                                        
+                                        JToken authenticationValue8 = serviceBusTopicMessageValue3["authentication"];
+                                        if (authenticationValue8 != null && authenticationValue8.Type != JTokenType.Null)
+                                        {
+                                            JobServiceBusAuthentication authenticationInstance = new JobServiceBusAuthentication();
+                                            serviceBusTopicMessageInstance.Authentication = authenticationInstance;
+                                            
+                                            JToken sasKeyNameValue = authenticationValue8["sasKeyName"];
+                                            if (sasKeyNameValue != null && sasKeyNameValue.Type != JTokenType.Null)
+                                            {
+                                                string sasKeyNameInstance = ((string)sasKeyNameValue);
+                                                authenticationInstance.SasKeyName = sasKeyNameInstance;
+                                            }
+                                            
+                                            JToken sasKeyValue = authenticationValue8["sasKey"];
+                                            if (sasKeyValue != null && sasKeyValue.Type != JTokenType.Null)
+                                            {
+                                                string sasKeyInstance = ((string)sasKeyValue);
+                                                authenticationInstance.SasKey = sasKeyInstance;
+                                            }
+                                            
+                                            JToken typeValue6 = authenticationValue8["type"];
+                                            if (typeValue6 != null && typeValue6.Type != JTokenType.Null)
+                                            {
+                                                JobServiceBusAuthenticationType typeInstance6 = SchedulerClient.ParseJobServiceBusAuthenticationType(((string)typeValue6));
+                                                authenticationInstance.Type = typeInstance6;
+                                            }
+                                        }
+                                        
+                                        JToken messageValue2 = serviceBusTopicMessageValue3["message"];
+                                        if (messageValue2 != null && messageValue2.Type != JTokenType.Null)
+                                        {
+                                            string messageInstance2 = ((string)messageValue2);
+                                            serviceBusTopicMessageInstance.Message = messageInstance2;
+                                        }
+                                        
+                                        JToken brokeredMessagePropertiesValue5 = serviceBusTopicMessageValue3["brokeredMessageProperties"];
+                                        if (brokeredMessagePropertiesValue5 != null && brokeredMessagePropertiesValue5.Type != JTokenType.Null)
+                                        {
+                                            JobServiceBusBrokeredMessageProperties brokeredMessagePropertiesInstance = new JobServiceBusBrokeredMessageProperties();
+                                            serviceBusTopicMessageInstance.BrokeredMessageProperties = brokeredMessagePropertiesInstance;
+                                            
+                                            JToken contentTypeValue = brokeredMessagePropertiesValue5["contentType"];
+                                            if (contentTypeValue != null && contentTypeValue.Type != JTokenType.Null)
+                                            {
+                                                string contentTypeInstance = ((string)contentTypeValue);
+                                                brokeredMessagePropertiesInstance.ContentType = contentTypeInstance;
+                                            }
+                                            
+                                            JToken correlationIdValue = brokeredMessagePropertiesValue5["correlationId"];
+                                            if (correlationIdValue != null && correlationIdValue.Type != JTokenType.Null)
+                                            {
+                                                string correlationIdInstance = ((string)correlationIdValue);
+                                                brokeredMessagePropertiesInstance.CorrelationId = correlationIdInstance;
+                                            }
+                                            
+                                            JToken forcePersistenceValue = brokeredMessagePropertiesValue5["forcePersistence"];
+                                            if (forcePersistenceValue != null && forcePersistenceValue.Type != JTokenType.Null)
+                                            {
+                                                bool forcePersistenceInstance = ((bool)forcePersistenceValue);
+                                                brokeredMessagePropertiesInstance.ForcePersistence = forcePersistenceInstance;
+                                            }
+                                            
+                                            JToken labelValue = brokeredMessagePropertiesValue5["label"];
+                                            if (labelValue != null && labelValue.Type != JTokenType.Null)
+                                            {
+                                                string labelInstance = ((string)labelValue);
+                                                brokeredMessagePropertiesInstance.Label = labelInstance;
+                                            }
+                                            
+                                            JToken messageIdValue = brokeredMessagePropertiesValue5["messageId"];
+                                            if (messageIdValue != null && messageIdValue.Type != JTokenType.Null)
+                                            {
+                                                string messageIdInstance = ((string)messageIdValue);
+                                                brokeredMessagePropertiesInstance.MessageId = messageIdInstance;
+                                            }
+                                            
+                                            JToken partitionKeyValue = brokeredMessagePropertiesValue5["partitionKey"];
+                                            if (partitionKeyValue != null && partitionKeyValue.Type != JTokenType.Null)
+                                            {
+                                                string partitionKeyInstance = ((string)partitionKeyValue);
+                                                brokeredMessagePropertiesInstance.PartitionKey = partitionKeyInstance;
+                                            }
+                                            
+                                            JToken replyToValue = brokeredMessagePropertiesValue5["replyTo"];
+                                            if (replyToValue != null && replyToValue.Type != JTokenType.Null)
+                                            {
+                                                string replyToInstance = ((string)replyToValue);
+                                                brokeredMessagePropertiesInstance.ReplyTo = replyToInstance;
+                                            }
+                                            
+                                            JToken replyToSessionIdValue = brokeredMessagePropertiesValue5["replyToSessionId"];
+                                            if (replyToSessionIdValue != null && replyToSessionIdValue.Type != JTokenType.Null)
+                                            {
+                                                string replyToSessionIdInstance = ((string)replyToSessionIdValue);
+                                                brokeredMessagePropertiesInstance.ReplyToSessionId = replyToSessionIdInstance;
+                                            }
+                                            
+                                            JToken scheduledEnqueueTimeUtcValue = brokeredMessagePropertiesValue5["scheduledEnqueueTimeUtc"];
+                                            if (scheduledEnqueueTimeUtcValue != null && scheduledEnqueueTimeUtcValue.Type != JTokenType.Null)
+                                            {
+                                                DateTime scheduledEnqueueTimeUtcInstance = ((DateTime)scheduledEnqueueTimeUtcValue);
+                                                brokeredMessagePropertiesInstance.ScheduledEnqueueTimeUtc = scheduledEnqueueTimeUtcInstance;
+                                            }
+                                            
+                                            JToken sessionIdValue = brokeredMessagePropertiesValue5["sessionId"];
+                                            if (sessionIdValue != null && sessionIdValue.Type != JTokenType.Null)
+                                            {
+                                                string sessionIdInstance = ((string)sessionIdValue);
+                                                brokeredMessagePropertiesInstance.SessionId = sessionIdInstance;
+                                            }
+                                            
+                                            JToken timeToLiveValue = brokeredMessagePropertiesValue5["timeToLive"];
+                                            if (timeToLiveValue != null && timeToLiveValue.Type != JTokenType.Null)
+                                            {
+                                                DateTime timeToLiveInstance = ((DateTime)timeToLiveValue);
+                                                brokeredMessagePropertiesInstance.TimeToLive = timeToLiveInstance;
+                                            }
+                                            
+                                            JToken toValue = brokeredMessagePropertiesValue5["to"];
+                                            if (toValue != null && toValue.Type != JTokenType.Null)
+                                            {
+                                                string toInstance = ((string)toValue);
+                                                brokeredMessagePropertiesInstance.To = toInstance;
+                                            }
+                                            
+                                            JToken viaPartitionKeyValue = brokeredMessagePropertiesValue5["viaPartitionKey"];
+                                            if (viaPartitionKeyValue != null && viaPartitionKeyValue.Type != JTokenType.Null)
+                                            {
+                                                string viaPartitionKeyInstance = ((string)viaPartitionKeyValue);
+                                                brokeredMessagePropertiesInstance.ViaPartitionKey = viaPartitionKeyInstance;
+                                            }
+                                        }
+                                        
+                                        JToken customMessagePropertiesSequenceElement = ((JToken)serviceBusTopicMessageValue3["customMessageProperties"]);
+                                        if (customMessagePropertiesSequenceElement != null && customMessagePropertiesSequenceElement.Type != JTokenType.Null)
+                                        {
+                                            foreach (JProperty property2 in customMessagePropertiesSequenceElement)
+                                            {
+                                                string customMessagePropertiesKey5 = ((string)property2.Name);
+                                                string customMessagePropertiesValue5 = ((string)property2.Value);
+                                                serviceBusTopicMessageInstance.CustomMessageProperties.Add(customMessagePropertiesKey5, customMessagePropertiesValue5);
+                                            }
+                                        }
+                                    }
+                                    
+                                    JToken serviceBusQueueMessageValue3 = errorActionValue2["serviceBusQueueMessage"];
+                                    if (serviceBusQueueMessageValue3 != null && serviceBusQueueMessageValue3.Type != JTokenType.Null)
+                                    {
+                                        JobServiceBusQueueMessage serviceBusQueueMessageInstance = new JobServiceBusQueueMessage();
+                                        errorActionInstance.ServiceBusQueueMessage = serviceBusQueueMessageInstance;
+                                        
+                                        JToken queueNameValue2 = serviceBusQueueMessageValue3["queueName"];
+                                        if (queueNameValue2 != null && queueNameValue2.Type != JTokenType.Null)
+                                        {
+                                            string queueNameInstance2 = ((string)queueNameValue2);
+                                            serviceBusQueueMessageInstance.QueueName = queueNameInstance2;
+                                        }
+                                        
+                                        JToken namespaceValue2 = serviceBusQueueMessageValue3["namespace"];
+                                        if (namespaceValue2 != null && namespaceValue2.Type != JTokenType.Null)
+                                        {
+                                            string namespaceInstance2 = ((string)namespaceValue2);
+                                            serviceBusQueueMessageInstance.Namespace = namespaceInstance2;
+                                        }
+                                        
+                                        JToken transportTypeValue2 = serviceBusQueueMessageValue3["transportType"];
+                                        if (transportTypeValue2 != null && transportTypeValue2.Type != JTokenType.Null)
+                                        {
+                                            JobServiceBusTransportType transportTypeInstance2 = SchedulerClient.ParseJobServiceBusTransportType(((string)transportTypeValue2));
+                                            serviceBusQueueMessageInstance.TransportType = transportTypeInstance2;
+                                        }
+                                        
+                                        JToken authenticationValue9 = serviceBusQueueMessageValue3["authentication"];
+                                        if (authenticationValue9 != null && authenticationValue9.Type != JTokenType.Null)
+                                        {
+                                            JobServiceBusAuthentication authenticationInstance2 = new JobServiceBusAuthentication();
+                                            serviceBusQueueMessageInstance.Authentication = authenticationInstance2;
+                                            
+                                            JToken sasKeyNameValue2 = authenticationValue9["sasKeyName"];
+                                            if (sasKeyNameValue2 != null && sasKeyNameValue2.Type != JTokenType.Null)
+                                            {
+                                                string sasKeyNameInstance2 = ((string)sasKeyNameValue2);
+                                                authenticationInstance2.SasKeyName = sasKeyNameInstance2;
+                                            }
+                                            
+                                            JToken sasKeyValue2 = authenticationValue9["sasKey"];
+                                            if (sasKeyValue2 != null && sasKeyValue2.Type != JTokenType.Null)
+                                            {
+                                                string sasKeyInstance2 = ((string)sasKeyValue2);
+                                                authenticationInstance2.SasKey = sasKeyInstance2;
+                                            }
+                                            
+                                            JToken typeValue7 = authenticationValue9["type"];
+                                            if (typeValue7 != null && typeValue7.Type != JTokenType.Null)
+                                            {
+                                                JobServiceBusAuthenticationType typeInstance7 = SchedulerClient.ParseJobServiceBusAuthenticationType(((string)typeValue7));
+                                                authenticationInstance2.Type = typeInstance7;
+                                            }
+                                        }
+                                        
+                                        JToken messageValue3 = serviceBusQueueMessageValue3["message"];
+                                        if (messageValue3 != null && messageValue3.Type != JTokenType.Null)
+                                        {
+                                            string messageInstance3 = ((string)messageValue3);
+                                            serviceBusQueueMessageInstance.Message = messageInstance3;
+                                        }
+                                        
+                                        JToken brokeredMessagePropertiesValue6 = serviceBusQueueMessageValue3["brokeredMessageProperties"];
+                                        if (brokeredMessagePropertiesValue6 != null && brokeredMessagePropertiesValue6.Type != JTokenType.Null)
+                                        {
+                                            JobServiceBusBrokeredMessageProperties brokeredMessagePropertiesInstance2 = new JobServiceBusBrokeredMessageProperties();
+                                            serviceBusQueueMessageInstance.BrokeredMessageProperties = brokeredMessagePropertiesInstance2;
+                                            
+                                            JToken contentTypeValue2 = brokeredMessagePropertiesValue6["contentType"];
+                                            if (contentTypeValue2 != null && contentTypeValue2.Type != JTokenType.Null)
+                                            {
+                                                string contentTypeInstance2 = ((string)contentTypeValue2);
+                                                brokeredMessagePropertiesInstance2.ContentType = contentTypeInstance2;
+                                            }
+                                            
+                                            JToken correlationIdValue2 = brokeredMessagePropertiesValue6["correlationId"];
+                                            if (correlationIdValue2 != null && correlationIdValue2.Type != JTokenType.Null)
+                                            {
+                                                string correlationIdInstance2 = ((string)correlationIdValue2);
+                                                brokeredMessagePropertiesInstance2.CorrelationId = correlationIdInstance2;
+                                            }
+                                            
+                                            JToken forcePersistenceValue2 = brokeredMessagePropertiesValue6["forcePersistence"];
+                                            if (forcePersistenceValue2 != null && forcePersistenceValue2.Type != JTokenType.Null)
+                                            {
+                                                bool forcePersistenceInstance2 = ((bool)forcePersistenceValue2);
+                                                brokeredMessagePropertiesInstance2.ForcePersistence = forcePersistenceInstance2;
+                                            }
+                                            
+                                            JToken labelValue2 = brokeredMessagePropertiesValue6["label"];
+                                            if (labelValue2 != null && labelValue2.Type != JTokenType.Null)
+                                            {
+                                                string labelInstance2 = ((string)labelValue2);
+                                                brokeredMessagePropertiesInstance2.Label = labelInstance2;
+                                            }
+                                            
+                                            JToken messageIdValue2 = brokeredMessagePropertiesValue6["messageId"];
+                                            if (messageIdValue2 != null && messageIdValue2.Type != JTokenType.Null)
+                                            {
+                                                string messageIdInstance2 = ((string)messageIdValue2);
+                                                brokeredMessagePropertiesInstance2.MessageId = messageIdInstance2;
+                                            }
+                                            
+                                            JToken partitionKeyValue2 = brokeredMessagePropertiesValue6["partitionKey"];
+                                            if (partitionKeyValue2 != null && partitionKeyValue2.Type != JTokenType.Null)
+                                            {
+                                                string partitionKeyInstance2 = ((string)partitionKeyValue2);
+                                                brokeredMessagePropertiesInstance2.PartitionKey = partitionKeyInstance2;
+                                            }
+                                            
+                                            JToken replyToValue2 = brokeredMessagePropertiesValue6["replyTo"];
+                                            if (replyToValue2 != null && replyToValue2.Type != JTokenType.Null)
+                                            {
+                                                string replyToInstance2 = ((string)replyToValue2);
+                                                brokeredMessagePropertiesInstance2.ReplyTo = replyToInstance2;
+                                            }
+                                            
+                                            JToken replyToSessionIdValue2 = brokeredMessagePropertiesValue6["replyToSessionId"];
+                                            if (replyToSessionIdValue2 != null && replyToSessionIdValue2.Type != JTokenType.Null)
+                                            {
+                                                string replyToSessionIdInstance2 = ((string)replyToSessionIdValue2);
+                                                brokeredMessagePropertiesInstance2.ReplyToSessionId = replyToSessionIdInstance2;
+                                            }
+                                            
+                                            JToken scheduledEnqueueTimeUtcValue2 = brokeredMessagePropertiesValue6["scheduledEnqueueTimeUtc"];
+                                            if (scheduledEnqueueTimeUtcValue2 != null && scheduledEnqueueTimeUtcValue2.Type != JTokenType.Null)
+                                            {
+                                                DateTime scheduledEnqueueTimeUtcInstance2 = ((DateTime)scheduledEnqueueTimeUtcValue2);
+                                                brokeredMessagePropertiesInstance2.ScheduledEnqueueTimeUtc = scheduledEnqueueTimeUtcInstance2;
+                                            }
+                                            
+                                            JToken sessionIdValue2 = brokeredMessagePropertiesValue6["sessionId"];
+                                            if (sessionIdValue2 != null && sessionIdValue2.Type != JTokenType.Null)
+                                            {
+                                                string sessionIdInstance2 = ((string)sessionIdValue2);
+                                                brokeredMessagePropertiesInstance2.SessionId = sessionIdInstance2;
+                                            }
+                                            
+                                            JToken timeToLiveValue2 = brokeredMessagePropertiesValue6["timeToLive"];
+                                            if (timeToLiveValue2 != null && timeToLiveValue2.Type != JTokenType.Null)
+                                            {
+                                                DateTime timeToLiveInstance2 = ((DateTime)timeToLiveValue2);
+                                                brokeredMessagePropertiesInstance2.TimeToLive = timeToLiveInstance2;
+                                            }
+                                            
+                                            JToken toValue2 = brokeredMessagePropertiesValue6["to"];
+                                            if (toValue2 != null && toValue2.Type != JTokenType.Null)
+                                            {
+                                                string toInstance2 = ((string)toValue2);
+                                                brokeredMessagePropertiesInstance2.To = toInstance2;
+                                            }
+                                            
+                                            JToken viaPartitionKeyValue2 = brokeredMessagePropertiesValue6["viaPartitionKey"];
+                                            if (viaPartitionKeyValue2 != null && viaPartitionKeyValue2.Type != JTokenType.Null)
+                                            {
+                                                string viaPartitionKeyInstance2 = ((string)viaPartitionKeyValue2);
+                                                brokeredMessagePropertiesInstance2.ViaPartitionKey = viaPartitionKeyInstance2;
+                                            }
+                                        }
+                                        
+                                        JToken customMessagePropertiesSequenceElement2 = ((JToken)serviceBusQueueMessageValue3["customMessageProperties"]);
+                                        if (customMessagePropertiesSequenceElement2 != null && customMessagePropertiesSequenceElement2.Type != JTokenType.Null)
+                                        {
+                                            foreach (JProperty property3 in customMessagePropertiesSequenceElement2)
+                                            {
+                                                string customMessagePropertiesKey6 = ((string)property3.Name);
+                                                string customMessagePropertiesValue6 = ((string)property3.Value);
+                                                serviceBusQueueMessageInstance.CustomMessageProperties.Add(customMessagePropertiesKey6, customMessagePropertiesValue6);
+                                            }
+                                        }
+                                    }
                                 }
                                 
                                 JToken requestValue4 = actionValue2["request"];
@@ -2177,10 +4249,10 @@ namespace Microsoft.WindowsAzure.Scheduler
                                     JToken headersSequenceElement2 = ((JToken)requestValue4["headers"]);
                                     if (headersSequenceElement2 != null && headersSequenceElement2.Type != JTokenType.Null)
                                     {
-                                        foreach (JProperty property2 in headersSequenceElement2)
+                                        foreach (JProperty property4 in headersSequenceElement2)
                                         {
-                                            string headersKey4 = ((string)property2.Name);
-                                            string headersValue4 = ((string)property2.Value);
+                                            string headersKey4 = ((string)property4.Name);
+                                            string headersValue4 = ((string)property4.Value);
                                             requestInstance2.Headers.Add(headersKey4, headersValue4);
                                         }
                                     }
@@ -2192,54 +4264,54 @@ namespace Microsoft.WindowsAzure.Scheduler
                                         requestInstance2.Body = bodyInstance2;
                                     }
                                     
-                                    JToken authenticationValue4 = requestValue4["authentication"];
-                                    if (authenticationValue4 != null && authenticationValue4.Type != JTokenType.Null)
+                                    JToken authenticationValue10 = requestValue4["authentication"];
+                                    if (authenticationValue10 != null && authenticationValue10.Type != JTokenType.Null)
                                     {
-                                        string typeName2 = ((string)authenticationValue4["type"]);
+                                        string typeName2 = ((string)authenticationValue10["type"]);
                                         if (typeName2 == "ClientCertificate")
                                         {
                                             ClientCertAuthentication clientCertAuthenticationInstance2 = new ClientCertAuthentication();
                                             
-                                            JToken passwordValue3 = authenticationValue4["password"];
+                                            JToken passwordValue3 = authenticationValue10["password"];
                                             if (passwordValue3 != null && passwordValue3.Type != JTokenType.Null)
                                             {
                                                 string passwordInstance3 = ((string)passwordValue3);
                                                 clientCertAuthenticationInstance2.Password = passwordInstance3;
                                             }
                                             
-                                            JToken pfxValue2 = authenticationValue4["pfx"];
+                                            JToken pfxValue2 = authenticationValue10["pfx"];
                                             if (pfxValue2 != null && pfxValue2.Type != JTokenType.Null)
                                             {
                                                 string pfxInstance2 = ((string)pfxValue2);
                                                 clientCertAuthenticationInstance2.Pfx = pfxInstance2;
                                             }
                                             
-                                            JToken certificateThumbprintValue2 = authenticationValue4["certificateThumbprint"];
+                                            JToken certificateThumbprintValue2 = authenticationValue10["certificateThumbprint"];
                                             if (certificateThumbprintValue2 != null && certificateThumbprintValue2.Type != JTokenType.Null)
                                             {
                                                 string certificateThumbprintInstance2 = ((string)certificateThumbprintValue2);
                                                 clientCertAuthenticationInstance2.CertificateThumbprint = certificateThumbprintInstance2;
                                             }
                                             
-                                            JToken certificateExpirationValue2 = authenticationValue4["certificateExpiration"];
+                                            JToken certificateExpirationValue2 = authenticationValue10["certificateExpiration"];
                                             if (certificateExpirationValue2 != null && certificateExpirationValue2.Type != JTokenType.Null)
                                             {
                                                 DateTime certificateExpirationInstance2 = ((DateTime)certificateExpirationValue2);
                                                 clientCertAuthenticationInstance2.CertificateExpiration = certificateExpirationInstance2;
                                             }
                                             
-                                            JToken certificateSubjectNameValue2 = authenticationValue4["certificateSubjectName"];
+                                            JToken certificateSubjectNameValue2 = authenticationValue10["certificateSubjectName"];
                                             if (certificateSubjectNameValue2 != null && certificateSubjectNameValue2.Type != JTokenType.Null)
                                             {
                                                 string certificateSubjectNameInstance2 = ((string)certificateSubjectNameValue2);
                                                 clientCertAuthenticationInstance2.CertificateSubjectName = certificateSubjectNameInstance2;
                                             }
                                             
-                                            JToken typeValue6 = authenticationValue4["type"];
-                                            if (typeValue6 != null && typeValue6.Type != JTokenType.Null)
+                                            JToken typeValue8 = authenticationValue10["type"];
+                                            if (typeValue8 != null && typeValue8.Type != JTokenType.Null)
                                             {
-                                                HttpAuthenticationType typeInstance6 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue6));
-                                                clientCertAuthenticationInstance2.Type = typeInstance6;
+                                                HttpAuthenticationType typeInstance8 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue8));
+                                                clientCertAuthenticationInstance2.Type = typeInstance8;
                                             }
                                             requestInstance2.Authentication = clientCertAuthenticationInstance2;
                                         }
@@ -2247,39 +4319,39 @@ namespace Microsoft.WindowsAzure.Scheduler
                                         {
                                             AADOAuthAuthentication aADOAuthAuthenticationInstance2 = new AADOAuthAuthentication();
                                             
-                                            JToken secretValue2 = authenticationValue4["secret"];
+                                            JToken secretValue2 = authenticationValue10["secret"];
                                             if (secretValue2 != null && secretValue2.Type != JTokenType.Null)
                                             {
                                                 string secretInstance2 = ((string)secretValue2);
                                                 aADOAuthAuthenticationInstance2.Secret = secretInstance2;
                                             }
                                             
-                                            JToken tenantValue2 = authenticationValue4["tenant"];
+                                            JToken tenantValue2 = authenticationValue10["tenant"];
                                             if (tenantValue2 != null && tenantValue2.Type != JTokenType.Null)
                                             {
                                                 string tenantInstance2 = ((string)tenantValue2);
                                                 aADOAuthAuthenticationInstance2.Tenant = tenantInstance2;
                                             }
                                             
-                                            JToken audienceValue2 = authenticationValue4["audience"];
+                                            JToken audienceValue2 = authenticationValue10["audience"];
                                             if (audienceValue2 != null && audienceValue2.Type != JTokenType.Null)
                                             {
                                                 string audienceInstance2 = ((string)audienceValue2);
                                                 aADOAuthAuthenticationInstance2.Audience = audienceInstance2;
                                             }
                                             
-                                            JToken clientIdValue2 = authenticationValue4["clientId"];
+                                            JToken clientIdValue2 = authenticationValue10["clientId"];
                                             if (clientIdValue2 != null && clientIdValue2.Type != JTokenType.Null)
                                             {
                                                 string clientIdInstance2 = ((string)clientIdValue2);
                                                 aADOAuthAuthenticationInstance2.ClientId = clientIdInstance2;
                                             }
                                             
-                                            JToken typeValue7 = authenticationValue4["type"];
-                                            if (typeValue7 != null && typeValue7.Type != JTokenType.Null)
+                                            JToken typeValue9 = authenticationValue10["type"];
+                                            if (typeValue9 != null && typeValue9.Type != JTokenType.Null)
                                             {
-                                                HttpAuthenticationType typeInstance7 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue7));
-                                                aADOAuthAuthenticationInstance2.Type = typeInstance7;
+                                                HttpAuthenticationType typeInstance9 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue9));
+                                                aADOAuthAuthenticationInstance2.Type = typeInstance9;
                                             }
                                             requestInstance2.Authentication = aADOAuthAuthenticationInstance2;
                                         }
@@ -2287,25 +4359,25 @@ namespace Microsoft.WindowsAzure.Scheduler
                                         {
                                             BasicAuthentication basicAuthenticationInstance2 = new BasicAuthentication();
                                             
-                                            JToken usernameValue2 = authenticationValue4["username"];
+                                            JToken usernameValue2 = authenticationValue10["username"];
                                             if (usernameValue2 != null && usernameValue2.Type != JTokenType.Null)
                                             {
                                                 string usernameInstance2 = ((string)usernameValue2);
                                                 basicAuthenticationInstance2.Username = usernameInstance2;
                                             }
                                             
-                                            JToken passwordValue4 = authenticationValue4["password"];
+                                            JToken passwordValue4 = authenticationValue10["password"];
                                             if (passwordValue4 != null && passwordValue4.Type != JTokenType.Null)
                                             {
                                                 string passwordInstance4 = ((string)passwordValue4);
                                                 basicAuthenticationInstance2.Password = passwordInstance4;
                                             }
                                             
-                                            JToken typeValue8 = authenticationValue4["type"];
-                                            if (typeValue8 != null && typeValue8.Type != JTokenType.Null)
+                                            JToken typeValue10 = authenticationValue10["type"];
+                                            if (typeValue10 != null && typeValue10.Type != JTokenType.Null)
                                             {
-                                                HttpAuthenticationType typeInstance8 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue8));
-                                                basicAuthenticationInstance2.Type = typeInstance8;
+                                                HttpAuthenticationType typeInstance10 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue10));
+                                                basicAuthenticationInstance2.Type = typeInstance10;
                                             }
                                             requestInstance2.Authentication = basicAuthenticationInstance2;
                                         }
@@ -2325,11 +4397,11 @@ namespace Microsoft.WindowsAzure.Scheduler
                                         queueMessageInstance2.StorageAccountName = storageAccountInstance2;
                                     }
                                     
-                                    JToken queueNameValue2 = queueMessageValue4["queueName"];
-                                    if (queueNameValue2 != null && queueNameValue2.Type != JTokenType.Null)
+                                    JToken queueNameValue3 = queueMessageValue4["queueName"];
+                                    if (queueNameValue3 != null && queueNameValue3.Type != JTokenType.Null)
                                     {
-                                        string queueNameInstance2 = ((string)queueNameValue2);
-                                        queueMessageInstance2.QueueName = queueNameInstance2;
+                                        string queueNameInstance3 = ((string)queueNameValue3);
+                                        queueMessageInstance2.QueueName = queueNameInstance3;
                                     }
                                     
                                     JToken sasTokenValue2 = queueMessageValue4["sasToken"];
@@ -2339,11 +4411,355 @@ namespace Microsoft.WindowsAzure.Scheduler
                                         queueMessageInstance2.SasToken = sasTokenInstance2;
                                     }
                                     
-                                    JToken messageValue2 = queueMessageValue4["message"];
-                                    if (messageValue2 != null && messageValue2.Type != JTokenType.Null)
+                                    JToken messageValue4 = queueMessageValue4["message"];
+                                    if (messageValue4 != null && messageValue4.Type != JTokenType.Null)
                                     {
-                                        string messageInstance2 = ((string)messageValue2);
-                                        queueMessageInstance2.Message = messageInstance2;
+                                        string messageInstance4 = ((string)messageValue4);
+                                        queueMessageInstance2.Message = messageInstance4;
+                                    }
+                                }
+                                
+                                JToken serviceBusTopicMessageValue4 = actionValue2["serviceBusTopicMessage"];
+                                if (serviceBusTopicMessageValue4 != null && serviceBusTopicMessageValue4.Type != JTokenType.Null)
+                                {
+                                    JobServiceBusTopicMessage serviceBusTopicMessageInstance2 = new JobServiceBusTopicMessage();
+                                    actionInstance.ServiceBusTopicMessage = serviceBusTopicMessageInstance2;
+                                    
+                                    JToken topicPathValue2 = serviceBusTopicMessageValue4["topicPath"];
+                                    if (topicPathValue2 != null && topicPathValue2.Type != JTokenType.Null)
+                                    {
+                                        string topicPathInstance2 = ((string)topicPathValue2);
+                                        serviceBusTopicMessageInstance2.TopicPath = topicPathInstance2;
+                                    }
+                                    
+                                    JToken namespaceValue3 = serviceBusTopicMessageValue4["namespace"];
+                                    if (namespaceValue3 != null && namespaceValue3.Type != JTokenType.Null)
+                                    {
+                                        string namespaceInstance3 = ((string)namespaceValue3);
+                                        serviceBusTopicMessageInstance2.Namespace = namespaceInstance3;
+                                    }
+                                    
+                                    JToken transportTypeValue3 = serviceBusTopicMessageValue4["transportType"];
+                                    if (transportTypeValue3 != null && transportTypeValue3.Type != JTokenType.Null)
+                                    {
+                                        JobServiceBusTransportType transportTypeInstance3 = SchedulerClient.ParseJobServiceBusTransportType(((string)transportTypeValue3));
+                                        serviceBusTopicMessageInstance2.TransportType = transportTypeInstance3;
+                                    }
+                                    
+                                    JToken authenticationValue11 = serviceBusTopicMessageValue4["authentication"];
+                                    if (authenticationValue11 != null && authenticationValue11.Type != JTokenType.Null)
+                                    {
+                                        JobServiceBusAuthentication authenticationInstance3 = new JobServiceBusAuthentication();
+                                        serviceBusTopicMessageInstance2.Authentication = authenticationInstance3;
+                                        
+                                        JToken sasKeyNameValue3 = authenticationValue11["sasKeyName"];
+                                        if (sasKeyNameValue3 != null && sasKeyNameValue3.Type != JTokenType.Null)
+                                        {
+                                            string sasKeyNameInstance3 = ((string)sasKeyNameValue3);
+                                            authenticationInstance3.SasKeyName = sasKeyNameInstance3;
+                                        }
+                                        
+                                        JToken sasKeyValue3 = authenticationValue11["sasKey"];
+                                        if (sasKeyValue3 != null && sasKeyValue3.Type != JTokenType.Null)
+                                        {
+                                            string sasKeyInstance3 = ((string)sasKeyValue3);
+                                            authenticationInstance3.SasKey = sasKeyInstance3;
+                                        }
+                                        
+                                        JToken typeValue11 = authenticationValue11["type"];
+                                        if (typeValue11 != null && typeValue11.Type != JTokenType.Null)
+                                        {
+                                            JobServiceBusAuthenticationType typeInstance11 = SchedulerClient.ParseJobServiceBusAuthenticationType(((string)typeValue11));
+                                            authenticationInstance3.Type = typeInstance11;
+                                        }
+                                    }
+                                    
+                                    JToken messageValue5 = serviceBusTopicMessageValue4["message"];
+                                    if (messageValue5 != null && messageValue5.Type != JTokenType.Null)
+                                    {
+                                        string messageInstance5 = ((string)messageValue5);
+                                        serviceBusTopicMessageInstance2.Message = messageInstance5;
+                                    }
+                                    
+                                    JToken brokeredMessagePropertiesValue7 = serviceBusTopicMessageValue4["brokeredMessageProperties"];
+                                    if (brokeredMessagePropertiesValue7 != null && brokeredMessagePropertiesValue7.Type != JTokenType.Null)
+                                    {
+                                        JobServiceBusBrokeredMessageProperties brokeredMessagePropertiesInstance3 = new JobServiceBusBrokeredMessageProperties();
+                                        serviceBusTopicMessageInstance2.BrokeredMessageProperties = brokeredMessagePropertiesInstance3;
+                                        
+                                        JToken contentTypeValue3 = brokeredMessagePropertiesValue7["contentType"];
+                                        if (contentTypeValue3 != null && contentTypeValue3.Type != JTokenType.Null)
+                                        {
+                                            string contentTypeInstance3 = ((string)contentTypeValue3);
+                                            brokeredMessagePropertiesInstance3.ContentType = contentTypeInstance3;
+                                        }
+                                        
+                                        JToken correlationIdValue3 = brokeredMessagePropertiesValue7["correlationId"];
+                                        if (correlationIdValue3 != null && correlationIdValue3.Type != JTokenType.Null)
+                                        {
+                                            string correlationIdInstance3 = ((string)correlationIdValue3);
+                                            brokeredMessagePropertiesInstance3.CorrelationId = correlationIdInstance3;
+                                        }
+                                        
+                                        JToken forcePersistenceValue3 = brokeredMessagePropertiesValue7["forcePersistence"];
+                                        if (forcePersistenceValue3 != null && forcePersistenceValue3.Type != JTokenType.Null)
+                                        {
+                                            bool forcePersistenceInstance3 = ((bool)forcePersistenceValue3);
+                                            brokeredMessagePropertiesInstance3.ForcePersistence = forcePersistenceInstance3;
+                                        }
+                                        
+                                        JToken labelValue3 = brokeredMessagePropertiesValue7["label"];
+                                        if (labelValue3 != null && labelValue3.Type != JTokenType.Null)
+                                        {
+                                            string labelInstance3 = ((string)labelValue3);
+                                            brokeredMessagePropertiesInstance3.Label = labelInstance3;
+                                        }
+                                        
+                                        JToken messageIdValue3 = brokeredMessagePropertiesValue7["messageId"];
+                                        if (messageIdValue3 != null && messageIdValue3.Type != JTokenType.Null)
+                                        {
+                                            string messageIdInstance3 = ((string)messageIdValue3);
+                                            brokeredMessagePropertiesInstance3.MessageId = messageIdInstance3;
+                                        }
+                                        
+                                        JToken partitionKeyValue3 = brokeredMessagePropertiesValue7["partitionKey"];
+                                        if (partitionKeyValue3 != null && partitionKeyValue3.Type != JTokenType.Null)
+                                        {
+                                            string partitionKeyInstance3 = ((string)partitionKeyValue3);
+                                            brokeredMessagePropertiesInstance3.PartitionKey = partitionKeyInstance3;
+                                        }
+                                        
+                                        JToken replyToValue3 = brokeredMessagePropertiesValue7["replyTo"];
+                                        if (replyToValue3 != null && replyToValue3.Type != JTokenType.Null)
+                                        {
+                                            string replyToInstance3 = ((string)replyToValue3);
+                                            brokeredMessagePropertiesInstance3.ReplyTo = replyToInstance3;
+                                        }
+                                        
+                                        JToken replyToSessionIdValue3 = brokeredMessagePropertiesValue7["replyToSessionId"];
+                                        if (replyToSessionIdValue3 != null && replyToSessionIdValue3.Type != JTokenType.Null)
+                                        {
+                                            string replyToSessionIdInstance3 = ((string)replyToSessionIdValue3);
+                                            brokeredMessagePropertiesInstance3.ReplyToSessionId = replyToSessionIdInstance3;
+                                        }
+                                        
+                                        JToken scheduledEnqueueTimeUtcValue3 = brokeredMessagePropertiesValue7["scheduledEnqueueTimeUtc"];
+                                        if (scheduledEnqueueTimeUtcValue3 != null && scheduledEnqueueTimeUtcValue3.Type != JTokenType.Null)
+                                        {
+                                            DateTime scheduledEnqueueTimeUtcInstance3 = ((DateTime)scheduledEnqueueTimeUtcValue3);
+                                            brokeredMessagePropertiesInstance3.ScheduledEnqueueTimeUtc = scheduledEnqueueTimeUtcInstance3;
+                                        }
+                                        
+                                        JToken sessionIdValue3 = brokeredMessagePropertiesValue7["sessionId"];
+                                        if (sessionIdValue3 != null && sessionIdValue3.Type != JTokenType.Null)
+                                        {
+                                            string sessionIdInstance3 = ((string)sessionIdValue3);
+                                            brokeredMessagePropertiesInstance3.SessionId = sessionIdInstance3;
+                                        }
+                                        
+                                        JToken timeToLiveValue3 = brokeredMessagePropertiesValue7["timeToLive"];
+                                        if (timeToLiveValue3 != null && timeToLiveValue3.Type != JTokenType.Null)
+                                        {
+                                            DateTime timeToLiveInstance3 = ((DateTime)timeToLiveValue3);
+                                            brokeredMessagePropertiesInstance3.TimeToLive = timeToLiveInstance3;
+                                        }
+                                        
+                                        JToken toValue3 = brokeredMessagePropertiesValue7["to"];
+                                        if (toValue3 != null && toValue3.Type != JTokenType.Null)
+                                        {
+                                            string toInstance3 = ((string)toValue3);
+                                            brokeredMessagePropertiesInstance3.To = toInstance3;
+                                        }
+                                        
+                                        JToken viaPartitionKeyValue3 = brokeredMessagePropertiesValue7["viaPartitionKey"];
+                                        if (viaPartitionKeyValue3 != null && viaPartitionKeyValue3.Type != JTokenType.Null)
+                                        {
+                                            string viaPartitionKeyInstance3 = ((string)viaPartitionKeyValue3);
+                                            brokeredMessagePropertiesInstance3.ViaPartitionKey = viaPartitionKeyInstance3;
+                                        }
+                                    }
+                                    
+                                    JToken customMessagePropertiesSequenceElement3 = ((JToken)serviceBusTopicMessageValue4["customMessageProperties"]);
+                                    if (customMessagePropertiesSequenceElement3 != null && customMessagePropertiesSequenceElement3.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property5 in customMessagePropertiesSequenceElement3)
+                                        {
+                                            string customMessagePropertiesKey7 = ((string)property5.Name);
+                                            string customMessagePropertiesValue7 = ((string)property5.Value);
+                                            serviceBusTopicMessageInstance2.CustomMessageProperties.Add(customMessagePropertiesKey7, customMessagePropertiesValue7);
+                                        }
+                                    }
+                                }
+                                
+                                JToken serviceBusQueueMessageValue4 = actionValue2["serviceBusQueueMessage"];
+                                if (serviceBusQueueMessageValue4 != null && serviceBusQueueMessageValue4.Type != JTokenType.Null)
+                                {
+                                    JobServiceBusQueueMessage serviceBusQueueMessageInstance2 = new JobServiceBusQueueMessage();
+                                    actionInstance.ServiceBusQueueMessage = serviceBusQueueMessageInstance2;
+                                    
+                                    JToken queueNameValue4 = serviceBusQueueMessageValue4["queueName"];
+                                    if (queueNameValue4 != null && queueNameValue4.Type != JTokenType.Null)
+                                    {
+                                        string queueNameInstance4 = ((string)queueNameValue4);
+                                        serviceBusQueueMessageInstance2.QueueName = queueNameInstance4;
+                                    }
+                                    
+                                    JToken namespaceValue4 = serviceBusQueueMessageValue4["namespace"];
+                                    if (namespaceValue4 != null && namespaceValue4.Type != JTokenType.Null)
+                                    {
+                                        string namespaceInstance4 = ((string)namespaceValue4);
+                                        serviceBusQueueMessageInstance2.Namespace = namespaceInstance4;
+                                    }
+                                    
+                                    JToken transportTypeValue4 = serviceBusQueueMessageValue4["transportType"];
+                                    if (transportTypeValue4 != null && transportTypeValue4.Type != JTokenType.Null)
+                                    {
+                                        JobServiceBusTransportType transportTypeInstance4 = SchedulerClient.ParseJobServiceBusTransportType(((string)transportTypeValue4));
+                                        serviceBusQueueMessageInstance2.TransportType = transportTypeInstance4;
+                                    }
+                                    
+                                    JToken authenticationValue12 = serviceBusQueueMessageValue4["authentication"];
+                                    if (authenticationValue12 != null && authenticationValue12.Type != JTokenType.Null)
+                                    {
+                                        JobServiceBusAuthentication authenticationInstance4 = new JobServiceBusAuthentication();
+                                        serviceBusQueueMessageInstance2.Authentication = authenticationInstance4;
+                                        
+                                        JToken sasKeyNameValue4 = authenticationValue12["sasKeyName"];
+                                        if (sasKeyNameValue4 != null && sasKeyNameValue4.Type != JTokenType.Null)
+                                        {
+                                            string sasKeyNameInstance4 = ((string)sasKeyNameValue4);
+                                            authenticationInstance4.SasKeyName = sasKeyNameInstance4;
+                                        }
+                                        
+                                        JToken sasKeyValue4 = authenticationValue12["sasKey"];
+                                        if (sasKeyValue4 != null && sasKeyValue4.Type != JTokenType.Null)
+                                        {
+                                            string sasKeyInstance4 = ((string)sasKeyValue4);
+                                            authenticationInstance4.SasKey = sasKeyInstance4;
+                                        }
+                                        
+                                        JToken typeValue12 = authenticationValue12["type"];
+                                        if (typeValue12 != null && typeValue12.Type != JTokenType.Null)
+                                        {
+                                            JobServiceBusAuthenticationType typeInstance12 = SchedulerClient.ParseJobServiceBusAuthenticationType(((string)typeValue12));
+                                            authenticationInstance4.Type = typeInstance12;
+                                        }
+                                    }
+                                    
+                                    JToken messageValue6 = serviceBusQueueMessageValue4["message"];
+                                    if (messageValue6 != null && messageValue6.Type != JTokenType.Null)
+                                    {
+                                        string messageInstance6 = ((string)messageValue6);
+                                        serviceBusQueueMessageInstance2.Message = messageInstance6;
+                                    }
+                                    
+                                    JToken brokeredMessagePropertiesValue8 = serviceBusQueueMessageValue4["brokeredMessageProperties"];
+                                    if (brokeredMessagePropertiesValue8 != null && brokeredMessagePropertiesValue8.Type != JTokenType.Null)
+                                    {
+                                        JobServiceBusBrokeredMessageProperties brokeredMessagePropertiesInstance4 = new JobServiceBusBrokeredMessageProperties();
+                                        serviceBusQueueMessageInstance2.BrokeredMessageProperties = brokeredMessagePropertiesInstance4;
+                                        
+                                        JToken contentTypeValue4 = brokeredMessagePropertiesValue8["contentType"];
+                                        if (contentTypeValue4 != null && contentTypeValue4.Type != JTokenType.Null)
+                                        {
+                                            string contentTypeInstance4 = ((string)contentTypeValue4);
+                                            brokeredMessagePropertiesInstance4.ContentType = contentTypeInstance4;
+                                        }
+                                        
+                                        JToken correlationIdValue4 = brokeredMessagePropertiesValue8["correlationId"];
+                                        if (correlationIdValue4 != null && correlationIdValue4.Type != JTokenType.Null)
+                                        {
+                                            string correlationIdInstance4 = ((string)correlationIdValue4);
+                                            brokeredMessagePropertiesInstance4.CorrelationId = correlationIdInstance4;
+                                        }
+                                        
+                                        JToken forcePersistenceValue4 = brokeredMessagePropertiesValue8["forcePersistence"];
+                                        if (forcePersistenceValue4 != null && forcePersistenceValue4.Type != JTokenType.Null)
+                                        {
+                                            bool forcePersistenceInstance4 = ((bool)forcePersistenceValue4);
+                                            brokeredMessagePropertiesInstance4.ForcePersistence = forcePersistenceInstance4;
+                                        }
+                                        
+                                        JToken labelValue4 = brokeredMessagePropertiesValue8["label"];
+                                        if (labelValue4 != null && labelValue4.Type != JTokenType.Null)
+                                        {
+                                            string labelInstance4 = ((string)labelValue4);
+                                            brokeredMessagePropertiesInstance4.Label = labelInstance4;
+                                        }
+                                        
+                                        JToken messageIdValue4 = brokeredMessagePropertiesValue8["messageId"];
+                                        if (messageIdValue4 != null && messageIdValue4.Type != JTokenType.Null)
+                                        {
+                                            string messageIdInstance4 = ((string)messageIdValue4);
+                                            brokeredMessagePropertiesInstance4.MessageId = messageIdInstance4;
+                                        }
+                                        
+                                        JToken partitionKeyValue4 = brokeredMessagePropertiesValue8["partitionKey"];
+                                        if (partitionKeyValue4 != null && partitionKeyValue4.Type != JTokenType.Null)
+                                        {
+                                            string partitionKeyInstance4 = ((string)partitionKeyValue4);
+                                            brokeredMessagePropertiesInstance4.PartitionKey = partitionKeyInstance4;
+                                        }
+                                        
+                                        JToken replyToValue4 = brokeredMessagePropertiesValue8["replyTo"];
+                                        if (replyToValue4 != null && replyToValue4.Type != JTokenType.Null)
+                                        {
+                                            string replyToInstance4 = ((string)replyToValue4);
+                                            brokeredMessagePropertiesInstance4.ReplyTo = replyToInstance4;
+                                        }
+                                        
+                                        JToken replyToSessionIdValue4 = brokeredMessagePropertiesValue8["replyToSessionId"];
+                                        if (replyToSessionIdValue4 != null && replyToSessionIdValue4.Type != JTokenType.Null)
+                                        {
+                                            string replyToSessionIdInstance4 = ((string)replyToSessionIdValue4);
+                                            brokeredMessagePropertiesInstance4.ReplyToSessionId = replyToSessionIdInstance4;
+                                        }
+                                        
+                                        JToken scheduledEnqueueTimeUtcValue4 = brokeredMessagePropertiesValue8["scheduledEnqueueTimeUtc"];
+                                        if (scheduledEnqueueTimeUtcValue4 != null && scheduledEnqueueTimeUtcValue4.Type != JTokenType.Null)
+                                        {
+                                            DateTime scheduledEnqueueTimeUtcInstance4 = ((DateTime)scheduledEnqueueTimeUtcValue4);
+                                            brokeredMessagePropertiesInstance4.ScheduledEnqueueTimeUtc = scheduledEnqueueTimeUtcInstance4;
+                                        }
+                                        
+                                        JToken sessionIdValue4 = brokeredMessagePropertiesValue8["sessionId"];
+                                        if (sessionIdValue4 != null && sessionIdValue4.Type != JTokenType.Null)
+                                        {
+                                            string sessionIdInstance4 = ((string)sessionIdValue4);
+                                            brokeredMessagePropertiesInstance4.SessionId = sessionIdInstance4;
+                                        }
+                                        
+                                        JToken timeToLiveValue4 = brokeredMessagePropertiesValue8["timeToLive"];
+                                        if (timeToLiveValue4 != null && timeToLiveValue4.Type != JTokenType.Null)
+                                        {
+                                            DateTime timeToLiveInstance4 = ((DateTime)timeToLiveValue4);
+                                            brokeredMessagePropertiesInstance4.TimeToLive = timeToLiveInstance4;
+                                        }
+                                        
+                                        JToken toValue4 = brokeredMessagePropertiesValue8["to"];
+                                        if (toValue4 != null && toValue4.Type != JTokenType.Null)
+                                        {
+                                            string toInstance4 = ((string)toValue4);
+                                            brokeredMessagePropertiesInstance4.To = toInstance4;
+                                        }
+                                        
+                                        JToken viaPartitionKeyValue4 = brokeredMessagePropertiesValue8["viaPartitionKey"];
+                                        if (viaPartitionKeyValue4 != null && viaPartitionKeyValue4.Type != JTokenType.Null)
+                                        {
+                                            string viaPartitionKeyInstance4 = ((string)viaPartitionKeyValue4);
+                                            brokeredMessagePropertiesInstance4.ViaPartitionKey = viaPartitionKeyInstance4;
+                                        }
+                                    }
+                                    
+                                    JToken customMessagePropertiesSequenceElement4 = ((JToken)serviceBusQueueMessageValue4["customMessageProperties"]);
+                                    if (customMessagePropertiesSequenceElement4 != null && customMessagePropertiesSequenceElement4.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property6 in customMessagePropertiesSequenceElement4)
+                                        {
+                                            string customMessagePropertiesKey8 = ((string)property6.Name);
+                                            string customMessagePropertiesValue8 = ((string)property6.Value);
+                                            serviceBusQueueMessageInstance2.CustomMessageProperties.Add(customMessagePropertiesKey8, customMessagePropertiesValue8);
+                                        }
                                     }
                                 }
                             }
@@ -3072,6 +5488,350 @@ namespace Microsoft.WindowsAzure.Scheduler
                                             queueMessageInstance.Message = messageInstance;
                                         }
                                     }
+                                    
+                                    JToken serviceBusTopicMessageValue = errorActionValue["serviceBusTopicMessage"];
+                                    if (serviceBusTopicMessageValue != null && serviceBusTopicMessageValue.Type != JTokenType.Null)
+                                    {
+                                        JobServiceBusTopicMessage serviceBusTopicMessageInstance = new JobServiceBusTopicMessage();
+                                        errorActionInstance.ServiceBusTopicMessage = serviceBusTopicMessageInstance;
+                                        
+                                        JToken topicPathValue = serviceBusTopicMessageValue["topicPath"];
+                                        if (topicPathValue != null && topicPathValue.Type != JTokenType.Null)
+                                        {
+                                            string topicPathInstance = ((string)topicPathValue);
+                                            serviceBusTopicMessageInstance.TopicPath = topicPathInstance;
+                                        }
+                                        
+                                        JToken namespaceValue = serviceBusTopicMessageValue["namespace"];
+                                        if (namespaceValue != null && namespaceValue.Type != JTokenType.Null)
+                                        {
+                                            string namespaceInstance = ((string)namespaceValue);
+                                            serviceBusTopicMessageInstance.Namespace = namespaceInstance;
+                                        }
+                                        
+                                        JToken transportTypeValue = serviceBusTopicMessageValue["transportType"];
+                                        if (transportTypeValue != null && transportTypeValue.Type != JTokenType.Null)
+                                        {
+                                            JobServiceBusTransportType transportTypeInstance = SchedulerClient.ParseJobServiceBusTransportType(((string)transportTypeValue));
+                                            serviceBusTopicMessageInstance.TransportType = transportTypeInstance;
+                                        }
+                                        
+                                        JToken authenticationValue2 = serviceBusTopicMessageValue["authentication"];
+                                        if (authenticationValue2 != null && authenticationValue2.Type != JTokenType.Null)
+                                        {
+                                            JobServiceBusAuthentication authenticationInstance = new JobServiceBusAuthentication();
+                                            serviceBusTopicMessageInstance.Authentication = authenticationInstance;
+                                            
+                                            JToken sasKeyNameValue = authenticationValue2["sasKeyName"];
+                                            if (sasKeyNameValue != null && sasKeyNameValue.Type != JTokenType.Null)
+                                            {
+                                                string sasKeyNameInstance = ((string)sasKeyNameValue);
+                                                authenticationInstance.SasKeyName = sasKeyNameInstance;
+                                            }
+                                            
+                                            JToken sasKeyValue = authenticationValue2["sasKey"];
+                                            if (sasKeyValue != null && sasKeyValue.Type != JTokenType.Null)
+                                            {
+                                                string sasKeyInstance = ((string)sasKeyValue);
+                                                authenticationInstance.SasKey = sasKeyInstance;
+                                            }
+                                            
+                                            JToken typeValue6 = authenticationValue2["type"];
+                                            if (typeValue6 != null && typeValue6.Type != JTokenType.Null)
+                                            {
+                                                JobServiceBusAuthenticationType typeInstance6 = SchedulerClient.ParseJobServiceBusAuthenticationType(((string)typeValue6));
+                                                authenticationInstance.Type = typeInstance6;
+                                            }
+                                        }
+                                        
+                                        JToken messageValue2 = serviceBusTopicMessageValue["message"];
+                                        if (messageValue2 != null && messageValue2.Type != JTokenType.Null)
+                                        {
+                                            string messageInstance2 = ((string)messageValue2);
+                                            serviceBusTopicMessageInstance.Message = messageInstance2;
+                                        }
+                                        
+                                        JToken brokeredMessagePropertiesValue = serviceBusTopicMessageValue["brokeredMessageProperties"];
+                                        if (brokeredMessagePropertiesValue != null && brokeredMessagePropertiesValue.Type != JTokenType.Null)
+                                        {
+                                            JobServiceBusBrokeredMessageProperties brokeredMessagePropertiesInstance = new JobServiceBusBrokeredMessageProperties();
+                                            serviceBusTopicMessageInstance.BrokeredMessageProperties = brokeredMessagePropertiesInstance;
+                                            
+                                            JToken contentTypeValue = brokeredMessagePropertiesValue["contentType"];
+                                            if (contentTypeValue != null && contentTypeValue.Type != JTokenType.Null)
+                                            {
+                                                string contentTypeInstance = ((string)contentTypeValue);
+                                                brokeredMessagePropertiesInstance.ContentType = contentTypeInstance;
+                                            }
+                                            
+                                            JToken correlationIdValue = brokeredMessagePropertiesValue["correlationId"];
+                                            if (correlationIdValue != null && correlationIdValue.Type != JTokenType.Null)
+                                            {
+                                                string correlationIdInstance = ((string)correlationIdValue);
+                                                brokeredMessagePropertiesInstance.CorrelationId = correlationIdInstance;
+                                            }
+                                            
+                                            JToken forcePersistenceValue = brokeredMessagePropertiesValue["forcePersistence"];
+                                            if (forcePersistenceValue != null && forcePersistenceValue.Type != JTokenType.Null)
+                                            {
+                                                bool forcePersistenceInstance = ((bool)forcePersistenceValue);
+                                                brokeredMessagePropertiesInstance.ForcePersistence = forcePersistenceInstance;
+                                            }
+                                            
+                                            JToken labelValue = brokeredMessagePropertiesValue["label"];
+                                            if (labelValue != null && labelValue.Type != JTokenType.Null)
+                                            {
+                                                string labelInstance = ((string)labelValue);
+                                                brokeredMessagePropertiesInstance.Label = labelInstance;
+                                            }
+                                            
+                                            JToken messageIdValue = brokeredMessagePropertiesValue["messageId"];
+                                            if (messageIdValue != null && messageIdValue.Type != JTokenType.Null)
+                                            {
+                                                string messageIdInstance = ((string)messageIdValue);
+                                                brokeredMessagePropertiesInstance.MessageId = messageIdInstance;
+                                            }
+                                            
+                                            JToken partitionKeyValue = brokeredMessagePropertiesValue["partitionKey"];
+                                            if (partitionKeyValue != null && partitionKeyValue.Type != JTokenType.Null)
+                                            {
+                                                string partitionKeyInstance = ((string)partitionKeyValue);
+                                                brokeredMessagePropertiesInstance.PartitionKey = partitionKeyInstance;
+                                            }
+                                            
+                                            JToken replyToValue = brokeredMessagePropertiesValue["replyTo"];
+                                            if (replyToValue != null && replyToValue.Type != JTokenType.Null)
+                                            {
+                                                string replyToInstance = ((string)replyToValue);
+                                                brokeredMessagePropertiesInstance.ReplyTo = replyToInstance;
+                                            }
+                                            
+                                            JToken replyToSessionIdValue = brokeredMessagePropertiesValue["replyToSessionId"];
+                                            if (replyToSessionIdValue != null && replyToSessionIdValue.Type != JTokenType.Null)
+                                            {
+                                                string replyToSessionIdInstance = ((string)replyToSessionIdValue);
+                                                brokeredMessagePropertiesInstance.ReplyToSessionId = replyToSessionIdInstance;
+                                            }
+                                            
+                                            JToken scheduledEnqueueTimeUtcValue = brokeredMessagePropertiesValue["scheduledEnqueueTimeUtc"];
+                                            if (scheduledEnqueueTimeUtcValue != null && scheduledEnqueueTimeUtcValue.Type != JTokenType.Null)
+                                            {
+                                                DateTime scheduledEnqueueTimeUtcInstance = ((DateTime)scheduledEnqueueTimeUtcValue);
+                                                brokeredMessagePropertiesInstance.ScheduledEnqueueTimeUtc = scheduledEnqueueTimeUtcInstance;
+                                            }
+                                            
+                                            JToken sessionIdValue = brokeredMessagePropertiesValue["sessionId"];
+                                            if (sessionIdValue != null && sessionIdValue.Type != JTokenType.Null)
+                                            {
+                                                string sessionIdInstance = ((string)sessionIdValue);
+                                                brokeredMessagePropertiesInstance.SessionId = sessionIdInstance;
+                                            }
+                                            
+                                            JToken timeToLiveValue = brokeredMessagePropertiesValue["timeToLive"];
+                                            if (timeToLiveValue != null && timeToLiveValue.Type != JTokenType.Null)
+                                            {
+                                                DateTime timeToLiveInstance = ((DateTime)timeToLiveValue);
+                                                brokeredMessagePropertiesInstance.TimeToLive = timeToLiveInstance;
+                                            }
+                                            
+                                            JToken toValue = brokeredMessagePropertiesValue["to"];
+                                            if (toValue != null && toValue.Type != JTokenType.Null)
+                                            {
+                                                string toInstance = ((string)toValue);
+                                                brokeredMessagePropertiesInstance.To = toInstance;
+                                            }
+                                            
+                                            JToken viaPartitionKeyValue = brokeredMessagePropertiesValue["viaPartitionKey"];
+                                            if (viaPartitionKeyValue != null && viaPartitionKeyValue.Type != JTokenType.Null)
+                                            {
+                                                string viaPartitionKeyInstance = ((string)viaPartitionKeyValue);
+                                                brokeredMessagePropertiesInstance.ViaPartitionKey = viaPartitionKeyInstance;
+                                            }
+                                        }
+                                        
+                                        JToken customMessagePropertiesSequenceElement = ((JToken)serviceBusTopicMessageValue["customMessageProperties"]);
+                                        if (customMessagePropertiesSequenceElement != null && customMessagePropertiesSequenceElement.Type != JTokenType.Null)
+                                        {
+                                            foreach (JProperty property2 in customMessagePropertiesSequenceElement)
+                                            {
+                                                string customMessagePropertiesKey = ((string)property2.Name);
+                                                string customMessagePropertiesValue = ((string)property2.Value);
+                                                serviceBusTopicMessageInstance.CustomMessageProperties.Add(customMessagePropertiesKey, customMessagePropertiesValue);
+                                            }
+                                        }
+                                    }
+                                    
+                                    JToken serviceBusQueueMessageValue = errorActionValue["serviceBusQueueMessage"];
+                                    if (serviceBusQueueMessageValue != null && serviceBusQueueMessageValue.Type != JTokenType.Null)
+                                    {
+                                        JobServiceBusQueueMessage serviceBusQueueMessageInstance = new JobServiceBusQueueMessage();
+                                        errorActionInstance.ServiceBusQueueMessage = serviceBusQueueMessageInstance;
+                                        
+                                        JToken queueNameValue2 = serviceBusQueueMessageValue["queueName"];
+                                        if (queueNameValue2 != null && queueNameValue2.Type != JTokenType.Null)
+                                        {
+                                            string queueNameInstance2 = ((string)queueNameValue2);
+                                            serviceBusQueueMessageInstance.QueueName = queueNameInstance2;
+                                        }
+                                        
+                                        JToken namespaceValue2 = serviceBusQueueMessageValue["namespace"];
+                                        if (namespaceValue2 != null && namespaceValue2.Type != JTokenType.Null)
+                                        {
+                                            string namespaceInstance2 = ((string)namespaceValue2);
+                                            serviceBusQueueMessageInstance.Namespace = namespaceInstance2;
+                                        }
+                                        
+                                        JToken transportTypeValue2 = serviceBusQueueMessageValue["transportType"];
+                                        if (transportTypeValue2 != null && transportTypeValue2.Type != JTokenType.Null)
+                                        {
+                                            JobServiceBusTransportType transportTypeInstance2 = SchedulerClient.ParseJobServiceBusTransportType(((string)transportTypeValue2));
+                                            serviceBusQueueMessageInstance.TransportType = transportTypeInstance2;
+                                        }
+                                        
+                                        JToken authenticationValue3 = serviceBusQueueMessageValue["authentication"];
+                                        if (authenticationValue3 != null && authenticationValue3.Type != JTokenType.Null)
+                                        {
+                                            JobServiceBusAuthentication authenticationInstance2 = new JobServiceBusAuthentication();
+                                            serviceBusQueueMessageInstance.Authentication = authenticationInstance2;
+                                            
+                                            JToken sasKeyNameValue2 = authenticationValue3["sasKeyName"];
+                                            if (sasKeyNameValue2 != null && sasKeyNameValue2.Type != JTokenType.Null)
+                                            {
+                                                string sasKeyNameInstance2 = ((string)sasKeyNameValue2);
+                                                authenticationInstance2.SasKeyName = sasKeyNameInstance2;
+                                            }
+                                            
+                                            JToken sasKeyValue2 = authenticationValue3["sasKey"];
+                                            if (sasKeyValue2 != null && sasKeyValue2.Type != JTokenType.Null)
+                                            {
+                                                string sasKeyInstance2 = ((string)sasKeyValue2);
+                                                authenticationInstance2.SasKey = sasKeyInstance2;
+                                            }
+                                            
+                                            JToken typeValue7 = authenticationValue3["type"];
+                                            if (typeValue7 != null && typeValue7.Type != JTokenType.Null)
+                                            {
+                                                JobServiceBusAuthenticationType typeInstance7 = SchedulerClient.ParseJobServiceBusAuthenticationType(((string)typeValue7));
+                                                authenticationInstance2.Type = typeInstance7;
+                                            }
+                                        }
+                                        
+                                        JToken messageValue3 = serviceBusQueueMessageValue["message"];
+                                        if (messageValue3 != null && messageValue3.Type != JTokenType.Null)
+                                        {
+                                            string messageInstance3 = ((string)messageValue3);
+                                            serviceBusQueueMessageInstance.Message = messageInstance3;
+                                        }
+                                        
+                                        JToken brokeredMessagePropertiesValue2 = serviceBusQueueMessageValue["brokeredMessageProperties"];
+                                        if (brokeredMessagePropertiesValue2 != null && brokeredMessagePropertiesValue2.Type != JTokenType.Null)
+                                        {
+                                            JobServiceBusBrokeredMessageProperties brokeredMessagePropertiesInstance2 = new JobServiceBusBrokeredMessageProperties();
+                                            serviceBusQueueMessageInstance.BrokeredMessageProperties = brokeredMessagePropertiesInstance2;
+                                            
+                                            JToken contentTypeValue2 = brokeredMessagePropertiesValue2["contentType"];
+                                            if (contentTypeValue2 != null && contentTypeValue2.Type != JTokenType.Null)
+                                            {
+                                                string contentTypeInstance2 = ((string)contentTypeValue2);
+                                                brokeredMessagePropertiesInstance2.ContentType = contentTypeInstance2;
+                                            }
+                                            
+                                            JToken correlationIdValue2 = brokeredMessagePropertiesValue2["correlationId"];
+                                            if (correlationIdValue2 != null && correlationIdValue2.Type != JTokenType.Null)
+                                            {
+                                                string correlationIdInstance2 = ((string)correlationIdValue2);
+                                                brokeredMessagePropertiesInstance2.CorrelationId = correlationIdInstance2;
+                                            }
+                                            
+                                            JToken forcePersistenceValue2 = brokeredMessagePropertiesValue2["forcePersistence"];
+                                            if (forcePersistenceValue2 != null && forcePersistenceValue2.Type != JTokenType.Null)
+                                            {
+                                                bool forcePersistenceInstance2 = ((bool)forcePersistenceValue2);
+                                                brokeredMessagePropertiesInstance2.ForcePersistence = forcePersistenceInstance2;
+                                            }
+                                            
+                                            JToken labelValue2 = brokeredMessagePropertiesValue2["label"];
+                                            if (labelValue2 != null && labelValue2.Type != JTokenType.Null)
+                                            {
+                                                string labelInstance2 = ((string)labelValue2);
+                                                brokeredMessagePropertiesInstance2.Label = labelInstance2;
+                                            }
+                                            
+                                            JToken messageIdValue2 = brokeredMessagePropertiesValue2["messageId"];
+                                            if (messageIdValue2 != null && messageIdValue2.Type != JTokenType.Null)
+                                            {
+                                                string messageIdInstance2 = ((string)messageIdValue2);
+                                                brokeredMessagePropertiesInstance2.MessageId = messageIdInstance2;
+                                            }
+                                            
+                                            JToken partitionKeyValue2 = brokeredMessagePropertiesValue2["partitionKey"];
+                                            if (partitionKeyValue2 != null && partitionKeyValue2.Type != JTokenType.Null)
+                                            {
+                                                string partitionKeyInstance2 = ((string)partitionKeyValue2);
+                                                brokeredMessagePropertiesInstance2.PartitionKey = partitionKeyInstance2;
+                                            }
+                                            
+                                            JToken replyToValue2 = brokeredMessagePropertiesValue2["replyTo"];
+                                            if (replyToValue2 != null && replyToValue2.Type != JTokenType.Null)
+                                            {
+                                                string replyToInstance2 = ((string)replyToValue2);
+                                                brokeredMessagePropertiesInstance2.ReplyTo = replyToInstance2;
+                                            }
+                                            
+                                            JToken replyToSessionIdValue2 = brokeredMessagePropertiesValue2["replyToSessionId"];
+                                            if (replyToSessionIdValue2 != null && replyToSessionIdValue2.Type != JTokenType.Null)
+                                            {
+                                                string replyToSessionIdInstance2 = ((string)replyToSessionIdValue2);
+                                                brokeredMessagePropertiesInstance2.ReplyToSessionId = replyToSessionIdInstance2;
+                                            }
+                                            
+                                            JToken scheduledEnqueueTimeUtcValue2 = brokeredMessagePropertiesValue2["scheduledEnqueueTimeUtc"];
+                                            if (scheduledEnqueueTimeUtcValue2 != null && scheduledEnqueueTimeUtcValue2.Type != JTokenType.Null)
+                                            {
+                                                DateTime scheduledEnqueueTimeUtcInstance2 = ((DateTime)scheduledEnqueueTimeUtcValue2);
+                                                brokeredMessagePropertiesInstance2.ScheduledEnqueueTimeUtc = scheduledEnqueueTimeUtcInstance2;
+                                            }
+                                            
+                                            JToken sessionIdValue2 = brokeredMessagePropertiesValue2["sessionId"];
+                                            if (sessionIdValue2 != null && sessionIdValue2.Type != JTokenType.Null)
+                                            {
+                                                string sessionIdInstance2 = ((string)sessionIdValue2);
+                                                brokeredMessagePropertiesInstance2.SessionId = sessionIdInstance2;
+                                            }
+                                            
+                                            JToken timeToLiveValue2 = brokeredMessagePropertiesValue2["timeToLive"];
+                                            if (timeToLiveValue2 != null && timeToLiveValue2.Type != JTokenType.Null)
+                                            {
+                                                DateTime timeToLiveInstance2 = ((DateTime)timeToLiveValue2);
+                                                brokeredMessagePropertiesInstance2.TimeToLive = timeToLiveInstance2;
+                                            }
+                                            
+                                            JToken toValue2 = brokeredMessagePropertiesValue2["to"];
+                                            if (toValue2 != null && toValue2.Type != JTokenType.Null)
+                                            {
+                                                string toInstance2 = ((string)toValue2);
+                                                brokeredMessagePropertiesInstance2.To = toInstance2;
+                                            }
+                                            
+                                            JToken viaPartitionKeyValue2 = brokeredMessagePropertiesValue2["viaPartitionKey"];
+                                            if (viaPartitionKeyValue2 != null && viaPartitionKeyValue2.Type != JTokenType.Null)
+                                            {
+                                                string viaPartitionKeyInstance2 = ((string)viaPartitionKeyValue2);
+                                                brokeredMessagePropertiesInstance2.ViaPartitionKey = viaPartitionKeyInstance2;
+                                            }
+                                        }
+                                        
+                                        JToken customMessagePropertiesSequenceElement2 = ((JToken)serviceBusQueueMessageValue["customMessageProperties"]);
+                                        if (customMessagePropertiesSequenceElement2 != null && customMessagePropertiesSequenceElement2.Type != JTokenType.Null)
+                                        {
+                                            foreach (JProperty property3 in customMessagePropertiesSequenceElement2)
+                                            {
+                                                string customMessagePropertiesKey2 = ((string)property3.Name);
+                                                string customMessagePropertiesValue2 = ((string)property3.Value);
+                                                serviceBusQueueMessageInstance.CustomMessageProperties.Add(customMessagePropertiesKey2, customMessagePropertiesValue2);
+                                            }
+                                        }
+                                    }
                                 }
                                 
                                 JToken requestValue2 = actionValue["request"];
@@ -3097,10 +5857,10 @@ namespace Microsoft.WindowsAzure.Scheduler
                                     JToken headersSequenceElement2 = ((JToken)requestValue2["headers"]);
                                     if (headersSequenceElement2 != null && headersSequenceElement2.Type != JTokenType.Null)
                                     {
-                                        foreach (JProperty property2 in headersSequenceElement2)
+                                        foreach (JProperty property4 in headersSequenceElement2)
                                         {
-                                            string headersKey2 = ((string)property2.Name);
-                                            string headersValue2 = ((string)property2.Value);
+                                            string headersKey2 = ((string)property4.Name);
+                                            string headersValue2 = ((string)property4.Value);
                                             requestInstance2.Headers.Add(headersKey2, headersValue2);
                                         }
                                     }
@@ -3112,54 +5872,54 @@ namespace Microsoft.WindowsAzure.Scheduler
                                         requestInstance2.Body = bodyInstance2;
                                     }
                                     
-                                    JToken authenticationValue2 = requestValue2["authentication"];
-                                    if (authenticationValue2 != null && authenticationValue2.Type != JTokenType.Null)
+                                    JToken authenticationValue4 = requestValue2["authentication"];
+                                    if (authenticationValue4 != null && authenticationValue4.Type != JTokenType.Null)
                                     {
-                                        string typeName2 = ((string)authenticationValue2["type"]);
+                                        string typeName2 = ((string)authenticationValue4["type"]);
                                         if (typeName2 == "ClientCertificate")
                                         {
                                             ClientCertAuthentication clientCertAuthenticationInstance2 = new ClientCertAuthentication();
                                             
-                                            JToken passwordValue3 = authenticationValue2["password"];
+                                            JToken passwordValue3 = authenticationValue4["password"];
                                             if (passwordValue3 != null && passwordValue3.Type != JTokenType.Null)
                                             {
                                                 string passwordInstance3 = ((string)passwordValue3);
                                                 clientCertAuthenticationInstance2.Password = passwordInstance3;
                                             }
                                             
-                                            JToken pfxValue2 = authenticationValue2["pfx"];
+                                            JToken pfxValue2 = authenticationValue4["pfx"];
                                             if (pfxValue2 != null && pfxValue2.Type != JTokenType.Null)
                                             {
                                                 string pfxInstance2 = ((string)pfxValue2);
                                                 clientCertAuthenticationInstance2.Pfx = pfxInstance2;
                                             }
                                             
-                                            JToken certificateThumbprintValue2 = authenticationValue2["certificateThumbprint"];
+                                            JToken certificateThumbprintValue2 = authenticationValue4["certificateThumbprint"];
                                             if (certificateThumbprintValue2 != null && certificateThumbprintValue2.Type != JTokenType.Null)
                                             {
                                                 string certificateThumbprintInstance2 = ((string)certificateThumbprintValue2);
                                                 clientCertAuthenticationInstance2.CertificateThumbprint = certificateThumbprintInstance2;
                                             }
                                             
-                                            JToken certificateExpirationValue2 = authenticationValue2["certificateExpiration"];
+                                            JToken certificateExpirationValue2 = authenticationValue4["certificateExpiration"];
                                             if (certificateExpirationValue2 != null && certificateExpirationValue2.Type != JTokenType.Null)
                                             {
                                                 DateTime certificateExpirationInstance2 = ((DateTime)certificateExpirationValue2);
                                                 clientCertAuthenticationInstance2.CertificateExpiration = certificateExpirationInstance2;
                                             }
                                             
-                                            JToken certificateSubjectNameValue2 = authenticationValue2["certificateSubjectName"];
+                                            JToken certificateSubjectNameValue2 = authenticationValue4["certificateSubjectName"];
                                             if (certificateSubjectNameValue2 != null && certificateSubjectNameValue2.Type != JTokenType.Null)
                                             {
                                                 string certificateSubjectNameInstance2 = ((string)certificateSubjectNameValue2);
                                                 clientCertAuthenticationInstance2.CertificateSubjectName = certificateSubjectNameInstance2;
                                             }
                                             
-                                            JToken typeValue6 = authenticationValue2["type"];
-                                            if (typeValue6 != null && typeValue6.Type != JTokenType.Null)
+                                            JToken typeValue8 = authenticationValue4["type"];
+                                            if (typeValue8 != null && typeValue8.Type != JTokenType.Null)
                                             {
-                                                HttpAuthenticationType typeInstance6 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue6));
-                                                clientCertAuthenticationInstance2.Type = typeInstance6;
+                                                HttpAuthenticationType typeInstance8 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue8));
+                                                clientCertAuthenticationInstance2.Type = typeInstance8;
                                             }
                                             requestInstance2.Authentication = clientCertAuthenticationInstance2;
                                         }
@@ -3167,39 +5927,39 @@ namespace Microsoft.WindowsAzure.Scheduler
                                         {
                                             AADOAuthAuthentication aADOAuthAuthenticationInstance2 = new AADOAuthAuthentication();
                                             
-                                            JToken secretValue2 = authenticationValue2["secret"];
+                                            JToken secretValue2 = authenticationValue4["secret"];
                                             if (secretValue2 != null && secretValue2.Type != JTokenType.Null)
                                             {
                                                 string secretInstance2 = ((string)secretValue2);
                                                 aADOAuthAuthenticationInstance2.Secret = secretInstance2;
                                             }
                                             
-                                            JToken tenantValue2 = authenticationValue2["tenant"];
+                                            JToken tenantValue2 = authenticationValue4["tenant"];
                                             if (tenantValue2 != null && tenantValue2.Type != JTokenType.Null)
                                             {
                                                 string tenantInstance2 = ((string)tenantValue2);
                                                 aADOAuthAuthenticationInstance2.Tenant = tenantInstance2;
                                             }
                                             
-                                            JToken audienceValue2 = authenticationValue2["audience"];
+                                            JToken audienceValue2 = authenticationValue4["audience"];
                                             if (audienceValue2 != null && audienceValue2.Type != JTokenType.Null)
                                             {
                                                 string audienceInstance2 = ((string)audienceValue2);
                                                 aADOAuthAuthenticationInstance2.Audience = audienceInstance2;
                                             }
                                             
-                                            JToken clientIdValue2 = authenticationValue2["clientId"];
+                                            JToken clientIdValue2 = authenticationValue4["clientId"];
                                             if (clientIdValue2 != null && clientIdValue2.Type != JTokenType.Null)
                                             {
                                                 string clientIdInstance2 = ((string)clientIdValue2);
                                                 aADOAuthAuthenticationInstance2.ClientId = clientIdInstance2;
                                             }
                                             
-                                            JToken typeValue7 = authenticationValue2["type"];
-                                            if (typeValue7 != null && typeValue7.Type != JTokenType.Null)
+                                            JToken typeValue9 = authenticationValue4["type"];
+                                            if (typeValue9 != null && typeValue9.Type != JTokenType.Null)
                                             {
-                                                HttpAuthenticationType typeInstance7 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue7));
-                                                aADOAuthAuthenticationInstance2.Type = typeInstance7;
+                                                HttpAuthenticationType typeInstance9 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue9));
+                                                aADOAuthAuthenticationInstance2.Type = typeInstance9;
                                             }
                                             requestInstance2.Authentication = aADOAuthAuthenticationInstance2;
                                         }
@@ -3207,25 +5967,25 @@ namespace Microsoft.WindowsAzure.Scheduler
                                         {
                                             BasicAuthentication basicAuthenticationInstance2 = new BasicAuthentication();
                                             
-                                            JToken usernameValue2 = authenticationValue2["username"];
+                                            JToken usernameValue2 = authenticationValue4["username"];
                                             if (usernameValue2 != null && usernameValue2.Type != JTokenType.Null)
                                             {
                                                 string usernameInstance2 = ((string)usernameValue2);
                                                 basicAuthenticationInstance2.Username = usernameInstance2;
                                             }
                                             
-                                            JToken passwordValue4 = authenticationValue2["password"];
+                                            JToken passwordValue4 = authenticationValue4["password"];
                                             if (passwordValue4 != null && passwordValue4.Type != JTokenType.Null)
                                             {
                                                 string passwordInstance4 = ((string)passwordValue4);
                                                 basicAuthenticationInstance2.Password = passwordInstance4;
                                             }
                                             
-                                            JToken typeValue8 = authenticationValue2["type"];
-                                            if (typeValue8 != null && typeValue8.Type != JTokenType.Null)
+                                            JToken typeValue10 = authenticationValue4["type"];
+                                            if (typeValue10 != null && typeValue10.Type != JTokenType.Null)
                                             {
-                                                HttpAuthenticationType typeInstance8 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue8));
-                                                basicAuthenticationInstance2.Type = typeInstance8;
+                                                HttpAuthenticationType typeInstance10 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue10));
+                                                basicAuthenticationInstance2.Type = typeInstance10;
                                             }
                                             requestInstance2.Authentication = basicAuthenticationInstance2;
                                         }
@@ -3245,11 +6005,11 @@ namespace Microsoft.WindowsAzure.Scheduler
                                         queueMessageInstance2.StorageAccountName = storageAccountInstance2;
                                     }
                                     
-                                    JToken queueNameValue2 = queueMessageValue2["queueName"];
-                                    if (queueNameValue2 != null && queueNameValue2.Type != JTokenType.Null)
+                                    JToken queueNameValue3 = queueMessageValue2["queueName"];
+                                    if (queueNameValue3 != null && queueNameValue3.Type != JTokenType.Null)
                                     {
-                                        string queueNameInstance2 = ((string)queueNameValue2);
-                                        queueMessageInstance2.QueueName = queueNameInstance2;
+                                        string queueNameInstance3 = ((string)queueNameValue3);
+                                        queueMessageInstance2.QueueName = queueNameInstance3;
                                     }
                                     
                                     JToken sasTokenValue2 = queueMessageValue2["sasToken"];
@@ -3259,11 +6019,355 @@ namespace Microsoft.WindowsAzure.Scheduler
                                         queueMessageInstance2.SasToken = sasTokenInstance2;
                                     }
                                     
-                                    JToken messageValue2 = queueMessageValue2["message"];
-                                    if (messageValue2 != null && messageValue2.Type != JTokenType.Null)
+                                    JToken messageValue4 = queueMessageValue2["message"];
+                                    if (messageValue4 != null && messageValue4.Type != JTokenType.Null)
                                     {
-                                        string messageInstance2 = ((string)messageValue2);
-                                        queueMessageInstance2.Message = messageInstance2;
+                                        string messageInstance4 = ((string)messageValue4);
+                                        queueMessageInstance2.Message = messageInstance4;
+                                    }
+                                }
+                                
+                                JToken serviceBusTopicMessageValue2 = actionValue["serviceBusTopicMessage"];
+                                if (serviceBusTopicMessageValue2 != null && serviceBusTopicMessageValue2.Type != JTokenType.Null)
+                                {
+                                    JobServiceBusTopicMessage serviceBusTopicMessageInstance2 = new JobServiceBusTopicMessage();
+                                    actionInstance.ServiceBusTopicMessage = serviceBusTopicMessageInstance2;
+                                    
+                                    JToken topicPathValue2 = serviceBusTopicMessageValue2["topicPath"];
+                                    if (topicPathValue2 != null && topicPathValue2.Type != JTokenType.Null)
+                                    {
+                                        string topicPathInstance2 = ((string)topicPathValue2);
+                                        serviceBusTopicMessageInstance2.TopicPath = topicPathInstance2;
+                                    }
+                                    
+                                    JToken namespaceValue3 = serviceBusTopicMessageValue2["namespace"];
+                                    if (namespaceValue3 != null && namespaceValue3.Type != JTokenType.Null)
+                                    {
+                                        string namespaceInstance3 = ((string)namespaceValue3);
+                                        serviceBusTopicMessageInstance2.Namespace = namespaceInstance3;
+                                    }
+                                    
+                                    JToken transportTypeValue3 = serviceBusTopicMessageValue2["transportType"];
+                                    if (transportTypeValue3 != null && transportTypeValue3.Type != JTokenType.Null)
+                                    {
+                                        JobServiceBusTransportType transportTypeInstance3 = SchedulerClient.ParseJobServiceBusTransportType(((string)transportTypeValue3));
+                                        serviceBusTopicMessageInstance2.TransportType = transportTypeInstance3;
+                                    }
+                                    
+                                    JToken authenticationValue5 = serviceBusTopicMessageValue2["authentication"];
+                                    if (authenticationValue5 != null && authenticationValue5.Type != JTokenType.Null)
+                                    {
+                                        JobServiceBusAuthentication authenticationInstance3 = new JobServiceBusAuthentication();
+                                        serviceBusTopicMessageInstance2.Authentication = authenticationInstance3;
+                                        
+                                        JToken sasKeyNameValue3 = authenticationValue5["sasKeyName"];
+                                        if (sasKeyNameValue3 != null && sasKeyNameValue3.Type != JTokenType.Null)
+                                        {
+                                            string sasKeyNameInstance3 = ((string)sasKeyNameValue3);
+                                            authenticationInstance3.SasKeyName = sasKeyNameInstance3;
+                                        }
+                                        
+                                        JToken sasKeyValue3 = authenticationValue5["sasKey"];
+                                        if (sasKeyValue3 != null && sasKeyValue3.Type != JTokenType.Null)
+                                        {
+                                            string sasKeyInstance3 = ((string)sasKeyValue3);
+                                            authenticationInstance3.SasKey = sasKeyInstance3;
+                                        }
+                                        
+                                        JToken typeValue11 = authenticationValue5["type"];
+                                        if (typeValue11 != null && typeValue11.Type != JTokenType.Null)
+                                        {
+                                            JobServiceBusAuthenticationType typeInstance11 = SchedulerClient.ParseJobServiceBusAuthenticationType(((string)typeValue11));
+                                            authenticationInstance3.Type = typeInstance11;
+                                        }
+                                    }
+                                    
+                                    JToken messageValue5 = serviceBusTopicMessageValue2["message"];
+                                    if (messageValue5 != null && messageValue5.Type != JTokenType.Null)
+                                    {
+                                        string messageInstance5 = ((string)messageValue5);
+                                        serviceBusTopicMessageInstance2.Message = messageInstance5;
+                                    }
+                                    
+                                    JToken brokeredMessagePropertiesValue3 = serviceBusTopicMessageValue2["brokeredMessageProperties"];
+                                    if (brokeredMessagePropertiesValue3 != null && brokeredMessagePropertiesValue3.Type != JTokenType.Null)
+                                    {
+                                        JobServiceBusBrokeredMessageProperties brokeredMessagePropertiesInstance3 = new JobServiceBusBrokeredMessageProperties();
+                                        serviceBusTopicMessageInstance2.BrokeredMessageProperties = brokeredMessagePropertiesInstance3;
+                                        
+                                        JToken contentTypeValue3 = brokeredMessagePropertiesValue3["contentType"];
+                                        if (contentTypeValue3 != null && contentTypeValue3.Type != JTokenType.Null)
+                                        {
+                                            string contentTypeInstance3 = ((string)contentTypeValue3);
+                                            brokeredMessagePropertiesInstance3.ContentType = contentTypeInstance3;
+                                        }
+                                        
+                                        JToken correlationIdValue3 = brokeredMessagePropertiesValue3["correlationId"];
+                                        if (correlationIdValue3 != null && correlationIdValue3.Type != JTokenType.Null)
+                                        {
+                                            string correlationIdInstance3 = ((string)correlationIdValue3);
+                                            brokeredMessagePropertiesInstance3.CorrelationId = correlationIdInstance3;
+                                        }
+                                        
+                                        JToken forcePersistenceValue3 = brokeredMessagePropertiesValue3["forcePersistence"];
+                                        if (forcePersistenceValue3 != null && forcePersistenceValue3.Type != JTokenType.Null)
+                                        {
+                                            bool forcePersistenceInstance3 = ((bool)forcePersistenceValue3);
+                                            brokeredMessagePropertiesInstance3.ForcePersistence = forcePersistenceInstance3;
+                                        }
+                                        
+                                        JToken labelValue3 = brokeredMessagePropertiesValue3["label"];
+                                        if (labelValue3 != null && labelValue3.Type != JTokenType.Null)
+                                        {
+                                            string labelInstance3 = ((string)labelValue3);
+                                            brokeredMessagePropertiesInstance3.Label = labelInstance3;
+                                        }
+                                        
+                                        JToken messageIdValue3 = brokeredMessagePropertiesValue3["messageId"];
+                                        if (messageIdValue3 != null && messageIdValue3.Type != JTokenType.Null)
+                                        {
+                                            string messageIdInstance3 = ((string)messageIdValue3);
+                                            brokeredMessagePropertiesInstance3.MessageId = messageIdInstance3;
+                                        }
+                                        
+                                        JToken partitionKeyValue3 = brokeredMessagePropertiesValue3["partitionKey"];
+                                        if (partitionKeyValue3 != null && partitionKeyValue3.Type != JTokenType.Null)
+                                        {
+                                            string partitionKeyInstance3 = ((string)partitionKeyValue3);
+                                            brokeredMessagePropertiesInstance3.PartitionKey = partitionKeyInstance3;
+                                        }
+                                        
+                                        JToken replyToValue3 = brokeredMessagePropertiesValue3["replyTo"];
+                                        if (replyToValue3 != null && replyToValue3.Type != JTokenType.Null)
+                                        {
+                                            string replyToInstance3 = ((string)replyToValue3);
+                                            brokeredMessagePropertiesInstance3.ReplyTo = replyToInstance3;
+                                        }
+                                        
+                                        JToken replyToSessionIdValue3 = brokeredMessagePropertiesValue3["replyToSessionId"];
+                                        if (replyToSessionIdValue3 != null && replyToSessionIdValue3.Type != JTokenType.Null)
+                                        {
+                                            string replyToSessionIdInstance3 = ((string)replyToSessionIdValue3);
+                                            brokeredMessagePropertiesInstance3.ReplyToSessionId = replyToSessionIdInstance3;
+                                        }
+                                        
+                                        JToken scheduledEnqueueTimeUtcValue3 = brokeredMessagePropertiesValue3["scheduledEnqueueTimeUtc"];
+                                        if (scheduledEnqueueTimeUtcValue3 != null && scheduledEnqueueTimeUtcValue3.Type != JTokenType.Null)
+                                        {
+                                            DateTime scheduledEnqueueTimeUtcInstance3 = ((DateTime)scheduledEnqueueTimeUtcValue3);
+                                            brokeredMessagePropertiesInstance3.ScheduledEnqueueTimeUtc = scheduledEnqueueTimeUtcInstance3;
+                                        }
+                                        
+                                        JToken sessionIdValue3 = brokeredMessagePropertiesValue3["sessionId"];
+                                        if (sessionIdValue3 != null && sessionIdValue3.Type != JTokenType.Null)
+                                        {
+                                            string sessionIdInstance3 = ((string)sessionIdValue3);
+                                            brokeredMessagePropertiesInstance3.SessionId = sessionIdInstance3;
+                                        }
+                                        
+                                        JToken timeToLiveValue3 = brokeredMessagePropertiesValue3["timeToLive"];
+                                        if (timeToLiveValue3 != null && timeToLiveValue3.Type != JTokenType.Null)
+                                        {
+                                            DateTime timeToLiveInstance3 = ((DateTime)timeToLiveValue3);
+                                            brokeredMessagePropertiesInstance3.TimeToLive = timeToLiveInstance3;
+                                        }
+                                        
+                                        JToken toValue3 = brokeredMessagePropertiesValue3["to"];
+                                        if (toValue3 != null && toValue3.Type != JTokenType.Null)
+                                        {
+                                            string toInstance3 = ((string)toValue3);
+                                            brokeredMessagePropertiesInstance3.To = toInstance3;
+                                        }
+                                        
+                                        JToken viaPartitionKeyValue3 = brokeredMessagePropertiesValue3["viaPartitionKey"];
+                                        if (viaPartitionKeyValue3 != null && viaPartitionKeyValue3.Type != JTokenType.Null)
+                                        {
+                                            string viaPartitionKeyInstance3 = ((string)viaPartitionKeyValue3);
+                                            brokeredMessagePropertiesInstance3.ViaPartitionKey = viaPartitionKeyInstance3;
+                                        }
+                                    }
+                                    
+                                    JToken customMessagePropertiesSequenceElement3 = ((JToken)serviceBusTopicMessageValue2["customMessageProperties"]);
+                                    if (customMessagePropertiesSequenceElement3 != null && customMessagePropertiesSequenceElement3.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property5 in customMessagePropertiesSequenceElement3)
+                                        {
+                                            string customMessagePropertiesKey3 = ((string)property5.Name);
+                                            string customMessagePropertiesValue3 = ((string)property5.Value);
+                                            serviceBusTopicMessageInstance2.CustomMessageProperties.Add(customMessagePropertiesKey3, customMessagePropertiesValue3);
+                                        }
+                                    }
+                                }
+                                
+                                JToken serviceBusQueueMessageValue2 = actionValue["serviceBusQueueMessage"];
+                                if (serviceBusQueueMessageValue2 != null && serviceBusQueueMessageValue2.Type != JTokenType.Null)
+                                {
+                                    JobServiceBusQueueMessage serviceBusQueueMessageInstance2 = new JobServiceBusQueueMessage();
+                                    actionInstance.ServiceBusQueueMessage = serviceBusQueueMessageInstance2;
+                                    
+                                    JToken queueNameValue4 = serviceBusQueueMessageValue2["queueName"];
+                                    if (queueNameValue4 != null && queueNameValue4.Type != JTokenType.Null)
+                                    {
+                                        string queueNameInstance4 = ((string)queueNameValue4);
+                                        serviceBusQueueMessageInstance2.QueueName = queueNameInstance4;
+                                    }
+                                    
+                                    JToken namespaceValue4 = serviceBusQueueMessageValue2["namespace"];
+                                    if (namespaceValue4 != null && namespaceValue4.Type != JTokenType.Null)
+                                    {
+                                        string namespaceInstance4 = ((string)namespaceValue4);
+                                        serviceBusQueueMessageInstance2.Namespace = namespaceInstance4;
+                                    }
+                                    
+                                    JToken transportTypeValue4 = serviceBusQueueMessageValue2["transportType"];
+                                    if (transportTypeValue4 != null && transportTypeValue4.Type != JTokenType.Null)
+                                    {
+                                        JobServiceBusTransportType transportTypeInstance4 = SchedulerClient.ParseJobServiceBusTransportType(((string)transportTypeValue4));
+                                        serviceBusQueueMessageInstance2.TransportType = transportTypeInstance4;
+                                    }
+                                    
+                                    JToken authenticationValue6 = serviceBusQueueMessageValue2["authentication"];
+                                    if (authenticationValue6 != null && authenticationValue6.Type != JTokenType.Null)
+                                    {
+                                        JobServiceBusAuthentication authenticationInstance4 = new JobServiceBusAuthentication();
+                                        serviceBusQueueMessageInstance2.Authentication = authenticationInstance4;
+                                        
+                                        JToken sasKeyNameValue4 = authenticationValue6["sasKeyName"];
+                                        if (sasKeyNameValue4 != null && sasKeyNameValue4.Type != JTokenType.Null)
+                                        {
+                                            string sasKeyNameInstance4 = ((string)sasKeyNameValue4);
+                                            authenticationInstance4.SasKeyName = sasKeyNameInstance4;
+                                        }
+                                        
+                                        JToken sasKeyValue4 = authenticationValue6["sasKey"];
+                                        if (sasKeyValue4 != null && sasKeyValue4.Type != JTokenType.Null)
+                                        {
+                                            string sasKeyInstance4 = ((string)sasKeyValue4);
+                                            authenticationInstance4.SasKey = sasKeyInstance4;
+                                        }
+                                        
+                                        JToken typeValue12 = authenticationValue6["type"];
+                                        if (typeValue12 != null && typeValue12.Type != JTokenType.Null)
+                                        {
+                                            JobServiceBusAuthenticationType typeInstance12 = SchedulerClient.ParseJobServiceBusAuthenticationType(((string)typeValue12));
+                                            authenticationInstance4.Type = typeInstance12;
+                                        }
+                                    }
+                                    
+                                    JToken messageValue6 = serviceBusQueueMessageValue2["message"];
+                                    if (messageValue6 != null && messageValue6.Type != JTokenType.Null)
+                                    {
+                                        string messageInstance6 = ((string)messageValue6);
+                                        serviceBusQueueMessageInstance2.Message = messageInstance6;
+                                    }
+                                    
+                                    JToken brokeredMessagePropertiesValue4 = serviceBusQueueMessageValue2["brokeredMessageProperties"];
+                                    if (brokeredMessagePropertiesValue4 != null && brokeredMessagePropertiesValue4.Type != JTokenType.Null)
+                                    {
+                                        JobServiceBusBrokeredMessageProperties brokeredMessagePropertiesInstance4 = new JobServiceBusBrokeredMessageProperties();
+                                        serviceBusQueueMessageInstance2.BrokeredMessageProperties = brokeredMessagePropertiesInstance4;
+                                        
+                                        JToken contentTypeValue4 = brokeredMessagePropertiesValue4["contentType"];
+                                        if (contentTypeValue4 != null && contentTypeValue4.Type != JTokenType.Null)
+                                        {
+                                            string contentTypeInstance4 = ((string)contentTypeValue4);
+                                            brokeredMessagePropertiesInstance4.ContentType = contentTypeInstance4;
+                                        }
+                                        
+                                        JToken correlationIdValue4 = brokeredMessagePropertiesValue4["correlationId"];
+                                        if (correlationIdValue4 != null && correlationIdValue4.Type != JTokenType.Null)
+                                        {
+                                            string correlationIdInstance4 = ((string)correlationIdValue4);
+                                            brokeredMessagePropertiesInstance4.CorrelationId = correlationIdInstance4;
+                                        }
+                                        
+                                        JToken forcePersistenceValue4 = brokeredMessagePropertiesValue4["forcePersistence"];
+                                        if (forcePersistenceValue4 != null && forcePersistenceValue4.Type != JTokenType.Null)
+                                        {
+                                            bool forcePersistenceInstance4 = ((bool)forcePersistenceValue4);
+                                            brokeredMessagePropertiesInstance4.ForcePersistence = forcePersistenceInstance4;
+                                        }
+                                        
+                                        JToken labelValue4 = brokeredMessagePropertiesValue4["label"];
+                                        if (labelValue4 != null && labelValue4.Type != JTokenType.Null)
+                                        {
+                                            string labelInstance4 = ((string)labelValue4);
+                                            brokeredMessagePropertiesInstance4.Label = labelInstance4;
+                                        }
+                                        
+                                        JToken messageIdValue4 = brokeredMessagePropertiesValue4["messageId"];
+                                        if (messageIdValue4 != null && messageIdValue4.Type != JTokenType.Null)
+                                        {
+                                            string messageIdInstance4 = ((string)messageIdValue4);
+                                            brokeredMessagePropertiesInstance4.MessageId = messageIdInstance4;
+                                        }
+                                        
+                                        JToken partitionKeyValue4 = brokeredMessagePropertiesValue4["partitionKey"];
+                                        if (partitionKeyValue4 != null && partitionKeyValue4.Type != JTokenType.Null)
+                                        {
+                                            string partitionKeyInstance4 = ((string)partitionKeyValue4);
+                                            brokeredMessagePropertiesInstance4.PartitionKey = partitionKeyInstance4;
+                                        }
+                                        
+                                        JToken replyToValue4 = brokeredMessagePropertiesValue4["replyTo"];
+                                        if (replyToValue4 != null && replyToValue4.Type != JTokenType.Null)
+                                        {
+                                            string replyToInstance4 = ((string)replyToValue4);
+                                            brokeredMessagePropertiesInstance4.ReplyTo = replyToInstance4;
+                                        }
+                                        
+                                        JToken replyToSessionIdValue4 = brokeredMessagePropertiesValue4["replyToSessionId"];
+                                        if (replyToSessionIdValue4 != null && replyToSessionIdValue4.Type != JTokenType.Null)
+                                        {
+                                            string replyToSessionIdInstance4 = ((string)replyToSessionIdValue4);
+                                            brokeredMessagePropertiesInstance4.ReplyToSessionId = replyToSessionIdInstance4;
+                                        }
+                                        
+                                        JToken scheduledEnqueueTimeUtcValue4 = brokeredMessagePropertiesValue4["scheduledEnqueueTimeUtc"];
+                                        if (scheduledEnqueueTimeUtcValue4 != null && scheduledEnqueueTimeUtcValue4.Type != JTokenType.Null)
+                                        {
+                                            DateTime scheduledEnqueueTimeUtcInstance4 = ((DateTime)scheduledEnqueueTimeUtcValue4);
+                                            brokeredMessagePropertiesInstance4.ScheduledEnqueueTimeUtc = scheduledEnqueueTimeUtcInstance4;
+                                        }
+                                        
+                                        JToken sessionIdValue4 = brokeredMessagePropertiesValue4["sessionId"];
+                                        if (sessionIdValue4 != null && sessionIdValue4.Type != JTokenType.Null)
+                                        {
+                                            string sessionIdInstance4 = ((string)sessionIdValue4);
+                                            brokeredMessagePropertiesInstance4.SessionId = sessionIdInstance4;
+                                        }
+                                        
+                                        JToken timeToLiveValue4 = brokeredMessagePropertiesValue4["timeToLive"];
+                                        if (timeToLiveValue4 != null && timeToLiveValue4.Type != JTokenType.Null)
+                                        {
+                                            DateTime timeToLiveInstance4 = ((DateTime)timeToLiveValue4);
+                                            brokeredMessagePropertiesInstance4.TimeToLive = timeToLiveInstance4;
+                                        }
+                                        
+                                        JToken toValue4 = brokeredMessagePropertiesValue4["to"];
+                                        if (toValue4 != null && toValue4.Type != JTokenType.Null)
+                                        {
+                                            string toInstance4 = ((string)toValue4);
+                                            brokeredMessagePropertiesInstance4.To = toInstance4;
+                                        }
+                                        
+                                        JToken viaPartitionKeyValue4 = brokeredMessagePropertiesValue4["viaPartitionKey"];
+                                        if (viaPartitionKeyValue4 != null && viaPartitionKeyValue4.Type != JTokenType.Null)
+                                        {
+                                            string viaPartitionKeyInstance4 = ((string)viaPartitionKeyValue4);
+                                            brokeredMessagePropertiesInstance4.ViaPartitionKey = viaPartitionKeyInstance4;
+                                        }
+                                    }
+                                    
+                                    JToken customMessagePropertiesSequenceElement4 = ((JToken)serviceBusQueueMessageValue2["customMessageProperties"]);
+                                    if (customMessagePropertiesSequenceElement4 != null && customMessagePropertiesSequenceElement4.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property6 in customMessagePropertiesSequenceElement4)
+                                        {
+                                            string customMessagePropertiesKey4 = ((string)property6.Name);
+                                            string customMessagePropertiesValue4 = ((string)property6.Value);
+                                            serviceBusQueueMessageInstance2.CustomMessageProperties.Add(customMessagePropertiesKey4, customMessagePropertiesValue4);
+                                        }
                                     }
                                 }
                             }
@@ -4372,6 +7476,350 @@ namespace Microsoft.WindowsAzure.Scheduler
                                                     queueMessageInstance.Message = messageInstance;
                                                 }
                                             }
+                                            
+                                            JToken serviceBusTopicMessageValue = errorActionValue["serviceBusTopicMessage"];
+                                            if (serviceBusTopicMessageValue != null && serviceBusTopicMessageValue.Type != JTokenType.Null)
+                                            {
+                                                JobServiceBusTopicMessage serviceBusTopicMessageInstance = new JobServiceBusTopicMessage();
+                                                errorActionInstance.ServiceBusTopicMessage = serviceBusTopicMessageInstance;
+                                                
+                                                JToken topicPathValue = serviceBusTopicMessageValue["topicPath"];
+                                                if (topicPathValue != null && topicPathValue.Type != JTokenType.Null)
+                                                {
+                                                    string topicPathInstance = ((string)topicPathValue);
+                                                    serviceBusTopicMessageInstance.TopicPath = topicPathInstance;
+                                                }
+                                                
+                                                JToken namespaceValue = serviceBusTopicMessageValue["namespace"];
+                                                if (namespaceValue != null && namespaceValue.Type != JTokenType.Null)
+                                                {
+                                                    string namespaceInstance = ((string)namespaceValue);
+                                                    serviceBusTopicMessageInstance.Namespace = namespaceInstance;
+                                                }
+                                                
+                                                JToken transportTypeValue = serviceBusTopicMessageValue["transportType"];
+                                                if (transportTypeValue != null && transportTypeValue.Type != JTokenType.Null)
+                                                {
+                                                    JobServiceBusTransportType transportTypeInstance = SchedulerClient.ParseJobServiceBusTransportType(((string)transportTypeValue));
+                                                    serviceBusTopicMessageInstance.TransportType = transportTypeInstance;
+                                                }
+                                                
+                                                JToken authenticationValue2 = serviceBusTopicMessageValue["authentication"];
+                                                if (authenticationValue2 != null && authenticationValue2.Type != JTokenType.Null)
+                                                {
+                                                    JobServiceBusAuthentication authenticationInstance = new JobServiceBusAuthentication();
+                                                    serviceBusTopicMessageInstance.Authentication = authenticationInstance;
+                                                    
+                                                    JToken sasKeyNameValue = authenticationValue2["sasKeyName"];
+                                                    if (sasKeyNameValue != null && sasKeyNameValue.Type != JTokenType.Null)
+                                                    {
+                                                        string sasKeyNameInstance = ((string)sasKeyNameValue);
+                                                        authenticationInstance.SasKeyName = sasKeyNameInstance;
+                                                    }
+                                                    
+                                                    JToken sasKeyValue = authenticationValue2["sasKey"];
+                                                    if (sasKeyValue != null && sasKeyValue.Type != JTokenType.Null)
+                                                    {
+                                                        string sasKeyInstance = ((string)sasKeyValue);
+                                                        authenticationInstance.SasKey = sasKeyInstance;
+                                                    }
+                                                    
+                                                    JToken typeValue6 = authenticationValue2["type"];
+                                                    if (typeValue6 != null && typeValue6.Type != JTokenType.Null)
+                                                    {
+                                                        JobServiceBusAuthenticationType typeInstance6 = SchedulerClient.ParseJobServiceBusAuthenticationType(((string)typeValue6));
+                                                        authenticationInstance.Type = typeInstance6;
+                                                    }
+                                                }
+                                                
+                                                JToken messageValue2 = serviceBusTopicMessageValue["message"];
+                                                if (messageValue2 != null && messageValue2.Type != JTokenType.Null)
+                                                {
+                                                    string messageInstance2 = ((string)messageValue2);
+                                                    serviceBusTopicMessageInstance.Message = messageInstance2;
+                                                }
+                                                
+                                                JToken brokeredMessagePropertiesValue = serviceBusTopicMessageValue["brokeredMessageProperties"];
+                                                if (brokeredMessagePropertiesValue != null && brokeredMessagePropertiesValue.Type != JTokenType.Null)
+                                                {
+                                                    JobServiceBusBrokeredMessageProperties brokeredMessagePropertiesInstance = new JobServiceBusBrokeredMessageProperties();
+                                                    serviceBusTopicMessageInstance.BrokeredMessageProperties = brokeredMessagePropertiesInstance;
+                                                    
+                                                    JToken contentTypeValue = brokeredMessagePropertiesValue["contentType"];
+                                                    if (contentTypeValue != null && contentTypeValue.Type != JTokenType.Null)
+                                                    {
+                                                        string contentTypeInstance = ((string)contentTypeValue);
+                                                        brokeredMessagePropertiesInstance.ContentType = contentTypeInstance;
+                                                    }
+                                                    
+                                                    JToken correlationIdValue = brokeredMessagePropertiesValue["correlationId"];
+                                                    if (correlationIdValue != null && correlationIdValue.Type != JTokenType.Null)
+                                                    {
+                                                        string correlationIdInstance = ((string)correlationIdValue);
+                                                        brokeredMessagePropertiesInstance.CorrelationId = correlationIdInstance;
+                                                    }
+                                                    
+                                                    JToken forcePersistenceValue = brokeredMessagePropertiesValue["forcePersistence"];
+                                                    if (forcePersistenceValue != null && forcePersistenceValue.Type != JTokenType.Null)
+                                                    {
+                                                        bool forcePersistenceInstance = ((bool)forcePersistenceValue);
+                                                        brokeredMessagePropertiesInstance.ForcePersistence = forcePersistenceInstance;
+                                                    }
+                                                    
+                                                    JToken labelValue = brokeredMessagePropertiesValue["label"];
+                                                    if (labelValue != null && labelValue.Type != JTokenType.Null)
+                                                    {
+                                                        string labelInstance = ((string)labelValue);
+                                                        brokeredMessagePropertiesInstance.Label = labelInstance;
+                                                    }
+                                                    
+                                                    JToken messageIdValue = brokeredMessagePropertiesValue["messageId"];
+                                                    if (messageIdValue != null && messageIdValue.Type != JTokenType.Null)
+                                                    {
+                                                        string messageIdInstance = ((string)messageIdValue);
+                                                        brokeredMessagePropertiesInstance.MessageId = messageIdInstance;
+                                                    }
+                                                    
+                                                    JToken partitionKeyValue = brokeredMessagePropertiesValue["partitionKey"];
+                                                    if (partitionKeyValue != null && partitionKeyValue.Type != JTokenType.Null)
+                                                    {
+                                                        string partitionKeyInstance = ((string)partitionKeyValue);
+                                                        brokeredMessagePropertiesInstance.PartitionKey = partitionKeyInstance;
+                                                    }
+                                                    
+                                                    JToken replyToValue = brokeredMessagePropertiesValue["replyTo"];
+                                                    if (replyToValue != null && replyToValue.Type != JTokenType.Null)
+                                                    {
+                                                        string replyToInstance = ((string)replyToValue);
+                                                        brokeredMessagePropertiesInstance.ReplyTo = replyToInstance;
+                                                    }
+                                                    
+                                                    JToken replyToSessionIdValue = brokeredMessagePropertiesValue["replyToSessionId"];
+                                                    if (replyToSessionIdValue != null && replyToSessionIdValue.Type != JTokenType.Null)
+                                                    {
+                                                        string replyToSessionIdInstance = ((string)replyToSessionIdValue);
+                                                        brokeredMessagePropertiesInstance.ReplyToSessionId = replyToSessionIdInstance;
+                                                    }
+                                                    
+                                                    JToken scheduledEnqueueTimeUtcValue = brokeredMessagePropertiesValue["scheduledEnqueueTimeUtc"];
+                                                    if (scheduledEnqueueTimeUtcValue != null && scheduledEnqueueTimeUtcValue.Type != JTokenType.Null)
+                                                    {
+                                                        DateTime scheduledEnqueueTimeUtcInstance = ((DateTime)scheduledEnqueueTimeUtcValue);
+                                                        brokeredMessagePropertiesInstance.ScheduledEnqueueTimeUtc = scheduledEnqueueTimeUtcInstance;
+                                                    }
+                                                    
+                                                    JToken sessionIdValue = brokeredMessagePropertiesValue["sessionId"];
+                                                    if (sessionIdValue != null && sessionIdValue.Type != JTokenType.Null)
+                                                    {
+                                                        string sessionIdInstance = ((string)sessionIdValue);
+                                                        brokeredMessagePropertiesInstance.SessionId = sessionIdInstance;
+                                                    }
+                                                    
+                                                    JToken timeToLiveValue = brokeredMessagePropertiesValue["timeToLive"];
+                                                    if (timeToLiveValue != null && timeToLiveValue.Type != JTokenType.Null)
+                                                    {
+                                                        DateTime timeToLiveInstance = ((DateTime)timeToLiveValue);
+                                                        brokeredMessagePropertiesInstance.TimeToLive = timeToLiveInstance;
+                                                    }
+                                                    
+                                                    JToken toValue = brokeredMessagePropertiesValue["to"];
+                                                    if (toValue != null && toValue.Type != JTokenType.Null)
+                                                    {
+                                                        string toInstance = ((string)toValue);
+                                                        brokeredMessagePropertiesInstance.To = toInstance;
+                                                    }
+                                                    
+                                                    JToken viaPartitionKeyValue = brokeredMessagePropertiesValue["viaPartitionKey"];
+                                                    if (viaPartitionKeyValue != null && viaPartitionKeyValue.Type != JTokenType.Null)
+                                                    {
+                                                        string viaPartitionKeyInstance = ((string)viaPartitionKeyValue);
+                                                        brokeredMessagePropertiesInstance.ViaPartitionKey = viaPartitionKeyInstance;
+                                                    }
+                                                }
+                                                
+                                                JToken customMessagePropertiesSequenceElement = ((JToken)serviceBusTopicMessageValue["customMessageProperties"]);
+                                                if (customMessagePropertiesSequenceElement != null && customMessagePropertiesSequenceElement.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JProperty property2 in customMessagePropertiesSequenceElement)
+                                                    {
+                                                        string customMessagePropertiesKey = ((string)property2.Name);
+                                                        string customMessagePropertiesValue = ((string)property2.Value);
+                                                        serviceBusTopicMessageInstance.CustomMessageProperties.Add(customMessagePropertiesKey, customMessagePropertiesValue);
+                                                    }
+                                                }
+                                            }
+                                            
+                                            JToken serviceBusQueueMessageValue = errorActionValue["serviceBusQueueMessage"];
+                                            if (serviceBusQueueMessageValue != null && serviceBusQueueMessageValue.Type != JTokenType.Null)
+                                            {
+                                                JobServiceBusQueueMessage serviceBusQueueMessageInstance = new JobServiceBusQueueMessage();
+                                                errorActionInstance.ServiceBusQueueMessage = serviceBusQueueMessageInstance;
+                                                
+                                                JToken queueNameValue2 = serviceBusQueueMessageValue["queueName"];
+                                                if (queueNameValue2 != null && queueNameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string queueNameInstance2 = ((string)queueNameValue2);
+                                                    serviceBusQueueMessageInstance.QueueName = queueNameInstance2;
+                                                }
+                                                
+                                                JToken namespaceValue2 = serviceBusQueueMessageValue["namespace"];
+                                                if (namespaceValue2 != null && namespaceValue2.Type != JTokenType.Null)
+                                                {
+                                                    string namespaceInstance2 = ((string)namespaceValue2);
+                                                    serviceBusQueueMessageInstance.Namespace = namespaceInstance2;
+                                                }
+                                                
+                                                JToken transportTypeValue2 = serviceBusQueueMessageValue["transportType"];
+                                                if (transportTypeValue2 != null && transportTypeValue2.Type != JTokenType.Null)
+                                                {
+                                                    JobServiceBusTransportType transportTypeInstance2 = SchedulerClient.ParseJobServiceBusTransportType(((string)transportTypeValue2));
+                                                    serviceBusQueueMessageInstance.TransportType = transportTypeInstance2;
+                                                }
+                                                
+                                                JToken authenticationValue3 = serviceBusQueueMessageValue["authentication"];
+                                                if (authenticationValue3 != null && authenticationValue3.Type != JTokenType.Null)
+                                                {
+                                                    JobServiceBusAuthentication authenticationInstance2 = new JobServiceBusAuthentication();
+                                                    serviceBusQueueMessageInstance.Authentication = authenticationInstance2;
+                                                    
+                                                    JToken sasKeyNameValue2 = authenticationValue3["sasKeyName"];
+                                                    if (sasKeyNameValue2 != null && sasKeyNameValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string sasKeyNameInstance2 = ((string)sasKeyNameValue2);
+                                                        authenticationInstance2.SasKeyName = sasKeyNameInstance2;
+                                                    }
+                                                    
+                                                    JToken sasKeyValue2 = authenticationValue3["sasKey"];
+                                                    if (sasKeyValue2 != null && sasKeyValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string sasKeyInstance2 = ((string)sasKeyValue2);
+                                                        authenticationInstance2.SasKey = sasKeyInstance2;
+                                                    }
+                                                    
+                                                    JToken typeValue7 = authenticationValue3["type"];
+                                                    if (typeValue7 != null && typeValue7.Type != JTokenType.Null)
+                                                    {
+                                                        JobServiceBusAuthenticationType typeInstance7 = SchedulerClient.ParseJobServiceBusAuthenticationType(((string)typeValue7));
+                                                        authenticationInstance2.Type = typeInstance7;
+                                                    }
+                                                }
+                                                
+                                                JToken messageValue3 = serviceBusQueueMessageValue["message"];
+                                                if (messageValue3 != null && messageValue3.Type != JTokenType.Null)
+                                                {
+                                                    string messageInstance3 = ((string)messageValue3);
+                                                    serviceBusQueueMessageInstance.Message = messageInstance3;
+                                                }
+                                                
+                                                JToken brokeredMessagePropertiesValue2 = serviceBusQueueMessageValue["brokeredMessageProperties"];
+                                                if (brokeredMessagePropertiesValue2 != null && brokeredMessagePropertiesValue2.Type != JTokenType.Null)
+                                                {
+                                                    JobServiceBusBrokeredMessageProperties brokeredMessagePropertiesInstance2 = new JobServiceBusBrokeredMessageProperties();
+                                                    serviceBusQueueMessageInstance.BrokeredMessageProperties = brokeredMessagePropertiesInstance2;
+                                                    
+                                                    JToken contentTypeValue2 = brokeredMessagePropertiesValue2["contentType"];
+                                                    if (contentTypeValue2 != null && contentTypeValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string contentTypeInstance2 = ((string)contentTypeValue2);
+                                                        brokeredMessagePropertiesInstance2.ContentType = contentTypeInstance2;
+                                                    }
+                                                    
+                                                    JToken correlationIdValue2 = brokeredMessagePropertiesValue2["correlationId"];
+                                                    if (correlationIdValue2 != null && correlationIdValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string correlationIdInstance2 = ((string)correlationIdValue2);
+                                                        brokeredMessagePropertiesInstance2.CorrelationId = correlationIdInstance2;
+                                                    }
+                                                    
+                                                    JToken forcePersistenceValue2 = brokeredMessagePropertiesValue2["forcePersistence"];
+                                                    if (forcePersistenceValue2 != null && forcePersistenceValue2.Type != JTokenType.Null)
+                                                    {
+                                                        bool forcePersistenceInstance2 = ((bool)forcePersistenceValue2);
+                                                        brokeredMessagePropertiesInstance2.ForcePersistence = forcePersistenceInstance2;
+                                                    }
+                                                    
+                                                    JToken labelValue2 = brokeredMessagePropertiesValue2["label"];
+                                                    if (labelValue2 != null && labelValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string labelInstance2 = ((string)labelValue2);
+                                                        brokeredMessagePropertiesInstance2.Label = labelInstance2;
+                                                    }
+                                                    
+                                                    JToken messageIdValue2 = brokeredMessagePropertiesValue2["messageId"];
+                                                    if (messageIdValue2 != null && messageIdValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string messageIdInstance2 = ((string)messageIdValue2);
+                                                        brokeredMessagePropertiesInstance2.MessageId = messageIdInstance2;
+                                                    }
+                                                    
+                                                    JToken partitionKeyValue2 = brokeredMessagePropertiesValue2["partitionKey"];
+                                                    if (partitionKeyValue2 != null && partitionKeyValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string partitionKeyInstance2 = ((string)partitionKeyValue2);
+                                                        brokeredMessagePropertiesInstance2.PartitionKey = partitionKeyInstance2;
+                                                    }
+                                                    
+                                                    JToken replyToValue2 = brokeredMessagePropertiesValue2["replyTo"];
+                                                    if (replyToValue2 != null && replyToValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string replyToInstance2 = ((string)replyToValue2);
+                                                        brokeredMessagePropertiesInstance2.ReplyTo = replyToInstance2;
+                                                    }
+                                                    
+                                                    JToken replyToSessionIdValue2 = brokeredMessagePropertiesValue2["replyToSessionId"];
+                                                    if (replyToSessionIdValue2 != null && replyToSessionIdValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string replyToSessionIdInstance2 = ((string)replyToSessionIdValue2);
+                                                        brokeredMessagePropertiesInstance2.ReplyToSessionId = replyToSessionIdInstance2;
+                                                    }
+                                                    
+                                                    JToken scheduledEnqueueTimeUtcValue2 = brokeredMessagePropertiesValue2["scheduledEnqueueTimeUtc"];
+                                                    if (scheduledEnqueueTimeUtcValue2 != null && scheduledEnqueueTimeUtcValue2.Type != JTokenType.Null)
+                                                    {
+                                                        DateTime scheduledEnqueueTimeUtcInstance2 = ((DateTime)scheduledEnqueueTimeUtcValue2);
+                                                        brokeredMessagePropertiesInstance2.ScheduledEnqueueTimeUtc = scheduledEnqueueTimeUtcInstance2;
+                                                    }
+                                                    
+                                                    JToken sessionIdValue2 = brokeredMessagePropertiesValue2["sessionId"];
+                                                    if (sessionIdValue2 != null && sessionIdValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string sessionIdInstance2 = ((string)sessionIdValue2);
+                                                        brokeredMessagePropertiesInstance2.SessionId = sessionIdInstance2;
+                                                    }
+                                                    
+                                                    JToken timeToLiveValue2 = brokeredMessagePropertiesValue2["timeToLive"];
+                                                    if (timeToLiveValue2 != null && timeToLiveValue2.Type != JTokenType.Null)
+                                                    {
+                                                        DateTime timeToLiveInstance2 = ((DateTime)timeToLiveValue2);
+                                                        brokeredMessagePropertiesInstance2.TimeToLive = timeToLiveInstance2;
+                                                    }
+                                                    
+                                                    JToken toValue2 = brokeredMessagePropertiesValue2["to"];
+                                                    if (toValue2 != null && toValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string toInstance2 = ((string)toValue2);
+                                                        brokeredMessagePropertiesInstance2.To = toInstance2;
+                                                    }
+                                                    
+                                                    JToken viaPartitionKeyValue2 = brokeredMessagePropertiesValue2["viaPartitionKey"];
+                                                    if (viaPartitionKeyValue2 != null && viaPartitionKeyValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string viaPartitionKeyInstance2 = ((string)viaPartitionKeyValue2);
+                                                        brokeredMessagePropertiesInstance2.ViaPartitionKey = viaPartitionKeyInstance2;
+                                                    }
+                                                }
+                                                
+                                                JToken customMessagePropertiesSequenceElement2 = ((JToken)serviceBusQueueMessageValue["customMessageProperties"]);
+                                                if (customMessagePropertiesSequenceElement2 != null && customMessagePropertiesSequenceElement2.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JProperty property3 in customMessagePropertiesSequenceElement2)
+                                                    {
+                                                        string customMessagePropertiesKey2 = ((string)property3.Name);
+                                                        string customMessagePropertiesValue2 = ((string)property3.Value);
+                                                        serviceBusQueueMessageInstance.CustomMessageProperties.Add(customMessagePropertiesKey2, customMessagePropertiesValue2);
+                                                    }
+                                                }
+                                            }
                                         }
                                         
                                         JToken requestValue2 = actionValue["request"];
@@ -4397,10 +7845,10 @@ namespace Microsoft.WindowsAzure.Scheduler
                                             JToken headersSequenceElement2 = ((JToken)requestValue2["headers"]);
                                             if (headersSequenceElement2 != null && headersSequenceElement2.Type != JTokenType.Null)
                                             {
-                                                foreach (JProperty property2 in headersSequenceElement2)
+                                                foreach (JProperty property4 in headersSequenceElement2)
                                                 {
-                                                    string headersKey2 = ((string)property2.Name);
-                                                    string headersValue2 = ((string)property2.Value);
+                                                    string headersKey2 = ((string)property4.Name);
+                                                    string headersValue2 = ((string)property4.Value);
                                                     requestInstance2.Headers.Add(headersKey2, headersValue2);
                                                 }
                                             }
@@ -4412,54 +7860,54 @@ namespace Microsoft.WindowsAzure.Scheduler
                                                 requestInstance2.Body = bodyInstance2;
                                             }
                                             
-                                            JToken authenticationValue2 = requestValue2["authentication"];
-                                            if (authenticationValue2 != null && authenticationValue2.Type != JTokenType.Null)
+                                            JToken authenticationValue4 = requestValue2["authentication"];
+                                            if (authenticationValue4 != null && authenticationValue4.Type != JTokenType.Null)
                                             {
-                                                string typeName2 = ((string)authenticationValue2["type"]);
+                                                string typeName2 = ((string)authenticationValue4["type"]);
                                                 if (typeName2 == "ClientCertificate")
                                                 {
                                                     ClientCertAuthentication clientCertAuthenticationInstance2 = new ClientCertAuthentication();
                                                     
-                                                    JToken passwordValue3 = authenticationValue2["password"];
+                                                    JToken passwordValue3 = authenticationValue4["password"];
                                                     if (passwordValue3 != null && passwordValue3.Type != JTokenType.Null)
                                                     {
                                                         string passwordInstance3 = ((string)passwordValue3);
                                                         clientCertAuthenticationInstance2.Password = passwordInstance3;
                                                     }
                                                     
-                                                    JToken pfxValue2 = authenticationValue2["pfx"];
+                                                    JToken pfxValue2 = authenticationValue4["pfx"];
                                                     if (pfxValue2 != null && pfxValue2.Type != JTokenType.Null)
                                                     {
                                                         string pfxInstance2 = ((string)pfxValue2);
                                                         clientCertAuthenticationInstance2.Pfx = pfxInstance2;
                                                     }
                                                     
-                                                    JToken certificateThumbprintValue2 = authenticationValue2["certificateThumbprint"];
+                                                    JToken certificateThumbprintValue2 = authenticationValue4["certificateThumbprint"];
                                                     if (certificateThumbprintValue2 != null && certificateThumbprintValue2.Type != JTokenType.Null)
                                                     {
                                                         string certificateThumbprintInstance2 = ((string)certificateThumbprintValue2);
                                                         clientCertAuthenticationInstance2.CertificateThumbprint = certificateThumbprintInstance2;
                                                     }
                                                     
-                                                    JToken certificateExpirationValue2 = authenticationValue2["certificateExpiration"];
+                                                    JToken certificateExpirationValue2 = authenticationValue4["certificateExpiration"];
                                                     if (certificateExpirationValue2 != null && certificateExpirationValue2.Type != JTokenType.Null)
                                                     {
                                                         DateTime certificateExpirationInstance2 = ((DateTime)certificateExpirationValue2);
                                                         clientCertAuthenticationInstance2.CertificateExpiration = certificateExpirationInstance2;
                                                     }
                                                     
-                                                    JToken certificateSubjectNameValue2 = authenticationValue2["certificateSubjectName"];
+                                                    JToken certificateSubjectNameValue2 = authenticationValue4["certificateSubjectName"];
                                                     if (certificateSubjectNameValue2 != null && certificateSubjectNameValue2.Type != JTokenType.Null)
                                                     {
                                                         string certificateSubjectNameInstance2 = ((string)certificateSubjectNameValue2);
                                                         clientCertAuthenticationInstance2.CertificateSubjectName = certificateSubjectNameInstance2;
                                                     }
                                                     
-                                                    JToken typeValue6 = authenticationValue2["type"];
-                                                    if (typeValue6 != null && typeValue6.Type != JTokenType.Null)
+                                                    JToken typeValue8 = authenticationValue4["type"];
+                                                    if (typeValue8 != null && typeValue8.Type != JTokenType.Null)
                                                     {
-                                                        HttpAuthenticationType typeInstance6 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue6));
-                                                        clientCertAuthenticationInstance2.Type = typeInstance6;
+                                                        HttpAuthenticationType typeInstance8 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue8));
+                                                        clientCertAuthenticationInstance2.Type = typeInstance8;
                                                     }
                                                     requestInstance2.Authentication = clientCertAuthenticationInstance2;
                                                 }
@@ -4467,39 +7915,39 @@ namespace Microsoft.WindowsAzure.Scheduler
                                                 {
                                                     AADOAuthAuthentication aADOAuthAuthenticationInstance2 = new AADOAuthAuthentication();
                                                     
-                                                    JToken secretValue2 = authenticationValue2["secret"];
+                                                    JToken secretValue2 = authenticationValue4["secret"];
                                                     if (secretValue2 != null && secretValue2.Type != JTokenType.Null)
                                                     {
                                                         string secretInstance2 = ((string)secretValue2);
                                                         aADOAuthAuthenticationInstance2.Secret = secretInstance2;
                                                     }
                                                     
-                                                    JToken tenantValue2 = authenticationValue2["tenant"];
+                                                    JToken tenantValue2 = authenticationValue4["tenant"];
                                                     if (tenantValue2 != null && tenantValue2.Type != JTokenType.Null)
                                                     {
                                                         string tenantInstance2 = ((string)tenantValue2);
                                                         aADOAuthAuthenticationInstance2.Tenant = tenantInstance2;
                                                     }
                                                     
-                                                    JToken audienceValue2 = authenticationValue2["audience"];
+                                                    JToken audienceValue2 = authenticationValue4["audience"];
                                                     if (audienceValue2 != null && audienceValue2.Type != JTokenType.Null)
                                                     {
                                                         string audienceInstance2 = ((string)audienceValue2);
                                                         aADOAuthAuthenticationInstance2.Audience = audienceInstance2;
                                                     }
                                                     
-                                                    JToken clientIdValue2 = authenticationValue2["clientId"];
+                                                    JToken clientIdValue2 = authenticationValue4["clientId"];
                                                     if (clientIdValue2 != null && clientIdValue2.Type != JTokenType.Null)
                                                     {
                                                         string clientIdInstance2 = ((string)clientIdValue2);
                                                         aADOAuthAuthenticationInstance2.ClientId = clientIdInstance2;
                                                     }
                                                     
-                                                    JToken typeValue7 = authenticationValue2["type"];
-                                                    if (typeValue7 != null && typeValue7.Type != JTokenType.Null)
+                                                    JToken typeValue9 = authenticationValue4["type"];
+                                                    if (typeValue9 != null && typeValue9.Type != JTokenType.Null)
                                                     {
-                                                        HttpAuthenticationType typeInstance7 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue7));
-                                                        aADOAuthAuthenticationInstance2.Type = typeInstance7;
+                                                        HttpAuthenticationType typeInstance9 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue9));
+                                                        aADOAuthAuthenticationInstance2.Type = typeInstance9;
                                                     }
                                                     requestInstance2.Authentication = aADOAuthAuthenticationInstance2;
                                                 }
@@ -4507,25 +7955,25 @@ namespace Microsoft.WindowsAzure.Scheduler
                                                 {
                                                     BasicAuthentication basicAuthenticationInstance2 = new BasicAuthentication();
                                                     
-                                                    JToken usernameValue2 = authenticationValue2["username"];
+                                                    JToken usernameValue2 = authenticationValue4["username"];
                                                     if (usernameValue2 != null && usernameValue2.Type != JTokenType.Null)
                                                     {
                                                         string usernameInstance2 = ((string)usernameValue2);
                                                         basicAuthenticationInstance2.Username = usernameInstance2;
                                                     }
                                                     
-                                                    JToken passwordValue4 = authenticationValue2["password"];
+                                                    JToken passwordValue4 = authenticationValue4["password"];
                                                     if (passwordValue4 != null && passwordValue4.Type != JTokenType.Null)
                                                     {
                                                         string passwordInstance4 = ((string)passwordValue4);
                                                         basicAuthenticationInstance2.Password = passwordInstance4;
                                                     }
                                                     
-                                                    JToken typeValue8 = authenticationValue2["type"];
-                                                    if (typeValue8 != null && typeValue8.Type != JTokenType.Null)
+                                                    JToken typeValue10 = authenticationValue4["type"];
+                                                    if (typeValue10 != null && typeValue10.Type != JTokenType.Null)
                                                     {
-                                                        HttpAuthenticationType typeInstance8 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue8));
-                                                        basicAuthenticationInstance2.Type = typeInstance8;
+                                                        HttpAuthenticationType typeInstance10 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue10));
+                                                        basicAuthenticationInstance2.Type = typeInstance10;
                                                     }
                                                     requestInstance2.Authentication = basicAuthenticationInstance2;
                                                 }
@@ -4545,11 +7993,11 @@ namespace Microsoft.WindowsAzure.Scheduler
                                                 queueMessageInstance2.StorageAccountName = storageAccountInstance2;
                                             }
                                             
-                                            JToken queueNameValue2 = queueMessageValue2["queueName"];
-                                            if (queueNameValue2 != null && queueNameValue2.Type != JTokenType.Null)
+                                            JToken queueNameValue3 = queueMessageValue2["queueName"];
+                                            if (queueNameValue3 != null && queueNameValue3.Type != JTokenType.Null)
                                             {
-                                                string queueNameInstance2 = ((string)queueNameValue2);
-                                                queueMessageInstance2.QueueName = queueNameInstance2;
+                                                string queueNameInstance3 = ((string)queueNameValue3);
+                                                queueMessageInstance2.QueueName = queueNameInstance3;
                                             }
                                             
                                             JToken sasTokenValue2 = queueMessageValue2["sasToken"];
@@ -4559,11 +8007,355 @@ namespace Microsoft.WindowsAzure.Scheduler
                                                 queueMessageInstance2.SasToken = sasTokenInstance2;
                                             }
                                             
-                                            JToken messageValue2 = queueMessageValue2["message"];
-                                            if (messageValue2 != null && messageValue2.Type != JTokenType.Null)
+                                            JToken messageValue4 = queueMessageValue2["message"];
+                                            if (messageValue4 != null && messageValue4.Type != JTokenType.Null)
                                             {
-                                                string messageInstance2 = ((string)messageValue2);
-                                                queueMessageInstance2.Message = messageInstance2;
+                                                string messageInstance4 = ((string)messageValue4);
+                                                queueMessageInstance2.Message = messageInstance4;
+                                            }
+                                        }
+                                        
+                                        JToken serviceBusTopicMessageValue2 = actionValue["serviceBusTopicMessage"];
+                                        if (serviceBusTopicMessageValue2 != null && serviceBusTopicMessageValue2.Type != JTokenType.Null)
+                                        {
+                                            JobServiceBusTopicMessage serviceBusTopicMessageInstance2 = new JobServiceBusTopicMessage();
+                                            actionInstance.ServiceBusTopicMessage = serviceBusTopicMessageInstance2;
+                                            
+                                            JToken topicPathValue2 = serviceBusTopicMessageValue2["topicPath"];
+                                            if (topicPathValue2 != null && topicPathValue2.Type != JTokenType.Null)
+                                            {
+                                                string topicPathInstance2 = ((string)topicPathValue2);
+                                                serviceBusTopicMessageInstance2.TopicPath = topicPathInstance2;
+                                            }
+                                            
+                                            JToken namespaceValue3 = serviceBusTopicMessageValue2["namespace"];
+                                            if (namespaceValue3 != null && namespaceValue3.Type != JTokenType.Null)
+                                            {
+                                                string namespaceInstance3 = ((string)namespaceValue3);
+                                                serviceBusTopicMessageInstance2.Namespace = namespaceInstance3;
+                                            }
+                                            
+                                            JToken transportTypeValue3 = serviceBusTopicMessageValue2["transportType"];
+                                            if (transportTypeValue3 != null && transportTypeValue3.Type != JTokenType.Null)
+                                            {
+                                                JobServiceBusTransportType transportTypeInstance3 = SchedulerClient.ParseJobServiceBusTransportType(((string)transportTypeValue3));
+                                                serviceBusTopicMessageInstance2.TransportType = transportTypeInstance3;
+                                            }
+                                            
+                                            JToken authenticationValue5 = serviceBusTopicMessageValue2["authentication"];
+                                            if (authenticationValue5 != null && authenticationValue5.Type != JTokenType.Null)
+                                            {
+                                                JobServiceBusAuthentication authenticationInstance3 = new JobServiceBusAuthentication();
+                                                serviceBusTopicMessageInstance2.Authentication = authenticationInstance3;
+                                                
+                                                JToken sasKeyNameValue3 = authenticationValue5["sasKeyName"];
+                                                if (sasKeyNameValue3 != null && sasKeyNameValue3.Type != JTokenType.Null)
+                                                {
+                                                    string sasKeyNameInstance3 = ((string)sasKeyNameValue3);
+                                                    authenticationInstance3.SasKeyName = sasKeyNameInstance3;
+                                                }
+                                                
+                                                JToken sasKeyValue3 = authenticationValue5["sasKey"];
+                                                if (sasKeyValue3 != null && sasKeyValue3.Type != JTokenType.Null)
+                                                {
+                                                    string sasKeyInstance3 = ((string)sasKeyValue3);
+                                                    authenticationInstance3.SasKey = sasKeyInstance3;
+                                                }
+                                                
+                                                JToken typeValue11 = authenticationValue5["type"];
+                                                if (typeValue11 != null && typeValue11.Type != JTokenType.Null)
+                                                {
+                                                    JobServiceBusAuthenticationType typeInstance11 = SchedulerClient.ParseJobServiceBusAuthenticationType(((string)typeValue11));
+                                                    authenticationInstance3.Type = typeInstance11;
+                                                }
+                                            }
+                                            
+                                            JToken messageValue5 = serviceBusTopicMessageValue2["message"];
+                                            if (messageValue5 != null && messageValue5.Type != JTokenType.Null)
+                                            {
+                                                string messageInstance5 = ((string)messageValue5);
+                                                serviceBusTopicMessageInstance2.Message = messageInstance5;
+                                            }
+                                            
+                                            JToken brokeredMessagePropertiesValue3 = serviceBusTopicMessageValue2["brokeredMessageProperties"];
+                                            if (brokeredMessagePropertiesValue3 != null && brokeredMessagePropertiesValue3.Type != JTokenType.Null)
+                                            {
+                                                JobServiceBusBrokeredMessageProperties brokeredMessagePropertiesInstance3 = new JobServiceBusBrokeredMessageProperties();
+                                                serviceBusTopicMessageInstance2.BrokeredMessageProperties = brokeredMessagePropertiesInstance3;
+                                                
+                                                JToken contentTypeValue3 = brokeredMessagePropertiesValue3["contentType"];
+                                                if (contentTypeValue3 != null && contentTypeValue3.Type != JTokenType.Null)
+                                                {
+                                                    string contentTypeInstance3 = ((string)contentTypeValue3);
+                                                    brokeredMessagePropertiesInstance3.ContentType = contentTypeInstance3;
+                                                }
+                                                
+                                                JToken correlationIdValue3 = brokeredMessagePropertiesValue3["correlationId"];
+                                                if (correlationIdValue3 != null && correlationIdValue3.Type != JTokenType.Null)
+                                                {
+                                                    string correlationIdInstance3 = ((string)correlationIdValue3);
+                                                    brokeredMessagePropertiesInstance3.CorrelationId = correlationIdInstance3;
+                                                }
+                                                
+                                                JToken forcePersistenceValue3 = brokeredMessagePropertiesValue3["forcePersistence"];
+                                                if (forcePersistenceValue3 != null && forcePersistenceValue3.Type != JTokenType.Null)
+                                                {
+                                                    bool forcePersistenceInstance3 = ((bool)forcePersistenceValue3);
+                                                    brokeredMessagePropertiesInstance3.ForcePersistence = forcePersistenceInstance3;
+                                                }
+                                                
+                                                JToken labelValue3 = brokeredMessagePropertiesValue3["label"];
+                                                if (labelValue3 != null && labelValue3.Type != JTokenType.Null)
+                                                {
+                                                    string labelInstance3 = ((string)labelValue3);
+                                                    brokeredMessagePropertiesInstance3.Label = labelInstance3;
+                                                }
+                                                
+                                                JToken messageIdValue3 = brokeredMessagePropertiesValue3["messageId"];
+                                                if (messageIdValue3 != null && messageIdValue3.Type != JTokenType.Null)
+                                                {
+                                                    string messageIdInstance3 = ((string)messageIdValue3);
+                                                    brokeredMessagePropertiesInstance3.MessageId = messageIdInstance3;
+                                                }
+                                                
+                                                JToken partitionKeyValue3 = brokeredMessagePropertiesValue3["partitionKey"];
+                                                if (partitionKeyValue3 != null && partitionKeyValue3.Type != JTokenType.Null)
+                                                {
+                                                    string partitionKeyInstance3 = ((string)partitionKeyValue3);
+                                                    brokeredMessagePropertiesInstance3.PartitionKey = partitionKeyInstance3;
+                                                }
+                                                
+                                                JToken replyToValue3 = brokeredMessagePropertiesValue3["replyTo"];
+                                                if (replyToValue3 != null && replyToValue3.Type != JTokenType.Null)
+                                                {
+                                                    string replyToInstance3 = ((string)replyToValue3);
+                                                    brokeredMessagePropertiesInstance3.ReplyTo = replyToInstance3;
+                                                }
+                                                
+                                                JToken replyToSessionIdValue3 = brokeredMessagePropertiesValue3["replyToSessionId"];
+                                                if (replyToSessionIdValue3 != null && replyToSessionIdValue3.Type != JTokenType.Null)
+                                                {
+                                                    string replyToSessionIdInstance3 = ((string)replyToSessionIdValue3);
+                                                    brokeredMessagePropertiesInstance3.ReplyToSessionId = replyToSessionIdInstance3;
+                                                }
+                                                
+                                                JToken scheduledEnqueueTimeUtcValue3 = brokeredMessagePropertiesValue3["scheduledEnqueueTimeUtc"];
+                                                if (scheduledEnqueueTimeUtcValue3 != null && scheduledEnqueueTimeUtcValue3.Type != JTokenType.Null)
+                                                {
+                                                    DateTime scheduledEnqueueTimeUtcInstance3 = ((DateTime)scheduledEnqueueTimeUtcValue3);
+                                                    brokeredMessagePropertiesInstance3.ScheduledEnqueueTimeUtc = scheduledEnqueueTimeUtcInstance3;
+                                                }
+                                                
+                                                JToken sessionIdValue3 = brokeredMessagePropertiesValue3["sessionId"];
+                                                if (sessionIdValue3 != null && sessionIdValue3.Type != JTokenType.Null)
+                                                {
+                                                    string sessionIdInstance3 = ((string)sessionIdValue3);
+                                                    brokeredMessagePropertiesInstance3.SessionId = sessionIdInstance3;
+                                                }
+                                                
+                                                JToken timeToLiveValue3 = brokeredMessagePropertiesValue3["timeToLive"];
+                                                if (timeToLiveValue3 != null && timeToLiveValue3.Type != JTokenType.Null)
+                                                {
+                                                    DateTime timeToLiveInstance3 = ((DateTime)timeToLiveValue3);
+                                                    brokeredMessagePropertiesInstance3.TimeToLive = timeToLiveInstance3;
+                                                }
+                                                
+                                                JToken toValue3 = brokeredMessagePropertiesValue3["to"];
+                                                if (toValue3 != null && toValue3.Type != JTokenType.Null)
+                                                {
+                                                    string toInstance3 = ((string)toValue3);
+                                                    brokeredMessagePropertiesInstance3.To = toInstance3;
+                                                }
+                                                
+                                                JToken viaPartitionKeyValue3 = brokeredMessagePropertiesValue3["viaPartitionKey"];
+                                                if (viaPartitionKeyValue3 != null && viaPartitionKeyValue3.Type != JTokenType.Null)
+                                                {
+                                                    string viaPartitionKeyInstance3 = ((string)viaPartitionKeyValue3);
+                                                    brokeredMessagePropertiesInstance3.ViaPartitionKey = viaPartitionKeyInstance3;
+                                                }
+                                            }
+                                            
+                                            JToken customMessagePropertiesSequenceElement3 = ((JToken)serviceBusTopicMessageValue2["customMessageProperties"]);
+                                            if (customMessagePropertiesSequenceElement3 != null && customMessagePropertiesSequenceElement3.Type != JTokenType.Null)
+                                            {
+                                                foreach (JProperty property5 in customMessagePropertiesSequenceElement3)
+                                                {
+                                                    string customMessagePropertiesKey3 = ((string)property5.Name);
+                                                    string customMessagePropertiesValue3 = ((string)property5.Value);
+                                                    serviceBusTopicMessageInstance2.CustomMessageProperties.Add(customMessagePropertiesKey3, customMessagePropertiesValue3);
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken serviceBusQueueMessageValue2 = actionValue["serviceBusQueueMessage"];
+                                        if (serviceBusQueueMessageValue2 != null && serviceBusQueueMessageValue2.Type != JTokenType.Null)
+                                        {
+                                            JobServiceBusQueueMessage serviceBusQueueMessageInstance2 = new JobServiceBusQueueMessage();
+                                            actionInstance.ServiceBusQueueMessage = serviceBusQueueMessageInstance2;
+                                            
+                                            JToken queueNameValue4 = serviceBusQueueMessageValue2["queueName"];
+                                            if (queueNameValue4 != null && queueNameValue4.Type != JTokenType.Null)
+                                            {
+                                                string queueNameInstance4 = ((string)queueNameValue4);
+                                                serviceBusQueueMessageInstance2.QueueName = queueNameInstance4;
+                                            }
+                                            
+                                            JToken namespaceValue4 = serviceBusQueueMessageValue2["namespace"];
+                                            if (namespaceValue4 != null && namespaceValue4.Type != JTokenType.Null)
+                                            {
+                                                string namespaceInstance4 = ((string)namespaceValue4);
+                                                serviceBusQueueMessageInstance2.Namespace = namespaceInstance4;
+                                            }
+                                            
+                                            JToken transportTypeValue4 = serviceBusQueueMessageValue2["transportType"];
+                                            if (transportTypeValue4 != null && transportTypeValue4.Type != JTokenType.Null)
+                                            {
+                                                JobServiceBusTransportType transportTypeInstance4 = SchedulerClient.ParseJobServiceBusTransportType(((string)transportTypeValue4));
+                                                serviceBusQueueMessageInstance2.TransportType = transportTypeInstance4;
+                                            }
+                                            
+                                            JToken authenticationValue6 = serviceBusQueueMessageValue2["authentication"];
+                                            if (authenticationValue6 != null && authenticationValue6.Type != JTokenType.Null)
+                                            {
+                                                JobServiceBusAuthentication authenticationInstance4 = new JobServiceBusAuthentication();
+                                                serviceBusQueueMessageInstance2.Authentication = authenticationInstance4;
+                                                
+                                                JToken sasKeyNameValue4 = authenticationValue6["sasKeyName"];
+                                                if (sasKeyNameValue4 != null && sasKeyNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string sasKeyNameInstance4 = ((string)sasKeyNameValue4);
+                                                    authenticationInstance4.SasKeyName = sasKeyNameInstance4;
+                                                }
+                                                
+                                                JToken sasKeyValue4 = authenticationValue6["sasKey"];
+                                                if (sasKeyValue4 != null && sasKeyValue4.Type != JTokenType.Null)
+                                                {
+                                                    string sasKeyInstance4 = ((string)sasKeyValue4);
+                                                    authenticationInstance4.SasKey = sasKeyInstance4;
+                                                }
+                                                
+                                                JToken typeValue12 = authenticationValue6["type"];
+                                                if (typeValue12 != null && typeValue12.Type != JTokenType.Null)
+                                                {
+                                                    JobServiceBusAuthenticationType typeInstance12 = SchedulerClient.ParseJobServiceBusAuthenticationType(((string)typeValue12));
+                                                    authenticationInstance4.Type = typeInstance12;
+                                                }
+                                            }
+                                            
+                                            JToken messageValue6 = serviceBusQueueMessageValue2["message"];
+                                            if (messageValue6 != null && messageValue6.Type != JTokenType.Null)
+                                            {
+                                                string messageInstance6 = ((string)messageValue6);
+                                                serviceBusQueueMessageInstance2.Message = messageInstance6;
+                                            }
+                                            
+                                            JToken brokeredMessagePropertiesValue4 = serviceBusQueueMessageValue2["brokeredMessageProperties"];
+                                            if (brokeredMessagePropertiesValue4 != null && brokeredMessagePropertiesValue4.Type != JTokenType.Null)
+                                            {
+                                                JobServiceBusBrokeredMessageProperties brokeredMessagePropertiesInstance4 = new JobServiceBusBrokeredMessageProperties();
+                                                serviceBusQueueMessageInstance2.BrokeredMessageProperties = brokeredMessagePropertiesInstance4;
+                                                
+                                                JToken contentTypeValue4 = brokeredMessagePropertiesValue4["contentType"];
+                                                if (contentTypeValue4 != null && contentTypeValue4.Type != JTokenType.Null)
+                                                {
+                                                    string contentTypeInstance4 = ((string)contentTypeValue4);
+                                                    brokeredMessagePropertiesInstance4.ContentType = contentTypeInstance4;
+                                                }
+                                                
+                                                JToken correlationIdValue4 = brokeredMessagePropertiesValue4["correlationId"];
+                                                if (correlationIdValue4 != null && correlationIdValue4.Type != JTokenType.Null)
+                                                {
+                                                    string correlationIdInstance4 = ((string)correlationIdValue4);
+                                                    brokeredMessagePropertiesInstance4.CorrelationId = correlationIdInstance4;
+                                                }
+                                                
+                                                JToken forcePersistenceValue4 = brokeredMessagePropertiesValue4["forcePersistence"];
+                                                if (forcePersistenceValue4 != null && forcePersistenceValue4.Type != JTokenType.Null)
+                                                {
+                                                    bool forcePersistenceInstance4 = ((bool)forcePersistenceValue4);
+                                                    brokeredMessagePropertiesInstance4.ForcePersistence = forcePersistenceInstance4;
+                                                }
+                                                
+                                                JToken labelValue4 = brokeredMessagePropertiesValue4["label"];
+                                                if (labelValue4 != null && labelValue4.Type != JTokenType.Null)
+                                                {
+                                                    string labelInstance4 = ((string)labelValue4);
+                                                    brokeredMessagePropertiesInstance4.Label = labelInstance4;
+                                                }
+                                                
+                                                JToken messageIdValue4 = brokeredMessagePropertiesValue4["messageId"];
+                                                if (messageIdValue4 != null && messageIdValue4.Type != JTokenType.Null)
+                                                {
+                                                    string messageIdInstance4 = ((string)messageIdValue4);
+                                                    brokeredMessagePropertiesInstance4.MessageId = messageIdInstance4;
+                                                }
+                                                
+                                                JToken partitionKeyValue4 = brokeredMessagePropertiesValue4["partitionKey"];
+                                                if (partitionKeyValue4 != null && partitionKeyValue4.Type != JTokenType.Null)
+                                                {
+                                                    string partitionKeyInstance4 = ((string)partitionKeyValue4);
+                                                    brokeredMessagePropertiesInstance4.PartitionKey = partitionKeyInstance4;
+                                                }
+                                                
+                                                JToken replyToValue4 = brokeredMessagePropertiesValue4["replyTo"];
+                                                if (replyToValue4 != null && replyToValue4.Type != JTokenType.Null)
+                                                {
+                                                    string replyToInstance4 = ((string)replyToValue4);
+                                                    brokeredMessagePropertiesInstance4.ReplyTo = replyToInstance4;
+                                                }
+                                                
+                                                JToken replyToSessionIdValue4 = brokeredMessagePropertiesValue4["replyToSessionId"];
+                                                if (replyToSessionIdValue4 != null && replyToSessionIdValue4.Type != JTokenType.Null)
+                                                {
+                                                    string replyToSessionIdInstance4 = ((string)replyToSessionIdValue4);
+                                                    brokeredMessagePropertiesInstance4.ReplyToSessionId = replyToSessionIdInstance4;
+                                                }
+                                                
+                                                JToken scheduledEnqueueTimeUtcValue4 = brokeredMessagePropertiesValue4["scheduledEnqueueTimeUtc"];
+                                                if (scheduledEnqueueTimeUtcValue4 != null && scheduledEnqueueTimeUtcValue4.Type != JTokenType.Null)
+                                                {
+                                                    DateTime scheduledEnqueueTimeUtcInstance4 = ((DateTime)scheduledEnqueueTimeUtcValue4);
+                                                    brokeredMessagePropertiesInstance4.ScheduledEnqueueTimeUtc = scheduledEnqueueTimeUtcInstance4;
+                                                }
+                                                
+                                                JToken sessionIdValue4 = brokeredMessagePropertiesValue4["sessionId"];
+                                                if (sessionIdValue4 != null && sessionIdValue4.Type != JTokenType.Null)
+                                                {
+                                                    string sessionIdInstance4 = ((string)sessionIdValue4);
+                                                    brokeredMessagePropertiesInstance4.SessionId = sessionIdInstance4;
+                                                }
+                                                
+                                                JToken timeToLiveValue4 = brokeredMessagePropertiesValue4["timeToLive"];
+                                                if (timeToLiveValue4 != null && timeToLiveValue4.Type != JTokenType.Null)
+                                                {
+                                                    DateTime timeToLiveInstance4 = ((DateTime)timeToLiveValue4);
+                                                    brokeredMessagePropertiesInstance4.TimeToLive = timeToLiveInstance4;
+                                                }
+                                                
+                                                JToken toValue4 = brokeredMessagePropertiesValue4["to"];
+                                                if (toValue4 != null && toValue4.Type != JTokenType.Null)
+                                                {
+                                                    string toInstance4 = ((string)toValue4);
+                                                    brokeredMessagePropertiesInstance4.To = toInstance4;
+                                                }
+                                                
+                                                JToken viaPartitionKeyValue4 = brokeredMessagePropertiesValue4["viaPartitionKey"];
+                                                if (viaPartitionKeyValue4 != null && viaPartitionKeyValue4.Type != JTokenType.Null)
+                                                {
+                                                    string viaPartitionKeyInstance4 = ((string)viaPartitionKeyValue4);
+                                                    brokeredMessagePropertiesInstance4.ViaPartitionKey = viaPartitionKeyInstance4;
+                                                }
+                                            }
+                                            
+                                            JToken customMessagePropertiesSequenceElement4 = ((JToken)serviceBusQueueMessageValue2["customMessageProperties"]);
+                                            if (customMessagePropertiesSequenceElement4 != null && customMessagePropertiesSequenceElement4.Type != JTokenType.Null)
+                                            {
+                                                foreach (JProperty property6 in customMessagePropertiesSequenceElement4)
+                                                {
+                                                    string customMessagePropertiesKey4 = ((string)property6.Name);
+                                                    string customMessagePropertiesValue4 = ((string)property6.Value);
+                                                    serviceBusQueueMessageInstance2.CustomMessageProperties.Add(customMessagePropertiesKey4, customMessagePropertiesValue4);
+                                                }
                                             }
                                         }
                                     }
@@ -5173,6 +8965,350 @@ namespace Microsoft.WindowsAzure.Scheduler
                                                     queueMessageInstance.Message = messageInstance;
                                                 }
                                             }
+                                            
+                                            JToken serviceBusTopicMessageValue = errorActionValue["serviceBusTopicMessage"];
+                                            if (serviceBusTopicMessageValue != null && serviceBusTopicMessageValue.Type != JTokenType.Null)
+                                            {
+                                                JobServiceBusTopicMessage serviceBusTopicMessageInstance = new JobServiceBusTopicMessage();
+                                                errorActionInstance.ServiceBusTopicMessage = serviceBusTopicMessageInstance;
+                                                
+                                                JToken topicPathValue = serviceBusTopicMessageValue["topicPath"];
+                                                if (topicPathValue != null && topicPathValue.Type != JTokenType.Null)
+                                                {
+                                                    string topicPathInstance = ((string)topicPathValue);
+                                                    serviceBusTopicMessageInstance.TopicPath = topicPathInstance;
+                                                }
+                                                
+                                                JToken namespaceValue = serviceBusTopicMessageValue["namespace"];
+                                                if (namespaceValue != null && namespaceValue.Type != JTokenType.Null)
+                                                {
+                                                    string namespaceInstance = ((string)namespaceValue);
+                                                    serviceBusTopicMessageInstance.Namespace = namespaceInstance;
+                                                }
+                                                
+                                                JToken transportTypeValue = serviceBusTopicMessageValue["transportType"];
+                                                if (transportTypeValue != null && transportTypeValue.Type != JTokenType.Null)
+                                                {
+                                                    JobServiceBusTransportType transportTypeInstance = SchedulerClient.ParseJobServiceBusTransportType(((string)transportTypeValue));
+                                                    serviceBusTopicMessageInstance.TransportType = transportTypeInstance;
+                                                }
+                                                
+                                                JToken authenticationValue2 = serviceBusTopicMessageValue["authentication"];
+                                                if (authenticationValue2 != null && authenticationValue2.Type != JTokenType.Null)
+                                                {
+                                                    JobServiceBusAuthentication authenticationInstance = new JobServiceBusAuthentication();
+                                                    serviceBusTopicMessageInstance.Authentication = authenticationInstance;
+                                                    
+                                                    JToken sasKeyNameValue = authenticationValue2["sasKeyName"];
+                                                    if (sasKeyNameValue != null && sasKeyNameValue.Type != JTokenType.Null)
+                                                    {
+                                                        string sasKeyNameInstance = ((string)sasKeyNameValue);
+                                                        authenticationInstance.SasKeyName = sasKeyNameInstance;
+                                                    }
+                                                    
+                                                    JToken sasKeyValue = authenticationValue2["sasKey"];
+                                                    if (sasKeyValue != null && sasKeyValue.Type != JTokenType.Null)
+                                                    {
+                                                        string sasKeyInstance = ((string)sasKeyValue);
+                                                        authenticationInstance.SasKey = sasKeyInstance;
+                                                    }
+                                                    
+                                                    JToken typeValue6 = authenticationValue2["type"];
+                                                    if (typeValue6 != null && typeValue6.Type != JTokenType.Null)
+                                                    {
+                                                        JobServiceBusAuthenticationType typeInstance6 = SchedulerClient.ParseJobServiceBusAuthenticationType(((string)typeValue6));
+                                                        authenticationInstance.Type = typeInstance6;
+                                                    }
+                                                }
+                                                
+                                                JToken messageValue2 = serviceBusTopicMessageValue["message"];
+                                                if (messageValue2 != null && messageValue2.Type != JTokenType.Null)
+                                                {
+                                                    string messageInstance2 = ((string)messageValue2);
+                                                    serviceBusTopicMessageInstance.Message = messageInstance2;
+                                                }
+                                                
+                                                JToken brokeredMessagePropertiesValue = serviceBusTopicMessageValue["brokeredMessageProperties"];
+                                                if (brokeredMessagePropertiesValue != null && brokeredMessagePropertiesValue.Type != JTokenType.Null)
+                                                {
+                                                    JobServiceBusBrokeredMessageProperties brokeredMessagePropertiesInstance = new JobServiceBusBrokeredMessageProperties();
+                                                    serviceBusTopicMessageInstance.BrokeredMessageProperties = brokeredMessagePropertiesInstance;
+                                                    
+                                                    JToken contentTypeValue = brokeredMessagePropertiesValue["contentType"];
+                                                    if (contentTypeValue != null && contentTypeValue.Type != JTokenType.Null)
+                                                    {
+                                                        string contentTypeInstance = ((string)contentTypeValue);
+                                                        brokeredMessagePropertiesInstance.ContentType = contentTypeInstance;
+                                                    }
+                                                    
+                                                    JToken correlationIdValue = brokeredMessagePropertiesValue["correlationId"];
+                                                    if (correlationIdValue != null && correlationIdValue.Type != JTokenType.Null)
+                                                    {
+                                                        string correlationIdInstance = ((string)correlationIdValue);
+                                                        brokeredMessagePropertiesInstance.CorrelationId = correlationIdInstance;
+                                                    }
+                                                    
+                                                    JToken forcePersistenceValue = brokeredMessagePropertiesValue["forcePersistence"];
+                                                    if (forcePersistenceValue != null && forcePersistenceValue.Type != JTokenType.Null)
+                                                    {
+                                                        bool forcePersistenceInstance = ((bool)forcePersistenceValue);
+                                                        brokeredMessagePropertiesInstance.ForcePersistence = forcePersistenceInstance;
+                                                    }
+                                                    
+                                                    JToken labelValue = brokeredMessagePropertiesValue["label"];
+                                                    if (labelValue != null && labelValue.Type != JTokenType.Null)
+                                                    {
+                                                        string labelInstance = ((string)labelValue);
+                                                        brokeredMessagePropertiesInstance.Label = labelInstance;
+                                                    }
+                                                    
+                                                    JToken messageIdValue = brokeredMessagePropertiesValue["messageId"];
+                                                    if (messageIdValue != null && messageIdValue.Type != JTokenType.Null)
+                                                    {
+                                                        string messageIdInstance = ((string)messageIdValue);
+                                                        brokeredMessagePropertiesInstance.MessageId = messageIdInstance;
+                                                    }
+                                                    
+                                                    JToken partitionKeyValue = brokeredMessagePropertiesValue["partitionKey"];
+                                                    if (partitionKeyValue != null && partitionKeyValue.Type != JTokenType.Null)
+                                                    {
+                                                        string partitionKeyInstance = ((string)partitionKeyValue);
+                                                        brokeredMessagePropertiesInstance.PartitionKey = partitionKeyInstance;
+                                                    }
+                                                    
+                                                    JToken replyToValue = brokeredMessagePropertiesValue["replyTo"];
+                                                    if (replyToValue != null && replyToValue.Type != JTokenType.Null)
+                                                    {
+                                                        string replyToInstance = ((string)replyToValue);
+                                                        brokeredMessagePropertiesInstance.ReplyTo = replyToInstance;
+                                                    }
+                                                    
+                                                    JToken replyToSessionIdValue = brokeredMessagePropertiesValue["replyToSessionId"];
+                                                    if (replyToSessionIdValue != null && replyToSessionIdValue.Type != JTokenType.Null)
+                                                    {
+                                                        string replyToSessionIdInstance = ((string)replyToSessionIdValue);
+                                                        brokeredMessagePropertiesInstance.ReplyToSessionId = replyToSessionIdInstance;
+                                                    }
+                                                    
+                                                    JToken scheduledEnqueueTimeUtcValue = brokeredMessagePropertiesValue["scheduledEnqueueTimeUtc"];
+                                                    if (scheduledEnqueueTimeUtcValue != null && scheduledEnqueueTimeUtcValue.Type != JTokenType.Null)
+                                                    {
+                                                        DateTime scheduledEnqueueTimeUtcInstance = ((DateTime)scheduledEnqueueTimeUtcValue);
+                                                        brokeredMessagePropertiesInstance.ScheduledEnqueueTimeUtc = scheduledEnqueueTimeUtcInstance;
+                                                    }
+                                                    
+                                                    JToken sessionIdValue = brokeredMessagePropertiesValue["sessionId"];
+                                                    if (sessionIdValue != null && sessionIdValue.Type != JTokenType.Null)
+                                                    {
+                                                        string sessionIdInstance = ((string)sessionIdValue);
+                                                        brokeredMessagePropertiesInstance.SessionId = sessionIdInstance;
+                                                    }
+                                                    
+                                                    JToken timeToLiveValue = brokeredMessagePropertiesValue["timeToLive"];
+                                                    if (timeToLiveValue != null && timeToLiveValue.Type != JTokenType.Null)
+                                                    {
+                                                        DateTime timeToLiveInstance = ((DateTime)timeToLiveValue);
+                                                        brokeredMessagePropertiesInstance.TimeToLive = timeToLiveInstance;
+                                                    }
+                                                    
+                                                    JToken toValue = brokeredMessagePropertiesValue["to"];
+                                                    if (toValue != null && toValue.Type != JTokenType.Null)
+                                                    {
+                                                        string toInstance = ((string)toValue);
+                                                        brokeredMessagePropertiesInstance.To = toInstance;
+                                                    }
+                                                    
+                                                    JToken viaPartitionKeyValue = brokeredMessagePropertiesValue["viaPartitionKey"];
+                                                    if (viaPartitionKeyValue != null && viaPartitionKeyValue.Type != JTokenType.Null)
+                                                    {
+                                                        string viaPartitionKeyInstance = ((string)viaPartitionKeyValue);
+                                                        brokeredMessagePropertiesInstance.ViaPartitionKey = viaPartitionKeyInstance;
+                                                    }
+                                                }
+                                                
+                                                JToken customMessagePropertiesSequenceElement = ((JToken)serviceBusTopicMessageValue["customMessageProperties"]);
+                                                if (customMessagePropertiesSequenceElement != null && customMessagePropertiesSequenceElement.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JProperty property2 in customMessagePropertiesSequenceElement)
+                                                    {
+                                                        string customMessagePropertiesKey = ((string)property2.Name);
+                                                        string customMessagePropertiesValue = ((string)property2.Value);
+                                                        serviceBusTopicMessageInstance.CustomMessageProperties.Add(customMessagePropertiesKey, customMessagePropertiesValue);
+                                                    }
+                                                }
+                                            }
+                                            
+                                            JToken serviceBusQueueMessageValue = errorActionValue["serviceBusQueueMessage"];
+                                            if (serviceBusQueueMessageValue != null && serviceBusQueueMessageValue.Type != JTokenType.Null)
+                                            {
+                                                JobServiceBusQueueMessage serviceBusQueueMessageInstance = new JobServiceBusQueueMessage();
+                                                errorActionInstance.ServiceBusQueueMessage = serviceBusQueueMessageInstance;
+                                                
+                                                JToken queueNameValue2 = serviceBusQueueMessageValue["queueName"];
+                                                if (queueNameValue2 != null && queueNameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string queueNameInstance2 = ((string)queueNameValue2);
+                                                    serviceBusQueueMessageInstance.QueueName = queueNameInstance2;
+                                                }
+                                                
+                                                JToken namespaceValue2 = serviceBusQueueMessageValue["namespace"];
+                                                if (namespaceValue2 != null && namespaceValue2.Type != JTokenType.Null)
+                                                {
+                                                    string namespaceInstance2 = ((string)namespaceValue2);
+                                                    serviceBusQueueMessageInstance.Namespace = namespaceInstance2;
+                                                }
+                                                
+                                                JToken transportTypeValue2 = serviceBusQueueMessageValue["transportType"];
+                                                if (transportTypeValue2 != null && transportTypeValue2.Type != JTokenType.Null)
+                                                {
+                                                    JobServiceBusTransportType transportTypeInstance2 = SchedulerClient.ParseJobServiceBusTransportType(((string)transportTypeValue2));
+                                                    serviceBusQueueMessageInstance.TransportType = transportTypeInstance2;
+                                                }
+                                                
+                                                JToken authenticationValue3 = serviceBusQueueMessageValue["authentication"];
+                                                if (authenticationValue3 != null && authenticationValue3.Type != JTokenType.Null)
+                                                {
+                                                    JobServiceBusAuthentication authenticationInstance2 = new JobServiceBusAuthentication();
+                                                    serviceBusQueueMessageInstance.Authentication = authenticationInstance2;
+                                                    
+                                                    JToken sasKeyNameValue2 = authenticationValue3["sasKeyName"];
+                                                    if (sasKeyNameValue2 != null && sasKeyNameValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string sasKeyNameInstance2 = ((string)sasKeyNameValue2);
+                                                        authenticationInstance2.SasKeyName = sasKeyNameInstance2;
+                                                    }
+                                                    
+                                                    JToken sasKeyValue2 = authenticationValue3["sasKey"];
+                                                    if (sasKeyValue2 != null && sasKeyValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string sasKeyInstance2 = ((string)sasKeyValue2);
+                                                        authenticationInstance2.SasKey = sasKeyInstance2;
+                                                    }
+                                                    
+                                                    JToken typeValue7 = authenticationValue3["type"];
+                                                    if (typeValue7 != null && typeValue7.Type != JTokenType.Null)
+                                                    {
+                                                        JobServiceBusAuthenticationType typeInstance7 = SchedulerClient.ParseJobServiceBusAuthenticationType(((string)typeValue7));
+                                                        authenticationInstance2.Type = typeInstance7;
+                                                    }
+                                                }
+                                                
+                                                JToken messageValue3 = serviceBusQueueMessageValue["message"];
+                                                if (messageValue3 != null && messageValue3.Type != JTokenType.Null)
+                                                {
+                                                    string messageInstance3 = ((string)messageValue3);
+                                                    serviceBusQueueMessageInstance.Message = messageInstance3;
+                                                }
+                                                
+                                                JToken brokeredMessagePropertiesValue2 = serviceBusQueueMessageValue["brokeredMessageProperties"];
+                                                if (brokeredMessagePropertiesValue2 != null && brokeredMessagePropertiesValue2.Type != JTokenType.Null)
+                                                {
+                                                    JobServiceBusBrokeredMessageProperties brokeredMessagePropertiesInstance2 = new JobServiceBusBrokeredMessageProperties();
+                                                    serviceBusQueueMessageInstance.BrokeredMessageProperties = brokeredMessagePropertiesInstance2;
+                                                    
+                                                    JToken contentTypeValue2 = brokeredMessagePropertiesValue2["contentType"];
+                                                    if (contentTypeValue2 != null && contentTypeValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string contentTypeInstance2 = ((string)contentTypeValue2);
+                                                        brokeredMessagePropertiesInstance2.ContentType = contentTypeInstance2;
+                                                    }
+                                                    
+                                                    JToken correlationIdValue2 = brokeredMessagePropertiesValue2["correlationId"];
+                                                    if (correlationIdValue2 != null && correlationIdValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string correlationIdInstance2 = ((string)correlationIdValue2);
+                                                        brokeredMessagePropertiesInstance2.CorrelationId = correlationIdInstance2;
+                                                    }
+                                                    
+                                                    JToken forcePersistenceValue2 = brokeredMessagePropertiesValue2["forcePersistence"];
+                                                    if (forcePersistenceValue2 != null && forcePersistenceValue2.Type != JTokenType.Null)
+                                                    {
+                                                        bool forcePersistenceInstance2 = ((bool)forcePersistenceValue2);
+                                                        brokeredMessagePropertiesInstance2.ForcePersistence = forcePersistenceInstance2;
+                                                    }
+                                                    
+                                                    JToken labelValue2 = brokeredMessagePropertiesValue2["label"];
+                                                    if (labelValue2 != null && labelValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string labelInstance2 = ((string)labelValue2);
+                                                        brokeredMessagePropertiesInstance2.Label = labelInstance2;
+                                                    }
+                                                    
+                                                    JToken messageIdValue2 = brokeredMessagePropertiesValue2["messageId"];
+                                                    if (messageIdValue2 != null && messageIdValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string messageIdInstance2 = ((string)messageIdValue2);
+                                                        brokeredMessagePropertiesInstance2.MessageId = messageIdInstance2;
+                                                    }
+                                                    
+                                                    JToken partitionKeyValue2 = brokeredMessagePropertiesValue2["partitionKey"];
+                                                    if (partitionKeyValue2 != null && partitionKeyValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string partitionKeyInstance2 = ((string)partitionKeyValue2);
+                                                        brokeredMessagePropertiesInstance2.PartitionKey = partitionKeyInstance2;
+                                                    }
+                                                    
+                                                    JToken replyToValue2 = brokeredMessagePropertiesValue2["replyTo"];
+                                                    if (replyToValue2 != null && replyToValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string replyToInstance2 = ((string)replyToValue2);
+                                                        brokeredMessagePropertiesInstance2.ReplyTo = replyToInstance2;
+                                                    }
+                                                    
+                                                    JToken replyToSessionIdValue2 = brokeredMessagePropertiesValue2["replyToSessionId"];
+                                                    if (replyToSessionIdValue2 != null && replyToSessionIdValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string replyToSessionIdInstance2 = ((string)replyToSessionIdValue2);
+                                                        brokeredMessagePropertiesInstance2.ReplyToSessionId = replyToSessionIdInstance2;
+                                                    }
+                                                    
+                                                    JToken scheduledEnqueueTimeUtcValue2 = brokeredMessagePropertiesValue2["scheduledEnqueueTimeUtc"];
+                                                    if (scheduledEnqueueTimeUtcValue2 != null && scheduledEnqueueTimeUtcValue2.Type != JTokenType.Null)
+                                                    {
+                                                        DateTime scheduledEnqueueTimeUtcInstance2 = ((DateTime)scheduledEnqueueTimeUtcValue2);
+                                                        brokeredMessagePropertiesInstance2.ScheduledEnqueueTimeUtc = scheduledEnqueueTimeUtcInstance2;
+                                                    }
+                                                    
+                                                    JToken sessionIdValue2 = brokeredMessagePropertiesValue2["sessionId"];
+                                                    if (sessionIdValue2 != null && sessionIdValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string sessionIdInstance2 = ((string)sessionIdValue2);
+                                                        brokeredMessagePropertiesInstance2.SessionId = sessionIdInstance2;
+                                                    }
+                                                    
+                                                    JToken timeToLiveValue2 = brokeredMessagePropertiesValue2["timeToLive"];
+                                                    if (timeToLiveValue2 != null && timeToLiveValue2.Type != JTokenType.Null)
+                                                    {
+                                                        DateTime timeToLiveInstance2 = ((DateTime)timeToLiveValue2);
+                                                        brokeredMessagePropertiesInstance2.TimeToLive = timeToLiveInstance2;
+                                                    }
+                                                    
+                                                    JToken toValue2 = brokeredMessagePropertiesValue2["to"];
+                                                    if (toValue2 != null && toValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string toInstance2 = ((string)toValue2);
+                                                        brokeredMessagePropertiesInstance2.To = toInstance2;
+                                                    }
+                                                    
+                                                    JToken viaPartitionKeyValue2 = brokeredMessagePropertiesValue2["viaPartitionKey"];
+                                                    if (viaPartitionKeyValue2 != null && viaPartitionKeyValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string viaPartitionKeyInstance2 = ((string)viaPartitionKeyValue2);
+                                                        brokeredMessagePropertiesInstance2.ViaPartitionKey = viaPartitionKeyInstance2;
+                                                    }
+                                                }
+                                                
+                                                JToken customMessagePropertiesSequenceElement2 = ((JToken)serviceBusQueueMessageValue["customMessageProperties"]);
+                                                if (customMessagePropertiesSequenceElement2 != null && customMessagePropertiesSequenceElement2.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JProperty property3 in customMessagePropertiesSequenceElement2)
+                                                    {
+                                                        string customMessagePropertiesKey2 = ((string)property3.Name);
+                                                        string customMessagePropertiesValue2 = ((string)property3.Value);
+                                                        serviceBusQueueMessageInstance.CustomMessageProperties.Add(customMessagePropertiesKey2, customMessagePropertiesValue2);
+                                                    }
+                                                }
+                                            }
                                         }
                                         
                                         JToken requestValue2 = actionValue["request"];
@@ -5198,10 +9334,10 @@ namespace Microsoft.WindowsAzure.Scheduler
                                             JToken headersSequenceElement2 = ((JToken)requestValue2["headers"]);
                                             if (headersSequenceElement2 != null && headersSequenceElement2.Type != JTokenType.Null)
                                             {
-                                                foreach (JProperty property2 in headersSequenceElement2)
+                                                foreach (JProperty property4 in headersSequenceElement2)
                                                 {
-                                                    string headersKey2 = ((string)property2.Name);
-                                                    string headersValue2 = ((string)property2.Value);
+                                                    string headersKey2 = ((string)property4.Name);
+                                                    string headersValue2 = ((string)property4.Value);
                                                     requestInstance2.Headers.Add(headersKey2, headersValue2);
                                                 }
                                             }
@@ -5213,54 +9349,54 @@ namespace Microsoft.WindowsAzure.Scheduler
                                                 requestInstance2.Body = bodyInstance2;
                                             }
                                             
-                                            JToken authenticationValue2 = requestValue2["authentication"];
-                                            if (authenticationValue2 != null && authenticationValue2.Type != JTokenType.Null)
+                                            JToken authenticationValue4 = requestValue2["authentication"];
+                                            if (authenticationValue4 != null && authenticationValue4.Type != JTokenType.Null)
                                             {
-                                                string typeName2 = ((string)authenticationValue2["type"]);
+                                                string typeName2 = ((string)authenticationValue4["type"]);
                                                 if (typeName2 == "ClientCertificate")
                                                 {
                                                     ClientCertAuthentication clientCertAuthenticationInstance2 = new ClientCertAuthentication();
                                                     
-                                                    JToken passwordValue3 = authenticationValue2["password"];
+                                                    JToken passwordValue3 = authenticationValue4["password"];
                                                     if (passwordValue3 != null && passwordValue3.Type != JTokenType.Null)
                                                     {
                                                         string passwordInstance3 = ((string)passwordValue3);
                                                         clientCertAuthenticationInstance2.Password = passwordInstance3;
                                                     }
                                                     
-                                                    JToken pfxValue2 = authenticationValue2["pfx"];
+                                                    JToken pfxValue2 = authenticationValue4["pfx"];
                                                     if (pfxValue2 != null && pfxValue2.Type != JTokenType.Null)
                                                     {
                                                         string pfxInstance2 = ((string)pfxValue2);
                                                         clientCertAuthenticationInstance2.Pfx = pfxInstance2;
                                                     }
                                                     
-                                                    JToken certificateThumbprintValue2 = authenticationValue2["certificateThumbprint"];
+                                                    JToken certificateThumbprintValue2 = authenticationValue4["certificateThumbprint"];
                                                     if (certificateThumbprintValue2 != null && certificateThumbprintValue2.Type != JTokenType.Null)
                                                     {
                                                         string certificateThumbprintInstance2 = ((string)certificateThumbprintValue2);
                                                         clientCertAuthenticationInstance2.CertificateThumbprint = certificateThumbprintInstance2;
                                                     }
                                                     
-                                                    JToken certificateExpirationValue2 = authenticationValue2["certificateExpiration"];
+                                                    JToken certificateExpirationValue2 = authenticationValue4["certificateExpiration"];
                                                     if (certificateExpirationValue2 != null && certificateExpirationValue2.Type != JTokenType.Null)
                                                     {
                                                         DateTime certificateExpirationInstance2 = ((DateTime)certificateExpirationValue2);
                                                         clientCertAuthenticationInstance2.CertificateExpiration = certificateExpirationInstance2;
                                                     }
                                                     
-                                                    JToken certificateSubjectNameValue2 = authenticationValue2["certificateSubjectName"];
+                                                    JToken certificateSubjectNameValue2 = authenticationValue4["certificateSubjectName"];
                                                     if (certificateSubjectNameValue2 != null && certificateSubjectNameValue2.Type != JTokenType.Null)
                                                     {
                                                         string certificateSubjectNameInstance2 = ((string)certificateSubjectNameValue2);
                                                         clientCertAuthenticationInstance2.CertificateSubjectName = certificateSubjectNameInstance2;
                                                     }
                                                     
-                                                    JToken typeValue6 = authenticationValue2["type"];
-                                                    if (typeValue6 != null && typeValue6.Type != JTokenType.Null)
+                                                    JToken typeValue8 = authenticationValue4["type"];
+                                                    if (typeValue8 != null && typeValue8.Type != JTokenType.Null)
                                                     {
-                                                        HttpAuthenticationType typeInstance6 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue6));
-                                                        clientCertAuthenticationInstance2.Type = typeInstance6;
+                                                        HttpAuthenticationType typeInstance8 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue8));
+                                                        clientCertAuthenticationInstance2.Type = typeInstance8;
                                                     }
                                                     requestInstance2.Authentication = clientCertAuthenticationInstance2;
                                                 }
@@ -5268,39 +9404,39 @@ namespace Microsoft.WindowsAzure.Scheduler
                                                 {
                                                     AADOAuthAuthentication aADOAuthAuthenticationInstance2 = new AADOAuthAuthentication();
                                                     
-                                                    JToken secretValue2 = authenticationValue2["secret"];
+                                                    JToken secretValue2 = authenticationValue4["secret"];
                                                     if (secretValue2 != null && secretValue2.Type != JTokenType.Null)
                                                     {
                                                         string secretInstance2 = ((string)secretValue2);
                                                         aADOAuthAuthenticationInstance2.Secret = secretInstance2;
                                                     }
                                                     
-                                                    JToken tenantValue2 = authenticationValue2["tenant"];
+                                                    JToken tenantValue2 = authenticationValue4["tenant"];
                                                     if (tenantValue2 != null && tenantValue2.Type != JTokenType.Null)
                                                     {
                                                         string tenantInstance2 = ((string)tenantValue2);
                                                         aADOAuthAuthenticationInstance2.Tenant = tenantInstance2;
                                                     }
                                                     
-                                                    JToken audienceValue2 = authenticationValue2["audience"];
+                                                    JToken audienceValue2 = authenticationValue4["audience"];
                                                     if (audienceValue2 != null && audienceValue2.Type != JTokenType.Null)
                                                     {
                                                         string audienceInstance2 = ((string)audienceValue2);
                                                         aADOAuthAuthenticationInstance2.Audience = audienceInstance2;
                                                     }
                                                     
-                                                    JToken clientIdValue2 = authenticationValue2["clientId"];
+                                                    JToken clientIdValue2 = authenticationValue4["clientId"];
                                                     if (clientIdValue2 != null && clientIdValue2.Type != JTokenType.Null)
                                                     {
                                                         string clientIdInstance2 = ((string)clientIdValue2);
                                                         aADOAuthAuthenticationInstance2.ClientId = clientIdInstance2;
                                                     }
                                                     
-                                                    JToken typeValue7 = authenticationValue2["type"];
-                                                    if (typeValue7 != null && typeValue7.Type != JTokenType.Null)
+                                                    JToken typeValue9 = authenticationValue4["type"];
+                                                    if (typeValue9 != null && typeValue9.Type != JTokenType.Null)
                                                     {
-                                                        HttpAuthenticationType typeInstance7 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue7));
-                                                        aADOAuthAuthenticationInstance2.Type = typeInstance7;
+                                                        HttpAuthenticationType typeInstance9 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue9));
+                                                        aADOAuthAuthenticationInstance2.Type = typeInstance9;
                                                     }
                                                     requestInstance2.Authentication = aADOAuthAuthenticationInstance2;
                                                 }
@@ -5308,25 +9444,25 @@ namespace Microsoft.WindowsAzure.Scheduler
                                                 {
                                                     BasicAuthentication basicAuthenticationInstance2 = new BasicAuthentication();
                                                     
-                                                    JToken usernameValue2 = authenticationValue2["username"];
+                                                    JToken usernameValue2 = authenticationValue4["username"];
                                                     if (usernameValue2 != null && usernameValue2.Type != JTokenType.Null)
                                                     {
                                                         string usernameInstance2 = ((string)usernameValue2);
                                                         basicAuthenticationInstance2.Username = usernameInstance2;
                                                     }
                                                     
-                                                    JToken passwordValue4 = authenticationValue2["password"];
+                                                    JToken passwordValue4 = authenticationValue4["password"];
                                                     if (passwordValue4 != null && passwordValue4.Type != JTokenType.Null)
                                                     {
                                                         string passwordInstance4 = ((string)passwordValue4);
                                                         basicAuthenticationInstance2.Password = passwordInstance4;
                                                     }
                                                     
-                                                    JToken typeValue8 = authenticationValue2["type"];
-                                                    if (typeValue8 != null && typeValue8.Type != JTokenType.Null)
+                                                    JToken typeValue10 = authenticationValue4["type"];
+                                                    if (typeValue10 != null && typeValue10.Type != JTokenType.Null)
                                                     {
-                                                        HttpAuthenticationType typeInstance8 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue8));
-                                                        basicAuthenticationInstance2.Type = typeInstance8;
+                                                        HttpAuthenticationType typeInstance10 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue10));
+                                                        basicAuthenticationInstance2.Type = typeInstance10;
                                                     }
                                                     requestInstance2.Authentication = basicAuthenticationInstance2;
                                                 }
@@ -5346,11 +9482,11 @@ namespace Microsoft.WindowsAzure.Scheduler
                                                 queueMessageInstance2.StorageAccountName = storageAccountInstance2;
                                             }
                                             
-                                            JToken queueNameValue2 = queueMessageValue2["queueName"];
-                                            if (queueNameValue2 != null && queueNameValue2.Type != JTokenType.Null)
+                                            JToken queueNameValue3 = queueMessageValue2["queueName"];
+                                            if (queueNameValue3 != null && queueNameValue3.Type != JTokenType.Null)
                                             {
-                                                string queueNameInstance2 = ((string)queueNameValue2);
-                                                queueMessageInstance2.QueueName = queueNameInstance2;
+                                                string queueNameInstance3 = ((string)queueNameValue3);
+                                                queueMessageInstance2.QueueName = queueNameInstance3;
                                             }
                                             
                                             JToken sasTokenValue2 = queueMessageValue2["sasToken"];
@@ -5360,11 +9496,355 @@ namespace Microsoft.WindowsAzure.Scheduler
                                                 queueMessageInstance2.SasToken = sasTokenInstance2;
                                             }
                                             
-                                            JToken messageValue2 = queueMessageValue2["message"];
-                                            if (messageValue2 != null && messageValue2.Type != JTokenType.Null)
+                                            JToken messageValue4 = queueMessageValue2["message"];
+                                            if (messageValue4 != null && messageValue4.Type != JTokenType.Null)
                                             {
-                                                string messageInstance2 = ((string)messageValue2);
-                                                queueMessageInstance2.Message = messageInstance2;
+                                                string messageInstance4 = ((string)messageValue4);
+                                                queueMessageInstance2.Message = messageInstance4;
+                                            }
+                                        }
+                                        
+                                        JToken serviceBusTopicMessageValue2 = actionValue["serviceBusTopicMessage"];
+                                        if (serviceBusTopicMessageValue2 != null && serviceBusTopicMessageValue2.Type != JTokenType.Null)
+                                        {
+                                            JobServiceBusTopicMessage serviceBusTopicMessageInstance2 = new JobServiceBusTopicMessage();
+                                            actionInstance.ServiceBusTopicMessage = serviceBusTopicMessageInstance2;
+                                            
+                                            JToken topicPathValue2 = serviceBusTopicMessageValue2["topicPath"];
+                                            if (topicPathValue2 != null && topicPathValue2.Type != JTokenType.Null)
+                                            {
+                                                string topicPathInstance2 = ((string)topicPathValue2);
+                                                serviceBusTopicMessageInstance2.TopicPath = topicPathInstance2;
+                                            }
+                                            
+                                            JToken namespaceValue3 = serviceBusTopicMessageValue2["namespace"];
+                                            if (namespaceValue3 != null && namespaceValue3.Type != JTokenType.Null)
+                                            {
+                                                string namespaceInstance3 = ((string)namespaceValue3);
+                                                serviceBusTopicMessageInstance2.Namespace = namespaceInstance3;
+                                            }
+                                            
+                                            JToken transportTypeValue3 = serviceBusTopicMessageValue2["transportType"];
+                                            if (transportTypeValue3 != null && transportTypeValue3.Type != JTokenType.Null)
+                                            {
+                                                JobServiceBusTransportType transportTypeInstance3 = SchedulerClient.ParseJobServiceBusTransportType(((string)transportTypeValue3));
+                                                serviceBusTopicMessageInstance2.TransportType = transportTypeInstance3;
+                                            }
+                                            
+                                            JToken authenticationValue5 = serviceBusTopicMessageValue2["authentication"];
+                                            if (authenticationValue5 != null && authenticationValue5.Type != JTokenType.Null)
+                                            {
+                                                JobServiceBusAuthentication authenticationInstance3 = new JobServiceBusAuthentication();
+                                                serviceBusTopicMessageInstance2.Authentication = authenticationInstance3;
+                                                
+                                                JToken sasKeyNameValue3 = authenticationValue5["sasKeyName"];
+                                                if (sasKeyNameValue3 != null && sasKeyNameValue3.Type != JTokenType.Null)
+                                                {
+                                                    string sasKeyNameInstance3 = ((string)sasKeyNameValue3);
+                                                    authenticationInstance3.SasKeyName = sasKeyNameInstance3;
+                                                }
+                                                
+                                                JToken sasKeyValue3 = authenticationValue5["sasKey"];
+                                                if (sasKeyValue3 != null && sasKeyValue3.Type != JTokenType.Null)
+                                                {
+                                                    string sasKeyInstance3 = ((string)sasKeyValue3);
+                                                    authenticationInstance3.SasKey = sasKeyInstance3;
+                                                }
+                                                
+                                                JToken typeValue11 = authenticationValue5["type"];
+                                                if (typeValue11 != null && typeValue11.Type != JTokenType.Null)
+                                                {
+                                                    JobServiceBusAuthenticationType typeInstance11 = SchedulerClient.ParseJobServiceBusAuthenticationType(((string)typeValue11));
+                                                    authenticationInstance3.Type = typeInstance11;
+                                                }
+                                            }
+                                            
+                                            JToken messageValue5 = serviceBusTopicMessageValue2["message"];
+                                            if (messageValue5 != null && messageValue5.Type != JTokenType.Null)
+                                            {
+                                                string messageInstance5 = ((string)messageValue5);
+                                                serviceBusTopicMessageInstance2.Message = messageInstance5;
+                                            }
+                                            
+                                            JToken brokeredMessagePropertiesValue3 = serviceBusTopicMessageValue2["brokeredMessageProperties"];
+                                            if (brokeredMessagePropertiesValue3 != null && brokeredMessagePropertiesValue3.Type != JTokenType.Null)
+                                            {
+                                                JobServiceBusBrokeredMessageProperties brokeredMessagePropertiesInstance3 = new JobServiceBusBrokeredMessageProperties();
+                                                serviceBusTopicMessageInstance2.BrokeredMessageProperties = brokeredMessagePropertiesInstance3;
+                                                
+                                                JToken contentTypeValue3 = brokeredMessagePropertiesValue3["contentType"];
+                                                if (contentTypeValue3 != null && contentTypeValue3.Type != JTokenType.Null)
+                                                {
+                                                    string contentTypeInstance3 = ((string)contentTypeValue3);
+                                                    brokeredMessagePropertiesInstance3.ContentType = contentTypeInstance3;
+                                                }
+                                                
+                                                JToken correlationIdValue3 = brokeredMessagePropertiesValue3["correlationId"];
+                                                if (correlationIdValue3 != null && correlationIdValue3.Type != JTokenType.Null)
+                                                {
+                                                    string correlationIdInstance3 = ((string)correlationIdValue3);
+                                                    brokeredMessagePropertiesInstance3.CorrelationId = correlationIdInstance3;
+                                                }
+                                                
+                                                JToken forcePersistenceValue3 = brokeredMessagePropertiesValue3["forcePersistence"];
+                                                if (forcePersistenceValue3 != null && forcePersistenceValue3.Type != JTokenType.Null)
+                                                {
+                                                    bool forcePersistenceInstance3 = ((bool)forcePersistenceValue3);
+                                                    brokeredMessagePropertiesInstance3.ForcePersistence = forcePersistenceInstance3;
+                                                }
+                                                
+                                                JToken labelValue3 = brokeredMessagePropertiesValue3["label"];
+                                                if (labelValue3 != null && labelValue3.Type != JTokenType.Null)
+                                                {
+                                                    string labelInstance3 = ((string)labelValue3);
+                                                    brokeredMessagePropertiesInstance3.Label = labelInstance3;
+                                                }
+                                                
+                                                JToken messageIdValue3 = brokeredMessagePropertiesValue3["messageId"];
+                                                if (messageIdValue3 != null && messageIdValue3.Type != JTokenType.Null)
+                                                {
+                                                    string messageIdInstance3 = ((string)messageIdValue3);
+                                                    brokeredMessagePropertiesInstance3.MessageId = messageIdInstance3;
+                                                }
+                                                
+                                                JToken partitionKeyValue3 = brokeredMessagePropertiesValue3["partitionKey"];
+                                                if (partitionKeyValue3 != null && partitionKeyValue3.Type != JTokenType.Null)
+                                                {
+                                                    string partitionKeyInstance3 = ((string)partitionKeyValue3);
+                                                    brokeredMessagePropertiesInstance3.PartitionKey = partitionKeyInstance3;
+                                                }
+                                                
+                                                JToken replyToValue3 = brokeredMessagePropertiesValue3["replyTo"];
+                                                if (replyToValue3 != null && replyToValue3.Type != JTokenType.Null)
+                                                {
+                                                    string replyToInstance3 = ((string)replyToValue3);
+                                                    brokeredMessagePropertiesInstance3.ReplyTo = replyToInstance3;
+                                                }
+                                                
+                                                JToken replyToSessionIdValue3 = brokeredMessagePropertiesValue3["replyToSessionId"];
+                                                if (replyToSessionIdValue3 != null && replyToSessionIdValue3.Type != JTokenType.Null)
+                                                {
+                                                    string replyToSessionIdInstance3 = ((string)replyToSessionIdValue3);
+                                                    brokeredMessagePropertiesInstance3.ReplyToSessionId = replyToSessionIdInstance3;
+                                                }
+                                                
+                                                JToken scheduledEnqueueTimeUtcValue3 = brokeredMessagePropertiesValue3["scheduledEnqueueTimeUtc"];
+                                                if (scheduledEnqueueTimeUtcValue3 != null && scheduledEnqueueTimeUtcValue3.Type != JTokenType.Null)
+                                                {
+                                                    DateTime scheduledEnqueueTimeUtcInstance3 = ((DateTime)scheduledEnqueueTimeUtcValue3);
+                                                    brokeredMessagePropertiesInstance3.ScheduledEnqueueTimeUtc = scheduledEnqueueTimeUtcInstance3;
+                                                }
+                                                
+                                                JToken sessionIdValue3 = brokeredMessagePropertiesValue3["sessionId"];
+                                                if (sessionIdValue3 != null && sessionIdValue3.Type != JTokenType.Null)
+                                                {
+                                                    string sessionIdInstance3 = ((string)sessionIdValue3);
+                                                    brokeredMessagePropertiesInstance3.SessionId = sessionIdInstance3;
+                                                }
+                                                
+                                                JToken timeToLiveValue3 = brokeredMessagePropertiesValue3["timeToLive"];
+                                                if (timeToLiveValue3 != null && timeToLiveValue3.Type != JTokenType.Null)
+                                                {
+                                                    DateTime timeToLiveInstance3 = ((DateTime)timeToLiveValue3);
+                                                    brokeredMessagePropertiesInstance3.TimeToLive = timeToLiveInstance3;
+                                                }
+                                                
+                                                JToken toValue3 = brokeredMessagePropertiesValue3["to"];
+                                                if (toValue3 != null && toValue3.Type != JTokenType.Null)
+                                                {
+                                                    string toInstance3 = ((string)toValue3);
+                                                    brokeredMessagePropertiesInstance3.To = toInstance3;
+                                                }
+                                                
+                                                JToken viaPartitionKeyValue3 = brokeredMessagePropertiesValue3["viaPartitionKey"];
+                                                if (viaPartitionKeyValue3 != null && viaPartitionKeyValue3.Type != JTokenType.Null)
+                                                {
+                                                    string viaPartitionKeyInstance3 = ((string)viaPartitionKeyValue3);
+                                                    brokeredMessagePropertiesInstance3.ViaPartitionKey = viaPartitionKeyInstance3;
+                                                }
+                                            }
+                                            
+                                            JToken customMessagePropertiesSequenceElement3 = ((JToken)serviceBusTopicMessageValue2["customMessageProperties"]);
+                                            if (customMessagePropertiesSequenceElement3 != null && customMessagePropertiesSequenceElement3.Type != JTokenType.Null)
+                                            {
+                                                foreach (JProperty property5 in customMessagePropertiesSequenceElement3)
+                                                {
+                                                    string customMessagePropertiesKey3 = ((string)property5.Name);
+                                                    string customMessagePropertiesValue3 = ((string)property5.Value);
+                                                    serviceBusTopicMessageInstance2.CustomMessageProperties.Add(customMessagePropertiesKey3, customMessagePropertiesValue3);
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken serviceBusQueueMessageValue2 = actionValue["serviceBusQueueMessage"];
+                                        if (serviceBusQueueMessageValue2 != null && serviceBusQueueMessageValue2.Type != JTokenType.Null)
+                                        {
+                                            JobServiceBusQueueMessage serviceBusQueueMessageInstance2 = new JobServiceBusQueueMessage();
+                                            actionInstance.ServiceBusQueueMessage = serviceBusQueueMessageInstance2;
+                                            
+                                            JToken queueNameValue4 = serviceBusQueueMessageValue2["queueName"];
+                                            if (queueNameValue4 != null && queueNameValue4.Type != JTokenType.Null)
+                                            {
+                                                string queueNameInstance4 = ((string)queueNameValue4);
+                                                serviceBusQueueMessageInstance2.QueueName = queueNameInstance4;
+                                            }
+                                            
+                                            JToken namespaceValue4 = serviceBusQueueMessageValue2["namespace"];
+                                            if (namespaceValue4 != null && namespaceValue4.Type != JTokenType.Null)
+                                            {
+                                                string namespaceInstance4 = ((string)namespaceValue4);
+                                                serviceBusQueueMessageInstance2.Namespace = namespaceInstance4;
+                                            }
+                                            
+                                            JToken transportTypeValue4 = serviceBusQueueMessageValue2["transportType"];
+                                            if (transportTypeValue4 != null && transportTypeValue4.Type != JTokenType.Null)
+                                            {
+                                                JobServiceBusTransportType transportTypeInstance4 = SchedulerClient.ParseJobServiceBusTransportType(((string)transportTypeValue4));
+                                                serviceBusQueueMessageInstance2.TransportType = transportTypeInstance4;
+                                            }
+                                            
+                                            JToken authenticationValue6 = serviceBusQueueMessageValue2["authentication"];
+                                            if (authenticationValue6 != null && authenticationValue6.Type != JTokenType.Null)
+                                            {
+                                                JobServiceBusAuthentication authenticationInstance4 = new JobServiceBusAuthentication();
+                                                serviceBusQueueMessageInstance2.Authentication = authenticationInstance4;
+                                                
+                                                JToken sasKeyNameValue4 = authenticationValue6["sasKeyName"];
+                                                if (sasKeyNameValue4 != null && sasKeyNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string sasKeyNameInstance4 = ((string)sasKeyNameValue4);
+                                                    authenticationInstance4.SasKeyName = sasKeyNameInstance4;
+                                                }
+                                                
+                                                JToken sasKeyValue4 = authenticationValue6["sasKey"];
+                                                if (sasKeyValue4 != null && sasKeyValue4.Type != JTokenType.Null)
+                                                {
+                                                    string sasKeyInstance4 = ((string)sasKeyValue4);
+                                                    authenticationInstance4.SasKey = sasKeyInstance4;
+                                                }
+                                                
+                                                JToken typeValue12 = authenticationValue6["type"];
+                                                if (typeValue12 != null && typeValue12.Type != JTokenType.Null)
+                                                {
+                                                    JobServiceBusAuthenticationType typeInstance12 = SchedulerClient.ParseJobServiceBusAuthenticationType(((string)typeValue12));
+                                                    authenticationInstance4.Type = typeInstance12;
+                                                }
+                                            }
+                                            
+                                            JToken messageValue6 = serviceBusQueueMessageValue2["message"];
+                                            if (messageValue6 != null && messageValue6.Type != JTokenType.Null)
+                                            {
+                                                string messageInstance6 = ((string)messageValue6);
+                                                serviceBusQueueMessageInstance2.Message = messageInstance6;
+                                            }
+                                            
+                                            JToken brokeredMessagePropertiesValue4 = serviceBusQueueMessageValue2["brokeredMessageProperties"];
+                                            if (brokeredMessagePropertiesValue4 != null && brokeredMessagePropertiesValue4.Type != JTokenType.Null)
+                                            {
+                                                JobServiceBusBrokeredMessageProperties brokeredMessagePropertiesInstance4 = new JobServiceBusBrokeredMessageProperties();
+                                                serviceBusQueueMessageInstance2.BrokeredMessageProperties = brokeredMessagePropertiesInstance4;
+                                                
+                                                JToken contentTypeValue4 = brokeredMessagePropertiesValue4["contentType"];
+                                                if (contentTypeValue4 != null && contentTypeValue4.Type != JTokenType.Null)
+                                                {
+                                                    string contentTypeInstance4 = ((string)contentTypeValue4);
+                                                    brokeredMessagePropertiesInstance4.ContentType = contentTypeInstance4;
+                                                }
+                                                
+                                                JToken correlationIdValue4 = brokeredMessagePropertiesValue4["correlationId"];
+                                                if (correlationIdValue4 != null && correlationIdValue4.Type != JTokenType.Null)
+                                                {
+                                                    string correlationIdInstance4 = ((string)correlationIdValue4);
+                                                    brokeredMessagePropertiesInstance4.CorrelationId = correlationIdInstance4;
+                                                }
+                                                
+                                                JToken forcePersistenceValue4 = brokeredMessagePropertiesValue4["forcePersistence"];
+                                                if (forcePersistenceValue4 != null && forcePersistenceValue4.Type != JTokenType.Null)
+                                                {
+                                                    bool forcePersistenceInstance4 = ((bool)forcePersistenceValue4);
+                                                    brokeredMessagePropertiesInstance4.ForcePersistence = forcePersistenceInstance4;
+                                                }
+                                                
+                                                JToken labelValue4 = brokeredMessagePropertiesValue4["label"];
+                                                if (labelValue4 != null && labelValue4.Type != JTokenType.Null)
+                                                {
+                                                    string labelInstance4 = ((string)labelValue4);
+                                                    brokeredMessagePropertiesInstance4.Label = labelInstance4;
+                                                }
+                                                
+                                                JToken messageIdValue4 = brokeredMessagePropertiesValue4["messageId"];
+                                                if (messageIdValue4 != null && messageIdValue4.Type != JTokenType.Null)
+                                                {
+                                                    string messageIdInstance4 = ((string)messageIdValue4);
+                                                    brokeredMessagePropertiesInstance4.MessageId = messageIdInstance4;
+                                                }
+                                                
+                                                JToken partitionKeyValue4 = brokeredMessagePropertiesValue4["partitionKey"];
+                                                if (partitionKeyValue4 != null && partitionKeyValue4.Type != JTokenType.Null)
+                                                {
+                                                    string partitionKeyInstance4 = ((string)partitionKeyValue4);
+                                                    brokeredMessagePropertiesInstance4.PartitionKey = partitionKeyInstance4;
+                                                }
+                                                
+                                                JToken replyToValue4 = brokeredMessagePropertiesValue4["replyTo"];
+                                                if (replyToValue4 != null && replyToValue4.Type != JTokenType.Null)
+                                                {
+                                                    string replyToInstance4 = ((string)replyToValue4);
+                                                    brokeredMessagePropertiesInstance4.ReplyTo = replyToInstance4;
+                                                }
+                                                
+                                                JToken replyToSessionIdValue4 = brokeredMessagePropertiesValue4["replyToSessionId"];
+                                                if (replyToSessionIdValue4 != null && replyToSessionIdValue4.Type != JTokenType.Null)
+                                                {
+                                                    string replyToSessionIdInstance4 = ((string)replyToSessionIdValue4);
+                                                    brokeredMessagePropertiesInstance4.ReplyToSessionId = replyToSessionIdInstance4;
+                                                }
+                                                
+                                                JToken scheduledEnqueueTimeUtcValue4 = brokeredMessagePropertiesValue4["scheduledEnqueueTimeUtc"];
+                                                if (scheduledEnqueueTimeUtcValue4 != null && scheduledEnqueueTimeUtcValue4.Type != JTokenType.Null)
+                                                {
+                                                    DateTime scheduledEnqueueTimeUtcInstance4 = ((DateTime)scheduledEnqueueTimeUtcValue4);
+                                                    brokeredMessagePropertiesInstance4.ScheduledEnqueueTimeUtc = scheduledEnqueueTimeUtcInstance4;
+                                                }
+                                                
+                                                JToken sessionIdValue4 = brokeredMessagePropertiesValue4["sessionId"];
+                                                if (sessionIdValue4 != null && sessionIdValue4.Type != JTokenType.Null)
+                                                {
+                                                    string sessionIdInstance4 = ((string)sessionIdValue4);
+                                                    brokeredMessagePropertiesInstance4.SessionId = sessionIdInstance4;
+                                                }
+                                                
+                                                JToken timeToLiveValue4 = brokeredMessagePropertiesValue4["timeToLive"];
+                                                if (timeToLiveValue4 != null && timeToLiveValue4.Type != JTokenType.Null)
+                                                {
+                                                    DateTime timeToLiveInstance4 = ((DateTime)timeToLiveValue4);
+                                                    brokeredMessagePropertiesInstance4.TimeToLive = timeToLiveInstance4;
+                                                }
+                                                
+                                                JToken toValue4 = brokeredMessagePropertiesValue4["to"];
+                                                if (toValue4 != null && toValue4.Type != JTokenType.Null)
+                                                {
+                                                    string toInstance4 = ((string)toValue4);
+                                                    brokeredMessagePropertiesInstance4.To = toInstance4;
+                                                }
+                                                
+                                                JToken viaPartitionKeyValue4 = brokeredMessagePropertiesValue4["viaPartitionKey"];
+                                                if (viaPartitionKeyValue4 != null && viaPartitionKeyValue4.Type != JTokenType.Null)
+                                                {
+                                                    string viaPartitionKeyInstance4 = ((string)viaPartitionKeyValue4);
+                                                    brokeredMessagePropertiesInstance4.ViaPartitionKey = viaPartitionKeyInstance4;
+                                                }
+                                            }
+                                            
+                                            JToken customMessagePropertiesSequenceElement4 = ((JToken)serviceBusQueueMessageValue2["customMessageProperties"]);
+                                            if (customMessagePropertiesSequenceElement4 != null && customMessagePropertiesSequenceElement4.Type != JTokenType.Null)
+                                            {
+                                                foreach (JProperty property6 in customMessagePropertiesSequenceElement4)
+                                                {
+                                                    string customMessagePropertiesKey4 = ((string)property6.Name);
+                                                    string customMessagePropertiesValue4 = ((string)property6.Value);
+                                                    serviceBusQueueMessageInstance2.CustomMessageProperties.Add(customMessagePropertiesKey4, customMessagePropertiesValue4);
+                                                }
                                             }
                                         }
                                     }
@@ -5965,6 +10445,350 @@ namespace Microsoft.WindowsAzure.Scheduler
                                                     queueMessageInstance.Message = messageInstance;
                                                 }
                                             }
+                                            
+                                            JToken serviceBusTopicMessageValue = errorActionValue["serviceBusTopicMessage"];
+                                            if (serviceBusTopicMessageValue != null && serviceBusTopicMessageValue.Type != JTokenType.Null)
+                                            {
+                                                JobServiceBusTopicMessage serviceBusTopicMessageInstance = new JobServiceBusTopicMessage();
+                                                errorActionInstance.ServiceBusTopicMessage = serviceBusTopicMessageInstance;
+                                                
+                                                JToken topicPathValue = serviceBusTopicMessageValue["topicPath"];
+                                                if (topicPathValue != null && topicPathValue.Type != JTokenType.Null)
+                                                {
+                                                    string topicPathInstance = ((string)topicPathValue);
+                                                    serviceBusTopicMessageInstance.TopicPath = topicPathInstance;
+                                                }
+                                                
+                                                JToken namespaceValue = serviceBusTopicMessageValue["namespace"];
+                                                if (namespaceValue != null && namespaceValue.Type != JTokenType.Null)
+                                                {
+                                                    string namespaceInstance = ((string)namespaceValue);
+                                                    serviceBusTopicMessageInstance.Namespace = namespaceInstance;
+                                                }
+                                                
+                                                JToken transportTypeValue = serviceBusTopicMessageValue["transportType"];
+                                                if (transportTypeValue != null && transportTypeValue.Type != JTokenType.Null)
+                                                {
+                                                    JobServiceBusTransportType transportTypeInstance = SchedulerClient.ParseJobServiceBusTransportType(((string)transportTypeValue));
+                                                    serviceBusTopicMessageInstance.TransportType = transportTypeInstance;
+                                                }
+                                                
+                                                JToken authenticationValue2 = serviceBusTopicMessageValue["authentication"];
+                                                if (authenticationValue2 != null && authenticationValue2.Type != JTokenType.Null)
+                                                {
+                                                    JobServiceBusAuthentication authenticationInstance = new JobServiceBusAuthentication();
+                                                    serviceBusTopicMessageInstance.Authentication = authenticationInstance;
+                                                    
+                                                    JToken sasKeyNameValue = authenticationValue2["sasKeyName"];
+                                                    if (sasKeyNameValue != null && sasKeyNameValue.Type != JTokenType.Null)
+                                                    {
+                                                        string sasKeyNameInstance = ((string)sasKeyNameValue);
+                                                        authenticationInstance.SasKeyName = sasKeyNameInstance;
+                                                    }
+                                                    
+                                                    JToken sasKeyValue = authenticationValue2["sasKey"];
+                                                    if (sasKeyValue != null && sasKeyValue.Type != JTokenType.Null)
+                                                    {
+                                                        string sasKeyInstance = ((string)sasKeyValue);
+                                                        authenticationInstance.SasKey = sasKeyInstance;
+                                                    }
+                                                    
+                                                    JToken typeValue6 = authenticationValue2["type"];
+                                                    if (typeValue6 != null && typeValue6.Type != JTokenType.Null)
+                                                    {
+                                                        JobServiceBusAuthenticationType typeInstance6 = SchedulerClient.ParseJobServiceBusAuthenticationType(((string)typeValue6));
+                                                        authenticationInstance.Type = typeInstance6;
+                                                    }
+                                                }
+                                                
+                                                JToken messageValue2 = serviceBusTopicMessageValue["message"];
+                                                if (messageValue2 != null && messageValue2.Type != JTokenType.Null)
+                                                {
+                                                    string messageInstance2 = ((string)messageValue2);
+                                                    serviceBusTopicMessageInstance.Message = messageInstance2;
+                                                }
+                                                
+                                                JToken brokeredMessagePropertiesValue = serviceBusTopicMessageValue["brokeredMessageProperties"];
+                                                if (brokeredMessagePropertiesValue != null && brokeredMessagePropertiesValue.Type != JTokenType.Null)
+                                                {
+                                                    JobServiceBusBrokeredMessageProperties brokeredMessagePropertiesInstance = new JobServiceBusBrokeredMessageProperties();
+                                                    serviceBusTopicMessageInstance.BrokeredMessageProperties = brokeredMessagePropertiesInstance;
+                                                    
+                                                    JToken contentTypeValue = brokeredMessagePropertiesValue["contentType"];
+                                                    if (contentTypeValue != null && contentTypeValue.Type != JTokenType.Null)
+                                                    {
+                                                        string contentTypeInstance = ((string)contentTypeValue);
+                                                        brokeredMessagePropertiesInstance.ContentType = contentTypeInstance;
+                                                    }
+                                                    
+                                                    JToken correlationIdValue = brokeredMessagePropertiesValue["correlationId"];
+                                                    if (correlationIdValue != null && correlationIdValue.Type != JTokenType.Null)
+                                                    {
+                                                        string correlationIdInstance = ((string)correlationIdValue);
+                                                        brokeredMessagePropertiesInstance.CorrelationId = correlationIdInstance;
+                                                    }
+                                                    
+                                                    JToken forcePersistenceValue = brokeredMessagePropertiesValue["forcePersistence"];
+                                                    if (forcePersistenceValue != null && forcePersistenceValue.Type != JTokenType.Null)
+                                                    {
+                                                        bool forcePersistenceInstance = ((bool)forcePersistenceValue);
+                                                        brokeredMessagePropertiesInstance.ForcePersistence = forcePersistenceInstance;
+                                                    }
+                                                    
+                                                    JToken labelValue = brokeredMessagePropertiesValue["label"];
+                                                    if (labelValue != null && labelValue.Type != JTokenType.Null)
+                                                    {
+                                                        string labelInstance = ((string)labelValue);
+                                                        brokeredMessagePropertiesInstance.Label = labelInstance;
+                                                    }
+                                                    
+                                                    JToken messageIdValue = brokeredMessagePropertiesValue["messageId"];
+                                                    if (messageIdValue != null && messageIdValue.Type != JTokenType.Null)
+                                                    {
+                                                        string messageIdInstance = ((string)messageIdValue);
+                                                        brokeredMessagePropertiesInstance.MessageId = messageIdInstance;
+                                                    }
+                                                    
+                                                    JToken partitionKeyValue = brokeredMessagePropertiesValue["partitionKey"];
+                                                    if (partitionKeyValue != null && partitionKeyValue.Type != JTokenType.Null)
+                                                    {
+                                                        string partitionKeyInstance = ((string)partitionKeyValue);
+                                                        brokeredMessagePropertiesInstance.PartitionKey = partitionKeyInstance;
+                                                    }
+                                                    
+                                                    JToken replyToValue = brokeredMessagePropertiesValue["replyTo"];
+                                                    if (replyToValue != null && replyToValue.Type != JTokenType.Null)
+                                                    {
+                                                        string replyToInstance = ((string)replyToValue);
+                                                        brokeredMessagePropertiesInstance.ReplyTo = replyToInstance;
+                                                    }
+                                                    
+                                                    JToken replyToSessionIdValue = brokeredMessagePropertiesValue["replyToSessionId"];
+                                                    if (replyToSessionIdValue != null && replyToSessionIdValue.Type != JTokenType.Null)
+                                                    {
+                                                        string replyToSessionIdInstance = ((string)replyToSessionIdValue);
+                                                        brokeredMessagePropertiesInstance.ReplyToSessionId = replyToSessionIdInstance;
+                                                    }
+                                                    
+                                                    JToken scheduledEnqueueTimeUtcValue = brokeredMessagePropertiesValue["scheduledEnqueueTimeUtc"];
+                                                    if (scheduledEnqueueTimeUtcValue != null && scheduledEnqueueTimeUtcValue.Type != JTokenType.Null)
+                                                    {
+                                                        DateTime scheduledEnqueueTimeUtcInstance = ((DateTime)scheduledEnqueueTimeUtcValue);
+                                                        brokeredMessagePropertiesInstance.ScheduledEnqueueTimeUtc = scheduledEnqueueTimeUtcInstance;
+                                                    }
+                                                    
+                                                    JToken sessionIdValue = brokeredMessagePropertiesValue["sessionId"];
+                                                    if (sessionIdValue != null && sessionIdValue.Type != JTokenType.Null)
+                                                    {
+                                                        string sessionIdInstance = ((string)sessionIdValue);
+                                                        brokeredMessagePropertiesInstance.SessionId = sessionIdInstance;
+                                                    }
+                                                    
+                                                    JToken timeToLiveValue = brokeredMessagePropertiesValue["timeToLive"];
+                                                    if (timeToLiveValue != null && timeToLiveValue.Type != JTokenType.Null)
+                                                    {
+                                                        DateTime timeToLiveInstance = ((DateTime)timeToLiveValue);
+                                                        brokeredMessagePropertiesInstance.TimeToLive = timeToLiveInstance;
+                                                    }
+                                                    
+                                                    JToken toValue = brokeredMessagePropertiesValue["to"];
+                                                    if (toValue != null && toValue.Type != JTokenType.Null)
+                                                    {
+                                                        string toInstance = ((string)toValue);
+                                                        brokeredMessagePropertiesInstance.To = toInstance;
+                                                    }
+                                                    
+                                                    JToken viaPartitionKeyValue = brokeredMessagePropertiesValue["viaPartitionKey"];
+                                                    if (viaPartitionKeyValue != null && viaPartitionKeyValue.Type != JTokenType.Null)
+                                                    {
+                                                        string viaPartitionKeyInstance = ((string)viaPartitionKeyValue);
+                                                        brokeredMessagePropertiesInstance.ViaPartitionKey = viaPartitionKeyInstance;
+                                                    }
+                                                }
+                                                
+                                                JToken customMessagePropertiesSequenceElement = ((JToken)serviceBusTopicMessageValue["customMessageProperties"]);
+                                                if (customMessagePropertiesSequenceElement != null && customMessagePropertiesSequenceElement.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JProperty property2 in customMessagePropertiesSequenceElement)
+                                                    {
+                                                        string customMessagePropertiesKey = ((string)property2.Name);
+                                                        string customMessagePropertiesValue = ((string)property2.Value);
+                                                        serviceBusTopicMessageInstance.CustomMessageProperties.Add(customMessagePropertiesKey, customMessagePropertiesValue);
+                                                    }
+                                                }
+                                            }
+                                            
+                                            JToken serviceBusQueueMessageValue = errorActionValue["serviceBusQueueMessage"];
+                                            if (serviceBusQueueMessageValue != null && serviceBusQueueMessageValue.Type != JTokenType.Null)
+                                            {
+                                                JobServiceBusQueueMessage serviceBusQueueMessageInstance = new JobServiceBusQueueMessage();
+                                                errorActionInstance.ServiceBusQueueMessage = serviceBusQueueMessageInstance;
+                                                
+                                                JToken queueNameValue2 = serviceBusQueueMessageValue["queueName"];
+                                                if (queueNameValue2 != null && queueNameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string queueNameInstance2 = ((string)queueNameValue2);
+                                                    serviceBusQueueMessageInstance.QueueName = queueNameInstance2;
+                                                }
+                                                
+                                                JToken namespaceValue2 = serviceBusQueueMessageValue["namespace"];
+                                                if (namespaceValue2 != null && namespaceValue2.Type != JTokenType.Null)
+                                                {
+                                                    string namespaceInstance2 = ((string)namespaceValue2);
+                                                    serviceBusQueueMessageInstance.Namespace = namespaceInstance2;
+                                                }
+                                                
+                                                JToken transportTypeValue2 = serviceBusQueueMessageValue["transportType"];
+                                                if (transportTypeValue2 != null && transportTypeValue2.Type != JTokenType.Null)
+                                                {
+                                                    JobServiceBusTransportType transportTypeInstance2 = SchedulerClient.ParseJobServiceBusTransportType(((string)transportTypeValue2));
+                                                    serviceBusQueueMessageInstance.TransportType = transportTypeInstance2;
+                                                }
+                                                
+                                                JToken authenticationValue3 = serviceBusQueueMessageValue["authentication"];
+                                                if (authenticationValue3 != null && authenticationValue3.Type != JTokenType.Null)
+                                                {
+                                                    JobServiceBusAuthentication authenticationInstance2 = new JobServiceBusAuthentication();
+                                                    serviceBusQueueMessageInstance.Authentication = authenticationInstance2;
+                                                    
+                                                    JToken sasKeyNameValue2 = authenticationValue3["sasKeyName"];
+                                                    if (sasKeyNameValue2 != null && sasKeyNameValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string sasKeyNameInstance2 = ((string)sasKeyNameValue2);
+                                                        authenticationInstance2.SasKeyName = sasKeyNameInstance2;
+                                                    }
+                                                    
+                                                    JToken sasKeyValue2 = authenticationValue3["sasKey"];
+                                                    if (sasKeyValue2 != null && sasKeyValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string sasKeyInstance2 = ((string)sasKeyValue2);
+                                                        authenticationInstance2.SasKey = sasKeyInstance2;
+                                                    }
+                                                    
+                                                    JToken typeValue7 = authenticationValue3["type"];
+                                                    if (typeValue7 != null && typeValue7.Type != JTokenType.Null)
+                                                    {
+                                                        JobServiceBusAuthenticationType typeInstance7 = SchedulerClient.ParseJobServiceBusAuthenticationType(((string)typeValue7));
+                                                        authenticationInstance2.Type = typeInstance7;
+                                                    }
+                                                }
+                                                
+                                                JToken messageValue3 = serviceBusQueueMessageValue["message"];
+                                                if (messageValue3 != null && messageValue3.Type != JTokenType.Null)
+                                                {
+                                                    string messageInstance3 = ((string)messageValue3);
+                                                    serviceBusQueueMessageInstance.Message = messageInstance3;
+                                                }
+                                                
+                                                JToken brokeredMessagePropertiesValue2 = serviceBusQueueMessageValue["brokeredMessageProperties"];
+                                                if (brokeredMessagePropertiesValue2 != null && brokeredMessagePropertiesValue2.Type != JTokenType.Null)
+                                                {
+                                                    JobServiceBusBrokeredMessageProperties brokeredMessagePropertiesInstance2 = new JobServiceBusBrokeredMessageProperties();
+                                                    serviceBusQueueMessageInstance.BrokeredMessageProperties = brokeredMessagePropertiesInstance2;
+                                                    
+                                                    JToken contentTypeValue2 = brokeredMessagePropertiesValue2["contentType"];
+                                                    if (contentTypeValue2 != null && contentTypeValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string contentTypeInstance2 = ((string)contentTypeValue2);
+                                                        brokeredMessagePropertiesInstance2.ContentType = contentTypeInstance2;
+                                                    }
+                                                    
+                                                    JToken correlationIdValue2 = brokeredMessagePropertiesValue2["correlationId"];
+                                                    if (correlationIdValue2 != null && correlationIdValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string correlationIdInstance2 = ((string)correlationIdValue2);
+                                                        brokeredMessagePropertiesInstance2.CorrelationId = correlationIdInstance2;
+                                                    }
+                                                    
+                                                    JToken forcePersistenceValue2 = brokeredMessagePropertiesValue2["forcePersistence"];
+                                                    if (forcePersistenceValue2 != null && forcePersistenceValue2.Type != JTokenType.Null)
+                                                    {
+                                                        bool forcePersistenceInstance2 = ((bool)forcePersistenceValue2);
+                                                        brokeredMessagePropertiesInstance2.ForcePersistence = forcePersistenceInstance2;
+                                                    }
+                                                    
+                                                    JToken labelValue2 = brokeredMessagePropertiesValue2["label"];
+                                                    if (labelValue2 != null && labelValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string labelInstance2 = ((string)labelValue2);
+                                                        brokeredMessagePropertiesInstance2.Label = labelInstance2;
+                                                    }
+                                                    
+                                                    JToken messageIdValue2 = brokeredMessagePropertiesValue2["messageId"];
+                                                    if (messageIdValue2 != null && messageIdValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string messageIdInstance2 = ((string)messageIdValue2);
+                                                        brokeredMessagePropertiesInstance2.MessageId = messageIdInstance2;
+                                                    }
+                                                    
+                                                    JToken partitionKeyValue2 = brokeredMessagePropertiesValue2["partitionKey"];
+                                                    if (partitionKeyValue2 != null && partitionKeyValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string partitionKeyInstance2 = ((string)partitionKeyValue2);
+                                                        brokeredMessagePropertiesInstance2.PartitionKey = partitionKeyInstance2;
+                                                    }
+                                                    
+                                                    JToken replyToValue2 = brokeredMessagePropertiesValue2["replyTo"];
+                                                    if (replyToValue2 != null && replyToValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string replyToInstance2 = ((string)replyToValue2);
+                                                        brokeredMessagePropertiesInstance2.ReplyTo = replyToInstance2;
+                                                    }
+                                                    
+                                                    JToken replyToSessionIdValue2 = brokeredMessagePropertiesValue2["replyToSessionId"];
+                                                    if (replyToSessionIdValue2 != null && replyToSessionIdValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string replyToSessionIdInstance2 = ((string)replyToSessionIdValue2);
+                                                        brokeredMessagePropertiesInstance2.ReplyToSessionId = replyToSessionIdInstance2;
+                                                    }
+                                                    
+                                                    JToken scheduledEnqueueTimeUtcValue2 = brokeredMessagePropertiesValue2["scheduledEnqueueTimeUtc"];
+                                                    if (scheduledEnqueueTimeUtcValue2 != null && scheduledEnqueueTimeUtcValue2.Type != JTokenType.Null)
+                                                    {
+                                                        DateTime scheduledEnqueueTimeUtcInstance2 = ((DateTime)scheduledEnqueueTimeUtcValue2);
+                                                        brokeredMessagePropertiesInstance2.ScheduledEnqueueTimeUtc = scheduledEnqueueTimeUtcInstance2;
+                                                    }
+                                                    
+                                                    JToken sessionIdValue2 = brokeredMessagePropertiesValue2["sessionId"];
+                                                    if (sessionIdValue2 != null && sessionIdValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string sessionIdInstance2 = ((string)sessionIdValue2);
+                                                        brokeredMessagePropertiesInstance2.SessionId = sessionIdInstance2;
+                                                    }
+                                                    
+                                                    JToken timeToLiveValue2 = brokeredMessagePropertiesValue2["timeToLive"];
+                                                    if (timeToLiveValue2 != null && timeToLiveValue2.Type != JTokenType.Null)
+                                                    {
+                                                        DateTime timeToLiveInstance2 = ((DateTime)timeToLiveValue2);
+                                                        brokeredMessagePropertiesInstance2.TimeToLive = timeToLiveInstance2;
+                                                    }
+                                                    
+                                                    JToken toValue2 = brokeredMessagePropertiesValue2["to"];
+                                                    if (toValue2 != null && toValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string toInstance2 = ((string)toValue2);
+                                                        brokeredMessagePropertiesInstance2.To = toInstance2;
+                                                    }
+                                                    
+                                                    JToken viaPartitionKeyValue2 = brokeredMessagePropertiesValue2["viaPartitionKey"];
+                                                    if (viaPartitionKeyValue2 != null && viaPartitionKeyValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string viaPartitionKeyInstance2 = ((string)viaPartitionKeyValue2);
+                                                        brokeredMessagePropertiesInstance2.ViaPartitionKey = viaPartitionKeyInstance2;
+                                                    }
+                                                }
+                                                
+                                                JToken customMessagePropertiesSequenceElement2 = ((JToken)serviceBusQueueMessageValue["customMessageProperties"]);
+                                                if (customMessagePropertiesSequenceElement2 != null && customMessagePropertiesSequenceElement2.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JProperty property3 in customMessagePropertiesSequenceElement2)
+                                                    {
+                                                        string customMessagePropertiesKey2 = ((string)property3.Name);
+                                                        string customMessagePropertiesValue2 = ((string)property3.Value);
+                                                        serviceBusQueueMessageInstance.CustomMessageProperties.Add(customMessagePropertiesKey2, customMessagePropertiesValue2);
+                                                    }
+                                                }
+                                            }
                                         }
                                         
                                         JToken requestValue2 = actionValue["request"];
@@ -5990,10 +10814,10 @@ namespace Microsoft.WindowsAzure.Scheduler
                                             JToken headersSequenceElement2 = ((JToken)requestValue2["headers"]);
                                             if (headersSequenceElement2 != null && headersSequenceElement2.Type != JTokenType.Null)
                                             {
-                                                foreach (JProperty property2 in headersSequenceElement2)
+                                                foreach (JProperty property4 in headersSequenceElement2)
                                                 {
-                                                    string headersKey2 = ((string)property2.Name);
-                                                    string headersValue2 = ((string)property2.Value);
+                                                    string headersKey2 = ((string)property4.Name);
+                                                    string headersValue2 = ((string)property4.Value);
                                                     requestInstance2.Headers.Add(headersKey2, headersValue2);
                                                 }
                                             }
@@ -6005,54 +10829,54 @@ namespace Microsoft.WindowsAzure.Scheduler
                                                 requestInstance2.Body = bodyInstance2;
                                             }
                                             
-                                            JToken authenticationValue2 = requestValue2["authentication"];
-                                            if (authenticationValue2 != null && authenticationValue2.Type != JTokenType.Null)
+                                            JToken authenticationValue4 = requestValue2["authentication"];
+                                            if (authenticationValue4 != null && authenticationValue4.Type != JTokenType.Null)
                                             {
-                                                string typeName2 = ((string)authenticationValue2["type"]);
+                                                string typeName2 = ((string)authenticationValue4["type"]);
                                                 if (typeName2 == "ClientCertificate")
                                                 {
                                                     ClientCertAuthentication clientCertAuthenticationInstance2 = new ClientCertAuthentication();
                                                     
-                                                    JToken passwordValue3 = authenticationValue2["password"];
+                                                    JToken passwordValue3 = authenticationValue4["password"];
                                                     if (passwordValue3 != null && passwordValue3.Type != JTokenType.Null)
                                                     {
                                                         string passwordInstance3 = ((string)passwordValue3);
                                                         clientCertAuthenticationInstance2.Password = passwordInstance3;
                                                     }
                                                     
-                                                    JToken pfxValue2 = authenticationValue2["pfx"];
+                                                    JToken pfxValue2 = authenticationValue4["pfx"];
                                                     if (pfxValue2 != null && pfxValue2.Type != JTokenType.Null)
                                                     {
                                                         string pfxInstance2 = ((string)pfxValue2);
                                                         clientCertAuthenticationInstance2.Pfx = pfxInstance2;
                                                     }
                                                     
-                                                    JToken certificateThumbprintValue2 = authenticationValue2["certificateThumbprint"];
+                                                    JToken certificateThumbprintValue2 = authenticationValue4["certificateThumbprint"];
                                                     if (certificateThumbprintValue2 != null && certificateThumbprintValue2.Type != JTokenType.Null)
                                                     {
                                                         string certificateThumbprintInstance2 = ((string)certificateThumbprintValue2);
                                                         clientCertAuthenticationInstance2.CertificateThumbprint = certificateThumbprintInstance2;
                                                     }
                                                     
-                                                    JToken certificateExpirationValue2 = authenticationValue2["certificateExpiration"];
+                                                    JToken certificateExpirationValue2 = authenticationValue4["certificateExpiration"];
                                                     if (certificateExpirationValue2 != null && certificateExpirationValue2.Type != JTokenType.Null)
                                                     {
                                                         DateTime certificateExpirationInstance2 = ((DateTime)certificateExpirationValue2);
                                                         clientCertAuthenticationInstance2.CertificateExpiration = certificateExpirationInstance2;
                                                     }
                                                     
-                                                    JToken certificateSubjectNameValue2 = authenticationValue2["certificateSubjectName"];
+                                                    JToken certificateSubjectNameValue2 = authenticationValue4["certificateSubjectName"];
                                                     if (certificateSubjectNameValue2 != null && certificateSubjectNameValue2.Type != JTokenType.Null)
                                                     {
                                                         string certificateSubjectNameInstance2 = ((string)certificateSubjectNameValue2);
                                                         clientCertAuthenticationInstance2.CertificateSubjectName = certificateSubjectNameInstance2;
                                                     }
                                                     
-                                                    JToken typeValue6 = authenticationValue2["type"];
-                                                    if (typeValue6 != null && typeValue6.Type != JTokenType.Null)
+                                                    JToken typeValue8 = authenticationValue4["type"];
+                                                    if (typeValue8 != null && typeValue8.Type != JTokenType.Null)
                                                     {
-                                                        HttpAuthenticationType typeInstance6 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue6));
-                                                        clientCertAuthenticationInstance2.Type = typeInstance6;
+                                                        HttpAuthenticationType typeInstance8 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue8));
+                                                        clientCertAuthenticationInstance2.Type = typeInstance8;
                                                     }
                                                     requestInstance2.Authentication = clientCertAuthenticationInstance2;
                                                 }
@@ -6060,39 +10884,39 @@ namespace Microsoft.WindowsAzure.Scheduler
                                                 {
                                                     AADOAuthAuthentication aADOAuthAuthenticationInstance2 = new AADOAuthAuthentication();
                                                     
-                                                    JToken secretValue2 = authenticationValue2["secret"];
+                                                    JToken secretValue2 = authenticationValue4["secret"];
                                                     if (secretValue2 != null && secretValue2.Type != JTokenType.Null)
                                                     {
                                                         string secretInstance2 = ((string)secretValue2);
                                                         aADOAuthAuthenticationInstance2.Secret = secretInstance2;
                                                     }
                                                     
-                                                    JToken tenantValue2 = authenticationValue2["tenant"];
+                                                    JToken tenantValue2 = authenticationValue4["tenant"];
                                                     if (tenantValue2 != null && tenantValue2.Type != JTokenType.Null)
                                                     {
                                                         string tenantInstance2 = ((string)tenantValue2);
                                                         aADOAuthAuthenticationInstance2.Tenant = tenantInstance2;
                                                     }
                                                     
-                                                    JToken audienceValue2 = authenticationValue2["audience"];
+                                                    JToken audienceValue2 = authenticationValue4["audience"];
                                                     if (audienceValue2 != null && audienceValue2.Type != JTokenType.Null)
                                                     {
                                                         string audienceInstance2 = ((string)audienceValue2);
                                                         aADOAuthAuthenticationInstance2.Audience = audienceInstance2;
                                                     }
                                                     
-                                                    JToken clientIdValue2 = authenticationValue2["clientId"];
+                                                    JToken clientIdValue2 = authenticationValue4["clientId"];
                                                     if (clientIdValue2 != null && clientIdValue2.Type != JTokenType.Null)
                                                     {
                                                         string clientIdInstance2 = ((string)clientIdValue2);
                                                         aADOAuthAuthenticationInstance2.ClientId = clientIdInstance2;
                                                     }
                                                     
-                                                    JToken typeValue7 = authenticationValue2["type"];
-                                                    if (typeValue7 != null && typeValue7.Type != JTokenType.Null)
+                                                    JToken typeValue9 = authenticationValue4["type"];
+                                                    if (typeValue9 != null && typeValue9.Type != JTokenType.Null)
                                                     {
-                                                        HttpAuthenticationType typeInstance7 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue7));
-                                                        aADOAuthAuthenticationInstance2.Type = typeInstance7;
+                                                        HttpAuthenticationType typeInstance9 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue9));
+                                                        aADOAuthAuthenticationInstance2.Type = typeInstance9;
                                                     }
                                                     requestInstance2.Authentication = aADOAuthAuthenticationInstance2;
                                                 }
@@ -6100,25 +10924,25 @@ namespace Microsoft.WindowsAzure.Scheduler
                                                 {
                                                     BasicAuthentication basicAuthenticationInstance2 = new BasicAuthentication();
                                                     
-                                                    JToken usernameValue2 = authenticationValue2["username"];
+                                                    JToken usernameValue2 = authenticationValue4["username"];
                                                     if (usernameValue2 != null && usernameValue2.Type != JTokenType.Null)
                                                     {
                                                         string usernameInstance2 = ((string)usernameValue2);
                                                         basicAuthenticationInstance2.Username = usernameInstance2;
                                                     }
                                                     
-                                                    JToken passwordValue4 = authenticationValue2["password"];
+                                                    JToken passwordValue4 = authenticationValue4["password"];
                                                     if (passwordValue4 != null && passwordValue4.Type != JTokenType.Null)
                                                     {
                                                         string passwordInstance4 = ((string)passwordValue4);
                                                         basicAuthenticationInstance2.Password = passwordInstance4;
                                                     }
                                                     
-                                                    JToken typeValue8 = authenticationValue2["type"];
-                                                    if (typeValue8 != null && typeValue8.Type != JTokenType.Null)
+                                                    JToken typeValue10 = authenticationValue4["type"];
+                                                    if (typeValue10 != null && typeValue10.Type != JTokenType.Null)
                                                     {
-                                                        HttpAuthenticationType typeInstance8 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue8));
-                                                        basicAuthenticationInstance2.Type = typeInstance8;
+                                                        HttpAuthenticationType typeInstance10 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue10));
+                                                        basicAuthenticationInstance2.Type = typeInstance10;
                                                     }
                                                     requestInstance2.Authentication = basicAuthenticationInstance2;
                                                 }
@@ -6138,11 +10962,11 @@ namespace Microsoft.WindowsAzure.Scheduler
                                                 queueMessageInstance2.StorageAccountName = storageAccountInstance2;
                                             }
                                             
-                                            JToken queueNameValue2 = queueMessageValue2["queueName"];
-                                            if (queueNameValue2 != null && queueNameValue2.Type != JTokenType.Null)
+                                            JToken queueNameValue3 = queueMessageValue2["queueName"];
+                                            if (queueNameValue3 != null && queueNameValue3.Type != JTokenType.Null)
                                             {
-                                                string queueNameInstance2 = ((string)queueNameValue2);
-                                                queueMessageInstance2.QueueName = queueNameInstance2;
+                                                string queueNameInstance3 = ((string)queueNameValue3);
+                                                queueMessageInstance2.QueueName = queueNameInstance3;
                                             }
                                             
                                             JToken sasTokenValue2 = queueMessageValue2["sasToken"];
@@ -6152,11 +10976,355 @@ namespace Microsoft.WindowsAzure.Scheduler
                                                 queueMessageInstance2.SasToken = sasTokenInstance2;
                                             }
                                             
-                                            JToken messageValue2 = queueMessageValue2["message"];
-                                            if (messageValue2 != null && messageValue2.Type != JTokenType.Null)
+                                            JToken messageValue4 = queueMessageValue2["message"];
+                                            if (messageValue4 != null && messageValue4.Type != JTokenType.Null)
                                             {
-                                                string messageInstance2 = ((string)messageValue2);
-                                                queueMessageInstance2.Message = messageInstance2;
+                                                string messageInstance4 = ((string)messageValue4);
+                                                queueMessageInstance2.Message = messageInstance4;
+                                            }
+                                        }
+                                        
+                                        JToken serviceBusTopicMessageValue2 = actionValue["serviceBusTopicMessage"];
+                                        if (serviceBusTopicMessageValue2 != null && serviceBusTopicMessageValue2.Type != JTokenType.Null)
+                                        {
+                                            JobServiceBusTopicMessage serviceBusTopicMessageInstance2 = new JobServiceBusTopicMessage();
+                                            actionInstance.ServiceBusTopicMessage = serviceBusTopicMessageInstance2;
+                                            
+                                            JToken topicPathValue2 = serviceBusTopicMessageValue2["topicPath"];
+                                            if (topicPathValue2 != null && topicPathValue2.Type != JTokenType.Null)
+                                            {
+                                                string topicPathInstance2 = ((string)topicPathValue2);
+                                                serviceBusTopicMessageInstance2.TopicPath = topicPathInstance2;
+                                            }
+                                            
+                                            JToken namespaceValue3 = serviceBusTopicMessageValue2["namespace"];
+                                            if (namespaceValue3 != null && namespaceValue3.Type != JTokenType.Null)
+                                            {
+                                                string namespaceInstance3 = ((string)namespaceValue3);
+                                                serviceBusTopicMessageInstance2.Namespace = namespaceInstance3;
+                                            }
+                                            
+                                            JToken transportTypeValue3 = serviceBusTopicMessageValue2["transportType"];
+                                            if (transportTypeValue3 != null && transportTypeValue3.Type != JTokenType.Null)
+                                            {
+                                                JobServiceBusTransportType transportTypeInstance3 = SchedulerClient.ParseJobServiceBusTransportType(((string)transportTypeValue3));
+                                                serviceBusTopicMessageInstance2.TransportType = transportTypeInstance3;
+                                            }
+                                            
+                                            JToken authenticationValue5 = serviceBusTopicMessageValue2["authentication"];
+                                            if (authenticationValue5 != null && authenticationValue5.Type != JTokenType.Null)
+                                            {
+                                                JobServiceBusAuthentication authenticationInstance3 = new JobServiceBusAuthentication();
+                                                serviceBusTopicMessageInstance2.Authentication = authenticationInstance3;
+                                                
+                                                JToken sasKeyNameValue3 = authenticationValue5["sasKeyName"];
+                                                if (sasKeyNameValue3 != null && sasKeyNameValue3.Type != JTokenType.Null)
+                                                {
+                                                    string sasKeyNameInstance3 = ((string)sasKeyNameValue3);
+                                                    authenticationInstance3.SasKeyName = sasKeyNameInstance3;
+                                                }
+                                                
+                                                JToken sasKeyValue3 = authenticationValue5["sasKey"];
+                                                if (sasKeyValue3 != null && sasKeyValue3.Type != JTokenType.Null)
+                                                {
+                                                    string sasKeyInstance3 = ((string)sasKeyValue3);
+                                                    authenticationInstance3.SasKey = sasKeyInstance3;
+                                                }
+                                                
+                                                JToken typeValue11 = authenticationValue5["type"];
+                                                if (typeValue11 != null && typeValue11.Type != JTokenType.Null)
+                                                {
+                                                    JobServiceBusAuthenticationType typeInstance11 = SchedulerClient.ParseJobServiceBusAuthenticationType(((string)typeValue11));
+                                                    authenticationInstance3.Type = typeInstance11;
+                                                }
+                                            }
+                                            
+                                            JToken messageValue5 = serviceBusTopicMessageValue2["message"];
+                                            if (messageValue5 != null && messageValue5.Type != JTokenType.Null)
+                                            {
+                                                string messageInstance5 = ((string)messageValue5);
+                                                serviceBusTopicMessageInstance2.Message = messageInstance5;
+                                            }
+                                            
+                                            JToken brokeredMessagePropertiesValue3 = serviceBusTopicMessageValue2["brokeredMessageProperties"];
+                                            if (brokeredMessagePropertiesValue3 != null && brokeredMessagePropertiesValue3.Type != JTokenType.Null)
+                                            {
+                                                JobServiceBusBrokeredMessageProperties brokeredMessagePropertiesInstance3 = new JobServiceBusBrokeredMessageProperties();
+                                                serviceBusTopicMessageInstance2.BrokeredMessageProperties = brokeredMessagePropertiesInstance3;
+                                                
+                                                JToken contentTypeValue3 = brokeredMessagePropertiesValue3["contentType"];
+                                                if (contentTypeValue3 != null && contentTypeValue3.Type != JTokenType.Null)
+                                                {
+                                                    string contentTypeInstance3 = ((string)contentTypeValue3);
+                                                    brokeredMessagePropertiesInstance3.ContentType = contentTypeInstance3;
+                                                }
+                                                
+                                                JToken correlationIdValue3 = brokeredMessagePropertiesValue3["correlationId"];
+                                                if (correlationIdValue3 != null && correlationIdValue3.Type != JTokenType.Null)
+                                                {
+                                                    string correlationIdInstance3 = ((string)correlationIdValue3);
+                                                    brokeredMessagePropertiesInstance3.CorrelationId = correlationIdInstance3;
+                                                }
+                                                
+                                                JToken forcePersistenceValue3 = brokeredMessagePropertiesValue3["forcePersistence"];
+                                                if (forcePersistenceValue3 != null && forcePersistenceValue3.Type != JTokenType.Null)
+                                                {
+                                                    bool forcePersistenceInstance3 = ((bool)forcePersistenceValue3);
+                                                    brokeredMessagePropertiesInstance3.ForcePersistence = forcePersistenceInstance3;
+                                                }
+                                                
+                                                JToken labelValue3 = brokeredMessagePropertiesValue3["label"];
+                                                if (labelValue3 != null && labelValue3.Type != JTokenType.Null)
+                                                {
+                                                    string labelInstance3 = ((string)labelValue3);
+                                                    brokeredMessagePropertiesInstance3.Label = labelInstance3;
+                                                }
+                                                
+                                                JToken messageIdValue3 = brokeredMessagePropertiesValue3["messageId"];
+                                                if (messageIdValue3 != null && messageIdValue3.Type != JTokenType.Null)
+                                                {
+                                                    string messageIdInstance3 = ((string)messageIdValue3);
+                                                    brokeredMessagePropertiesInstance3.MessageId = messageIdInstance3;
+                                                }
+                                                
+                                                JToken partitionKeyValue3 = brokeredMessagePropertiesValue3["partitionKey"];
+                                                if (partitionKeyValue3 != null && partitionKeyValue3.Type != JTokenType.Null)
+                                                {
+                                                    string partitionKeyInstance3 = ((string)partitionKeyValue3);
+                                                    brokeredMessagePropertiesInstance3.PartitionKey = partitionKeyInstance3;
+                                                }
+                                                
+                                                JToken replyToValue3 = brokeredMessagePropertiesValue3["replyTo"];
+                                                if (replyToValue3 != null && replyToValue3.Type != JTokenType.Null)
+                                                {
+                                                    string replyToInstance3 = ((string)replyToValue3);
+                                                    brokeredMessagePropertiesInstance3.ReplyTo = replyToInstance3;
+                                                }
+                                                
+                                                JToken replyToSessionIdValue3 = brokeredMessagePropertiesValue3["replyToSessionId"];
+                                                if (replyToSessionIdValue3 != null && replyToSessionIdValue3.Type != JTokenType.Null)
+                                                {
+                                                    string replyToSessionIdInstance3 = ((string)replyToSessionIdValue3);
+                                                    brokeredMessagePropertiesInstance3.ReplyToSessionId = replyToSessionIdInstance3;
+                                                }
+                                                
+                                                JToken scheduledEnqueueTimeUtcValue3 = brokeredMessagePropertiesValue3["scheduledEnqueueTimeUtc"];
+                                                if (scheduledEnqueueTimeUtcValue3 != null && scheduledEnqueueTimeUtcValue3.Type != JTokenType.Null)
+                                                {
+                                                    DateTime scheduledEnqueueTimeUtcInstance3 = ((DateTime)scheduledEnqueueTimeUtcValue3);
+                                                    brokeredMessagePropertiesInstance3.ScheduledEnqueueTimeUtc = scheduledEnqueueTimeUtcInstance3;
+                                                }
+                                                
+                                                JToken sessionIdValue3 = brokeredMessagePropertiesValue3["sessionId"];
+                                                if (sessionIdValue3 != null && sessionIdValue3.Type != JTokenType.Null)
+                                                {
+                                                    string sessionIdInstance3 = ((string)sessionIdValue3);
+                                                    brokeredMessagePropertiesInstance3.SessionId = sessionIdInstance3;
+                                                }
+                                                
+                                                JToken timeToLiveValue3 = brokeredMessagePropertiesValue3["timeToLive"];
+                                                if (timeToLiveValue3 != null && timeToLiveValue3.Type != JTokenType.Null)
+                                                {
+                                                    DateTime timeToLiveInstance3 = ((DateTime)timeToLiveValue3);
+                                                    brokeredMessagePropertiesInstance3.TimeToLive = timeToLiveInstance3;
+                                                }
+                                                
+                                                JToken toValue3 = brokeredMessagePropertiesValue3["to"];
+                                                if (toValue3 != null && toValue3.Type != JTokenType.Null)
+                                                {
+                                                    string toInstance3 = ((string)toValue3);
+                                                    brokeredMessagePropertiesInstance3.To = toInstance3;
+                                                }
+                                                
+                                                JToken viaPartitionKeyValue3 = brokeredMessagePropertiesValue3["viaPartitionKey"];
+                                                if (viaPartitionKeyValue3 != null && viaPartitionKeyValue3.Type != JTokenType.Null)
+                                                {
+                                                    string viaPartitionKeyInstance3 = ((string)viaPartitionKeyValue3);
+                                                    brokeredMessagePropertiesInstance3.ViaPartitionKey = viaPartitionKeyInstance3;
+                                                }
+                                            }
+                                            
+                                            JToken customMessagePropertiesSequenceElement3 = ((JToken)serviceBusTopicMessageValue2["customMessageProperties"]);
+                                            if (customMessagePropertiesSequenceElement3 != null && customMessagePropertiesSequenceElement3.Type != JTokenType.Null)
+                                            {
+                                                foreach (JProperty property5 in customMessagePropertiesSequenceElement3)
+                                                {
+                                                    string customMessagePropertiesKey3 = ((string)property5.Name);
+                                                    string customMessagePropertiesValue3 = ((string)property5.Value);
+                                                    serviceBusTopicMessageInstance2.CustomMessageProperties.Add(customMessagePropertiesKey3, customMessagePropertiesValue3);
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken serviceBusQueueMessageValue2 = actionValue["serviceBusQueueMessage"];
+                                        if (serviceBusQueueMessageValue2 != null && serviceBusQueueMessageValue2.Type != JTokenType.Null)
+                                        {
+                                            JobServiceBusQueueMessage serviceBusQueueMessageInstance2 = new JobServiceBusQueueMessage();
+                                            actionInstance.ServiceBusQueueMessage = serviceBusQueueMessageInstance2;
+                                            
+                                            JToken queueNameValue4 = serviceBusQueueMessageValue2["queueName"];
+                                            if (queueNameValue4 != null && queueNameValue4.Type != JTokenType.Null)
+                                            {
+                                                string queueNameInstance4 = ((string)queueNameValue4);
+                                                serviceBusQueueMessageInstance2.QueueName = queueNameInstance4;
+                                            }
+                                            
+                                            JToken namespaceValue4 = serviceBusQueueMessageValue2["namespace"];
+                                            if (namespaceValue4 != null && namespaceValue4.Type != JTokenType.Null)
+                                            {
+                                                string namespaceInstance4 = ((string)namespaceValue4);
+                                                serviceBusQueueMessageInstance2.Namespace = namespaceInstance4;
+                                            }
+                                            
+                                            JToken transportTypeValue4 = serviceBusQueueMessageValue2["transportType"];
+                                            if (transportTypeValue4 != null && transportTypeValue4.Type != JTokenType.Null)
+                                            {
+                                                JobServiceBusTransportType transportTypeInstance4 = SchedulerClient.ParseJobServiceBusTransportType(((string)transportTypeValue4));
+                                                serviceBusQueueMessageInstance2.TransportType = transportTypeInstance4;
+                                            }
+                                            
+                                            JToken authenticationValue6 = serviceBusQueueMessageValue2["authentication"];
+                                            if (authenticationValue6 != null && authenticationValue6.Type != JTokenType.Null)
+                                            {
+                                                JobServiceBusAuthentication authenticationInstance4 = new JobServiceBusAuthentication();
+                                                serviceBusQueueMessageInstance2.Authentication = authenticationInstance4;
+                                                
+                                                JToken sasKeyNameValue4 = authenticationValue6["sasKeyName"];
+                                                if (sasKeyNameValue4 != null && sasKeyNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string sasKeyNameInstance4 = ((string)sasKeyNameValue4);
+                                                    authenticationInstance4.SasKeyName = sasKeyNameInstance4;
+                                                }
+                                                
+                                                JToken sasKeyValue4 = authenticationValue6["sasKey"];
+                                                if (sasKeyValue4 != null && sasKeyValue4.Type != JTokenType.Null)
+                                                {
+                                                    string sasKeyInstance4 = ((string)sasKeyValue4);
+                                                    authenticationInstance4.SasKey = sasKeyInstance4;
+                                                }
+                                                
+                                                JToken typeValue12 = authenticationValue6["type"];
+                                                if (typeValue12 != null && typeValue12.Type != JTokenType.Null)
+                                                {
+                                                    JobServiceBusAuthenticationType typeInstance12 = SchedulerClient.ParseJobServiceBusAuthenticationType(((string)typeValue12));
+                                                    authenticationInstance4.Type = typeInstance12;
+                                                }
+                                            }
+                                            
+                                            JToken messageValue6 = serviceBusQueueMessageValue2["message"];
+                                            if (messageValue6 != null && messageValue6.Type != JTokenType.Null)
+                                            {
+                                                string messageInstance6 = ((string)messageValue6);
+                                                serviceBusQueueMessageInstance2.Message = messageInstance6;
+                                            }
+                                            
+                                            JToken brokeredMessagePropertiesValue4 = serviceBusQueueMessageValue2["brokeredMessageProperties"];
+                                            if (brokeredMessagePropertiesValue4 != null && brokeredMessagePropertiesValue4.Type != JTokenType.Null)
+                                            {
+                                                JobServiceBusBrokeredMessageProperties brokeredMessagePropertiesInstance4 = new JobServiceBusBrokeredMessageProperties();
+                                                serviceBusQueueMessageInstance2.BrokeredMessageProperties = brokeredMessagePropertiesInstance4;
+                                                
+                                                JToken contentTypeValue4 = brokeredMessagePropertiesValue4["contentType"];
+                                                if (contentTypeValue4 != null && contentTypeValue4.Type != JTokenType.Null)
+                                                {
+                                                    string contentTypeInstance4 = ((string)contentTypeValue4);
+                                                    brokeredMessagePropertiesInstance4.ContentType = contentTypeInstance4;
+                                                }
+                                                
+                                                JToken correlationIdValue4 = brokeredMessagePropertiesValue4["correlationId"];
+                                                if (correlationIdValue4 != null && correlationIdValue4.Type != JTokenType.Null)
+                                                {
+                                                    string correlationIdInstance4 = ((string)correlationIdValue4);
+                                                    brokeredMessagePropertiesInstance4.CorrelationId = correlationIdInstance4;
+                                                }
+                                                
+                                                JToken forcePersistenceValue4 = brokeredMessagePropertiesValue4["forcePersistence"];
+                                                if (forcePersistenceValue4 != null && forcePersistenceValue4.Type != JTokenType.Null)
+                                                {
+                                                    bool forcePersistenceInstance4 = ((bool)forcePersistenceValue4);
+                                                    brokeredMessagePropertiesInstance4.ForcePersistence = forcePersistenceInstance4;
+                                                }
+                                                
+                                                JToken labelValue4 = brokeredMessagePropertiesValue4["label"];
+                                                if (labelValue4 != null && labelValue4.Type != JTokenType.Null)
+                                                {
+                                                    string labelInstance4 = ((string)labelValue4);
+                                                    brokeredMessagePropertiesInstance4.Label = labelInstance4;
+                                                }
+                                                
+                                                JToken messageIdValue4 = brokeredMessagePropertiesValue4["messageId"];
+                                                if (messageIdValue4 != null && messageIdValue4.Type != JTokenType.Null)
+                                                {
+                                                    string messageIdInstance4 = ((string)messageIdValue4);
+                                                    brokeredMessagePropertiesInstance4.MessageId = messageIdInstance4;
+                                                }
+                                                
+                                                JToken partitionKeyValue4 = brokeredMessagePropertiesValue4["partitionKey"];
+                                                if (partitionKeyValue4 != null && partitionKeyValue4.Type != JTokenType.Null)
+                                                {
+                                                    string partitionKeyInstance4 = ((string)partitionKeyValue4);
+                                                    brokeredMessagePropertiesInstance4.PartitionKey = partitionKeyInstance4;
+                                                }
+                                                
+                                                JToken replyToValue4 = brokeredMessagePropertiesValue4["replyTo"];
+                                                if (replyToValue4 != null && replyToValue4.Type != JTokenType.Null)
+                                                {
+                                                    string replyToInstance4 = ((string)replyToValue4);
+                                                    brokeredMessagePropertiesInstance4.ReplyTo = replyToInstance4;
+                                                }
+                                                
+                                                JToken replyToSessionIdValue4 = brokeredMessagePropertiesValue4["replyToSessionId"];
+                                                if (replyToSessionIdValue4 != null && replyToSessionIdValue4.Type != JTokenType.Null)
+                                                {
+                                                    string replyToSessionIdInstance4 = ((string)replyToSessionIdValue4);
+                                                    brokeredMessagePropertiesInstance4.ReplyToSessionId = replyToSessionIdInstance4;
+                                                }
+                                                
+                                                JToken scheduledEnqueueTimeUtcValue4 = brokeredMessagePropertiesValue4["scheduledEnqueueTimeUtc"];
+                                                if (scheduledEnqueueTimeUtcValue4 != null && scheduledEnqueueTimeUtcValue4.Type != JTokenType.Null)
+                                                {
+                                                    DateTime scheduledEnqueueTimeUtcInstance4 = ((DateTime)scheduledEnqueueTimeUtcValue4);
+                                                    brokeredMessagePropertiesInstance4.ScheduledEnqueueTimeUtc = scheduledEnqueueTimeUtcInstance4;
+                                                }
+                                                
+                                                JToken sessionIdValue4 = brokeredMessagePropertiesValue4["sessionId"];
+                                                if (sessionIdValue4 != null && sessionIdValue4.Type != JTokenType.Null)
+                                                {
+                                                    string sessionIdInstance4 = ((string)sessionIdValue4);
+                                                    brokeredMessagePropertiesInstance4.SessionId = sessionIdInstance4;
+                                                }
+                                                
+                                                JToken timeToLiveValue4 = brokeredMessagePropertiesValue4["timeToLive"];
+                                                if (timeToLiveValue4 != null && timeToLiveValue4.Type != JTokenType.Null)
+                                                {
+                                                    DateTime timeToLiveInstance4 = ((DateTime)timeToLiveValue4);
+                                                    brokeredMessagePropertiesInstance4.TimeToLive = timeToLiveInstance4;
+                                                }
+                                                
+                                                JToken toValue4 = brokeredMessagePropertiesValue4["to"];
+                                                if (toValue4 != null && toValue4.Type != JTokenType.Null)
+                                                {
+                                                    string toInstance4 = ((string)toValue4);
+                                                    brokeredMessagePropertiesInstance4.To = toInstance4;
+                                                }
+                                                
+                                                JToken viaPartitionKeyValue4 = brokeredMessagePropertiesValue4["viaPartitionKey"];
+                                                if (viaPartitionKeyValue4 != null && viaPartitionKeyValue4.Type != JTokenType.Null)
+                                                {
+                                                    string viaPartitionKeyInstance4 = ((string)viaPartitionKeyValue4);
+                                                    brokeredMessagePropertiesInstance4.ViaPartitionKey = viaPartitionKeyInstance4;
+                                                }
+                                            }
+                                            
+                                            JToken customMessagePropertiesSequenceElement4 = ((JToken)serviceBusQueueMessageValue2["customMessageProperties"]);
+                                            if (customMessagePropertiesSequenceElement4 != null && customMessagePropertiesSequenceElement4.Type != JTokenType.Null)
+                                            {
+                                                foreach (JProperty property6 in customMessagePropertiesSequenceElement4)
+                                                {
+                                                    string customMessagePropertiesKey4 = ((string)property6.Name);
+                                                    string customMessagePropertiesValue4 = ((string)property6.Value);
+                                                    serviceBusQueueMessageInstance2.CustomMessageProperties.Add(customMessagePropertiesKey4, customMessagePropertiesValue4);
+                                                }
                                             }
                                         }
                                     }
@@ -6772,6 +11940,350 @@ namespace Microsoft.WindowsAzure.Scheduler
                                             queueMessageInstance.Message = messageInstance;
                                         }
                                     }
+                                    
+                                    JToken serviceBusTopicMessageValue = errorActionValue["serviceBusTopicMessage"];
+                                    if (serviceBusTopicMessageValue != null && serviceBusTopicMessageValue.Type != JTokenType.Null)
+                                    {
+                                        JobServiceBusTopicMessage serviceBusTopicMessageInstance = new JobServiceBusTopicMessage();
+                                        errorActionInstance.ServiceBusTopicMessage = serviceBusTopicMessageInstance;
+                                        
+                                        JToken topicPathValue = serviceBusTopicMessageValue["topicPath"];
+                                        if (topicPathValue != null && topicPathValue.Type != JTokenType.Null)
+                                        {
+                                            string topicPathInstance = ((string)topicPathValue);
+                                            serviceBusTopicMessageInstance.TopicPath = topicPathInstance;
+                                        }
+                                        
+                                        JToken namespaceValue = serviceBusTopicMessageValue["namespace"];
+                                        if (namespaceValue != null && namespaceValue.Type != JTokenType.Null)
+                                        {
+                                            string namespaceInstance = ((string)namespaceValue);
+                                            serviceBusTopicMessageInstance.Namespace = namespaceInstance;
+                                        }
+                                        
+                                        JToken transportTypeValue = serviceBusTopicMessageValue["transportType"];
+                                        if (transportTypeValue != null && transportTypeValue.Type != JTokenType.Null)
+                                        {
+                                            JobServiceBusTransportType transportTypeInstance = SchedulerClient.ParseJobServiceBusTransportType(((string)transportTypeValue));
+                                            serviceBusTopicMessageInstance.TransportType = transportTypeInstance;
+                                        }
+                                        
+                                        JToken authenticationValue2 = serviceBusTopicMessageValue["authentication"];
+                                        if (authenticationValue2 != null && authenticationValue2.Type != JTokenType.Null)
+                                        {
+                                            JobServiceBusAuthentication authenticationInstance = new JobServiceBusAuthentication();
+                                            serviceBusTopicMessageInstance.Authentication = authenticationInstance;
+                                            
+                                            JToken sasKeyNameValue = authenticationValue2["sasKeyName"];
+                                            if (sasKeyNameValue != null && sasKeyNameValue.Type != JTokenType.Null)
+                                            {
+                                                string sasKeyNameInstance = ((string)sasKeyNameValue);
+                                                authenticationInstance.SasKeyName = sasKeyNameInstance;
+                                            }
+                                            
+                                            JToken sasKeyValue = authenticationValue2["sasKey"];
+                                            if (sasKeyValue != null && sasKeyValue.Type != JTokenType.Null)
+                                            {
+                                                string sasKeyInstance = ((string)sasKeyValue);
+                                                authenticationInstance.SasKey = sasKeyInstance;
+                                            }
+                                            
+                                            JToken typeValue6 = authenticationValue2["type"];
+                                            if (typeValue6 != null && typeValue6.Type != JTokenType.Null)
+                                            {
+                                                JobServiceBusAuthenticationType typeInstance6 = SchedulerClient.ParseJobServiceBusAuthenticationType(((string)typeValue6));
+                                                authenticationInstance.Type = typeInstance6;
+                                            }
+                                        }
+                                        
+                                        JToken messageValue2 = serviceBusTopicMessageValue["message"];
+                                        if (messageValue2 != null && messageValue2.Type != JTokenType.Null)
+                                        {
+                                            string messageInstance2 = ((string)messageValue2);
+                                            serviceBusTopicMessageInstance.Message = messageInstance2;
+                                        }
+                                        
+                                        JToken brokeredMessagePropertiesValue = serviceBusTopicMessageValue["brokeredMessageProperties"];
+                                        if (brokeredMessagePropertiesValue != null && brokeredMessagePropertiesValue.Type != JTokenType.Null)
+                                        {
+                                            JobServiceBusBrokeredMessageProperties brokeredMessagePropertiesInstance = new JobServiceBusBrokeredMessageProperties();
+                                            serviceBusTopicMessageInstance.BrokeredMessageProperties = brokeredMessagePropertiesInstance;
+                                            
+                                            JToken contentTypeValue = brokeredMessagePropertiesValue["contentType"];
+                                            if (contentTypeValue != null && contentTypeValue.Type != JTokenType.Null)
+                                            {
+                                                string contentTypeInstance = ((string)contentTypeValue);
+                                                brokeredMessagePropertiesInstance.ContentType = contentTypeInstance;
+                                            }
+                                            
+                                            JToken correlationIdValue = brokeredMessagePropertiesValue["correlationId"];
+                                            if (correlationIdValue != null && correlationIdValue.Type != JTokenType.Null)
+                                            {
+                                                string correlationIdInstance = ((string)correlationIdValue);
+                                                brokeredMessagePropertiesInstance.CorrelationId = correlationIdInstance;
+                                            }
+                                            
+                                            JToken forcePersistenceValue = brokeredMessagePropertiesValue["forcePersistence"];
+                                            if (forcePersistenceValue != null && forcePersistenceValue.Type != JTokenType.Null)
+                                            {
+                                                bool forcePersistenceInstance = ((bool)forcePersistenceValue);
+                                                brokeredMessagePropertiesInstance.ForcePersistence = forcePersistenceInstance;
+                                            }
+                                            
+                                            JToken labelValue = brokeredMessagePropertiesValue["label"];
+                                            if (labelValue != null && labelValue.Type != JTokenType.Null)
+                                            {
+                                                string labelInstance = ((string)labelValue);
+                                                brokeredMessagePropertiesInstance.Label = labelInstance;
+                                            }
+                                            
+                                            JToken messageIdValue = brokeredMessagePropertiesValue["messageId"];
+                                            if (messageIdValue != null && messageIdValue.Type != JTokenType.Null)
+                                            {
+                                                string messageIdInstance = ((string)messageIdValue);
+                                                brokeredMessagePropertiesInstance.MessageId = messageIdInstance;
+                                            }
+                                            
+                                            JToken partitionKeyValue = brokeredMessagePropertiesValue["partitionKey"];
+                                            if (partitionKeyValue != null && partitionKeyValue.Type != JTokenType.Null)
+                                            {
+                                                string partitionKeyInstance = ((string)partitionKeyValue);
+                                                brokeredMessagePropertiesInstance.PartitionKey = partitionKeyInstance;
+                                            }
+                                            
+                                            JToken replyToValue = brokeredMessagePropertiesValue["replyTo"];
+                                            if (replyToValue != null && replyToValue.Type != JTokenType.Null)
+                                            {
+                                                string replyToInstance = ((string)replyToValue);
+                                                brokeredMessagePropertiesInstance.ReplyTo = replyToInstance;
+                                            }
+                                            
+                                            JToken replyToSessionIdValue = brokeredMessagePropertiesValue["replyToSessionId"];
+                                            if (replyToSessionIdValue != null && replyToSessionIdValue.Type != JTokenType.Null)
+                                            {
+                                                string replyToSessionIdInstance = ((string)replyToSessionIdValue);
+                                                brokeredMessagePropertiesInstance.ReplyToSessionId = replyToSessionIdInstance;
+                                            }
+                                            
+                                            JToken scheduledEnqueueTimeUtcValue = brokeredMessagePropertiesValue["scheduledEnqueueTimeUtc"];
+                                            if (scheduledEnqueueTimeUtcValue != null && scheduledEnqueueTimeUtcValue.Type != JTokenType.Null)
+                                            {
+                                                DateTime scheduledEnqueueTimeUtcInstance = ((DateTime)scheduledEnqueueTimeUtcValue);
+                                                brokeredMessagePropertiesInstance.ScheduledEnqueueTimeUtc = scheduledEnqueueTimeUtcInstance;
+                                            }
+                                            
+                                            JToken sessionIdValue = brokeredMessagePropertiesValue["sessionId"];
+                                            if (sessionIdValue != null && sessionIdValue.Type != JTokenType.Null)
+                                            {
+                                                string sessionIdInstance = ((string)sessionIdValue);
+                                                brokeredMessagePropertiesInstance.SessionId = sessionIdInstance;
+                                            }
+                                            
+                                            JToken timeToLiveValue = brokeredMessagePropertiesValue["timeToLive"];
+                                            if (timeToLiveValue != null && timeToLiveValue.Type != JTokenType.Null)
+                                            {
+                                                DateTime timeToLiveInstance = ((DateTime)timeToLiveValue);
+                                                brokeredMessagePropertiesInstance.TimeToLive = timeToLiveInstance;
+                                            }
+                                            
+                                            JToken toValue = brokeredMessagePropertiesValue["to"];
+                                            if (toValue != null && toValue.Type != JTokenType.Null)
+                                            {
+                                                string toInstance = ((string)toValue);
+                                                brokeredMessagePropertiesInstance.To = toInstance;
+                                            }
+                                            
+                                            JToken viaPartitionKeyValue = brokeredMessagePropertiesValue["viaPartitionKey"];
+                                            if (viaPartitionKeyValue != null && viaPartitionKeyValue.Type != JTokenType.Null)
+                                            {
+                                                string viaPartitionKeyInstance = ((string)viaPartitionKeyValue);
+                                                brokeredMessagePropertiesInstance.ViaPartitionKey = viaPartitionKeyInstance;
+                                            }
+                                        }
+                                        
+                                        JToken customMessagePropertiesSequenceElement = ((JToken)serviceBusTopicMessageValue["customMessageProperties"]);
+                                        if (customMessagePropertiesSequenceElement != null && customMessagePropertiesSequenceElement.Type != JTokenType.Null)
+                                        {
+                                            foreach (JProperty property2 in customMessagePropertiesSequenceElement)
+                                            {
+                                                string customMessagePropertiesKey = ((string)property2.Name);
+                                                string customMessagePropertiesValue = ((string)property2.Value);
+                                                serviceBusTopicMessageInstance.CustomMessageProperties.Add(customMessagePropertiesKey, customMessagePropertiesValue);
+                                            }
+                                        }
+                                    }
+                                    
+                                    JToken serviceBusQueueMessageValue = errorActionValue["serviceBusQueueMessage"];
+                                    if (serviceBusQueueMessageValue != null && serviceBusQueueMessageValue.Type != JTokenType.Null)
+                                    {
+                                        JobServiceBusQueueMessage serviceBusQueueMessageInstance = new JobServiceBusQueueMessage();
+                                        errorActionInstance.ServiceBusQueueMessage = serviceBusQueueMessageInstance;
+                                        
+                                        JToken queueNameValue2 = serviceBusQueueMessageValue["queueName"];
+                                        if (queueNameValue2 != null && queueNameValue2.Type != JTokenType.Null)
+                                        {
+                                            string queueNameInstance2 = ((string)queueNameValue2);
+                                            serviceBusQueueMessageInstance.QueueName = queueNameInstance2;
+                                        }
+                                        
+                                        JToken namespaceValue2 = serviceBusQueueMessageValue["namespace"];
+                                        if (namespaceValue2 != null && namespaceValue2.Type != JTokenType.Null)
+                                        {
+                                            string namespaceInstance2 = ((string)namespaceValue2);
+                                            serviceBusQueueMessageInstance.Namespace = namespaceInstance2;
+                                        }
+                                        
+                                        JToken transportTypeValue2 = serviceBusQueueMessageValue["transportType"];
+                                        if (transportTypeValue2 != null && transportTypeValue2.Type != JTokenType.Null)
+                                        {
+                                            JobServiceBusTransportType transportTypeInstance2 = SchedulerClient.ParseJobServiceBusTransportType(((string)transportTypeValue2));
+                                            serviceBusQueueMessageInstance.TransportType = transportTypeInstance2;
+                                        }
+                                        
+                                        JToken authenticationValue3 = serviceBusQueueMessageValue["authentication"];
+                                        if (authenticationValue3 != null && authenticationValue3.Type != JTokenType.Null)
+                                        {
+                                            JobServiceBusAuthentication authenticationInstance2 = new JobServiceBusAuthentication();
+                                            serviceBusQueueMessageInstance.Authentication = authenticationInstance2;
+                                            
+                                            JToken sasKeyNameValue2 = authenticationValue3["sasKeyName"];
+                                            if (sasKeyNameValue2 != null && sasKeyNameValue2.Type != JTokenType.Null)
+                                            {
+                                                string sasKeyNameInstance2 = ((string)sasKeyNameValue2);
+                                                authenticationInstance2.SasKeyName = sasKeyNameInstance2;
+                                            }
+                                            
+                                            JToken sasKeyValue2 = authenticationValue3["sasKey"];
+                                            if (sasKeyValue2 != null && sasKeyValue2.Type != JTokenType.Null)
+                                            {
+                                                string sasKeyInstance2 = ((string)sasKeyValue2);
+                                                authenticationInstance2.SasKey = sasKeyInstance2;
+                                            }
+                                            
+                                            JToken typeValue7 = authenticationValue3["type"];
+                                            if (typeValue7 != null && typeValue7.Type != JTokenType.Null)
+                                            {
+                                                JobServiceBusAuthenticationType typeInstance7 = SchedulerClient.ParseJobServiceBusAuthenticationType(((string)typeValue7));
+                                                authenticationInstance2.Type = typeInstance7;
+                                            }
+                                        }
+                                        
+                                        JToken messageValue3 = serviceBusQueueMessageValue["message"];
+                                        if (messageValue3 != null && messageValue3.Type != JTokenType.Null)
+                                        {
+                                            string messageInstance3 = ((string)messageValue3);
+                                            serviceBusQueueMessageInstance.Message = messageInstance3;
+                                        }
+                                        
+                                        JToken brokeredMessagePropertiesValue2 = serviceBusQueueMessageValue["brokeredMessageProperties"];
+                                        if (brokeredMessagePropertiesValue2 != null && brokeredMessagePropertiesValue2.Type != JTokenType.Null)
+                                        {
+                                            JobServiceBusBrokeredMessageProperties brokeredMessagePropertiesInstance2 = new JobServiceBusBrokeredMessageProperties();
+                                            serviceBusQueueMessageInstance.BrokeredMessageProperties = brokeredMessagePropertiesInstance2;
+                                            
+                                            JToken contentTypeValue2 = brokeredMessagePropertiesValue2["contentType"];
+                                            if (contentTypeValue2 != null && contentTypeValue2.Type != JTokenType.Null)
+                                            {
+                                                string contentTypeInstance2 = ((string)contentTypeValue2);
+                                                brokeredMessagePropertiesInstance2.ContentType = contentTypeInstance2;
+                                            }
+                                            
+                                            JToken correlationIdValue2 = brokeredMessagePropertiesValue2["correlationId"];
+                                            if (correlationIdValue2 != null && correlationIdValue2.Type != JTokenType.Null)
+                                            {
+                                                string correlationIdInstance2 = ((string)correlationIdValue2);
+                                                brokeredMessagePropertiesInstance2.CorrelationId = correlationIdInstance2;
+                                            }
+                                            
+                                            JToken forcePersistenceValue2 = brokeredMessagePropertiesValue2["forcePersistence"];
+                                            if (forcePersistenceValue2 != null && forcePersistenceValue2.Type != JTokenType.Null)
+                                            {
+                                                bool forcePersistenceInstance2 = ((bool)forcePersistenceValue2);
+                                                brokeredMessagePropertiesInstance2.ForcePersistence = forcePersistenceInstance2;
+                                            }
+                                            
+                                            JToken labelValue2 = brokeredMessagePropertiesValue2["label"];
+                                            if (labelValue2 != null && labelValue2.Type != JTokenType.Null)
+                                            {
+                                                string labelInstance2 = ((string)labelValue2);
+                                                brokeredMessagePropertiesInstance2.Label = labelInstance2;
+                                            }
+                                            
+                                            JToken messageIdValue2 = brokeredMessagePropertiesValue2["messageId"];
+                                            if (messageIdValue2 != null && messageIdValue2.Type != JTokenType.Null)
+                                            {
+                                                string messageIdInstance2 = ((string)messageIdValue2);
+                                                brokeredMessagePropertiesInstance2.MessageId = messageIdInstance2;
+                                            }
+                                            
+                                            JToken partitionKeyValue2 = brokeredMessagePropertiesValue2["partitionKey"];
+                                            if (partitionKeyValue2 != null && partitionKeyValue2.Type != JTokenType.Null)
+                                            {
+                                                string partitionKeyInstance2 = ((string)partitionKeyValue2);
+                                                brokeredMessagePropertiesInstance2.PartitionKey = partitionKeyInstance2;
+                                            }
+                                            
+                                            JToken replyToValue2 = brokeredMessagePropertiesValue2["replyTo"];
+                                            if (replyToValue2 != null && replyToValue2.Type != JTokenType.Null)
+                                            {
+                                                string replyToInstance2 = ((string)replyToValue2);
+                                                brokeredMessagePropertiesInstance2.ReplyTo = replyToInstance2;
+                                            }
+                                            
+                                            JToken replyToSessionIdValue2 = brokeredMessagePropertiesValue2["replyToSessionId"];
+                                            if (replyToSessionIdValue2 != null && replyToSessionIdValue2.Type != JTokenType.Null)
+                                            {
+                                                string replyToSessionIdInstance2 = ((string)replyToSessionIdValue2);
+                                                brokeredMessagePropertiesInstance2.ReplyToSessionId = replyToSessionIdInstance2;
+                                            }
+                                            
+                                            JToken scheduledEnqueueTimeUtcValue2 = brokeredMessagePropertiesValue2["scheduledEnqueueTimeUtc"];
+                                            if (scheduledEnqueueTimeUtcValue2 != null && scheduledEnqueueTimeUtcValue2.Type != JTokenType.Null)
+                                            {
+                                                DateTime scheduledEnqueueTimeUtcInstance2 = ((DateTime)scheduledEnqueueTimeUtcValue2);
+                                                brokeredMessagePropertiesInstance2.ScheduledEnqueueTimeUtc = scheduledEnqueueTimeUtcInstance2;
+                                            }
+                                            
+                                            JToken sessionIdValue2 = brokeredMessagePropertiesValue2["sessionId"];
+                                            if (sessionIdValue2 != null && sessionIdValue2.Type != JTokenType.Null)
+                                            {
+                                                string sessionIdInstance2 = ((string)sessionIdValue2);
+                                                brokeredMessagePropertiesInstance2.SessionId = sessionIdInstance2;
+                                            }
+                                            
+                                            JToken timeToLiveValue2 = brokeredMessagePropertiesValue2["timeToLive"];
+                                            if (timeToLiveValue2 != null && timeToLiveValue2.Type != JTokenType.Null)
+                                            {
+                                                DateTime timeToLiveInstance2 = ((DateTime)timeToLiveValue2);
+                                                brokeredMessagePropertiesInstance2.TimeToLive = timeToLiveInstance2;
+                                            }
+                                            
+                                            JToken toValue2 = brokeredMessagePropertiesValue2["to"];
+                                            if (toValue2 != null && toValue2.Type != JTokenType.Null)
+                                            {
+                                                string toInstance2 = ((string)toValue2);
+                                                brokeredMessagePropertiesInstance2.To = toInstance2;
+                                            }
+                                            
+                                            JToken viaPartitionKeyValue2 = brokeredMessagePropertiesValue2["viaPartitionKey"];
+                                            if (viaPartitionKeyValue2 != null && viaPartitionKeyValue2.Type != JTokenType.Null)
+                                            {
+                                                string viaPartitionKeyInstance2 = ((string)viaPartitionKeyValue2);
+                                                brokeredMessagePropertiesInstance2.ViaPartitionKey = viaPartitionKeyInstance2;
+                                            }
+                                        }
+                                        
+                                        JToken customMessagePropertiesSequenceElement2 = ((JToken)serviceBusQueueMessageValue["customMessageProperties"]);
+                                        if (customMessagePropertiesSequenceElement2 != null && customMessagePropertiesSequenceElement2.Type != JTokenType.Null)
+                                        {
+                                            foreach (JProperty property3 in customMessagePropertiesSequenceElement2)
+                                            {
+                                                string customMessagePropertiesKey2 = ((string)property3.Name);
+                                                string customMessagePropertiesValue2 = ((string)property3.Value);
+                                                serviceBusQueueMessageInstance.CustomMessageProperties.Add(customMessagePropertiesKey2, customMessagePropertiesValue2);
+                                            }
+                                        }
+                                    }
                                 }
                                 
                                 JToken requestValue2 = actionValue["request"];
@@ -6797,10 +12309,10 @@ namespace Microsoft.WindowsAzure.Scheduler
                                     JToken headersSequenceElement2 = ((JToken)requestValue2["headers"]);
                                     if (headersSequenceElement2 != null && headersSequenceElement2.Type != JTokenType.Null)
                                     {
-                                        foreach (JProperty property2 in headersSequenceElement2)
+                                        foreach (JProperty property4 in headersSequenceElement2)
                                         {
-                                            string headersKey2 = ((string)property2.Name);
-                                            string headersValue2 = ((string)property2.Value);
+                                            string headersKey2 = ((string)property4.Name);
+                                            string headersValue2 = ((string)property4.Value);
                                             requestInstance2.Headers.Add(headersKey2, headersValue2);
                                         }
                                     }
@@ -6812,54 +12324,54 @@ namespace Microsoft.WindowsAzure.Scheduler
                                         requestInstance2.Body = bodyInstance2;
                                     }
                                     
-                                    JToken authenticationValue2 = requestValue2["authentication"];
-                                    if (authenticationValue2 != null && authenticationValue2.Type != JTokenType.Null)
+                                    JToken authenticationValue4 = requestValue2["authentication"];
+                                    if (authenticationValue4 != null && authenticationValue4.Type != JTokenType.Null)
                                     {
-                                        string typeName2 = ((string)authenticationValue2["type"]);
+                                        string typeName2 = ((string)authenticationValue4["type"]);
                                         if (typeName2 == "ClientCertificate")
                                         {
                                             ClientCertAuthentication clientCertAuthenticationInstance2 = new ClientCertAuthentication();
                                             
-                                            JToken passwordValue3 = authenticationValue2["password"];
+                                            JToken passwordValue3 = authenticationValue4["password"];
                                             if (passwordValue3 != null && passwordValue3.Type != JTokenType.Null)
                                             {
                                                 string passwordInstance3 = ((string)passwordValue3);
                                                 clientCertAuthenticationInstance2.Password = passwordInstance3;
                                             }
                                             
-                                            JToken pfxValue2 = authenticationValue2["pfx"];
+                                            JToken pfxValue2 = authenticationValue4["pfx"];
                                             if (pfxValue2 != null && pfxValue2.Type != JTokenType.Null)
                                             {
                                                 string pfxInstance2 = ((string)pfxValue2);
                                                 clientCertAuthenticationInstance2.Pfx = pfxInstance2;
                                             }
                                             
-                                            JToken certificateThumbprintValue2 = authenticationValue2["certificateThumbprint"];
+                                            JToken certificateThumbprintValue2 = authenticationValue4["certificateThumbprint"];
                                             if (certificateThumbprintValue2 != null && certificateThumbprintValue2.Type != JTokenType.Null)
                                             {
                                                 string certificateThumbprintInstance2 = ((string)certificateThumbprintValue2);
                                                 clientCertAuthenticationInstance2.CertificateThumbprint = certificateThumbprintInstance2;
                                             }
                                             
-                                            JToken certificateExpirationValue2 = authenticationValue2["certificateExpiration"];
+                                            JToken certificateExpirationValue2 = authenticationValue4["certificateExpiration"];
                                             if (certificateExpirationValue2 != null && certificateExpirationValue2.Type != JTokenType.Null)
                                             {
                                                 DateTime certificateExpirationInstance2 = ((DateTime)certificateExpirationValue2);
                                                 clientCertAuthenticationInstance2.CertificateExpiration = certificateExpirationInstance2;
                                             }
                                             
-                                            JToken certificateSubjectNameValue2 = authenticationValue2["certificateSubjectName"];
+                                            JToken certificateSubjectNameValue2 = authenticationValue4["certificateSubjectName"];
                                             if (certificateSubjectNameValue2 != null && certificateSubjectNameValue2.Type != JTokenType.Null)
                                             {
                                                 string certificateSubjectNameInstance2 = ((string)certificateSubjectNameValue2);
                                                 clientCertAuthenticationInstance2.CertificateSubjectName = certificateSubjectNameInstance2;
                                             }
                                             
-                                            JToken typeValue6 = authenticationValue2["type"];
-                                            if (typeValue6 != null && typeValue6.Type != JTokenType.Null)
+                                            JToken typeValue8 = authenticationValue4["type"];
+                                            if (typeValue8 != null && typeValue8.Type != JTokenType.Null)
                                             {
-                                                HttpAuthenticationType typeInstance6 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue6));
-                                                clientCertAuthenticationInstance2.Type = typeInstance6;
+                                                HttpAuthenticationType typeInstance8 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue8));
+                                                clientCertAuthenticationInstance2.Type = typeInstance8;
                                             }
                                             requestInstance2.Authentication = clientCertAuthenticationInstance2;
                                         }
@@ -6867,39 +12379,39 @@ namespace Microsoft.WindowsAzure.Scheduler
                                         {
                                             AADOAuthAuthentication aADOAuthAuthenticationInstance2 = new AADOAuthAuthentication();
                                             
-                                            JToken secretValue2 = authenticationValue2["secret"];
+                                            JToken secretValue2 = authenticationValue4["secret"];
                                             if (secretValue2 != null && secretValue2.Type != JTokenType.Null)
                                             {
                                                 string secretInstance2 = ((string)secretValue2);
                                                 aADOAuthAuthenticationInstance2.Secret = secretInstance2;
                                             }
                                             
-                                            JToken tenantValue2 = authenticationValue2["tenant"];
+                                            JToken tenantValue2 = authenticationValue4["tenant"];
                                             if (tenantValue2 != null && tenantValue2.Type != JTokenType.Null)
                                             {
                                                 string tenantInstance2 = ((string)tenantValue2);
                                                 aADOAuthAuthenticationInstance2.Tenant = tenantInstance2;
                                             }
                                             
-                                            JToken audienceValue2 = authenticationValue2["audience"];
+                                            JToken audienceValue2 = authenticationValue4["audience"];
                                             if (audienceValue2 != null && audienceValue2.Type != JTokenType.Null)
                                             {
                                                 string audienceInstance2 = ((string)audienceValue2);
                                                 aADOAuthAuthenticationInstance2.Audience = audienceInstance2;
                                             }
                                             
-                                            JToken clientIdValue2 = authenticationValue2["clientId"];
+                                            JToken clientIdValue2 = authenticationValue4["clientId"];
                                             if (clientIdValue2 != null && clientIdValue2.Type != JTokenType.Null)
                                             {
                                                 string clientIdInstance2 = ((string)clientIdValue2);
                                                 aADOAuthAuthenticationInstance2.ClientId = clientIdInstance2;
                                             }
                                             
-                                            JToken typeValue7 = authenticationValue2["type"];
-                                            if (typeValue7 != null && typeValue7.Type != JTokenType.Null)
+                                            JToken typeValue9 = authenticationValue4["type"];
+                                            if (typeValue9 != null && typeValue9.Type != JTokenType.Null)
                                             {
-                                                HttpAuthenticationType typeInstance7 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue7));
-                                                aADOAuthAuthenticationInstance2.Type = typeInstance7;
+                                                HttpAuthenticationType typeInstance9 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue9));
+                                                aADOAuthAuthenticationInstance2.Type = typeInstance9;
                                             }
                                             requestInstance2.Authentication = aADOAuthAuthenticationInstance2;
                                         }
@@ -6907,25 +12419,25 @@ namespace Microsoft.WindowsAzure.Scheduler
                                         {
                                             BasicAuthentication basicAuthenticationInstance2 = new BasicAuthentication();
                                             
-                                            JToken usernameValue2 = authenticationValue2["username"];
+                                            JToken usernameValue2 = authenticationValue4["username"];
                                             if (usernameValue2 != null && usernameValue2.Type != JTokenType.Null)
                                             {
                                                 string usernameInstance2 = ((string)usernameValue2);
                                                 basicAuthenticationInstance2.Username = usernameInstance2;
                                             }
                                             
-                                            JToken passwordValue4 = authenticationValue2["password"];
+                                            JToken passwordValue4 = authenticationValue4["password"];
                                             if (passwordValue4 != null && passwordValue4.Type != JTokenType.Null)
                                             {
                                                 string passwordInstance4 = ((string)passwordValue4);
                                                 basicAuthenticationInstance2.Password = passwordInstance4;
                                             }
                                             
-                                            JToken typeValue8 = authenticationValue2["type"];
-                                            if (typeValue8 != null && typeValue8.Type != JTokenType.Null)
+                                            JToken typeValue10 = authenticationValue4["type"];
+                                            if (typeValue10 != null && typeValue10.Type != JTokenType.Null)
                                             {
-                                                HttpAuthenticationType typeInstance8 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue8));
-                                                basicAuthenticationInstance2.Type = typeInstance8;
+                                                HttpAuthenticationType typeInstance10 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue10));
+                                                basicAuthenticationInstance2.Type = typeInstance10;
                                             }
                                             requestInstance2.Authentication = basicAuthenticationInstance2;
                                         }
@@ -6945,11 +12457,11 @@ namespace Microsoft.WindowsAzure.Scheduler
                                         queueMessageInstance2.StorageAccountName = storageAccountInstance2;
                                     }
                                     
-                                    JToken queueNameValue2 = queueMessageValue2["queueName"];
-                                    if (queueNameValue2 != null && queueNameValue2.Type != JTokenType.Null)
+                                    JToken queueNameValue3 = queueMessageValue2["queueName"];
+                                    if (queueNameValue3 != null && queueNameValue3.Type != JTokenType.Null)
                                     {
-                                        string queueNameInstance2 = ((string)queueNameValue2);
-                                        queueMessageInstance2.QueueName = queueNameInstance2;
+                                        string queueNameInstance3 = ((string)queueNameValue3);
+                                        queueMessageInstance2.QueueName = queueNameInstance3;
                                     }
                                     
                                     JToken sasTokenValue2 = queueMessageValue2["sasToken"];
@@ -6959,11 +12471,355 @@ namespace Microsoft.WindowsAzure.Scheduler
                                         queueMessageInstance2.SasToken = sasTokenInstance2;
                                     }
                                     
-                                    JToken messageValue2 = queueMessageValue2["message"];
-                                    if (messageValue2 != null && messageValue2.Type != JTokenType.Null)
+                                    JToken messageValue4 = queueMessageValue2["message"];
+                                    if (messageValue4 != null && messageValue4.Type != JTokenType.Null)
                                     {
-                                        string messageInstance2 = ((string)messageValue2);
-                                        queueMessageInstance2.Message = messageInstance2;
+                                        string messageInstance4 = ((string)messageValue4);
+                                        queueMessageInstance2.Message = messageInstance4;
+                                    }
+                                }
+                                
+                                JToken serviceBusTopicMessageValue2 = actionValue["serviceBusTopicMessage"];
+                                if (serviceBusTopicMessageValue2 != null && serviceBusTopicMessageValue2.Type != JTokenType.Null)
+                                {
+                                    JobServiceBusTopicMessage serviceBusTopicMessageInstance2 = new JobServiceBusTopicMessage();
+                                    actionInstance.ServiceBusTopicMessage = serviceBusTopicMessageInstance2;
+                                    
+                                    JToken topicPathValue2 = serviceBusTopicMessageValue2["topicPath"];
+                                    if (topicPathValue2 != null && topicPathValue2.Type != JTokenType.Null)
+                                    {
+                                        string topicPathInstance2 = ((string)topicPathValue2);
+                                        serviceBusTopicMessageInstance2.TopicPath = topicPathInstance2;
+                                    }
+                                    
+                                    JToken namespaceValue3 = serviceBusTopicMessageValue2["namespace"];
+                                    if (namespaceValue3 != null && namespaceValue3.Type != JTokenType.Null)
+                                    {
+                                        string namespaceInstance3 = ((string)namespaceValue3);
+                                        serviceBusTopicMessageInstance2.Namespace = namespaceInstance3;
+                                    }
+                                    
+                                    JToken transportTypeValue3 = serviceBusTopicMessageValue2["transportType"];
+                                    if (transportTypeValue3 != null && transportTypeValue3.Type != JTokenType.Null)
+                                    {
+                                        JobServiceBusTransportType transportTypeInstance3 = SchedulerClient.ParseJobServiceBusTransportType(((string)transportTypeValue3));
+                                        serviceBusTopicMessageInstance2.TransportType = transportTypeInstance3;
+                                    }
+                                    
+                                    JToken authenticationValue5 = serviceBusTopicMessageValue2["authentication"];
+                                    if (authenticationValue5 != null && authenticationValue5.Type != JTokenType.Null)
+                                    {
+                                        JobServiceBusAuthentication authenticationInstance3 = new JobServiceBusAuthentication();
+                                        serviceBusTopicMessageInstance2.Authentication = authenticationInstance3;
+                                        
+                                        JToken sasKeyNameValue3 = authenticationValue5["sasKeyName"];
+                                        if (sasKeyNameValue3 != null && sasKeyNameValue3.Type != JTokenType.Null)
+                                        {
+                                            string sasKeyNameInstance3 = ((string)sasKeyNameValue3);
+                                            authenticationInstance3.SasKeyName = sasKeyNameInstance3;
+                                        }
+                                        
+                                        JToken sasKeyValue3 = authenticationValue5["sasKey"];
+                                        if (sasKeyValue3 != null && sasKeyValue3.Type != JTokenType.Null)
+                                        {
+                                            string sasKeyInstance3 = ((string)sasKeyValue3);
+                                            authenticationInstance3.SasKey = sasKeyInstance3;
+                                        }
+                                        
+                                        JToken typeValue11 = authenticationValue5["type"];
+                                        if (typeValue11 != null && typeValue11.Type != JTokenType.Null)
+                                        {
+                                            JobServiceBusAuthenticationType typeInstance11 = SchedulerClient.ParseJobServiceBusAuthenticationType(((string)typeValue11));
+                                            authenticationInstance3.Type = typeInstance11;
+                                        }
+                                    }
+                                    
+                                    JToken messageValue5 = serviceBusTopicMessageValue2["message"];
+                                    if (messageValue5 != null && messageValue5.Type != JTokenType.Null)
+                                    {
+                                        string messageInstance5 = ((string)messageValue5);
+                                        serviceBusTopicMessageInstance2.Message = messageInstance5;
+                                    }
+                                    
+                                    JToken brokeredMessagePropertiesValue3 = serviceBusTopicMessageValue2["brokeredMessageProperties"];
+                                    if (brokeredMessagePropertiesValue3 != null && brokeredMessagePropertiesValue3.Type != JTokenType.Null)
+                                    {
+                                        JobServiceBusBrokeredMessageProperties brokeredMessagePropertiesInstance3 = new JobServiceBusBrokeredMessageProperties();
+                                        serviceBusTopicMessageInstance2.BrokeredMessageProperties = brokeredMessagePropertiesInstance3;
+                                        
+                                        JToken contentTypeValue3 = brokeredMessagePropertiesValue3["contentType"];
+                                        if (contentTypeValue3 != null && contentTypeValue3.Type != JTokenType.Null)
+                                        {
+                                            string contentTypeInstance3 = ((string)contentTypeValue3);
+                                            brokeredMessagePropertiesInstance3.ContentType = contentTypeInstance3;
+                                        }
+                                        
+                                        JToken correlationIdValue3 = brokeredMessagePropertiesValue3["correlationId"];
+                                        if (correlationIdValue3 != null && correlationIdValue3.Type != JTokenType.Null)
+                                        {
+                                            string correlationIdInstance3 = ((string)correlationIdValue3);
+                                            brokeredMessagePropertiesInstance3.CorrelationId = correlationIdInstance3;
+                                        }
+                                        
+                                        JToken forcePersistenceValue3 = brokeredMessagePropertiesValue3["forcePersistence"];
+                                        if (forcePersistenceValue3 != null && forcePersistenceValue3.Type != JTokenType.Null)
+                                        {
+                                            bool forcePersistenceInstance3 = ((bool)forcePersistenceValue3);
+                                            brokeredMessagePropertiesInstance3.ForcePersistence = forcePersistenceInstance3;
+                                        }
+                                        
+                                        JToken labelValue3 = brokeredMessagePropertiesValue3["label"];
+                                        if (labelValue3 != null && labelValue3.Type != JTokenType.Null)
+                                        {
+                                            string labelInstance3 = ((string)labelValue3);
+                                            brokeredMessagePropertiesInstance3.Label = labelInstance3;
+                                        }
+                                        
+                                        JToken messageIdValue3 = brokeredMessagePropertiesValue3["messageId"];
+                                        if (messageIdValue3 != null && messageIdValue3.Type != JTokenType.Null)
+                                        {
+                                            string messageIdInstance3 = ((string)messageIdValue3);
+                                            brokeredMessagePropertiesInstance3.MessageId = messageIdInstance3;
+                                        }
+                                        
+                                        JToken partitionKeyValue3 = brokeredMessagePropertiesValue3["partitionKey"];
+                                        if (partitionKeyValue3 != null && partitionKeyValue3.Type != JTokenType.Null)
+                                        {
+                                            string partitionKeyInstance3 = ((string)partitionKeyValue3);
+                                            brokeredMessagePropertiesInstance3.PartitionKey = partitionKeyInstance3;
+                                        }
+                                        
+                                        JToken replyToValue3 = brokeredMessagePropertiesValue3["replyTo"];
+                                        if (replyToValue3 != null && replyToValue3.Type != JTokenType.Null)
+                                        {
+                                            string replyToInstance3 = ((string)replyToValue3);
+                                            brokeredMessagePropertiesInstance3.ReplyTo = replyToInstance3;
+                                        }
+                                        
+                                        JToken replyToSessionIdValue3 = brokeredMessagePropertiesValue3["replyToSessionId"];
+                                        if (replyToSessionIdValue3 != null && replyToSessionIdValue3.Type != JTokenType.Null)
+                                        {
+                                            string replyToSessionIdInstance3 = ((string)replyToSessionIdValue3);
+                                            brokeredMessagePropertiesInstance3.ReplyToSessionId = replyToSessionIdInstance3;
+                                        }
+                                        
+                                        JToken scheduledEnqueueTimeUtcValue3 = brokeredMessagePropertiesValue3["scheduledEnqueueTimeUtc"];
+                                        if (scheduledEnqueueTimeUtcValue3 != null && scheduledEnqueueTimeUtcValue3.Type != JTokenType.Null)
+                                        {
+                                            DateTime scheduledEnqueueTimeUtcInstance3 = ((DateTime)scheduledEnqueueTimeUtcValue3);
+                                            brokeredMessagePropertiesInstance3.ScheduledEnqueueTimeUtc = scheduledEnqueueTimeUtcInstance3;
+                                        }
+                                        
+                                        JToken sessionIdValue3 = brokeredMessagePropertiesValue3["sessionId"];
+                                        if (sessionIdValue3 != null && sessionIdValue3.Type != JTokenType.Null)
+                                        {
+                                            string sessionIdInstance3 = ((string)sessionIdValue3);
+                                            brokeredMessagePropertiesInstance3.SessionId = sessionIdInstance3;
+                                        }
+                                        
+                                        JToken timeToLiveValue3 = brokeredMessagePropertiesValue3["timeToLive"];
+                                        if (timeToLiveValue3 != null && timeToLiveValue3.Type != JTokenType.Null)
+                                        {
+                                            DateTime timeToLiveInstance3 = ((DateTime)timeToLiveValue3);
+                                            brokeredMessagePropertiesInstance3.TimeToLive = timeToLiveInstance3;
+                                        }
+                                        
+                                        JToken toValue3 = brokeredMessagePropertiesValue3["to"];
+                                        if (toValue3 != null && toValue3.Type != JTokenType.Null)
+                                        {
+                                            string toInstance3 = ((string)toValue3);
+                                            brokeredMessagePropertiesInstance3.To = toInstance3;
+                                        }
+                                        
+                                        JToken viaPartitionKeyValue3 = brokeredMessagePropertiesValue3["viaPartitionKey"];
+                                        if (viaPartitionKeyValue3 != null && viaPartitionKeyValue3.Type != JTokenType.Null)
+                                        {
+                                            string viaPartitionKeyInstance3 = ((string)viaPartitionKeyValue3);
+                                            brokeredMessagePropertiesInstance3.ViaPartitionKey = viaPartitionKeyInstance3;
+                                        }
+                                    }
+                                    
+                                    JToken customMessagePropertiesSequenceElement3 = ((JToken)serviceBusTopicMessageValue2["customMessageProperties"]);
+                                    if (customMessagePropertiesSequenceElement3 != null && customMessagePropertiesSequenceElement3.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property5 in customMessagePropertiesSequenceElement3)
+                                        {
+                                            string customMessagePropertiesKey3 = ((string)property5.Name);
+                                            string customMessagePropertiesValue3 = ((string)property5.Value);
+                                            serviceBusTopicMessageInstance2.CustomMessageProperties.Add(customMessagePropertiesKey3, customMessagePropertiesValue3);
+                                        }
+                                    }
+                                }
+                                
+                                JToken serviceBusQueueMessageValue2 = actionValue["serviceBusQueueMessage"];
+                                if (serviceBusQueueMessageValue2 != null && serviceBusQueueMessageValue2.Type != JTokenType.Null)
+                                {
+                                    JobServiceBusQueueMessage serviceBusQueueMessageInstance2 = new JobServiceBusQueueMessage();
+                                    actionInstance.ServiceBusQueueMessage = serviceBusQueueMessageInstance2;
+                                    
+                                    JToken queueNameValue4 = serviceBusQueueMessageValue2["queueName"];
+                                    if (queueNameValue4 != null && queueNameValue4.Type != JTokenType.Null)
+                                    {
+                                        string queueNameInstance4 = ((string)queueNameValue4);
+                                        serviceBusQueueMessageInstance2.QueueName = queueNameInstance4;
+                                    }
+                                    
+                                    JToken namespaceValue4 = serviceBusQueueMessageValue2["namespace"];
+                                    if (namespaceValue4 != null && namespaceValue4.Type != JTokenType.Null)
+                                    {
+                                        string namespaceInstance4 = ((string)namespaceValue4);
+                                        serviceBusQueueMessageInstance2.Namespace = namespaceInstance4;
+                                    }
+                                    
+                                    JToken transportTypeValue4 = serviceBusQueueMessageValue2["transportType"];
+                                    if (transportTypeValue4 != null && transportTypeValue4.Type != JTokenType.Null)
+                                    {
+                                        JobServiceBusTransportType transportTypeInstance4 = SchedulerClient.ParseJobServiceBusTransportType(((string)transportTypeValue4));
+                                        serviceBusQueueMessageInstance2.TransportType = transportTypeInstance4;
+                                    }
+                                    
+                                    JToken authenticationValue6 = serviceBusQueueMessageValue2["authentication"];
+                                    if (authenticationValue6 != null && authenticationValue6.Type != JTokenType.Null)
+                                    {
+                                        JobServiceBusAuthentication authenticationInstance4 = new JobServiceBusAuthentication();
+                                        serviceBusQueueMessageInstance2.Authentication = authenticationInstance4;
+                                        
+                                        JToken sasKeyNameValue4 = authenticationValue6["sasKeyName"];
+                                        if (sasKeyNameValue4 != null && sasKeyNameValue4.Type != JTokenType.Null)
+                                        {
+                                            string sasKeyNameInstance4 = ((string)sasKeyNameValue4);
+                                            authenticationInstance4.SasKeyName = sasKeyNameInstance4;
+                                        }
+                                        
+                                        JToken sasKeyValue4 = authenticationValue6["sasKey"];
+                                        if (sasKeyValue4 != null && sasKeyValue4.Type != JTokenType.Null)
+                                        {
+                                            string sasKeyInstance4 = ((string)sasKeyValue4);
+                                            authenticationInstance4.SasKey = sasKeyInstance4;
+                                        }
+                                        
+                                        JToken typeValue12 = authenticationValue6["type"];
+                                        if (typeValue12 != null && typeValue12.Type != JTokenType.Null)
+                                        {
+                                            JobServiceBusAuthenticationType typeInstance12 = SchedulerClient.ParseJobServiceBusAuthenticationType(((string)typeValue12));
+                                            authenticationInstance4.Type = typeInstance12;
+                                        }
+                                    }
+                                    
+                                    JToken messageValue6 = serviceBusQueueMessageValue2["message"];
+                                    if (messageValue6 != null && messageValue6.Type != JTokenType.Null)
+                                    {
+                                        string messageInstance6 = ((string)messageValue6);
+                                        serviceBusQueueMessageInstance2.Message = messageInstance6;
+                                    }
+                                    
+                                    JToken brokeredMessagePropertiesValue4 = serviceBusQueueMessageValue2["brokeredMessageProperties"];
+                                    if (brokeredMessagePropertiesValue4 != null && brokeredMessagePropertiesValue4.Type != JTokenType.Null)
+                                    {
+                                        JobServiceBusBrokeredMessageProperties brokeredMessagePropertiesInstance4 = new JobServiceBusBrokeredMessageProperties();
+                                        serviceBusQueueMessageInstance2.BrokeredMessageProperties = brokeredMessagePropertiesInstance4;
+                                        
+                                        JToken contentTypeValue4 = brokeredMessagePropertiesValue4["contentType"];
+                                        if (contentTypeValue4 != null && contentTypeValue4.Type != JTokenType.Null)
+                                        {
+                                            string contentTypeInstance4 = ((string)contentTypeValue4);
+                                            brokeredMessagePropertiesInstance4.ContentType = contentTypeInstance4;
+                                        }
+                                        
+                                        JToken correlationIdValue4 = brokeredMessagePropertiesValue4["correlationId"];
+                                        if (correlationIdValue4 != null && correlationIdValue4.Type != JTokenType.Null)
+                                        {
+                                            string correlationIdInstance4 = ((string)correlationIdValue4);
+                                            brokeredMessagePropertiesInstance4.CorrelationId = correlationIdInstance4;
+                                        }
+                                        
+                                        JToken forcePersistenceValue4 = brokeredMessagePropertiesValue4["forcePersistence"];
+                                        if (forcePersistenceValue4 != null && forcePersistenceValue4.Type != JTokenType.Null)
+                                        {
+                                            bool forcePersistenceInstance4 = ((bool)forcePersistenceValue4);
+                                            brokeredMessagePropertiesInstance4.ForcePersistence = forcePersistenceInstance4;
+                                        }
+                                        
+                                        JToken labelValue4 = brokeredMessagePropertiesValue4["label"];
+                                        if (labelValue4 != null && labelValue4.Type != JTokenType.Null)
+                                        {
+                                            string labelInstance4 = ((string)labelValue4);
+                                            brokeredMessagePropertiesInstance4.Label = labelInstance4;
+                                        }
+                                        
+                                        JToken messageIdValue4 = brokeredMessagePropertiesValue4["messageId"];
+                                        if (messageIdValue4 != null && messageIdValue4.Type != JTokenType.Null)
+                                        {
+                                            string messageIdInstance4 = ((string)messageIdValue4);
+                                            brokeredMessagePropertiesInstance4.MessageId = messageIdInstance4;
+                                        }
+                                        
+                                        JToken partitionKeyValue4 = brokeredMessagePropertiesValue4["partitionKey"];
+                                        if (partitionKeyValue4 != null && partitionKeyValue4.Type != JTokenType.Null)
+                                        {
+                                            string partitionKeyInstance4 = ((string)partitionKeyValue4);
+                                            brokeredMessagePropertiesInstance4.PartitionKey = partitionKeyInstance4;
+                                        }
+                                        
+                                        JToken replyToValue4 = brokeredMessagePropertiesValue4["replyTo"];
+                                        if (replyToValue4 != null && replyToValue4.Type != JTokenType.Null)
+                                        {
+                                            string replyToInstance4 = ((string)replyToValue4);
+                                            brokeredMessagePropertiesInstance4.ReplyTo = replyToInstance4;
+                                        }
+                                        
+                                        JToken replyToSessionIdValue4 = brokeredMessagePropertiesValue4["replyToSessionId"];
+                                        if (replyToSessionIdValue4 != null && replyToSessionIdValue4.Type != JTokenType.Null)
+                                        {
+                                            string replyToSessionIdInstance4 = ((string)replyToSessionIdValue4);
+                                            brokeredMessagePropertiesInstance4.ReplyToSessionId = replyToSessionIdInstance4;
+                                        }
+                                        
+                                        JToken scheduledEnqueueTimeUtcValue4 = brokeredMessagePropertiesValue4["scheduledEnqueueTimeUtc"];
+                                        if (scheduledEnqueueTimeUtcValue4 != null && scheduledEnqueueTimeUtcValue4.Type != JTokenType.Null)
+                                        {
+                                            DateTime scheduledEnqueueTimeUtcInstance4 = ((DateTime)scheduledEnqueueTimeUtcValue4);
+                                            brokeredMessagePropertiesInstance4.ScheduledEnqueueTimeUtc = scheduledEnqueueTimeUtcInstance4;
+                                        }
+                                        
+                                        JToken sessionIdValue4 = brokeredMessagePropertiesValue4["sessionId"];
+                                        if (sessionIdValue4 != null && sessionIdValue4.Type != JTokenType.Null)
+                                        {
+                                            string sessionIdInstance4 = ((string)sessionIdValue4);
+                                            brokeredMessagePropertiesInstance4.SessionId = sessionIdInstance4;
+                                        }
+                                        
+                                        JToken timeToLiveValue4 = brokeredMessagePropertiesValue4["timeToLive"];
+                                        if (timeToLiveValue4 != null && timeToLiveValue4.Type != JTokenType.Null)
+                                        {
+                                            DateTime timeToLiveInstance4 = ((DateTime)timeToLiveValue4);
+                                            brokeredMessagePropertiesInstance4.TimeToLive = timeToLiveInstance4;
+                                        }
+                                        
+                                        JToken toValue4 = brokeredMessagePropertiesValue4["to"];
+                                        if (toValue4 != null && toValue4.Type != JTokenType.Null)
+                                        {
+                                            string toInstance4 = ((string)toValue4);
+                                            brokeredMessagePropertiesInstance4.To = toInstance4;
+                                        }
+                                        
+                                        JToken viaPartitionKeyValue4 = brokeredMessagePropertiesValue4["viaPartitionKey"];
+                                        if (viaPartitionKeyValue4 != null && viaPartitionKeyValue4.Type != JTokenType.Null)
+                                        {
+                                            string viaPartitionKeyInstance4 = ((string)viaPartitionKeyValue4);
+                                            brokeredMessagePropertiesInstance4.ViaPartitionKey = viaPartitionKeyInstance4;
+                                        }
+                                    }
+                                    
+                                    JToken customMessagePropertiesSequenceElement4 = ((JToken)serviceBusQueueMessageValue2["customMessageProperties"]);
+                                    if (customMessagePropertiesSequenceElement4 != null && customMessagePropertiesSequenceElement4.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property6 in customMessagePropertiesSequenceElement4)
+                                        {
+                                            string customMessagePropertiesKey4 = ((string)property6.Name);
+                                            string customMessagePropertiesValue4 = ((string)property6.Value);
+                                            serviceBusQueueMessageInstance2.CustomMessageProperties.Add(customMessagePropertiesKey4, customMessagePropertiesValue4);
+                                        }
                                     }
                                 }
                             }
