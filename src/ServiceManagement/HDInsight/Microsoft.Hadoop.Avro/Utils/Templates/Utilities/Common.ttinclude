@@ -1,0 +1,10 @@
+﻿<#+
+	public void GenerateDataContractNamespace(NamedSchema schema){
+		#>(Namespace = "<#= Utilities.Validate(schema.Namespace) #>")<#+
+    }
+
+	private string GetNamespace(NamedSchema schema)
+	{
+		return this.ForceNameSpace ? this.DefaultNamespace : string.IsNullOrEmpty(schema.Namespace) ? this.DefaultNamespace : schema.Namespace;
+    }
+#>

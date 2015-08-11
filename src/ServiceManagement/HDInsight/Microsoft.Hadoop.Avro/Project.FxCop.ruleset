@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='utf-8'?>
+<RuleSet Name='Project Level Rule Overrides'
+         Description='This rule set contains project level overrides for this project.'
+         ToolsVersion='10.0'>
+  <Rules AnalyzerId='Microsoft.Analyzers.ManagedCodeAnalysis' RuleNamespace='Microsoft.Rules.Managed'>
+
+	<!-- CA1720	== Microsoft.Naming:Identifiers should not contain type names -->
+	<!-- Given the nature of this project, this rule is okay to turn of globally -->
+    <Rule Id='CA1720' Action='None' />
+  
+    <!-- CA1303 == Microsoft.Globalization:'Do not pass literals as localized parameters' -->
+	<!-- TODO: This should be fixed -->
+    <Rule Id='CA1303' Action='None' />
+
+  </Rules>
+</RuleSet>

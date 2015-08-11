@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata minClientVersion="2.5">
+    <id>Microsoft.Hadoop.Avro</id>
+    <title>Microsoft Windows Azure HDInsight Avro Library</title>
+    <releaseNotes>Avro serialization operations.</releaseNotes>
+    <version>$version$</version>
+    <authors>Microsoft</authors>
+    <owners>azure-sdk, Microsoft</owners>
+    <licenseUrl>http://aka.ms/windowsazureapache2</licenseUrl>
+    <projectUrl>https://github.com/WindowsAzure/azure-sdk-for-net</projectUrl>
+    <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <summary>Provides a .NET API for Serializing data into the Avro format.</summary>
+    <description>Provides a .NET API for Serializing data into the Avro format.</description>
+    <copyright>Copyright © Microsoft Corporation</copyright>
+    <tags>Microsoft Azure HDInsight.</tags>
+    <references>
+      <group targetFramework="net45">
+        <reference file="Microsoft.Hadoop.Avro.dll" />
+        <reference file="Microsoft.Hadoop.Avro.xml" />
+      </group>
+    </references>
+    <dependencies>
+      <dependency id="Newtonsoft.Json" version="6.0.4" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="ServiceManagement\HDInsight\Microsoft.Hadoop.Avro\**\*.cs" target="src" />
+    <file src="..\binaries\net45\Microsoft.Hadoop.Avro.dll" target="lib\net45" />
+    <file src="..\binaries\net45\Microsoft.Hadoop.Avro.pdb" target="lib\net45" />
+    <file src="..\binaries\net45\Microsoft.Hadoop.Avro.xml" target="lib\net45" />
+  </files>
+</package>
