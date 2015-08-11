@@ -16,7 +16,7 @@
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using Hyak.Common;
+using Microsoft.Rest.Azure;
 using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.Management.WebSites
@@ -57,8 +57,8 @@ namespace Microsoft.Azure.Management.WebSites
         {
         }
 
-        public new CloudHttpRequestErrorInfo Request { get; private set; }
-        public new CloudHttpResponseErrorInfo Response { get; private set; }
+        //public new CloudHttpRequestErrorInfo Request { get; private set; }
+        //public new CloudHttpResponseErrorInfo Response { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the WebSiteCloudException class.
@@ -71,17 +71,13 @@ namespace Microsoft.Azure.Management.WebSites
             ErrorMessageArguments = new List<string>();
         }
 
-        public WebSiteCloudException(
-            string message,
-            string code,
-            CloudHttpRequestErrorInfo request,
-            CloudHttpResponseErrorInfo response,
-            Exception innerException)
-            : base(message, innerException)
-        {
-            this.Request = request;
-            this.Response = response;
-        }
+        //public WebSiteCloudException(
+        //    string message,
+        //    string code,
+        //    Exception innerException)
+        //    : base(message, innerException)
+        //{
+        //}
 
         /// <summary>
         /// Create a CloudException from a failed response.
@@ -116,9 +112,6 @@ namespace Microsoft.Azure.Management.WebSites
             // Create the exception
             CloudException exception = new WebSiteCloudException(
                 exceptionMessage,
-                code,
-                CloudHttpRequestErrorInfo.Create(request, requestContent),
-                CloudHttpResponseErrorInfo.Create(response, responseContent),
                 innerException);
             return exception;
 
