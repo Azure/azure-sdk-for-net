@@ -13,43 +13,29 @@
 // limitations under the License.
 //
 
-using System.Linq;
+using System;
 using System.Net;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
 using Microsoft.Azure.Management.WebSites;
 using Microsoft.Azure.Management.WebSites.Models;
-using Microsoft.Azure.Test;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using WebSites.Tests.Helpers;
 using Xunit;
-using System;
 
 namespace WebSites.Tests.ScenarioTests
 {
-    public class BackupRestoreScenarioTests
+    public class BackupRestoreScenarioTests : TestBase
     {
-        public WebSiteManagementClient GetWebSitesClient(RecordedDelegatingHandler handler)
-        {
-            handler.IsPassThrough = true;
-            return TestBase.GetServiceClient<WebSiteManagementClient>(new CSMTestEnvironmentFactory()).WithHandler(handler);
-        }
-
-        public ResourceManagementClient GetResourcesClient(RecordedDelegatingHandler handler)
-        {
-            handler.IsPassThrough = true;
-            return TestBase.GetServiceClient<ResourceManagementClient>(new CSMTestEnvironmentFactory()).WithHandler(handler);
-        }
-
         [Fact(Skip = "Backup/Restore feature is not allowed in current site mode.")]
         public void ListBackupsAndScheduledBackupRoundTrip()
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (UndoContext context = UndoContext.Current)
+            using (var context = MockContext.Start())
             {
-                context.Start();
-                var webSitesClient = GetWebSitesClient(handler);
-                var resourcesClient = GetResourcesClient(handler);
+                var webSitesClient = this.GetWebSiteManagementClientWithHandler(context, handler);
+                var resourcesClient = this.GetResourceManagementClientWithHandler(context, handler);
 
                 string farmName = TestUtilities.GenerateName("csmsf");
                 string resourceGroupName = TestUtilities.GenerateName("csmrg");
@@ -63,35 +49,27 @@ namespace WebSites.Tests.ScenarioTests
                         Location = locationName
                     });
 
-                webSitesClient.WebHostingPlans.CreateOrUpdate(resourceGroupName, new WebHostingPlanCreateOrUpdateParameters
+                webSitesClient.ServerFarms.CreateOrUpdateServerFarm(resourceGroupName, farmName, new ServerFarmWithRichSku
                 {
-                    WebHostingPlan = new WebHostingPlan
+                    ServerFarmWithRichSkuName = farmName,
+                    Location = locationName,
+                    Sku = new SkuDescription
                     {
-                        Name = farmName,
-                        Location = locationName,
-                        Properties = new WebHostingPlanProperties
-                        {
-                            NumberOfWorkers = 1,
-                            WorkerSize = WorkerSizeOptions.Small
-                        }
+                        Name = "F1",
+                        Tier = "Free",
+                        Capacity = 1
                     }
                 });
 
-                webSitesClient.WebSites.CreateOrUpdate(resourceGroupName, siteName, null, new WebSiteCreateOrUpdateParameters()
+                webSitesClient.Sites.CreateOrUpdateSite(resourceGroupName, siteName, new Site
                 {
-                    WebSite = new WebSiteBase()
-                    {
-                        Name = siteName,
-                        Location = locationName,
-                        Properties = new WebSiteBaseProperties()
-                        {
-                            ServerFarm = farmName
-                        }
-                    }
+                    SiteName = siteName,
+                    Location = locationName,
+                    ServerFarm = farmName
                 });
 
-                var backupResponse = webSitesClient.WebSites.ListBackups(resourceGroupName, siteName, null);
-                Assert.Equal(0, backupResponse.BackupList.Properties.Count); // , "Backup list should be empty"
+                var backupResponse = webSitesClient.Sites.ListSiteBackups(resourceGroupName, siteName);
+                Assert.Equal(0, backupResponse.Value.Count); // , "Backup list should be empty"
 
                 // the following URL just have a proper format, but it is not valid - for an API test it is not needed to be valid,
                 // since we are just testing a roundtrip here
@@ -103,40 +81,32 @@ namespace WebSites.Tests.ScenarioTests
                     BackupSchedule = new BackupSchedule()
                     {
                         FrequencyInterval = 17,
-                        FrequencyUnit = FrequencyUnit.Day,
+                        FrequencyUnit = "Day",
                         KeepAtLeastOneBackup = true,
                         RetentionPeriodInDays = 26,
                         StartTime = DateTime.Now.AddDays(5)
                     },
-                    Name = "abc",
+                    BackupRequestName = "abc",
                     StorageAccountUrl = storageUrl
                 };
 
-                webSitesClient.WebSites.UpdateBackupConfiguration(resourceGroupName, siteName, null, new BackupRequestEnvelope()
-                {
-                    Location = locationName,
-                    Request = sr
-                });
+                webSitesClient.Sites.UpdateSiteBackupConfiguration(resourceGroupName, siteName, sr);
 
-                var backupConfiguration = webSitesClient.WebSites.GetBackupConfiguration(resourceGroupName, siteName, null);
+                var backupConfiguration = webSitesClient.Sites.GetSiteBackupConfiguration(resourceGroupName, siteName);
 
-                Assert.Equal(sr.Enabled, backupConfiguration.BackupSchedule.Properties.Enabled);
-                Assert.Equal(sr.BackupSchedule.FrequencyInterval, backupConfiguration.BackupSchedule.Properties.BackupSchedule.FrequencyInterval);
-                Assert.Equal(sr.BackupSchedule.FrequencyUnit, backupConfiguration.BackupSchedule.Properties.BackupSchedule.FrequencyUnit);
-                Assert.Equal(sr.BackupSchedule.KeepAtLeastOneBackup, backupConfiguration.BackupSchedule.Properties.BackupSchedule.KeepAtLeastOneBackup);
-                Assert.Equal(sr.Name, backupConfiguration.BackupSchedule.Properties.Name);
+                Assert.Equal(sr.Enabled, backupConfiguration.Enabled);
+                Assert.Equal(sr.BackupSchedule.FrequencyInterval, backupConfiguration.BackupSchedule.FrequencyInterval);
+                Assert.Equal(sr.BackupSchedule.FrequencyUnit, backupConfiguration.BackupSchedule.FrequencyUnit);
+                Assert.Equal(sr.BackupSchedule.KeepAtLeastOneBackup, backupConfiguration.BackupSchedule.KeepAtLeastOneBackup);
+                Assert.Equal(sr.Name, backupConfiguration.BackupRequestName);
 
-                webSitesClient.WebSites.Delete(resourceGroupName, siteName, null, new WebSiteDeleteParameters()
-                {
-                    DeleteAllSlots = true,
-                    DeleteMetrics = true
-                });
+                webSitesClient.Sites.DeleteSite(resourceGroupName, siteName, deleteAllSlots: true.ToString(), deleteMetrics: true.ToString());
 
-                webSitesClient.WebHostingPlans.Delete(resourceGroupName, farmName);
+                webSitesClient.ServerFarms.DeleteServerFarm(resourceGroupName, farmName);
 
-                var serverFarmResponse = webSitesClient.WebHostingPlans.List(resourceGroupName);
+                var serverFarmResponse = webSitesClient.ServerFarms.GetServerFarms(resourceGroupName);
 
-                Assert.Equal(0, serverFarmResponse.WebHostingPlans.Count);
+                Assert.Equal(0, serverFarmResponse.Value.Count);
             }
         }
     }

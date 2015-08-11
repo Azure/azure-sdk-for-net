@@ -13,12 +13,8 @@
 // limitations under the License.
 //
 
-using Hyak.Common;
-using Microsoft.WindowsAzure.Management.WebSites.Testing;
-
 namespace Microsoft.WindowsAzure.Management.ResourceManagement.Testing
 {
-    using Microsoft.Azure.Test;
     using System;
     using System.Collections.Generic;
     using System.Net;
@@ -29,16 +25,16 @@ namespace Microsoft.WindowsAzure.Management.ResourceManagement.Testing
     /// Class used to discover and construct undo handlers available in the app domain
     /// </summary>
     /// 
-    [UndoHandlerFactory]
-    public static partial class UndoContextDiscoveryExtensions
-    {
-        /// <summary>
-        /// Create an undo handler for ResourceManager operations
-        /// </summary>
-        /// <returns>An undo handler for ResourceManager operations</returns>
-        public static OperationUndoHandler CreateResourceManagerUndoHandler()
-        {
-            return new ResourceManagementUndoHandler();
-        }
-    }
+    //[UndoHandlerFactory]
+    //public static partial class UndoContextDiscoveryExtensions
+    //{
+    //    /// <summary>
+    //    /// Create an undo handler for ResourceManager operations
+    //    /// </summary>
+    //    /// <returns>An undo handler for ResourceManager operations</returns>
+    //    public static OperationUndoHandler CreateResourceManagerUndoHandler()
+    //    {
+    //        return new ResourceManagementUndoHandler();
+    //    }
+    //}
 }

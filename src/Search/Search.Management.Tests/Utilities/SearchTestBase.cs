@@ -15,28 +15,34 @@
 
 using System;
 using Microsoft.Azure.Management.Search;
-using Microsoft.Azure.Test;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
 namespace Microsoft.Azure.Search.Tests.Utilities
 {
-    public abstract class SearchTestBase<TTestFixture> : TestBase where TTestFixture : new()
+    public abstract class SearchTestBase<TTestFixture> : TestBase where TTestFixture : IResourceFixture, new()
     {
+        private MockContext _currentContext; // Changes as each test runs.
+
         protected TTestFixture Data { get; private set; }
 
-        protected static SearchManagementClient GetSearchManagementClient()
+        protected SearchManagementClient GetSearchManagementClient()
         {
-            return GetServiceClient<SearchManagementClient>(new CSMTestEnvironmentFactory());
+            if (_currentContext == null)
+            {
+                throw new InvalidOperationException("GetSearchManagementClient() can only be called from a running test.");
+            }
+
+            return _currentContext.GetServiceClient<SearchManagementClient>();
         }
         
         protected void Run(Action testBody)
         {
-            const int TestNameStackFrameDepth = 4;
-            using (var undoContext = UndoContext.Current)
+            const int TestNameStackFrameDepth = 3;
+            using (var mockContext = MockContext.Start(TestNameStackFrameDepth))
             {
-                undoContext.Start(TestNameStackFrameDepth);
-
+                _currentContext = mockContext;
                 Data = new TTestFixture();
-
+                Data.Initialize(mockContext);
                 testBody();
             }
         }
