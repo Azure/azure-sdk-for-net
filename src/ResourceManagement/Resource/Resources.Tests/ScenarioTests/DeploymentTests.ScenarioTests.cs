@@ -411,5 +411,44 @@ namespace ResourceGroups.Tests
                 Assert.True(operations.Operations.Any());
             }
         }
+
+        [Fact]
+        public void CheckExistenceReturnsCorrectValue()
+        {
+            var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Created };
+
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+                var client = GetResourceManagementClient(handler);
+                string resourceName = TestUtilities.GenerateName("csmr");
+
+                var parameters = new Deployment
+                {
+                    Properties = new DeploymentProperties()
+                    {
+                        TemplateLink = new TemplateLink
+                        {
+                            Uri = new Uri(GoodWebsiteTemplateUri),
+                        },
+                        Parameters =
+                            @"{ 'siteName': {'value': 'mctest0101'},'hostingPlanName': {'value': 'mctest0101'},'siteMode': {'value': 'Limited'},'computeMode': {'value': 'Shared'},'siteLocation': {'value': 'North Europe'},'sku': {'value': 'Free'},'workerSize': {'value': '0'}}",
+                        Mode = DeploymentMode.Incremental,
+                    }
+                };
+                string groupName = TestUtilities.GenerateName("csmrg");
+                string deploymentName = TestUtilities.GenerateName("csmd");
+                client.ResourceGroups.CreateOrUpdate(groupName, new ResourceGroup { Location = "West Europe" });
+
+                var checkExistenceFirst = client.Deployments.CheckExistence(groupName, deploymentName);
+                Assert.False(checkExistenceFirst.Exists);
+
+                var deploymentCreateResult = client.Deployments.CreateOrUpdate(groupName, deploymentName, parameters);
+
+                var checkExistenceSecond = client.Deployments.CheckExistence(groupName, deploymentName);
+
+                Assert.True(checkExistenceSecond.Exists);
+            }
+        }
     }
 }

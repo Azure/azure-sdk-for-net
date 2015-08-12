@@ -71,6 +71,24 @@ namespace Microsoft.Azure.Management.Resources
         Task<AzureOperationResponse> CancelAsync(string resourceGroupName, string deploymentName, CancellationToken cancellationToken);
         
         /// <summary>
+        /// Checks whether deployment exists.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group to check. The name is case
+        /// insensitive.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// The name of the deployment.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Deployment information.
+        /// </returns>
+        Task<DeploymentExistsResult> CheckExistenceAsync(string resourceGroupName, string deploymentName, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// Create a named template deployment using a template.
         /// </summary>
         /// <param name='resourceGroupName'>
