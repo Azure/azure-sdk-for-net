@@ -43,7 +43,7 @@ namespace WebSites.Tests.ScenarioTests
             SourceControlName = "Bitbucket"
         };
 
-        [Fact(Skip = "TEMPORARILY DISABLING TESTS DUE TO ENVIRONMENT ISSUE")]
+        [Fact]
         public void TestUpdateSourceControlUpdates()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };

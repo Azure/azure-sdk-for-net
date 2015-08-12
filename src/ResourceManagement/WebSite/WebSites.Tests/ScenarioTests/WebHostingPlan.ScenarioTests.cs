@@ -28,7 +28,7 @@ namespace WebSites.Tests.ScenarioTests
 {
     public class WebHostingPlanScenarioTests : TestBase
     {
-        [Fact(Skip = "TEMPORARILY DISABLING TESTS DUE TO ENVIRONMENT ISSUE")]
+        [Fact]
         public void CreateAndVerifyWebHostingPlan()
         {
             var handler = new RecordedDelegatingHandler {StatusCodeToReturn = HttpStatusCode.OK};
@@ -70,7 +70,7 @@ namespace WebSites.Tests.ScenarioTests
             }
         }
 
-        [Fact(Skip = "TEMPORARILY DISABLING TESTS DUE TO ENVIRONMENT ISSUE")]
+        [Fact]
         public void CreateAndVerifyListOfWebHostingPlan()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -124,7 +124,7 @@ namespace WebSites.Tests.ScenarioTests
             }
         }
 
-        [Fact(Skip = "TEMPORARILY DISABLING TESTS DUE TO ENVIRONMENT ISSUE")]
+        [Fact]
         public void CreateAndDeleteWebHostingPlan()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -167,7 +167,7 @@ namespace WebSites.Tests.ScenarioTests
             }
         }
 
-        [Fact(Skip = "TEMPORARILY DISABLING TESTS DUE TO ENVIRONMENT ISSUE")]
+        [Fact]
         public void GetAndSetAdminSiteWebHostingPlan()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
