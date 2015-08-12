@@ -142,6 +142,13 @@ namespace ResourceGroups.Tests
                 Assert.NotNull(deploymentListResult.Deployments[0].Properties.CorrelationId);
                 Assert.True(deploymentGetResult.Deployment.Properties.Parameters.Contains("mctest0101"));
                 Assert.True(deploymentListResult.Deployments[0].Properties.Parameters.Contains("mctest0101"));
+
+                //stop the deployment
+                client.Deployments.Cancel(groupName, deploymentName);
+                TestUtilities.Wait(2000);
+
+                //Delete deployment
+                Assert.Equal(HttpStatusCode.NoContent, client.Deployments.Delete(groupName, deploymentName).StatusCode);
             }
         }
 
