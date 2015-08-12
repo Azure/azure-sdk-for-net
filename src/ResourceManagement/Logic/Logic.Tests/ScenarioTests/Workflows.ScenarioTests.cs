@@ -22,7 +22,7 @@ namespace Test.Azure.Management.Logic
             using (MockContext context = MockContext.Start())
             {
                 string workflowName = TestUtilities.GenerateName("logicwf");
-                var client = this.GetLogicManagementClient();
+                var client = this.GetLogicManagementClient(context);
 
                 // Create a workflow
                 client.Workflows.CreateOrUpdate(
@@ -56,7 +56,7 @@ namespace Test.Azure.Management.Logic
             using (MockContext context = MockContext.Start())
             {
                 string workflowName = TestUtilities.GenerateName("logicwf");
-                var client = this.GetLogicManagementClient();
+                var client = this.GetLogicManagementClient(context);
 
                 // Create a workflow
                 var workflow = client.Workflows.CreateOrUpdate(
@@ -103,7 +103,7 @@ namespace Test.Azure.Management.Logic
             {
                 string workflowName = TestUtilities.GenerateName("logicwf");
                 string workflowName2 = TestUtilities.GenerateName("logicwf");
-                var client = this.GetLogicManagementClient();
+                var client = this.GetLogicManagementClient(context);
 
                 // Create a workflow
                 var workflow = client.Workflows.CreateOrUpdate(
@@ -172,7 +172,7 @@ namespace Test.Azure.Management.Logic
             using (MockContext context = MockContext.Start())
             {
                 string workflowName = TestUtilities.GenerateName("logicwf");
-                var client = this.GetLogicManagementClient();
+                var client = this.GetLogicManagementClient(context);
 
                 // Create a workflow
                 client.Workflows.CreateOrUpdate(
@@ -234,7 +234,7 @@ namespace Test.Azure.Management.Logic
         {
             using (MockContext context = MockContext.Start())
             {
-                var client = this.GetLogicManagementClient();
+                var client = this.GetLogicManagementClient(context);
 
                 var workflows = client.Workflows.ListByResourceGroup(this.resourceGroupName);
 
@@ -265,7 +265,7 @@ namespace Test.Azure.Management.Logic
             using (MockContext context = MockContext.Start())
             {
                 string workflowName = TestUtilities.GenerateName("logicwf");
-                var client = this.GetLogicManagementClient();
+                var client = this.GetLogicManagementClient(context);
 
                 // Create a workflow
                 var workflow = client.Workflows.CreateOrUpdate(
