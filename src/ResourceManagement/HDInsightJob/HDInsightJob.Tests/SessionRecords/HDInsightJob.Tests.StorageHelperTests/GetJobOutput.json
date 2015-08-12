@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "/templeton/v1/hive?user.name=hadoopuser",
-      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9oaXZlP3VzZXIubmFtZT1oYWRvb3B1c2Vy",
+      "RequestUri": "/templeton/v1/hive?user.name=sameuser",
+      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9oaXZlP3VzZXIubmFtZT1zYW1ldXNlcg==",
       "RequestMethod": "POST",
-      "RequestBody": "user.name=hadoopuser&execute=SHOW TABLES;&file=&arg=&files=&statusdir=jobstatus&enablelog=",
+      "RequestBody": "user.name=sameuser&execute=SHOW TABLES;&file=&arg=&files=&statusdir=jobstatus&enablelog=",
       "RequestHeaders": {
         "Content-Type": [
           "application/text"
         ],
         "Content-Length": [
-          "90"
+          "88"
         ],
         "accept": [
           "application/json"
@@ -25,7 +25,7 @@
           "submission"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"job_1435101021696_0043\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"job_1438899342432_0014\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "31"
@@ -34,16 +34,16 @@
           "application/json"
         ],
         "x-ms-hdi-servedby": [
-          "GATEWAY0"
+          "GATEWAY1"
         ],
         "x-ms-hdi-active": [
-          "headnode0.hdisdk-resize1.d6.internal.cloudapp.net"
+          "headnode1.nemadj-ssh-test.b5.internal.cloudapp.net"
         ],
         "x-ms-leader-detect-time": [
           "0"
         ],
         "Set-Cookie": [
-          "hadoop.auth=\"u=hadoopuser&p=hadoopuser&t=simple&e=1435732421631&s=ir6XKnH0VFBKKxRVlDHZyOFd1ko=\"; Version=1; Path=/; Expires=Wed, 01-Jul-2015 06:33:41 GMT; HttpOnly"
+          "hadoop.auth=\"u=sameuser&p=sameuser&t=simple&e=1439291353297&s=fg5yfCWu3X5rziYXjxg07MbZHI4=\"; Version=1; Path=/; Expires=Tue, 11-Aug-2015 11:09:13 GMT; HttpOnly"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -55,15 +55,18 @@
         "X-Content-Type-Options": [
           "nosniff"
         ],
+        "Strict-Transport-Security": [
+          "max-age=31536000"
+        ],
         "Date": [
-          "Tue, 30 Jun 2015 20:33:43 GMT"
+          "Tue, 11 Aug 2015 01:09:15 GMT"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/templeton/v1/jobs/job_1435101021696_0043?user.name=hadoopuser",
-      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDM1MTAxMDIxNjk2XzAwNDM/dXNlci5uYW1lPWhhZG9vcHVzZXI=",
+      "RequestUri": "/templeton/v1/jobs/job_1438899342432_0014?user.name=sameuser",
+      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDM4ODk5MzQyNDMyXzAwMTQ/dXNlci5uYW1lPXNhbWV1c2Vy",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -79,19 +82,19 @@
           "job"
         ]
       },
-      "ResponseBody": "{\r\n  \"status\": {\r\n    \"jobID\": {\r\n      \"jtIdentifier\": \"1435101021696\",\r\n      \"id\": 43\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobId\": \"job_1435101021696_0043\",\r\n    \"runState\": 4,\r\n    \"finishTime\": 0,\r\n    \"priority\": \"NORMAL\",\r\n    \"state\": \"PREP\",\r\n    \"trackingUrl\": \"http://headnodehost:9014/proxy/application_1435101021696_0043/\",\r\n    \"numReservedSlots\": 0,\r\n    \"reservedMem\": 0,\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"numUsedSlots\": 0,\r\n    \"username\": \"hadoopuser\",\r\n    \"jobFile\": \"/user/hadoopuser/.staging/job_1435101021696_0043/job.xml\",\r\n    \"startTime\": 1435696424600,\r\n    \"retired\": false,\r\n    \"neededMem\": 0,\r\n    \"usedMem\": 0,\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"historyFile\": \"\",\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 0.0,\r\n    \"jobComplete\": false,\r\n    \"uber\": false,\r\n    \"jobACLs\": {},\r\n    \"queue\": \"default\"\r\n  },\r\n  \"profile\": {\r\n    \"url\": \"http://headnodehost:9014/proxy/application_1435101021696_0043/\",\r\n    \"jobFile\": \"/user/hadoopuser/.staging/job_1435101021696_0043/job.xml\",\r\n    \"jobID\": {\r\n      \"jtIdentifier\": \"1435101021696\",\r\n      \"id\": 43\r\n    },\r\n    \"user\": \"hadoopuser\",\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1435101021696_0043\"\r\n  },\r\n  \"id\": \"job_1435101021696_0043\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"hadoopuser\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"jobstatus\",\r\n    \"files\": \"\",\r\n    \"define\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"SHOW TABLES;\",\r\n    \"user.name\": \"hadoopuser\",\r\n    \"file\": \"\",\r\n    \"callback\": null\r\n  },\r\n  \"msg\": null\r\n}",
+      "ResponseBody": "{\r\n  \"status\": {\r\n    \"jobID\": {\r\n      \"jtIdentifier\": \"1438899342432\",\r\n      \"id\": 14\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"runState\": 4,\r\n    \"jobId\": \"job_1438899342432_0014\",\r\n    \"jobFile\": \"/user/sameuser/.staging/job_1438899342432_0014/job.xml\",\r\n    \"username\": \"sameuser\",\r\n    \"priority\": \"NORMAL\",\r\n    \"state\": \"PREP\",\r\n    \"usedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"retired\": false,\r\n    \"finishTime\": 0,\r\n    \"startTime\": 1439255355689,\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"queue\": \"default\",\r\n    \"trackingUrl\": \"http://headnodehost:9014/proxy/application_1438899342432_0014/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"schedulingInfo\": \"NA\",\r\n    \"reservedMem\": 0,\r\n    \"failureInfo\": \"NA\",\r\n    \"uber\": false,\r\n    \"mapProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"setupProgress\": 0.0,\r\n    \"historyFile\": \"\",\r\n    \"jobComplete\": false,\r\n    \"jobACLs\": {}\r\n  },\r\n  \"profile\": {\r\n    \"jobFile\": \"/user/sameuser/.staging/job_1438899342432_0014/job.xml\",\r\n    \"url\": \"http://headnodehost:9014/proxy/application_1438899342432_0014/\",\r\n    \"jobID\": {\r\n      \"jtIdentifier\": \"1438899342432\",\r\n      \"id\": 14\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"queueName\": \"default\",\r\n    \"user\": \"sameuser\",\r\n    \"jobId\": \"job_1438899342432_0014\"\r\n  },\r\n  \"id\": \"job_1438899342432_0014\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"sameuser\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"jobstatus\",\r\n    \"files\": \"\",\r\n    \"define\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"SHOW TABLES;\",\r\n    \"user.name\": \"sameuser\",\r\n    \"file\": \"\",\r\n    \"callback\": null\r\n  },\r\n  \"msg\": null\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "1329"
+          "1317"
         ],
         "Content-Type": [
           "application/json"
         ],
         "x-ms-hdi-servedby": [
-          "GATEWAY0"
+          "GATEWAY1"
         ],
         "x-ms-hdi-active": [
-          "headnode0.hdisdk-resize1.d6.internal.cloudapp.net"
+          "headnode1.nemadj-ssh-test.b5.internal.cloudapp.net"
         ],
         "x-ms-leader-detect-time": [
           "0"
@@ -106,15 +109,18 @@
         "X-Content-Type-Options": [
           "nosniff"
         ],
+        "Strict-Transport-Security": [
+          "max-age=31536000"
+        ],
         "Date": [
-          "Tue, 30 Jun 2015 20:33:43 GMT"
+          "Tue, 11 Aug 2015 01:09:15 GMT"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/templeton/v1/jobs/job_1435101021696_0043?user.name=hadoopuser",
-      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDM1MTAxMDIxNjk2XzAwNDM/dXNlci5uYW1lPWhhZG9vcHVzZXI=",
+      "RequestUri": "/templeton/v1/jobs/job_1438899342432_0014?user.name=sameuser",
+      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDM4ODk5MzQyNDMyXzAwMTQ/dXNlci5uYW1lPXNhbWV1c2Vy",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -130,19 +136,19 @@
           "job"
         ]
       },
-      "ResponseBody": "{\r\n  \"status\": {\r\n    \"jobID\": {\r\n      \"jtIdentifier\": \"1435101021696\",\r\n      \"id\": 43\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobId\": \"job_1435101021696_0043\",\r\n    \"runState\": 4,\r\n    \"finishTime\": 0,\r\n    \"priority\": \"NORMAL\",\r\n    \"state\": \"PREP\",\r\n    \"trackingUrl\": \"http://headnodehost:9014/proxy/application_1435101021696_0043/\",\r\n    \"numReservedSlots\": 0,\r\n    \"reservedMem\": 0,\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"numUsedSlots\": 0,\r\n    \"username\": \"hadoopuser\",\r\n    \"jobFile\": \"/user/hadoopuser/.staging/job_1435101021696_0043/job.xml\",\r\n    \"startTime\": 1435696424600,\r\n    \"retired\": false,\r\n    \"neededMem\": 0,\r\n    \"usedMem\": 0,\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"historyFile\": \"\",\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 0.0,\r\n    \"jobComplete\": false,\r\n    \"uber\": false,\r\n    \"jobACLs\": {},\r\n    \"queue\": \"default\"\r\n  },\r\n  \"profile\": {\r\n    \"url\": \"http://headnodehost:9014/proxy/application_1435101021696_0043/\",\r\n    \"jobFile\": \"/user/hadoopuser/.staging/job_1435101021696_0043/job.xml\",\r\n    \"jobID\": {\r\n      \"jtIdentifier\": \"1435101021696\",\r\n      \"id\": 43\r\n    },\r\n    \"user\": \"hadoopuser\",\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1435101021696_0043\"\r\n  },\r\n  \"id\": \"job_1435101021696_0043\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"hadoopuser\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"jobstatus\",\r\n    \"files\": \"\",\r\n    \"define\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"SHOW TABLES;\",\r\n    \"user.name\": \"hadoopuser\",\r\n    \"file\": \"\",\r\n    \"callback\": null\r\n  },\r\n  \"msg\": null\r\n}",
+      "ResponseBody": "{\r\n  \"status\": {\r\n    \"jobID\": {\r\n      \"jtIdentifier\": \"1438899342432\",\r\n      \"id\": 14\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"runState\": 4,\r\n    \"jobId\": \"job_1438899342432_0014\",\r\n    \"jobFile\": \"/user/sameuser/.staging/job_1438899342432_0014/job.xml\",\r\n    \"username\": \"sameuser\",\r\n    \"priority\": \"NORMAL\",\r\n    \"state\": \"PREP\",\r\n    \"usedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"retired\": false,\r\n    \"finishTime\": 0,\r\n    \"startTime\": 1439255355689,\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"queue\": \"default\",\r\n    \"trackingUrl\": \"http://headnodehost:9014/proxy/application_1438899342432_0014/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"schedulingInfo\": \"NA\",\r\n    \"reservedMem\": 0,\r\n    \"failureInfo\": \"NA\",\r\n    \"uber\": false,\r\n    \"mapProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"setupProgress\": 0.0,\r\n    \"historyFile\": \"\",\r\n    \"jobComplete\": false,\r\n    \"jobACLs\": {}\r\n  },\r\n  \"profile\": {\r\n    \"jobFile\": \"/user/sameuser/.staging/job_1438899342432_0014/job.xml\",\r\n    \"url\": \"http://headnodehost:9014/proxy/application_1438899342432_0014/\",\r\n    \"jobID\": {\r\n      \"jtIdentifier\": \"1438899342432\",\r\n      \"id\": 14\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"queueName\": \"default\",\r\n    \"user\": \"sameuser\",\r\n    \"jobId\": \"job_1438899342432_0014\"\r\n  },\r\n  \"id\": \"job_1438899342432_0014\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"sameuser\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"jobstatus\",\r\n    \"files\": \"\",\r\n    \"define\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"SHOW TABLES;\",\r\n    \"user.name\": \"sameuser\",\r\n    \"file\": \"\",\r\n    \"callback\": null\r\n  },\r\n  \"msg\": null\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "1329"
+          "1317"
         ],
         "Content-Type": [
           "application/json"
         ],
         "x-ms-hdi-servedby": [
-          "GATEWAY0"
+          "GATEWAY1"
         ],
         "x-ms-hdi-active": [
-          "headnode0.hdisdk-resize1.d6.internal.cloudapp.net"
+          "headnode1.nemadj-ssh-test.b5.internal.cloudapp.net"
         ],
         "x-ms-leader-detect-time": [
           "0"
@@ -157,8 +163,11 @@
         "X-Content-Type-Options": [
           "nosniff"
         ],
+        "Strict-Transport-Security": [
+          "max-age=31536000"
+        ],
         "Date": [
-          "Tue, 30 Jun 2015 20:33:45 GMT"
+          "Tue, 11 Aug 2015 01:09:15 GMT"
         ]
       },
       "StatusCode": 200

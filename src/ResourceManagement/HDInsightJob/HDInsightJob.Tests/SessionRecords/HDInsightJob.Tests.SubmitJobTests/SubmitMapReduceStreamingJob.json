@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "/templeton/v1/mapreduce/streaming?user.name=hadoopuser",
-      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9tYXByZWR1Y2Uvc3RyZWFtaW5nP3VzZXIubmFtZT1oYWRvb3B1c2Vy",
+      "RequestUri": "/templeton/v1/mapreduce/streaming?user.name=sameuser",
+      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9tYXByZWR1Y2Uvc3RyZWFtaW5nP3VzZXIubmFtZT1zYW1ldXNlcg==",
       "RequestMethod": "POST",
-      "RequestBody": "user.name=hadoopuser&input=/example/data/gutenberg/davinci.txt&output=/example/data/gutenberg/wcout&mapper=cat.exe&reducer=wc.exe&File=&define=&cmdenv=&arg=&statusdir=&enablelog=",
+      "RequestBody": "user.name=sameuser&input=/example/data/gutenberg/davinci.txt&output=/example/data/gutenberg/wcout&mapper=cat.exe&reducer=wc.exe&File=&define=&cmdenv=&arg=&statusdir=&enablelog=",
       "RequestHeaders": {
         "Content-Type": [
           "application/text"
         ],
         "Content-Length": [
-          "178"
+          "176"
         ],
         "accept": [
           "application/json"
@@ -26,7 +26,7 @@
           "submission"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"job_1435101021696_0048\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"job_1438899342432_0018\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "31"
@@ -38,13 +38,13 @@
           "GATEWAY1"
         ],
         "x-ms-hdi-active": [
-          "headnode0.hdisdk-resize1.d6.internal.cloudapp.net"
+          "headnode1.nemadj-ssh-test.b5.internal.cloudapp.net"
         ],
         "x-ms-leader-detect-time": [
           "0"
         ],
         "Set-Cookie": [
-          "hadoop.auth=\"u=hadoopuser&p=hadoopuser&t=simple&e=1435732440516&s=2KmTSgphtKxPUrP+8al/4u9MeG0=\"; Version=1; Path=/; Expires=Wed, 01-Jul-2015 06:34:00 GMT; HttpOnly"
+          "hadoop.auth=\"u=sameuser&p=sameuser&t=simple&e=1439291367481&s=kxFRRaemPA+hiEfD/S/IIYEqZJE=\"; Version=1; Path=/; Expires=Tue, 11-Aug-2015 11:09:27 GMT; HttpOnly"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -56,8 +56,11 @@
         "X-Content-Type-Options": [
           "nosniff"
         ],
+        "Strict-Transport-Security": [
+          "max-age=31536000"
+        ],
         "Date": [
-          "Tue, 30 Jun 2015 20:34:02 GMT"
+          "Tue, 11 Aug 2015 01:09:31 GMT"
         ]
       },
       "StatusCode": 200

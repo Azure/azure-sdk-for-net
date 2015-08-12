@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "/templeton/v1/pig?user.name=hadoopuser",
-      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9waWc/dXNlci5uYW1lPWhhZG9vcHVzZXI=",
+      "RequestUri": "/templeton/v1/pig?user.name=sameuser",
+      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9waWc/dXNlci5uYW1lPXNhbWV1c2Vy",
       "RequestMethod": "POST",
-      "RequestBody": "user.name=hadoopuser&execute=records = LOAD '/example/pig/sahara-paleo-fauna.txt' AS (DateBP:int, Loc:chararray, Coordinates:chararray, Samples:chararray, Country:chararray, Laboratory:chararray);filtered_records = FILTER records by Country == 'Egypt' OR Country == 'Morocco';grouped_records = GROUP filtered_records BY Country;DUMP grouped_records;&file=&arg=&files=&statusdir=&enablelog=",
+      "RequestBody": "user.name=sameuser&execute=records = LOAD '/example/pig/sahara-paleo-fauna.txt' AS (DateBP:int, Loc:chararray, Coordinates:chararray, Samples:chararray, Country:chararray, Laboratory:chararray);filtered_records = FILTER records by Country == 'Egypt' OR Country == 'Morocco';grouped_records = GROUP filtered_records BY Country;DUMP grouped_records;&file=&arg=&files=&statusdir=&enablelog=",
       "RequestHeaders": {
         "Content-Type": [
           "application/text"
         ],
         "Content-Length": [
-          "389"
+          "387"
         ],
         "accept": [
           "application/json"
@@ -25,7 +25,7 @@
           "submission"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"job_1435101021696_0047\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"job_1438899342432_0016\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "31"
@@ -34,16 +34,16 @@
           "application/json"
         ],
         "x-ms-hdi-servedby": [
-          "GATEWAY0"
+          "GATEWAY1"
         ],
         "x-ms-hdi-active": [
-          "headnode0.hdisdk-resize1.d6.internal.cloudapp.net"
+          "headnode1.nemadj-ssh-test.b5.internal.cloudapp.net"
         ],
         "x-ms-leader-detect-time": [
           "0"
         ],
         "Set-Cookie": [
-          "hadoop.auth=\"u=hadoopuser&p=hadoopuser&t=simple&e=1435732436388&s=cNiO/wdbE8dumMuzsHS6z8VcA/I=\"; Version=1; Path=/; Expires=Wed, 01-Jul-2015 06:33:56 GMT; HttpOnly"
+          "hadoop.auth=\"u=sameuser&p=sameuser&t=simple&e=1439291361329&s=BX8etKYKeOpdwpIo1nn/IhPq5zc=\"; Version=1; Path=/; Expires=Tue, 11-Aug-2015 11:09:21 GMT; HttpOnly"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -55,8 +55,11 @@
         "X-Content-Type-Options": [
           "nosniff"
         ],
+        "Strict-Transport-Security": [
+          "max-age=31536000"
+        ],
         "Date": [
-          "Tue, 30 Jun 2015 20:33:58 GMT"
+          "Tue, 11 Aug 2015 01:09:23 GMT"
         ]
       },
       "StatusCode": 200
