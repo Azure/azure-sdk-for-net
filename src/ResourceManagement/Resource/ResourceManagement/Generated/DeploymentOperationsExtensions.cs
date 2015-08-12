@@ -134,6 +134,54 @@ namespace Microsoft.Azure.Management.Resources
         }
         
         /// <summary>
+        /// Checks whether deployment exists.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Resources.IDeploymentOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group to check. The name is case
+        /// insensitive.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required. The name of the deployment.
+        /// </param>
+        /// <returns>
+        /// Deployment information.
+        /// </returns>
+        public static DeploymentExistsResult CheckExistence(this IDeploymentOperations operations, string resourceGroupName, string deploymentName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IDeploymentOperations)s).CheckExistenceAsync(resourceGroupName, deploymentName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Checks whether deployment exists.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Resources.IDeploymentOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group to check. The name is case
+        /// insensitive.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required. The name of the deployment.
+        /// </param>
+        /// <returns>
+        /// Deployment information.
+        /// </returns>
+        public static Task<DeploymentExistsResult> CheckExistenceAsync(this IDeploymentOperations operations, string resourceGroupName, string deploymentName)
+        {
+            return operations.CheckExistenceAsync(resourceGroupName, deploymentName, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Create a named template deployment using a template.
         /// </summary>
         /// <param name='operations'>
