@@ -112,7 +112,7 @@ namespace Microsoft.Azure.Insights
             url = url + "/";
             url = url + Uri.EscapeDataString(resourceUri);
             List<string> queryParameters = new List<string>();
-            if (Util.IsDocumentDb(resourceUri))
+            if (Util.IsLegacyResource(resourceUri))
             {
                 url = url + "/metricDefinitions";
                 queryParameters.Add("api-version=2014-04-01");
