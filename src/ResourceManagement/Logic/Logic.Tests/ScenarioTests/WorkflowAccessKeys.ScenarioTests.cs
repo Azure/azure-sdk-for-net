@@ -22,7 +22,7 @@ namespace Test.Azure.Management.Logic
             {
                 string workflowName = TestUtilities.GenerateName("logicwf");
 				string accessKeyName = TestUtilities.GenerateName("accesskey");
-                var client = this.GetLogicManagementClient();
+                var client = this.GetLogicManagementClient(context);
 
                 // Create a workflow
                 client.Workflows.CreateOrUpdate(
@@ -69,7 +69,7 @@ namespace Test.Azure.Management.Logic
             {
                 string workflowName = TestUtilities.GenerateName("logicwf");
                 string accessKeyName = TestUtilities.GenerateName("accesskey");
-                var client = this.GetLogicManagementClient();
+                var client = this.GetLogicManagementClient(context);
 
                 // Create a workflow
                 client.Workflows.CreateOrUpdate(
@@ -113,7 +113,7 @@ namespace Test.Azure.Management.Logic
             {
                 string workflowName = TestUtilities.GenerateName("logicwf");
                 string accessKeyName = TestUtilities.GenerateName("accesskey");
-                var client = this.GetLogicManagementClient();
+                var client = this.GetLogicManagementClient(context);
 
                 // Create a workflow
                 client.Workflows.CreateOrUpdate(
