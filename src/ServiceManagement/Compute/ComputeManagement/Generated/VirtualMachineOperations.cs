@@ -127,6 +127,39 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             if (parameters.ProvisioningConfiguration != null)
             {
+                if (parameters.ProvisioningConfiguration.AdditionalUnattendContent != null)
+                {
+                    if (parameters.ProvisioningConfiguration.AdditionalUnattendContent.UnattendPasses != null)
+                    {
+                        foreach (UnattendPassSettings unattendPassesParameterItem in parameters.ProvisioningConfiguration.AdditionalUnattendContent.UnattendPasses)
+                        {
+                            if (unattendPassesParameterItem.PassName == null)
+                            {
+                                throw new ArgumentNullException("parameters.ProvisioningConfiguration.AdditionalUnattendContent.UnattendPasses.PassName");
+                            }
+                            if (unattendPassesParameterItem.UnattendComponents != null)
+                            {
+                                foreach (UnattendComponent unattendComponentsParameterItem in unattendPassesParameterItem.UnattendComponents)
+                                {
+                                    if (unattendComponentsParameterItem.ComponentName == null)
+                                    {
+                                        throw new ArgumentNullException("parameters.ProvisioningConfiguration.AdditionalUnattendContent.UnattendPasses.UnattendComponents.ComponentName");
+                                    }
+                                    if (unattendComponentsParameterItem.UnattendComponentSettings != null)
+                                    {
+                                        foreach (ComponentSetting unattendComponentSettingsParameterItem in unattendComponentsParameterItem.UnattendComponentSettings)
+                                        {
+                                            if (unattendComponentSettingsParameterItem.SettingName == null)
+                                            {
+                                                throw new ArgumentNullException("parameters.ProvisioningConfiguration.AdditionalUnattendContent.UnattendPasses.UnattendComponents.UnattendComponentSettings.SettingName");
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
                 if (parameters.ProvisioningConfiguration.DomainJoin != null)
                 {
                     if (parameters.ProvisioningConfiguration.DomainJoin.Credentials != null)
@@ -764,6 +797,73 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         provisioningConfigurationElement.Add(adminUsernameElement);
                     }
                     
+                    if (parameters.ProvisioningConfiguration.AdditionalUnattendContent != null)
+                    {
+                        XElement additionalUnattendContentElement = new XElement(XName.Get("AdditionalUnattendContent", "http://schemas.microsoft.com/windowsazure"));
+                        provisioningConfigurationElement.Add(additionalUnattendContentElement);
+                        
+                        if (parameters.ProvisioningConfiguration.AdditionalUnattendContent.UnattendPasses != null)
+                        {
+                            if (parameters.ProvisioningConfiguration.AdditionalUnattendContent.UnattendPasses is ILazyCollection == false || ((ILazyCollection)parameters.ProvisioningConfiguration.AdditionalUnattendContent.UnattendPasses).IsInitialized)
+                            {
+                                XElement passesSequenceElement = new XElement(XName.Get("Passes", "http://schemas.microsoft.com/windowsazure"));
+                                foreach (UnattendPassSettings passesItem in parameters.ProvisioningConfiguration.AdditionalUnattendContent.UnattendPasses)
+                                {
+                                    XElement unattendPassElement = new XElement(XName.Get("UnattendPass", "http://schemas.microsoft.com/windowsazure"));
+                                    passesSequenceElement.Add(unattendPassElement);
+                                    
+                                    XElement passNameElement = new XElement(XName.Get("PassName", "http://schemas.microsoft.com/windowsazure"));
+                                    passNameElement.Value = passesItem.PassName;
+                                    unattendPassElement.Add(passNameElement);
+                                    
+                                    if (passesItem.UnattendComponents != null)
+                                    {
+                                        if (passesItem.UnattendComponents is ILazyCollection == false || ((ILazyCollection)passesItem.UnattendComponents).IsInitialized)
+                                        {
+                                            XElement componentsSequenceElement = new XElement(XName.Get("Components", "http://schemas.microsoft.com/windowsazure"));
+                                            foreach (UnattendComponent componentsItem in passesItem.UnattendComponents)
+                                            {
+                                                XElement unattendComponentElement = new XElement(XName.Get("UnattendComponent", "http://schemas.microsoft.com/windowsazure"));
+                                                componentsSequenceElement.Add(unattendComponentElement);
+                                                
+                                                XElement componentNameElement = new XElement(XName.Get("ComponentName", "http://schemas.microsoft.com/windowsazure"));
+                                                componentNameElement.Value = componentsItem.ComponentName;
+                                                unattendComponentElement.Add(componentNameElement);
+                                                
+                                                if (componentsItem.UnattendComponentSettings != null)
+                                                {
+                                                    if (componentsItem.UnattendComponentSettings is ILazyCollection == false || ((ILazyCollection)componentsItem.UnattendComponentSettings).IsInitialized)
+                                                    {
+                                                        XElement componentSettingsSequenceElement = new XElement(XName.Get("ComponentSettings", "http://schemas.microsoft.com/windowsazure"));
+                                                        foreach (ComponentSetting componentSettingsItem in componentsItem.UnattendComponentSettings)
+                                                        {
+                                                            XElement componentSettingElement = new XElement(XName.Get("ComponentSetting", "http://schemas.microsoft.com/windowsazure"));
+                                                            componentSettingsSequenceElement.Add(componentSettingElement);
+                                                            
+                                                            XElement settingNameElement = new XElement(XName.Get("SettingName", "http://schemas.microsoft.com/windowsazure"));
+                                                            settingNameElement.Value = componentSettingsItem.SettingName;
+                                                            componentSettingElement.Add(settingNameElement);
+                                                            
+                                                            if (componentSettingsItem.Content != null)
+                                                            {
+                                                                XElement contentElement = new XElement(XName.Get("Content", "http://schemas.microsoft.com/windowsazure"));
+                                                                contentElement.Value = TypeConversion.ToBase64String(componentSettingsItem.Content);
+                                                                componentSettingElement.Add(contentElement);
+                                                            }
+                                                        }
+                                                        unattendComponentElement.Add(componentSettingsSequenceElement);
+                                                    }
+                                                }
+                                            }
+                                            unattendPassElement.Add(componentsSequenceElement);
+                                        }
+                                    }
+                                }
+                                additionalUnattendContentElement.Add(passesSequenceElement);
+                            }
+                        }
+                    }
+                    
                     if (parameters.ProvisioningConfiguration.HostName != null)
                     {
                         XElement hostNameElement = new XElement(XName.Get("HostName", "http://schemas.microsoft.com/windowsazure"));
@@ -1168,6 +1268,39 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 foreach (ConfigurationSet configurationSetsParameterItem in parameters.ConfigurationSets)
                 {
+                    if (configurationSetsParameterItem.AdditionalUnattendContent != null)
+                    {
+                        if (configurationSetsParameterItem.AdditionalUnattendContent.UnattendPasses != null)
+                        {
+                            foreach (UnattendPassSettings unattendPassesParameterItem in configurationSetsParameterItem.AdditionalUnattendContent.UnattendPasses)
+                            {
+                                if (unattendPassesParameterItem.PassName == null)
+                                {
+                                    throw new ArgumentNullException("parameters.ConfigurationSets.AdditionalUnattendContent.UnattendPasses.PassName");
+                                }
+                                if (unattendPassesParameterItem.UnattendComponents != null)
+                                {
+                                    foreach (UnattendComponent unattendComponentsParameterItem in unattendPassesParameterItem.UnattendComponents)
+                                    {
+                                        if (unattendComponentsParameterItem.ComponentName == null)
+                                        {
+                                            throw new ArgumentNullException("parameters.ConfigurationSets.AdditionalUnattendContent.UnattendPasses.UnattendComponents.ComponentName");
+                                        }
+                                        if (unattendComponentsParameterItem.UnattendComponentSettings != null)
+                                        {
+                                            foreach (ComponentSetting unattendComponentSettingsParameterItem in unattendComponentsParameterItem.UnattendComponentSettings)
+                                            {
+                                                if (unattendComponentSettingsParameterItem.SettingName == null)
+                                                {
+                                                    throw new ArgumentNullException("parameters.ConfigurationSets.AdditionalUnattendContent.UnattendPasses.UnattendComponents.UnattendComponentSettings.SettingName");
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                     if (configurationSetsParameterItem.DomainJoin != null)
                     {
                         if (configurationSetsParameterItem.DomainJoin.Credentials != null)
@@ -1804,6 +1937,73 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 configurationSetElement.Add(adminUsernameElement);
                             }
                             
+                            if (configurationSetsItem.AdditionalUnattendContent != null)
+                            {
+                                XElement additionalUnattendContentElement = new XElement(XName.Get("AdditionalUnattendContent", "http://schemas.microsoft.com/windowsazure"));
+                                configurationSetElement.Add(additionalUnattendContentElement);
+                                
+                                if (configurationSetsItem.AdditionalUnattendContent.UnattendPasses != null)
+                                {
+                                    if (configurationSetsItem.AdditionalUnattendContent.UnattendPasses is ILazyCollection == false || ((ILazyCollection)configurationSetsItem.AdditionalUnattendContent.UnattendPasses).IsInitialized)
+                                    {
+                                        XElement passesSequenceElement = new XElement(XName.Get("Passes", "http://schemas.microsoft.com/windowsazure"));
+                                        foreach (UnattendPassSettings passesItem in configurationSetsItem.AdditionalUnattendContent.UnattendPasses)
+                                        {
+                                            XElement unattendPassElement = new XElement(XName.Get("UnattendPass", "http://schemas.microsoft.com/windowsazure"));
+                                            passesSequenceElement.Add(unattendPassElement);
+                                            
+                                            XElement passNameElement = new XElement(XName.Get("PassName", "http://schemas.microsoft.com/windowsazure"));
+                                            passNameElement.Value = passesItem.PassName;
+                                            unattendPassElement.Add(passNameElement);
+                                            
+                                            if (passesItem.UnattendComponents != null)
+                                            {
+                                                if (passesItem.UnattendComponents is ILazyCollection == false || ((ILazyCollection)passesItem.UnattendComponents).IsInitialized)
+                                                {
+                                                    XElement componentsSequenceElement = new XElement(XName.Get("Components", "http://schemas.microsoft.com/windowsazure"));
+                                                    foreach (UnattendComponent componentsItem in passesItem.UnattendComponents)
+                                                    {
+                                                        XElement unattendComponentElement = new XElement(XName.Get("UnattendComponent", "http://schemas.microsoft.com/windowsazure"));
+                                                        componentsSequenceElement.Add(unattendComponentElement);
+                                                        
+                                                        XElement componentNameElement = new XElement(XName.Get("ComponentName", "http://schemas.microsoft.com/windowsazure"));
+                                                        componentNameElement.Value = componentsItem.ComponentName;
+                                                        unattendComponentElement.Add(componentNameElement);
+                                                        
+                                                        if (componentsItem.UnattendComponentSettings != null)
+                                                        {
+                                                            if (componentsItem.UnattendComponentSettings is ILazyCollection == false || ((ILazyCollection)componentsItem.UnattendComponentSettings).IsInitialized)
+                                                            {
+                                                                XElement componentSettingsSequenceElement = new XElement(XName.Get("ComponentSettings", "http://schemas.microsoft.com/windowsazure"));
+                                                                foreach (ComponentSetting componentSettingsItem in componentsItem.UnattendComponentSettings)
+                                                                {
+                                                                    XElement componentSettingElement = new XElement(XName.Get("ComponentSetting", "http://schemas.microsoft.com/windowsazure"));
+                                                                    componentSettingsSequenceElement.Add(componentSettingElement);
+                                                                    
+                                                                    XElement settingNameElement = new XElement(XName.Get("SettingName", "http://schemas.microsoft.com/windowsazure"));
+                                                                    settingNameElement.Value = componentSettingsItem.SettingName;
+                                                                    componentSettingElement.Add(settingNameElement);
+                                                                    
+                                                                    if (componentSettingsItem.Content != null)
+                                                                    {
+                                                                        XElement contentElement = new XElement(XName.Get("Content", "http://schemas.microsoft.com/windowsazure"));
+                                                                        contentElement.Value = TypeConversion.ToBase64String(componentSettingsItem.Content);
+                                                                        componentSettingElement.Add(contentElement);
+                                                                    }
+                                                                }
+                                                                unattendComponentElement.Add(componentSettingsSequenceElement);
+                                                            }
+                                                        }
+                                                    }
+                                                    unattendPassElement.Add(componentsSequenceElement);
+                                                }
+                                            }
+                                        }
+                                        additionalUnattendContentElement.Add(passesSequenceElement);
+                                    }
+                                }
+                            }
+                            
                             if (configurationSetsItem.HostName != null)
                             {
                                 XElement hostNameElement = new XElement(XName.Get("HostName", "http://schemas.microsoft.com/windowsazure"));
@@ -2288,6 +2488,39 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     {
                         foreach (ConfigurationSet configurationSetsParameterItem in rolesParameterItem.ConfigurationSets)
                         {
+                            if (configurationSetsParameterItem.AdditionalUnattendContent != null)
+                            {
+                                if (configurationSetsParameterItem.AdditionalUnattendContent.UnattendPasses != null)
+                                {
+                                    foreach (UnattendPassSettings unattendPassesParameterItem in configurationSetsParameterItem.AdditionalUnattendContent.UnattendPasses)
+                                    {
+                                        if (unattendPassesParameterItem.PassName == null)
+                                        {
+                                            throw new ArgumentNullException("parameters.Roles.ConfigurationSets.AdditionalUnattendContent.UnattendPasses.PassName");
+                                        }
+                                        if (unattendPassesParameterItem.UnattendComponents != null)
+                                        {
+                                            foreach (UnattendComponent unattendComponentsParameterItem in unattendPassesParameterItem.UnattendComponents)
+                                            {
+                                                if (unattendComponentsParameterItem.ComponentName == null)
+                                                {
+                                                    throw new ArgumentNullException("parameters.Roles.ConfigurationSets.AdditionalUnattendContent.UnattendPasses.UnattendComponents.ComponentName");
+                                                }
+                                                if (unattendComponentsParameterItem.UnattendComponentSettings != null)
+                                                {
+                                                    foreach (ComponentSetting unattendComponentSettingsParameterItem in unattendComponentsParameterItem.UnattendComponentSettings)
+                                                    {
+                                                        if (unattendComponentSettingsParameterItem.SettingName == null)
+                                                        {
+                                                            throw new ArgumentNullException("parameters.Roles.ConfigurationSets.AdditionalUnattendContent.UnattendPasses.UnattendComponents.UnattendComponentSettings.SettingName");
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                             if (configurationSetsParameterItem.DomainJoin != null)
                             {
                                 if (configurationSetsParameterItem.DomainJoin.Credentials != null)
@@ -2950,6 +3183,73 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                         XElement adminUsernameElement = new XElement(XName.Get("AdminUsername", "http://schemas.microsoft.com/windowsazure"));
                                         adminUsernameElement.Value = configurationSetsItem.AdminUserName;
                                         configurationSetElement.Add(adminUsernameElement);
+                                    }
+                                    
+                                    if (configurationSetsItem.AdditionalUnattendContent != null)
+                                    {
+                                        XElement additionalUnattendContentElement = new XElement(XName.Get("AdditionalUnattendContent", "http://schemas.microsoft.com/windowsazure"));
+                                        configurationSetElement.Add(additionalUnattendContentElement);
+                                        
+                                        if (configurationSetsItem.AdditionalUnattendContent.UnattendPasses != null)
+                                        {
+                                            if (configurationSetsItem.AdditionalUnattendContent.UnattendPasses is ILazyCollection == false || ((ILazyCollection)configurationSetsItem.AdditionalUnattendContent.UnattendPasses).IsInitialized)
+                                            {
+                                                XElement passesSequenceElement = new XElement(XName.Get("Passes", "http://schemas.microsoft.com/windowsazure"));
+                                                foreach (UnattendPassSettings passesItem in configurationSetsItem.AdditionalUnattendContent.UnattendPasses)
+                                                {
+                                                    XElement unattendPassElement = new XElement(XName.Get("UnattendPass", "http://schemas.microsoft.com/windowsazure"));
+                                                    passesSequenceElement.Add(unattendPassElement);
+                                                    
+                                                    XElement passNameElement = new XElement(XName.Get("PassName", "http://schemas.microsoft.com/windowsazure"));
+                                                    passNameElement.Value = passesItem.PassName;
+                                                    unattendPassElement.Add(passNameElement);
+                                                    
+                                                    if (passesItem.UnattendComponents != null)
+                                                    {
+                                                        if (passesItem.UnattendComponents is ILazyCollection == false || ((ILazyCollection)passesItem.UnattendComponents).IsInitialized)
+                                                        {
+                                                            XElement componentsSequenceElement = new XElement(XName.Get("Components", "http://schemas.microsoft.com/windowsazure"));
+                                                            foreach (UnattendComponent componentsItem in passesItem.UnattendComponents)
+                                                            {
+                                                                XElement unattendComponentElement = new XElement(XName.Get("UnattendComponent", "http://schemas.microsoft.com/windowsazure"));
+                                                                componentsSequenceElement.Add(unattendComponentElement);
+                                                                
+                                                                XElement componentNameElement = new XElement(XName.Get("ComponentName", "http://schemas.microsoft.com/windowsazure"));
+                                                                componentNameElement.Value = componentsItem.ComponentName;
+                                                                unattendComponentElement.Add(componentNameElement);
+                                                                
+                                                                if (componentsItem.UnattendComponentSettings != null)
+                                                                {
+                                                                    if (componentsItem.UnattendComponentSettings is ILazyCollection == false || ((ILazyCollection)componentsItem.UnattendComponentSettings).IsInitialized)
+                                                                    {
+                                                                        XElement componentSettingsSequenceElement = new XElement(XName.Get("ComponentSettings", "http://schemas.microsoft.com/windowsazure"));
+                                                                        foreach (ComponentSetting componentSettingsItem in componentsItem.UnattendComponentSettings)
+                                                                        {
+                                                                            XElement componentSettingElement = new XElement(XName.Get("ComponentSetting", "http://schemas.microsoft.com/windowsazure"));
+                                                                            componentSettingsSequenceElement.Add(componentSettingElement);
+                                                                            
+                                                                            XElement settingNameElement = new XElement(XName.Get("SettingName", "http://schemas.microsoft.com/windowsazure"));
+                                                                            settingNameElement.Value = componentSettingsItem.SettingName;
+                                                                            componentSettingElement.Add(settingNameElement);
+                                                                            
+                                                                            if (componentSettingsItem.Content != null)
+                                                                            {
+                                                                                XElement contentElement = new XElement(XName.Get("Content", "http://schemas.microsoft.com/windowsazure"));
+                                                                                contentElement.Value = TypeConversion.ToBase64String(componentSettingsItem.Content);
+                                                                                componentSettingElement.Add(contentElement);
+                                                                            }
+                                                                        }
+                                                                        unattendComponentElement.Add(componentSettingsSequenceElement);
+                                                                    }
+                                                                }
+                                                            }
+                                                            unattendPassElement.Add(componentsSequenceElement);
+                                                        }
+                                                    }
+                                                }
+                                                additionalUnattendContentElement.Add(passesSequenceElement);
+                                            }
+                                        }
                                     }
                                     
                                     if (configurationSetsItem.HostName != null)
@@ -4604,6 +4904,39 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 foreach (ConfigurationSet configurationSetsParameterItem in parameters.ConfigurationSets)
                 {
+                    if (configurationSetsParameterItem.AdditionalUnattendContent != null)
+                    {
+                        if (configurationSetsParameterItem.AdditionalUnattendContent.UnattendPasses != null)
+                        {
+                            foreach (UnattendPassSettings unattendPassesParameterItem in configurationSetsParameterItem.AdditionalUnattendContent.UnattendPasses)
+                            {
+                                if (unattendPassesParameterItem.PassName == null)
+                                {
+                                    throw new ArgumentNullException("parameters.ConfigurationSets.AdditionalUnattendContent.UnattendPasses.PassName");
+                                }
+                                if (unattendPassesParameterItem.UnattendComponents != null)
+                                {
+                                    foreach (UnattendComponent unattendComponentsParameterItem in unattendPassesParameterItem.UnattendComponents)
+                                    {
+                                        if (unattendComponentsParameterItem.ComponentName == null)
+                                        {
+                                            throw new ArgumentNullException("parameters.ConfigurationSets.AdditionalUnattendContent.UnattendPasses.UnattendComponents.ComponentName");
+                                        }
+                                        if (unattendComponentsParameterItem.UnattendComponentSettings != null)
+                                        {
+                                            foreach (ComponentSetting unattendComponentSettingsParameterItem in unattendComponentsParameterItem.UnattendComponentSettings)
+                                            {
+                                                if (unattendComponentSettingsParameterItem.SettingName == null)
+                                                {
+                                                    throw new ArgumentNullException("parameters.ConfigurationSets.AdditionalUnattendContent.UnattendPasses.UnattendComponents.UnattendComponentSettings.SettingName");
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                     if (configurationSetsParameterItem.DomainJoin != null)
                     {
                         if (configurationSetsParameterItem.DomainJoin.Credentials != null)
@@ -5244,6 +5577,73 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 XElement adminUsernameElement = new XElement(XName.Get("AdminUsername", "http://schemas.microsoft.com/windowsazure"));
                                 adminUsernameElement.Value = configurationSetsItem.AdminUserName;
                                 configurationSetElement.Add(adminUsernameElement);
+                            }
+                            
+                            if (configurationSetsItem.AdditionalUnattendContent != null)
+                            {
+                                XElement additionalUnattendContentElement = new XElement(XName.Get("AdditionalUnattendContent", "http://schemas.microsoft.com/windowsazure"));
+                                configurationSetElement.Add(additionalUnattendContentElement);
+                                
+                                if (configurationSetsItem.AdditionalUnattendContent.UnattendPasses != null)
+                                {
+                                    if (configurationSetsItem.AdditionalUnattendContent.UnattendPasses is ILazyCollection == false || ((ILazyCollection)configurationSetsItem.AdditionalUnattendContent.UnattendPasses).IsInitialized)
+                                    {
+                                        XElement passesSequenceElement = new XElement(XName.Get("Passes", "http://schemas.microsoft.com/windowsazure"));
+                                        foreach (UnattendPassSettings passesItem in configurationSetsItem.AdditionalUnattendContent.UnattendPasses)
+                                        {
+                                            XElement unattendPassElement = new XElement(XName.Get("UnattendPass", "http://schemas.microsoft.com/windowsazure"));
+                                            passesSequenceElement.Add(unattendPassElement);
+                                            
+                                            XElement passNameElement = new XElement(XName.Get("PassName", "http://schemas.microsoft.com/windowsazure"));
+                                            passNameElement.Value = passesItem.PassName;
+                                            unattendPassElement.Add(passNameElement);
+                                            
+                                            if (passesItem.UnattendComponents != null)
+                                            {
+                                                if (passesItem.UnattendComponents is ILazyCollection == false || ((ILazyCollection)passesItem.UnattendComponents).IsInitialized)
+                                                {
+                                                    XElement componentsSequenceElement = new XElement(XName.Get("Components", "http://schemas.microsoft.com/windowsazure"));
+                                                    foreach (UnattendComponent componentsItem in passesItem.UnattendComponents)
+                                                    {
+                                                        XElement unattendComponentElement = new XElement(XName.Get("UnattendComponent", "http://schemas.microsoft.com/windowsazure"));
+                                                        componentsSequenceElement.Add(unattendComponentElement);
+                                                        
+                                                        XElement componentNameElement = new XElement(XName.Get("ComponentName", "http://schemas.microsoft.com/windowsazure"));
+                                                        componentNameElement.Value = componentsItem.ComponentName;
+                                                        unattendComponentElement.Add(componentNameElement);
+                                                        
+                                                        if (componentsItem.UnattendComponentSettings != null)
+                                                        {
+                                                            if (componentsItem.UnattendComponentSettings is ILazyCollection == false || ((ILazyCollection)componentsItem.UnattendComponentSettings).IsInitialized)
+                                                            {
+                                                                XElement componentSettingsSequenceElement = new XElement(XName.Get("ComponentSettings", "http://schemas.microsoft.com/windowsazure"));
+                                                                foreach (ComponentSetting componentSettingsItem in componentsItem.UnattendComponentSettings)
+                                                                {
+                                                                    XElement componentSettingElement = new XElement(XName.Get("ComponentSetting", "http://schemas.microsoft.com/windowsazure"));
+                                                                    componentSettingsSequenceElement.Add(componentSettingElement);
+                                                                    
+                                                                    XElement settingNameElement = new XElement(XName.Get("SettingName", "http://schemas.microsoft.com/windowsazure"));
+                                                                    settingNameElement.Value = componentSettingsItem.SettingName;
+                                                                    componentSettingElement.Add(settingNameElement);
+                                                                    
+                                                                    if (componentSettingsItem.Content != null)
+                                                                    {
+                                                                        XElement contentElement = new XElement(XName.Get("Content", "http://schemas.microsoft.com/windowsazure"));
+                                                                        contentElement.Value = TypeConversion.ToBase64String(componentSettingsItem.Content);
+                                                                        componentSettingElement.Add(contentElement);
+                                                                    }
+                                                                }
+                                                                unattendComponentElement.Add(componentSettingsSequenceElement);
+                                                            }
+                                                        }
+                                                    }
+                                                    unattendPassElement.Add(componentsSequenceElement);
+                                                }
+                                            }
+                                        }
+                                        additionalUnattendContentElement.Add(passesSequenceElement);
+                                    }
+                                }
                             }
                             
                             if (configurationSetsItem.HostName != null)
@@ -7165,6 +7565,71 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                     {
                                         string adminUsernameInstance = adminUsernameElement.Value;
                                         configurationSetInstance.AdminUserName = adminUsernameInstance;
+                                    }
+                                    
+                                    XElement additionalUnattendContentElement = configurationSetsElement.Element(XName.Get("AdditionalUnattendContent", "http://schemas.microsoft.com/windowsazure"));
+                                    if (additionalUnattendContentElement != null)
+                                    {
+                                        AdditionalUnattendContentSettings additionalUnattendContentInstance = new AdditionalUnattendContentSettings();
+                                        configurationSetInstance.AdditionalUnattendContent = additionalUnattendContentInstance;
+                                        
+                                        XElement passesSequenceElement = additionalUnattendContentElement.Element(XName.Get("Passes", "http://schemas.microsoft.com/windowsazure"));
+                                        if (passesSequenceElement != null)
+                                        {
+                                            foreach (XElement passesElement in passesSequenceElement.Elements(XName.Get("UnattendPass", "http://schemas.microsoft.com/windowsazure")))
+                                            {
+                                                UnattendPassSettings unattendPassInstance = new UnattendPassSettings();
+                                                additionalUnattendContentInstance.UnattendPasses.Add(unattendPassInstance);
+                                                
+                                                XElement passNameElement = passesElement.Element(XName.Get("PassName", "http://schemas.microsoft.com/windowsazure"));
+                                                if (passNameElement != null)
+                                                {
+                                                    string passNameInstance = passNameElement.Value;
+                                                    unattendPassInstance.PassName = passNameInstance;
+                                                }
+                                                
+                                                XElement componentsSequenceElement = passesElement.Element(XName.Get("Components", "http://schemas.microsoft.com/windowsazure"));
+                                                if (componentsSequenceElement != null)
+                                                {
+                                                    foreach (XElement componentsElement in componentsSequenceElement.Elements(XName.Get("UnattendComponent", "http://schemas.microsoft.com/windowsazure")))
+                                                    {
+                                                        UnattendComponent unattendComponentInstance = new UnattendComponent();
+                                                        unattendPassInstance.UnattendComponents.Add(unattendComponentInstance);
+                                                        
+                                                        XElement componentNameElement = componentsElement.Element(XName.Get("ComponentName", "http://schemas.microsoft.com/windowsazure"));
+                                                        if (componentNameElement != null)
+                                                        {
+                                                            string componentNameInstance = componentNameElement.Value;
+                                                            unattendComponentInstance.ComponentName = componentNameInstance;
+                                                        }
+                                                        
+                                                        XElement componentSettingsSequenceElement = componentsElement.Element(XName.Get("ComponentSettings", "http://schemas.microsoft.com/windowsazure"));
+                                                        if (componentSettingsSequenceElement != null)
+                                                        {
+                                                            foreach (XElement componentSettingsElement in componentSettingsSequenceElement.Elements(XName.Get("ComponentSetting", "http://schemas.microsoft.com/windowsazure")))
+                                                            {
+                                                                ComponentSetting componentSettingInstance = new ComponentSetting();
+                                                                unattendComponentInstance.UnattendComponentSettings.Add(componentSettingInstance);
+                                                                
+                                                                XElement settingNameElement = componentSettingsElement.Element(XName.Get("SettingName", "http://schemas.microsoft.com/windowsazure"));
+                                                                if (settingNameElement != null)
+                                                                {
+                                                                    string settingNameInstance = settingNameElement.Value;
+                                                                    componentSettingInstance.SettingName = settingNameInstance;
+                                                                }
+                                                                
+                                                                XElement contentElement = componentSettingsElement.Element(XName.Get("Content", "http://schemas.microsoft.com/windowsazure"));
+                                                                if (contentElement != null)
+                                                                {
+                                                                    string contentInstance = TypeConversion.FromBase64String(contentElement.Value);
+                                                                    componentSettingInstance.Content = contentInstance;
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
                                     }
                                     
                                     XElement hostNameElement = configurationSetsElement.Element(XName.Get("HostName", "http://schemas.microsoft.com/windowsazure"));
