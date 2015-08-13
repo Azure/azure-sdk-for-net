@@ -304,7 +304,32 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
                                                 ComputerName = serviceName,
                                                 HostName = string.Format("{0}.cloudapp.net", serviceName),
                                                 EnableAutomaticUpdates = false,
-                                                TimeZone = "Pacific Standard Time"
+                                                TimeZone = "Pacific Standard Time",
+                                                AdditionalUnattendContent = new AdditionalUnattendContentSettings
+                                                {
+                                                    UnattendPasses = new List<UnattendPassSettings>
+                                                    {
+                                                        new UnattendPassSettings
+                                                        {
+                                                            PassName = "oobeSystem",
+                                                            UnattendComponents = new List<UnattendComponent>
+                                                            {
+                                                                new UnattendComponent
+                                                                {
+                                                                    ComponentName = "Microsoft-Windows-Shell-Setup",
+                                                                    UnattendComponentSettings = new List<ComponentSetting>
+                                                                    {
+                                                                        new ComponentSetting
+                                                                        {
+                                                                            SettingName = "AutoLogon",
+                                                                            Content = "<AutoLogon><Enabled>true</Enabled><LogonCount>5</LogonCount><Username>Foo12</Username><Password><Value>BaR@123pslibtest1269</Value><PlainText>true</PlainText></Password></AutoLogon>",
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
                                             },
                                             new ConfigurationSet
                                             {
@@ -439,7 +464,32 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
                                         ComputerName = serviceName,
                                         HostName = string.Format("{0}.cloudapp.net", serviceName),
                                         EnableAutomaticUpdates = false,
-                                        TimeZone = "Pacific Standard Time"
+                                        TimeZone = "Pacific Standard Time",
+                                        AdditionalUnattendContent = new AdditionalUnattendContentSettings
+                                        {
+                                            UnattendPasses = new List<UnattendPassSettings>
+                                            {
+                                                new UnattendPassSettings
+                                                {
+                                                    PassName = "oobeSystem",
+                                                    UnattendComponents = new List<UnattendComponent>
+                                                    {
+                                                        new UnattendComponent
+                                                        {
+                                                            ComponentName = "Microsoft-Windows-Shell-Setup",
+                                                            UnattendComponentSettings = new List<ComponentSetting>
+                                                            {
+                                                                new ComponentSetting
+                                                                {
+                                                                    SettingName = "AutoLogon",
+                                                                    Content = "<AutoLogon><Enabled>true</Enabled><LogonCount>5</LogonCount><Username>Foo12</Username><Password><Value>BaR@123pslibtest1269</Value><PlainText>true</PlainText></Password></AutoLogon>",
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
                                     },
                                     new ConfigurationSet
                                     {
@@ -1193,7 +1243,32 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
                                                 ComputerName = serviceName,
                                                 HostName = string.Format("{0}.cloudapp.net", serviceName),
                                                 EnableAutomaticUpdates = false,
-                                                TimeZone = "Pacific Standard Time"
+                                                TimeZone = "Pacific Standard Time",
+                                                AdditionalUnattendContent = new AdditionalUnattendContentSettings
+                                                {
+                                                    UnattendPasses = new List<UnattendPassSettings>
+                                                    {
+                                                        new UnattendPassSettings
+                                                        {
+                                                            PassName = "oobeSystem",
+                                                            UnattendComponents = new List<UnattendComponent>
+                                                            {
+                                                                new UnattendComponent
+                                                                {
+                                                                    ComponentName = "Microsoft-Windows-Shell-Setup",
+                                                                    UnattendComponentSettings = new List<ComponentSetting>
+                                                                    {
+                                                                        new ComponentSetting
+                                                                        {
+                                                                            SettingName = "AutoLogon",
+                                                                            Content = "<AutoLogon><Enabled>true</Enabled><LogonCount>5</LogonCount><Username>Foo12</Username><Password><Value>BaR@123pslibtest1269</Value><PlainText>true</PlainText></Password></AutoLogon>",
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
                                             },
                                             new ConfigurationSet
                                             {
@@ -1342,7 +1417,32 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
                                                 ComputerName = serviceName,
                                                 HostName = string.Format("{0}.cloudapp.net", serviceName),
                                                 EnableAutomaticUpdates = false,
-                                                TimeZone = "Pacific Standard Time"
+                                                TimeZone = "Pacific Standard Time",
+                                                AdditionalUnattendContent = new AdditionalUnattendContentSettings
+                                                {
+                                                    UnattendPasses = new List<UnattendPassSettings>
+                                                    {
+                                                        new UnattendPassSettings
+                                                        {
+                                                            PassName = "oobeSystem",
+                                                            UnattendComponents = new List<UnattendComponent>
+                                                            {
+                                                                new UnattendComponent
+                                                                {
+                                                                    ComponentName = "Microsoft-Windows-Shell-Setup",
+                                                                    UnattendComponentSettings = new List<ComponentSetting>
+                                                                    {
+                                                                        new ComponentSetting
+                                                                        {
+                                                                            SettingName = "AutoLogon",
+                                                                            Content = "<AutoLogon><Enabled>true</Enabled><LogonCount>5</LogonCount><Username>Foo12</Username><Password><Value>BaR@123pslibtest1269</Value><PlainText>true</PlainText></Password></AutoLogon>",
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
                                             },
                                             new ConfigurationSet
                                             {
