@@ -22,6 +22,7 @@
 using System;
 using System.Linq;
 using Microsoft.Azure;
+using Microsoft.Azure.Management.NotificationHubs.Models;
 
 namespace Microsoft.Azure.Management.NotificationHubs.Models
 {
@@ -30,16 +31,16 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
     /// </summary>
     public partial class CheckAvailabilityResponse : AzureOperationResponse
     {
-        private bool _isAvailable;
+        private CheckAvailabilityResource _value;
         
         /// <summary>
         /// Optional. Gets or sets true if the name is available and can be
         /// used to create new Namespace/NotificationHub. Otherwise false.
         /// </summary>
-        public bool IsAvailable
+        public CheckAvailabilityResource Value
         {
-            get { return this._isAvailable; }
-            set { this._isAvailable = value; }
+            get { return this._value; }
+            set { this._value = value; }
         }
         
         /// <summary>

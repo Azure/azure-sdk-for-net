@@ -21,6 +21,7 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure.Management.NotificationHubs.Models;
 
 namespace Microsoft.Azure.Management.NotificationHubs.Models
 {
@@ -29,37 +30,15 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
     /// </summary>
     public partial class AdmCredential
     {
-        private string _authTokenUrl;
+        private AdmCredentialProperties _properties;
         
         /// <summary>
-        /// Optional. Gets or sets the URL of the authorization token.
+        /// Optional. Gets or sets properties of NotificationHub AdmCredential.
         /// </summary>
-        public string AuthTokenUrl
+        public AdmCredentialProperties Properties
         {
-            get { return this._authTokenUrl; }
-            set { this._authTokenUrl = value; }
-        }
-        
-        private string _clientId;
-        
-        /// <summary>
-        /// Optional. Gets or sets the client identifier.
-        /// </summary>
-        public string ClientId
-        {
-            get { return this._clientId; }
-            set { this._clientId = value; }
-        }
-        
-        private string _clientSecret;
-        
-        /// <summary>
-        /// Optional. Gets or sets the credential secret access key.
-        /// </summary>
-        public string ClientSecret
-        {
-            get { return this._clientSecret; }
-            set { this._clientSecret = value; }
+            get { return this._properties; }
+            set { this._properties = value; }
         }
         
         /// <summary>

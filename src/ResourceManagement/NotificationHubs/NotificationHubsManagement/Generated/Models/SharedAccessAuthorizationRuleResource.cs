@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
     /// <summary>
     /// Description of a Namespace AuthorizationRules.
     /// </summary>
-    public partial class AuthorizationRulesResource
+    public partial class SharedAccessAuthorizationRuleResource
     {
         private string _id;
         
@@ -67,12 +67,12 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
             set { this._name = value; }
         }
         
-        private AuthorizationRulesProperties _properties;
+        private SharedAccessAuthorizationRuleProperties _properties;
         
         /// <summary>
         /// Optional. Gets or sets properties of the Namespace.
         /// </summary>
-        public AuthorizationRulesProperties Properties
+        public SharedAccessAuthorizationRuleProperties Properties
         {
             get { return this._properties; }
             set { this._properties = value; }
@@ -102,9 +102,10 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
         }
         
         /// <summary>
-        /// Initializes a new instance of the AuthorizationRulesResource class.
+        /// Initializes a new instance of the
+        /// SharedAccessAuthorizationRuleResource class.
         /// </summary>
-        public AuthorizationRulesResource()
+        public SharedAccessAuthorizationRuleResource()
         {
             this.Tags = new LazyDictionary<string, string>();
         }

@@ -37,11 +37,7 @@ namespace NotificationHubs.Tests.ScenarioTests
             using (var context = UndoContext.Current)
             {
                 context.Start("ScenarioTests", "NamespaceCreateGetUpdateDelete");
-
-                //precreate a namespace
-                TryCreateNamespace();
-
-                var location = this.ManagmentClient.TryGetLocation(NotificationHubsManagementHelper.DefaultLocation);
+                var location = NotificationHubsManagementHelper.DefaultLocation;
                 var resourceGroup = this.ResourceManagementClient.TryGetResourceGroup(location);
                 if (string.IsNullOrWhiteSpace(resourceGroup))
                 {
@@ -51,7 +47,7 @@ namespace NotificationHubs.Tests.ScenarioTests
 
                 var namespaceName = TestUtilities.GenerateName(NotificationHubsManagementHelper.NamespacePrefix);
 
-                var createNamespaceResponse = NotificationHubsManagementClient.Namespaces.CreateOrUpdate(resourceGroup, namespaceName, 
+                var createNamespaceResponse = this.NotificationHubsManagementClient.Namespaces.CreateOrUpdate(resourceGroup, namespaceName, 
                     new NamespaceCreateOrUpdateParameters()
                     {
                         Location = location,
@@ -61,16 +57,20 @@ namespace NotificationHubs.Tests.ScenarioTests
                         }
                     });
 
-                Assert.Null(createNamespaceResponse);
-                Assert.Null(createNamespaceResponse.Value);
-                Assert.Equal(createNamespaceResponse.Value.Name, namespaceName);
+                Assert.NotNull(createNamespaceResponse);
+                Assert.NotNull(createNamespaceResponse.Value);
+                Assert.Equal(createNamespaceResponse.Value.Properties.Name, namespaceName);
 
                 TestUtilities.Wait(TimeSpan.FromSeconds(5));
-                
+
                 //Get the created namespace
                 var getNamespaceResponse = NotificationHubsManagementClient.Namespaces.Get(resourceGroup, namespaceName);
-                Assert.Null(getNamespaceResponse);
-                Assert.Null(getNamespaceResponse.Value);
+                if (string.Compare(getNamespaceResponse.Value.Properties.ProvisioningState, "Succeeded", true) != 0)
+                    TestUtilities.Wait(TimeSpan.FromSeconds(5));
+
+                getNamespaceResponse = NotificationHubsManagementClient.Namespaces.Get(resourceGroup, namespaceName);
+                Assert.NotNull(getNamespaceResponse);
+                Assert.NotNull(getNamespaceResponse.Value);
                 Assert.Equal("Succeeded", getNamespaceResponse.Value.Properties.ProvisioningState, StringComparer.CurrentCultureIgnoreCase);
                 Assert.Equal("Active", getNamespaceResponse.Value.Properties.Status, StringComparer.CurrentCultureIgnoreCase);
                 Assert.Equal(NamespaceType.NotificationHub, getNamespaceResponse.Value.Properties.NamespaceType);
@@ -78,23 +78,23 @@ namespace NotificationHubs.Tests.ScenarioTests
 
                 //Get all namespaces created within a resourceGroup
                 var getAllNamespacesResponse = NotificationHubsManagementClient.Namespaces.List(resourceGroup);
-                Assert.Null(getAllNamespacesResponse);
-                Assert.Null(getAllNamespacesResponse.Value);
-                Assert.True(getAllNamespacesResponse.Value.Count > 1);
+                Assert.NotNull(getAllNamespacesResponse);
+                Assert.NotNull(getAllNamespacesResponse.Value);
+                Assert.True(getAllNamespacesResponse.Value.Count >= 1);
                 Assert.True(getAllNamespacesResponse.Value.Any(ns => ns.Name == namespaceName));
-                Assert.True(getAllNamespacesResponse.Value.All(ns => ns.Id == resourceGroup));
+                Assert.True(getAllNamespacesResponse.Value.All(ns => ns.Id.Contains(resourceGroup)));
 
                 //Get all namespaces created within the subscription irrespective of the resourceGroup
-                getAllNamespacesResponse = NotificationHubsManagementClient.Namespaces.List(null);
-                Assert.Null(getAllNamespacesResponse);
-                Assert.Null(getAllNamespacesResponse.Value);
-                Assert.True(getAllNamespacesResponse.Value.Count > 1);
+                getAllNamespacesResponse = NotificationHubsManagementClient.Namespaces.ListAll();
+                Assert.NotNull(getAllNamespacesResponse);
+                Assert.NotNull(getAllNamespacesResponse.Value);
+                Assert.True(getAllNamespacesResponse.Value.Count >= 1);
                 Assert.True(getAllNamespacesResponse.Value.Any(ns => ns.Name == namespaceName));
-                Assert.True(getAllNamespacesResponse.Value.Any(ns => ns.Id == resourceGroup));
 
                 //Update namespace tags and make the namespace critical
                 var updateNamespaceParameter = new NamespaceCreateOrUpdateParameters()
                     {
+                        Location = location,
                         Tags = 
                         {
                             {"tag1", "value1"},
@@ -104,18 +104,15 @@ namespace NotificationHubs.Tests.ScenarioTests
                         },
 
                         Properties = new NamespaceProperties()
-                        {
-                            Critical = true
-                        }
                     };
 
                 var updateNamespaceResponse = NotificationHubsManagementClient.Namespaces.CreateOrUpdate(resourceGroup, namespaceName, updateNamespaceParameter);
 
                 Assert.NotNull(updateNamespaceResponse);
                 Assert.NotNull(updateNamespaceResponse.Value);
-                Assert.Equal("Succeeded", updateNamespaceResponse.Value.Properties.ProvisioningState, StringComparer.CurrentCultureIgnoreCase);
-                Assert.Equal(namespaceName, updateNamespaceResponse.Value.Name);
-                Assert.True(updateNamespaceResponse.Value.Properties.Critical);
+                Assert.Equal("Active", updateNamespaceResponse.Value.Properties.ProvisioningState, StringComparer.CurrentCultureIgnoreCase);
+                Assert.Equal(namespaceName, updateNamespaceResponse.Value.Properties.Name);
+                //Assert.True(updateNamespaceResponse.Value.Properties.Critical);
                 Assert.Equal(updateNamespaceResponse.Value.Tags.Count, 4);
                 foreach(var tag in updateNamespaceParameter.Tags)
                 {
@@ -123,14 +120,16 @@ namespace NotificationHubs.Tests.ScenarioTests
                     Assert.True(updateNamespaceResponse.Value.Tags.Any(t => t.Value.Equals(tag.Value)));
                 }
 
+                TestUtilities.Wait(TimeSpan.FromSeconds(5));
+
                 //Get the updated namespace
                 getNamespaceResponse = NotificationHubsManagementClient.Namespaces.Get(resourceGroup, namespaceName);
-                Assert.Null(getNamespaceResponse);
-                Assert.Null(getNamespaceResponse.Value);
+                Assert.NotNull(getNamespaceResponse);
+                Assert.NotNull(getNamespaceResponse.Value);
                 Assert.Equal(NamespaceType.NotificationHub, getNamespaceResponse.Value.Properties.NamespaceType);
                 Assert.Equal(location, getNamespaceResponse.Value.Properties.Region, StringComparer.CurrentCultureIgnoreCase);
                 Assert.Equal(namespaceName, getNamespaceResponse.Value.Name);
-                Assert.True(getNamespaceResponse.Value.Properties.Critical);
+                //Assert.True(getNamespaceResponse.Value.Properties.Critical);
                 Assert.Equal(getNamespaceResponse.Value.Tags.Count, 4);
                 foreach (var tag in updateNamespaceParameter.Tags)
                 {
@@ -138,22 +137,34 @@ namespace NotificationHubs.Tests.ScenarioTests
                     Assert.True(getNamespaceResponse.Value.Tags.Any(t => t.Value.Equals(tag.Value)));
                 }
 
+
+                //create Namespace 2
+                var namespaceName2 = TestUtilities.GenerateName(NotificationHubsManagementHelper.NamespacePrefix);
+
+                var createNamespaceResponse2 = this.NotificationHubsManagementClient.Namespaces.CreateOrUpdate(resourceGroup, namespaceName2,
+                    new NamespaceCreateOrUpdateParameters()
+                    {
+                        Location = location,
+                        Properties = new NamespaceProperties()
+                        {
+                            NamespaceType = NamespaceType.NotificationHub
+                        }
+                    });
+
+                Assert.NotNull(createNamespaceResponse2);
+                Assert.NotNull(createNamespaceResponse2.Value);
+                Assert.Equal(createNamespaceResponse2.Value.Properties.Name, namespaceName2);
+
+                TestUtilities.Wait(TimeSpan.FromSeconds(10));
+
                 //Delete namespace
+                var deleteNSResponse = NotificationHubsManagementClient.Namespaces.Delete(resourceGroup, namespaceName2);
+                Assert.NotNull(deleteNSResponse);
+                Assert.True(HttpStatusCode.NotFound == deleteNSResponse.StatusCode || HttpStatusCode.OK == deleteNSResponse.StatusCode);
 
-                var deleteResponse = NotificationHubsManagementClient.Namespaces.Delete(resourceGroup, namespaceName);
-                Assert.Null(deleteResponse);
-                Assert.Equal(deleteResponse.StatusCode, HttpStatusCode.OK);
-
-                TestUtilities.Wait(TimeSpan.FromSeconds(5));
-                try
-                {
-                    NotificationHubsManagementClient.Namespaces.Get(resourceGroup, namespaceName);
-                    Assert.True(false, "this step should have failed");
-                }
-                catch(CloudException ex)
-                {
-                    Assert.Equal(HttpStatusCode.NotFound, ex.Response.StatusCode);
-                }
+                deleteNSResponse = NotificationHubsManagementClient.Namespaces.Delete(resourceGroup, namespaceName);
+                Assert.NotNull(deleteNSResponse);
+                Assert.True(HttpStatusCode.NotFound == deleteNSResponse.StatusCode || HttpStatusCode.OK == deleteNSResponse.StatusCode);
             }
         }
     }

@@ -21,30 +21,40 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.NotificationHubs.Models;
 
 namespace Microsoft.Azure.Management.NotificationHubs.Models
 {
     /// <summary>
-    /// Description of a NotificationHub MpnsCredential.
+    /// Description of a NotificationHub GcmCredential.
     /// </summary>
-    public partial class MpnsCredential
+    public partial class GcmCredentialProperties
     {
-        private MpnsCredentialProperties _properties;
+        private string _gcmEndpoint;
         
         /// <summary>
-        /// Optional. Gets or sets properties of NotificationHub MpnsCredential.
+        /// Optional. Gets or sets the GCM endpoint.
         /// </summary>
-        public MpnsCredentialProperties Properties
+        public string GcmEndpoint
         {
-            get { return this._properties; }
-            set { this._properties = value; }
+            get { return this._gcmEndpoint; }
+            set { this._gcmEndpoint = value; }
+        }
+        
+        private string _googleApiKey;
+        
+        /// <summary>
+        /// Optional. Gets or sets the Google API key.
+        /// </summary>
+        public string GoogleApiKey
+        {
+            get { return this._googleApiKey; }
+            set { this._googleApiKey = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the MpnsCredential class.
+        /// Initializes a new instance of the GcmCredentialProperties class.
         /// </summary>
-        public MpnsCredential()
+        public GcmCredentialProperties()
         {
         }
     }

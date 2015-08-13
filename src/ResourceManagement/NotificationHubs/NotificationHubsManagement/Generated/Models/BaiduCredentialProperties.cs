@@ -21,30 +21,51 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.NotificationHubs.Models;
 
 namespace Microsoft.Azure.Management.NotificationHubs.Models
 {
     /// <summary>
-    /// Description of a NotificationHub MpnsCredential.
+    /// Description of a NotificationHub BaiduCredential.
     /// </summary>
-    public partial class MpnsCredential
+    public partial class BaiduCredentialProperties
     {
-        private MpnsCredentialProperties _properties;
+        private string _baiduApiKey;
         
         /// <summary>
-        /// Optional. Gets or sets properties of NotificationHub MpnsCredential.
+        /// Optional. Get or Set Baidu Api Key.
         /// </summary>
-        public MpnsCredentialProperties Properties
+        public string BaiduApiKey
         {
-            get { return this._properties; }
-            set { this._properties = value; }
+            get { return this._baiduApiKey; }
+            set { this._baiduApiKey = value; }
+        }
+        
+        private string _baiduEndPoint;
+        
+        /// <summary>
+        /// Optional. Get or Set Baidu Endpoint.
+        /// </summary>
+        public string BaiduEndPoint
+        {
+            get { return this._baiduEndPoint; }
+            set { this._baiduEndPoint = value; }
+        }
+        
+        private string _baiduSecretKey;
+        
+        /// <summary>
+        /// Optional. Get or Set Baidu Secret Key
+        /// </summary>
+        public string BaiduSecretKey
+        {
+            get { return this._baiduSecretKey; }
+            set { this._baiduSecretKey = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the MpnsCredential class.
+        /// Initializes a new instance of the BaiduCredentialProperties class.
         /// </summary>
-        public MpnsCredential()
+        public BaiduCredentialProperties()
         {
         }
     }

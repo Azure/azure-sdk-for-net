@@ -20,50 +20,44 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
-using Microsoft.Azure;
 using Microsoft.Azure.Management.NotificationHubs.Models;
 
 namespace Microsoft.Azure.Management.NotificationHubs.Models
 {
     /// <summary>
-    /// The response of the List Namespace operation.
+    /// SharedAccessAuthorizationRule properties.
     /// </summary>
-    public partial class AuthorizationRulesListResponse : AzureOperationResponse
+    public partial class SharedAccessAuthorizationRuleProperties : AuthorizationRule
     {
-        private string _nextLink;
+        private string _primaryKey;
         
         /// <summary>
-        /// Optional. Gets or sets link to the next set of results. Not empty
-        /// if Value contains incomplete list of AuthorizationRules
+        /// Optional. The primary key that was used.
         /// </summary>
-        public string NextLink
+        public string PrimaryKey
         {
-            get { return this._nextLink; }
-            set { this._nextLink = value; }
+            get { return this._primaryKey; }
+            set { this._primaryKey = value; }
         }
         
-        private IList<AuthorizationRulesResource> _value;
+        private string _secondaryKey;
         
         /// <summary>
-        /// Optional. Gets or sets result of the List AuthorizationRules
-        /// operation.
+        /// Optional. The secondary key that was used.
         /// </summary>
-        public IList<AuthorizationRulesResource> Value
+        public string SecondaryKey
         {
-            get { return this._value; }
-            set { this._value = value; }
+            get { return this._secondaryKey; }
+            set { this._secondaryKey = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the AuthorizationRulesListResponse
-        /// class.
+        /// Initializes a new instance of the
+        /// SharedAccessAuthorizationRuleProperties class.
         /// </summary>
-        public AuthorizationRulesListResponse()
+        public SharedAccessAuthorizationRuleProperties()
         {
-            this.Value = new LazyList<AuthorizationRulesResource>();
         }
     }
 }

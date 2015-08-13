@@ -57,6 +57,31 @@ namespace Microsoft.Azure.Management.NotificationHubs
         Task<CheckAvailabilityResponse> CheckAvailabilityAsync(string resourceGroupName, string namespaceName, CheckAvailabilityParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
+        /// Creates a new NotificationHub in a namespace.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj856303.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='namespaceName'>
+        /// The namespace name.
+        /// </param>
+        /// <param name='notificationHubName'>
+        /// The notification hub name.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the create a Namespace Resource.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Response of the CreateOrUpdate operation on the NotificationHub
+        /// </returns>
+        Task<NotificationHubCreateOrUpdateResponse> CreateAsync(string resourceGroupName, string namespaceName, string notificationHubName, NotificationHubCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// The create NotificationHub authorization rule operation creates an
         /// authorization rule for a NotificationHub
         /// </summary>
@@ -81,32 +106,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
         /// <returns>
         /// Response of the CreateOrUpdate operation on the AuthorizationRules
         /// </returns>
-        Task<AuthorizationRulesCreateOrUpdateResponse> CreateAuthorizationRuleAsync(string resourceGroupName, string namespaceName, string notificationHubName, string authorizationRuleName, AuthorizationRulesCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Creates a new NotificationHub in a namespace.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj856303.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='namespaceName'>
-        /// The namespace name.
-        /// </param>
-        /// <param name='notificationHubName'>
-        /// The notification hub name.
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to the create a Namespace Resource.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// Response of the CreateOrUpdate operation on the NotificationHub
-        /// </returns>
-        Task<NotificationHubCreateOrUpdateResponse> CreateOrUpdateAsync(string resourceGroupName, string namespaceName, string notificationHubName, NotificationHubCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
+        Task<SharedAccessAuthorizationRuleCreateOrUpdateResponse> CreateOrUpdateAuthorizationRuleAsync(string resourceGroupName, string namespaceName, string notificationHubName, string authorizationRuleName, SharedAccessAuthorizationRuleCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Deletes a notification hub associated with a namespace.
@@ -195,7 +195,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
         /// <returns>
         /// The response of the Get Namespace operation.
         /// </returns>
-        Task<AuthorizationRulesGetResponse> GetAuthorizationRuleAsync(string resourceGroupName, string namespaceName, string notificationHubName, string authorizationRuleName, CancellationToken cancellationToken);
+        Task<SharedAccessAuthorizationRuleGetResponse> GetAuthorizationRuleAsync(string resourceGroupName, string namespaceName, string notificationHubName, string authorizationRuleName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Lists the PNS Credentials associated with a notification hub .
@@ -253,7 +253,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
         /// <returns>
         /// The response of the List Namespace operation.
         /// </returns>
-        Task<AuthorizationRulesListResponse> ListAuthorizationRulesAsync(string resourceGroupName, string namespaceName, string notificationHubName, CancellationToken cancellationToken);
+        Task<SharedAccessAuthorizationRuleListResponse> ListAuthorizationRulesAsync(string resourceGroupName, string namespaceName, string notificationHubName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Gets the Primary and Secondary ConnectionStrings to the
@@ -281,5 +281,30 @@ namespace Microsoft.Azure.Management.NotificationHubs
         /// Namespace/NotificationHub Connection String
         /// </returns>
         Task<ResourceListKeys> ListKeysAsync(string resourceGroupName, string namespaceName, string notificationHubName, string authorizationRuleName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Creates a new NotificationHub in a namespace.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj856303.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='namespaceName'>
+        /// The namespace name.
+        /// </param>
+        /// <param name='notificationHubName'>
+        /// The notification hub name.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the create a Namespace Resource.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Response of the CreateOrUpdate operation on the NotificationHub
+        /// </returns>
+        Task<NotificationHubCreateOrUpdateResponse> UpdateAsync(string resourceGroupName, string namespaceName, string notificationHubName, NotificationHubCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
     }
 }

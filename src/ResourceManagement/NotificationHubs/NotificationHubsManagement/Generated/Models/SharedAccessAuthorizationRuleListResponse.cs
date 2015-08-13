@@ -20,23 +20,38 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 using Microsoft.Azure;
 using Microsoft.Azure.Management.NotificationHubs.Models;
 
 namespace Microsoft.Azure.Management.NotificationHubs.Models
 {
     /// <summary>
-    /// Response of the CreateOrUpdate operation on the AuthorizationRules
+    /// The response of the List Namespace operation.
     /// </summary>
-    public partial class AuthorizationRulesCreateOrUpdateResponse : AzureOperationResponse
+    public partial class SharedAccessAuthorizationRuleListResponse : AzureOperationResponse
     {
-        private AuthorizationRulesResource _value;
+        private string _nextLink;
         
         /// <summary>
-        /// Optional. Gets or Sets Namespace AuthorizationRules description
+        /// Optional. Gets or sets link to the next set of results. Not empty
+        /// if Value contains incomplete list of AuthorizationRules
         /// </summary>
-        public AuthorizationRulesResource Value
+        public string NextLink
+        {
+            get { return this._nextLink; }
+            set { this._nextLink = value; }
+        }
+        
+        private IList<SharedAccessAuthorizationRuleResource> _value;
+        
+        /// <summary>
+        /// Optional. Gets or sets result of the List AuthorizationRules
+        /// operation.
+        /// </summary>
+        public IList<SharedAccessAuthorizationRuleResource> Value
         {
             get { return this._value; }
             set { this._value = value; }
@@ -44,10 +59,11 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
         
         /// <summary>
         /// Initializes a new instance of the
-        /// AuthorizationRulesCreateOrUpdateResponse class.
+        /// SharedAccessAuthorizationRuleListResponse class.
         /// </summary>
-        public AuthorizationRulesCreateOrUpdateResponse()
+        public SharedAccessAuthorizationRuleListResponse()
         {
+            this.Value = new LazyList<SharedAccessAuthorizationRuleResource>();
         }
     }
 }

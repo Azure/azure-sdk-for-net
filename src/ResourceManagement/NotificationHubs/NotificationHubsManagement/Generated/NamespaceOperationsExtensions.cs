@@ -137,66 +137,6 @@ namespace Microsoft.Azure.Management.NotificationHubs
         }
         
         /// <summary>
-        /// The create namespace authorization rule operation creates an
-        /// authorization rule for a namespace
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.NotificationHubs.INamespaceOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. The name of the resource group.
-        /// </param>
-        /// <param name='namespaceName'>
-        /// Required. The namespace name.
-        /// </param>
-        /// <param name='authorizationRuleName'>
-        /// Required. The namespace authorizationRuleName name.
-        /// </param>
-        /// <param name='parameters'>
-        /// Required. The shared access authorization rule.
-        /// </param>
-        /// <returns>
-        /// Response of the CreateOrUpdate operation on the AuthorizationRules
-        /// </returns>
-        public static AuthorizationRulesCreateOrUpdateResponse CreateAuthorizationRule(this INamespaceOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName, AuthorizationRulesCreateOrUpdateParameters parameters)
-        {
-            return Task.Factory.StartNew((object s) => 
-            {
-                return ((INamespaceOperations)s).CreateAuthorizationRuleAsync(resourceGroupName, namespaceName, authorizationRuleName, parameters);
-            }
-            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-        }
-        
-        /// <summary>
-        /// The create namespace authorization rule operation creates an
-        /// authorization rule for a namespace
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.NotificationHubs.INamespaceOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. The name of the resource group.
-        /// </param>
-        /// <param name='namespaceName'>
-        /// Required. The namespace name.
-        /// </param>
-        /// <param name='authorizationRuleName'>
-        /// Required. The namespace authorizationRuleName name.
-        /// </param>
-        /// <param name='parameters'>
-        /// Required. The shared access authorization rule.
-        /// </param>
-        /// <returns>
-        /// Response of the CreateOrUpdate operation on the AuthorizationRules
-        /// </returns>
-        public static Task<AuthorizationRulesCreateOrUpdateResponse> CreateAuthorizationRuleAsync(this INamespaceOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName, AuthorizationRulesCreateOrUpdateParameters parameters)
-        {
-            return operations.CreateAuthorizationRuleAsync(resourceGroupName, namespaceName, authorizationRuleName, parameters, CancellationToken.None);
-        }
-        
-        /// <summary>
         /// Creates/Updates a service namespace. Once created, this namespace's
         /// resource manifest is immutable. This operation is idempotent.
         /// (see http://msdn.microsoft.com/en-us/library/windowsazure/jj856303.aspx
@@ -252,6 +192,66 @@ namespace Microsoft.Azure.Management.NotificationHubs
         public static Task<NamespaceCreateOrUpdateResponse> CreateOrUpdateAsync(this INamespaceOperations operations, string resourceGroupName, string namespaceName, NamespaceCreateOrUpdateParameters parameters)
         {
             return operations.CreateOrUpdateAsync(resourceGroupName, namespaceName, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The create namespace authorization rule operation creates an
+        /// authorization rule for a namespace
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.NotificationHubs.INamespaceOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='namespaceName'>
+        /// Required. The namespace name.
+        /// </param>
+        /// <param name='authorizationRuleName'>
+        /// Required. The namespace authorizationRuleName name.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The shared access authorization rule.
+        /// </param>
+        /// <returns>
+        /// Response of the CreateOrUpdate operation on the AuthorizationRules
+        /// </returns>
+        public static SharedAccessAuthorizationRuleCreateOrUpdateResponse CreateOrUpdateAuthorizationRule(this INamespaceOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName, SharedAccessAuthorizationRuleCreateOrUpdateParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((INamespaceOperations)s).CreateOrUpdateAuthorizationRuleAsync(resourceGroupName, namespaceName, authorizationRuleName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The create namespace authorization rule operation creates an
+        /// authorization rule for a namespace
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.NotificationHubs.INamespaceOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='namespaceName'>
+        /// Required. The namespace name.
+        /// </param>
+        /// <param name='authorizationRuleName'>
+        /// Required. The namespace authorizationRuleName name.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The shared access authorization rule.
+        /// </param>
+        /// <returns>
+        /// Response of the CreateOrUpdate operation on the AuthorizationRules
+        /// </returns>
+        public static Task<SharedAccessAuthorizationRuleCreateOrUpdateResponse> CreateOrUpdateAuthorizationRuleAsync(this INamespaceOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName, SharedAccessAuthorizationRuleCreateOrUpdateParameters parameters)
+        {
+            return operations.CreateOrUpdateAuthorizationRuleAsync(resourceGroupName, namespaceName, authorizationRuleName, parameters, CancellationToken.None);
         }
         
         /// <summary>
@@ -426,7 +426,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
         /// <returns>
         /// The response of the Get Namespace operation.
         /// </returns>
-        public static AuthorizationRulesGetResponse GetAuthorizationRule(this INamespaceOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName)
+        public static SharedAccessAuthorizationRuleGetResponse GetAuthorizationRule(this INamespaceOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -455,7 +455,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
         /// <returns>
         /// The response of the Get Namespace operation.
         /// </returns>
-        public static Task<AuthorizationRulesGetResponse> GetAuthorizationRuleAsync(this INamespaceOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName)
+        public static Task<SharedAccessAuthorizationRuleGetResponse> GetAuthorizationRuleAsync(this INamespaceOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName)
         {
             return operations.GetAuthorizationRuleAsync(resourceGroupName, namespaceName, authorizationRuleName, CancellationToken.None);
         }
@@ -568,7 +568,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
         /// Microsoft.Azure.Management.NotificationHubs.INamespaceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Optional. The name of the resource group. If resourceGroupName
+        /// Required. The name of the resource group. If resourceGroupName
         /// value is null the method lists all the namespaces within
         /// subscription
         /// </param>
@@ -594,7 +594,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
         /// Microsoft.Azure.Management.NotificationHubs.INamespaceOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Optional. The name of the resource group. If resourceGroupName
+        /// Required. The name of the resource group. If resourceGroupName
         /// value is null the method lists all the namespaces within
         /// subscription
         /// </param>
@@ -604,6 +604,46 @@ namespace Microsoft.Azure.Management.NotificationHubs
         public static Task<NamespaceListResponse> ListAsync(this INamespaceOperations operations, string resourceGroupName)
         {
             return operations.ListAsync(resourceGroupName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Lists all the available namespaces within the subscription
+        /// irrespective of the resourceGroups.  (see
+        /// http://msdn.microsoft.com/en-us/library/azure/hh780759.aspx for
+        /// more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.NotificationHubs.INamespaceOperations.
+        /// </param>
+        /// <returns>
+        /// The response of the List Namespace operation.
+        /// </returns>
+        public static NamespaceListResponse ListAll(this INamespaceOperations operations)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((INamespaceOperations)s).ListAllAsync();
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Lists all the available namespaces within the subscription
+        /// irrespective of the resourceGroups.  (see
+        /// http://msdn.microsoft.com/en-us/library/azure/hh780759.aspx for
+        /// more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.NotificationHubs.INamespaceOperations.
+        /// </param>
+        /// <returns>
+        /// The response of the List Namespace operation.
+        /// </returns>
+        public static Task<NamespaceListResponse> ListAllAsync(this INamespaceOperations operations)
+        {
+            return operations.ListAllAsync(CancellationToken.None);
         }
         
         /// <summary>
@@ -623,7 +663,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
         /// <returns>
         /// The response of the List Namespace operation.
         /// </returns>
-        public static AuthorizationRulesListResponse ListAuthorizationRules(this INamespaceOperations operations, string resourceGroupName, string namespaceName)
+        public static SharedAccessAuthorizationRuleListResponse ListAuthorizationRules(this INamespaceOperations operations, string resourceGroupName, string namespaceName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -649,7 +689,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
         /// <returns>
         /// The response of the List Namespace operation.
         /// </returns>
-        public static Task<AuthorizationRulesListResponse> ListAuthorizationRulesAsync(this INamespaceOperations operations, string resourceGroupName, string namespaceName)
+        public static Task<SharedAccessAuthorizationRuleListResponse> ListAuthorizationRulesAsync(this INamespaceOperations operations, string resourceGroupName, string namespaceName)
         {
             return operations.ListAuthorizationRulesAsync(resourceGroupName, namespaceName, CancellationToken.None);
         }

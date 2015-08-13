@@ -21,31 +21,27 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.NotificationHubs.Models;
 
 namespace Microsoft.Azure.Management.NotificationHubs.Models
 {
     /// <summary>
-    /// Description of a NotificationHub MpnsCredential.
+    /// AuthorizationRules access rights.
     /// </summary>
-    public partial class MpnsCredential
+    public enum AccessRights
     {
-        private MpnsCredentialProperties _properties;
+        /// <summary>
+        /// Listen Access Right.
+        /// </summary>
+        Manage = 0,
         
         /// <summary>
-        /// Optional. Gets or sets properties of NotificationHub MpnsCredential.
+        /// Manage Access Right.
         /// </summary>
-        public MpnsCredentialProperties Properties
-        {
-            get { return this._properties; }
-            set { this._properties = value; }
-        }
+        Send = 1,
         
         /// <summary>
-        /// Initializes a new instance of the MpnsCredential class.
+        /// Send Access Right.
         /// </summary>
-        public MpnsCredential()
-        {
-        }
+        Listen = 2,
     }
 }

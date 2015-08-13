@@ -21,30 +21,51 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.NotificationHubs.Models;
 
 namespace Microsoft.Azure.Management.NotificationHubs.Models
 {
     /// <summary>
     /// Description of a NotificationHub MpnsCredential.
     /// </summary>
-    public partial class MpnsCredential
+    public partial class MpnsCredentialProperties
     {
-        private MpnsCredentialProperties _properties;
+        private string _certificateKey;
         
         /// <summary>
-        /// Optional. Gets or sets properties of NotificationHub MpnsCredential.
+        /// Optional. Gets or sets the certificate key for this credential.
         /// </summary>
-        public MpnsCredentialProperties Properties
+        public string CertificateKey
         {
-            get { return this._properties; }
-            set { this._properties = value; }
+            get { return this._certificateKey; }
+            set { this._certificateKey = value; }
+        }
+        
+        private string _mpnsCertificate;
+        
+        /// <summary>
+        /// Optional. Gets or sets the MPNS certificate.
+        /// </summary>
+        public string MpnsCertificate
+        {
+            get { return this._mpnsCertificate; }
+            set { this._mpnsCertificate = value; }
+        }
+        
+        private string _thumbprint;
+        
+        /// <summary>
+        /// Optional. Gets or sets the Mpns certificate Thumbprint
+        /// </summary>
+        public string Thumbprint
+        {
+            get { return this._thumbprint; }
+            set { this._thumbprint = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the MpnsCredential class.
+        /// Initializes a new instance of the MpnsCredentialProperties class.
         /// </summary>
-        public MpnsCredential()
+        public MpnsCredentialProperties()
         {
         }
     }

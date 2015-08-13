@@ -93,6 +93,68 @@ namespace Microsoft.Azure.Management.NotificationHubs
         }
         
         /// <summary>
+        /// Creates a new NotificationHub in a namespace.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj856303.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.NotificationHubs.INotificationHubOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='namespaceName'>
+        /// Required. The namespace name.
+        /// </param>
+        /// <param name='notificationHubName'>
+        /// Required. The notification hub name.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the create a Namespace Resource.
+        /// </param>
+        /// <returns>
+        /// Response of the CreateOrUpdate operation on the NotificationHub
+        /// </returns>
+        public static NotificationHubCreateOrUpdateResponse Create(this INotificationHubOperations operations, string resourceGroupName, string namespaceName, string notificationHubName, NotificationHubCreateOrUpdateParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((INotificationHubOperations)s).CreateAsync(resourceGroupName, namespaceName, notificationHubName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Creates a new NotificationHub in a namespace.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj856303.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.NotificationHubs.INotificationHubOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='namespaceName'>
+        /// Required. The namespace name.
+        /// </param>
+        /// <param name='notificationHubName'>
+        /// Required. The notification hub name.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the create a Namespace Resource.
+        /// </param>
+        /// <returns>
+        /// Response of the CreateOrUpdate operation on the NotificationHub
+        /// </returns>
+        public static Task<NotificationHubCreateOrUpdateResponse> CreateAsync(this INotificationHubOperations operations, string resourceGroupName, string namespaceName, string notificationHubName, NotificationHubCreateOrUpdateParameters parameters)
+        {
+            return operations.CreateAsync(resourceGroupName, namespaceName, notificationHubName, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// The create NotificationHub authorization rule operation creates an
         /// authorization rule for a NotificationHub
         /// </summary>
@@ -118,11 +180,11 @@ namespace Microsoft.Azure.Management.NotificationHubs
         /// <returns>
         /// Response of the CreateOrUpdate operation on the AuthorizationRules
         /// </returns>
-        public static AuthorizationRulesCreateOrUpdateResponse CreateAuthorizationRule(this INotificationHubOperations operations, string resourceGroupName, string namespaceName, string notificationHubName, string authorizationRuleName, AuthorizationRulesCreateOrUpdateParameters parameters)
+        public static SharedAccessAuthorizationRuleCreateOrUpdateResponse CreateOrUpdateAuthorizationRule(this INotificationHubOperations operations, string resourceGroupName, string namespaceName, string notificationHubName, string authorizationRuleName, SharedAccessAuthorizationRuleCreateOrUpdateParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((INotificationHubOperations)s).CreateAuthorizationRuleAsync(resourceGroupName, namespaceName, notificationHubName, authorizationRuleName, parameters);
+                return ((INotificationHubOperations)s).CreateOrUpdateAuthorizationRuleAsync(resourceGroupName, namespaceName, notificationHubName, authorizationRuleName, parameters);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -153,71 +215,9 @@ namespace Microsoft.Azure.Management.NotificationHubs
         /// <returns>
         /// Response of the CreateOrUpdate operation on the AuthorizationRules
         /// </returns>
-        public static Task<AuthorizationRulesCreateOrUpdateResponse> CreateAuthorizationRuleAsync(this INotificationHubOperations operations, string resourceGroupName, string namespaceName, string notificationHubName, string authorizationRuleName, AuthorizationRulesCreateOrUpdateParameters parameters)
+        public static Task<SharedAccessAuthorizationRuleCreateOrUpdateResponse> CreateOrUpdateAuthorizationRuleAsync(this INotificationHubOperations operations, string resourceGroupName, string namespaceName, string notificationHubName, string authorizationRuleName, SharedAccessAuthorizationRuleCreateOrUpdateParameters parameters)
         {
-            return operations.CreateAuthorizationRuleAsync(resourceGroupName, namespaceName, notificationHubName, authorizationRuleName, parameters, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// Creates a new NotificationHub in a namespace.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj856303.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.NotificationHubs.INotificationHubOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. The name of the resource group.
-        /// </param>
-        /// <param name='namespaceName'>
-        /// Required. The namespace name.
-        /// </param>
-        /// <param name='notificationHubName'>
-        /// Required. The notification hub name.
-        /// </param>
-        /// <param name='parameters'>
-        /// Required. Parameters supplied to the create a Namespace Resource.
-        /// </param>
-        /// <returns>
-        /// Response of the CreateOrUpdate operation on the NotificationHub
-        /// </returns>
-        public static NotificationHubCreateOrUpdateResponse CreateOrUpdate(this INotificationHubOperations operations, string resourceGroupName, string namespaceName, string notificationHubName, NotificationHubCreateOrUpdateParameters parameters)
-        {
-            return Task.Factory.StartNew((object s) => 
-            {
-                return ((INotificationHubOperations)s).CreateOrUpdateAsync(resourceGroupName, namespaceName, notificationHubName, parameters);
-            }
-            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-        }
-        
-        /// <summary>
-        /// Creates a new NotificationHub in a namespace.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj856303.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.NotificationHubs.INotificationHubOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. The name of the resource group.
-        /// </param>
-        /// <param name='namespaceName'>
-        /// Required. The namespace name.
-        /// </param>
-        /// <param name='notificationHubName'>
-        /// Required. The notification hub name.
-        /// </param>
-        /// <param name='parameters'>
-        /// Required. Parameters supplied to the create a Namespace Resource.
-        /// </param>
-        /// <returns>
-        /// Response of the CreateOrUpdate operation on the NotificationHub
-        /// </returns>
-        public static Task<NotificationHubCreateOrUpdateResponse> CreateOrUpdateAsync(this INotificationHubOperations operations, string resourceGroupName, string namespaceName, string notificationHubName, NotificationHubCreateOrUpdateParameters parameters)
-        {
-            return operations.CreateOrUpdateAsync(resourceGroupName, namespaceName, notificationHubName, parameters, CancellationToken.None);
+            return operations.CreateOrUpdateAuthorizationRuleAsync(resourceGroupName, namespaceName, notificationHubName, authorizationRuleName, parameters, CancellationToken.None);
         }
         
         /// <summary>
@@ -409,7 +409,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
         /// <returns>
         /// The response of the Get Namespace operation.
         /// </returns>
-        public static AuthorizationRulesGetResponse GetAuthorizationRule(this INotificationHubOperations operations, string resourceGroupName, string namespaceName, string notificationHubName, string authorizationRuleName)
+        public static SharedAccessAuthorizationRuleGetResponse GetAuthorizationRule(this INotificationHubOperations operations, string resourceGroupName, string namespaceName, string notificationHubName, string authorizationRuleName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -441,7 +441,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
         /// <returns>
         /// The response of the Get Namespace operation.
         /// </returns>
-        public static Task<AuthorizationRulesGetResponse> GetAuthorizationRuleAsync(this INotificationHubOperations operations, string resourceGroupName, string namespaceName, string notificationHubName, string authorizationRuleName)
+        public static Task<SharedAccessAuthorizationRuleGetResponse> GetAuthorizationRuleAsync(this INotificationHubOperations operations, string resourceGroupName, string namespaceName, string notificationHubName, string authorizationRuleName)
         {
             return operations.GetAuthorizationRuleAsync(resourceGroupName, namespaceName, notificationHubName, authorizationRuleName, CancellationToken.None);
         }
@@ -564,7 +564,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
         /// <returns>
         /// The response of the List Namespace operation.
         /// </returns>
-        public static AuthorizationRulesListResponse ListAuthorizationRules(this INotificationHubOperations operations, string resourceGroupName, string namespaceName, string notificationHubName)
+        public static SharedAccessAuthorizationRuleListResponse ListAuthorizationRules(this INotificationHubOperations operations, string resourceGroupName, string namespaceName, string notificationHubName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -593,7 +593,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
         /// <returns>
         /// The response of the List Namespace operation.
         /// </returns>
-        public static Task<AuthorizationRulesListResponse> ListAuthorizationRulesAsync(this INotificationHubOperations operations, string resourceGroupName, string namespaceName, string notificationHubName)
+        public static Task<SharedAccessAuthorizationRuleListResponse> ListAuthorizationRulesAsync(this INotificationHubOperations operations, string resourceGroupName, string namespaceName, string notificationHubName)
         {
             return operations.ListAuthorizationRulesAsync(resourceGroupName, namespaceName, notificationHubName, CancellationToken.None);
         }
@@ -662,6 +662,68 @@ namespace Microsoft.Azure.Management.NotificationHubs
         public static Task<ResourceListKeys> ListKeysAsync(this INotificationHubOperations operations, string resourceGroupName, string namespaceName, string notificationHubName, string authorizationRuleName)
         {
             return operations.ListKeysAsync(resourceGroupName, namespaceName, notificationHubName, authorizationRuleName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Creates a new NotificationHub in a namespace.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj856303.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.NotificationHubs.INotificationHubOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='namespaceName'>
+        /// Required. The namespace name.
+        /// </param>
+        /// <param name='notificationHubName'>
+        /// Required. The notification hub name.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the create a Namespace Resource.
+        /// </param>
+        /// <returns>
+        /// Response of the CreateOrUpdate operation on the NotificationHub
+        /// </returns>
+        public static NotificationHubCreateOrUpdateResponse Update(this INotificationHubOperations operations, string resourceGroupName, string namespaceName, string notificationHubName, NotificationHubCreateOrUpdateParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((INotificationHubOperations)s).UpdateAsync(resourceGroupName, namespaceName, notificationHubName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Creates a new NotificationHub in a namespace.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj856303.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.NotificationHubs.INotificationHubOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='namespaceName'>
+        /// Required. The namespace name.
+        /// </param>
+        /// <param name='notificationHubName'>
+        /// Required. The notification hub name.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the create a Namespace Resource.
+        /// </param>
+        /// <returns>
+        /// Response of the CreateOrUpdate operation on the NotificationHub
+        /// </returns>
+        public static Task<NotificationHubCreateOrUpdateResponse> UpdateAsync(this INotificationHubOperations operations, string resourceGroupName, string namespaceName, string notificationHubName, NotificationHubCreateOrUpdateParameters parameters)
+        {
+            return operations.UpdateAsync(resourceGroupName, namespaceName, notificationHubName, parameters, CancellationToken.None);
         }
     }
 }

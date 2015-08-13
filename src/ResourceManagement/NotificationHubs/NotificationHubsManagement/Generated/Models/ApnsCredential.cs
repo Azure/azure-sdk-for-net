@@ -21,6 +21,7 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure.Management.NotificationHubs.Models;
 
 namespace Microsoft.Azure.Management.NotificationHubs.Models
 {
@@ -29,48 +30,15 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
     /// </summary>
     public partial class ApnsCredential
     {
-        private string _apnsCertificate;
+        private ApnsCredentialProperties _properties;
         
         /// <summary>
-        /// Optional. Gets or sets the APNS certificate.
+        /// Optional. Gets or sets properties of NotificationHub ApnsCredential.
         /// </summary>
-        public string ApnsCertificate
+        public ApnsCredentialProperties Properties
         {
-            get { return this._apnsCertificate; }
-            set { this._apnsCertificate = value; }
-        }
-        
-        private string _certificateKey;
-        
-        /// <summary>
-        /// Optional. Gets or sets the certificate key.
-        /// </summary>
-        public string CertificateKey
-        {
-            get { return this._certificateKey; }
-            set { this._certificateKey = value; }
-        }
-        
-        private string _endpoint;
-        
-        /// <summary>
-        /// Optional. Gets or sets the endpoint of this credential.
-        /// </summary>
-        public string Endpoint
-        {
-            get { return this._endpoint; }
-            set { this._endpoint = value; }
-        }
-        
-        private string _thumbprint;
-        
-        /// <summary>
-        /// Optional. Gets or sets the Apns certificate Thumbprint
-        /// </summary>
-        public string Thumbprint
-        {
-            get { return this._thumbprint; }
-            set { this._thumbprint = value; }
+            get { return this._properties; }
+            set { this._properties = value; }
         }
         
         /// <summary>

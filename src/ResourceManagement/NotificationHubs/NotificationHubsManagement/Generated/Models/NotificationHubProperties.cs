@@ -20,7 +20,9 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 using Microsoft.Azure.Management.NotificationHubs.Models;
 
 namespace Microsoft.Azure.Management.NotificationHubs.Models
@@ -52,15 +54,15 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
             set { this._apnsCredential = value; }
         }
         
-        private AuthorizationRulesProperties _authorization;
+        private IList<SharedAccessAuthorizationRuleProperties> _authorizationRules;
         
         /// <summary>
         /// Optional. The AuthorizationRules of the created NotificationHub
         /// </summary>
-        public AuthorizationRulesProperties Authorization
+        public IList<SharedAccessAuthorizationRuleProperties> AuthorizationRules
         {
-            get { return this._authorization; }
-            set { this._authorization = value; }
+            get { return this._authorizationRules; }
+            set { this._authorizationRules = value; }
         }
         
         private BaiduCredential _baiduCredential;
@@ -134,6 +136,7 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
         /// </summary>
         public NotificationHubProperties()
         {
+            this.AuthorizationRules = new LazyList<SharedAccessAuthorizationRuleProperties>();
         }
     }
 }

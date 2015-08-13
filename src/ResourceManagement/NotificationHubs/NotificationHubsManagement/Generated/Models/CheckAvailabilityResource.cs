@@ -27,11 +27,21 @@ using Hyak.Common;
 namespace Microsoft.Azure.Management.NotificationHubs.Models
 {
     /// <summary>
-    /// Parameters supplied to the Check Name Availability for Namespace and
-    /// NotificationHubs.
+    /// Description of a CheckAvailibility resource.
     /// </summary>
-    public partial class CheckAvailabilityParameters
+    public partial class CheckAvailabilityResource
     {
+        private string _id;
+        
+        /// <summary>
+        /// Optional. Gets or sets the id
+        /// </summary>
+        public string Id
+        {
+            get { return this._id; }
+            set { this._id = value; }
+        }
+        
         private bool _isAvailable;
         
         /// <summary>
@@ -47,7 +57,7 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
         private string _location;
         
         /// <summary>
-        /// Optional. Gets or sets location.
+        /// Optional. Gets or sets datacenter location
         /// </summary>
         public string Location
         {
@@ -58,7 +68,7 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
         private string _name;
         
         /// <summary>
-        /// Required. Gets or sets name
+        /// Optional. Gets or sets name
         /// </summary>
         public string Name
         {
@@ -69,7 +79,7 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
         private IDictionary<string, string> _tags;
         
         /// <summary>
-        /// Optional. Gets or sets tags.
+        /// Optional. Gets or sets tags
         /// </summary>
         public IDictionary<string, string> Tags
         {
@@ -77,26 +87,23 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
             set { this._tags = value; }
         }
         
+        private string _type;
+        
         /// <summary>
-        /// Initializes a new instance of the CheckAvailabilityParameters class.
+        /// Optional. Gets or sets resource type
         /// </summary>
-        public CheckAvailabilityParameters()
+        public string Type
         {
-            this.Tags = new LazyDictionary<string, string>();
+            get { return this._type; }
+            set { this._type = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the CheckAvailabilityParameters class
-        /// with required arguments.
+        /// Initializes a new instance of the CheckAvailabilityResource class.
         /// </summary>
-        public CheckAvailabilityParameters(string name)
-            : this()
+        public CheckAvailabilityResource()
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException("name");
-            }
-            this.Name = name;
+            this.Tags = new LazyDictionary<string, string>();
         }
     }
 }

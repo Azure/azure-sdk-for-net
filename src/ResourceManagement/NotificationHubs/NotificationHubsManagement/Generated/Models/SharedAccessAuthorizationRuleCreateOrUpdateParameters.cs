@@ -28,12 +28,12 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
     /// <summary>
     /// Parameters supplied to the CreateOrUpdate Namespace AuthorizationRules.
     /// </summary>
-    public partial class AuthorizationRulesCreateOrUpdateParameters
+    public partial class SharedAccessAuthorizationRuleCreateOrUpdateParameters
     {
         private string _location;
         
         /// <summary>
-        /// Required. Gets or sets Namespace data center location.
+        /// Optional. Gets or sets Namespace data center location.
         /// </summary>
         public string Location
         {
@@ -41,13 +41,24 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
             set { this._location = value; }
         }
         
-        private AuthorizationRulesProperties _properties;
+        private string _name;
+        
+        /// <summary>
+        /// Optional. Gets or sets Name of the Namespace AuthorizationRule.
+        /// </summary>
+        public string Name
+        {
+            get { return this._name; }
+            set { this._name = value; }
+        }
+        
+        private SharedAccessAuthorizationRuleProperties _properties;
         
         /// <summary>
         /// Required. Gets or sets properties of the Namespace
         /// AuthorizationRules.
         /// </summary>
-        public AuthorizationRulesProperties Properties
+        public SharedAccessAuthorizationRuleProperties Properties
         {
             get { return this._properties; }
             set { this._properties = value; }
@@ -55,29 +66,24 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
         
         /// <summary>
         /// Initializes a new instance of the
-        /// AuthorizationRulesCreateOrUpdateParameters class.
+        /// SharedAccessAuthorizationRuleCreateOrUpdateParameters class.
         /// </summary>
-        public AuthorizationRulesCreateOrUpdateParameters()
+        public SharedAccessAuthorizationRuleCreateOrUpdateParameters()
         {
         }
         
         /// <summary>
         /// Initializes a new instance of the
-        /// AuthorizationRulesCreateOrUpdateParameters class with required
-        /// arguments.
+        /// SharedAccessAuthorizationRuleCreateOrUpdateParameters class with
+        /// required arguments.
         /// </summary>
-        public AuthorizationRulesCreateOrUpdateParameters(string location, AuthorizationRulesProperties properties)
+        public SharedAccessAuthorizationRuleCreateOrUpdateParameters(SharedAccessAuthorizationRuleProperties properties)
             : this()
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException("location");
-            }
             if (properties == null)
             {
                 throw new ArgumentNullException("properties");
             }
-            this.Location = location;
             this.Properties = properties;
         }
     }

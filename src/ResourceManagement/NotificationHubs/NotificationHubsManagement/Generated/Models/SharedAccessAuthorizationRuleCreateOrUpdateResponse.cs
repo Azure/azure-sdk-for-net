@@ -21,30 +21,32 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.NotificationHubs.Models;
 
 namespace Microsoft.Azure.Management.NotificationHubs.Models
 {
     /// <summary>
-    /// Description of a NotificationHub MpnsCredential.
+    /// Response of the CreateOrUpdate operation on the AuthorizationRules
     /// </summary>
-    public partial class MpnsCredential
+    public partial class SharedAccessAuthorizationRuleCreateOrUpdateResponse : AzureOperationResponse
     {
-        private MpnsCredentialProperties _properties;
+        private SharedAccessAuthorizationRuleResource _value;
         
         /// <summary>
-        /// Optional. Gets or sets properties of NotificationHub MpnsCredential.
+        /// Optional. Gets or Sets Namespace AuthorizationRules description
         /// </summary>
-        public MpnsCredentialProperties Properties
+        public SharedAccessAuthorizationRuleResource Value
         {
-            get { return this._properties; }
-            set { this._properties = value; }
+            get { return this._value; }
+            set { this._value = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the MpnsCredential class.
+        /// Initializes a new instance of the
+        /// SharedAccessAuthorizationRuleCreateOrUpdateResponse class.
         /// </summary>
-        public MpnsCredential()
+        public SharedAccessAuthorizationRuleCreateOrUpdateResponse()
         {
         }
     }

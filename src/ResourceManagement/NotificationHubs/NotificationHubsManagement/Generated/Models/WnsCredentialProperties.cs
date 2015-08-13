@@ -25,23 +25,48 @@ using System.Linq;
 namespace Microsoft.Azure.Management.NotificationHubs.Models
 {
     /// <summary>
-    /// AuthorizationRules access rights.
+    /// Description of a NotificationHub WnsCredential.
     /// </summary>
-    public enum AccessRight
+    public partial class WnsCredentialProperties
     {
-        /// <summary>
-        /// Listen Access Right.
-        /// </summary>
-        Listen = 0,
+        private string _packageSid;
         
         /// <summary>
-        /// Manage Access Right.
+        /// Optional. Gets or sets the package ID for this credential.
         /// </summary>
-        Manage = 1,
+        public string PackageSid
+        {
+            get { return this._packageSid; }
+            set { this._packageSid = value; }
+        }
+        
+        private string _secretKey;
         
         /// <summary>
-        /// Send Access Right.
+        /// Optional. Gets or sets the secret key.
         /// </summary>
-        Send = 2,
+        public string SecretKey
+        {
+            get { return this._secretKey; }
+            set { this._secretKey = value; }
+        }
+        
+        private string _windowsLiveEndpoint;
+        
+        /// <summary>
+        /// Optional. Gets or sets the Windows Live endpoint.
+        /// </summary>
+        public string WindowsLiveEndpoint
+        {
+            get { return this._windowsLiveEndpoint; }
+            set { this._windowsLiveEndpoint = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the WnsCredentialProperties class.
+        /// </summary>
+        public WnsCredentialProperties()
+        {
+        }
     }
 }

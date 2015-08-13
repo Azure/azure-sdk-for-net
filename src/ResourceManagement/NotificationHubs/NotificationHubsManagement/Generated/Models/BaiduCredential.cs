@@ -21,6 +21,7 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure.Management.NotificationHubs.Models;
 
 namespace Microsoft.Azure.Management.NotificationHubs.Models
 {
@@ -29,37 +30,16 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
     /// </summary>
     public partial class BaiduCredential
     {
-        private string _baiduApiKey;
+        private BaiduCredentialProperties _properties;
         
         /// <summary>
-        /// Optional. Get or Set Baidu Api Key.
+        /// Optional. Gets or sets properties of NotificationHub
+        /// BaiduCredential.
         /// </summary>
-        public string BaiduApiKey
+        public BaiduCredentialProperties Properties
         {
-            get { return this._baiduApiKey; }
-            set { this._baiduApiKey = value; }
-        }
-        
-        private string _baiduEndPoint;
-        
-        /// <summary>
-        /// Optional. Get or Set Baidu Endpoint.
-        /// </summary>
-        public string BaiduEndPoint
-        {
-            get { return this._baiduEndPoint; }
-            set { this._baiduEndPoint = value; }
-        }
-        
-        private string _baiduSecretKey;
-        
-        /// <summary>
-        /// Optional. Get or Set Baidu Secret Key
-        /// </summary>
-        public string BaiduSecretKey
-        {
-            get { return this._baiduSecretKey; }
-            set { this._baiduSecretKey = value; }
+            get { return this._properties; }
+            set { this._properties = value; }
         }
         
         /// <summary>

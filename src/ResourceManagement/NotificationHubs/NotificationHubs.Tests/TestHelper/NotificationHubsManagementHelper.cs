@@ -28,6 +28,10 @@ namespace NotificationHubs.Tests.TestHelper
     using Microsoft.IdentityModel.Clients.ActiveDirectory;
     using Microsoft.WindowsAzure.Management;
     using System.Security.Cryptography;
+    using Newtonsoft.Json;
+    using System.Threading.Tasks;
+    using Newtonsoft.Json.Serialization;
+    using Newtonsoft.Json.Converters;
 
     public static class NotificationHubsManagementHelper
     {
@@ -37,10 +41,10 @@ namespace NotificationHubs.Tests.TestHelper
         internal const string NotificationHubPrefix = "HydraNH-NotificationHub";
         internal const string AuthorizationRulesPrefix = "HydraNH-Authrules";
         internal const string DefaultNamespaceAuthorizationRule = "RootManageSharedAccessKey";
-
+        
         public static NotificationHubsManagementClient GetNotificationHubsManagementClient(RecordedDelegatingHandler handler)
         {
-            return TestBase.GetServiceClient<NotificationHubsManagementClient>(new CSMTestEnvironmentFactory()).WithHandler(handler);
+            return TestBase.GetServiceClient<NotificationHubsManagementClient>(new CSMTestEnvironmentFactory());//.WithHandler(handler);
         }
 
         public static ResourceManagementClient GetResourceManagementClient(RecordedDelegatingHandler handler)
@@ -50,7 +54,7 @@ namespace NotificationHubs.Tests.TestHelper
 
         public static ManagementClient GetManagementClient(RecordedDelegatingHandler handler)
         {
-            return TestBase.GetServiceClient<ManagementClient>().WithHandler(handler);
+            return TestBase.GetServiceClient<ManagementClient>(new CSMTestEnvironmentFactory()).WithHandler(handler);
         }
 
         public static void RefreshAccessToken(this NotificationHubsManagementClient notificationHubsManagementClient)
@@ -121,6 +125,10 @@ namespace NotificationHubs.Tests.TestHelper
 
         public static string TryGetLocation(this ManagementClient managementClient, string preferedLocationName = null)
         {
+            var loc = managementClient.Locations;
+            var locList = loc.List();
+            var locc = locList.Locations;
+
             var locations = managementClient.Locations.List().Locations;
             if (!locations.Any())
             {
@@ -187,5 +195,31 @@ namespace NotificationHubs.Tests.TestHelper
 
             return Convert.ToBase64String(key256);
         }
+
+        public static string ConvertObjectToJSon<T>(T obj)
+        {
+            return ConvertObjectToJSonAsync(obj);
+        }
+
+        public static string ConvertObjectToJSonAsync(object obj)
+        {
+            if (obj != null)
+            {
+                return (Task.Factory.StartNew(() => JsonConvert.SerializeObject(obj, SerializeMediaTypeFormatterSettings))).Result;
+            }
+            return String.Empty;
+        }
+
+        private static readonly JsonSerializerSettings SerializeMediaTypeFormatterSettings = new JsonSerializerSettings
+        {
+            NullValueHandling = Newtonsoft.Json.NullValueHandling.Include,
+            ContractResolver = new CamelCasePropertyNamesContractResolver(),
+            Converters = new List<JsonConverter>
+            {
+                new StringEnumConverter { CamelCaseText = false },
+            },
+            ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor
+        };
+
     }
 }

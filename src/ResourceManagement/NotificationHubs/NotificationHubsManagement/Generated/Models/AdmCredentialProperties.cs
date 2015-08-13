@@ -21,32 +21,51 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure;
-using Microsoft.Azure.Management.NotificationHubs.Models;
 
 namespace Microsoft.Azure.Management.NotificationHubs.Models
 {
     /// <summary>
-    /// The response of the Get Namespace operation.
+    /// Description of a NotificationHub AdmCredential.
     /// </summary>
-    public partial class AuthorizationRulesGetResponse : AzureOperationResponse
+    public partial class AdmCredentialProperties
     {
-        private AuthorizationRulesResource _value;
+        private string _authTokenUrl;
         
         /// <summary>
-        /// Optional. Gets or sets result of the Get Namespace operation.
+        /// Optional. Gets or sets the URL of the authorization token.
         /// </summary>
-        public AuthorizationRulesResource Value
+        public string AuthTokenUrl
         {
-            get { return this._value; }
-            set { this._value = value; }
+            get { return this._authTokenUrl; }
+            set { this._authTokenUrl = value; }
+        }
+        
+        private string _clientId;
+        
+        /// <summary>
+        /// Optional. Gets or sets the client identifier.
+        /// </summary>
+        public string ClientId
+        {
+            get { return this._clientId; }
+            set { this._clientId = value; }
+        }
+        
+        private string _clientSecret;
+        
+        /// <summary>
+        /// Optional. Gets or sets the credential secret access key.
+        /// </summary>
+        public string ClientSecret
+        {
+            get { return this._clientSecret; }
+            set { this._clientSecret = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the AuthorizationRulesGetResponse
-        /// class.
+        /// Initializes a new instance of the AdmCredentialProperties class.
         /// </summary>
-        public AuthorizationRulesGetResponse()
+        public AdmCredentialProperties()
         {
         }
     }

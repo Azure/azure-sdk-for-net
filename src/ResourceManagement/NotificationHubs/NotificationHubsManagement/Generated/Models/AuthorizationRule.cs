@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
     /// <summary>
     /// AuthorizationRules properties.
     /// </summary>
-    public partial class AuthorizationRulesProperties
+    public partial class AuthorizationRule
     {
         private string _claimType;
         
@@ -87,17 +87,6 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
             set { this._modifiedTime = value; }
         }
         
-        private string _primaryKey;
-        
-        /// <summary>
-        /// Optional. The primary key that was used.
-        /// </summary>
-        public string PrimaryKey
-        {
-            get { return this._primaryKey; }
-            set { this._primaryKey = value; }
-        }
-        
         private int _revision;
         
         /// <summary>
@@ -109,35 +98,23 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
             set { this._revision = value; }
         }
         
-        private IList<AccessRight> _rights;
+        private IList<AccessRights> _rights;
         
         /// <summary>
         /// Optional. The rights associated with the rule.
         /// </summary>
-        public IList<AccessRight> Rights
+        public IList<AccessRights> Rights
         {
             get { return this._rights; }
             set { this._rights = value; }
         }
         
-        private string _secondaryKey;
-        
         /// <summary>
-        /// Optional. The secondary key that was used.
+        /// Initializes a new instance of the AuthorizationRule class.
         /// </summary>
-        public string SecondaryKey
+        public AuthorizationRule()
         {
-            get { return this._secondaryKey; }
-            set { this._secondaryKey = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the AuthorizationRulesProperties
-        /// class.
-        /// </summary>
-        public AuthorizationRulesProperties()
-        {
-            this.Rights = new LazyList<AccessRight>();
+            this.Rights = new LazyList<AccessRights>();
         }
     }
 }

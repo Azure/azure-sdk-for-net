@@ -23,6 +23,8 @@ namespace NotificationHubs.Tests.ScenarioTests
     using Microsoft.Azure.Test;
     using Microsoft.WindowsAzure.Management;
     using NotificationHubs.Tests.TestHelper;
+    using System;
+    using System.Net;
     using Xunit;
 
     public partial class ScenarioTests : TestBase
@@ -37,15 +39,15 @@ namespace NotificationHubs.Tests.ScenarioTests
                 var validNamespaceName = TestUtilities.GenerateName(NotificationHubsManagementHelper.NamespacePrefix);
                 var response = NotificationHubsManagementClient.Namespaces.CheckAvailability(new CheckAvailabilityParameters(validNamespaceName));
                 Assert.NotNull(response);
-                Assert.True(response.IsAvailable);
+                Assert.True(response.Value.IsAvailable);
 
                 const string invalidNamespaceName = "hydraNhNamespace-invalid@!!#%$#";
                 response = NotificationHubsManagementClient.Namespaces.CheckAvailability(new CheckAvailabilityParameters(invalidNamespaceName));
                 Assert.NotNull(response);
-                Assert.False(response.IsAvailable);
+                Assert.False(response.Value.IsAvailable);
 
                 // create NH Namespace  
-                var location = this.ManagmentClient.TryGetLocation(NotificationHubsManagementHelper.DefaultLocation);
+                var location = NotificationHubsManagementHelper.DefaultLocation;
                 var resourceGroup = this.ResourceManagementClient.TryGetResourceGroup(location);
                 if (string.IsNullOrWhiteSpace(resourceGroup))
                 {
@@ -63,9 +65,15 @@ namespace NotificationHubs.Tests.ScenarioTests
 
                 Assert.NotNull(createResponse);
 
+                TestUtilities.Wait(TimeSpan.FromSeconds(30));
                 response = NotificationHubsManagementClient.Namespaces.CheckAvailability( new CheckAvailabilityParameters(validNamespaceName));
                 Assert.NotNull(response);
-                Assert.False(response.IsAvailable);
+                Assert.False(response.Value.IsAvailable);
+
+                //Delete namespace
+                var deleteNSResponse = NotificationHubsManagementClient.Namespaces.Delete(resourceGroup, validNamespaceName);
+                Assert.NotNull(deleteNSResponse);
+                Assert.True(HttpStatusCode.NotFound == deleteNSResponse.StatusCode || HttpStatusCode.OK == deleteNSResponse.StatusCode);
             }
         }
     }

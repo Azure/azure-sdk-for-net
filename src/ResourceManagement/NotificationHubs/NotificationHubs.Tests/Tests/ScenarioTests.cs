@@ -74,7 +74,7 @@ namespace NotificationHubs.Tests.ScenarioTests
         protected void TryCreateNamespace()
         {
             this.ResourceGroupName = this.ResourceManagementClient.TryGetResourceGroup(Location);
-            this.Location = this.ManagmentClient.TryGetLocation(NotificationHubsManagementHelper.DefaultLocation);
+            this.Location = NotificationHubsManagementHelper.DefaultLocation;
 
             if (string.IsNullOrWhiteSpace(ResourceGroupName))
             {
@@ -84,6 +84,6 @@ namespace NotificationHubs.Tests.ScenarioTests
 
             NamespaceName = TestUtilities.GenerateName(NotificationHubsManagementHelper.NamespacePrefix);
             this.NotificationHubsManagementClient.TryCreateNamespace(ResourceGroupName, NamespaceName, Location);
-        }
+        }        
     }
 }

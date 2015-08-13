@@ -21,6 +21,7 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure.Management.NotificationHubs.Models;
 
 namespace Microsoft.Azure.Management.NotificationHubs.Models
 {
@@ -29,37 +30,15 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
     /// </summary>
     public partial class WnsCredential
     {
-        private string _packageSid;
+        private WnsCredentialProperties _properties;
         
         /// <summary>
-        /// Optional. Gets or sets the package ID for this credential.
+        /// Optional. Gets or sets properties of NotificationHub WnsCredential.
         /// </summary>
-        public string PackageSid
+        public WnsCredentialProperties Properties
         {
-            get { return this._packageSid; }
-            set { this._packageSid = value; }
-        }
-        
-        private string _secretKey;
-        
-        /// <summary>
-        /// Optional. Gets or sets the secret key.
-        /// </summary>
-        public string SecretKey
-        {
-            get { return this._secretKey; }
-            set { this._secretKey = value; }
-        }
-        
-        private string _windowsLiveEndpoint;
-        
-        /// <summary>
-        /// Optional. Gets or sets the Windows Live endpoint.
-        /// </summary>
-        public string WindowsLiveEndpoint
-        {
-            get { return this._windowsLiveEndpoint; }
-            set { this._windowsLiveEndpoint = value; }
+            get { return this._properties; }
+            set { this._properties = value; }
         }
         
         /// <summary>

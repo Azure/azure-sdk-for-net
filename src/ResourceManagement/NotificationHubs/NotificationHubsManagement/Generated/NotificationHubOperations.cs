@@ -175,6 +175,28 @@ namespace Microsoft.Azure.Management.NotificationHubs
                 
                 checkAvailabilityParametersValue["name"] = parameters.Name;
                 
+                if (parameters.Location != null)
+                {
+                    checkAvailabilityParametersValue["location"] = parameters.Location;
+                }
+                
+                if (parameters.Tags != null)
+                {
+                    if (parameters.Tags is ILazyCollection == false || ((ILazyCollection)parameters.Tags).IsInitialized)
+                    {
+                        JObject tagsDictionary = new JObject();
+                        foreach (KeyValuePair<string, string> pair in parameters.Tags)
+                        {
+                            string tagsKey = pair.Key;
+                            string tagsValue = pair.Value;
+                            tagsDictionary[tagsKey] = tagsValue;
+                        }
+                        checkAvailabilityParametersValue["tags"] = tagsDictionary;
+                    }
+                }
+                
+                checkAvailabilityParametersValue["isAvailiable"] = parameters.IsAvailable;
+                
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
@@ -221,269 +243,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            JToken isAvailableValue = responseDoc["isAvailable"];
-                            if (isAvailableValue != null && isAvailableValue.Type != JTokenType.Null)
-                            {
-                                bool isAvailableInstance = ((bool)isAvailableValue);
-                                result.IsAvailable = isAvailableInstance;
-                            }
-                        }
-                        
-                    }
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// The create NotificationHub authorization rule operation creates an
-        /// authorization rule for a NotificationHub
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Required. The name of the resource group.
-        /// </param>
-        /// <param name='namespaceName'>
-        /// Required. The namespace name.
-        /// </param>
-        /// <param name='notificationHubName'>
-        /// Required. The notification hub name.
-        /// </param>
-        /// <param name='authorizationRuleName'>
-        /// Required. The namespace authorizationRuleName name.
-        /// </param>
-        /// <param name='parameters'>
-        /// Required. The shared access authorization rule.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// Response of the CreateOrUpdate operation on the AuthorizationRules
-        /// </returns>
-        public async Task<AuthorizationRulesCreateOrUpdateResponse> CreateAuthorizationRuleAsync(string resourceGroupName, string namespaceName, string notificationHubName, string authorizationRuleName, AuthorizationRulesCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException("resourceGroupName");
-            }
-            if (namespaceName == null)
-            {
-                throw new ArgumentNullException("namespaceName");
-            }
-            if (notificationHubName == null)
-            {
-                throw new ArgumentNullException("notificationHubName");
-            }
-            if (authorizationRuleName == null)
-            {
-                throw new ArgumentNullException("authorizationRuleName");
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException("parameters");
-            }
-            if (parameters.Location == null)
-            {
-                throw new ArgumentNullException("parameters.Location");
-            }
-            if (parameters.Properties == null)
-            {
-                throw new ArgumentNullException("parameters.Properties");
-            }
-            
-            // Tracing
-            bool shouldTrace = TracingAdapter.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = TracingAdapter.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("namespaceName", namespaceName);
-                tracingParameters.Add("notificationHubName", notificationHubName);
-                tracingParameters.Add("authorizationRuleName", authorizationRuleName);
-                tracingParameters.Add("parameters", parameters);
-                TracingAdapter.Enter(invocationId, this, "CreateAuthorizationRuleAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = "";
-            url = url + "/subscriptions/";
-            if (this.Client.Credentials.SubscriptionId != null)
-            {
-                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
-            }
-            url = url + "/resourceGroups/";
-            url = url + Uri.EscapeDataString(resourceGroupName);
-            url = url + "/providers/";
-            url = url + "Microsoft.NotificationHubs";
-            url = url + "/namespaces/";
-            url = url + Uri.EscapeDataString(namespaceName);
-            url = url + "/notificationHubs/";
-            url = url + Uri.EscapeDataString(notificationHubName);
-            url = url + "/AuthorizationRules/";
-            url = url + Uri.EscapeDataString(authorizationRuleName);
-            List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-09-01");
-            if (queryParameters.Count > 0)
-            {
-                url = url + "?" + string.Join("&", queryParameters);
-            }
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            // Trim '/' character from the end of baseUrl and beginning of url.
-            if (baseUrl[baseUrl.Length - 1] == '/')
-            {
-                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
-            }
-            if (url[0] == '/')
-            {
-                url = url.Substring(1);
-            }
-            url = baseUrl + "/" + url;
-            url = url.Replace(" ", "%20");
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Put;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Serialize Request
-                string requestContent = null;
-                JToken requestDoc = null;
-                
-                JObject authorizationRulesCreateOrUpdateParametersValue = new JObject();
-                requestDoc = authorizationRulesCreateOrUpdateParametersValue;
-                
-                authorizationRulesCreateOrUpdateParametersValue["location"] = parameters.Location;
-                
-                JObject propertiesValue = new JObject();
-                authorizationRulesCreateOrUpdateParametersValue["properties"] = propertiesValue;
-                
-                if (parameters.Properties.KeyName != null)
-                {
-                    propertiesValue["KeyName"] = parameters.Properties.KeyName;
-                }
-                
-                if (parameters.Properties.PrimaryKey != null)
-                {
-                    propertiesValue["PrimaryKey"] = parameters.Properties.PrimaryKey;
-                }
-                
-                if (parameters.Properties.SecondaryKey != null)
-                {
-                    propertiesValue["SecondaryKey"] = parameters.Properties.SecondaryKey;
-                }
-                
-                if (parameters.Properties.ClaimType != null)
-                {
-                    propertiesValue["ClaimType"] = parameters.Properties.ClaimType;
-                }
-                
-                if (parameters.Properties.ClaimValue != null)
-                {
-                    propertiesValue["ClaimValue"] = parameters.Properties.ClaimValue;
-                }
-                
-                if (parameters.Properties.Rights != null)
-                {
-                    if (parameters.Properties.Rights is ILazyCollection == false || ((ILazyCollection)parameters.Properties.Rights).IsInitialized)
-                    {
-                        JArray rightsArray = new JArray();
-                        foreach (AccessRight rightsItem in parameters.Properties.Rights)
-                        {
-                            rightsArray.Add(((int)rightsItem));
-                        }
-                        propertiesValue["Rights"] = rightsArray;
-                    }
-                }
-                
-                propertiesValue["CreatedTime"] = string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.Properties.CreatedTime.ToUniversalTime());
-                
-                propertiesValue["ModifiedTime"] = string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.Properties.ModifiedTime.ToUniversalTime());
-                
-                propertiesValue["Revision"] = parameters.Properties.Revision;
-                
-                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
-                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            TracingAdapter.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    AuthorizationRulesCreateOrUpdateResponse result = null;
-                    // Deserialize Response
-                    if (statusCode == HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new AuthorizationRulesCreateOrUpdateResponse();
-                        JToken responseDoc = null;
-                        if (string.IsNullOrEmpty(responseContent) == false)
-                        {
-                            responseDoc = JToken.Parse(responseContent);
-                        }
-                        
-                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                        {
-                            AuthorizationRulesResource valueInstance = new AuthorizationRulesResource();
+                            CheckAvailabilityResource valueInstance = new CheckAvailabilityResource();
                             result.Value = valueInstance;
                             
                             JToken idValue = responseDoc["id"];
@@ -519,82 +279,17 @@ namespace Microsoft.Azure.Management.NotificationHubs
                             {
                                 foreach (JProperty property in tagsSequenceElement)
                                 {
-                                    string tagsKey = ((string)property.Name);
-                                    string tagsValue = ((string)property.Value);
-                                    valueInstance.Tags.Add(tagsKey, tagsValue);
+                                    string tagsKey2 = ((string)property.Name);
+                                    string tagsValue2 = ((string)property.Value);
+                                    valueInstance.Tags.Add(tagsKey2, tagsValue2);
                                 }
                             }
                             
-                            JToken propertiesValue2 = responseDoc["properties"];
-                            if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
+                            JToken isAvailiableValue = responseDoc["isAvailiable"];
+                            if (isAvailiableValue != null && isAvailiableValue.Type != JTokenType.Null)
                             {
-                                AuthorizationRulesProperties propertiesInstance = new AuthorizationRulesProperties();
-                                valueInstance.Properties = propertiesInstance;
-                                
-                                JToken keyNameValue = propertiesValue2["KeyName"];
-                                if (keyNameValue != null && keyNameValue.Type != JTokenType.Null)
-                                {
-                                    string keyNameInstance = ((string)keyNameValue);
-                                    propertiesInstance.KeyName = keyNameInstance;
-                                }
-                                
-                                JToken primaryKeyValue = propertiesValue2["PrimaryKey"];
-                                if (primaryKeyValue != null && primaryKeyValue.Type != JTokenType.Null)
-                                {
-                                    string primaryKeyInstance = ((string)primaryKeyValue);
-                                    propertiesInstance.PrimaryKey = primaryKeyInstance;
-                                }
-                                
-                                JToken secondaryKeyValue = propertiesValue2["SecondaryKey"];
-                                if (secondaryKeyValue != null && secondaryKeyValue.Type != JTokenType.Null)
-                                {
-                                    string secondaryKeyInstance = ((string)secondaryKeyValue);
-                                    propertiesInstance.SecondaryKey = secondaryKeyInstance;
-                                }
-                                
-                                JToken claimTypeValue = propertiesValue2["ClaimType"];
-                                if (claimTypeValue != null && claimTypeValue.Type != JTokenType.Null)
-                                {
-                                    string claimTypeInstance = ((string)claimTypeValue);
-                                    propertiesInstance.ClaimType = claimTypeInstance;
-                                }
-                                
-                                JToken claimValueValue = propertiesValue2["ClaimValue"];
-                                if (claimValueValue != null && claimValueValue.Type != JTokenType.Null)
-                                {
-                                    string claimValueInstance = ((string)claimValueValue);
-                                    propertiesInstance.ClaimValue = claimValueInstance;
-                                }
-                                
-                                JToken rightsArray2 = propertiesValue2["Rights"];
-                                if (rightsArray2 != null && rightsArray2.Type != JTokenType.Null)
-                                {
-                                    foreach (JToken rightsValue in ((JArray)rightsArray2))
-                                    {
-                                        propertiesInstance.Rights.Add(((AccessRight)(((int)rightsValue))));
-                                    }
-                                }
-                                
-                                JToken createdTimeValue = propertiesValue2["CreatedTime"];
-                                if (createdTimeValue != null && createdTimeValue.Type != JTokenType.Null)
-                                {
-                                    DateTime createdTimeInstance = DateTime.Parse(((string)createdTimeValue), CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
-                                    propertiesInstance.CreatedTime = createdTimeInstance;
-                                }
-                                
-                                JToken modifiedTimeValue = propertiesValue2["ModifiedTime"];
-                                if (modifiedTimeValue != null && modifiedTimeValue.Type != JTokenType.Null)
-                                {
-                                    DateTime modifiedTimeInstance = DateTime.Parse(((string)modifiedTimeValue), CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
-                                    propertiesInstance.ModifiedTime = modifiedTimeInstance;
-                                }
-                                
-                                JToken revisionValue = propertiesValue2["Revision"];
-                                if (revisionValue != null && revisionValue.Type != JTokenType.Null)
-                                {
-                                    int revisionInstance = ((int)revisionValue);
-                                    propertiesInstance.Revision = revisionInstance;
-                                }
+                                bool isAvailiableInstance = ((bool)isAvailiableValue);
+                                valueInstance.IsAvailable = isAvailiableInstance;
                             }
                         }
                         
@@ -651,7 +346,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
         /// <returns>
         /// Response of the CreateOrUpdate operation on the NotificationHub
         /// </returns>
-        public async Task<NotificationHubCreateOrUpdateResponse> CreateOrUpdateAsync(string resourceGroupName, string namespaceName, string notificationHubName, NotificationHubCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
+        public async Task<NotificationHubCreateOrUpdateResponse> CreateAsync(string resourceGroupName, string namespaceName, string notificationHubName, NotificationHubCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -690,7 +385,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
                 tracingParameters.Add("namespaceName", namespaceName);
                 tracingParameters.Add("notificationHubName", notificationHubName);
                 tracingParameters.Add("parameters", parameters);
-                TracingAdapter.Enter(invocationId, this, "CreateOrUpdateAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "CreateAsync", tracingParameters);
             }
             
             // Construct URL
@@ -765,7 +460,232 @@ namespace Microsoft.Azure.Management.NotificationHubs
                     }
                 }
                 
-                notificationHubCreateOrUpdateParametersValue["properties"] = parameters.Properties.ToString();
+                JObject propertiesValue = new JObject();
+                notificationHubCreateOrUpdateParametersValue["properties"] = propertiesValue;
+                
+                if (parameters.Properties.Name != null)
+                {
+                    propertiesValue["name"] = parameters.Properties.Name;
+                }
+                
+                if (parameters.Properties.RegistrationTtl != null)
+                {
+                    propertiesValue["registrationTtl"] = parameters.Properties.RegistrationTtl;
+                }
+                
+                if (parameters.Properties.AuthorizationRules != null)
+                {
+                    if (parameters.Properties.AuthorizationRules is ILazyCollection == false || ((ILazyCollection)parameters.Properties.AuthorizationRules).IsInitialized)
+                    {
+                        JArray authorizationRulesArray = new JArray();
+                        foreach (SharedAccessAuthorizationRuleProperties authorizationRulesItem in parameters.Properties.AuthorizationRules)
+                        {
+                            if (authorizationRulesItem.PrimaryKey != null)
+                            {
+                                requestDoc = authorizationRulesItem.PrimaryKey;
+                            }
+                            
+                            if (authorizationRulesItem.SecondaryKey != null)
+                            {
+                                requestDoc = authorizationRulesItem.SecondaryKey;
+                            }
+                            
+                            if (authorizationRulesItem.KeyName != null)
+                            {
+                                requestDoc = authorizationRulesItem.KeyName;
+                            }
+                            
+                            if (authorizationRulesItem.ClaimType != null)
+                            {
+                                requestDoc = authorizationRulesItem.ClaimType;
+                            }
+                            
+                            if (authorizationRulesItem.ClaimValue != null)
+                            {
+                                requestDoc = authorizationRulesItem.ClaimValue;
+                            }
+                            
+                            if (authorizationRulesItem.Rights != null)
+                            {
+                                JArray rightsArray = new JArray();
+                                foreach (AccessRights rightsItem in authorizationRulesItem.Rights)
+                                {
+                                    rightsArray.Add(rightsItem.ToString());
+                                }
+                                requestDoc = rightsArray;
+                            }
+                            
+                            requestDoc = string.Format(CultureInfo.InvariantCulture, "{0:O}", authorizationRulesItem.CreatedTime.ToUniversalTime());
+                            
+                            requestDoc = string.Format(CultureInfo.InvariantCulture, "{0:O}", authorizationRulesItem.ModifiedTime.ToUniversalTime());
+                            
+                            requestDoc = authorizationRulesItem.Revision;
+                        }
+                        propertiesValue["authorizationRules"] = authorizationRulesArray;
+                    }
+                }
+                
+                if (parameters.Properties.ApnsCredential != null)
+                {
+                    JObject apnsCredentialValue = new JObject();
+                    propertiesValue["apnsCredential"] = apnsCredentialValue;
+                    
+                    if (parameters.Properties.ApnsCredential.Properties != null)
+                    {
+                        JObject propertiesValue2 = new JObject();
+                        apnsCredentialValue["properties"] = propertiesValue2;
+                        
+                        if (parameters.Properties.ApnsCredential.Properties.ApnsCertificate != null)
+                        {
+                            propertiesValue2["apnsCertificate"] = parameters.Properties.ApnsCredential.Properties.ApnsCertificate;
+                        }
+                        
+                        if (parameters.Properties.ApnsCredential.Properties.CertificateKey != null)
+                        {
+                            propertiesValue2["certificateKey"] = parameters.Properties.ApnsCredential.Properties.CertificateKey;
+                        }
+                        
+                        if (parameters.Properties.ApnsCredential.Properties.Endpoint != null)
+                        {
+                            propertiesValue2["endpoint"] = parameters.Properties.ApnsCredential.Properties.Endpoint;
+                        }
+                        
+                        if (parameters.Properties.ApnsCredential.Properties.Thumbprint != null)
+                        {
+                            propertiesValue2["thumbprint"] = parameters.Properties.ApnsCredential.Properties.Thumbprint;
+                        }
+                    }
+                }
+                
+                if (parameters.Properties.WnsCredential != null)
+                {
+                    JObject wnsCredentialValue = new JObject();
+                    propertiesValue["wnsCredential"] = wnsCredentialValue;
+                    
+                    if (parameters.Properties.WnsCredential.Properties != null)
+                    {
+                        JObject propertiesValue3 = new JObject();
+                        wnsCredentialValue["properties"] = propertiesValue3;
+                        
+                        if (parameters.Properties.WnsCredential.Properties.PackageSid != null)
+                        {
+                            propertiesValue3["packageSid"] = parameters.Properties.WnsCredential.Properties.PackageSid;
+                        }
+                        
+                        if (parameters.Properties.WnsCredential.Properties.SecretKey != null)
+                        {
+                            propertiesValue3["secretKey"] = parameters.Properties.WnsCredential.Properties.SecretKey;
+                        }
+                        
+                        if (parameters.Properties.WnsCredential.Properties.WindowsLiveEndpoint != null)
+                        {
+                            propertiesValue3["windowsLiveEndpoint"] = parameters.Properties.WnsCredential.Properties.WindowsLiveEndpoint;
+                        }
+                    }
+                }
+                
+                if (parameters.Properties.GcmCredential != null)
+                {
+                    JObject gcmCredentialValue = new JObject();
+                    propertiesValue["gcmCredential"] = gcmCredentialValue;
+                    
+                    if (parameters.Properties.GcmCredential.Properties != null)
+                    {
+                        JObject propertiesValue4 = new JObject();
+                        gcmCredentialValue["properties"] = propertiesValue4;
+                        
+                        if (parameters.Properties.GcmCredential.Properties.GcmEndpoint != null)
+                        {
+                            propertiesValue4["gcmEndpoint"] = parameters.Properties.GcmCredential.Properties.GcmEndpoint;
+                        }
+                        
+                        if (parameters.Properties.GcmCredential.Properties.GoogleApiKey != null)
+                        {
+                            propertiesValue4["googleApiKey"] = parameters.Properties.GcmCredential.Properties.GoogleApiKey;
+                        }
+                    }
+                }
+                
+                if (parameters.Properties.MpnsCredential != null)
+                {
+                    JObject mpnsCredentialValue = new JObject();
+                    propertiesValue["mpnsCredential"] = mpnsCredentialValue;
+                    
+                    if (parameters.Properties.MpnsCredential.Properties != null)
+                    {
+                        JObject propertiesValue5 = new JObject();
+                        mpnsCredentialValue["properties"] = propertiesValue5;
+                        
+                        if (parameters.Properties.MpnsCredential.Properties.MpnsCertificate != null)
+                        {
+                            propertiesValue5["mpnsCertificate"] = parameters.Properties.MpnsCredential.Properties.MpnsCertificate;
+                        }
+                        
+                        if (parameters.Properties.MpnsCredential.Properties.CertificateKey != null)
+                        {
+                            propertiesValue5["certificateKey"] = parameters.Properties.MpnsCredential.Properties.CertificateKey;
+                        }
+                        
+                        if (parameters.Properties.MpnsCredential.Properties.Thumbprint != null)
+                        {
+                            propertiesValue5["thumbprint"] = parameters.Properties.MpnsCredential.Properties.Thumbprint;
+                        }
+                    }
+                }
+                
+                if (parameters.Properties.AdmCredential != null)
+                {
+                    JObject admCredentialValue = new JObject();
+                    propertiesValue["admCredential"] = admCredentialValue;
+                    
+                    if (parameters.Properties.AdmCredential.Properties != null)
+                    {
+                        JObject propertiesValue6 = new JObject();
+                        admCredentialValue["properties"] = propertiesValue6;
+                        
+                        if (parameters.Properties.AdmCredential.Properties.ClientId != null)
+                        {
+                            propertiesValue6["clientId"] = parameters.Properties.AdmCredential.Properties.ClientId;
+                        }
+                        
+                        if (parameters.Properties.AdmCredential.Properties.ClientSecret != null)
+                        {
+                            propertiesValue6["clientSecret"] = parameters.Properties.AdmCredential.Properties.ClientSecret;
+                        }
+                        
+                        if (parameters.Properties.AdmCredential.Properties.AuthTokenUrl != null)
+                        {
+                            propertiesValue6["authTokenUrl"] = parameters.Properties.AdmCredential.Properties.AuthTokenUrl;
+                        }
+                    }
+                }
+                
+                if (parameters.Properties.BaiduCredential != null)
+                {
+                    JObject baiduCredentialValue = new JObject();
+                    propertiesValue["baiduCredential"] = baiduCredentialValue;
+                    
+                    if (parameters.Properties.BaiduCredential.Properties != null)
+                    {
+                        JObject propertiesValue7 = new JObject();
+                        baiduCredentialValue["properties"] = propertiesValue7;
+                        
+                        if (parameters.Properties.BaiduCredential.Properties.BaiduApiKey != null)
+                        {
+                            propertiesValue7["baiduApiKey"] = parameters.Properties.BaiduCredential.Properties.BaiduApiKey;
+                        }
+                        
+                        if (parameters.Properties.BaiduCredential.Properties.BaiduEndPoint != null)
+                        {
+                            propertiesValue7["baiduEndPoint"] = parameters.Properties.BaiduCredential.Properties.BaiduEndPoint;
+                        }
+                        
+                        if (parameters.Properties.BaiduCredential.Properties.BaiduSecretKey != null)
+                        {
+                            propertiesValue7["baiduSecretKey"] = parameters.Properties.BaiduCredential.Properties.BaiduSecretKey;
+                        }
+                    }
+                }
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
@@ -786,7 +706,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
                         TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Created)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
@@ -800,7 +720,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
                     // Create Result
                     NotificationHubCreateOrUpdateResponse result = null;
                     // Deserialize Response
-                    if (statusCode == HttpStatusCode.OK)
+                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Created)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -855,11 +775,680 @@ namespace Microsoft.Azure.Management.NotificationHubs
                                 }
                             }
                             
-                            JToken propertiesValue = responseDoc["properties"];
-                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                            JToken propertiesValue8 = responseDoc["properties"];
+                            if (propertiesValue8 != null && propertiesValue8.Type != JTokenType.Null)
                             {
                                 NotificationHubProperties propertiesInstance = new NotificationHubProperties();
                                 valueInstance.Properties = propertiesInstance;
+                                
+                                JToken nameValue2 = propertiesValue8["name"];
+                                if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                {
+                                    string nameInstance2 = ((string)nameValue2);
+                                    propertiesInstance.Name = nameInstance2;
+                                }
+                                
+                                JToken registrationTtlValue = propertiesValue8["registrationTtl"];
+                                if (registrationTtlValue != null && registrationTtlValue.Type != JTokenType.Null)
+                                {
+                                    string registrationTtlInstance = ((string)registrationTtlValue);
+                                    propertiesInstance.RegistrationTtl = registrationTtlInstance;
+                                }
+                                
+                                JToken authorizationRulesArray2 = propertiesValue8["authorizationRules"];
+                                if (authorizationRulesArray2 != null && authorizationRulesArray2.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken authorizationRulesValue in ((JArray)authorizationRulesArray2))
+                                    {
+                                        SharedAccessAuthorizationRuleProperties sharedAccessAuthorizationRulePropertiesInstance = new SharedAccessAuthorizationRuleProperties();
+                                        propertiesInstance.AuthorizationRules.Add(sharedAccessAuthorizationRulePropertiesInstance);
+                                        
+                                        JToken primaryKeyValue = authorizationRulesValue["primaryKey"];
+                                        if (primaryKeyValue != null && primaryKeyValue.Type != JTokenType.Null)
+                                        {
+                                            string primaryKeyInstance = ((string)primaryKeyValue);
+                                            sharedAccessAuthorizationRulePropertiesInstance.PrimaryKey = primaryKeyInstance;
+                                        }
+                                        
+                                        JToken secondaryKeyValue = authorizationRulesValue["secondaryKey"];
+                                        if (secondaryKeyValue != null && secondaryKeyValue.Type != JTokenType.Null)
+                                        {
+                                            string secondaryKeyInstance = ((string)secondaryKeyValue);
+                                            sharedAccessAuthorizationRulePropertiesInstance.SecondaryKey = secondaryKeyInstance;
+                                        }
+                                        
+                                        JToken keyNameValue = authorizationRulesValue["keyName"];
+                                        if (keyNameValue != null && keyNameValue.Type != JTokenType.Null)
+                                        {
+                                            string keyNameInstance = ((string)keyNameValue);
+                                            sharedAccessAuthorizationRulePropertiesInstance.KeyName = keyNameInstance;
+                                        }
+                                        
+                                        JToken claimTypeValue = authorizationRulesValue["claimType"];
+                                        if (claimTypeValue != null && claimTypeValue.Type != JTokenType.Null)
+                                        {
+                                            string claimTypeInstance = ((string)claimTypeValue);
+                                            sharedAccessAuthorizationRulePropertiesInstance.ClaimType = claimTypeInstance;
+                                        }
+                                        
+                                        JToken claimValueValue = authorizationRulesValue["claimValue"];
+                                        if (claimValueValue != null && claimValueValue.Type != JTokenType.Null)
+                                        {
+                                            string claimValueInstance = ((string)claimValueValue);
+                                            sharedAccessAuthorizationRulePropertiesInstance.ClaimValue = claimValueInstance;
+                                        }
+                                        
+                                        JToken rightsArray2 = authorizationRulesValue["rights"];
+                                        if (rightsArray2 != null && rightsArray2.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken rightsValue in ((JArray)rightsArray2))
+                                            {
+                                                sharedAccessAuthorizationRulePropertiesInstance.Rights.Add(((AccessRights)Enum.Parse(typeof(AccessRights), ((string)rightsValue), true)));
+                                            }
+                                        }
+                                        
+                                        JToken createdTimeValue = authorizationRulesValue["createdTime"];
+                                        if (createdTimeValue != null && createdTimeValue.Type != JTokenType.Null)
+                                        {
+                                            DateTime createdTimeInstance = DateTime.Parse(((string)createdTimeValue), CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
+                                            sharedAccessAuthorizationRulePropertiesInstance.CreatedTime = createdTimeInstance;
+                                        }
+                                        
+                                        JToken modifiedTimeValue = authorizationRulesValue["modifiedTime"];
+                                        if (modifiedTimeValue != null && modifiedTimeValue.Type != JTokenType.Null)
+                                        {
+                                            DateTime modifiedTimeInstance = DateTime.Parse(((string)modifiedTimeValue), CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
+                                            sharedAccessAuthorizationRulePropertiesInstance.ModifiedTime = modifiedTimeInstance;
+                                        }
+                                        
+                                        JToken revisionValue = authorizationRulesValue["revision"];
+                                        if (revisionValue != null && revisionValue.Type != JTokenType.Null)
+                                        {
+                                            int revisionInstance = ((int)revisionValue);
+                                            sharedAccessAuthorizationRulePropertiesInstance.Revision = revisionInstance;
+                                        }
+                                    }
+                                }
+                                
+                                JToken apnsCredentialValue2 = propertiesValue8["apnsCredential"];
+                                if (apnsCredentialValue2 != null && apnsCredentialValue2.Type != JTokenType.Null)
+                                {
+                                    ApnsCredential apnsCredentialInstance = new ApnsCredential();
+                                    propertiesInstance.ApnsCredential = apnsCredentialInstance;
+                                    
+                                    JToken propertiesValue9 = apnsCredentialValue2["properties"];
+                                    if (propertiesValue9 != null && propertiesValue9.Type != JTokenType.Null)
+                                    {
+                                        ApnsCredentialProperties propertiesInstance2 = new ApnsCredentialProperties();
+                                        apnsCredentialInstance.Properties = propertiesInstance2;
+                                        
+                                        JToken apnsCertificateValue = propertiesValue9["apnsCertificate"];
+                                        if (apnsCertificateValue != null && apnsCertificateValue.Type != JTokenType.Null)
+                                        {
+                                            string apnsCertificateInstance = ((string)apnsCertificateValue);
+                                            propertiesInstance2.ApnsCertificate = apnsCertificateInstance;
+                                        }
+                                        
+                                        JToken certificateKeyValue = propertiesValue9["certificateKey"];
+                                        if (certificateKeyValue != null && certificateKeyValue.Type != JTokenType.Null)
+                                        {
+                                            string certificateKeyInstance = ((string)certificateKeyValue);
+                                            propertiesInstance2.CertificateKey = certificateKeyInstance;
+                                        }
+                                        
+                                        JToken endpointValue = propertiesValue9["endpoint"];
+                                        if (endpointValue != null && endpointValue.Type != JTokenType.Null)
+                                        {
+                                            string endpointInstance = ((string)endpointValue);
+                                            propertiesInstance2.Endpoint = endpointInstance;
+                                        }
+                                        
+                                        JToken thumbprintValue = propertiesValue9["thumbprint"];
+                                        if (thumbprintValue != null && thumbprintValue.Type != JTokenType.Null)
+                                        {
+                                            string thumbprintInstance = ((string)thumbprintValue);
+                                            propertiesInstance2.Thumbprint = thumbprintInstance;
+                                        }
+                                    }
+                                }
+                                
+                                JToken wnsCredentialValue2 = propertiesValue8["wnsCredential"];
+                                if (wnsCredentialValue2 != null && wnsCredentialValue2.Type != JTokenType.Null)
+                                {
+                                    WnsCredential wnsCredentialInstance = new WnsCredential();
+                                    propertiesInstance.WnsCredential = wnsCredentialInstance;
+                                    
+                                    JToken propertiesValue10 = wnsCredentialValue2["properties"];
+                                    if (propertiesValue10 != null && propertiesValue10.Type != JTokenType.Null)
+                                    {
+                                        WnsCredentialProperties propertiesInstance3 = new WnsCredentialProperties();
+                                        wnsCredentialInstance.Properties = propertiesInstance3;
+                                        
+                                        JToken packageSidValue = propertiesValue10["packageSid"];
+                                        if (packageSidValue != null && packageSidValue.Type != JTokenType.Null)
+                                        {
+                                            string packageSidInstance = ((string)packageSidValue);
+                                            propertiesInstance3.PackageSid = packageSidInstance;
+                                        }
+                                        
+                                        JToken secretKeyValue = propertiesValue10["secretKey"];
+                                        if (secretKeyValue != null && secretKeyValue.Type != JTokenType.Null)
+                                        {
+                                            string secretKeyInstance = ((string)secretKeyValue);
+                                            propertiesInstance3.SecretKey = secretKeyInstance;
+                                        }
+                                        
+                                        JToken windowsLiveEndpointValue = propertiesValue10["windowsLiveEndpoint"];
+                                        if (windowsLiveEndpointValue != null && windowsLiveEndpointValue.Type != JTokenType.Null)
+                                        {
+                                            string windowsLiveEndpointInstance = ((string)windowsLiveEndpointValue);
+                                            propertiesInstance3.WindowsLiveEndpoint = windowsLiveEndpointInstance;
+                                        }
+                                    }
+                                }
+                                
+                                JToken gcmCredentialValue2 = propertiesValue8["gcmCredential"];
+                                if (gcmCredentialValue2 != null && gcmCredentialValue2.Type != JTokenType.Null)
+                                {
+                                    GcmCredential gcmCredentialInstance = new GcmCredential();
+                                    propertiesInstance.GcmCredential = gcmCredentialInstance;
+                                    
+                                    JToken propertiesValue11 = gcmCredentialValue2["properties"];
+                                    if (propertiesValue11 != null && propertiesValue11.Type != JTokenType.Null)
+                                    {
+                                        GcmCredentialProperties propertiesInstance4 = new GcmCredentialProperties();
+                                        gcmCredentialInstance.Properties = propertiesInstance4;
+                                        
+                                        JToken gcmEndpointValue = propertiesValue11["gcmEndpoint"];
+                                        if (gcmEndpointValue != null && gcmEndpointValue.Type != JTokenType.Null)
+                                        {
+                                            string gcmEndpointInstance = ((string)gcmEndpointValue);
+                                            propertiesInstance4.GcmEndpoint = gcmEndpointInstance;
+                                        }
+                                        
+                                        JToken googleApiKeyValue = propertiesValue11["googleApiKey"];
+                                        if (googleApiKeyValue != null && googleApiKeyValue.Type != JTokenType.Null)
+                                        {
+                                            string googleApiKeyInstance = ((string)googleApiKeyValue);
+                                            propertiesInstance4.GoogleApiKey = googleApiKeyInstance;
+                                        }
+                                    }
+                                }
+                                
+                                JToken mpnsCredentialValue2 = propertiesValue8["mpnsCredential"];
+                                if (mpnsCredentialValue2 != null && mpnsCredentialValue2.Type != JTokenType.Null)
+                                {
+                                    MpnsCredential mpnsCredentialInstance = new MpnsCredential();
+                                    propertiesInstance.MpnsCredential = mpnsCredentialInstance;
+                                    
+                                    JToken propertiesValue12 = mpnsCredentialValue2["properties"];
+                                    if (propertiesValue12 != null && propertiesValue12.Type != JTokenType.Null)
+                                    {
+                                        MpnsCredentialProperties propertiesInstance5 = new MpnsCredentialProperties();
+                                        mpnsCredentialInstance.Properties = propertiesInstance5;
+                                        
+                                        JToken mpnsCertificateValue = propertiesValue12["mpnsCertificate"];
+                                        if (mpnsCertificateValue != null && mpnsCertificateValue.Type != JTokenType.Null)
+                                        {
+                                            string mpnsCertificateInstance = ((string)mpnsCertificateValue);
+                                            propertiesInstance5.MpnsCertificate = mpnsCertificateInstance;
+                                        }
+                                        
+                                        JToken certificateKeyValue2 = propertiesValue12["certificateKey"];
+                                        if (certificateKeyValue2 != null && certificateKeyValue2.Type != JTokenType.Null)
+                                        {
+                                            string certificateKeyInstance2 = ((string)certificateKeyValue2);
+                                            propertiesInstance5.CertificateKey = certificateKeyInstance2;
+                                        }
+                                        
+                                        JToken thumbprintValue2 = propertiesValue12["thumbprint"];
+                                        if (thumbprintValue2 != null && thumbprintValue2.Type != JTokenType.Null)
+                                        {
+                                            string thumbprintInstance2 = ((string)thumbprintValue2);
+                                            propertiesInstance5.Thumbprint = thumbprintInstance2;
+                                        }
+                                    }
+                                }
+                                
+                                JToken admCredentialValue2 = propertiesValue8["admCredential"];
+                                if (admCredentialValue2 != null && admCredentialValue2.Type != JTokenType.Null)
+                                {
+                                    AdmCredential admCredentialInstance = new AdmCredential();
+                                    propertiesInstance.AdmCredential = admCredentialInstance;
+                                    
+                                    JToken propertiesValue13 = admCredentialValue2["properties"];
+                                    if (propertiesValue13 != null && propertiesValue13.Type != JTokenType.Null)
+                                    {
+                                        AdmCredentialProperties propertiesInstance6 = new AdmCredentialProperties();
+                                        admCredentialInstance.Properties = propertiesInstance6;
+                                        
+                                        JToken clientIdValue = propertiesValue13["clientId"];
+                                        if (clientIdValue != null && clientIdValue.Type != JTokenType.Null)
+                                        {
+                                            string clientIdInstance = ((string)clientIdValue);
+                                            propertiesInstance6.ClientId = clientIdInstance;
+                                        }
+                                        
+                                        JToken clientSecretValue = propertiesValue13["clientSecret"];
+                                        if (clientSecretValue != null && clientSecretValue.Type != JTokenType.Null)
+                                        {
+                                            string clientSecretInstance = ((string)clientSecretValue);
+                                            propertiesInstance6.ClientSecret = clientSecretInstance;
+                                        }
+                                        
+                                        JToken authTokenUrlValue = propertiesValue13["authTokenUrl"];
+                                        if (authTokenUrlValue != null && authTokenUrlValue.Type != JTokenType.Null)
+                                        {
+                                            string authTokenUrlInstance = ((string)authTokenUrlValue);
+                                            propertiesInstance6.AuthTokenUrl = authTokenUrlInstance;
+                                        }
+                                    }
+                                }
+                                
+                                JToken baiduCredentialValue2 = propertiesValue8["baiduCredential"];
+                                if (baiduCredentialValue2 != null && baiduCredentialValue2.Type != JTokenType.Null)
+                                {
+                                    BaiduCredential baiduCredentialInstance = new BaiduCredential();
+                                    propertiesInstance.BaiduCredential = baiduCredentialInstance;
+                                    
+                                    JToken propertiesValue14 = baiduCredentialValue2["properties"];
+                                    if (propertiesValue14 != null && propertiesValue14.Type != JTokenType.Null)
+                                    {
+                                        BaiduCredentialProperties propertiesInstance7 = new BaiduCredentialProperties();
+                                        baiduCredentialInstance.Properties = propertiesInstance7;
+                                        
+                                        JToken baiduApiKeyValue = propertiesValue14["baiduApiKey"];
+                                        if (baiduApiKeyValue != null && baiduApiKeyValue.Type != JTokenType.Null)
+                                        {
+                                            string baiduApiKeyInstance = ((string)baiduApiKeyValue);
+                                            propertiesInstance7.BaiduApiKey = baiduApiKeyInstance;
+                                        }
+                                        
+                                        JToken baiduEndPointValue = propertiesValue14["baiduEndPoint"];
+                                        if (baiduEndPointValue != null && baiduEndPointValue.Type != JTokenType.Null)
+                                        {
+                                            string baiduEndPointInstance = ((string)baiduEndPointValue);
+                                            propertiesInstance7.BaiduEndPoint = baiduEndPointInstance;
+                                        }
+                                        
+                                        JToken baiduSecretKeyValue = propertiesValue14["baiduSecretKey"];
+                                        if (baiduSecretKeyValue != null && baiduSecretKeyValue.Type != JTokenType.Null)
+                                        {
+                                            string baiduSecretKeyInstance = ((string)baiduSecretKeyValue);
+                                            propertiesInstance7.BaiduSecretKey = baiduSecretKeyInstance;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The create NotificationHub authorization rule operation creates an
+        /// authorization rule for a NotificationHub
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='namespaceName'>
+        /// Required. The namespace name.
+        /// </param>
+        /// <param name='notificationHubName'>
+        /// Required. The notification hub name.
+        /// </param>
+        /// <param name='authorizationRuleName'>
+        /// Required. The namespace authorizationRuleName name.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The shared access authorization rule.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Response of the CreateOrUpdate operation on the AuthorizationRules
+        /// </returns>
+        public async Task<SharedAccessAuthorizationRuleCreateOrUpdateResponse> CreateOrUpdateAuthorizationRuleAsync(string resourceGroupName, string namespaceName, string notificationHubName, string authorizationRuleName, SharedAccessAuthorizationRuleCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (namespaceName == null)
+            {
+                throw new ArgumentNullException("namespaceName");
+            }
+            if (notificationHubName == null)
+            {
+                throw new ArgumentNullException("notificationHubName");
+            }
+            if (authorizationRuleName == null)
+            {
+                throw new ArgumentNullException("authorizationRuleName");
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            if (parameters.Properties == null)
+            {
+                throw new ArgumentNullException("parameters.Properties");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("namespaceName", namespaceName);
+                tracingParameters.Add("notificationHubName", notificationHubName);
+                tracingParameters.Add("authorizationRuleName", authorizationRuleName);
+                tracingParameters.Add("parameters", parameters);
+                TracingAdapter.Enter(invocationId, this, "CreateOrUpdateAuthorizationRuleAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/";
+            url = url + "Microsoft.NotificationHubs";
+            url = url + "/namespaces/";
+            url = url + Uri.EscapeDataString(namespaceName);
+            url = url + "/notificationHubs/";
+            url = url + Uri.EscapeDataString(notificationHubName);
+            url = url + "/AuthorizationRules/";
+            url = url + Uri.EscapeDataString(authorizationRuleName);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-09-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Put;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                JToken requestDoc = null;
+                
+                JObject sharedAccessAuthorizationRuleCreateOrUpdateParametersValue = new JObject();
+                requestDoc = sharedAccessAuthorizationRuleCreateOrUpdateParametersValue;
+                
+                if (parameters.Location != null)
+                {
+                    sharedAccessAuthorizationRuleCreateOrUpdateParametersValue["location"] = parameters.Location;
+                }
+                
+                if (parameters.Name != null)
+                {
+                    sharedAccessAuthorizationRuleCreateOrUpdateParametersValue["name"] = parameters.Name;
+                }
+                
+                JObject propertiesValue = new JObject();
+                sharedAccessAuthorizationRuleCreateOrUpdateParametersValue["properties"] = propertiesValue;
+                
+                if (parameters.Properties.PrimaryKey != null)
+                {
+                    propertiesValue["primaryKey"] = parameters.Properties.PrimaryKey;
+                }
+                
+                if (parameters.Properties.SecondaryKey != null)
+                {
+                    propertiesValue["secondaryKey"] = parameters.Properties.SecondaryKey;
+                }
+                
+                if (parameters.Properties.KeyName != null)
+                {
+                    propertiesValue["keyName"] = parameters.Properties.KeyName;
+                }
+                
+                if (parameters.Properties.ClaimType != null)
+                {
+                    propertiesValue["claimType"] = parameters.Properties.ClaimType;
+                }
+                
+                if (parameters.Properties.ClaimValue != null)
+                {
+                    propertiesValue["claimValue"] = parameters.Properties.ClaimValue;
+                }
+                
+                if (parameters.Properties.Rights != null)
+                {
+                    JArray rightsArray = new JArray();
+                    foreach (AccessRights rightsItem in parameters.Properties.Rights)
+                    {
+                        rightsArray.Add(rightsItem.ToString());
+                    }
+                    propertiesValue["rights"] = rightsArray;
+                }
+                
+                propertiesValue["createdTime"] = string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.Properties.CreatedTime.ToUniversalTime());
+                
+                propertiesValue["modifiedTime"] = string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.Properties.ModifiedTime.ToUniversalTime());
+                
+                propertiesValue["revision"] = parameters.Properties.Revision;
+                
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    SharedAccessAuthorizationRuleCreateOrUpdateResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new SharedAccessAuthorizationRuleCreateOrUpdateResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            SharedAccessAuthorizationRuleResource valueInstance = new SharedAccessAuthorizationRuleResource();
+                            result.Value = valueInstance;
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                valueInstance.Id = idInstance;
+                            }
+                            
+                            JToken locationValue = responseDoc["location"];
+                            if (locationValue != null && locationValue.Type != JTokenType.Null)
+                            {
+                                string locationInstance = ((string)locationValue);
+                                valueInstance.Location = locationInstance;
+                            }
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                string nameInstance = ((string)nameValue);
+                                valueInstance.Name = nameInstance;
+                            }
+                            
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            {
+                                string typeInstance = ((string)typeValue);
+                                valueInstance.Type = typeInstance;
+                            }
+                            
+                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
+                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                            {
+                                foreach (JProperty property in tagsSequenceElement)
+                                {
+                                    string tagsKey = ((string)property.Name);
+                                    string tagsValue = ((string)property.Value);
+                                    valueInstance.Tags.Add(tagsKey, tagsValue);
+                                }
+                            }
+                            
+                            JToken propertiesValue2 = responseDoc["properties"];
+                            if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
+                            {
+                                SharedAccessAuthorizationRuleProperties propertiesInstance = new SharedAccessAuthorizationRuleProperties();
+                                valueInstance.Properties = propertiesInstance;
+                                
+                                JToken primaryKeyValue = propertiesValue2["primaryKey"];
+                                if (primaryKeyValue != null && primaryKeyValue.Type != JTokenType.Null)
+                                {
+                                    string primaryKeyInstance = ((string)primaryKeyValue);
+                                    propertiesInstance.PrimaryKey = primaryKeyInstance;
+                                }
+                                
+                                JToken secondaryKeyValue = propertiesValue2["secondaryKey"];
+                                if (secondaryKeyValue != null && secondaryKeyValue.Type != JTokenType.Null)
+                                {
+                                    string secondaryKeyInstance = ((string)secondaryKeyValue);
+                                    propertiesInstance.SecondaryKey = secondaryKeyInstance;
+                                }
+                                
+                                JToken keyNameValue = propertiesValue2["keyName"];
+                                if (keyNameValue != null && keyNameValue.Type != JTokenType.Null)
+                                {
+                                    string keyNameInstance = ((string)keyNameValue);
+                                    propertiesInstance.KeyName = keyNameInstance;
+                                }
+                                
+                                JToken claimTypeValue = propertiesValue2["claimType"];
+                                if (claimTypeValue != null && claimTypeValue.Type != JTokenType.Null)
+                                {
+                                    string claimTypeInstance = ((string)claimTypeValue);
+                                    propertiesInstance.ClaimType = claimTypeInstance;
+                                }
+                                
+                                JToken claimValueValue = propertiesValue2["claimValue"];
+                                if (claimValueValue != null && claimValueValue.Type != JTokenType.Null)
+                                {
+                                    string claimValueInstance = ((string)claimValueValue);
+                                    propertiesInstance.ClaimValue = claimValueInstance;
+                                }
+                                
+                                JToken rightsArray2 = propertiesValue2["rights"];
+                                if (rightsArray2 != null && rightsArray2.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken rightsValue in ((JArray)rightsArray2))
+                                    {
+                                        propertiesInstance.Rights.Add(((AccessRights)Enum.Parse(typeof(AccessRights), ((string)rightsValue), true)));
+                                    }
+                                }
+                                
+                                JToken createdTimeValue = propertiesValue2["createdTime"];
+                                if (createdTimeValue != null && createdTimeValue.Type != JTokenType.Null)
+                                {
+                                    DateTime createdTimeInstance = DateTime.Parse(((string)createdTimeValue), CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
+                                    propertiesInstance.CreatedTime = createdTimeInstance;
+                                }
+                                
+                                JToken modifiedTimeValue = propertiesValue2["modifiedTime"];
+                                if (modifiedTimeValue != null && modifiedTimeValue.Type != JTokenType.Null)
+                                {
+                                    DateTime modifiedTimeInstance = DateTime.Parse(((string)modifiedTimeValue), CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
+                                    propertiesInstance.ModifiedTime = modifiedTimeInstance;
+                                }
+                                
+                                JToken revisionValue = propertiesValue2["revision"];
+                                if (revisionValue != null && revisionValue.Type != JTokenType.Null)
+                                {
+                                    int revisionInstance = ((int)revisionValue);
+                                    propertiesInstance.Revision = revisionInstance;
+                                }
                             }
                         }
                         
@@ -1397,6 +1986,305 @@ namespace Microsoft.Azure.Management.NotificationHubs
                             {
                                 NotificationHubProperties propertiesInstance = new NotificationHubProperties();
                                 valueInstance.Properties = propertiesInstance;
+                                
+                                JToken nameValue2 = propertiesValue["name"];
+                                if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                {
+                                    string nameInstance2 = ((string)nameValue2);
+                                    propertiesInstance.Name = nameInstance2;
+                                }
+                                
+                                JToken registrationTtlValue = propertiesValue["registrationTtl"];
+                                if (registrationTtlValue != null && registrationTtlValue.Type != JTokenType.Null)
+                                {
+                                    string registrationTtlInstance = ((string)registrationTtlValue);
+                                    propertiesInstance.RegistrationTtl = registrationTtlInstance;
+                                }
+                                
+                                JToken authorizationRulesArray = propertiesValue["authorizationRules"];
+                                if (authorizationRulesArray != null && authorizationRulesArray.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken authorizationRulesValue in ((JArray)authorizationRulesArray))
+                                    {
+                                        SharedAccessAuthorizationRuleProperties sharedAccessAuthorizationRulePropertiesInstance = new SharedAccessAuthorizationRuleProperties();
+                                        propertiesInstance.AuthorizationRules.Add(sharedAccessAuthorizationRulePropertiesInstance);
+                                        
+                                        JToken primaryKeyValue = authorizationRulesValue["primaryKey"];
+                                        if (primaryKeyValue != null && primaryKeyValue.Type != JTokenType.Null)
+                                        {
+                                            string primaryKeyInstance = ((string)primaryKeyValue);
+                                            sharedAccessAuthorizationRulePropertiesInstance.PrimaryKey = primaryKeyInstance;
+                                        }
+                                        
+                                        JToken secondaryKeyValue = authorizationRulesValue["secondaryKey"];
+                                        if (secondaryKeyValue != null && secondaryKeyValue.Type != JTokenType.Null)
+                                        {
+                                            string secondaryKeyInstance = ((string)secondaryKeyValue);
+                                            sharedAccessAuthorizationRulePropertiesInstance.SecondaryKey = secondaryKeyInstance;
+                                        }
+                                        
+                                        JToken keyNameValue = authorizationRulesValue["keyName"];
+                                        if (keyNameValue != null && keyNameValue.Type != JTokenType.Null)
+                                        {
+                                            string keyNameInstance = ((string)keyNameValue);
+                                            sharedAccessAuthorizationRulePropertiesInstance.KeyName = keyNameInstance;
+                                        }
+                                        
+                                        JToken claimTypeValue = authorizationRulesValue["claimType"];
+                                        if (claimTypeValue != null && claimTypeValue.Type != JTokenType.Null)
+                                        {
+                                            string claimTypeInstance = ((string)claimTypeValue);
+                                            sharedAccessAuthorizationRulePropertiesInstance.ClaimType = claimTypeInstance;
+                                        }
+                                        
+                                        JToken claimValueValue = authorizationRulesValue["claimValue"];
+                                        if (claimValueValue != null && claimValueValue.Type != JTokenType.Null)
+                                        {
+                                            string claimValueInstance = ((string)claimValueValue);
+                                            sharedAccessAuthorizationRulePropertiesInstance.ClaimValue = claimValueInstance;
+                                        }
+                                        
+                                        JToken rightsArray = authorizationRulesValue["rights"];
+                                        if (rightsArray != null && rightsArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken rightsValue in ((JArray)rightsArray))
+                                            {
+                                                sharedAccessAuthorizationRulePropertiesInstance.Rights.Add(((AccessRights)Enum.Parse(typeof(AccessRights), ((string)rightsValue), true)));
+                                            }
+                                        }
+                                        
+                                        JToken createdTimeValue = authorizationRulesValue["createdTime"];
+                                        if (createdTimeValue != null && createdTimeValue.Type != JTokenType.Null)
+                                        {
+                                            DateTime createdTimeInstance = DateTime.Parse(((string)createdTimeValue), CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
+                                            sharedAccessAuthorizationRulePropertiesInstance.CreatedTime = createdTimeInstance;
+                                        }
+                                        
+                                        JToken modifiedTimeValue = authorizationRulesValue["modifiedTime"];
+                                        if (modifiedTimeValue != null && modifiedTimeValue.Type != JTokenType.Null)
+                                        {
+                                            DateTime modifiedTimeInstance = DateTime.Parse(((string)modifiedTimeValue), CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
+                                            sharedAccessAuthorizationRulePropertiesInstance.ModifiedTime = modifiedTimeInstance;
+                                        }
+                                        
+                                        JToken revisionValue = authorizationRulesValue["revision"];
+                                        if (revisionValue != null && revisionValue.Type != JTokenType.Null)
+                                        {
+                                            int revisionInstance = ((int)revisionValue);
+                                            sharedAccessAuthorizationRulePropertiesInstance.Revision = revisionInstance;
+                                        }
+                                    }
+                                }
+                                
+                                JToken apnsCredentialValue = propertiesValue["apnsCredential"];
+                                if (apnsCredentialValue != null && apnsCredentialValue.Type != JTokenType.Null)
+                                {
+                                    ApnsCredential apnsCredentialInstance = new ApnsCredential();
+                                    propertiesInstance.ApnsCredential = apnsCredentialInstance;
+                                    
+                                    JToken propertiesValue2 = apnsCredentialValue["properties"];
+                                    if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
+                                    {
+                                        ApnsCredentialProperties propertiesInstance2 = new ApnsCredentialProperties();
+                                        apnsCredentialInstance.Properties = propertiesInstance2;
+                                        
+                                        JToken apnsCertificateValue = propertiesValue2["apnsCertificate"];
+                                        if (apnsCertificateValue != null && apnsCertificateValue.Type != JTokenType.Null)
+                                        {
+                                            string apnsCertificateInstance = ((string)apnsCertificateValue);
+                                            propertiesInstance2.ApnsCertificate = apnsCertificateInstance;
+                                        }
+                                        
+                                        JToken certificateKeyValue = propertiesValue2["certificateKey"];
+                                        if (certificateKeyValue != null && certificateKeyValue.Type != JTokenType.Null)
+                                        {
+                                            string certificateKeyInstance = ((string)certificateKeyValue);
+                                            propertiesInstance2.CertificateKey = certificateKeyInstance;
+                                        }
+                                        
+                                        JToken endpointValue = propertiesValue2["endpoint"];
+                                        if (endpointValue != null && endpointValue.Type != JTokenType.Null)
+                                        {
+                                            string endpointInstance = ((string)endpointValue);
+                                            propertiesInstance2.Endpoint = endpointInstance;
+                                        }
+                                        
+                                        JToken thumbprintValue = propertiesValue2["thumbprint"];
+                                        if (thumbprintValue != null && thumbprintValue.Type != JTokenType.Null)
+                                        {
+                                            string thumbprintInstance = ((string)thumbprintValue);
+                                            propertiesInstance2.Thumbprint = thumbprintInstance;
+                                        }
+                                    }
+                                }
+                                
+                                JToken wnsCredentialValue = propertiesValue["wnsCredential"];
+                                if (wnsCredentialValue != null && wnsCredentialValue.Type != JTokenType.Null)
+                                {
+                                    WnsCredential wnsCredentialInstance = new WnsCredential();
+                                    propertiesInstance.WnsCredential = wnsCredentialInstance;
+                                    
+                                    JToken propertiesValue3 = wnsCredentialValue["properties"];
+                                    if (propertiesValue3 != null && propertiesValue3.Type != JTokenType.Null)
+                                    {
+                                        WnsCredentialProperties propertiesInstance3 = new WnsCredentialProperties();
+                                        wnsCredentialInstance.Properties = propertiesInstance3;
+                                        
+                                        JToken packageSidValue = propertiesValue3["packageSid"];
+                                        if (packageSidValue != null && packageSidValue.Type != JTokenType.Null)
+                                        {
+                                            string packageSidInstance = ((string)packageSidValue);
+                                            propertiesInstance3.PackageSid = packageSidInstance;
+                                        }
+                                        
+                                        JToken secretKeyValue = propertiesValue3["secretKey"];
+                                        if (secretKeyValue != null && secretKeyValue.Type != JTokenType.Null)
+                                        {
+                                            string secretKeyInstance = ((string)secretKeyValue);
+                                            propertiesInstance3.SecretKey = secretKeyInstance;
+                                        }
+                                        
+                                        JToken windowsLiveEndpointValue = propertiesValue3["windowsLiveEndpoint"];
+                                        if (windowsLiveEndpointValue != null && windowsLiveEndpointValue.Type != JTokenType.Null)
+                                        {
+                                            string windowsLiveEndpointInstance = ((string)windowsLiveEndpointValue);
+                                            propertiesInstance3.WindowsLiveEndpoint = windowsLiveEndpointInstance;
+                                        }
+                                    }
+                                }
+                                
+                                JToken gcmCredentialValue = propertiesValue["gcmCredential"];
+                                if (gcmCredentialValue != null && gcmCredentialValue.Type != JTokenType.Null)
+                                {
+                                    GcmCredential gcmCredentialInstance = new GcmCredential();
+                                    propertiesInstance.GcmCredential = gcmCredentialInstance;
+                                    
+                                    JToken propertiesValue4 = gcmCredentialValue["properties"];
+                                    if (propertiesValue4 != null && propertiesValue4.Type != JTokenType.Null)
+                                    {
+                                        GcmCredentialProperties propertiesInstance4 = new GcmCredentialProperties();
+                                        gcmCredentialInstance.Properties = propertiesInstance4;
+                                        
+                                        JToken gcmEndpointValue = propertiesValue4["gcmEndpoint"];
+                                        if (gcmEndpointValue != null && gcmEndpointValue.Type != JTokenType.Null)
+                                        {
+                                            string gcmEndpointInstance = ((string)gcmEndpointValue);
+                                            propertiesInstance4.GcmEndpoint = gcmEndpointInstance;
+                                        }
+                                        
+                                        JToken googleApiKeyValue = propertiesValue4["googleApiKey"];
+                                        if (googleApiKeyValue != null && googleApiKeyValue.Type != JTokenType.Null)
+                                        {
+                                            string googleApiKeyInstance = ((string)googleApiKeyValue);
+                                            propertiesInstance4.GoogleApiKey = googleApiKeyInstance;
+                                        }
+                                    }
+                                }
+                                
+                                JToken mpnsCredentialValue = propertiesValue["mpnsCredential"];
+                                if (mpnsCredentialValue != null && mpnsCredentialValue.Type != JTokenType.Null)
+                                {
+                                    MpnsCredential mpnsCredentialInstance = new MpnsCredential();
+                                    propertiesInstance.MpnsCredential = mpnsCredentialInstance;
+                                    
+                                    JToken propertiesValue5 = mpnsCredentialValue["properties"];
+                                    if (propertiesValue5 != null && propertiesValue5.Type != JTokenType.Null)
+                                    {
+                                        MpnsCredentialProperties propertiesInstance5 = new MpnsCredentialProperties();
+                                        mpnsCredentialInstance.Properties = propertiesInstance5;
+                                        
+                                        JToken mpnsCertificateValue = propertiesValue5["mpnsCertificate"];
+                                        if (mpnsCertificateValue != null && mpnsCertificateValue.Type != JTokenType.Null)
+                                        {
+                                            string mpnsCertificateInstance = ((string)mpnsCertificateValue);
+                                            propertiesInstance5.MpnsCertificate = mpnsCertificateInstance;
+                                        }
+                                        
+                                        JToken certificateKeyValue2 = propertiesValue5["certificateKey"];
+                                        if (certificateKeyValue2 != null && certificateKeyValue2.Type != JTokenType.Null)
+                                        {
+                                            string certificateKeyInstance2 = ((string)certificateKeyValue2);
+                                            propertiesInstance5.CertificateKey = certificateKeyInstance2;
+                                        }
+                                        
+                                        JToken thumbprintValue2 = propertiesValue5["thumbprint"];
+                                        if (thumbprintValue2 != null && thumbprintValue2.Type != JTokenType.Null)
+                                        {
+                                            string thumbprintInstance2 = ((string)thumbprintValue2);
+                                            propertiesInstance5.Thumbprint = thumbprintInstance2;
+                                        }
+                                    }
+                                }
+                                
+                                JToken admCredentialValue = propertiesValue["admCredential"];
+                                if (admCredentialValue != null && admCredentialValue.Type != JTokenType.Null)
+                                {
+                                    AdmCredential admCredentialInstance = new AdmCredential();
+                                    propertiesInstance.AdmCredential = admCredentialInstance;
+                                    
+                                    JToken propertiesValue6 = admCredentialValue["properties"];
+                                    if (propertiesValue6 != null && propertiesValue6.Type != JTokenType.Null)
+                                    {
+                                        AdmCredentialProperties propertiesInstance6 = new AdmCredentialProperties();
+                                        admCredentialInstance.Properties = propertiesInstance6;
+                                        
+                                        JToken clientIdValue = propertiesValue6["clientId"];
+                                        if (clientIdValue != null && clientIdValue.Type != JTokenType.Null)
+                                        {
+                                            string clientIdInstance = ((string)clientIdValue);
+                                            propertiesInstance6.ClientId = clientIdInstance;
+                                        }
+                                        
+                                        JToken clientSecretValue = propertiesValue6["clientSecret"];
+                                        if (clientSecretValue != null && clientSecretValue.Type != JTokenType.Null)
+                                        {
+                                            string clientSecretInstance = ((string)clientSecretValue);
+                                            propertiesInstance6.ClientSecret = clientSecretInstance;
+                                        }
+                                        
+                                        JToken authTokenUrlValue = propertiesValue6["authTokenUrl"];
+                                        if (authTokenUrlValue != null && authTokenUrlValue.Type != JTokenType.Null)
+                                        {
+                                            string authTokenUrlInstance = ((string)authTokenUrlValue);
+                                            propertiesInstance6.AuthTokenUrl = authTokenUrlInstance;
+                                        }
+                                    }
+                                }
+                                
+                                JToken baiduCredentialValue = propertiesValue["baiduCredential"];
+                                if (baiduCredentialValue != null && baiduCredentialValue.Type != JTokenType.Null)
+                                {
+                                    BaiduCredential baiduCredentialInstance = new BaiduCredential();
+                                    propertiesInstance.BaiduCredential = baiduCredentialInstance;
+                                    
+                                    JToken propertiesValue7 = baiduCredentialValue["properties"];
+                                    if (propertiesValue7 != null && propertiesValue7.Type != JTokenType.Null)
+                                    {
+                                        BaiduCredentialProperties propertiesInstance7 = new BaiduCredentialProperties();
+                                        baiduCredentialInstance.Properties = propertiesInstance7;
+                                        
+                                        JToken baiduApiKeyValue = propertiesValue7["baiduApiKey"];
+                                        if (baiduApiKeyValue != null && baiduApiKeyValue.Type != JTokenType.Null)
+                                        {
+                                            string baiduApiKeyInstance = ((string)baiduApiKeyValue);
+                                            propertiesInstance7.BaiduApiKey = baiduApiKeyInstance;
+                                        }
+                                        
+                                        JToken baiduEndPointValue = propertiesValue7["baiduEndPoint"];
+                                        if (baiduEndPointValue != null && baiduEndPointValue.Type != JTokenType.Null)
+                                        {
+                                            string baiduEndPointInstance = ((string)baiduEndPointValue);
+                                            propertiesInstance7.BaiduEndPoint = baiduEndPointInstance;
+                                        }
+                                        
+                                        JToken baiduSecretKeyValue = propertiesValue7["baiduSecretKey"];
+                                        if (baiduSecretKeyValue != null && baiduSecretKeyValue.Type != JTokenType.Null)
+                                        {
+                                            string baiduSecretKeyInstance = ((string)baiduSecretKeyValue);
+                                            propertiesInstance7.BaiduSecretKey = baiduSecretKeyInstance;
+                                        }
+                                    }
+                                }
                             }
                         }
                         
@@ -1452,7 +2340,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
         /// <returns>
         /// The response of the Get Namespace operation.
         /// </returns>
-        public async Task<AuthorizationRulesGetResponse> GetAuthorizationRuleAsync(string resourceGroupName, string namespaceName, string notificationHubName, string authorizationRuleName, CancellationToken cancellationToken)
+        public async Task<SharedAccessAuthorizationRuleGetResponse> GetAuthorizationRuleAsync(string resourceGroupName, string namespaceName, string notificationHubName, string authorizationRuleName, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -1563,13 +2451,13 @@ namespace Microsoft.Azure.Management.NotificationHubs
                     }
                     
                     // Create Result
-                    AuthorizationRulesGetResponse result = null;
+                    SharedAccessAuthorizationRuleGetResponse result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new AuthorizationRulesGetResponse();
+                        result = new SharedAccessAuthorizationRuleGetResponse();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -1578,7 +2466,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            AuthorizationRulesResource valueInstance = new AuthorizationRulesResource();
+                            SharedAccessAuthorizationRuleResource valueInstance = new SharedAccessAuthorizationRuleResource();
                             result.Value = valueInstance;
                             
                             JToken idValue = responseDoc["id"];
@@ -1623,68 +2511,68 @@ namespace Microsoft.Azure.Management.NotificationHubs
                             JToken propertiesValue = responseDoc["properties"];
                             if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                             {
-                                AuthorizationRulesProperties propertiesInstance = new AuthorizationRulesProperties();
+                                SharedAccessAuthorizationRuleProperties propertiesInstance = new SharedAccessAuthorizationRuleProperties();
                                 valueInstance.Properties = propertiesInstance;
                                 
-                                JToken keyNameValue = propertiesValue["KeyName"];
-                                if (keyNameValue != null && keyNameValue.Type != JTokenType.Null)
-                                {
-                                    string keyNameInstance = ((string)keyNameValue);
-                                    propertiesInstance.KeyName = keyNameInstance;
-                                }
-                                
-                                JToken primaryKeyValue = propertiesValue["PrimaryKey"];
+                                JToken primaryKeyValue = propertiesValue["primaryKey"];
                                 if (primaryKeyValue != null && primaryKeyValue.Type != JTokenType.Null)
                                 {
                                     string primaryKeyInstance = ((string)primaryKeyValue);
                                     propertiesInstance.PrimaryKey = primaryKeyInstance;
                                 }
                                 
-                                JToken secondaryKeyValue = propertiesValue["SecondaryKey"];
+                                JToken secondaryKeyValue = propertiesValue["secondaryKey"];
                                 if (secondaryKeyValue != null && secondaryKeyValue.Type != JTokenType.Null)
                                 {
                                     string secondaryKeyInstance = ((string)secondaryKeyValue);
                                     propertiesInstance.SecondaryKey = secondaryKeyInstance;
                                 }
                                 
-                                JToken claimTypeValue = propertiesValue["ClaimType"];
+                                JToken keyNameValue = propertiesValue["keyName"];
+                                if (keyNameValue != null && keyNameValue.Type != JTokenType.Null)
+                                {
+                                    string keyNameInstance = ((string)keyNameValue);
+                                    propertiesInstance.KeyName = keyNameInstance;
+                                }
+                                
+                                JToken claimTypeValue = propertiesValue["claimType"];
                                 if (claimTypeValue != null && claimTypeValue.Type != JTokenType.Null)
                                 {
                                     string claimTypeInstance = ((string)claimTypeValue);
                                     propertiesInstance.ClaimType = claimTypeInstance;
                                 }
                                 
-                                JToken claimValueValue = propertiesValue["ClaimValue"];
+                                JToken claimValueValue = propertiesValue["claimValue"];
                                 if (claimValueValue != null && claimValueValue.Type != JTokenType.Null)
                                 {
                                     string claimValueInstance = ((string)claimValueValue);
                                     propertiesInstance.ClaimValue = claimValueInstance;
                                 }
                                 
-                                JToken rightsArray = propertiesValue["Rights"];
+                                JToken rightsArray = propertiesValue["rights"];
                                 if (rightsArray != null && rightsArray.Type != JTokenType.Null)
                                 {
                                     foreach (JToken rightsValue in ((JArray)rightsArray))
                                     {
-                                        propertiesInstance.Rights.Add(((AccessRight)(((int)rightsValue))));
+                                        propertiesInstance.Rights.Add(((AccessRights)Enum.Parse(typeof(AccessRights), ((string)rightsValue), true)));
                                     }
                                 }
                                 
-                                JToken createdTimeValue = propertiesValue["CreatedTime"];
+                                JToken createdTimeValue = propertiesValue["createdTime"];
                                 if (createdTimeValue != null && createdTimeValue.Type != JTokenType.Null)
                                 {
                                     DateTime createdTimeInstance = DateTime.Parse(((string)createdTimeValue), CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                     propertiesInstance.CreatedTime = createdTimeInstance;
                                 }
                                 
-                                JToken modifiedTimeValue = propertiesValue["ModifiedTime"];
+                                JToken modifiedTimeValue = propertiesValue["modifiedTime"];
                                 if (modifiedTimeValue != null && modifiedTimeValue.Type != JTokenType.Null)
                                 {
                                     DateTime modifiedTimeInstance = DateTime.Parse(((string)modifiedTimeValue), CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                     propertiesInstance.ModifiedTime = modifiedTimeInstance;
                                 }
                                 
-                                JToken revisionValue = propertiesValue["Revision"];
+                                JToken revisionValue = propertiesValue["revision"];
                                 if (revisionValue != null && revisionValue.Type != JTokenType.Null)
                                 {
                                     int revisionInstance = ((int)revisionValue);
@@ -1908,6 +2796,305 @@ namespace Microsoft.Azure.Management.NotificationHubs
                             {
                                 NotificationHubProperties propertiesInstance = new NotificationHubProperties();
                                 valueInstance.Properties = propertiesInstance;
+                                
+                                JToken nameValue2 = propertiesValue["name"];
+                                if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                {
+                                    string nameInstance2 = ((string)nameValue2);
+                                    propertiesInstance.Name = nameInstance2;
+                                }
+                                
+                                JToken registrationTtlValue = propertiesValue["registrationTtl"];
+                                if (registrationTtlValue != null && registrationTtlValue.Type != JTokenType.Null)
+                                {
+                                    string registrationTtlInstance = ((string)registrationTtlValue);
+                                    propertiesInstance.RegistrationTtl = registrationTtlInstance;
+                                }
+                                
+                                JToken authorizationRulesArray = propertiesValue["authorizationRules"];
+                                if (authorizationRulesArray != null && authorizationRulesArray.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken authorizationRulesValue in ((JArray)authorizationRulesArray))
+                                    {
+                                        SharedAccessAuthorizationRuleProperties sharedAccessAuthorizationRulePropertiesInstance = new SharedAccessAuthorizationRuleProperties();
+                                        propertiesInstance.AuthorizationRules.Add(sharedAccessAuthorizationRulePropertiesInstance);
+                                        
+                                        JToken primaryKeyValue = authorizationRulesValue["primaryKey"];
+                                        if (primaryKeyValue != null && primaryKeyValue.Type != JTokenType.Null)
+                                        {
+                                            string primaryKeyInstance = ((string)primaryKeyValue);
+                                            sharedAccessAuthorizationRulePropertiesInstance.PrimaryKey = primaryKeyInstance;
+                                        }
+                                        
+                                        JToken secondaryKeyValue = authorizationRulesValue["secondaryKey"];
+                                        if (secondaryKeyValue != null && secondaryKeyValue.Type != JTokenType.Null)
+                                        {
+                                            string secondaryKeyInstance = ((string)secondaryKeyValue);
+                                            sharedAccessAuthorizationRulePropertiesInstance.SecondaryKey = secondaryKeyInstance;
+                                        }
+                                        
+                                        JToken keyNameValue = authorizationRulesValue["keyName"];
+                                        if (keyNameValue != null && keyNameValue.Type != JTokenType.Null)
+                                        {
+                                            string keyNameInstance = ((string)keyNameValue);
+                                            sharedAccessAuthorizationRulePropertiesInstance.KeyName = keyNameInstance;
+                                        }
+                                        
+                                        JToken claimTypeValue = authorizationRulesValue["claimType"];
+                                        if (claimTypeValue != null && claimTypeValue.Type != JTokenType.Null)
+                                        {
+                                            string claimTypeInstance = ((string)claimTypeValue);
+                                            sharedAccessAuthorizationRulePropertiesInstance.ClaimType = claimTypeInstance;
+                                        }
+                                        
+                                        JToken claimValueValue = authorizationRulesValue["claimValue"];
+                                        if (claimValueValue != null && claimValueValue.Type != JTokenType.Null)
+                                        {
+                                            string claimValueInstance = ((string)claimValueValue);
+                                            sharedAccessAuthorizationRulePropertiesInstance.ClaimValue = claimValueInstance;
+                                        }
+                                        
+                                        JToken rightsArray = authorizationRulesValue["rights"];
+                                        if (rightsArray != null && rightsArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken rightsValue in ((JArray)rightsArray))
+                                            {
+                                                sharedAccessAuthorizationRulePropertiesInstance.Rights.Add(((AccessRights)Enum.Parse(typeof(AccessRights), ((string)rightsValue), true)));
+                                            }
+                                        }
+                                        
+                                        JToken createdTimeValue = authorizationRulesValue["createdTime"];
+                                        if (createdTimeValue != null && createdTimeValue.Type != JTokenType.Null)
+                                        {
+                                            DateTime createdTimeInstance = DateTime.Parse(((string)createdTimeValue), CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
+                                            sharedAccessAuthorizationRulePropertiesInstance.CreatedTime = createdTimeInstance;
+                                        }
+                                        
+                                        JToken modifiedTimeValue = authorizationRulesValue["modifiedTime"];
+                                        if (modifiedTimeValue != null && modifiedTimeValue.Type != JTokenType.Null)
+                                        {
+                                            DateTime modifiedTimeInstance = DateTime.Parse(((string)modifiedTimeValue), CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
+                                            sharedAccessAuthorizationRulePropertiesInstance.ModifiedTime = modifiedTimeInstance;
+                                        }
+                                        
+                                        JToken revisionValue = authorizationRulesValue["revision"];
+                                        if (revisionValue != null && revisionValue.Type != JTokenType.Null)
+                                        {
+                                            int revisionInstance = ((int)revisionValue);
+                                            sharedAccessAuthorizationRulePropertiesInstance.Revision = revisionInstance;
+                                        }
+                                    }
+                                }
+                                
+                                JToken apnsCredentialValue = propertiesValue["apnsCredential"];
+                                if (apnsCredentialValue != null && apnsCredentialValue.Type != JTokenType.Null)
+                                {
+                                    ApnsCredential apnsCredentialInstance = new ApnsCredential();
+                                    propertiesInstance.ApnsCredential = apnsCredentialInstance;
+                                    
+                                    JToken propertiesValue2 = apnsCredentialValue["properties"];
+                                    if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
+                                    {
+                                        ApnsCredentialProperties propertiesInstance2 = new ApnsCredentialProperties();
+                                        apnsCredentialInstance.Properties = propertiesInstance2;
+                                        
+                                        JToken apnsCertificateValue = propertiesValue2["apnsCertificate"];
+                                        if (apnsCertificateValue != null && apnsCertificateValue.Type != JTokenType.Null)
+                                        {
+                                            string apnsCertificateInstance = ((string)apnsCertificateValue);
+                                            propertiesInstance2.ApnsCertificate = apnsCertificateInstance;
+                                        }
+                                        
+                                        JToken certificateKeyValue = propertiesValue2["certificateKey"];
+                                        if (certificateKeyValue != null && certificateKeyValue.Type != JTokenType.Null)
+                                        {
+                                            string certificateKeyInstance = ((string)certificateKeyValue);
+                                            propertiesInstance2.CertificateKey = certificateKeyInstance;
+                                        }
+                                        
+                                        JToken endpointValue = propertiesValue2["endpoint"];
+                                        if (endpointValue != null && endpointValue.Type != JTokenType.Null)
+                                        {
+                                            string endpointInstance = ((string)endpointValue);
+                                            propertiesInstance2.Endpoint = endpointInstance;
+                                        }
+                                        
+                                        JToken thumbprintValue = propertiesValue2["thumbprint"];
+                                        if (thumbprintValue != null && thumbprintValue.Type != JTokenType.Null)
+                                        {
+                                            string thumbprintInstance = ((string)thumbprintValue);
+                                            propertiesInstance2.Thumbprint = thumbprintInstance;
+                                        }
+                                    }
+                                }
+                                
+                                JToken wnsCredentialValue = propertiesValue["wnsCredential"];
+                                if (wnsCredentialValue != null && wnsCredentialValue.Type != JTokenType.Null)
+                                {
+                                    WnsCredential wnsCredentialInstance = new WnsCredential();
+                                    propertiesInstance.WnsCredential = wnsCredentialInstance;
+                                    
+                                    JToken propertiesValue3 = wnsCredentialValue["properties"];
+                                    if (propertiesValue3 != null && propertiesValue3.Type != JTokenType.Null)
+                                    {
+                                        WnsCredentialProperties propertiesInstance3 = new WnsCredentialProperties();
+                                        wnsCredentialInstance.Properties = propertiesInstance3;
+                                        
+                                        JToken packageSidValue = propertiesValue3["packageSid"];
+                                        if (packageSidValue != null && packageSidValue.Type != JTokenType.Null)
+                                        {
+                                            string packageSidInstance = ((string)packageSidValue);
+                                            propertiesInstance3.PackageSid = packageSidInstance;
+                                        }
+                                        
+                                        JToken secretKeyValue = propertiesValue3["secretKey"];
+                                        if (secretKeyValue != null && secretKeyValue.Type != JTokenType.Null)
+                                        {
+                                            string secretKeyInstance = ((string)secretKeyValue);
+                                            propertiesInstance3.SecretKey = secretKeyInstance;
+                                        }
+                                        
+                                        JToken windowsLiveEndpointValue = propertiesValue3["windowsLiveEndpoint"];
+                                        if (windowsLiveEndpointValue != null && windowsLiveEndpointValue.Type != JTokenType.Null)
+                                        {
+                                            string windowsLiveEndpointInstance = ((string)windowsLiveEndpointValue);
+                                            propertiesInstance3.WindowsLiveEndpoint = windowsLiveEndpointInstance;
+                                        }
+                                    }
+                                }
+                                
+                                JToken gcmCredentialValue = propertiesValue["gcmCredential"];
+                                if (gcmCredentialValue != null && gcmCredentialValue.Type != JTokenType.Null)
+                                {
+                                    GcmCredential gcmCredentialInstance = new GcmCredential();
+                                    propertiesInstance.GcmCredential = gcmCredentialInstance;
+                                    
+                                    JToken propertiesValue4 = gcmCredentialValue["properties"];
+                                    if (propertiesValue4 != null && propertiesValue4.Type != JTokenType.Null)
+                                    {
+                                        GcmCredentialProperties propertiesInstance4 = new GcmCredentialProperties();
+                                        gcmCredentialInstance.Properties = propertiesInstance4;
+                                        
+                                        JToken gcmEndpointValue = propertiesValue4["gcmEndpoint"];
+                                        if (gcmEndpointValue != null && gcmEndpointValue.Type != JTokenType.Null)
+                                        {
+                                            string gcmEndpointInstance = ((string)gcmEndpointValue);
+                                            propertiesInstance4.GcmEndpoint = gcmEndpointInstance;
+                                        }
+                                        
+                                        JToken googleApiKeyValue = propertiesValue4["googleApiKey"];
+                                        if (googleApiKeyValue != null && googleApiKeyValue.Type != JTokenType.Null)
+                                        {
+                                            string googleApiKeyInstance = ((string)googleApiKeyValue);
+                                            propertiesInstance4.GoogleApiKey = googleApiKeyInstance;
+                                        }
+                                    }
+                                }
+                                
+                                JToken mpnsCredentialValue = propertiesValue["mpnsCredential"];
+                                if (mpnsCredentialValue != null && mpnsCredentialValue.Type != JTokenType.Null)
+                                {
+                                    MpnsCredential mpnsCredentialInstance = new MpnsCredential();
+                                    propertiesInstance.MpnsCredential = mpnsCredentialInstance;
+                                    
+                                    JToken propertiesValue5 = mpnsCredentialValue["properties"];
+                                    if (propertiesValue5 != null && propertiesValue5.Type != JTokenType.Null)
+                                    {
+                                        MpnsCredentialProperties propertiesInstance5 = new MpnsCredentialProperties();
+                                        mpnsCredentialInstance.Properties = propertiesInstance5;
+                                        
+                                        JToken mpnsCertificateValue = propertiesValue5["mpnsCertificate"];
+                                        if (mpnsCertificateValue != null && mpnsCertificateValue.Type != JTokenType.Null)
+                                        {
+                                            string mpnsCertificateInstance = ((string)mpnsCertificateValue);
+                                            propertiesInstance5.MpnsCertificate = mpnsCertificateInstance;
+                                        }
+                                        
+                                        JToken certificateKeyValue2 = propertiesValue5["certificateKey"];
+                                        if (certificateKeyValue2 != null && certificateKeyValue2.Type != JTokenType.Null)
+                                        {
+                                            string certificateKeyInstance2 = ((string)certificateKeyValue2);
+                                            propertiesInstance5.CertificateKey = certificateKeyInstance2;
+                                        }
+                                        
+                                        JToken thumbprintValue2 = propertiesValue5["thumbprint"];
+                                        if (thumbprintValue2 != null && thumbprintValue2.Type != JTokenType.Null)
+                                        {
+                                            string thumbprintInstance2 = ((string)thumbprintValue2);
+                                            propertiesInstance5.Thumbprint = thumbprintInstance2;
+                                        }
+                                    }
+                                }
+                                
+                                JToken admCredentialValue = propertiesValue["admCredential"];
+                                if (admCredentialValue != null && admCredentialValue.Type != JTokenType.Null)
+                                {
+                                    AdmCredential admCredentialInstance = new AdmCredential();
+                                    propertiesInstance.AdmCredential = admCredentialInstance;
+                                    
+                                    JToken propertiesValue6 = admCredentialValue["properties"];
+                                    if (propertiesValue6 != null && propertiesValue6.Type != JTokenType.Null)
+                                    {
+                                        AdmCredentialProperties propertiesInstance6 = new AdmCredentialProperties();
+                                        admCredentialInstance.Properties = propertiesInstance6;
+                                        
+                                        JToken clientIdValue = propertiesValue6["clientId"];
+                                        if (clientIdValue != null && clientIdValue.Type != JTokenType.Null)
+                                        {
+                                            string clientIdInstance = ((string)clientIdValue);
+                                            propertiesInstance6.ClientId = clientIdInstance;
+                                        }
+                                        
+                                        JToken clientSecretValue = propertiesValue6["clientSecret"];
+                                        if (clientSecretValue != null && clientSecretValue.Type != JTokenType.Null)
+                                        {
+                                            string clientSecretInstance = ((string)clientSecretValue);
+                                            propertiesInstance6.ClientSecret = clientSecretInstance;
+                                        }
+                                        
+                                        JToken authTokenUrlValue = propertiesValue6["authTokenUrl"];
+                                        if (authTokenUrlValue != null && authTokenUrlValue.Type != JTokenType.Null)
+                                        {
+                                            string authTokenUrlInstance = ((string)authTokenUrlValue);
+                                            propertiesInstance6.AuthTokenUrl = authTokenUrlInstance;
+                                        }
+                                    }
+                                }
+                                
+                                JToken baiduCredentialValue = propertiesValue["baiduCredential"];
+                                if (baiduCredentialValue != null && baiduCredentialValue.Type != JTokenType.Null)
+                                {
+                                    BaiduCredential baiduCredentialInstance = new BaiduCredential();
+                                    propertiesInstance.BaiduCredential = baiduCredentialInstance;
+                                    
+                                    JToken propertiesValue7 = baiduCredentialValue["properties"];
+                                    if (propertiesValue7 != null && propertiesValue7.Type != JTokenType.Null)
+                                    {
+                                        BaiduCredentialProperties propertiesInstance7 = new BaiduCredentialProperties();
+                                        baiduCredentialInstance.Properties = propertiesInstance7;
+                                        
+                                        JToken baiduApiKeyValue = propertiesValue7["baiduApiKey"];
+                                        if (baiduApiKeyValue != null && baiduApiKeyValue.Type != JTokenType.Null)
+                                        {
+                                            string baiduApiKeyInstance = ((string)baiduApiKeyValue);
+                                            propertiesInstance7.BaiduApiKey = baiduApiKeyInstance;
+                                        }
+                                        
+                                        JToken baiduEndPointValue = propertiesValue7["baiduEndPoint"];
+                                        if (baiduEndPointValue != null && baiduEndPointValue.Type != JTokenType.Null)
+                                        {
+                                            string baiduEndPointInstance = ((string)baiduEndPointValue);
+                                            propertiesInstance7.BaiduEndPoint = baiduEndPointInstance;
+                                        }
+                                        
+                                        JToken baiduSecretKeyValue = propertiesValue7["baiduSecretKey"];
+                                        if (baiduSecretKeyValue != null && baiduSecretKeyValue.Type != JTokenType.Null)
+                                        {
+                                            string baiduSecretKeyInstance = ((string)baiduSecretKeyValue);
+                                            propertiesInstance7.BaiduSecretKey = baiduSecretKeyInstance;
+                                        }
+                                    }
+                                }
                             }
                         }
                         
@@ -2121,6 +3308,305 @@ namespace Microsoft.Azure.Management.NotificationHubs
                                     {
                                         NotificationHubProperties propertiesInstance = new NotificationHubProperties();
                                         notificationHubResourceInstance.Properties = propertiesInstance;
+                                        
+                                        JToken nameValue2 = propertiesValue["name"];
+                                        if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                        {
+                                            string nameInstance2 = ((string)nameValue2);
+                                            propertiesInstance.Name = nameInstance2;
+                                        }
+                                        
+                                        JToken registrationTtlValue = propertiesValue["registrationTtl"];
+                                        if (registrationTtlValue != null && registrationTtlValue.Type != JTokenType.Null)
+                                        {
+                                            string registrationTtlInstance = ((string)registrationTtlValue);
+                                            propertiesInstance.RegistrationTtl = registrationTtlInstance;
+                                        }
+                                        
+                                        JToken authorizationRulesArray = propertiesValue["authorizationRules"];
+                                        if (authorizationRulesArray != null && authorizationRulesArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken authorizationRulesValue in ((JArray)authorizationRulesArray))
+                                            {
+                                                SharedAccessAuthorizationRuleProperties sharedAccessAuthorizationRulePropertiesInstance = new SharedAccessAuthorizationRuleProperties();
+                                                propertiesInstance.AuthorizationRules.Add(sharedAccessAuthorizationRulePropertiesInstance);
+                                                
+                                                JToken primaryKeyValue = authorizationRulesValue["primaryKey"];
+                                                if (primaryKeyValue != null && primaryKeyValue.Type != JTokenType.Null)
+                                                {
+                                                    string primaryKeyInstance = ((string)primaryKeyValue);
+                                                    sharedAccessAuthorizationRulePropertiesInstance.PrimaryKey = primaryKeyInstance;
+                                                }
+                                                
+                                                JToken secondaryKeyValue = authorizationRulesValue["secondaryKey"];
+                                                if (secondaryKeyValue != null && secondaryKeyValue.Type != JTokenType.Null)
+                                                {
+                                                    string secondaryKeyInstance = ((string)secondaryKeyValue);
+                                                    sharedAccessAuthorizationRulePropertiesInstance.SecondaryKey = secondaryKeyInstance;
+                                                }
+                                                
+                                                JToken keyNameValue = authorizationRulesValue["keyName"];
+                                                if (keyNameValue != null && keyNameValue.Type != JTokenType.Null)
+                                                {
+                                                    string keyNameInstance = ((string)keyNameValue);
+                                                    sharedAccessAuthorizationRulePropertiesInstance.KeyName = keyNameInstance;
+                                                }
+                                                
+                                                JToken claimTypeValue = authorizationRulesValue["claimType"];
+                                                if (claimTypeValue != null && claimTypeValue.Type != JTokenType.Null)
+                                                {
+                                                    string claimTypeInstance = ((string)claimTypeValue);
+                                                    sharedAccessAuthorizationRulePropertiesInstance.ClaimType = claimTypeInstance;
+                                                }
+                                                
+                                                JToken claimValueValue = authorizationRulesValue["claimValue"];
+                                                if (claimValueValue != null && claimValueValue.Type != JTokenType.Null)
+                                                {
+                                                    string claimValueInstance = ((string)claimValueValue);
+                                                    sharedAccessAuthorizationRulePropertiesInstance.ClaimValue = claimValueInstance;
+                                                }
+                                                
+                                                JToken rightsArray = authorizationRulesValue["rights"];
+                                                if (rightsArray != null && rightsArray.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken rightsValue in ((JArray)rightsArray))
+                                                    {
+                                                        sharedAccessAuthorizationRulePropertiesInstance.Rights.Add(((AccessRights)Enum.Parse(typeof(AccessRights), ((string)rightsValue), true)));
+                                                    }
+                                                }
+                                                
+                                                JToken createdTimeValue = authorizationRulesValue["createdTime"];
+                                                if (createdTimeValue != null && createdTimeValue.Type != JTokenType.Null)
+                                                {
+                                                    DateTime createdTimeInstance = DateTime.Parse(((string)createdTimeValue), CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
+                                                    sharedAccessAuthorizationRulePropertiesInstance.CreatedTime = createdTimeInstance;
+                                                }
+                                                
+                                                JToken modifiedTimeValue = authorizationRulesValue["modifiedTime"];
+                                                if (modifiedTimeValue != null && modifiedTimeValue.Type != JTokenType.Null)
+                                                {
+                                                    DateTime modifiedTimeInstance = DateTime.Parse(((string)modifiedTimeValue), CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
+                                                    sharedAccessAuthorizationRulePropertiesInstance.ModifiedTime = modifiedTimeInstance;
+                                                }
+                                                
+                                                JToken revisionValue = authorizationRulesValue["revision"];
+                                                if (revisionValue != null && revisionValue.Type != JTokenType.Null)
+                                                {
+                                                    int revisionInstance = ((int)revisionValue);
+                                                    sharedAccessAuthorizationRulePropertiesInstance.Revision = revisionInstance;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken apnsCredentialValue = propertiesValue["apnsCredential"];
+                                        if (apnsCredentialValue != null && apnsCredentialValue.Type != JTokenType.Null)
+                                        {
+                                            ApnsCredential apnsCredentialInstance = new ApnsCredential();
+                                            propertiesInstance.ApnsCredential = apnsCredentialInstance;
+                                            
+                                            JToken propertiesValue2 = apnsCredentialValue["properties"];
+                                            if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
+                                            {
+                                                ApnsCredentialProperties propertiesInstance2 = new ApnsCredentialProperties();
+                                                apnsCredentialInstance.Properties = propertiesInstance2;
+                                                
+                                                JToken apnsCertificateValue = propertiesValue2["apnsCertificate"];
+                                                if (apnsCertificateValue != null && apnsCertificateValue.Type != JTokenType.Null)
+                                                {
+                                                    string apnsCertificateInstance = ((string)apnsCertificateValue);
+                                                    propertiesInstance2.ApnsCertificate = apnsCertificateInstance;
+                                                }
+                                                
+                                                JToken certificateKeyValue = propertiesValue2["certificateKey"];
+                                                if (certificateKeyValue != null && certificateKeyValue.Type != JTokenType.Null)
+                                                {
+                                                    string certificateKeyInstance = ((string)certificateKeyValue);
+                                                    propertiesInstance2.CertificateKey = certificateKeyInstance;
+                                                }
+                                                
+                                                JToken endpointValue = propertiesValue2["endpoint"];
+                                                if (endpointValue != null && endpointValue.Type != JTokenType.Null)
+                                                {
+                                                    string endpointInstance = ((string)endpointValue);
+                                                    propertiesInstance2.Endpoint = endpointInstance;
+                                                }
+                                                
+                                                JToken thumbprintValue = propertiesValue2["thumbprint"];
+                                                if (thumbprintValue != null && thumbprintValue.Type != JTokenType.Null)
+                                                {
+                                                    string thumbprintInstance = ((string)thumbprintValue);
+                                                    propertiesInstance2.Thumbprint = thumbprintInstance;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken wnsCredentialValue = propertiesValue["wnsCredential"];
+                                        if (wnsCredentialValue != null && wnsCredentialValue.Type != JTokenType.Null)
+                                        {
+                                            WnsCredential wnsCredentialInstance = new WnsCredential();
+                                            propertiesInstance.WnsCredential = wnsCredentialInstance;
+                                            
+                                            JToken propertiesValue3 = wnsCredentialValue["properties"];
+                                            if (propertiesValue3 != null && propertiesValue3.Type != JTokenType.Null)
+                                            {
+                                                WnsCredentialProperties propertiesInstance3 = new WnsCredentialProperties();
+                                                wnsCredentialInstance.Properties = propertiesInstance3;
+                                                
+                                                JToken packageSidValue = propertiesValue3["packageSid"];
+                                                if (packageSidValue != null && packageSidValue.Type != JTokenType.Null)
+                                                {
+                                                    string packageSidInstance = ((string)packageSidValue);
+                                                    propertiesInstance3.PackageSid = packageSidInstance;
+                                                }
+                                                
+                                                JToken secretKeyValue = propertiesValue3["secretKey"];
+                                                if (secretKeyValue != null && secretKeyValue.Type != JTokenType.Null)
+                                                {
+                                                    string secretKeyInstance = ((string)secretKeyValue);
+                                                    propertiesInstance3.SecretKey = secretKeyInstance;
+                                                }
+                                                
+                                                JToken windowsLiveEndpointValue = propertiesValue3["windowsLiveEndpoint"];
+                                                if (windowsLiveEndpointValue != null && windowsLiveEndpointValue.Type != JTokenType.Null)
+                                                {
+                                                    string windowsLiveEndpointInstance = ((string)windowsLiveEndpointValue);
+                                                    propertiesInstance3.WindowsLiveEndpoint = windowsLiveEndpointInstance;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken gcmCredentialValue = propertiesValue["gcmCredential"];
+                                        if (gcmCredentialValue != null && gcmCredentialValue.Type != JTokenType.Null)
+                                        {
+                                            GcmCredential gcmCredentialInstance = new GcmCredential();
+                                            propertiesInstance.GcmCredential = gcmCredentialInstance;
+                                            
+                                            JToken propertiesValue4 = gcmCredentialValue["properties"];
+                                            if (propertiesValue4 != null && propertiesValue4.Type != JTokenType.Null)
+                                            {
+                                                GcmCredentialProperties propertiesInstance4 = new GcmCredentialProperties();
+                                                gcmCredentialInstance.Properties = propertiesInstance4;
+                                                
+                                                JToken gcmEndpointValue = propertiesValue4["gcmEndpoint"];
+                                                if (gcmEndpointValue != null && gcmEndpointValue.Type != JTokenType.Null)
+                                                {
+                                                    string gcmEndpointInstance = ((string)gcmEndpointValue);
+                                                    propertiesInstance4.GcmEndpoint = gcmEndpointInstance;
+                                                }
+                                                
+                                                JToken googleApiKeyValue = propertiesValue4["googleApiKey"];
+                                                if (googleApiKeyValue != null && googleApiKeyValue.Type != JTokenType.Null)
+                                                {
+                                                    string googleApiKeyInstance = ((string)googleApiKeyValue);
+                                                    propertiesInstance4.GoogleApiKey = googleApiKeyInstance;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken mpnsCredentialValue = propertiesValue["mpnsCredential"];
+                                        if (mpnsCredentialValue != null && mpnsCredentialValue.Type != JTokenType.Null)
+                                        {
+                                            MpnsCredential mpnsCredentialInstance = new MpnsCredential();
+                                            propertiesInstance.MpnsCredential = mpnsCredentialInstance;
+                                            
+                                            JToken propertiesValue5 = mpnsCredentialValue["properties"];
+                                            if (propertiesValue5 != null && propertiesValue5.Type != JTokenType.Null)
+                                            {
+                                                MpnsCredentialProperties propertiesInstance5 = new MpnsCredentialProperties();
+                                                mpnsCredentialInstance.Properties = propertiesInstance5;
+                                                
+                                                JToken mpnsCertificateValue = propertiesValue5["mpnsCertificate"];
+                                                if (mpnsCertificateValue != null && mpnsCertificateValue.Type != JTokenType.Null)
+                                                {
+                                                    string mpnsCertificateInstance = ((string)mpnsCertificateValue);
+                                                    propertiesInstance5.MpnsCertificate = mpnsCertificateInstance;
+                                                }
+                                                
+                                                JToken certificateKeyValue2 = propertiesValue5["certificateKey"];
+                                                if (certificateKeyValue2 != null && certificateKeyValue2.Type != JTokenType.Null)
+                                                {
+                                                    string certificateKeyInstance2 = ((string)certificateKeyValue2);
+                                                    propertiesInstance5.CertificateKey = certificateKeyInstance2;
+                                                }
+                                                
+                                                JToken thumbprintValue2 = propertiesValue5["thumbprint"];
+                                                if (thumbprintValue2 != null && thumbprintValue2.Type != JTokenType.Null)
+                                                {
+                                                    string thumbprintInstance2 = ((string)thumbprintValue2);
+                                                    propertiesInstance5.Thumbprint = thumbprintInstance2;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken admCredentialValue = propertiesValue["admCredential"];
+                                        if (admCredentialValue != null && admCredentialValue.Type != JTokenType.Null)
+                                        {
+                                            AdmCredential admCredentialInstance = new AdmCredential();
+                                            propertiesInstance.AdmCredential = admCredentialInstance;
+                                            
+                                            JToken propertiesValue6 = admCredentialValue["properties"];
+                                            if (propertiesValue6 != null && propertiesValue6.Type != JTokenType.Null)
+                                            {
+                                                AdmCredentialProperties propertiesInstance6 = new AdmCredentialProperties();
+                                                admCredentialInstance.Properties = propertiesInstance6;
+                                                
+                                                JToken clientIdValue = propertiesValue6["clientId"];
+                                                if (clientIdValue != null && clientIdValue.Type != JTokenType.Null)
+                                                {
+                                                    string clientIdInstance = ((string)clientIdValue);
+                                                    propertiesInstance6.ClientId = clientIdInstance;
+                                                }
+                                                
+                                                JToken clientSecretValue = propertiesValue6["clientSecret"];
+                                                if (clientSecretValue != null && clientSecretValue.Type != JTokenType.Null)
+                                                {
+                                                    string clientSecretInstance = ((string)clientSecretValue);
+                                                    propertiesInstance6.ClientSecret = clientSecretInstance;
+                                                }
+                                                
+                                                JToken authTokenUrlValue = propertiesValue6["authTokenUrl"];
+                                                if (authTokenUrlValue != null && authTokenUrlValue.Type != JTokenType.Null)
+                                                {
+                                                    string authTokenUrlInstance = ((string)authTokenUrlValue);
+                                                    propertiesInstance6.AuthTokenUrl = authTokenUrlInstance;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken baiduCredentialValue = propertiesValue["baiduCredential"];
+                                        if (baiduCredentialValue != null && baiduCredentialValue.Type != JTokenType.Null)
+                                        {
+                                            BaiduCredential baiduCredentialInstance = new BaiduCredential();
+                                            propertiesInstance.BaiduCredential = baiduCredentialInstance;
+                                            
+                                            JToken propertiesValue7 = baiduCredentialValue["properties"];
+                                            if (propertiesValue7 != null && propertiesValue7.Type != JTokenType.Null)
+                                            {
+                                                BaiduCredentialProperties propertiesInstance7 = new BaiduCredentialProperties();
+                                                baiduCredentialInstance.Properties = propertiesInstance7;
+                                                
+                                                JToken baiduApiKeyValue = propertiesValue7["baiduApiKey"];
+                                                if (baiduApiKeyValue != null && baiduApiKeyValue.Type != JTokenType.Null)
+                                                {
+                                                    string baiduApiKeyInstance = ((string)baiduApiKeyValue);
+                                                    propertiesInstance7.BaiduApiKey = baiduApiKeyInstance;
+                                                }
+                                                
+                                                JToken baiduEndPointValue = propertiesValue7["baiduEndPoint"];
+                                                if (baiduEndPointValue != null && baiduEndPointValue.Type != JTokenType.Null)
+                                                {
+                                                    string baiduEndPointInstance = ((string)baiduEndPointValue);
+                                                    propertiesInstance7.BaiduEndPoint = baiduEndPointInstance;
+                                                }
+                                                
+                                                JToken baiduSecretKeyValue = propertiesValue7["baiduSecretKey"];
+                                                if (baiduSecretKeyValue != null && baiduSecretKeyValue.Type != JTokenType.Null)
+                                                {
+                                                    string baiduSecretKeyInstance = ((string)baiduSecretKeyValue);
+                                                    propertiesInstance7.BaiduSecretKey = baiduSecretKeyInstance;
+                                                }
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -2182,7 +3668,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
         /// <returns>
         /// The response of the List Namespace operation.
         /// </returns>
-        public async Task<AuthorizationRulesListResponse> ListAuthorizationRulesAsync(string resourceGroupName, string namespaceName, string notificationHubName, CancellationToken cancellationToken)
+        public async Task<SharedAccessAuthorizationRuleListResponse> ListAuthorizationRulesAsync(string resourceGroupName, string namespaceName, string notificationHubName, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -2287,13 +3773,13 @@ namespace Microsoft.Azure.Management.NotificationHubs
                     }
                     
                     // Create Result
-                    AuthorizationRulesListResponse result = null;
+                    SharedAccessAuthorizationRuleListResponse result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new AuthorizationRulesListResponse();
+                        result = new SharedAccessAuthorizationRuleListResponse();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -2307,35 +3793,35 @@ namespace Microsoft.Azure.Management.NotificationHubs
                             {
                                 foreach (JToken valueValue in ((JArray)valueArray))
                                 {
-                                    AuthorizationRulesResource authorizationRulesResourceInstance = new AuthorizationRulesResource();
-                                    result.Value.Add(authorizationRulesResourceInstance);
+                                    SharedAccessAuthorizationRuleResource sharedAccessAuthorizationRuleResourceInstance = new SharedAccessAuthorizationRuleResource();
+                                    result.Value.Add(sharedAccessAuthorizationRuleResourceInstance);
                                     
                                     JToken idValue = valueValue["id"];
                                     if (idValue != null && idValue.Type != JTokenType.Null)
                                     {
                                         string idInstance = ((string)idValue);
-                                        authorizationRulesResourceInstance.Id = idInstance;
+                                        sharedAccessAuthorizationRuleResourceInstance.Id = idInstance;
                                     }
                                     
                                     JToken locationValue = valueValue["location"];
                                     if (locationValue != null && locationValue.Type != JTokenType.Null)
                                     {
                                         string locationInstance = ((string)locationValue);
-                                        authorizationRulesResourceInstance.Location = locationInstance;
+                                        sharedAccessAuthorizationRuleResourceInstance.Location = locationInstance;
                                     }
                                     
                                     JToken nameValue = valueValue["name"];
                                     if (nameValue != null && nameValue.Type != JTokenType.Null)
                                     {
                                         string nameInstance = ((string)nameValue);
-                                        authorizationRulesResourceInstance.Name = nameInstance;
+                                        sharedAccessAuthorizationRuleResourceInstance.Name = nameInstance;
                                     }
                                     
                                     JToken typeValue = valueValue["type"];
                                     if (typeValue != null && typeValue.Type != JTokenType.Null)
                                     {
                                         string typeInstance = ((string)typeValue);
-                                        authorizationRulesResourceInstance.Type = typeInstance;
+                                        sharedAccessAuthorizationRuleResourceInstance.Type = typeInstance;
                                     }
                                     
                                     JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
@@ -2345,75 +3831,75 @@ namespace Microsoft.Azure.Management.NotificationHubs
                                         {
                                             string tagsKey = ((string)property.Name);
                                             string tagsValue = ((string)property.Value);
-                                            authorizationRulesResourceInstance.Tags.Add(tagsKey, tagsValue);
+                                            sharedAccessAuthorizationRuleResourceInstance.Tags.Add(tagsKey, tagsValue);
                                         }
                                     }
                                     
                                     JToken propertiesValue = valueValue["properties"];
                                     if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                     {
-                                        AuthorizationRulesProperties propertiesInstance = new AuthorizationRulesProperties();
-                                        authorizationRulesResourceInstance.Properties = propertiesInstance;
+                                        SharedAccessAuthorizationRuleProperties propertiesInstance = new SharedAccessAuthorizationRuleProperties();
+                                        sharedAccessAuthorizationRuleResourceInstance.Properties = propertiesInstance;
                                         
-                                        JToken keyNameValue = propertiesValue["KeyName"];
-                                        if (keyNameValue != null && keyNameValue.Type != JTokenType.Null)
-                                        {
-                                            string keyNameInstance = ((string)keyNameValue);
-                                            propertiesInstance.KeyName = keyNameInstance;
-                                        }
-                                        
-                                        JToken primaryKeyValue = propertiesValue["PrimaryKey"];
+                                        JToken primaryKeyValue = propertiesValue["primaryKey"];
                                         if (primaryKeyValue != null && primaryKeyValue.Type != JTokenType.Null)
                                         {
                                             string primaryKeyInstance = ((string)primaryKeyValue);
                                             propertiesInstance.PrimaryKey = primaryKeyInstance;
                                         }
                                         
-                                        JToken secondaryKeyValue = propertiesValue["SecondaryKey"];
+                                        JToken secondaryKeyValue = propertiesValue["secondaryKey"];
                                         if (secondaryKeyValue != null && secondaryKeyValue.Type != JTokenType.Null)
                                         {
                                             string secondaryKeyInstance = ((string)secondaryKeyValue);
                                             propertiesInstance.SecondaryKey = secondaryKeyInstance;
                                         }
                                         
-                                        JToken claimTypeValue = propertiesValue["ClaimType"];
+                                        JToken keyNameValue = propertiesValue["keyName"];
+                                        if (keyNameValue != null && keyNameValue.Type != JTokenType.Null)
+                                        {
+                                            string keyNameInstance = ((string)keyNameValue);
+                                            propertiesInstance.KeyName = keyNameInstance;
+                                        }
+                                        
+                                        JToken claimTypeValue = propertiesValue["claimType"];
                                         if (claimTypeValue != null && claimTypeValue.Type != JTokenType.Null)
                                         {
                                             string claimTypeInstance = ((string)claimTypeValue);
                                             propertiesInstance.ClaimType = claimTypeInstance;
                                         }
                                         
-                                        JToken claimValueValue = propertiesValue["ClaimValue"];
+                                        JToken claimValueValue = propertiesValue["claimValue"];
                                         if (claimValueValue != null && claimValueValue.Type != JTokenType.Null)
                                         {
                                             string claimValueInstance = ((string)claimValueValue);
                                             propertiesInstance.ClaimValue = claimValueInstance;
                                         }
                                         
-                                        JToken rightsArray = propertiesValue["Rights"];
+                                        JToken rightsArray = propertiesValue["rights"];
                                         if (rightsArray != null && rightsArray.Type != JTokenType.Null)
                                         {
                                             foreach (JToken rightsValue in ((JArray)rightsArray))
                                             {
-                                                propertiesInstance.Rights.Add(((AccessRight)(((int)rightsValue))));
+                                                propertiesInstance.Rights.Add(((AccessRights)Enum.Parse(typeof(AccessRights), ((string)rightsValue), true)));
                                             }
                                         }
                                         
-                                        JToken createdTimeValue = propertiesValue["CreatedTime"];
+                                        JToken createdTimeValue = propertiesValue["createdTime"];
                                         if (createdTimeValue != null && createdTimeValue.Type != JTokenType.Null)
                                         {
                                             DateTime createdTimeInstance = DateTime.Parse(((string)createdTimeValue), CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                             propertiesInstance.CreatedTime = createdTimeInstance;
                                         }
                                         
-                                        JToken modifiedTimeValue = propertiesValue["ModifiedTime"];
+                                        JToken modifiedTimeValue = propertiesValue["modifiedTime"];
                                         if (modifiedTimeValue != null && modifiedTimeValue.Type != JTokenType.Null)
                                         {
                                             DateTime modifiedTimeInstance = DateTime.Parse(((string)modifiedTimeValue), CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
                                             propertiesInstance.ModifiedTime = modifiedTimeInstance;
                                         }
                                         
-                                        JToken revisionValue = propertiesValue["Revision"];
+                                        JToken revisionValue = propertiesValue["revision"];
                                         if (revisionValue != null && revisionValue.Type != JTokenType.Null)
                                         {
                                             int revisionInstance = ((int)revisionValue);
@@ -2625,6 +4111,796 @@ namespace Microsoft.Azure.Management.NotificationHubs
                             {
                                 string secondaryConnectionStringInstance = ((string)secondaryConnectionStringValue);
                                 result.SecondaryConnectionString = secondaryConnectionStringInstance;
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Creates a new NotificationHub in a namespace.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj856303.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='namespaceName'>
+        /// Required. The namespace name.
+        /// </param>
+        /// <param name='notificationHubName'>
+        /// Required. The notification hub name.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the create a Namespace Resource.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Response of the CreateOrUpdate operation on the NotificationHub
+        /// </returns>
+        public async Task<NotificationHubCreateOrUpdateResponse> UpdateAsync(string resourceGroupName, string namespaceName, string notificationHubName, NotificationHubCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (namespaceName == null)
+            {
+                throw new ArgumentNullException("namespaceName");
+            }
+            if (notificationHubName == null)
+            {
+                throw new ArgumentNullException("notificationHubName");
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            if (parameters.Location == null)
+            {
+                throw new ArgumentNullException("parameters.Location");
+            }
+            if (parameters.Properties == null)
+            {
+                throw new ArgumentNullException("parameters.Properties");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("namespaceName", namespaceName);
+                tracingParameters.Add("notificationHubName", notificationHubName);
+                tracingParameters.Add("parameters", parameters);
+                TracingAdapter.Enter(invocationId, this, "UpdateAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/";
+            url = url + "Microsoft.NotificationHubs";
+            url = url + "/namespaces/";
+            url = url + Uri.EscapeDataString(namespaceName);
+            url = url + "/notificationHubs/";
+            url = url + Uri.EscapeDataString(notificationHubName);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-09-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Put;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("if-match", "*");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                JToken requestDoc = null;
+                
+                JObject notificationHubCreateOrUpdateParametersValue = new JObject();
+                requestDoc = notificationHubCreateOrUpdateParametersValue;
+                
+                notificationHubCreateOrUpdateParametersValue["location"] = parameters.Location;
+                
+                if (parameters.Tags != null)
+                {
+                    if (parameters.Tags is ILazyCollection == false || ((ILazyCollection)parameters.Tags).IsInitialized)
+                    {
+                        JObject tagsDictionary = new JObject();
+                        foreach (KeyValuePair<string, string> pair in parameters.Tags)
+                        {
+                            string tagsKey = pair.Key;
+                            string tagsValue = pair.Value;
+                            tagsDictionary[tagsKey] = tagsValue;
+                        }
+                        notificationHubCreateOrUpdateParametersValue["tags"] = tagsDictionary;
+                    }
+                }
+                
+                JObject propertiesValue = new JObject();
+                notificationHubCreateOrUpdateParametersValue["properties"] = propertiesValue;
+                
+                if (parameters.Properties.Name != null)
+                {
+                    propertiesValue["name"] = parameters.Properties.Name;
+                }
+                
+                if (parameters.Properties.RegistrationTtl != null)
+                {
+                    propertiesValue["registrationTtl"] = parameters.Properties.RegistrationTtl;
+                }
+                
+                if (parameters.Properties.AuthorizationRules != null)
+                {
+                    if (parameters.Properties.AuthorizationRules is ILazyCollection == false || ((ILazyCollection)parameters.Properties.AuthorizationRules).IsInitialized)
+                    {
+                        JArray authorizationRulesArray = new JArray();
+                        foreach (SharedAccessAuthorizationRuleProperties authorizationRulesItem in parameters.Properties.AuthorizationRules)
+                        {
+                            if (authorizationRulesItem.PrimaryKey != null)
+                            {
+                                requestDoc = authorizationRulesItem.PrimaryKey;
+                            }
+                            
+                            if (authorizationRulesItem.SecondaryKey != null)
+                            {
+                                requestDoc = authorizationRulesItem.SecondaryKey;
+                            }
+                            
+                            if (authorizationRulesItem.KeyName != null)
+                            {
+                                requestDoc = authorizationRulesItem.KeyName;
+                            }
+                            
+                            if (authorizationRulesItem.ClaimType != null)
+                            {
+                                requestDoc = authorizationRulesItem.ClaimType;
+                            }
+                            
+                            if (authorizationRulesItem.ClaimValue != null)
+                            {
+                                requestDoc = authorizationRulesItem.ClaimValue;
+                            }
+                            
+                            if (authorizationRulesItem.Rights != null)
+                            {
+                                JArray rightsArray = new JArray();
+                                foreach (AccessRights rightsItem in authorizationRulesItem.Rights)
+                                {
+                                    rightsArray.Add(rightsItem.ToString());
+                                }
+                                requestDoc = rightsArray;
+                            }
+                            
+                            requestDoc = string.Format(CultureInfo.InvariantCulture, "{0:O}", authorizationRulesItem.CreatedTime.ToUniversalTime());
+                            
+                            requestDoc = string.Format(CultureInfo.InvariantCulture, "{0:O}", authorizationRulesItem.ModifiedTime.ToUniversalTime());
+                            
+                            requestDoc = authorizationRulesItem.Revision;
+                        }
+                        propertiesValue["authorizationRules"] = authorizationRulesArray;
+                    }
+                }
+                
+                if (parameters.Properties.ApnsCredential != null)
+                {
+                    JObject apnsCredentialValue = new JObject();
+                    propertiesValue["apnsCredential"] = apnsCredentialValue;
+                    
+                    if (parameters.Properties.ApnsCredential.Properties != null)
+                    {
+                        JObject propertiesValue2 = new JObject();
+                        apnsCredentialValue["properties"] = propertiesValue2;
+                        
+                        if (parameters.Properties.ApnsCredential.Properties.ApnsCertificate != null)
+                        {
+                            propertiesValue2["apnsCertificate"] = parameters.Properties.ApnsCredential.Properties.ApnsCertificate;
+                        }
+                        
+                        if (parameters.Properties.ApnsCredential.Properties.CertificateKey != null)
+                        {
+                            propertiesValue2["certificateKey"] = parameters.Properties.ApnsCredential.Properties.CertificateKey;
+                        }
+                        
+                        if (parameters.Properties.ApnsCredential.Properties.Endpoint != null)
+                        {
+                            propertiesValue2["endpoint"] = parameters.Properties.ApnsCredential.Properties.Endpoint;
+                        }
+                        
+                        if (parameters.Properties.ApnsCredential.Properties.Thumbprint != null)
+                        {
+                            propertiesValue2["thumbprint"] = parameters.Properties.ApnsCredential.Properties.Thumbprint;
+                        }
+                    }
+                }
+                
+                if (parameters.Properties.WnsCredential != null)
+                {
+                    JObject wnsCredentialValue = new JObject();
+                    propertiesValue["wnsCredential"] = wnsCredentialValue;
+                    
+                    if (parameters.Properties.WnsCredential.Properties != null)
+                    {
+                        JObject propertiesValue3 = new JObject();
+                        wnsCredentialValue["properties"] = propertiesValue3;
+                        
+                        if (parameters.Properties.WnsCredential.Properties.PackageSid != null)
+                        {
+                            propertiesValue3["packageSid"] = parameters.Properties.WnsCredential.Properties.PackageSid;
+                        }
+                        
+                        if (parameters.Properties.WnsCredential.Properties.SecretKey != null)
+                        {
+                            propertiesValue3["secretKey"] = parameters.Properties.WnsCredential.Properties.SecretKey;
+                        }
+                        
+                        if (parameters.Properties.WnsCredential.Properties.WindowsLiveEndpoint != null)
+                        {
+                            propertiesValue3["windowsLiveEndpoint"] = parameters.Properties.WnsCredential.Properties.WindowsLiveEndpoint;
+                        }
+                    }
+                }
+                
+                if (parameters.Properties.GcmCredential != null)
+                {
+                    JObject gcmCredentialValue = new JObject();
+                    propertiesValue["gcmCredential"] = gcmCredentialValue;
+                    
+                    if (parameters.Properties.GcmCredential.Properties != null)
+                    {
+                        JObject propertiesValue4 = new JObject();
+                        gcmCredentialValue["properties"] = propertiesValue4;
+                        
+                        if (parameters.Properties.GcmCredential.Properties.GcmEndpoint != null)
+                        {
+                            propertiesValue4["gcmEndpoint"] = parameters.Properties.GcmCredential.Properties.GcmEndpoint;
+                        }
+                        
+                        if (parameters.Properties.GcmCredential.Properties.GoogleApiKey != null)
+                        {
+                            propertiesValue4["googleApiKey"] = parameters.Properties.GcmCredential.Properties.GoogleApiKey;
+                        }
+                    }
+                }
+                
+                if (parameters.Properties.MpnsCredential != null)
+                {
+                    JObject mpnsCredentialValue = new JObject();
+                    propertiesValue["mpnsCredential"] = mpnsCredentialValue;
+                    
+                    if (parameters.Properties.MpnsCredential.Properties != null)
+                    {
+                        JObject propertiesValue5 = new JObject();
+                        mpnsCredentialValue["properties"] = propertiesValue5;
+                        
+                        if (parameters.Properties.MpnsCredential.Properties.MpnsCertificate != null)
+                        {
+                            propertiesValue5["mpnsCertificate"] = parameters.Properties.MpnsCredential.Properties.MpnsCertificate;
+                        }
+                        
+                        if (parameters.Properties.MpnsCredential.Properties.CertificateKey != null)
+                        {
+                            propertiesValue5["certificateKey"] = parameters.Properties.MpnsCredential.Properties.CertificateKey;
+                        }
+                        
+                        if (parameters.Properties.MpnsCredential.Properties.Thumbprint != null)
+                        {
+                            propertiesValue5["thumbprint"] = parameters.Properties.MpnsCredential.Properties.Thumbprint;
+                        }
+                    }
+                }
+                
+                if (parameters.Properties.AdmCredential != null)
+                {
+                    JObject admCredentialValue = new JObject();
+                    propertiesValue["admCredential"] = admCredentialValue;
+                    
+                    if (parameters.Properties.AdmCredential.Properties != null)
+                    {
+                        JObject propertiesValue6 = new JObject();
+                        admCredentialValue["properties"] = propertiesValue6;
+                        
+                        if (parameters.Properties.AdmCredential.Properties.ClientId != null)
+                        {
+                            propertiesValue6["clientId"] = parameters.Properties.AdmCredential.Properties.ClientId;
+                        }
+                        
+                        if (parameters.Properties.AdmCredential.Properties.ClientSecret != null)
+                        {
+                            propertiesValue6["clientSecret"] = parameters.Properties.AdmCredential.Properties.ClientSecret;
+                        }
+                        
+                        if (parameters.Properties.AdmCredential.Properties.AuthTokenUrl != null)
+                        {
+                            propertiesValue6["authTokenUrl"] = parameters.Properties.AdmCredential.Properties.AuthTokenUrl;
+                        }
+                    }
+                }
+                
+                if (parameters.Properties.BaiduCredential != null)
+                {
+                    JObject baiduCredentialValue = new JObject();
+                    propertiesValue["baiduCredential"] = baiduCredentialValue;
+                    
+                    if (parameters.Properties.BaiduCredential.Properties != null)
+                    {
+                        JObject propertiesValue7 = new JObject();
+                        baiduCredentialValue["properties"] = propertiesValue7;
+                        
+                        if (parameters.Properties.BaiduCredential.Properties.BaiduApiKey != null)
+                        {
+                            propertiesValue7["baiduApiKey"] = parameters.Properties.BaiduCredential.Properties.BaiduApiKey;
+                        }
+                        
+                        if (parameters.Properties.BaiduCredential.Properties.BaiduEndPoint != null)
+                        {
+                            propertiesValue7["baiduEndPoint"] = parameters.Properties.BaiduCredential.Properties.BaiduEndPoint;
+                        }
+                        
+                        if (parameters.Properties.BaiduCredential.Properties.BaiduSecretKey != null)
+                        {
+                            propertiesValue7["baiduSecretKey"] = parameters.Properties.BaiduCredential.Properties.BaiduSecretKey;
+                        }
+                    }
+                }
+                
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Created)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    NotificationHubCreateOrUpdateResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Created)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new NotificationHubCreateOrUpdateResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            NotificationHubResource valueInstance = new NotificationHubResource();
+                            result.Value = valueInstance;
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                valueInstance.Id = idInstance;
+                            }
+                            
+                            JToken locationValue = responseDoc["location"];
+                            if (locationValue != null && locationValue.Type != JTokenType.Null)
+                            {
+                                string locationInstance = ((string)locationValue);
+                                valueInstance.Location = locationInstance;
+                            }
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                string nameInstance = ((string)nameValue);
+                                valueInstance.Name = nameInstance;
+                            }
+                            
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            {
+                                string typeInstance = ((string)typeValue);
+                                valueInstance.Type = typeInstance;
+                            }
+                            
+                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
+                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                            {
+                                foreach (JProperty property in tagsSequenceElement)
+                                {
+                                    string tagsKey2 = ((string)property.Name);
+                                    string tagsValue2 = ((string)property.Value);
+                                    valueInstance.Tags.Add(tagsKey2, tagsValue2);
+                                }
+                            }
+                            
+                            JToken propertiesValue8 = responseDoc["properties"];
+                            if (propertiesValue8 != null && propertiesValue8.Type != JTokenType.Null)
+                            {
+                                NotificationHubProperties propertiesInstance = new NotificationHubProperties();
+                                valueInstance.Properties = propertiesInstance;
+                                
+                                JToken nameValue2 = propertiesValue8["name"];
+                                if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                {
+                                    string nameInstance2 = ((string)nameValue2);
+                                    propertiesInstance.Name = nameInstance2;
+                                }
+                                
+                                JToken registrationTtlValue = propertiesValue8["registrationTtl"];
+                                if (registrationTtlValue != null && registrationTtlValue.Type != JTokenType.Null)
+                                {
+                                    string registrationTtlInstance = ((string)registrationTtlValue);
+                                    propertiesInstance.RegistrationTtl = registrationTtlInstance;
+                                }
+                                
+                                JToken authorizationRulesArray2 = propertiesValue8["authorizationRules"];
+                                if (authorizationRulesArray2 != null && authorizationRulesArray2.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken authorizationRulesValue in ((JArray)authorizationRulesArray2))
+                                    {
+                                        SharedAccessAuthorizationRuleProperties sharedAccessAuthorizationRulePropertiesInstance = new SharedAccessAuthorizationRuleProperties();
+                                        propertiesInstance.AuthorizationRules.Add(sharedAccessAuthorizationRulePropertiesInstance);
+                                        
+                                        JToken primaryKeyValue = authorizationRulesValue["primaryKey"];
+                                        if (primaryKeyValue != null && primaryKeyValue.Type != JTokenType.Null)
+                                        {
+                                            string primaryKeyInstance = ((string)primaryKeyValue);
+                                            sharedAccessAuthorizationRulePropertiesInstance.PrimaryKey = primaryKeyInstance;
+                                        }
+                                        
+                                        JToken secondaryKeyValue = authorizationRulesValue["secondaryKey"];
+                                        if (secondaryKeyValue != null && secondaryKeyValue.Type != JTokenType.Null)
+                                        {
+                                            string secondaryKeyInstance = ((string)secondaryKeyValue);
+                                            sharedAccessAuthorizationRulePropertiesInstance.SecondaryKey = secondaryKeyInstance;
+                                        }
+                                        
+                                        JToken keyNameValue = authorizationRulesValue["keyName"];
+                                        if (keyNameValue != null && keyNameValue.Type != JTokenType.Null)
+                                        {
+                                            string keyNameInstance = ((string)keyNameValue);
+                                            sharedAccessAuthorizationRulePropertiesInstance.KeyName = keyNameInstance;
+                                        }
+                                        
+                                        JToken claimTypeValue = authorizationRulesValue["claimType"];
+                                        if (claimTypeValue != null && claimTypeValue.Type != JTokenType.Null)
+                                        {
+                                            string claimTypeInstance = ((string)claimTypeValue);
+                                            sharedAccessAuthorizationRulePropertiesInstance.ClaimType = claimTypeInstance;
+                                        }
+                                        
+                                        JToken claimValueValue = authorizationRulesValue["claimValue"];
+                                        if (claimValueValue != null && claimValueValue.Type != JTokenType.Null)
+                                        {
+                                            string claimValueInstance = ((string)claimValueValue);
+                                            sharedAccessAuthorizationRulePropertiesInstance.ClaimValue = claimValueInstance;
+                                        }
+                                        
+                                        JToken rightsArray2 = authorizationRulesValue["rights"];
+                                        if (rightsArray2 != null && rightsArray2.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken rightsValue in ((JArray)rightsArray2))
+                                            {
+                                                sharedAccessAuthorizationRulePropertiesInstance.Rights.Add(((AccessRights)Enum.Parse(typeof(AccessRights), ((string)rightsValue), true)));
+                                            }
+                                        }
+                                        
+                                        JToken createdTimeValue = authorizationRulesValue["createdTime"];
+                                        if (createdTimeValue != null && createdTimeValue.Type != JTokenType.Null)
+                                        {
+                                            DateTime createdTimeInstance = DateTime.Parse(((string)createdTimeValue), CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
+                                            sharedAccessAuthorizationRulePropertiesInstance.CreatedTime = createdTimeInstance;
+                                        }
+                                        
+                                        JToken modifiedTimeValue = authorizationRulesValue["modifiedTime"];
+                                        if (modifiedTimeValue != null && modifiedTimeValue.Type != JTokenType.Null)
+                                        {
+                                            DateTime modifiedTimeInstance = DateTime.Parse(((string)modifiedTimeValue), CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).ToLocalTime();
+                                            sharedAccessAuthorizationRulePropertiesInstance.ModifiedTime = modifiedTimeInstance;
+                                        }
+                                        
+                                        JToken revisionValue = authorizationRulesValue["revision"];
+                                        if (revisionValue != null && revisionValue.Type != JTokenType.Null)
+                                        {
+                                            int revisionInstance = ((int)revisionValue);
+                                            sharedAccessAuthorizationRulePropertiesInstance.Revision = revisionInstance;
+                                        }
+                                    }
+                                }
+                                
+                                JToken apnsCredentialValue2 = propertiesValue8["apnsCredential"];
+                                if (apnsCredentialValue2 != null && apnsCredentialValue2.Type != JTokenType.Null)
+                                {
+                                    ApnsCredential apnsCredentialInstance = new ApnsCredential();
+                                    propertiesInstance.ApnsCredential = apnsCredentialInstance;
+                                    
+                                    JToken propertiesValue9 = apnsCredentialValue2["properties"];
+                                    if (propertiesValue9 != null && propertiesValue9.Type != JTokenType.Null)
+                                    {
+                                        ApnsCredentialProperties propertiesInstance2 = new ApnsCredentialProperties();
+                                        apnsCredentialInstance.Properties = propertiesInstance2;
+                                        
+                                        JToken apnsCertificateValue = propertiesValue9["apnsCertificate"];
+                                        if (apnsCertificateValue != null && apnsCertificateValue.Type != JTokenType.Null)
+                                        {
+                                            string apnsCertificateInstance = ((string)apnsCertificateValue);
+                                            propertiesInstance2.ApnsCertificate = apnsCertificateInstance;
+                                        }
+                                        
+                                        JToken certificateKeyValue = propertiesValue9["certificateKey"];
+                                        if (certificateKeyValue != null && certificateKeyValue.Type != JTokenType.Null)
+                                        {
+                                            string certificateKeyInstance = ((string)certificateKeyValue);
+                                            propertiesInstance2.CertificateKey = certificateKeyInstance;
+                                        }
+                                        
+                                        JToken endpointValue = propertiesValue9["endpoint"];
+                                        if (endpointValue != null && endpointValue.Type != JTokenType.Null)
+                                        {
+                                            string endpointInstance = ((string)endpointValue);
+                                            propertiesInstance2.Endpoint = endpointInstance;
+                                        }
+                                        
+                                        JToken thumbprintValue = propertiesValue9["thumbprint"];
+                                        if (thumbprintValue != null && thumbprintValue.Type != JTokenType.Null)
+                                        {
+                                            string thumbprintInstance = ((string)thumbprintValue);
+                                            propertiesInstance2.Thumbprint = thumbprintInstance;
+                                        }
+                                    }
+                                }
+                                
+                                JToken wnsCredentialValue2 = propertiesValue8["wnsCredential"];
+                                if (wnsCredentialValue2 != null && wnsCredentialValue2.Type != JTokenType.Null)
+                                {
+                                    WnsCredential wnsCredentialInstance = new WnsCredential();
+                                    propertiesInstance.WnsCredential = wnsCredentialInstance;
+                                    
+                                    JToken propertiesValue10 = wnsCredentialValue2["properties"];
+                                    if (propertiesValue10 != null && propertiesValue10.Type != JTokenType.Null)
+                                    {
+                                        WnsCredentialProperties propertiesInstance3 = new WnsCredentialProperties();
+                                        wnsCredentialInstance.Properties = propertiesInstance3;
+                                        
+                                        JToken packageSidValue = propertiesValue10["packageSid"];
+                                        if (packageSidValue != null && packageSidValue.Type != JTokenType.Null)
+                                        {
+                                            string packageSidInstance = ((string)packageSidValue);
+                                            propertiesInstance3.PackageSid = packageSidInstance;
+                                        }
+                                        
+                                        JToken secretKeyValue = propertiesValue10["secretKey"];
+                                        if (secretKeyValue != null && secretKeyValue.Type != JTokenType.Null)
+                                        {
+                                            string secretKeyInstance = ((string)secretKeyValue);
+                                            propertiesInstance3.SecretKey = secretKeyInstance;
+                                        }
+                                        
+                                        JToken windowsLiveEndpointValue = propertiesValue10["windowsLiveEndpoint"];
+                                        if (windowsLiveEndpointValue != null && windowsLiveEndpointValue.Type != JTokenType.Null)
+                                        {
+                                            string windowsLiveEndpointInstance = ((string)windowsLiveEndpointValue);
+                                            propertiesInstance3.WindowsLiveEndpoint = windowsLiveEndpointInstance;
+                                        }
+                                    }
+                                }
+                                
+                                JToken gcmCredentialValue2 = propertiesValue8["gcmCredential"];
+                                if (gcmCredentialValue2 != null && gcmCredentialValue2.Type != JTokenType.Null)
+                                {
+                                    GcmCredential gcmCredentialInstance = new GcmCredential();
+                                    propertiesInstance.GcmCredential = gcmCredentialInstance;
+                                    
+                                    JToken propertiesValue11 = gcmCredentialValue2["properties"];
+                                    if (propertiesValue11 != null && propertiesValue11.Type != JTokenType.Null)
+                                    {
+                                        GcmCredentialProperties propertiesInstance4 = new GcmCredentialProperties();
+                                        gcmCredentialInstance.Properties = propertiesInstance4;
+                                        
+                                        JToken gcmEndpointValue = propertiesValue11["gcmEndpoint"];
+                                        if (gcmEndpointValue != null && gcmEndpointValue.Type != JTokenType.Null)
+                                        {
+                                            string gcmEndpointInstance = ((string)gcmEndpointValue);
+                                            propertiesInstance4.GcmEndpoint = gcmEndpointInstance;
+                                        }
+                                        
+                                        JToken googleApiKeyValue = propertiesValue11["googleApiKey"];
+                                        if (googleApiKeyValue != null && googleApiKeyValue.Type != JTokenType.Null)
+                                        {
+                                            string googleApiKeyInstance = ((string)googleApiKeyValue);
+                                            propertiesInstance4.GoogleApiKey = googleApiKeyInstance;
+                                        }
+                                    }
+                                }
+                                
+                                JToken mpnsCredentialValue2 = propertiesValue8["mpnsCredential"];
+                                if (mpnsCredentialValue2 != null && mpnsCredentialValue2.Type != JTokenType.Null)
+                                {
+                                    MpnsCredential mpnsCredentialInstance = new MpnsCredential();
+                                    propertiesInstance.MpnsCredential = mpnsCredentialInstance;
+                                    
+                                    JToken propertiesValue12 = mpnsCredentialValue2["properties"];
+                                    if (propertiesValue12 != null && propertiesValue12.Type != JTokenType.Null)
+                                    {
+                                        MpnsCredentialProperties propertiesInstance5 = new MpnsCredentialProperties();
+                                        mpnsCredentialInstance.Properties = propertiesInstance5;
+                                        
+                                        JToken mpnsCertificateValue = propertiesValue12["mpnsCertificate"];
+                                        if (mpnsCertificateValue != null && mpnsCertificateValue.Type != JTokenType.Null)
+                                        {
+                                            string mpnsCertificateInstance = ((string)mpnsCertificateValue);
+                                            propertiesInstance5.MpnsCertificate = mpnsCertificateInstance;
+                                        }
+                                        
+                                        JToken certificateKeyValue2 = propertiesValue12["certificateKey"];
+                                        if (certificateKeyValue2 != null && certificateKeyValue2.Type != JTokenType.Null)
+                                        {
+                                            string certificateKeyInstance2 = ((string)certificateKeyValue2);
+                                            propertiesInstance5.CertificateKey = certificateKeyInstance2;
+                                        }
+                                        
+                                        JToken thumbprintValue2 = propertiesValue12["thumbprint"];
+                                        if (thumbprintValue2 != null && thumbprintValue2.Type != JTokenType.Null)
+                                        {
+                                            string thumbprintInstance2 = ((string)thumbprintValue2);
+                                            propertiesInstance5.Thumbprint = thumbprintInstance2;
+                                        }
+                                    }
+                                }
+                                
+                                JToken admCredentialValue2 = propertiesValue8["admCredential"];
+                                if (admCredentialValue2 != null && admCredentialValue2.Type != JTokenType.Null)
+                                {
+                                    AdmCredential admCredentialInstance = new AdmCredential();
+                                    propertiesInstance.AdmCredential = admCredentialInstance;
+                                    
+                                    JToken propertiesValue13 = admCredentialValue2["properties"];
+                                    if (propertiesValue13 != null && propertiesValue13.Type != JTokenType.Null)
+                                    {
+                                        AdmCredentialProperties propertiesInstance6 = new AdmCredentialProperties();
+                                        admCredentialInstance.Properties = propertiesInstance6;
+                                        
+                                        JToken clientIdValue = propertiesValue13["clientId"];
+                                        if (clientIdValue != null && clientIdValue.Type != JTokenType.Null)
+                                        {
+                                            string clientIdInstance = ((string)clientIdValue);
+                                            propertiesInstance6.ClientId = clientIdInstance;
+                                        }
+                                        
+                                        JToken clientSecretValue = propertiesValue13["clientSecret"];
+                                        if (clientSecretValue != null && clientSecretValue.Type != JTokenType.Null)
+                                        {
+                                            string clientSecretInstance = ((string)clientSecretValue);
+                                            propertiesInstance6.ClientSecret = clientSecretInstance;
+                                        }
+                                        
+                                        JToken authTokenUrlValue = propertiesValue13["authTokenUrl"];
+                                        if (authTokenUrlValue != null && authTokenUrlValue.Type != JTokenType.Null)
+                                        {
+                                            string authTokenUrlInstance = ((string)authTokenUrlValue);
+                                            propertiesInstance6.AuthTokenUrl = authTokenUrlInstance;
+                                        }
+                                    }
+                                }
+                                
+                                JToken baiduCredentialValue2 = propertiesValue8["baiduCredential"];
+                                if (baiduCredentialValue2 != null && baiduCredentialValue2.Type != JTokenType.Null)
+                                {
+                                    BaiduCredential baiduCredentialInstance = new BaiduCredential();
+                                    propertiesInstance.BaiduCredential = baiduCredentialInstance;
+                                    
+                                    JToken propertiesValue14 = baiduCredentialValue2["properties"];
+                                    if (propertiesValue14 != null && propertiesValue14.Type != JTokenType.Null)
+                                    {
+                                        BaiduCredentialProperties propertiesInstance7 = new BaiduCredentialProperties();
+                                        baiduCredentialInstance.Properties = propertiesInstance7;
+                                        
+                                        JToken baiduApiKeyValue = propertiesValue14["baiduApiKey"];
+                                        if (baiduApiKeyValue != null && baiduApiKeyValue.Type != JTokenType.Null)
+                                        {
+                                            string baiduApiKeyInstance = ((string)baiduApiKeyValue);
+                                            propertiesInstance7.BaiduApiKey = baiduApiKeyInstance;
+                                        }
+                                        
+                                        JToken baiduEndPointValue = propertiesValue14["baiduEndPoint"];
+                                        if (baiduEndPointValue != null && baiduEndPointValue.Type != JTokenType.Null)
+                                        {
+                                            string baiduEndPointInstance = ((string)baiduEndPointValue);
+                                            propertiesInstance7.BaiduEndPoint = baiduEndPointInstance;
+                                        }
+                                        
+                                        JToken baiduSecretKeyValue = propertiesValue14["baiduSecretKey"];
+                                        if (baiduSecretKeyValue != null && baiduSecretKeyValue.Type != JTokenType.Null)
+                                        {
+                                            string baiduSecretKeyInstance = ((string)baiduSecretKeyValue);
+                                            propertiesInstance7.BaiduSecretKey = baiduSecretKeyInstance;
+                                        }
+                                    }
+                                }
                             }
                         }
                         

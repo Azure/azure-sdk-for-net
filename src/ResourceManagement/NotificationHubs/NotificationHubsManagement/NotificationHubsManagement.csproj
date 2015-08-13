@@ -25,21 +25,23 @@
     <Compile Include="Generated\INamespaceOperations.cs" />
     <Compile Include="Generated\INotificationHubOperations.cs" />
     <Compile Include="Generated\INotificationHubsManagementClient.cs" />
-    <Compile Include="Generated\Models\AccessRight.cs" />
+    <Compile Include="Generated\Models\AccessRights.cs" />
     <Compile Include="Generated\Models\AdmCredential.cs" />
+    <Compile Include="Generated\Models\AdmCredentialProperties.cs" />
     <Compile Include="Generated\Models\ApnsCredential.cs" />
-    <Compile Include="Generated\Models\AuthorizationRulesCreateOrUpdateParameters.cs" />
-    <Compile Include="Generated\Models\AuthorizationRulesCreateOrUpdateResponse.cs" />
-    <Compile Include="Generated\Models\AuthorizationRulesGetResponse.cs" />
-    <Compile Include="Generated\Models\AuthorizationRulesListResponse.cs" />
-    <Compile Include="Generated\Models\AuthorizationRulesProperties.cs" />
-    <Compile Include="Generated\Models\AuthorizationRulesResource.cs" />
+    <Compile Include="Generated\Models\ApnsCredentialProperties.cs" />
+    <Compile Include="Generated\Models\AuthorizationRule.cs" />
     <Compile Include="Generated\Models\BaiduCredential.cs" />
+    <Compile Include="Generated\Models\BaiduCredentialProperties.cs" />
     <Compile Include="Generated\Models\CheckAvailabilityParameters.cs" />
+    <Compile Include="Generated\Models\CheckAvailabilityProperties.cs" />
+    <Compile Include="Generated\Models\CheckAvailabilityResource.cs" />
     <Compile Include="Generated\Models\CheckAvailabilityResponse.cs" />
     <Compile Include="Generated\Models\GcmCredential.cs" />
+    <Compile Include="Generated\Models\GcmCredentialProperties.cs" />
     <Compile Include="Generated\Models\LongRunningOperationResponse.cs" />
     <Compile Include="Generated\Models\MpnsCredential.cs" />
+    <Compile Include="Generated\Models\MpnsCredentialProperties.cs" />
     <Compile Include="Generated\Models\NamespaceCreateOrUpdateParameters.cs" />
     <Compile Include="Generated\Models\NamespaceCreateOrUpdateResponse.cs" />
     <Compile Include="Generated\Models\NamespaceGetResponse.cs" />
@@ -56,7 +58,14 @@
     <Compile Include="Generated\Models\NotificationHubResource.cs" />
     <Compile Include="Generated\Models\ResourceError.cs" />
     <Compile Include="Generated\Models\ResourceListKeys.cs" />
+    <Compile Include="Generated\Models\SharedAccessAuthorizationRuleCreateOrUpdateParameters.cs" />
+    <Compile Include="Generated\Models\SharedAccessAuthorizationRuleCreateOrUpdateResponse.cs" />
+    <Compile Include="Generated\Models\SharedAccessAuthorizationRuleGetResponse.cs" />
+    <Compile Include="Generated\Models\SharedAccessAuthorizationRuleListResponse.cs" />
+    <Compile Include="Generated\Models\SharedAccessAuthorizationRuleProperties.cs" />
+    <Compile Include="Generated\Models\SharedAccessAuthorizationRuleResource.cs" />
     <Compile Include="Generated\Models\WnsCredential.cs" />
+    <Compile Include="Generated\Models\WnsCredentialProperties.cs" />
     <Compile Include="Generated\NamespaceOperations.cs" />
     <Compile Include="Generated\NamespaceOperationsExtensions.cs" />
     <Compile Include="Generated\NotificationHubOperations.cs" />
@@ -66,13 +75,17 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Microsoft.Azure.Management.NotificationHubs.nuget.proj" />
-    <None Include="Microsoft.Azure.Management.NotificationHubs.nuspec" />
+    <None Include="Microsoft.Azure.Management.NotificationHubs.nuget.proj">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Microsoft.Azure.Management.NotificationHubs.nuspec">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Hyak.Common">
-      <HintPath>$(LibraryNugetPackageFolder)\Hyak.Common.1.0.2\lib\portable-net403+win+wpa81\Hyak.Common.dll</HintPath>
+      <HintPath>$(LibraryNugetPackageFolder)\Hyak.Common.1.0.2\lib\net45\Hyak.Common.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Azure.Common, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

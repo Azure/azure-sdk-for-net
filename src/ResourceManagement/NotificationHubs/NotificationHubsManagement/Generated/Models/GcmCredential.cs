@@ -21,6 +21,7 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure.Management.NotificationHubs.Models;
 
 namespace Microsoft.Azure.Management.NotificationHubs.Models
 {
@@ -29,26 +30,15 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
     /// </summary>
     public partial class GcmCredential
     {
-        private string _gcmEndpoint;
+        private GcmCredentialProperties _properties;
         
         /// <summary>
-        /// Optional. Gets or sets the GCM endpoint.
+        /// Optional. Gets or sets properties of NotificationHub GcmCredential.
         /// </summary>
-        public string GcmEndpoint
+        public GcmCredentialProperties Properties
         {
-            get { return this._gcmEndpoint; }
-            set { this._gcmEndpoint = value; }
-        }
-        
-        private string _googleApiKey;
-        
-        /// <summary>
-        /// Optional. Gets or sets the Google API key.
-        /// </summary>
-        public string GoogleApiKey
-        {
-            get { return this._googleApiKey; }
-            set { this._googleApiKey = value; }
+            get { return this._properties; }
+            set { this._properties = value; }
         }
         
         /// <summary>

@@ -74,30 +74,6 @@ namespace Microsoft.Azure.Management.NotificationHubs
         Task<CheckAvailabilityResponse> CheckAvailabilityAsync(CheckAvailabilityParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
-        /// The create namespace authorization rule operation creates an
-        /// authorization rule for a namespace
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='namespaceName'>
-        /// The namespace name.
-        /// </param>
-        /// <param name='authorizationRuleName'>
-        /// The namespace authorizationRuleName name.
-        /// </param>
-        /// <param name='parameters'>
-        /// The shared access authorization rule.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// Response of the CreateOrUpdate operation on the AuthorizationRules
-        /// </returns>
-        Task<AuthorizationRulesCreateOrUpdateResponse> CreateAuthorizationRuleAsync(string resourceGroupName, string namespaceName, string authorizationRuleName, AuthorizationRulesCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
-        
-        /// <summary>
         /// Creates/Updates a service namespace. Once created, this namespace's
         /// resource manifest is immutable. This operation is idempotent.
         /// (see http://msdn.microsoft.com/en-us/library/windowsazure/jj856303.aspx
@@ -119,6 +95,30 @@ namespace Microsoft.Azure.Management.NotificationHubs
         /// The response of the CreateOrUpdate Namespace.
         /// </returns>
         Task<NamespaceCreateOrUpdateResponse> CreateOrUpdateAsync(string resourceGroupName, string namespaceName, NamespaceCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The create namespace authorization rule operation creates an
+        /// authorization rule for a namespace
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='namespaceName'>
+        /// The namespace name.
+        /// </param>
+        /// <param name='authorizationRuleName'>
+        /// The namespace authorizationRuleName name.
+        /// </param>
+        /// <param name='parameters'>
+        /// The shared access authorization rule.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Response of the CreateOrUpdate operation on the AuthorizationRules
+        /// </returns>
+        Task<SharedAccessAuthorizationRuleCreateOrUpdateResponse> CreateOrUpdateAuthorizationRuleAsync(string resourceGroupName, string namespaceName, string authorizationRuleName, SharedAccessAuthorizationRuleCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Delete existing Namespace
@@ -197,7 +197,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
         /// <returns>
         /// The response of the Get Namespace operation.
         /// </returns>
-        Task<AuthorizationRulesGetResponse> GetAuthorizationRuleAsync(string resourceGroupName, string namespaceName, string authorizationRuleName, CancellationToken cancellationToken);
+        Task<SharedAccessAuthorizationRuleGetResponse> GetAuthorizationRuleAsync(string resourceGroupName, string namespaceName, string authorizationRuleName, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Get namespace Delete Operation Status operation returns the
@@ -254,6 +254,20 @@ namespace Microsoft.Azure.Management.NotificationHubs
         Task<NamespaceListResponse> ListAsync(string resourceGroupName, CancellationToken cancellationToken);
         
         /// <summary>
+        /// Lists all the available namespaces within the subscription
+        /// irrespective of the resourceGroups.  (see
+        /// http://msdn.microsoft.com/en-us/library/azure/hh780759.aspx for
+        /// more information)
+        /// </summary>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response of the List Namespace operation.
+        /// </returns>
+        Task<NamespaceListResponse> ListAllAsync(CancellationToken cancellationToken);
+        
+        /// <summary>
         /// The get authorization rules operation gets the authorization rules
         /// for a namespace.
         /// </summary>
@@ -269,7 +283,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
         /// <returns>
         /// The response of the List Namespace operation.
         /// </returns>
-        Task<AuthorizationRulesListResponse> ListAuthorizationRulesAsync(string resourceGroupName, string namespaceName, CancellationToken cancellationToken);
+        Task<SharedAccessAuthorizationRuleListResponse> ListAuthorizationRulesAsync(string resourceGroupName, string namespaceName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Gets the Primary and Secondary ConnectionStrings to the namespace
