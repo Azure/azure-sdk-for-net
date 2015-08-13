@@ -754,41 +754,6 @@ Parameter name: clusterCreateParameters");
 
         [TestMethod]
         [TestCategory("CheckIn")]
-        public async Task CanAccessWasbUriInStorageAccountUsingUriEndpointValidator()
-        {
-            var storageCreds = new WabStorageAccountConfiguration(
-                IntegrationTestBase.TestCredentials.Environments[0].DefaultStorageAccount.Name,
-                IntegrationTestBase.TestCredentials.Environments[0].DefaultStorageAccount.Key);
-
-            var fullPathToContainer = new Uri(string.Format(
-                CultureInfo.InvariantCulture,
-                "{0}{1}@{2}/hive",
-                Constants.WabsProtocolSchemeName,
-                IntegrationTestBase.TestCredentials.Environments[0].DefaultStorageAccount.Container,
-                UriEndpointValidator.GetFullyQualifiedStorageAccountName(
-                    IntegrationTestBase.TestCredentials.Environments[0].DefaultStorageAccount.Name)));
-            await UriEndpointValidator.ValidateAndResolveWasbScriptActionEndpointUri(fullPathToContainer, storageCreds);
-        }
-
-        [TestMethod]
-        [TestCategory("CheckIn")]
-        public async Task CanAccessHttpUriInStorageAccountUsingUriEndpointValidator()
-        {
-            var storageCreds = new WabStorageAccountConfiguration(
-                IntegrationTestBase.TestCredentials.Environments[0].DefaultStorageAccount.Name,
-                IntegrationTestBase.TestCredentials.Environments[0].DefaultStorageAccount.Key);
-
-            var fullPathToContainer = new Uri(string.Format(
-                CultureInfo.InvariantCulture,
-                "https://{0}/{1}/hive",
-                UriEndpointValidator.GetFullyQualifiedStorageAccountName(
-                    IntegrationTestBase.TestCredentials.Environments[0].DefaultStorageAccount.Name),
-                IntegrationTestBase.TestCredentials.Environments[0].DefaultStorageAccount.Container));
-            await UriEndpointValidator.ValidateAndResolveWasbScriptActionEndpointUri(fullPathToContainer, storageCreds);
-        }
-
-        [TestMethod]
-        [TestCategory("CheckIn")]
         [ExpectedException(typeof(InvalidOperationException))]
         public async Task CannotAccessNonExistentPrivateUriInStorageAccountUsingUriEndpointValidator()
         {

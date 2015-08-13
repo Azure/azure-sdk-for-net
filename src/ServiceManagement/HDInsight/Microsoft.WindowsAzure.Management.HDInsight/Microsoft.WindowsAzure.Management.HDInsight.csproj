@@ -15,6 +15,7 @@
   <ItemGroup>
     <Reference Include="BouncyCastle.Crypto, Version=1.7.4137.9688, Culture=neutral, PublicKeyToken=a4292a325f69b123, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(SolutionDir)\packages\BouncyCastle.1.7.0\lib\Net40-Client\BouncyCastle.Crypto.dll</HintPath>
       <HintPath>$(LibraryNugetPackageFolder)\BouncyCastle.1.7.0\lib\Net40-Client\BouncyCastle.Crypto.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.WindowsAzure.Common">
@@ -41,8 +42,8 @@
     <Compile Include="ClusterProvisioning\Data\Iaas\AzureCsmDocumentManager.cs" />
     <Compile Include="ClusterProvisioning\Data\Iaas\JsonHelper.cs" />
     <Compile Include="ClusterProvisioning\Data\Iaas\OpenSshToX509CertificateHelper.cs" />
-    <Compile Include="ClusterProvisioning\Data\OSType.cs" />
     <Compile Include="ClusterProvisioning\Data\Iaas\PayloadConverterIaasClusters.cs" />
+    <Compile Include="ClusterProvisioning\Data\OSType.cs" />
     <Compile Include="ClusterProvisioning\Data\Rdfe\Operation.cs" />
     <Compile Include="ClusterProvisioning\Data\ScriptAction.cs" />
     <Compile Include="ClusterProvisioning\Data\NodeVMSize.cs" />
@@ -183,6 +184,9 @@
     <Compile Include="JobSubmission\PocoClient\HDInsightJobSubmissionPocoClient.cs" />
     <Compile Include="JobSubmission\PocoClient\HDInsightJobSubmissionPocoClientFactory.cs" />
     <None Include="app.config" />
+    <None Include="ClusterProvisioning\Data\DocumentTemplates\3.2\hadoop-configuration.json" />
+    <None Include="ClusterProvisioning\Data\DocumentTemplates\Common\hadoop-azure-sshkey.json" />
+    <None Include="ClusterProvisioning\Data\DocumentTemplates\Common\hadoop-azure-sshpassword.json" />
     <EmbeddedResource Include="ClusterProvisioning\Data\DocumentTemplates\Common\hadoop-azure-sshkey.json" />
     <EmbeddedResource Include="ClusterProvisioning\Data\DocumentTemplates\3.2\hadoop-configuration.json" />
     <EmbeddedResource Include="ClusterProvisioning\Data\DocumentTemplates\Common\hadoop-azure-sshpassword.json" />
@@ -227,6 +231,7 @@
       <Name>Microsoft.WindowsAzure.Management.HDInsight.Framework</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(LibraryFxTarget)' == 'portable' " />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(LibraryFxTarget)' != 'portable' " />
   <Import Project="$(LibraryNugetPackageFolder)\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('$(LibraryNugetPackageFolder)\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />

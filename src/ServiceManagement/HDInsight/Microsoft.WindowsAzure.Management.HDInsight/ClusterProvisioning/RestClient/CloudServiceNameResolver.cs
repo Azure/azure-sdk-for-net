@@ -31,7 +31,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.RestCl
             region.ArgumentNotNullOrEmpty("region");
             string hashedSubId = string.Empty;
 
-            using (SHA256 sha256 = SHA256.Create())
+            using (SHA256CryptoServiceProvider sha256 = new SHA256CryptoServiceProvider())
             {
                 hashedSubId = Base32NoPaddingEncode(sha256.ComputeHash(Encoding.UTF8.GetBytes(subscriptionId.ToString())));
             }

@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "/templeton/v1/mapreduce/jar?user.name=hadoopuser",
-      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9tYXByZWR1Y2UvamFyP3VzZXIubmFtZT1oYWRvb3B1c2Vy",
+      "RequestUri": "/templeton/v1/mapreduce/jar?user.name=sameuser",
+      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9tYXByZWR1Y2UvamFyP3VzZXIubmFtZT1zYW1ldXNlcg==",
       "RequestMethod": "POST",
-      "RequestBody": "user.name=hadoopuser&jar=/example/jars/hadoop-mapreduce-examples.jar&class=pi&define=mapreduce.map.maxattempts%3D10&define=mapreduce.reduce.maxattempts%3D10&define=mapreduce.task.timeout%3D60000&arg=10&arg=1000&statusdir=&enablelog=&LibJars=&Files=",
+      "RequestBody": "user.name=sameuser&jar=/example/jars/hadoop-mapreduce-examples.jar&class=pi&define=mapreduce.map.maxattempts%3D10&define=mapreduce.reduce.maxattempts%3D10&define=mapreduce.task.timeout%3D60000&arg=10&arg=1000&statusdir=&enablelog=&LibJars=&Files=",
       "RequestHeaders": {
         "Content-Type": [
           "application/text"
         ],
         "Content-Length": [
-          "248"
+          "246"
         ],
         "accept": [
           "application/json"
@@ -25,7 +25,7 @@
           "submission"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"job_1435101021696_0049\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"job_1438899342432_0017\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "31"
@@ -37,13 +37,13 @@
           "GATEWAY0"
         ],
         "x-ms-hdi-active": [
-          "headnode0.hdisdk-resize1.d6.internal.cloudapp.net"
+          "headnode1.nemadj-ssh-test.b5.internal.cloudapp.net"
         ],
         "x-ms-leader-detect-time": [
           "0"
         ],
         "Set-Cookie": [
-          "hadoop.auth=\"u=hadoopuser&p=hadoopuser&t=simple&e=1435732444542&s=IOme0a+gdE3F6vPOdHwgzW537yE=\"; Version=1; Path=/; Expires=Wed, 01-Jul-2015 06:34:04 GMT; HttpOnly"
+          "hadoop.auth=\"u=sameuser&p=sameuser&t=simple&e=1439291364500&s=gC9w1CTEbteUmOHBgiohMByvlMA=\"; Version=1; Path=/; Expires=Tue, 11-Aug-2015 11:09:24 GMT; HttpOnly"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -55,8 +55,11 @@
         "X-Content-Type-Options": [
           "nosniff"
         ],
+        "Strict-Transport-Security": [
+          "max-age=31536000"
+        ],
         "Date": [
-          "Tue, 30 Jun 2015 20:34:06 GMT"
+          "Tue, 11 Aug 2015 01:09:27 GMT"
         ]
       },
       "StatusCode": 200

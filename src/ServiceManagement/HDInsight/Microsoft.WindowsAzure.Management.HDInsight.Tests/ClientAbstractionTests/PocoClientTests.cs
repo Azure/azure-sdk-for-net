@@ -733,19 +733,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
         [TestCategory("Integration")]
         [TestCategory("CheckIn")]
         [TestCategory("PocoClient")]
-        [ExpectedException(typeof(ConfigurationErrorsException))]
-        public async Task NegativeTest_InvalidAsv_Using_PocoClient()
-        {
-            IHDInsightCertificateCredential credentials = IntegrationTestBase.GetValidCredentials();
-            var cluster = GetRandomCluster();
-            cluster.AdditionalStorageAccounts.Add(new WabStorageAccountConfiguration(IntegrationTestBase.TestCredentials.Environments[0].AdditionalStorageAccounts[0].Name, IntegrationTestBase.TestCredentials.Environments[0].DefaultStorageAccount.Key));
-            await ServiceLocator.Instance.Locate<IHDInsightManagementPocoClientFactory>().Create(credentials, GetAbstractionContext(), false).CreateContainer(cluster);
-        }
-
-        [TestMethod]
-        [TestCategory("Integration")]
-        [TestCategory("CheckIn")]
-        [TestCategory("PocoClient")]
         public async Task NegativeTest_ExistingCluster_Using_PocoClient()
         {
             IHDInsightCertificateCredential credentials = IntegrationTestBase.GetValidCredentials();
