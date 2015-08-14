@@ -17,7 +17,6 @@ using Microsoft.Azure.Management.Csm;
 using Microsoft.Azure.Management.Rdfe;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Net;
 
@@ -32,16 +31,16 @@ namespace Microsoft.Azure.Common.Authentication.Models
         private void RegisterResourceManagerProviders<T>(AzureProfile profile) 
         {
             var providersToRegister = RequiredResourceLookup.RequiredProvidersForResourceManager<T>();
-            var registeredProviders = profile.Context.Subscription.GetPropertyAsArray(AzureSubscription.Property.RegisteredResourceProviders);
+            var registeredProviders = profile.DefaultContext.Subscription.GetPropertyAsArray(AzureSubscription.Property.RegisteredResourceProviders);
             var unregisteredProviders = providersToRegister.Where(p => !registeredProviders.Contains(p)).ToList();
             var successfullyRegisteredProvider = new List<string>();
-            SubscriptionCloudCredentials creds = AzureSession.AuthenticationFactory.GetSubscriptionCloudCredentials(profile.Context);
+            SubscriptionCloudCredentials creds = AzureSession.AuthenticationFactory.GetSubscriptionCloudCredentials(profile.DefaultContext);
 
             if (unregisteredProviders.Count > 0)
             {
                 using (var client = ClientFactory.CreateCustomClient<ResourceManagementClient>(
                                                         creds, 
-                                                        profile.Context.Environment.GetEndpointAsUri(AzureEnvironment.Endpoint.ResourceManager)))
+                                                        profile.DefaultContext.Environment.GetEndpointAsUri(AzureEnvironment.Endpoint.ResourceManager)))
                 {
                     foreach (string provider in unregisteredProviders)
                     {
@@ -57,7 +56,7 @@ namespace Microsoft.Azure.Common.Authentication.Models
                     }
                 }
 
-                UpdateSubscriptionRegisteredProviders(profile, profile.Context.Subscription, successfullyRegisteredProvider);
+                UpdateSubscriptionRegisteredProviders(profile, profile.DefaultContext.Subscription, successfullyRegisteredProvider);
             }
         }
 
@@ -67,9 +66,9 @@ namespace Microsoft.Azure.Common.Authentication.Models
         /// <typeparam name="T">The client type</typeparam>
         private void RegisterServiceManagementProviders<T>(AzureProfile profile) 
         {
-            var credentials = AzureSession.AuthenticationFactory.GetSubscriptionCloudCredentials(profile.Context);
+            var credentials = AzureSession.AuthenticationFactory.GetSubscriptionCloudCredentials(profile.DefaultContext);
             var providersToRegister = RequiredResourceLookup.RequiredProvidersForServiceManagement<T>();
-            var registeredProviders = profile.Context.Subscription.GetPropertyAsArray(AzureSubscription.Property.RegisteredResourceProviders);
+            var registeredProviders = profile.DefaultContext.Subscription.GetPropertyAsArray(AzureSubscription.Property.RegisteredResourceProviders);
             var unregisteredProviders = providersToRegister.Where(p => !registeredProviders.Contains(p)).ToList();
             var successfullyRegisteredProvider = new List<string>();
 
@@ -77,7 +76,7 @@ namespace Microsoft.Azure.Common.Authentication.Models
             {
                 using (var client = new ManagementClient(
                                             credentials, 
-                                            profile.Context.Environment.GetEndpointAsUri(AzureEnvironment.Endpoint.ServiceManagement)))
+                                            profile.DefaultContext.Environment.GetEndpointAsUri(AzureEnvironment.Endpoint.ServiceManagement)))
                 {
                     foreach (var provider in unregisteredProviders)
                     {
@@ -99,7 +98,7 @@ namespace Microsoft.Azure.Common.Authentication.Models
                     }
                 }
 
-                UpdateSubscriptionRegisteredProviders(profile, profile.Context.Subscription, successfullyRegisteredProvider);
+                UpdateSubscriptionRegisteredProviders(profile, profile.DefaultContext.Subscription, successfullyRegisteredProvider);
             }
         }
 

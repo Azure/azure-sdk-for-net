@@ -123,7 +123,7 @@ namespace Microsoft.Azure.Common.Authentication.Factories
 
         public virtual TClient CreateClient<TClient>(AzureProfile profile, AzureEnvironment.Endpoint endpoint) where TClient : ServiceClient<TClient>
         {
-            TClient client = CreateClient<TClient>(profile.Context, endpoint);
+            TClient client = CreateClient<TClient>(profile.DefaultContext, endpoint);
 
             foreach (IClientAction action in actions.Values)
             {

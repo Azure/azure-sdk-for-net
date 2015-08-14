@@ -12,7 +12,6 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
-using Hyak.Common;
 using System.Collections.Generic;
 
 namespace Microsoft.Azure.Common.Authentication

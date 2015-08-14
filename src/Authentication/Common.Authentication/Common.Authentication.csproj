@@ -66,8 +66,11 @@
     <Compile Include="Models\AzureEnvironment.cs" />
     <Compile Include="Models\AzureEnvironment.Methods.cs" />
     <Compile Include="Models\AzureProfile.cs" />
+    <Compile Include="Models\AzureRMProfile.cs" />
     <Compile Include="Models\AzureSubscription.cs" />
     <Compile Include="Models\AzureSubscription.Methods.cs" />
+    <Compile Include="Models\AzureTenant.cs" />
+    <Compile Include="Models\IAzureProfile.cs" />
     <Compile Include="Models\IClientAction.cs" />
     <Compile Include="Models\DiskDataStore.cs" />
     <Compile Include="Models\JsonProfileSerializer.cs" />

@@ -20,6 +20,7 @@
 // code is regenerated.
 
 using Hyak.Common;
+using Microsoft.Azure.Subscriptions.Rdfe.Models;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -29,7 +30,6 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using Microsoft.Azure.Subscriptions.Rdfe.Models;
 
 namespace Microsoft.Azure.Subscriptions.Rdfe
 {

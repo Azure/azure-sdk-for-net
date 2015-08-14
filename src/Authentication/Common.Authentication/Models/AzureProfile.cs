@@ -13,11 +13,11 @@
 // ----------------------------------------------------------------------------------
 
 using Hyak.Common;
+using Microsoft.Azure.Common.Authentication.Properties;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Azure.Common.Authentication.Properties;
-using Newtonsoft.Json;
 
 namespace Microsoft.Azure.Common.Authentication.Models
 {
@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Common.Authentication.Models
     /// Represents Azure profile structure with multiple environments, subscriptions, and accounts.
     /// </summary>
     [Serializable]
-    public sealed class AzureProfile
+    public sealed class AzureProfile : IAzureProfile
     {
         /// <summary>
         /// Gets Azure Accounts
@@ -76,10 +76,10 @@ namespace Microsoft.Azure.Common.Authentication.Models
         public Dictionary<string, AzureEnvironment> Environments { get; set; }
 
         /// <summary>
-        /// Gets current Azure context 
+        /// Gets the default azure context object.
         /// </summary>
         [JsonIgnore]
-        public AzureContext Context 
+        public AzureContext DefaultContext 
         { 
             get
             {

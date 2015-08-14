@@ -19,9 +19,9 @@
 // Changes to this file may cause incorrect behavior and will be lost if the
 // code is regenerated.
 
+using Microsoft.Azure.Management.Rdfe.Models;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.Management.Rdfe.Models;
 
 namespace Microsoft.Azure.Management.Rdfe
 {
