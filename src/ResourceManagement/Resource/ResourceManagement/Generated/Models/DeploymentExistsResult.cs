@@ -21,40 +21,31 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 
-namespace Microsoft.Azure.Management.Sql.Models
+namespace Microsoft.Azure.Management.Resources.Models
 {
     /// <summary>
-    /// Represents an Azure SQL Database Elastic Pool metric availability.
+    /// Deployment information.
     /// </summary>
-    public partial class MetricAvailability
+    public partial class DeploymentExistsResult : AzureOperationResponse
     {
-        private string _retention;
+        private bool _exists;
         
         /// <summary>
-        /// Optional. Gets or sets the retention period for the metric.
+        /// Optional. Gets or sets the value indicating whether the deployment
+        /// exists.
         /// </summary>
-        public string Retention
+        public bool Exists
         {
-            get { return this._retention; }
-            set { this._retention = value; }
-        }
-        
-        private string _timeGrain;
-        
-        /// <summary>
-        /// Optional. Gets or sets the time grain for the metric.
-        /// </summary>
-        public string TimeGrain
-        {
-            get { return this._timeGrain; }
-            set { this._timeGrain = value; }
+            get { return this._exists; }
+            set { this._exists = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the MetricAvailability class.
+        /// Initializes a new instance of the DeploymentExistsResult class.
         /// </summary>
-        public MetricAvailability()
+        public DeploymentExistsResult()
         {
         }
     }

@@ -78,14 +78,14 @@ namespace Microsoft.Azure.Management.Sql.Models
             set { this._edition = value; }
         }
         
-        private long? _storageMB;
+        private int? _storageMB;
         
         /// <summary>
         /// Optional. Gets or sets storage limit for the Sql Azure Database
         /// Elastic Pool in MB.This must agree with the Dtu if both are
         /// specified.
         /// </summary>
-        public long? StorageMB
+        public int? StorageMB
         {
             get { return this._storageMB; }
             set { this._storageMB = value; }

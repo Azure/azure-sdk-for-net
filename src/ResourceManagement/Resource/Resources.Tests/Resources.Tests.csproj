@@ -27,6 +27,9 @@
     <None Include="SessionRecords\Features.Tests.LiveFeatureTests\RegisterFeature.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\ResourceGroups.Tests.LiveDeploymentTests\CheckExistenceReturnsCorrectValue.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\ResourceGroups.Tests.LiveDeploymentTests\CreateDeploymentAndValidateProperties.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

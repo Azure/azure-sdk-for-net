@@ -20,42 +20,37 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
+using Microsoft.WindowsAzure.Management.Compute.Models;
 
-namespace Microsoft.Azure.Management.Sql.Models
+namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
     /// <summary>
-    /// Represents an Azure SQL Database Elastic Pool metric name.
+    /// Configures the Windows Remote Management service on the virtual
+    /// machine, which enables remote Windows PowerShell.
     /// </summary>
-    public partial class MetricName
+    public partial class AdditionalUnattendContentSettings
     {
-        private string _localizedValue;
+        private IList<UnattendPassSettings> _unattendPasses;
         
         /// <summary>
-        /// Optional. Gets or sets the localized name of the metric
+        /// Optional. Specifies the unattend passes
         /// </summary>
-        public string LocalizedValue
+        public IList<UnattendPassSettings> UnattendPasses
         {
-            get { return this._localizedValue; }
-            set { this._localizedValue = value; }
-        }
-        
-        private string _value;
-        
-        /// <summary>
-        /// Optional. Gets or sets the name of the metric
-        /// </summary>
-        public string Value
-        {
-            get { return this._value; }
-            set { this._value = value; }
+            get { return this._unattendPasses; }
+            set { this._unattendPasses = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the MetricName class.
+        /// Initializes a new instance of the AdditionalUnattendContentSettings
+        /// class.
         /// </summary>
-        public MetricName()
+        public AdditionalUnattendContentSettings()
         {
+            this.UnattendPasses = new LazyList<UnattendPassSettings>();
         }
     }
 }
