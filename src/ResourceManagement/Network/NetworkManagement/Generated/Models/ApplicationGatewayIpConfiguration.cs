@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.Network.Models
     /// <summary>
     /// IP configuration of application gateway
     /// </summary>
-    public partial class ApplicationGatewayIpConfiguration : ChildResource
+    public partial class ApplicationGatewayIPConfiguration : ChildResource
     {
         private string _provisioningState;
         
@@ -55,10 +55,10 @@ namespace Microsoft.Azure.Management.Network.Models
         }
         
         /// <summary>
-        /// Initializes a new instance of the ApplicationGatewayIpConfiguration
+        /// Initializes a new instance of the ApplicationGatewayIPConfiguration
         /// class.
         /// </summary>
-        public ApplicationGatewayIpConfiguration()
+        public ApplicationGatewayIPConfiguration()
         {
         }
     }

@@ -13,17 +13,17 @@
 // limitations under the License.
 //
 
-using Microsoft.Azure;
-using Microsoft.Azure.Management.BackupServices;
-using Microsoft.Azure.Management.BackupServices.Models;
-using Microsoft.Azure.Test;
-using Microsoft.Azure.Test.HttpRecorder;
 using System;
 using System.Configuration;
 using System.Net;
 using System.Net.Http;
 using System.Net.Security;
 using System.Reflection;
+using Microsoft.Azure;
+using Microsoft.Azure.Management.BackupServices;
+using Microsoft.Azure.Management.BackupServices.Models;
+using Microsoft.Azure.Test;
+using Microsoft.Azure.Test.HttpRecorder;
 
 namespace BackupServices.Tests
 {
@@ -36,11 +36,17 @@ namespace BackupServices.Tests
             var testEnvironment = factory.GetTestEnvironment();
             ServicePointManager.ServerCertificateValidationCallback = IgnoreCertificateErrorHandler;
 
+<<<<<<< HEAD
+=======
+            BackupVaultServicesManagementClient client;
+
+>>>>>>> release
             string resourceName = ConfigurationManager.AppSettings["ResourceName"];
             string resourceGroupName = ConfigurationManager.AppSettings["ResourceGroupName"];
 
             if (typeof(T) == typeof(BackupServicesManagementClient))
             {
+<<<<<<< HEAD
                 BackupServicesManagementClient client;
                 if (testEnvironment.UsesCustomUri())
                 {
@@ -78,12 +84,32 @@ namespace BackupServices.Tests
                         resourceGroupName,
                         testEnvironment.Credentials as SubscriptionCloudCredentials);
                 }
+=======
+                client = new BackupVaultServicesManagementClient(
+                    resourceName,
+                    resourceGroupName,
+                    testEnvironment.Credentials as SubscriptionCloudCredentials,
+                    testEnvironment.BaseUri);
+            }
+            else
+            {
+                client = new BackupVaultServicesManagementClient(
+                    resourceName,
+                    resourceGroupName,
+                    testEnvironment.Credentials as SubscriptionCloudCredentials);
+            }
+>>>>>>> release
 
                 return GetServiceClient<T>(factory, client);
             }
         }
 
+<<<<<<< HEAD
         public static T GetServiceClient<T>(TestEnvironmentFactory factory, BackupServicesManagementClient client) where T : class
+=======
+
+        public static T GetServiceClient<T>(TestEnvironmentFactory factory, BackupVaultServicesManagementClient client) where T : class
+>>>>>>> release
         {
             TestEnvironment testEnvironment = factory.GetTestEnvironment();
 

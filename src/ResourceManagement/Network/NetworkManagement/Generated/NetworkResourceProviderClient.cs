@@ -163,6 +163,28 @@ namespace Microsoft.Azure.Management.Network
             get { return this._publicIpAddresses; }
         }
         
+        private IRouteOperations _routes;
+        
+        /// <summary>
+        /// The Network Resource Provider API includes operations for managing
+        /// the Routes for your subscription.
+        /// </summary>
+        public virtual IRouteOperations Routes
+        {
+            get { return this._routes; }
+        }
+        
+        private IRouteTableOperations _routeTables;
+        
+        /// <summary>
+        /// The Network Resource Provider API includes operations for managing
+        /// the RouteTables for your subscription.
+        /// </summary>
+        public virtual IRouteTableOperations RouteTables
+        {
+            get { return this._routeTables; }
+        }
+        
         private ISecurityRuleOperations _securityRules;
         
         /// <summary>
@@ -241,6 +263,8 @@ namespace Microsoft.Azure.Management.Network
             this._networkInterfaces = new NetworkInterfaceOperations(this);
             this._networkSecurityGroups = new NetworkSecurityGroupOperations(this);
             this._publicIpAddresses = new PublicIpAddressOperations(this);
+            this._routes = new RouteOperations(this);
+            this._routeTables = new RouteTableOperations(this);
             this._securityRules = new SecurityRuleOperations(this);
             this._subnets = new SubnetOperations(this);
             this._usages = new UsageOperations(this);
@@ -321,6 +345,8 @@ namespace Microsoft.Azure.Management.Network
             this._networkInterfaces = new NetworkInterfaceOperations(this);
             this._networkSecurityGroups = new NetworkSecurityGroupOperations(this);
             this._publicIpAddresses = new PublicIpAddressOperations(this);
+            this._routes = new RouteOperations(this);
+            this._routeTables = new RouteTableOperations(this);
             this._securityRules = new SecurityRuleOperations(this);
             this._subnets = new SubnetOperations(this);
             this._usages = new UsageOperations(this);

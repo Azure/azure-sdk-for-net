@@ -28,7 +28,7 @@
     </references>
     <dependencies>
       <dependency id="Microsoft.Azure.Common" version="[2.1.0,3.0)" />
-      <dependency id="Microsoft.Azure.Management.Resources" version="2.18.0-preview" />
+      <dependency id="Microsoft.Azure.Management.Resources" version="2.18.1-preview" />
     </dependencies>
   </metadata>
   <files>

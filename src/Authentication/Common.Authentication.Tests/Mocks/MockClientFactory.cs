@@ -20,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 
 namespace Microsoft.WindowsAzure.Commands.Common.Test.Mocks
 {
@@ -79,16 +80,17 @@ namespace Microsoft.WindowsAzure.Commands.Common.Test.Mocks
             throw new NotImplementedException();
         }
 
-        public List<System.Net.Http.Headers.ProductInfoHeaderValue> UserAgents
+
+        public void AddUserAgent(string productName)
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
+            throw new NotImplementedException();
         }
+
+        public void AddUserAgent(string productName, string productVersion)
+        {
+            throw new NotImplementedException();
+        }
+
+        public HashSet<ProductInfoHeaderValue> UserAgents { get; set; }
     }
 }

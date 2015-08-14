@@ -81,18 +81,83 @@ namespace Microsoft.Azure.Management.BackupServices
         }
         
         /// <summary>
-        /// Definition of Container operations for the Azure Backup extension.
+<<<<<<< HEAD:src/ResourceManagement/AzureBackup/BackupServicesManagement/Generated/IBackupServicesManagementClient.cs
+        /// Definition of BackUp operations for the Azure Backup extension.
         /// </summary>
-        IMarsContainerOperations Container
+        IBackUpOperations BackUp
         {
             get; 
         }
         
         /// <summary>
+=======
+>>>>>>> release:src/ResourceManagement/AzureBackup/BackupServicesManagement/Generated/IBackupVaultServicesManagementClient.cs
+        /// Definition of Container operations for the Azure Backup extension.
+        /// </summary>
+        IContainerOperations Container
+        {
+            get; 
+        }
+        
+        /// <summary>
+<<<<<<< HEAD:src/ResourceManagement/AzureBackup/BackupServicesManagement/Generated/IBackupServicesManagementClient.cs
+        /// Definition of Protection Policy operations for the Azure Backup
+=======
         /// Definition of Vault-related operations for the Azure Backup
+>>>>>>> release:src/ResourceManagement/AzureBackup/BackupServicesManagement/Generated/IBackupVaultServicesManagementClient.cs
         /// extension.
         /// </summary>
-        IVaultOperations Vault
+        ICSMProtectionPolicyOperations CSMProtectionPolicy
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Definition of DataSource operations for the Azure Backup extension.
+        /// </summary>
+        IDataSourceOperations DataSource
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Definition of Job operations for Azure backup extension.
+        /// </summary>
+        IJobOperations Job
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Definition of Workflow operation for the Azure Backup extension.
+        /// </summary>
+        IOperationStatus OperationStatus
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Definition of Protectable ObjectOperation operations for the Azure
+        /// Backup extension.
+        /// </summary>
+        IProtectableObjectOperations ProtectableObject
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Definition of Recovery Point operations for the Azure Backup
+        /// extension.
+        /// </summary>
+        IRecoveryPointOperations RecoveryPoint
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Definition of Restore operations for the Azure Backup extension.
+        /// </summary>
+        IRestoreOperations Restore
         {
             get; 
         }

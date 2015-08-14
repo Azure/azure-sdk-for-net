@@ -100,25 +100,111 @@ namespace Microsoft.Azure.Management.BackupServices
             set { this._resourceName = value; }
         }
         
-        private IMarsContainerOperations _container;
+<<<<<<< HEAD:src/ResourceManagement/AzureBackup/BackupServicesManagement/Generated/BackupServicesManagementClient.cs
+        private IBackUpOperations _backUp;
+=======
+        private IContainerOperations _container;
         
         /// <summary>
         /// Definition of Container operations for the Azure Backup extension.
         /// </summary>
-        public virtual IMarsContainerOperations Container
+        public virtual IContainerOperations Container
         {
             get { return this._container; }
         }
         
         private IVaultOperations _vault;
+>>>>>>> release:src/ResourceManagement/AzureBackup/BackupServicesManagement/Generated/BackupVaultServicesManagementClient.cs
         
         /// <summary>
-        /// Definition of Vault-related operations for the Azure Backup
+        /// Definition of BackUp operations for the Azure Backup extension.
+        /// </summary>
+        public virtual IBackUpOperations BackUp
+        {
+            get { return this._backUp; }
+        }
+        
+        private IContainerOperations _container;
+        
+        /// <summary>
+        /// Definition of Container operations for the Azure Backup extension.
+        /// </summary>
+        public virtual IContainerOperations Container
+        {
+            get { return this._container; }
+        }
+        
+        private ICSMProtectionPolicyOperations _cSMProtectionPolicy;
+        
+        /// <summary>
+        /// Definition of Protection Policy operations for the Azure Backup
         /// extension.
         /// </summary>
-        public virtual IVaultOperations Vault
+        public virtual ICSMProtectionPolicyOperations CSMProtectionPolicy
         {
-            get { return this._vault; }
+            get { return this._cSMProtectionPolicy; }
+        }
+        
+        private IDataSourceOperations _dataSource;
+        
+        /// <summary>
+        /// Definition of DataSource operations for the Azure Backup extension.
+        /// </summary>
+        public virtual IDataSourceOperations DataSource
+        {
+            get { return this._dataSource; }
+        }
+        
+        private IJobOperations _job;
+        
+        /// <summary>
+        /// Definition of Job operations for Azure backup extension.
+        /// </summary>
+        public virtual IJobOperations Job
+        {
+            get { return this._job; }
+        }
+        
+        private IOperationStatus _operationStatus;
+        
+        /// <summary>
+        /// Definition of Workflow operation for the Azure Backup extension.
+        /// </summary>
+        public virtual IOperationStatus OperationStatus
+        {
+            get { return this._operationStatus; }
+        }
+        
+        private IProtectableObjectOperations _protectableObject;
+        
+        /// <summary>
+        /// Definition of Protectable ObjectOperation operations for the Azure
+        /// Backup extension.
+        /// </summary>
+        public virtual IProtectableObjectOperations ProtectableObject
+        {
+            get { return this._protectableObject; }
+        }
+        
+        private IRecoveryPointOperations _recoveryPoint;
+        
+        /// <summary>
+        /// Definition of Recovery Point operations for the Azure Backup
+        /// extension.
+        /// </summary>
+        public virtual IRecoveryPointOperations RecoveryPoint
+        {
+            get { return this._recoveryPoint; }
+        }
+        
+        private IRestoreOperations _restore;
+        
+        /// <summary>
+        /// Definition of Restore operations for the Azure Backup extension.
+        /// </summary>
+        public virtual IRestoreOperations Restore
+        {
+            get { return this._restore; }
         }
         
         /// <summary>
@@ -128,8 +214,20 @@ namespace Microsoft.Azure.Management.BackupServices
         public BackupVaultServicesManagementClient()
             : base()
         {
-            this._container = new MarsContainerOperations(this);
+<<<<<<< HEAD:src/ResourceManagement/AzureBackup/BackupServicesManagement/Generated/BackupServicesManagementClient.cs
+            this._backUp = new BackUpOperations(this);
+            this._container = new ContainerOperations(this);
+            this._cSMProtectionPolicy = new CSMProtectionPolicyOperations(this);
+            this._dataSource = new DataSourceOperations(this);
+            this._job = new JobOperations(this);
+            this._operationStatus = new OperationStatus(this);
+            this._protectableObject = new ProtectableObjectOperations(this);
+            this._recoveryPoint = new RecoveryPointOperations(this);
+            this._restore = new RestoreOperations(this);
+=======
+            this._container = new ContainerOperations(this);
             this._vault = new VaultOperations(this);
+>>>>>>> release:src/ResourceManagement/AzureBackup/BackupServicesManagement/Generated/BackupVaultServicesManagementClient.cs
             this._apiVersion = "2013-03-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
@@ -230,8 +328,20 @@ namespace Microsoft.Azure.Management.BackupServices
         public BackupVaultServicesManagementClient(HttpClient httpClient)
             : base(httpClient)
         {
-            this._container = new MarsContainerOperations(this);
+<<<<<<< HEAD:src/ResourceManagement/AzureBackup/BackupServicesManagement/Generated/BackupServicesManagementClient.cs
+            this._backUp = new BackUpOperations(this);
+            this._container = new ContainerOperations(this);
+            this._cSMProtectionPolicy = new CSMProtectionPolicyOperations(this);
+            this._dataSource = new DataSourceOperations(this);
+            this._job = new JobOperations(this);
+            this._operationStatus = new OperationStatus(this);
+            this._protectableObject = new ProtectableObjectOperations(this);
+            this._recoveryPoint = new RecoveryPointOperations(this);
+            this._restore = new RestoreOperations(this);
+=======
+            this._container = new ContainerOperations(this);
             this._vault = new VaultOperations(this);
+>>>>>>> release:src/ResourceManagement/AzureBackup/BackupServicesManagement/Generated/BackupVaultServicesManagementClient.cs
             this._apiVersion = "2013-03-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;

@@ -59,6 +59,8 @@
     <Compile Include="Generated\IProtectableObjectOperations.cs" />
     <Compile Include="Generated\IRecoveryPointOperations.cs" />
     <Compile Include="Generated\IRestoreOperations.cs" />
+    <Compile Include="Generated\IBackupVaultServicesManagementClient.cs" />
+    <Compile Include="Generated\IContainerOperations.cs" />
     <Compile Include="Generated\IVaultOperations.cs" />
     <Compile Include="Generated\JobOperations.cs" />
     <Compile Include="Generated\JobOperationsExtensions.cs" />
@@ -152,6 +154,19 @@
     <Compile Include="Generated\Models\Month.cs" />
     <Compile Include="Generated\Models\ProtectableObjectInfo.cs" />
     <Compile Include="Generated\Models\ProtectableObjectResponse.cs" />
+    <Compile Include="Generated\Models\BackupBaseObject.cs" />
+    <Compile Include="Generated\Models\BackupBaseResponse.cs" />
+    <Compile Include="Generated\Models\BackupListResponse.cs" />
+    <Compile Include="Generated\Models\ContainerReregistrationState.cs" />
+    <Compile Include="Generated\Models\CustomerType.cs" />
+    <Compile Include="Generated\Models\CustomRequestHeaders.cs" />
+    <Compile Include="Generated\Models\EnableReregistrationRequest.cs" />
+    <Compile Include="Generated\Models\GetResourceStorageConfigResponse.cs" />
+    <Compile Include="Generated\Models\ListMarsContainerOperationResponse.cs" />
+    <Compile Include="Generated\Models\ListMarsContainerResponse.cs" />
+    <Compile Include="Generated\Models\MarsContainerProperties.cs" />
+    <Compile Include="Generated\Models\MarsContainerResponse.cs" />
+    <Compile Include="Generated\Models\MarsContainerType.cs" />
     <Compile Include="Generated\Models\RawCertificateData.cs" />
     <Compile Include="Generated\Models\RecoveryType.cs" />
     <Compile Include="Generated\Models\RemoveProtectionRequestInput.cs" />
@@ -177,15 +192,9 @@
     <Compile Include="Generated\RestoreOperationsExtensions.cs" />
     <Compile Include="Generated\VaultOperations.cs" />
     <Compile Include="Generated\VaultOperationsExtensions.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(LibraryFxTarget)' == 'portable' " />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(LibraryFxTarget)' != 'portable' " />
   <Import Project="$(LibraryNugetPackageFolder)\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('$(LibraryNugetPackageFolder)\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
-  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
-  </Target>
 </Project>

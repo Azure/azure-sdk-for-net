@@ -13,6 +13,7 @@
 // limitations under the License.
 //
 
+<<<<<<< HEAD
 using Microsoft.Azure.Management.BackupServices.Models;
 using Microsoft.Azure.Management.BackupServices;
 using Microsoft.Azure.Test;
@@ -21,12 +22,27 @@ using System.Net;
 using Xunit;
 using System.Configuration;
 using System;
+=======
+using BackupServices.Tests.Helpers;
+using Microsoft.Azure.Management.BackupServices;
+using Microsoft.Azure.Management.BackupServices.Models;
+using Microsoft.Azure.Test;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Linq;
+using System.Net;
+using System.Text;
+using System.Threading.Tasks;
+using Xunit;
+>>>>>>> release
 
 namespace BackupServices.Tests
 {
     public class ContainerTests : BackupServicesTestsBase
     {
         [Fact]
+<<<<<<< HEAD
         public void RegisterContainerTest()
         {
             using (UndoContext context = UndoContext.Current)
@@ -69,6 +85,8 @@ namespace BackupServices.Tests
         }
 
         [Fact]
+=======
+>>>>>>> release
         void ListMarsContainersByTypeReturnsNonZeroContainers()
         {
             using (UndoContext undoContext = UndoContext.Current)
@@ -227,6 +245,7 @@ namespace BackupServices.Tests
                 }), "Reregistration doesn't appear to have been enabled for the input container");
             }
         }
+<<<<<<< HEAD
 
         [Fact]
         void ListContainersReturnsNonZeroContainers()
@@ -395,5 +414,7 @@ namespace BackupServices.Tests
                 }), "Obtained container list doesn't contain the input container");
             }
         }
+=======
+>>>>>>> release
     }
 }

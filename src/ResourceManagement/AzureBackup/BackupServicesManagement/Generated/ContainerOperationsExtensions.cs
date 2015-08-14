@@ -31,20 +31,33 @@ namespace Microsoft.Azure.Management.BackupServices
     public static partial class ContainerOperationsExtensions
     {
         /// <summary>
+<<<<<<< HEAD
         /// Get the list of all container based on the given query filter
         /// string.
+=======
+        /// Enable the container reregistration.
+>>>>>>> release
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.Azure.Management.BackupServices.IContainerOperations.
         /// </param>
+<<<<<<< HEAD
         /// <param name='parameters'>
         /// Optional. Container query parameters.
+=======
+        /// <param name='containerId'>
+        /// Required. MARS container ID.
+        /// </param>
+        /// <param name='enableReregistrationRequest'>
+        /// Required. Enable Reregistration Request.
+>>>>>>> release
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
+<<<<<<< HEAD
         /// The definition of a CSMContainerListOperationResponse.
         /// </returns>
         public static CSMContainerListOperationResponse List(this IContainerOperations operations, ContainerQueryParameters parameters, CustomRequestHeaders customRequestHeaders)
@@ -52,25 +65,47 @@ namespace Microsoft.Azure.Management.BackupServices
             return Task.Factory.StartNew((object s) => 
             {
                 return ((IContainerOperations)s).ListAsync(parameters, customRequestHeaders);
+=======
+        /// The definition of a Operation Response.
+        /// </returns>
+        public static OperationResponse EnableMarsContainerReregistration(this IContainerOperations operations, string containerId, EnableReregistrationRequest enableReregistrationRequest, CustomRequestHeaders customRequestHeaders)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IContainerOperations)s).EnableMarsContainerReregistrationAsync(containerId, enableReregistrationRequest, customRequestHeaders);
+>>>>>>> release
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
+<<<<<<< HEAD
         /// Get the list of all container based on the given query filter
         /// string.
+=======
+        /// Enable the container reregistration.
+>>>>>>> release
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.Azure.Management.BackupServices.IContainerOperations.
         /// </param>
+<<<<<<< HEAD
         /// <param name='parameters'>
         /// Optional. Container query parameters.
+=======
+        /// <param name='containerId'>
+        /// Required. MARS container ID.
+        /// </param>
+        /// <param name='enableReregistrationRequest'>
+        /// Required. Enable Reregistration Request.
+>>>>>>> release
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
+<<<<<<< HEAD
         /// The definition of a CSMContainerListOperationResponse.
         /// </returns>
         public static Task<CSMContainerListOperationResponse> ListAsync(this IContainerOperations operations, ContainerQueryParameters parameters, CustomRequestHeaders customRequestHeaders)
@@ -80,15 +115,34 @@ namespace Microsoft.Azure.Management.BackupServices
         
         /// <summary>
         /// Trigger the Discovery.
+=======
+        /// The definition of a Operation Response.
+        /// </returns>
+        public static Task<OperationResponse> EnableMarsContainerReregistrationAsync(this IContainerOperations operations, string containerId, EnableReregistrationRequest enableReregistrationRequest, CustomRequestHeaders customRequestHeaders)
+        {
+            return operations.EnableMarsContainerReregistrationAsync(containerId, enableReregistrationRequest, customRequestHeaders, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Get the list of all container based on the given query filter
+        /// string.
+>>>>>>> release
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.Azure.Management.BackupServices.IContainerOperations.
         /// </param>
+<<<<<<< HEAD
+=======
+        /// <param name='containerType'>
+        /// Required. Type of container.
+        /// </param>
+>>>>>>> release
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
+<<<<<<< HEAD
         /// The definition of a Operation Response.
         /// </returns>
         public static OperationResponse Refresh(this IContainerOperations operations, CustomRequestHeaders customRequestHeaders)
@@ -96,21 +150,42 @@ namespace Microsoft.Azure.Management.BackupServices
             return Task.Factory.StartNew((object s) => 
             {
                 return ((IContainerOperations)s).RefreshAsync(customRequestHeaders);
+=======
+        /// List of Microsoft Azure Recovery Services (MARS) containers.
+        /// </returns>
+        public static ListMarsContainerOperationResponse ListMarsContainersByType(this IContainerOperations operations, MarsContainerType containerType, CustomRequestHeaders customRequestHeaders)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IContainerOperations)s).ListMarsContainersByTypeAsync(containerType, customRequestHeaders);
+>>>>>>> release
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
+<<<<<<< HEAD
         /// Trigger the Discovery.
+=======
+        /// Get the list of all container based on the given query filter
+        /// string.
+>>>>>>> release
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.Azure.Management.BackupServices.IContainerOperations.
         /// </param>
+<<<<<<< HEAD
+=======
+        /// <param name='containerType'>
+        /// Required. Type of container.
+        /// </param>
+>>>>>>> release
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
+<<<<<<< HEAD
         /// The definition of a Operation Response.
         /// </returns>
         public static Task<OperationResponse> RefreshAsync(this IContainerOperations operations, CustomRequestHeaders customRequestHeaders)
@@ -120,18 +195,39 @@ namespace Microsoft.Azure.Management.BackupServices
         
         /// <summary>
         /// Register the container.
+=======
+        /// List of Microsoft Azure Recovery Services (MARS) containers.
+        /// </returns>
+        public static Task<ListMarsContainerOperationResponse> ListMarsContainersByTypeAsync(this IContainerOperations operations, MarsContainerType containerType, CustomRequestHeaders customRequestHeaders)
+        {
+            return operations.ListMarsContainersByTypeAsync(containerType, customRequestHeaders, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Get the list of all container based on the given query filter
+        /// string.
+>>>>>>> release
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.Azure.Management.BackupServices.IContainerOperations.
         /// </param>
+<<<<<<< HEAD
         /// <param name='containerName'>
         /// Required. Container to be register.
+=======
+        /// <param name='containerType'>
+        /// Required. Type of container.
+        /// </param>
+        /// <param name='friendlyName'>
+        /// Required. Friendly name of container.
+>>>>>>> release
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
+<<<<<<< HEAD
         /// The definition of a Operation Response.
         /// </returns>
         public static OperationResponse Register(this IContainerOperations operations, string containerName, CustomRequestHeaders customRequestHeaders)
@@ -139,29 +235,59 @@ namespace Microsoft.Azure.Management.BackupServices
             return Task.Factory.StartNew((object s) => 
             {
                 return ((IContainerOperations)s).RegisterAsync(containerName, customRequestHeaders);
+=======
+        /// List of Microsoft Azure Recovery Services (MARS) containers.
+        /// </returns>
+        public static ListMarsContainerOperationResponse ListMarsContainersByTypeAndFriendlyName(this IContainerOperations operations, MarsContainerType containerType, string friendlyName, CustomRequestHeaders customRequestHeaders)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IContainerOperations)s).ListMarsContainersByTypeAndFriendlyNameAsync(containerType, friendlyName, customRequestHeaders);
+>>>>>>> release
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
+<<<<<<< HEAD
         /// Register the container.
+=======
+        /// Get the list of all container based on the given query filter
+        /// string.
+>>>>>>> release
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.Azure.Management.BackupServices.IContainerOperations.
         /// </param>
+<<<<<<< HEAD
         /// <param name='containerName'>
         /// Required. Container to be register.
+=======
+        /// <param name='containerType'>
+        /// Required. Type of container.
+        /// </param>
+        /// <param name='friendlyName'>
+        /// Required. Friendly name of container.
+>>>>>>> release
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
+<<<<<<< HEAD
         /// The definition of a Operation Response.
         /// </returns>
         public static Task<OperationResponse> RegisterAsync(this IContainerOperations operations, string containerName, CustomRequestHeaders customRequestHeaders)
         {
             return operations.RegisterAsync(containerName, customRequestHeaders, CancellationToken.None);
+=======
+        /// List of Microsoft Azure Recovery Services (MARS) containers.
+        /// </returns>
+        public static Task<ListMarsContainerOperationResponse> ListMarsContainersByTypeAndFriendlyNameAsync(this IContainerOperations operations, MarsContainerType containerType, string friendlyName, CustomRequestHeaders customRequestHeaders)
+        {
+            return operations.ListMarsContainersByTypeAndFriendlyNameAsync(containerType, friendlyName, customRequestHeaders, CancellationToken.None);
+>>>>>>> release
         }
         
         /// <summary>
@@ -171,20 +297,36 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Reference to the
         /// Microsoft.Azure.Management.BackupServices.IContainerOperations.
         /// </param>
+<<<<<<< HEAD
         /// <param name='containerName'>
         /// Required. Container which we want to unregister.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Required. Request header parameters.
+=======
+        /// <param name='containerId'>
+        /// Required. MARS container ID.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+>>>>>>> release
         /// </param>
         /// <returns>
         /// The definition of a Operation Response.
         /// </returns>
+<<<<<<< HEAD
         public static OperationResponse Unregister(this IContainerOperations operations, string containerName, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
                 return ((IContainerOperations)s).UnregisterAsync(containerName, customRequestHeaders);
+=======
+        public static OperationResponse UnregisterMarsContainer(this IContainerOperations operations, string containerId, CustomRequestHeaders customRequestHeaders)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IContainerOperations)s).UnregisterMarsContainerAsync(containerId, customRequestHeaders);
+>>>>>>> release
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -196,18 +338,32 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Reference to the
         /// Microsoft.Azure.Management.BackupServices.IContainerOperations.
         /// </param>
+<<<<<<< HEAD
         /// <param name='containerName'>
         /// Required. Container which we want to unregister.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Required. Request header parameters.
+=======
+        /// <param name='containerId'>
+        /// Required. MARS container ID.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+>>>>>>> release
         /// </param>
         /// <returns>
         /// The definition of a Operation Response.
         /// </returns>
+<<<<<<< HEAD
         public static Task<OperationResponse> UnregisterAsync(this IContainerOperations operations, string containerName, CustomRequestHeaders customRequestHeaders)
         {
             return operations.UnregisterAsync(containerName, customRequestHeaders, CancellationToken.None);
+=======
+        public static Task<OperationResponse> UnregisterMarsContainerAsync(this IContainerOperations operations, string containerId, CustomRequestHeaders customRequestHeaders)
+        {
+            return operations.UnregisterMarsContainerAsync(containerId, customRequestHeaders, CancellationToken.None);
+>>>>>>> release
         }
     }
 }
