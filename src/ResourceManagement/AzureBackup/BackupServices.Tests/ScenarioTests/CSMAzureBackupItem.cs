@@ -148,8 +148,6 @@ namespace BackupServices.Tests
                     Assert.True(!string.IsNullOrEmpty(ds.Properties.ContainerId), "ContainerId can't be null or empty");
                     Assert.True(!string.IsNullOrEmpty(ds.Properties.FriendlyName), "FriendlyName can't be null or empty");
                     Assert.True(!string.IsNullOrEmpty(ds.Properties.ItemType), "ItemType can't be null or empty");
-                    Assert.True(!string.IsNullOrEmpty(ds.Properties.LastBackupJobId), "LastBackupJobId can't be null or empty");
-                    Assert.True(!string.IsNullOrEmpty(ds.Properties.LastBackupStatus), "LastBackupStatus can't be  null or empty");
                     Assert.True(!string.IsNullOrEmpty(ds.Properties.ProtectionPolicyId), "ProtectionPolicyId can't be null or empty");
                     Assert.True(!string.IsNullOrEmpty(ds.Properties.ProtectionStatus), "ProtectionStatus can't be null or empty");
                     Assert.True(!string.IsNullOrEmpty(ds.Properties.RecoveryPointsCount.ToString()), "RecoveryPointsCount can't be null or empty");
