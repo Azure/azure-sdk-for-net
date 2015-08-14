@@ -51,12 +51,12 @@ namespace Common.Authentication.Test
         private TenantIdDescription guestTenant;
         private RDFESubscription guestRdfeSubscription;
         private CSMSubscription guestCsmSubscription;
-        private AzureProfile currentProfile;
+        private AzureSMProfile currentProfile;
 
         public ProfileClientTests()
         {
             SetMockData();
-            currentProfile = new AzureProfile();
+            currentProfile = new AzureSMProfile();
         }
 
         [Fact]
@@ -65,7 +65,7 @@ namespace Common.Authentication.Test
             MemoryDataStore dataStore = new MemoryDataStore();
             dataStore.VirtualStore[oldProfileDataPath] = oldProfileData;
             AzureSession.DataStore = dataStore;
-            currentProfile = new AzureProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
+            currentProfile = new AzureSMProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
             ProfileClient client = new ProfileClient(currentProfile);
 
             Assert.False(dataStore.FileExists(oldProfileDataPath));
@@ -77,7 +77,7 @@ namespace Common.Authentication.Test
         {
             MemoryDataStore dataStore = new MemoryDataStore();
             AzureSession.DataStore = dataStore;
-            AzureProfile newProfile = new AzureProfile();
+            AzureSMProfile newProfile = new AzureSMProfile();
             ProfileClient client1 = new ProfileClient(newProfile);
             Assert.Throws<ArgumentNullException>(() =>
                 client1.InitializeProfile(null, Guid.NewGuid(), new X509Certificate2(), "foo"));
@@ -90,7 +90,7 @@ namespace Common.Authentication.Test
         {
             MemoryDataStore dataStore = new MemoryDataStore();
             AzureSession.DataStore = dataStore;
-            AzureProfile newProfile = new AzureProfile();
+            AzureSMProfile newProfile = new AzureSMProfile();
             ProfileClient client1 = new ProfileClient(newProfile);
             var subscriptionId = Guid.NewGuid();
             var certificate = new X509Certificate2(Convert.FromBase64String(dummyCertificate));
@@ -109,7 +109,7 @@ namespace Common.Authentication.Test
         {
             MemoryDataStore dataStore = new MemoryDataStore();
             AzureSession.DataStore = dataStore;
-            AzureProfile newProfile = new AzureProfile();
+            AzureSMProfile newProfile = new AzureSMProfile();
             ProfileClient client1 = new ProfileClient(newProfile);
             Assert.Throws<ArgumentNullException>(() =>
                 client1.InitializeProfile(null, Guid.NewGuid(), new AzureAccount(), null, "foo"));
@@ -123,7 +123,7 @@ namespace Common.Authentication.Test
             SetMocks(new[] { rdfeSubscription1, rdfeSubscription2 }.ToList(), new[] { csmSubscription1 }.ToList());
             MemoryDataStore dataStore = new MemoryDataStore();
             AzureSession.DataStore = dataStore;
-            AzureProfile newProfile = new AzureProfile();
+            AzureSMProfile newProfile = new AzureSMProfile();
             ProfileClient client1 = new ProfileClient(newProfile);
             var newAccount = new AzureAccount {Id = "foo"};
             newAccount.Properties[AzureAccount.Property.Tenants] = "123";
@@ -143,7 +143,7 @@ namespace Common.Authentication.Test
             //SetMocks(new[] { rdfeSubscription1, rdfeSubscription2 }.ToList(), new[] { csmSubscription1 }.ToList());
             MemoryDataStore dataStore = new MemoryDataStore();
             AzureSession.DataStore = dataStore;
-            AzureProfile newProfile = new AzureProfile();
+            AzureSMProfile newProfile = new AzureSMProfile();
             ProfileClient client1 = new ProfileClient(newProfile);
 
             client1.InitializeProfile(AzureEnvironment.PublicEnvironments["AzureCloud"],
@@ -163,7 +163,7 @@ namespace Common.Authentication.Test
             SetMocks(new[] { rdfeSubscription1, rdfeSubscription2 }.ToList(), new[] { csmSubscription1 }.ToList());
             MemoryDataStore dataStore = new MemoryDataStore();
             AzureSession.DataStore = dataStore;
-            AzureProfile newProfile = new AzureProfile();
+            AzureSMProfile newProfile = new AzureSMProfile();
             ProfileClient client1 = new ProfileClient(newProfile);
             var newAccount = new AzureAccount { Id = "foo" };
             newAccount.Properties[AzureAccount.Property.Tenants] = "123";
@@ -178,7 +178,7 @@ namespace Common.Authentication.Test
             MemoryDataStore dataStore = new MemoryDataStore();
             dataStore.VirtualStore[oldProfileDataPath] = oldProfileData;
             AzureSession.DataStore = dataStore;
-            currentProfile = new AzureProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
+            currentProfile = new AzureSMProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
             ProfileClient client1 = new ProfileClient(currentProfile);
 
             Assert.False(dataStore.FileExists(oldProfileDataPath));
@@ -196,7 +196,7 @@ namespace Common.Authentication.Test
             MemoryDataStore dataStore = new MemoryDataStore();
             dataStore.VirtualStore[oldProfileDataPath] = oldProfileData;
             AzureSession.DataStore = dataStore;
-            currentProfile = new AzureProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
+            currentProfile = new AzureSMProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
             ProfileClient client = new ProfileClient(currentProfile);
 
             // Verify Environment migration
@@ -255,7 +255,7 @@ namespace Common.Authentication.Test
             MemoryDataStore dataStore = new MemoryDataStore();
             dataStore.VirtualStore[oldProfileDataPath] = oldProfileDataBadSubscription;
             AzureSession.DataStore = dataStore;
-            currentProfile = new AzureProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
+            currentProfile = new AzureSMProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
             ProfileClient client = new ProfileClient(currentProfile);
 
             // Verify Environment migration
@@ -303,7 +303,7 @@ namespace Common.Authentication.Test
             MemoryDataStore dataStore = new MemoryDataStore();
             dataStore.VirtualStore[oldProfileDataPath] = oldProfileDataCorruptedFile;
             AzureSession.DataStore = dataStore;
-            currentProfile = new AzureProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
+            currentProfile = new AzureSMProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
             ProfileClient client = new ProfileClient(currentProfile);
 
             // Verify Environment migration
@@ -328,7 +328,7 @@ namespace Common.Authentication.Test
             MemoryDataStore dataStore = new MemoryDataStore();
             dataStore.VirtualStore[oldProfileDataPath] = oldProfileData;
             AzureSession.DataStore = dataStore;
-            currentProfile = new AzureProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
+            currentProfile = new AzureSMProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
             ProfileClient client = new ProfileClient(currentProfile);
 
             var account = client.AddAccountAndLoadSubscriptions(new AzureAccount { Id = "test", Type = AzureAccount.AccountType.User }, AzureEnvironment.PublicEnvironments[EnvironmentName.AzureCloud], null);
@@ -347,7 +347,7 @@ namespace Common.Authentication.Test
             MemoryDataStore dataStore = new MemoryDataStore();
             dataStore.VirtualStore[oldProfileDataPath] = oldProfileData;
             AzureSession.DataStore = dataStore;
-            currentProfile = new AzureProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
+            currentProfile = new AzureSMProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
             ProfileClient client = new ProfileClient(currentProfile);
 
             var account = client.AddAccountAndLoadSubscriptions(
@@ -388,7 +388,7 @@ namespace Common.Authentication.Test
             MemoryDataStore dataStore = new MemoryDataStore();
             dataStore.VirtualStore[oldProfileDataPath] = oldProfileData;
             AzureSession.DataStore = dataStore;
-            currentProfile = new AzureProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
+            currentProfile = new AzureSMProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
             ProfileClient client = new ProfileClient(currentProfile);
 
             var account = client.AddAccountAndLoadSubscriptions(new AzureAccount { Id = "UserA", Type = AzureAccount.AccountType.User }, AzureEnvironment.PublicEnvironments[EnvironmentName.AzureCloud], null);
@@ -430,7 +430,7 @@ namespace Common.Authentication.Test
             MemoryDataStore dataStore = new MemoryDataStore();
             dataStore.VirtualStore[oldProfileDataPath] = oldProfileData;
             AzureSession.DataStore = dataStore;
-            currentProfile = new AzureProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
+            currentProfile = new AzureSMProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
             ProfileClient client = new ProfileClient(currentProfile);
 
             var account = client.AddAccountAndLoadSubscriptions(new AzureAccount { Id = "UserA", Type = AzureAccount.AccountType.User }, 
@@ -475,7 +475,7 @@ namespace Common.Authentication.Test
             MemoryDataStore dataStore = new MemoryDataStore();
             dataStore.VirtualStore[oldProfileDataPath] = oldProfileData;
             AzureSession.DataStore = dataStore;
-            currentProfile = new AzureProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
+            currentProfile = new AzureSMProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
             ProfileClient client = new ProfileClient(currentProfile);
 
             var account = client.AddAccountAndLoadSubscriptions(new AzureAccount { Id = "UserA", Type = AzureAccount.AccountType.User }, 
@@ -493,7 +493,7 @@ namespace Common.Authentication.Test
         {
             MemoryDataStore dataStore = new MemoryDataStore();
             AzureSession.DataStore = dataStore;
-            currentProfile = new AzureProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
+            currentProfile = new AzureSMProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
             ProfileClient client = new ProfileClient(currentProfile);
             client.Profile.Subscriptions[azureSubscription1.Id] = azureSubscription1;
             client.Profile.Subscriptions[azureSubscription2.Id] = azureSubscription2;
@@ -515,7 +515,7 @@ namespace Common.Authentication.Test
         {
             MemoryDataStore dataStore = new MemoryDataStore();
             AzureSession.DataStore = dataStore;
-            currentProfile = new AzureProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
+            currentProfile = new AzureSMProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
             ProfileClient client = new ProfileClient(currentProfile);
             client.Profile.Subscriptions[azureSubscription1.Id] = azureSubscription1;
             client.Profile.Subscriptions[azureSubscription2.Id] = azureSubscription2;
@@ -537,7 +537,7 @@ namespace Common.Authentication.Test
         {
             MemoryDataStore dataStore = new MemoryDataStore();
             AzureSession.DataStore = dataStore;
-            currentProfile = new AzureProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
+            currentProfile = new AzureSMProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
             ProfileClient client = new ProfileClient(currentProfile);
             client.Profile.Subscriptions[azureSubscription1.Id] = azureSubscription1;
             client.Profile.Subscriptions[azureSubscription2.Id] = azureSubscription2;
@@ -555,7 +555,7 @@ namespace Common.Authentication.Test
         {
             MemoryDataStore dataStore = new MemoryDataStore();
             AzureSession.DataStore = dataStore;
-            currentProfile = new AzureProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
+            currentProfile = new AzureSMProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
             ProfileClient client = new ProfileClient(currentProfile);
             client.Profile.Subscriptions[azureSubscription1.Id] = azureSubscription1;
             client.Profile.Subscriptions[azureSubscription2.Id] = azureSubscription2;
@@ -583,7 +583,7 @@ namespace Common.Authentication.Test
         {
             MemoryDataStore dataStore = new MemoryDataStore();
             AzureSession.DataStore = dataStore;
-            currentProfile = new AzureProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
+            currentProfile = new AzureSMProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
             ProfileClient client = new ProfileClient(currentProfile);
             client.Profile.Subscriptions[azureSubscription1.Id] = azureSubscription1;
             client.Profile.Subscriptions[azureSubscription2.Id] = azureSubscription2;
@@ -654,7 +654,7 @@ namespace Common.Authentication.Test
         {
             MemoryDataStore dataStore = new MemoryDataStore();
             AzureSession.DataStore = dataStore;
-            currentProfile = new AzureProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
+            currentProfile = new AzureSMProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
             ProfileClient client = new ProfileClient(currentProfile);
             client.Profile.Subscriptions[azureSubscription1.Id] = azureSubscription1;
             client.Profile.Subscriptions[azureSubscription2.Id] = azureSubscription2;
@@ -718,7 +718,7 @@ namespace Common.Authentication.Test
         {
             MemoryDataStore dataStore = new MemoryDataStore();
             AzureSession.DataStore = dataStore;
-            currentProfile = new AzureProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
+            currentProfile = new AzureSMProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
             ProfileClient client = new ProfileClient(currentProfile);
 
             Assert.Equal(2, client.Profile.Environments.Count);
@@ -735,7 +735,7 @@ namespace Common.Authentication.Test
         {
             MemoryDataStore dataStore = new MemoryDataStore();
             AzureSession.DataStore = dataStore;
-            currentProfile = new AzureProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
+            currentProfile = new AzureSMProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
             ProfileClient client = new ProfileClient(currentProfile);
 
             var env1 = client.ListEnvironments(null);
@@ -756,7 +756,7 @@ namespace Common.Authentication.Test
         {
             MemoryDataStore dataStore = new MemoryDataStore();
             AzureSession.DataStore = dataStore;
-            currentProfile = new AzureProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
+            currentProfile = new AzureSMProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
             ProfileClient client = new ProfileClient(currentProfile);
 
             client.Profile.Accounts[azureAccount.Id] = azureAccount;
@@ -784,7 +784,7 @@ namespace Common.Authentication.Test
         {
             MemoryDataStore dataStore = new MemoryDataStore();
             AzureSession.DataStore = dataStore;
-            currentProfile = new AzureProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
+            currentProfile = new AzureSMProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
             ProfileClient client = new ProfileClient(currentProfile);
 
             client.Profile.Accounts[azureAccount.Id] = azureAccount;
@@ -812,7 +812,7 @@ namespace Common.Authentication.Test
         {
             MemoryDataStore dataStore = new MemoryDataStore();
             AzureSession.DataStore = dataStore;
-            currentProfile = new AzureProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
+            currentProfile = new AzureSMProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
             ProfileClient client = new ProfileClient(currentProfile);
 
             Assert.Equal(2, client.Profile.Environments.Count);
@@ -874,7 +874,7 @@ namespace Common.Authentication.Test
         {
             MemoryDataStore dataStore = new MemoryDataStore();
             AzureSession.DataStore = dataStore;
-            currentProfile = new AzureProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
+            currentProfile = new AzureSMProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
             ProfileClient client = new ProfileClient(currentProfile);
 
             client.AddOrSetAccount(azureAccount);
@@ -934,7 +934,7 @@ namespace Common.Authentication.Test
         {
             MemoryDataStore dataStore = new MemoryDataStore();
             AzureSession.DataStore = dataStore;
-            currentProfile = new AzureProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
+            currentProfile = new AzureSMProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
             ProfileClient client = new ProfileClient(currentProfile);
 
             client.Profile.Accounts[azureAccount.Id] = azureAccount;
@@ -965,7 +965,7 @@ namespace Common.Authentication.Test
             SetMocks(new[] { rdfeSubscription1, rdfeSubscription2 }.ToList(), new[] { csmSubscription1, csmSubscription1withDuplicateId }.ToList());
             MemoryDataStore dataStore = new MemoryDataStore();
             AzureSession.DataStore = dataStore;
-            currentProfile = new AzureProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
+            currentProfile = new AzureSMProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
             ProfileClient client = new ProfileClient(currentProfile);
             client.AddOrSetEnvironment(azureEnvironment);
             client.Profile.Accounts[azureAccount.Id] = azureAccount;
@@ -985,7 +985,7 @@ namespace Common.Authentication.Test
             SetMocks(new[] { rdfeSubscription1, rdfeSubscription2 }.ToList(), new[] { csmSubscription1, csmSubscription1withDuplicateId }.ToList());
             MemoryDataStore dataStore = new MemoryDataStore();
             AzureSession.DataStore = dataStore;
-            currentProfile = new AzureProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
+            currentProfile = new AzureSMProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
             ProfileClient client = new ProfileClient(currentProfile);
             client.AddOrSetEnvironment(azureEnvironment);
             client.Profile.Accounts[azureAccount.Id] = azureAccount;
@@ -1008,7 +1008,7 @@ namespace Common.Authentication.Test
             SetMocks(new[] { rdfeSubscription1, rdfeSubscription2 }.ToList(), new[] { csmSubscription1, csmSubscription1withDuplicateId }.ToList());
             MemoryDataStore dataStore = new MemoryDataStore();
             AzureSession.DataStore = dataStore;
-            currentProfile = new AzureProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
+            currentProfile = new AzureSMProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
             ProfileClient client = new ProfileClient(currentProfile);
 
             client.Profile.Accounts[azureAccount.Id] = azureAccount;
@@ -1028,7 +1028,7 @@ namespace Common.Authentication.Test
             SetMocks(new[] { rdfeSubscription1, rdfeSubscription2 }.ToList(), new[] { csmSubscription1, csmSubscription1withDuplicateId }.ToList());
             MemoryDataStore dataStore = new MemoryDataStore();
             AzureSession.DataStore = dataStore;
-            currentProfile = new AzureProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
+            currentProfile = new AzureSMProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
             ProfileClient client = new ProfileClient(currentProfile);
             client.AddOrSetAccount(azureAccount);
             client.AddOrSetEnvironment(azureEnvironment);
@@ -1050,7 +1050,7 @@ namespace Common.Authentication.Test
             SetMocks(new[] { rdfeSubscription1, rdfeSubscription2 }.ToList(), new[] { csmSubscription1, csmSubscription1withDuplicateId }.ToList());
             MemoryDataStore dataStore = new MemoryDataStore();
             AzureSession.DataStore = dataStore;
-            currentProfile = new AzureProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
+            currentProfile = new AzureSMProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
             ProfileClient client = new ProfileClient(currentProfile);
             client.AddOrSetAccount(azureAccount);
             client.AddOrSetEnvironment(azureEnvironment);
@@ -1069,7 +1069,7 @@ namespace Common.Authentication.Test
             SetMocks(new[] { rdfeSubscription1, rdfeSubscription2 }.ToList(), new[] { csmSubscription1, csmSubscription1withDuplicateId }.ToList());
             MemoryDataStore dataStore = new MemoryDataStore();
             AzureSession.DataStore = dataStore;
-            currentProfile = new AzureProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
+            currentProfile = new AzureSMProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
             ProfileClient client = new ProfileClient(currentProfile);
             client.AddOrSetAccount(azureAccount);
             client.AddOrSetEnvironment(azureEnvironment);
@@ -1111,7 +1111,7 @@ namespace Common.Authentication.Test
         {
             MemoryDataStore dataStore = new MemoryDataStore();
             AzureSession.DataStore = dataStore;
-            currentProfile = new AzureProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
+            currentProfile = new AzureSMProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
             ProfileClient client = new ProfileClient(currentProfile);
             client.Profile.Accounts[azureAccount.Id] = azureAccount;
             client.AddOrSetEnvironment(azureEnvironment);
@@ -1134,7 +1134,7 @@ namespace Common.Authentication.Test
         {
             MemoryDataStore dataStore = new MemoryDataStore();
             AzureSession.DataStore = dataStore;
-            currentProfile = new AzureProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
+            currentProfile = new AzureSMProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
             ProfileClient client = new ProfileClient(currentProfile);
 
             dataStore.WriteFile("ImportPublishSettingsLoadsAndReturnsSubscriptions.publishsettings",
@@ -1154,7 +1154,7 @@ namespace Common.Authentication.Test
         {
             MemoryDataStore dataStore = new MemoryDataStore();
             AzureSession.DataStore = dataStore;
-            currentProfile = new AzureProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
+            currentProfile = new AzureSMProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
             ProfileClient client = new ProfileClient(currentProfile);
             client.AddOrSetAccount(azureAccount);
             client.AddOrSetEnvironment(azureEnvironment);
@@ -1162,7 +1162,7 @@ namespace Common.Authentication.Test
             client.SetSubscriptionAsDefault(azureSubscription1.Name, azureAccount.Id);
             client.Profile.Save();
 
-            currentProfile = new AzureProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
+            currentProfile = new AzureSMProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
             client = new ProfileClient(currentProfile);
 
             dataStore.WriteFile("ImportPublishSettingsLoadsAndReturnsSubscriptions.publishsettings",
@@ -1181,7 +1181,7 @@ namespace Common.Authentication.Test
         {
             MemoryDataStore dataStore = new MemoryDataStore();
             AzureSession.DataStore = dataStore;
-            currentProfile = new AzureProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
+            currentProfile = new AzureSMProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
             ProfileClient client = new ProfileClient(currentProfile);
             client.AddOrSetAccount(azureAccount);
             azureEnvironment.Endpoints[AzureEnvironment.Endpoint.ServiceManagement] = "https://newmanagement.core.windows.net/";
@@ -1190,7 +1190,7 @@ namespace Common.Authentication.Test
             client.SetSubscriptionAsDefault(azureSubscription1.Name, azureAccount.Id);
             client.Profile.Save();
 
-            currentProfile = new AzureProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
+            currentProfile = new AzureSMProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
             client = new ProfileClient(currentProfile);
 
             dataStore.WriteFile("ImportPublishSettingsLoadsAndReturnsSubscriptions.publishsettings",
@@ -1209,7 +1209,7 @@ namespace Common.Authentication.Test
         {
             MemoryDataStore dataStore = new MemoryDataStore();
             AzureSession.DataStore = dataStore;
-            currentProfile = new AzureProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
+            currentProfile = new AzureSMProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
             ProfileClient client = new ProfileClient(currentProfile);
 
             dataStore.WriteFile("ImportPublishSettingsLoadsAndReturnsSubscriptions.publishsettings",
@@ -1228,7 +1228,7 @@ namespace Common.Authentication.Test
         {
             MemoryDataStore dataStore = new MemoryDataStore();
             AzureSession.DataStore = dataStore;
-            currentProfile = new AzureProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
+            currentProfile = new AzureSMProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
             ProfileClient client = new ProfileClient(currentProfile);
 
             dataStore.WriteFile("ImportPublishSettingsLoadsAndReturnsSubscriptions.publishsettings",
@@ -1247,7 +1247,7 @@ namespace Common.Authentication.Test
         {
             MemoryDataStore dataStore = new MemoryDataStore();
             AzureSession.DataStore = dataStore;
-            currentProfile = new AzureProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
+            currentProfile = new AzureSMProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
             ProfileClient client = new ProfileClient(currentProfile);
             client.AddOrSetAccount(azureAccount);
             client.AddOrSetEnvironment(azureEnvironment);
@@ -1255,7 +1255,7 @@ namespace Common.Authentication.Test
             client.SetSubscriptionAsDefault(azureSubscription1.Name, azureAccount.Id);
             client.Profile.Save();
 
-            currentProfile = new AzureProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
+            currentProfile = new AzureSMProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
             client = new ProfileClient(currentProfile);
 
             dataStore.WriteFile("ImportPublishSettingsLoadsAndReturnsSubscriptions.publishsettings",
@@ -1274,7 +1274,7 @@ namespace Common.Authentication.Test
         {
             MemoryDataStore dataStore = new MemoryDataStore();
             AzureSession.DataStore = dataStore;
-            currentProfile = new AzureProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
+            currentProfile = new AzureSMProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
             ProfileClient client = new ProfileClient(currentProfile);
             client.AddOrSetAccount(azureAccount);
             client.AddOrSetEnvironment(azureEnvironment);
@@ -1300,7 +1300,7 @@ namespace Common.Authentication.Test
         {
             MemoryDataStore dataStore = new MemoryDataStore();
             AzureSession.DataStore = dataStore;
-            currentProfile = new AzureProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
+            currentProfile = new AzureSMProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
             ProfileClient client = new ProfileClient(currentProfile);
             var newSubscription = new AzureSubscription
             {
@@ -1314,7 +1314,7 @@ namespace Common.Authentication.Test
             client.AddOrSetSubscription(newSubscription);
             client.Profile.Save();
 
-            currentProfile = new AzureProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
+            currentProfile = new AzureSMProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
             client = new ProfileClient(currentProfile);
 
             dataStore.WriteFile("ImportPublishSettingsLoadsAndReturnsSubscriptions.publishsettings",

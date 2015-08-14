@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Common.Authentication
     /// </summary>
     public class ProfileClient
     {
-        public AzureProfile Profile { get; private set; }
+        public AzureSMProfile Profile { get; private set; }
 
         public Action<string> WarningLog;
 
@@ -79,12 +79,12 @@ namespace Microsoft.Azure.Common.Authentication
                         // Ignore any errors here
                     }
 
-                    AzureProfile oldProfile = new AzureProfile(oldProfilePath);
+                    AzureSMProfile oldProfile = new AzureSMProfile(oldProfilePath);
 
                     if (AzureSession.DataStore.FileExists(newProfileFilePath))
                     {
                         // Merge profile files
-                        AzureProfile newProfile = new AzureProfile(newProfileFilePath);
+                        AzureSMProfile newProfile = new AzureSMProfile(newProfileFilePath);
                         foreach (var environment in newProfile.Environments.Values)
                         {
                             oldProfile.Environments[environment.Name] = environment;
@@ -132,12 +132,12 @@ namespace Microsoft.Azure.Common.Authentication
                 // In case that we changed a disk profile, reload it
                 if (Profile != null && Profile.ProfilePath == newProfileFilePath)
                 {
-                    Profile = new AzureProfile(Profile.ProfilePath);
+                    Profile = new AzureSMProfile(Profile.ProfilePath);
                 }
             }
         }
 
-        public ProfileClient(AzureProfile profile)
+        public ProfileClient(AzureSMProfile profile)
         {
             Profile = profile;
             WarningLog = (s) => Debug.WriteLine(s);
@@ -155,7 +155,7 @@ namespace Microsoft.Azure.Common.Authentication
         #region Profile management
 
         /// <summary>
-        /// Initializes AzureProfile using passed in certificate. The certificate
+        /// Initializes AzureSMProfile using passed in certificate. The certificate
         /// is imported into a certificate store.
         /// </summary>
         /// <param name="environment">Environment object.</param>
@@ -208,7 +208,7 @@ namespace Microsoft.Azure.Common.Authentication
         }
 
         /// <summary>
-        /// Initializes AzureProfile using passed in access token.
+        /// Initializes AzureSMProfile using passed in access token.
         /// </summary>
         /// <param name="environment">Environment object.</param>
         /// <param name="subscriptionId">Subscription Id</param>
@@ -261,7 +261,7 @@ namespace Microsoft.Azure.Common.Authentication
         }
 
         /// <summary>
-        /// Initializes AzureProfile using passed in account and optional password.
+        /// Initializes AzureSMProfile using passed in account and optional password.
         /// </summary>
         /// <param name="environment">Environment object.</param>
         /// <param name="subscriptionId">Subscription Id</param>

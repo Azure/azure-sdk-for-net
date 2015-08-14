@@ -24,13 +24,13 @@ using Xunit;
 
 namespace Common.Authentication.Test
 {
-    public class AzureProfileTests
+    public class AzureSMProfileTests
     {
         [Fact]
         public void ProfileSaveDoesNotSerializeContext()
         {
             var dataStore = new MockDataStore();
-            var currentProfile = new AzureProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
+            var currentProfile = new AzureSMProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
             AzureSession.DataStore = dataStore;
             var client = new ProfileClient(currentProfile);
             var tenant = Guid.NewGuid().ToString();
@@ -64,7 +64,7 @@ namespace Common.Authentication.Test
             string profileContents = dataStore.ReadFileAsText(profileFile);
             var readProfile = JsonConvert.DeserializeObject<Dictionary<string, object>>(profileContents);
             Assert.False(readProfile.ContainsKey("DefaultContext"));
-            AzureProfile parsedProfile = new AzureProfile();
+            AzureSMProfile parsedProfile = new AzureSMProfile();
             var serializer = new JsonProfileSerializer();
             Assert.True(serializer.Deserialize(profileContents, parsedProfile));
             Assert.NotNull(parsedProfile);
@@ -80,7 +80,7 @@ namespace Common.Authentication.Test
         public void ProfileSerializeDeserializeWorks()
         {
             var dataStore = new MockDataStore();
-            var currentProfile = new AzureProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
+            var currentProfile = new AzureSMProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
             AzureSession.DataStore = dataStore;
             var client = new ProfileClient(currentProfile);
             var tenant = Guid.NewGuid().ToString();
@@ -108,7 +108,7 @@ namespace Common.Authentication.Test
             client.AddOrSetAccount(account);
             client.AddOrSetSubscription(sub);
 
-            AzureProfile deserializedProfile;
+            AzureSMProfile deserializedProfile;
             // Round-trip the exception: Serialize and de-serialize with a BinaryFormatter
             BinaryFormatter bf = new BinaryFormatter();
             using (MemoryStream ms = new MemoryStream())
@@ -120,7 +120,7 @@ namespace Common.Authentication.Test
                 ms.Seek(0, 0);
 
                 // Replace the original exception with de-serialized one
-                deserializedProfile = (AzureProfile)bf.Deserialize(ms);
+                deserializedProfile = (AzureSMProfile)bf.Deserialize(ms);
             }
             Assert.NotNull(deserializedProfile);
             var jCurrentProfile = JsonConvert.SerializeObject(currentProfile);
@@ -131,7 +131,7 @@ namespace Common.Authentication.Test
         [Fact]
         public void AccountMatchingIgnoresCase()
         {
-            var profile = new AzureProfile();
+            var profile = new AzureSMProfile();
             string accountName = "howdy@contoso.com";
             string accountNameCase = "Howdy@Contoso.com";
             var subscriptionId = Guid.NewGuid();
@@ -166,7 +166,7 @@ namespace Common.Authentication.Test
         [Fact]
         public void GetsCorrectContext()
         {
-            AzureProfile profile = new AzureProfile();
+            AzureSMProfile profile = new AzureSMProfile();
             string accountId = "accountId";
             Guid subscriptionId = Guid.NewGuid();
             profile.Accounts.Add(accountId, new AzureAccount { Id = accountId, Type = AzureAccount.AccountType.User });

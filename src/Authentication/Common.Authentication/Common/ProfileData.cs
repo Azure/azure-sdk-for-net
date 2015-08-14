@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Common.Authentication
     /// <summary>
     /// This class provides the representation of
     /// data loaded and saved into data files
-    /// for AzureProfile.
+    /// for AzureSMProfile.
     /// </summary>
     [DataContract]
     public class ProfileData

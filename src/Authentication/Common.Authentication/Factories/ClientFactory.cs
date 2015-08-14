@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Common.Authentication.Factories
         /// <param name="subscription"></param>
         /// <param name="endpoint"></param>
         /// <returns></returns>
-        public virtual TClient CreateArmClient<TClient>(AzureProfile profile, AzureSubscription subscription, AzureEnvironment.Endpoint endpoint) where TClient : Microsoft.Rest.ServiceClient<TClient>
+        public virtual TClient CreateArmClient<TClient>(AzureSMProfile profile, AzureSubscription subscription, AzureEnvironment.Endpoint endpoint) where TClient : Microsoft.Rest.ServiceClient<TClient>
         {
             if (subscription == null)
             {
@@ -121,7 +121,7 @@ namespace Microsoft.Azure.Common.Authentication.Factories
             return client;
         }
 
-        public virtual TClient CreateClient<TClient>(AzureProfile profile, AzureEnvironment.Endpoint endpoint) where TClient : ServiceClient<TClient>
+        public virtual TClient CreateClient<TClient>(AzureSMProfile profile, AzureEnvironment.Endpoint endpoint) where TClient : ServiceClient<TClient>
         {
             TClient client = CreateClient<TClient>(profile.DefaultContext, endpoint);
 
@@ -139,7 +139,7 @@ namespace Microsoft.Azure.Common.Authentication.Factories
         /// <param name="subscription"></param>
         /// <param name="endpoint"></param>
         /// <returns></returns>
-        public virtual TClient CreateClient<TClient>(AzureProfile profile, AzureSubscription subscription, AzureEnvironment.Endpoint endpoint) where TClient : ServiceClient<TClient>
+        public virtual TClient CreateClient<TClient>(AzureSMProfile profile, AzureSubscription subscription, AzureEnvironment.Endpoint endpoint) where TClient : ServiceClient<TClient>
         {
             if (subscription == null)
             {

@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Common.Authentication.Models
     /// Represents Azure profile structure with multiple environments, subscriptions, and accounts.
     /// </summary>
     [Serializable]
-    public sealed class AzureProfile : IAzureProfile
+    public sealed class AzureSMProfile : IAzureProfile
     {
         /// <summary>
         /// Gets Azure Accounts
@@ -127,9 +127,9 @@ namespace Microsoft.Azure.Common.Authentication.Models
         public string ProfilePath { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of AzureProfile
+        /// Initializes a new instance of AzureSMProfile
         /// </summary>
-        public AzureProfile()
+        public AzureSMProfile()
         {
             Environments = new Dictionary<string, AzureEnvironment>(StringComparer.InvariantCultureIgnoreCase);
             Subscriptions = new Dictionary<Guid, AzureSubscription>();
@@ -143,11 +143,11 @@ namespace Microsoft.Azure.Common.Authentication.Models
         }
 
         /// <summary>
-        /// Initializes a new instance of AzureProfile and loads its content from specified path.
+        /// Initializes a new instance of AzureSMProfile and loads its content from specified path.
         /// Any errors generated in the process are stored in ProfileLoadErrors collection.
         /// </summary>
         /// <param name="path">Location of profile file on disk.</param>
-        public AzureProfile(string path) : this()
+        public AzureSMProfile(string path) : this()
         {
             ProfilePath = path;
             ProfileLoadErrors = new List<string>();

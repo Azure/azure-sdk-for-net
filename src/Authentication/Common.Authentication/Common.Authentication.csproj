@@ -65,7 +65,7 @@
     <Compile Include="Models\AzureContext.cs" />
     <Compile Include="Models\AzureEnvironment.cs" />
     <Compile Include="Models\AzureEnvironment.Methods.cs" />
-    <Compile Include="Models\AzureProfile.cs" />
+    <Compile Include="Models\AzureSMProfile.cs" />
     <Compile Include="Models\AzureRMProfile.cs" />
     <Compile Include="Models\AzureSubscription.cs" />
     <Compile Include="Models\AzureSubscription.Methods.cs" />

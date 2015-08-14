@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Common.Authentication.Models
         /// Registers resource providers for Sparta.
         /// </summary>
         /// <typeparam name="T">The client type</typeparam>
-        private void RegisterResourceManagerProviders<T>(AzureProfile profile) 
+        private void RegisterResourceManagerProviders<T>(AzureSMProfile profile) 
         {
             var providersToRegister = RequiredResourceLookup.RequiredProvidersForResourceManager<T>();
             var registeredProviders = profile.DefaultContext.Subscription.GetPropertyAsArray(AzureSubscription.Property.RegisteredResourceProviders);
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Common.Authentication.Models
         /// Registers resource providers for RDFE.
         /// </summary>
         /// <typeparam name="T">The client type</typeparam>
-        private void RegisterServiceManagementProviders<T>(AzureProfile profile) 
+        private void RegisterServiceManagementProviders<T>(AzureSMProfile profile) 
         {
             var credentials = AzureSession.AuthenticationFactory.GetSubscriptionCloudCredentials(profile.DefaultContext);
             var providersToRegister = RequiredResourceLookup.RequiredProvidersForServiceManagement<T>();
@@ -102,7 +102,7 @@ namespace Microsoft.Azure.Common.Authentication.Models
             }
         }
 
-        private void UpdateSubscriptionRegisteredProviders(AzureProfile profile, AzureSubscription subscription, List<string> providers)
+        private void UpdateSubscriptionRegisteredProviders(AzureSMProfile profile, AzureSubscription subscription, List<string> providers)
         {
             if (providers != null && providers.Count > 0)
             {
@@ -122,7 +122,7 @@ namespace Microsoft.Azure.Common.Authentication.Models
             }
         }
 
-        public void Apply<TClient>(TClient client, AzureProfile profile, AzureEnvironment.Endpoint endpoint) where TClient : ServiceClient<TClient>
+        public void Apply<TClient>(TClient client, AzureSMProfile profile, AzureEnvironment.Endpoint endpoint) where TClient : ServiceClient<TClient>
         {
             Debug.Assert(ClientFactory != null);
 
@@ -139,7 +139,7 @@ namespace Microsoft.Azure.Common.Authentication.Models
         public IClientFactory ClientFactory { get; set; }
 
 
-        public void ApplyArm<TClient>(TClient client, AzureProfile profile, AzureEnvironment.Endpoint endpoint) where TClient : Rest.ServiceClient<TClient>
+        public void ApplyArm<TClient>(TClient client, AzureSMProfile profile, AzureEnvironment.Endpoint endpoint) where TClient : Rest.ServiceClient<TClient>
         {
             Debug.Assert(ClientFactory != null);
 

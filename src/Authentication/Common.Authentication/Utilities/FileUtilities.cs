@@ -290,7 +290,7 @@ namespace Microsoft.Azure.Common.Authentication
             //  AzureResourceManager
             //      <Service Commands Folders>
             // Profile
-            //  AzureProfile
+            //  AzureSMProfile
             //      <Service Commands Folders>
             return Directory.GetParent(currentPath).FullName;
         }
@@ -306,7 +306,7 @@ namespace Microsoft.Azure.Common.Authentication
                     return "AzureResourceManager";
 
                 case AzureModule.AzureProfile:
-                    return "AzureProfile";
+                    return "AzureSMProfile";
 
                 default:
                     throw new ArgumentOutOfRangeException(module.ToString());

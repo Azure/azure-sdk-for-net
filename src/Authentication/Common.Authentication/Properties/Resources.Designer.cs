@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Common.Authentication.Properties
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No account was found for this subscription. Please execute Clear-AzureProfile and then execute Add-AzureAccount..
+        ///   Looks up a localized string similar to No account was found for this subscription. Please execute Clear-AzureSMProfile and then execute Add-AzureAccount..
         /// </summary>
         public static string AccountNotFound {
             get {
@@ -97,7 +97,7 @@ namespace Microsoft.Azure.Common.Authentication.Properties
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Multiple tokens were found for this user. Please clear your token cache using, Clear-AzureProfile and try this command again..
+        ///   Looks up a localized string similar to Multiple tokens were found for this user. Please clear your token cache using, Clear-AzureSMProfile and try this command again..
         /// </summary>
         public static string AdalMultipleTokens {
             get {
@@ -439,7 +439,7 @@ namespace Microsoft.Azure.Common.Authentication.Properties
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No tenant was found for this subscription. Please execute Clear-AzureProfile and then execute Add-AzureAccount..
+        ///   Looks up a localized string similar to No tenant was found for this subscription. Please execute Clear-AzureSMProfile and then execute Add-AzureAccount..
         /// </summary>
         public static string TenantNotFound {
             get {
