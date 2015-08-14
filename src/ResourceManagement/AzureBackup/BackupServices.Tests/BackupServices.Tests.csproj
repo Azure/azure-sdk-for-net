@@ -22,8 +22,6 @@
     <Compile Include="ScenarioTests\VaultTests.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ScenarioTests\ContainerTests.cs" />
-    <Compile Include="ScenarioTests\VaultTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.WindowsAzure.Management.Common, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -52,42 +50,22 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="SessionRecords\BackupServices.Tests.BackUpTests\TriggerBackUpTest.json" />
-    <None Include="SessionRecords\BackupServices.Tests.ContainerTests\EnableContainerReregistrationSetsReregisterFlag.json" />
-    <None Include="SessionRecords\BackupServices.Tests.ContainerTests\ListContainersByFriendlyNameAndStatusReturnsValidResponse.json" />
-    <None Include="SessionRecords\BackupServices.Tests.ContainerTests\ListContainersByFriendlyNameReturnsValidResponse.json" />
-    <None Include="SessionRecords\BackupServices.Tests.ContainerTests\ListContainersByStatusReturnsValidResponse.json" />
-    <None Include="SessionRecords\BackupServices.Tests.ContainerTests\ListContainersReturnsNonZeroContainers.json" />
-    <None Include="SessionRecords\BackupServices.Tests.ContainerTests\ListMarsContainersByTypeAndFriendlyNameReturnsSameContainer.json" />
-    <None Include="SessionRecords\BackupServices.Tests.ContainerTests\ListMarsContainersByTypeReturnsNonZeroContainers.json" />
-    <None Include="SessionRecords\BackupServices.Tests.ContainerTests\RefreshContainerTest.json" />
-    <None Include="SessionRecords\BackupServices.Tests.ContainerTests\RegisterContainerTest.json" />
-    <None Include="SessionRecords\BackupServices.Tests.ContainerTests\UnregisterContainerDeletesContainer.json" />
-    <None Include="SessionRecords\BackupServices.Tests.ContainerTests\UnregisterContainerTest.json" />
-    <None Include="SessionRecords\BackupServices.Tests.CSMAzureBackupItem\DisableAzureBackupProtectionTest.json" />
-    <None Include="SessionRecords\BackupServices.Tests.CSMAzureBackupItem\EnableAzureBackupProtectionTest.json" />
-    <None Include="SessionRecords\BackupServices.Tests.CSMAzureBackupItem\ListAzureBackupItemDSTest.json" />
-    <None Include="SessionRecords\BackupServices.Tests.CSMAzureBackupItem\ListAzureBackupItemPOTest.json" />
-    <None Include="SessionRecords\BackupServices.Tests.CSMAzureBackupItem\UpdateAzureBackupProtectionTest.json" />
-    <None Include="SessionRecords\BackupServices.Tests.JobsTests\CancelJobTest.json" />
-    <None Include="SessionRecords\BackupServices.Tests.JobsTests\GetJobDetailsTest.json" />
-    <None Include="SessionRecords\BackupServices.Tests.JobsTests\ListGetJobsTest.json" />
-    <None Include="SessionRecords\BackupServices.Tests.ProtectionPolicyTests\AddProtectionPolicyTest.json" />
-    <None Include="SessionRecords\BackupServices.Tests.ProtectionPolicyTests\DeleteProtectionPolicyTest.json" />
-    <None Include="SessionRecords\BackupServices.Tests.ProtectionPolicyTests\ListProtectionPolicyTest.json" />
-    <None Include="SessionRecords\BackupServices.Tests.ProtectionPolicyTests\UpdateProtectionPolicyTest.json" />
-    <None Include="SessionRecords\BackupServices.Tests.RecoveryPointTests\GetRecoveryPointTest.json" />
-    <None Include="SessionRecords\BackupServices.Tests.RecoveryPointTests\ListRecoveryPointTest.json" />
-    <None Include="SessionRecords\BackupServices.Tests.RestoreTests\TriggerRestoreTest.json" />
-    <None Include="SessionRecords\BackupServices.Tests.VaultTests\CreateOrUpdateVaultReturnsValidCodeTest.json" />
-    <None Include="SessionRecords\BackupServices.Tests.VaultTests\DeleteVaultRemovesVaultTest.json" />
-    <None Include="SessionRecords\BackupServices.Tests.VaultTests\GetResourceStorageConfigReturnsStorageTypeTest.json" />
-    <None Include="SessionRecords\BackupServices.Tests.VaultTests\GetVaultReturnsSameVaultTest.json" />
-    <None Include="SessionRecords\BackupServices.Tests.VaultTests\ListVaultsByResourceGroupReturnsVaultsinResourceGroup.json" />
-    <None Include="SessionRecords\BackupServices.Tests.VaultTests\ListVaultsReturnsVaultsInSubscriptionTest.json" />
-    <None Include="SessionRecords\BackupServices.Tests.VaultTests\UpdateStorageTypeReturnsValidCodeTest.json" />
-    <None Include="SessionRecords\BackupServices.Tests.VaultTests\UploadCertReturnsValidResponseTest.json" />
+    <None Include="SessionRecords\BackupServices.Tests.BackUpTests\TriggerBackUpTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\BackupServices.Tests.ContainerTests\EnableContainerReregistrationSetsReregisterFlag.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\BackupServices.Tests.ContainerTests\ListContainersByFriendlyNameAndStatusReturnsValidResponse.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\BackupServices.Tests.ContainerTests\ListContainersByFriendlyNameReturnsValidResponse.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\BackupServices.Tests.ContainerTests\ListContainersByStatusReturnsValidResponse.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\BackupServices.Tests.ContainerTests\ListContainersReturnsNonZeroContainers.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\BackupServices.Tests.ContainerTests\ListMarsContainersByTypeAndFriendlyNameReturnsSameContainer.json">
@@ -96,7 +74,61 @@
     <None Include="SessionRecords\BackupServices.Tests.ContainerTests\ListMarsContainersByTypeReturnsNonZeroContainers.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\BackupServices.Tests.ContainerTests\RefreshContainerTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\BackupServices.Tests.ContainerTests\RegisterContainerTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\BackupServices.Tests.ContainerTests\UnregisterContainerDeletesContainer.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\BackupServices.Tests.ContainerTests\UnregisterContainerTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\BackupServices.Tests.CSMAzureBackupItem\DisableAzureBackupProtectionTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\BackupServices.Tests.CSMAzureBackupItem\EnableAzureBackupProtectionTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\BackupServices.Tests.CSMAzureBackupItem\ListAzureBackupItemDSTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\BackupServices.Tests.CSMAzureBackupItem\ListAzureBackupItemPOTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\BackupServices.Tests.CSMAzureBackupItem\UpdateAzureBackupProtectionTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\BackupServices.Tests.JobsTests\CancelJobTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\BackupServices.Tests.JobsTests\GetJobDetailsTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\BackupServices.Tests.JobsTests\ListGetJobsTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\BackupServices.Tests.ProtectionPolicyTests\AddProtectionPolicyTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\BackupServices.Tests.ProtectionPolicyTests\DeleteProtectionPolicyTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\BackupServices.Tests.ProtectionPolicyTests\ListProtectionPolicyTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\BackupServices.Tests.ProtectionPolicyTests\UpdateProtectionPolicyTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\BackupServices.Tests.RecoveryPointTests\GetRecoveryPointTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\BackupServices.Tests.RecoveryPointTests\ListRecoveryPointTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\BackupServices.Tests.RestoreTests\TriggerRestoreTest.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\BackupServices.Tests.VaultTests\CreateOrUpdateVaultReturnsValidCodeTest.json">
