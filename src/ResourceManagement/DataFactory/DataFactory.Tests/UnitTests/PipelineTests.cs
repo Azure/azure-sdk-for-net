@@ -15,13 +15,13 @@
 // 
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using DataFactory.Tests.Framework;
 using DataFactory.Tests.Framework.JsonSamples;
 using Microsoft.Azure.Management.DataFactories;
 using Microsoft.Azure.Management.DataFactories.Models;
+using Newtonsoft.Json.Linq;
 using Xunit;
+using Xunit.Extensions;
 using Core = Microsoft.Azure.Management.DataFactories.Core;
 using CoreModel = Microsoft.Azure.Management.DataFactories.Core.Models;
     
@@ -37,31 +37,23 @@ namespace DataFactory.Tests.UnitTests
             } 
         }
         
-        [Fact]
+        [Theory, ClassData(typeof(PipelineJsonSamples))]
         [Trait(TraitName.TestType, TestType.Unit)]
         [Trait(TraitName.Function, TestType.Conversion)]
-        public void PipelineJsonConstsToWrappedObjectTest()
+        public void PipelineJsonConstsToWrappedObjectTest(JsonSampleInfo sampleInfo)
         {
-            IEnumerable<JsonSampleInfo> samples = JsonSampleCommon.GetJsonSamplesFromType<PipelineJsonSamples>();
-            this.TestPipelineJsonSamples(samples);
+            JsonSampleCommon.TestJsonSample(sampleInfo, this.TestPipelineJson);
         }
 
-        [Fact]
+        [Theory, ClassData(typeof(PipelineJsonSamples))]
         [Trait(TraitName.TestType, TestType.Unit)]
         [Trait(TraitName.Function, TestType.Conversion)]
-        public void PipelineValidateJsonConstsTest()
+        public void PipelineValidateJsonConstsTest(JsonSampleInfo sampleInfo)
         {
-            IEnumerable<JsonSampleInfo> samples = JsonSampleCommon.GetJsonSamplesFromType<PipelineJsonSamples>();
-            this.TestPipelineValidateSamples(samples);
+            JsonSampleCommon.TestJsonSample(sampleInfo, this.TestPipelineValidation);
         }
 
-        [Fact]
-        [Trait(TraitName.TestType, TestType.Unit)]
-        [Trait(TraitName.Function, TestType.Conversion)]
-        public void PipelineActivityMissingRequiredPropertiesThrowsExceptionTest()
-        {
-            // copySource and copySink are required for a CopyActivity
-            string invalidJson = @"
+        [Theory, InlineData(@"
 {
     name: ""My HDInsight pipeline"",
     properties: 
@@ -83,8 +75,12 @@ namespace DataFactory.Tests.UnitTests
         isPaused: false
     }
 }
-";
-
+")]
+        [Trait(TraitName.TestType, TestType.Unit)]
+        [Trait(TraitName.Function, TestType.Conversion)]
+        public void PipelineActivityMissingRequiredPropertiesThrowsExceptionTest(string invalidJson)
+        {
+            // copySource and copySink are required for a CopyActivity
             InvalidOperationException ex =
                 Assert.Throws<InvalidOperationException>(() => this.TestPipelineValidation(invalidJson));
             Assert.Contains("is required", ex.Message);
@@ -104,12 +100,7 @@ namespace DataFactory.Tests.UnitTests
 //            this.TestPipelineJsonSamples(samples);
 //        }
 
-        [Fact]
-        [Trait(TraitName.TestType, TestType.Unit)]
-        [Trait(TraitName.Function, TestType.Conversion)]
-        public void PipelineUnregisteredActivityTypeTest()
-        {
-            string unregisteredTypeJson = @"
+        [Theory, InlineData(@"
 {
     name: ""My HDInsight pipeline"",
     properties: 
@@ -138,22 +129,95 @@ namespace DataFactory.Tests.UnitTests
         }
     }
 }
-";
-
+")]
+        [Trait(TraitName.TestType, TestType.Unit)]
+        [Trait(TraitName.Function, TestType.Conversion)]
+        public void PipelineUnregisteredActivityTypeTest(string unregisteredTypeJson)
+        {
             // If an activity type has not been locally registered, 
             // typeProperties should be deserialized to a CustomActivity
             Pipeline pipeline = this.ConvertToWrapper(unregisteredTypeJson);
             Assert.IsType<GenericActivity>(pipeline.Properties.Activities[0].TypeProperties);
         }
 
-        [Fact]
+        [Theory]
+        [InlineData(@"
+{
+    name: ""MyPipelineName"",
+    properties: 
+    {
+        activities:
+        [
+            {
+                type: ""Copy"",
+                name: ""TestActivity"",
+                typeProperties:
+                {
+                    source:
+                    {
+                        type: ""UnknownSource"",
+                        sourceRetryCount: ""2"",
+                    }
+                },
+                inputs: [ ],
+                outputs: [ ],
+                linkedServiceName: ""MyLinkedServiceName""
+            }
+        ]
+    }
+}
+")]
         [Trait(TraitName.TestType, TestType.Unit)]
         [Trait(TraitName.Function, TestType.Conversion)]
-        public void PipelineGetDebugInfoTest()
+        public void UnknownCopySourceDoesNotThrowExceptionTest(string json)
+        {
+            Pipeline pipeline = null;
+
+            // When we try to deserialize an unknown nested polymorphic type, 
+            // the behavior should be to drop the object (return null) rather than throw an exception
+            Assert.DoesNotThrow(() => pipeline = this.ConvertToWrapper(json));
+            Assert.Null(((CopyActivity)pipeline.Properties.Activities[0].TypeProperties).Source);
+        }
+
+        [Theory]
+        [InlineData(@"{
+    name: ""MyPipelineName"",
+    properties: 
+    {
+        activities:
+        [
+            {
+                type: ""Copy"",
+                name: ""TestActivity"",
+                description: ""Test activity description"", 
+                typeProperties:
+                {
+                    source: null,
+                    sink: null
+                },
+                inputs: [ { name: ""InputSqlDA"" } ],
+                outputs: [ { name: ""OutputBlobDA"" } ],
+                linkedServiceName: ""MyLinkedServiceName""
+            }
+        ]
+    }
+}")]
+        [Trait(TraitName.TestType, TestType.Unit)]
+        [Trait(TraitName.Function, TestType.Conversion)]
+
+        public void CanConvertPipelineWithNullTypePropertyValuesTest(string json)
+        {
+            JsonSampleInfo sample = new JsonSampleInfo("PipelineWithNullTypePropertyValues", json, null);
+            this.TestPipelineJson(sample);
+        }
+
+        [Theory, InlineData(PipelineJsonSamples.HDInsightPipeline)]
+        [Trait(TraitName.TestType, TestType.Unit)]
+        [Trait(TraitName.Function, TestType.Conversion)]
+        public void PipelineGetDebugInfoTest(string pipelineJson)
         {
             // If an activity type has not been locally registered, 
             // typeProperties should be deserialized to a CustomActivity
-            string pipelineJson = PipelineJsonSamples.HDInsightPipeline;
             Assert.Contains("getDebugInfo", pipelineJson);
             Pipeline pipeline = this.ConvertToWrapper(PipelineJsonSamples.HDInsightPipeline);
 
@@ -161,17 +225,6 @@ namespace DataFactory.Tests.UnitTests
 
             Assert.NotNull(hiveActivity);
             Assert.True(hiveActivity.GetDebugInfo == "Failure");
-        }
-
-        private void TestPipelineJsonSamples(IEnumerable<JsonSampleInfo> samples)
-        {
-            JsonSampleCommon.TestJsonSamples(samples, this.TestPipelineJson);
-        }
-
-        private void TestPipelineValidateSamples(IEnumerable<JsonSampleInfo> samples)
-        {
-            Action<JsonSampleInfo> testSample = sampleInfo => this.TestPipelineValidation(sampleInfo.Json);
-            JsonSampleCommon.TestJsonSamples(samples, testSample);
         }
 
         private void TestPipelineJson(JsonSampleInfo sampleInfo)
@@ -185,19 +238,28 @@ namespace DataFactory.Tests.UnitTests
             JsonComparer.ValidateAreSame(json, actualJson, ignoreDefaultValues: true);
             Assert.DoesNotContain("ServiceExtraProperties", actualJson);
 
-            if (sampleInfo.Version == null)
+            if (sampleInfo.Version == null
+                || !sampleInfo.Version.Equals(JsonSampleType.Unregistered, StringComparison.OrdinalIgnoreCase))
             {
                 foreach (Activity activity in pipeline.Properties.Activities)
                 {
                     Assert.IsNotType<GenericActivity>(activity.TypeProperties);
                 }
             }
+
+            JObject actualJObject = JObject.Parse(actualJson);
+            JsonComparer.ValidatePropertyNameCasing(actualJObject, true, string.Empty, sampleInfo.PropertyBagKeys);
         }
 
         private void TestPipelineValidation(string json)
         {
             Pipeline pipeline = this.ConvertToWrapper(json);
             this.Operations.ValidateObject(pipeline);
+        }
+
+        private void TestPipelineValidation(JsonSampleInfo sampleInfo)
+        {
+            this.TestPipelineValidation(sampleInfo.Json);
         }
 
         private Pipeline ConvertToWrapper(string json)

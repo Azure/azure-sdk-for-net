@@ -13,14 +13,17 @@
 // limitations under the License.
 //
 
+using Microsoft.Azure.Management.DataFactories.Models;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 
 namespace Microsoft.Azure.Management.DataFactories.Runtime
 {
+    [JsonConverter(typeof(ActivityConfigurationConverter))]
     internal class ActivityConfiguration
     {
-        public IEnumerable<DataSet> InputDataSets { get; set; }
-        public IEnumerable<DataSet> OutputDataSets { get; set; }
-        public IDictionary<string, string> ExtendedProperties { get; set; }
+        public IEnumerable<ResolvedTable> Inputs { get; set; }
+        public IEnumerable<ResolvedTable> Outputs { get; set; }
+        public Pipeline Pipeline { get; set; }
     }
 }

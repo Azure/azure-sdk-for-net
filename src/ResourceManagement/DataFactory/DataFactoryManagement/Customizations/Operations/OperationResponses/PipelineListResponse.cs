@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
             Ensure.IsNotNull(internalResponse, "internalResponse");
             Ensure.IsNotNull(internalResponse.Pipelines, "internalResponse.Pipelines");
 
-            DataFactoryUtilities.CopyRuntimeProperties(internalResponse, this);
+            DataFactoryOperationUtilities.CopyRuntimeProperties(internalResponse, this);
             this.NextLink = internalResponse.NextLink;
             this.Pipelines = internalResponse.Pipelines.Select(
                     internalPipeline => ((PipelineOperations)client.Pipelines).Converter.ToWrapperType(internalPipeline))

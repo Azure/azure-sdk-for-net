@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.DataFactories.Registration.Models
             CoreRegistrationModel.ActivityTypeListResponse internalResponse,
             DataFactoryManagementClient client)
         {
-            DataFactoryUtilities.CopyRuntimeProperties(internalResponse, this);
+            DataFactoryOperationUtilities.CopyRuntimeProperties(internalResponse, this);
             this.NextLink = internalResponse.NextLink;
             this.ActivityTypes = internalResponse.ActivityTypes.Select(
                     internalActivityType => ((ActivityTypeOperations)client.ActivityTypes).Converter.ToWrapperType(internalActivityType))

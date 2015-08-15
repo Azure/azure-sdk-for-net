@@ -1,0 +1,63 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/templeton/v1/jobs?user.name=sameuser&showall=true",
+      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzP3VzZXIubmFtZT1zYW1ldXNlciZzaG93YWxsPXRydWU=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "accept": [
+          "application/json"
+        ],
+        "useragent": [
+          "xplat list jobs"
+        ],
+        "User-Agent": [
+          "xplat",
+          "list",
+          "jobs"
+        ]
+      },
+      "ResponseBody": "[\r\n  {\r\n    \"id\": \"job_1438899342432_0001\",\r\n    \"detail\": null\r\n  },\r\n  {\r\n    \"id\": \"job_1438899342432_0002\",\r\n    \"detail\": null\r\n  },\r\n  {\r\n    \"id\": \"job_1438899342432_0003\",\r\n    \"detail\": null\r\n  },\r\n  {\r\n    \"id\": \"job_1438899342432_0004\",\r\n    \"detail\": null\r\n  },\r\n  {\r\n    \"id\": \"job_1438899342432_0005\",\r\n    \"detail\": null\r\n  },\r\n  {\r\n    \"id\": \"job_1438899342432_0006\",\r\n    \"detail\": null\r\n  },\r\n  {\r\n    \"id\": \"job_1438899342432_0007\",\r\n    \"detail\": null\r\n  },\r\n  {\r\n    \"id\": \"job_1438899342432_0008\",\r\n    \"detail\": null\r\n  },\r\n  {\r\n    \"id\": \"job_1438899342432_0009\",\r\n    \"detail\": null\r\n  },\r\n  {\r\n    \"id\": \"job_1438899342432_0011\",\r\n    \"detail\": null\r\n  }\r\n]",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "461"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "x-ms-hdi-servedby": [
+          "GATEWAY1"
+        ],
+        "x-ms-hdi-active": [
+          "headnode1.nemadj-ssh-test.b5.internal.cloudapp.net"
+        ],
+        "x-ms-leader-detect-time": [
+          "0"
+        ],
+        "Set-Cookie": [
+          "hadoop.auth=\"u=sameuser&p=sameuser&t=simple&e=1439291344657&s=Zp/LMbwtnAGsaLYLb16SixxDhFU=\"; Version=1; Path=/; Expires=Tue, 11-Aug-2015 11:09:04 GMT; HttpOnly"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ARR/2.5",
+          "ASP.NET"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000"
+        ],
+        "Date": [
+          "Tue, 11 Aug 2015 01:09:04 GMT"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}

@@ -43,7 +43,7 @@ namespace Microsoft.Azure.KeyVault
         {
             foreach ( var resolver in _resolvers )
             {
-                IKey resolved = await resolver.ResolveKeyAsync( kid, token );
+                IKey resolved = await resolver.ResolveKeyAsync( kid, token ).ConfigureAwait( false );
 
                 if ( resolved != null )
                 {

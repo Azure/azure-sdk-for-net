@@ -53,6 +53,30 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
             set { this._request = value; }
         }
         
+        private JobServiceBusQueueMessage _serviceBusQueueMessage;
+        
+        /// <summary>
+        /// Optional. Queue and content for a service bus topic message action
+        /// type.
+        /// </summary>
+        public JobServiceBusQueueMessage ServiceBusQueueMessage
+        {
+            get { return this._serviceBusQueueMessage; }
+            set { this._serviceBusQueueMessage = value; }
+        }
+        
+        private JobServiceBusTopicMessage _serviceBusTopicMessage;
+        
+        /// <summary>
+        /// Optional. Topic and content for a service bus topic message action
+        /// type.
+        /// </summary>
+        public JobServiceBusTopicMessage ServiceBusTopicMessage
+        {
+            get { return this._serviceBusTopicMessage; }
+            set { this._serviceBusTopicMessage = value; }
+        }
+        
         private JobActionType _type;
         
         /// <summary>

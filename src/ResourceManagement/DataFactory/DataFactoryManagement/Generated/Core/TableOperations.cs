@@ -186,7 +186,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                 url = url + Uri.EscapeDataString(parameters.Table.Name);
             }
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-07-01-preview");
+            queryParameters.Add("api-version=2015-08-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -267,6 +267,16 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                 if (structureItem.Type != null)
                                 {
                                     dataElementValue["type"] = structureItem.Type;
+                                }
+                                
+                                if (structureItem.Culture != null)
+                                {
+                                    dataElementValue["culture"] = structureItem.Culture;
+                                }
+                                
+                                if (structureItem.Format != null)
+                                {
+                                    dataElementValue["format"] = structureItem.Format;
                                 }
                             }
                             propertiesValue["structure"] = structureArray;
@@ -362,11 +372,6 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                     if (parameters.Table.Properties.External != null)
                     {
                         propertiesValue["external"] = parameters.Table.Properties.External.Value;
-                    }
-                    
-                    if (parameters.Table.Properties.Published != null)
-                    {
-                        propertiesValue["published"] = parameters.Table.Properties.Published.Value;
                     }
                     
                     if (parameters.Table.Properties.CreateTime != null)
@@ -503,6 +508,20 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                             string typeInstance2 = ((string)typeValue2);
                                             dataElementInstance.Type = typeInstance2;
                                         }
+                                        
+                                        JToken cultureValue = structureValue["culture"];
+                                        if (cultureValue != null && cultureValue.Type != JTokenType.Null)
+                                        {
+                                            string cultureInstance = ((string)cultureValue);
+                                            dataElementInstance.Culture = cultureInstance;
+                                        }
+                                        
+                                        JToken formatValue = structureValue["format"];
+                                        if (formatValue != null && formatValue.Type != JTokenType.Null)
+                                        {
+                                            string formatInstance = ((string)formatValue);
+                                            dataElementInstance.Format = formatInstance;
+                                        }
                                     }
                                 }
                                 
@@ -637,13 +656,6 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                 {
                                     bool externalInstance = ((bool)externalValue);
                                     propertiesInstance.External = externalInstance;
-                                }
-                                
-                                JToken publishedValue = propertiesValue2["published"];
-                                if (publishedValue != null && publishedValue.Type != JTokenType.Null)
-                                {
-                                    bool publishedInstance = ((bool)publishedValue);
-                                    propertiesInstance.Published = publishedInstance;
                                 }
                                 
                                 JToken createTimeValue = propertiesValue2["createTime"];
@@ -798,7 +810,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + "/tables/";
             url = url + Uri.EscapeDataString(tableName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-07-01-preview");
+            queryParameters.Add("api-version=2015-08-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -950,6 +962,20 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                             string typeInstance2 = ((string)typeValue2);
                                             dataElementInstance.Type = typeInstance2;
                                         }
+                                        
+                                        JToken cultureValue = structureValue["culture"];
+                                        if (cultureValue != null && cultureValue.Type != JTokenType.Null)
+                                        {
+                                            string cultureInstance = ((string)cultureValue);
+                                            dataElementInstance.Culture = cultureInstance;
+                                        }
+                                        
+                                        JToken formatValue = structureValue["format"];
+                                        if (formatValue != null && formatValue.Type != JTokenType.Null)
+                                        {
+                                            string formatInstance = ((string)formatValue);
+                                            dataElementInstance.Format = formatInstance;
+                                        }
                                     }
                                 }
                                 
@@ -1084,13 +1110,6 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                 {
                                     bool externalInstance = ((bool)externalValue);
                                     propertiesInstance.External = externalInstance;
-                                }
-                                
-                                JToken publishedValue = propertiesValue["published"];
-                                if (publishedValue != null && publishedValue.Type != JTokenType.Null)
-                                {
-                                    bool publishedInstance = ((bool)publishedValue);
-                                    propertiesInstance.Published = publishedInstance;
                                 }
                                 
                                 JToken createTimeValue = propertiesValue["createTime"];
@@ -1232,7 +1251,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + "/tables/";
             url = url + Uri.EscapeDataString(tableName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-07-01-preview");
+            queryParameters.Add("api-version=2015-08-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1643,7 +1662,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + "/tables/";
             url = url + Uri.EscapeDataString(tableName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-07-01-preview");
+            queryParameters.Add("api-version=2015-08-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1790,6 +1809,20 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                             string typeInstance2 = ((string)typeValue2);
                                             dataElementInstance.Type = typeInstance2;
                                         }
+                                        
+                                        JToken cultureValue = structureValue["culture"];
+                                        if (cultureValue != null && cultureValue.Type != JTokenType.Null)
+                                        {
+                                            string cultureInstance = ((string)cultureValue);
+                                            dataElementInstance.Culture = cultureInstance;
+                                        }
+                                        
+                                        JToken formatValue = structureValue["format"];
+                                        if (formatValue != null && formatValue.Type != JTokenType.Null)
+                                        {
+                                            string formatInstance = ((string)formatValue);
+                                            dataElementInstance.Format = formatInstance;
+                                        }
                                     }
                                 }
                                 
@@ -1926,13 +1959,6 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                     propertiesInstance.External = externalInstance;
                                 }
                                 
-                                JToken publishedValue = propertiesValue["published"];
-                                if (publishedValue != null && publishedValue.Type != JTokenType.Null)
-                                {
-                                    bool publishedInstance = ((bool)publishedValue);
-                                    propertiesInstance.Published = publishedInstance;
-                                }
-                                
                                 JToken createTimeValue = propertiesValue["createTime"];
                                 if (createTimeValue != null && createTimeValue.Type != JTokenType.Null)
                                 {
@@ -2029,7 +2055,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                 
                 // Set Headers
                 httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
-                httpRequest.Headers.Add("x-ms-version", "2015-07-01-preview");
+                httpRequest.Headers.Add("x-ms-version", "2015-08-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2149,6 +2175,20 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                             string typeInstance2 = ((string)typeValue2);
                                             dataElementInstance.Type = typeInstance2;
                                         }
+                                        
+                                        JToken cultureValue = structureValue["culture"];
+                                        if (cultureValue != null && cultureValue.Type != JTokenType.Null)
+                                        {
+                                            string cultureInstance = ((string)cultureValue);
+                                            dataElementInstance.Culture = cultureInstance;
+                                        }
+                                        
+                                        JToken formatValue = structureValue["format"];
+                                        if (formatValue != null && formatValue.Type != JTokenType.Null)
+                                        {
+                                            string formatInstance = ((string)formatValue);
+                                            dataElementInstance.Format = formatInstance;
+                                        }
                                     }
                                 }
                                 
@@ -2283,13 +2323,6 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                 {
                                     bool externalInstance = ((bool)externalValue);
                                     propertiesInstance.External = externalInstance;
-                                }
-                                
-                                JToken publishedValue = propertiesValue["published"];
-                                if (publishedValue != null && publishedValue.Type != JTokenType.Null)
-                                {
-                                    bool publishedInstance = ((bool)publishedValue);
-                                    propertiesInstance.Published = publishedInstance;
                                 }
                                 
                                 JToken createTimeValue = propertiesValue["createTime"];
@@ -2423,7 +2456,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + Uri.EscapeDataString(dataFactoryName);
             url = url + "/tables";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-07-01-preview");
+            queryParameters.Add("api-version=2015-08-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2575,6 +2608,20 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                                     string typeInstance2 = ((string)typeValue2);
                                                     dataElementInstance.Type = typeInstance2;
                                                 }
+                                                
+                                                JToken cultureValue = structureValue["culture"];
+                                                if (cultureValue != null && cultureValue.Type != JTokenType.Null)
+                                                {
+                                                    string cultureInstance = ((string)cultureValue);
+                                                    dataElementInstance.Culture = cultureInstance;
+                                                }
+                                                
+                                                JToken formatValue = structureValue["format"];
+                                                if (formatValue != null && formatValue.Type != JTokenType.Null)
+                                                {
+                                                    string formatInstance = ((string)formatValue);
+                                                    dataElementInstance.Format = formatInstance;
+                                                }
                                             }
                                         }
                                         
@@ -2709,13 +2756,6 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                         {
                                             bool externalInstance = ((bool)externalValue);
                                             propertiesInstance.External = externalInstance;
-                                        }
-                                        
-                                        JToken publishedValue = propertiesValue["published"];
-                                        if (publishedValue != null && publishedValue.Type != JTokenType.Null)
-                                        {
-                                            bool publishedInstance = ((bool)publishedValue);
-                                            propertiesInstance.Published = publishedInstance;
                                         }
                                         
                                         JToken createTimeValue = propertiesValue["createTime"];
@@ -2951,6 +2991,20 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                                     string typeInstance2 = ((string)typeValue2);
                                                     dataElementInstance.Type = typeInstance2;
                                                 }
+                                                
+                                                JToken cultureValue = structureValue["culture"];
+                                                if (cultureValue != null && cultureValue.Type != JTokenType.Null)
+                                                {
+                                                    string cultureInstance = ((string)cultureValue);
+                                                    dataElementInstance.Culture = cultureInstance;
+                                                }
+                                                
+                                                JToken formatValue = structureValue["format"];
+                                                if (formatValue != null && formatValue.Type != JTokenType.Null)
+                                                {
+                                                    string formatInstance = ((string)formatValue);
+                                                    dataElementInstance.Format = formatInstance;
+                                                }
                                             }
                                         }
                                         
@@ -3085,13 +3139,6 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                                         {
                                             bool externalInstance = ((bool)externalValue);
                                             propertiesInstance.External = externalInstance;
-                                        }
-                                        
-                                        JToken publishedValue = propertiesValue["published"];
-                                        if (publishedValue != null && publishedValue.Type != JTokenType.Null)
-                                        {
-                                            bool publishedInstance = ((bool)publishedValue);
-                                            propertiesInstance.Published = publishedInstance;
                                         }
                                         
                                         JToken createTimeValue = propertiesValue["createTime"];
