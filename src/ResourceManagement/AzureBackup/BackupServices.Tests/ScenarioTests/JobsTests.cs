@@ -17,17 +17,19 @@ namespace BackupServices.Tests
             {
                 context.Start();
                 var client = GetServiceClient<BackupServicesManagementClient>();
+                DateTime startTime = new DateTime(2015, 6, 24, 15, 25, 9, DateTimeKind.Utc);
+                DateTime endTime = new DateTime(2015, 8, 13, 15, 25, 9, DateTimeKind.Utc);
                 var queryParams = new CSMJobQueryObject()
                 {
-                    StartTime = DateTime.UtcNow.AddDays(-50).ToString("yyyy-MM-dd hh:mm:ss tt"),
-                    EndTime = DateTime.UtcNow.ToString("yyyy-MM-dd hh:mm:ss tt"),
+                    StartTime = startTime.ToString("yyyy-MM-dd hh:mm:ss tt"),
+                    EndTime = endTime.ToString("yyyy-MM-dd hh:mm:ss tt"),
                     Operation = "Register"
                 };
 
                 var response = client.Job.ListAsync(queryParams, GetCustomRequestHeaders()).Result.List.Value;
 
                 Assert.NotNull(response);
-                foreach(var job in response)
+                foreach (var job in response)
                 {
                     ValidateJobResponse(job);
                 }
@@ -41,10 +43,13 @@ namespace BackupServices.Tests
             {
                 context.Start();
                 var client = GetServiceClient<BackupServicesManagementClient>();
+                //endTime%20eq%20'2015-08-13%2003:25:30%20PM'",
+                DateTime startTime = new DateTime(2015, 8, 12, 15, 25, 30, DateTimeKind.Utc);
+                DateTime endTime = new DateTime(2015, 8, 13, 15, 25, 30, DateTimeKind.Utc);
                 var queryParams = new CSMJobQueryObject()
                 {
-                    StartTime = DateTime.UtcNow.AddDays(-1).ToString("yyyy-MM-dd hh:mm:ss tt"),
-                    EndTime = DateTime.UtcNow.ToString("yyyy-MM-dd hh:mm:ss tt")
+                    StartTime = startTime.ToString("yyyy-MM-dd hh:mm:ss tt"),
+                    EndTime = endTime.ToString("yyyy-MM-dd hh:mm:ss tt")
                 };
 
                 var jobResponse = client.Job.ListAsync(queryParams, GetCustomRequestHeaders()).Result.List.Value;
@@ -76,10 +81,11 @@ namespace BackupServices.Tests
                 Assert.Equal(opStatus.Status, "Succeeded");
                 Assert.True(opStatus.JobList.Count > 0);
 
+                DateTime startTime = new DateTime(2015, 8, 12, 15, 40, 53, DateTimeKind.Utc);
                 var queryParams = new CSMJobQueryObject()
                 {
-                    StartTime = DateTime.UtcNow.AddDays(-1).ToString("yyyy-MM-dd hh:mm:ss tt"),
-                    EndTime = DateTime.UtcNow.ToString("yyyy-MM-dd hh:mm:ss tt"),
+                    StartTime = startTime.ToString("yyyy-MM-dd hh:mm:ss tt"),
+                    EndTime = startTime.AddDays(1).ToString("yyyy-MM-dd hh:mm:ss tt"),
                     Status = "InProgress",
                     Operation = "Backup",
                     Name = opStatus.JobList[0]
