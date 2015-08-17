@@ -32,7 +32,7 @@ namespace BackupServices.Tests
                     Assert.True(!string.IsNullOrEmpty(ppo.Name), "Policy Name can't be null or empty");
                     if(ppo.Properties.BackupSchedule.ScheduleRun == "Daily")
                     {
-                        Assert.True(ppo.Properties.LtrRetentionPolicy.DailySchedule == null, "Daily RetentionType can't be  null or empty for Daily Schedule");
+                        Assert.True(ppo.Properties.LtrRetentionPolicy.DailySchedule != null, "Daily RetentionType can't be  null or empty for Daily Schedule");
                     
                     }
                     else
@@ -57,6 +57,7 @@ namespace BackupServices.Tests
                 var addProtectionPolicyRequest = new CSMAddProtectionPolicyRequest();
                 string policyName = ConfigurationManager.AppSettings["PolicyName"]; 
                 addProtectionPolicyRequest.PolicyName = ConfigurationManager.AppSettings["PolicyName"];
+                addProtectionPolicyRequest.Properties = new CSMAddProtectionPolicyRequestProperties();
                 addProtectionPolicyRequest.Properties.PolicyName = ConfigurationManager.AppSettings["PolicyName"];
                 addProtectionPolicyRequest.Properties.BackupSchedule = backupSchedule;
                 addProtectionPolicyRequest.Properties.WorkloadType = ConfigurationManager.AppSettings["WorkloadType"];
@@ -77,6 +78,7 @@ namespace BackupServices.Tests
                 var backupSchedule = GetBackupSchedule();
 
                 var updateProtectionPolicyRequest = new CSMUpdateProtectionPolicyRequest();
+                updateProtectionPolicyRequest.Properties = new CSMUpdateProtectionPolicyRequestProperties();
                 updateProtectionPolicyRequest.Properties.PolicyName = ConfigurationManager.AppSettings["ModifiedPolicyName"];
                 string policyName = ConfigurationManager.AppSettings["PolicyName"];
                 updateProtectionPolicyRequest.Properties.BackupSchedule = backupSchedule;
@@ -94,7 +96,7 @@ namespace BackupServices.Tests
             {
                 context.Start();
                 var client = GetServiceClient<BackupServicesManagementClient>();
-                string policyName = ConfigurationManager.AppSettings["PolicyName"];
+                string policyName = ConfigurationManager.AppSettings["ModifiedPolicyName"];
                 var response = client.CSMProtectionPolicy.Delete(BackupServicesTestsBase.ResourceGroupName, BackupServicesTestsBase.ResourceName, policyName, GetCustomRequestHeaders());
 
                 Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);

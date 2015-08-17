@@ -27,7 +27,7 @@ using Microsoft.Azure.Management.TrafficManager.Models;
 namespace Microsoft.Azure.Management.TrafficManager.Models
 {
     /// <summary>
-    /// The response to a Profile CreateOrUpdate operation.
+    /// The response to a Traffic Manager profile 'CreateOrUpdate' operation.
     /// </summary>
     public partial class ProfileCreateOrUpdateResponse : AzureOperationResponse
     {
@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
         
         /// <summary>
         /// Optional. Gets or sets information about the profile in the
-        /// response.
+        /// response to the 'CreateOrUpdate' operation.
         /// </summary>
         public Profile Profile
         {

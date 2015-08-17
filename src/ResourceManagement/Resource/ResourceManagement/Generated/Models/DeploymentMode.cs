@@ -30,5 +30,7 @@ namespace Microsoft.Azure.Management.Resources.Models
     public enum DeploymentMode
     {
         Incremental = 0,
+        
+        Complete = 1,
     }
 }

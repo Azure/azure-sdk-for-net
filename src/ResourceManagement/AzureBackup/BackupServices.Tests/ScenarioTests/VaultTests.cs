@@ -13,16 +13,16 @@
 // limitations under the License.
 //
 
-using BackupServices.Tests.Helpers;
-using Microsoft.Azure.Management.BackupServices;
-using Microsoft.Azure.Management.BackupServices.Models;
-using Microsoft.Azure.Test;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
+using BackupServices.Tests.Helpers;
+using Microsoft.Azure.Management.BackupServices;
+using Microsoft.Azure.Management.BackupServices.Models;
+using Microsoft.Azure.Test;
 using Xunit;
 
 namespace BackupServices.Tests

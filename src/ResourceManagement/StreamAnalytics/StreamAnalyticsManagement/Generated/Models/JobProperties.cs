@@ -99,7 +99,8 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         
         /// <summary>
         /// Optional. Gets or sets the out of order policy of the stream
-        /// analytics job.
+        /// analytics job. Indicates the policy to apply to events that arrive
+        /// out of order in the input event stream.
         /// </summary>
         public string EventsOutOfOrderPolicy
         {

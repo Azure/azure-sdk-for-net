@@ -1,0 +1,75 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/Subscriptions/00a07ea0-ad8b-491c-9de8-77bf10881499/resourceGroups/testsitegroup/providers/Microsoft.SiteRecovery/SiteRecoveryVault/ppeVault2/jobs?api-version=2015-08-10",
+      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvMDBhMDdlYTAtYWQ4Yi00OTFjLTlkZTgtNzdiZjEwODgxNDk5L3Jlc291cmNlR3JvdXBzL3Rlc3RzaXRlZ3JvdXAvcHJvdmlkZXJzL01pY3Jvc29mdC5TaXRlUmVjb3ZlcnkvU2l0ZVJlY292ZXJ5VmF1bHQvcHBlVmF1bHQyL2pvYnM/YXBpLXZlcnNpb249MjAxNS0wOC0xMA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "12e92b86-ee78-45d7-954d-b054e502cfed"
+        ],
+        "x-ms-version": [
+          "2015-01-01"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.SiteRecovery.SiteRecoveryManagementClient/0.0.0.0"
+        ]
+      },
+      "ResponseBody": "[\r\n  {\r\n    \"id\": \"/Subscriptions/00a07ea0-ad8b-491c-9de8-77bf10881499/resourceGroups/testsitegroup/providers/Microsoft.SiteRecovery/SiteRecoveryVault/ppeVault2/Jobs/f0dd55c1-edf4-4d08-a4fb-15480ce81732\",\r\n    \"name\": \"f0dd55c1-edf4-4d08-a4fb-15480ce81732\",\r\n    \"type\": \"Microsoft.SiteRecovery/Job\",\r\n    \"properties\": {\r\n      \"activityId\": \"6a49a65b-4914-4ed4-8e3c-b3f5b8b62393\",\r\n      \"scenarioName\": \"RegisterVmm\",\r\n      \"displayName\": \"Register server\",\r\n      \"state\": \"Succeeded\",\r\n      \"tasks\": [\r\n        {\r\n          \"id\": \"RegisterVMMTask\",\r\n          \"name\": \"RegisterVmmTask\",\r\n          \"startTime\": \"2015-07-27T14:36:13.8828425Z\",\r\n          \"endTime\": \"2015-07-27T14:36:13.9453403Z\",\r\n          \"actions\": [],\r\n          \"state\": \"Succeeded\",\r\n          \"childJobId\": null\r\n        }\r\n      ],\r\n      \"errors\": [],\r\n      \"startTime\": \"2015-07-27T14:36:12.5033499Z\",\r\n      \"endTime\": \"2015-07-27T14:36:13Z\",\r\n      \"allowedActions\": [],\r\n      \"targetObjectId\": \"57f95c35-6c83-42ce-bb21-2c4f10f92d8e\",\r\n      \"targetObjectType\": \"Server\",\r\n      \"targetObjectName\": \"sriramvu-hv2.fareast.corp.microsoft.com\"\r\n    }\r\n  }\r\n]",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "872"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "12e92b86-ee78-45d7-954d-b054e502cfed 7/27/2015 9:06:56 PM"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0",
+          "Microsoft-IIS/8.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-client-request-id": [
+          "12e92b86-ee78-45d7-954d-b054e502cfed"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14997"
+        ],
+        "x-ms-correlation-request-id": [
+          "308a96eb-ab29-4ddd-910e-9da67154ee3b"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150727T210657Z:308a96eb-ab29-4ddd-910e-9da67154ee3b"
+        ],
+        "Date": [
+          "Mon, 27 Jul 2015 21:06:56 GMT"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "00a07ea0-ad8b-491c-9de8-77bf10881499"
+  }
+}

@@ -13,13 +13,13 @@
 // limitations under the License.
 //
 
+using System;
+using System.Security.Cryptography;
+using System.Security.Cryptography.X509Certificates;
 using Microsoft.WindowsAzure.Management;
 using Microsoft.WindowsAzure.Management.EventSources;
 using Security.Cryptography;
 using Security.Cryptography.X509Certificates;
-using System;
-using System.Security.Cryptography;
-using System.Security.Cryptography.X509Certificates;
 
 namespace BackupServices.Tests.Helpers
 {

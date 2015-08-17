@@ -104,10 +104,10 @@ namespace Microsoft.Azure.KeyVault
                 return null;
 
             if ( KeyIdentifier.IsKeyIdentifier( kid ) )
-                return await ResolveKeyFromKeyAsync( kid, token );
+                return await ResolveKeyFromKeyAsync( kid, token ).ConfigureAwait( false );
 
             if ( SecretIdentifier.IsSecretIdentifier( kid ) )
-                return await ResolveKeyFromSecretAsync( kid, token );
+                return await ResolveKeyFromSecretAsync( kid, token ).ConfigureAwait( false );
 
             // Return null rather than throw an exception here
             return null;

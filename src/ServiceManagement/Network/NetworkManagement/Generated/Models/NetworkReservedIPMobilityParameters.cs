@@ -51,6 +51,18 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             set { this._serviceName = value; }
         }
         
+        private string _virtualIPName;
+        
+        /// <summary>
+        /// Optional. The name of the virtual IP on which we want to perform
+        /// the IP Mobility operation.
+        /// </summary>
+        public string VirtualIPName
+        {
+            get { return this._virtualIPName; }
+            set { this._virtualIPName = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the
         /// NetworkReservedIPMobilityParameters class.

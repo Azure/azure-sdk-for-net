@@ -34,6 +34,25 @@ namespace Microsoft.Azure.Management.Resources
     public partial interface IDeploymentOperations
     {
         /// <summary>
+        /// Begin deleting deployment.To determine whether the operation has
+        /// finished processing the request, call
+        /// GetLongRunningOperationStatus.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// The name of the deployment to be deleted.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        Task<LongRunningOperationResponse> BeginDeletingAsync(string resourceGroupName, string deploymentName, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// Cancel a currently running template deployment.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -50,6 +69,24 @@ namespace Microsoft.Azure.Management.Resources
         /// request ID.
         /// </returns>
         Task<AzureOperationResponse> CancelAsync(string resourceGroupName, string deploymentName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Checks whether deployment exists.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group to check. The name is case
+        /// insensitive.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// The name of the deployment.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Deployment information.
+        /// </returns>
+        Task<DeploymentExistsResult> CheckExistenceAsync(string resourceGroupName, string deploymentName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Create a named template deployment using a template.
@@ -70,6 +107,24 @@ namespace Microsoft.Azure.Management.Resources
         /// Template deployment operation create result.
         /// </returns>
         Task<DeploymentOperationsCreateResult> CreateOrUpdateAsync(string resourceGroupName, string deploymentName, Deployment parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Delete deployment and all of its resources.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// The name of the deployment to be deleted.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<AzureOperationResponse> DeleteAsync(string resourceGroupName, string deploymentName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Get a deployment.

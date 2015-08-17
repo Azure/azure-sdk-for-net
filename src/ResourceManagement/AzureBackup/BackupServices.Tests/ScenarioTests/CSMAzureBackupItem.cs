@@ -35,8 +35,8 @@ namespace BackupServices.Tests
         {
             using (UndoContext context = UndoContext.Current)
             {
-                var client = GetServiceClient<BackupServicesManagementClient>();
                 context.Start();
+                var client = GetServiceClient<BackupServicesManagementClient>();
                 CSMSetProtectionRequest input = new CSMSetProtectionRequest();
                 input.Properties = new CSMSetProtectionRequestProperties();
                 input.Properties.PolicyId = ConfigurationManager.AppSettings["PolicyId"];
@@ -59,8 +59,8 @@ namespace BackupServices.Tests
         {
             using (UndoContext context = UndoContext.Current)
             {
-                var client = GetServiceClient<BackupServicesManagementClient>();
                 context.Start();
+                var client = GetServiceClient<BackupServicesManagementClient>();
 
                 CSMUpdateProtectionRequest input = new CSMUpdateProtectionRequest();
                 input.Properties = new CSMUpdateProtectionRequestProperties();
@@ -84,8 +84,8 @@ namespace BackupServices.Tests
         {
             using (UndoContext context = UndoContext.Current)
             {
-                var client = GetServiceClient<BackupServicesManagementClient>();
                 context.Start();
+                var client = GetServiceClient<BackupServicesManagementClient>();
 
                 string itemName = ConfigurationManager.AppSettings["AzureBackupItemName"];
                 string containerName = ConfigurationManager.AppSettings["ContainerName"];
@@ -154,8 +154,6 @@ namespace BackupServices.Tests
                     Assert.True(!string.IsNullOrEmpty(ds.Properties.ContainerId), "ContainerId can't be null or empty");
                     Assert.True(!string.IsNullOrEmpty(ds.Properties.FriendlyName), "FriendlyName can't be null or empty");
                     Assert.True(!string.IsNullOrEmpty(ds.Properties.ItemType), "ItemType can't be null or empty");
-                    Assert.True(!string.IsNullOrEmpty(ds.Properties.LastBackupJobId), "LastBackupJobId can't be null or empty");
-                    Assert.True(!string.IsNullOrEmpty(ds.Properties.LastBackupStatus), "LastBackupStatus can't be  null or empty");
                     Assert.True(!string.IsNullOrEmpty(ds.Properties.ProtectionPolicyId), "ProtectionPolicyId can't be null or empty");
                     Assert.True(!string.IsNullOrEmpty(ds.Properties.ProtectionStatus), "ProtectionStatus can't be null or empty");
                     Assert.True(!string.IsNullOrEmpty(ds.Properties.RecoveryPointsCount.ToString()), "RecoveryPointsCount can't be null or empty");

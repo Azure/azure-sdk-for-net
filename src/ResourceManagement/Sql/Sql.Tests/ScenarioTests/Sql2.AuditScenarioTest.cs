@@ -27,7 +27,7 @@ namespace Sql2.Tests.ScenarioTests
     public class Sql2AuditScenarioTest
     {
         private const string c_DefualtEventTypesToAudit =
-            "DataAccess,DataChanges,RevokePermissions,SchemaChanges,SecurityExceptions,PlainSQL_Success,PlainSQL_Failure,ParameterizedSQL_Success,ParameterizedSQL_Failure,StoredProcedure_Success,StoredProcedure_Failure,Login_Success,Login_Failure,TransactionManagement_Success,TransactionManagement_Failure";
+            "PlainSQL_Success,PlainSQL_Failure,ParameterizedSQL_Success,ParameterizedSQL_Failure,StoredProcedure_Success,StoredProcedure_Failure,Login_Success,Login_Failure,TransactionManagement_Success,TransactionManagement_Failure";
         /// <summary>
         /// The non-boilerplated test code of the APIs for managing the lifecycle of a given database's auditing policy. It is meant to be called with a name of an already existing database (and therefore already existing 
         /// server and resource group). This test does not create these resources and does not remove them.
@@ -76,8 +76,7 @@ namespace Sql2.Tests.ScenarioTests
                 StorageAccountSubscriptionId = null,
                 StorageTableEndpoint = null,
                 RetentionDays = "0",
-                UseServerDefault = "Disabled",
-                AuditLogsTableName = null
+                UseServerDefault = "Disabled"
             };
             return props;
         }
@@ -99,7 +98,6 @@ namespace Sql2.Tests.ScenarioTests
             Assert.Equal(expected.StorageAccountSubscriptionId, actual.StorageAccountSubscriptionId);
             Assert.Equal(expected.RetentionDays, actual.RetentionDays);
             Assert.Equal(expected.UseServerDefault, actual.UseServerDefault);
-            Assert.Equal(expected.AuditLogsTableName, actual.AuditLogsTableName);
         }
 
         /// <summary>
@@ -171,8 +169,7 @@ namespace Sql2.Tests.ScenarioTests
                 StorageAccountResourceGroupName = null,
                 StorageAccountSubscriptionId = null,
                 StorageTableEndpoint = null,
-                RetentionDays = "0",
-                AuditLogsTableName = null
+                RetentionDays = "0"
             };
             return props;
         }
@@ -193,7 +190,6 @@ namespace Sql2.Tests.ScenarioTests
             Assert.Equal(expected.StorageTableEndpoint, actual.StorageTableEndpoint);
             Assert.Equal(expected.StorageAccountSubscriptionId, actual.StorageAccountSubscriptionId);
             Assert.Equal(expected.RetentionDays, actual.RetentionDays);
-            Assert.Equal(expected.AuditLogsTableName, actual.AuditLogsTableName);
         }
 
         /// <summary>

@@ -14,7 +14,7 @@
     <summary>Provides azure backup management capabilities</summary>
     <description>Provides azure backup management capabilities.</description>
     <copyright>Copyright © Microsoft Corporation</copyright>
-    <tags>Microsoft Azure backup management "azure backup management" REST HTTP client azureofficial windowsazureofficial</tags>
+    <tags>Microsoft Azure backup management "backup management" REST HTTP client azureofficial windowsazureofficial</tags>
     <references>
       <group targetFramework="portable-net45+wp8+wpa81+win">
         <reference file="Microsoft.Azure.Management.BackupServicesManagement.dll" />

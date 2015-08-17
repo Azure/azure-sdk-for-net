@@ -20,7 +20,7 @@ using System.Resources;
 [assembly: AssemblyDescription("Provides management functionality for Microsoft Azure Virtual Machines and Hosted Services.")]
 
 [assembly: AssemblyVersion("12.0.0.0")]
-[assembly: AssemblyFileVersion("12.0.0.0")]
+[assembly: AssemblyFileVersion("12.4.0.0")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
 [assembly: AssemblyProduct("Azure .NET SDK")]
