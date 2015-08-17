@@ -84,22 +84,6 @@ namespace Microsoft.Azure.Management.BackupServices
             set { this._longRunningOperationRetryTimeout = value; }
         }
         
-        private string _resourceGroupName;
-        
-        public string ResourceGroupName
-        {
-            get { return this._resourceGroupName; }
-            set { this._resourceGroupName = value; }
-        }
-        
-        private string _resourceName;
-        
-        public string ResourceName
-        {
-            get { return this._resourceName; }
-            set { this._resourceName = value; }
-        }
-        
         private IBackUpOperations _backUp;
         
         /// <summary>
@@ -219,12 +203,6 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Initializes a new instance of the BackupServicesManagementClient
         /// class.
         /// </summary>
-        /// <param name='resourceName'>
-        /// Required.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required.
-        /// </param>
         /// <param name='credentials'>
         /// Required. Gets subscription credentials which uniquely identify
         /// Microsoft Azure subscription. The subscription ID forms part of
@@ -234,17 +212,9 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Optional. Gets the URI used as the base for all cloud service
         /// requests.
         /// </param>
-        public BackupServicesManagementClient(string resourceName, string resourceGroupName, SubscriptionCloudCredentials credentials, Uri baseUri)
+        public BackupServicesManagementClient(SubscriptionCloudCredentials credentials, Uri baseUri)
             : this()
         {
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException("resourceName");
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException("resourceGroupName");
-            }
             if (credentials == null)
             {
                 throw new ArgumentNullException("credentials");
@@ -253,8 +223,6 @@ namespace Microsoft.Azure.Management.BackupServices
             {
                 throw new ArgumentNullException("baseUri");
             }
-            this._resourceName = resourceName;
-            this._resourceGroupName = resourceGroupName;
             this._credentials = credentials;
             this._baseUri = baseUri;
             
@@ -265,34 +233,18 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Initializes a new instance of the BackupServicesManagementClient
         /// class.
         /// </summary>
-        /// <param name='resourceName'>
-        /// Required.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required.
-        /// </param>
         /// <param name='credentials'>
         /// Required. Gets subscription credentials which uniquely identify
         /// Microsoft Azure subscription. The subscription ID forms part of
         /// the URI for every service call.
         /// </param>
-        public BackupServicesManagementClient(string resourceName, string resourceGroupName, SubscriptionCloudCredentials credentials)
+        public BackupServicesManagementClient(SubscriptionCloudCredentials credentials)
             : this()
         {
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException("resourceName");
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException("resourceGroupName");
-            }
             if (credentials == null)
             {
                 throw new ArgumentNullException("credentials");
             }
-            this._resourceName = resourceName;
-            this._resourceGroupName = resourceGroupName;
             this._credentials = credentials;
             this._baseUri = new Uri("https://management.core.windows.net");
             
@@ -328,12 +280,6 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Initializes a new instance of the BackupServicesManagementClient
         /// class.
         /// </summary>
-        /// <param name='resourceName'>
-        /// Required.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required.
-        /// </param>
         /// <param name='credentials'>
         /// Required. Gets subscription credentials which uniquely identify
         /// Microsoft Azure subscription. The subscription ID forms part of
@@ -346,17 +292,9 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <param name='httpClient'>
         /// The Http client
         /// </param>
-        public BackupServicesManagementClient(string resourceName, string resourceGroupName, SubscriptionCloudCredentials credentials, Uri baseUri, HttpClient httpClient)
+        public BackupServicesManagementClient(SubscriptionCloudCredentials credentials, Uri baseUri, HttpClient httpClient)
             : this(httpClient)
         {
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException("resourceName");
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException("resourceGroupName");
-            }
             if (credentials == null)
             {
                 throw new ArgumentNullException("credentials");
@@ -365,8 +303,6 @@ namespace Microsoft.Azure.Management.BackupServices
             {
                 throw new ArgumentNullException("baseUri");
             }
-            this._resourceName = resourceName;
-            this._resourceGroupName = resourceGroupName;
             this._credentials = credentials;
             this._baseUri = baseUri;
             
@@ -377,12 +313,6 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Initializes a new instance of the BackupServicesManagementClient
         /// class.
         /// </summary>
-        /// <param name='resourceName'>
-        /// Required.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required.
-        /// </param>
         /// <param name='credentials'>
         /// Required. Gets subscription credentials which uniquely identify
         /// Microsoft Azure subscription. The subscription ID forms part of
@@ -391,23 +321,13 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <param name='httpClient'>
         /// The Http client
         /// </param>
-        public BackupServicesManagementClient(string resourceName, string resourceGroupName, SubscriptionCloudCredentials credentials, HttpClient httpClient)
+        public BackupServicesManagementClient(SubscriptionCloudCredentials credentials, HttpClient httpClient)
             : this(httpClient)
         {
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException("resourceName");
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException("resourceGroupName");
-            }
             if (credentials == null)
             {
                 throw new ArgumentNullException("credentials");
             }
-            this._resourceName = resourceName;
-            this._resourceGroupName = resourceGroupName;
             this._credentials = credentials;
             this._baseUri = new Uri("https://management.core.windows.net");
             
@@ -429,8 +349,6 @@ namespace Microsoft.Azure.Management.BackupServices
             {
                 BackupServicesManagementClient clonedClient = ((BackupServicesManagementClient)client);
                 
-                clonedClient._resourceName = this._resourceName;
-                clonedClient._resourceGroupName = this._resourceGroupName;
                 clonedClient._credentials = this._credentials;
                 clonedClient._baseUri = this._baseUri;
                 clonedClient._apiVersion = this._apiVersion;

@@ -37,6 +37,12 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Reference to the
         /// Microsoft.Azure.Management.BackupServices.IRestoreOperations.
         /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Required.
+        /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
@@ -55,11 +61,11 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a Operation Response.
         /// </returns>
-        public static OperationResponse TriggerResotre(this IRestoreOperations operations, CustomRequestHeaders customRequestHeaders, string containerName, string itemName, string recoveryPointName, CSMRestoreRequest parameters)
+        public static OperationResponse TriggerResotre(this IRestoreOperations operations, string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string containerName, string itemName, string recoveryPointName, CSMRestoreRequest parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IRestoreOperations)s).TriggerResotreAsync(customRequestHeaders, containerName, itemName, recoveryPointName, parameters);
+                return ((IRestoreOperations)s).TriggerResotreAsync(resourceGroupName, resourceName, customRequestHeaders, containerName, itemName, recoveryPointName, parameters);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -71,6 +77,12 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Reference to the
         /// Microsoft.Azure.Management.BackupServices.IRestoreOperations.
         /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Required.
+        /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
@@ -89,9 +101,9 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a Operation Response.
         /// </returns>
-        public static Task<OperationResponse> TriggerResotreAsync(this IRestoreOperations operations, CustomRequestHeaders customRequestHeaders, string containerName, string itemName, string recoveryPointName, CSMRestoreRequest parameters)
+        public static Task<OperationResponse> TriggerResotreAsync(this IRestoreOperations operations, string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string containerName, string itemName, string recoveryPointName, CSMRestoreRequest parameters)
         {
-            return operations.TriggerResotreAsync(customRequestHeaders, containerName, itemName, recoveryPointName, parameters, CancellationToken.None);
+            return operations.TriggerResotreAsync(resourceGroupName, resourceName, customRequestHeaders, containerName, itemName, recoveryPointName, parameters, CancellationToken.None);
         }
     }
 }

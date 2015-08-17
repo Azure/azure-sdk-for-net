@@ -65,7 +65,7 @@ namespace BackupServices.Tests
                     },
                 };
 
-                var response = client.Restore.TriggerResotre(GetCustomRequestHeaders(), containerName, itemName, recoveryPointName, restoreRequest);
+                var response = client.Restore.TriggerResotre(BackupServicesTestsBase.ResourceGroupName, BackupServicesTestsBase.ResourceName, GetCustomRequestHeaders(), containerName, itemName, recoveryPointName, restoreRequest);
                 Assert.Equal(HttpStatusCode.Accepted, response.StatusCode);
             }
         }

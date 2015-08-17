@@ -24,7 +24,7 @@ namespace BackupServices.Tests
                     Operation = "Register"
                 };
 
-                var response = client.Job.ListAsync(queryParams, GetCustomRequestHeaders()).Result.List.Value;
+                var response = client.Job.ListAsync(BackupServicesTestsBase.ResourceGroupName, BackupServicesTestsBase.ResourceName, queryParams, GetCustomRequestHeaders()).Result.List.Value;
 
                 Assert.NotNull(response);
                 foreach(var job in response)
@@ -47,8 +47,8 @@ namespace BackupServices.Tests
                     EndTime = DateTime.UtcNow.ToString("yyyy-MM-dd hh:mm:ss tt")
                 };
 
-                var jobResponse = client.Job.ListAsync(queryParams, GetCustomRequestHeaders()).Result.List.Value;
-                var response = client.Job.GetAsync(jobResponse[0].Name, GetCustomRequestHeaders()).Result.Value;
+                var jobResponse = client.Job.ListAsync(BackupServicesTestsBase.ResourceGroupName, BackupServicesTestsBase.ResourceName, queryParams, GetCustomRequestHeaders()).Result.List.Value;
+                var response = client.Job.GetAsync(BackupServicesTestsBase.ResourceGroupName, BackupServicesTestsBase.ResourceName, jobResponse[0].Name, GetCustomRequestHeaders()).Result.Value;
 
                 Assert.NotNull(response);
                 ValidateJobDetailsResponse(response);
@@ -66,12 +66,12 @@ namespace BackupServices.Tests
                 string containerName = ConfigurationManager.AppSettings["ContainerName"];
                 string itemName = ConfigurationManager.AppSettings["ItemName"];
 
-                var backupResponse = client.BackUp.TriggerBackUp(GetCustomRequestHeaders(), containerName, itemName);
+                var backupResponse = client.BackUp.TriggerBackUp(BackupServicesTestsBase.ResourceGroupName, BackupServicesTestsBase.ResourceName, GetCustomRequestHeaders(), containerName, itemName);
 
-                var opStatus = client.OperationStatus.CSMGetAsync(backupResponse.OperationId.ToString(), GetCustomRequestHeaders()).Result;
+                var opStatus = client.OperationStatus.CSMGetAsync(BackupServicesTestsBase.ResourceGroupName, BackupServicesTestsBase.ResourceName, backupResponse.OperationId.ToString(), GetCustomRequestHeaders()).Result;
                 while (opStatus.Status == "InProgress")
                 {
-                    opStatus = client.OperationStatus.CSMGetAsync(backupResponse.OperationId.ToString(), GetCustomRequestHeaders()).Result;
+                    opStatus = client.OperationStatus.CSMGetAsync(BackupServicesTestsBase.ResourceGroupName, BackupServicesTestsBase.ResourceName, backupResponse.OperationId.ToString(), GetCustomRequestHeaders()).Result;
                 }
                 Assert.Equal(opStatus.Status, "Succeeded");
                 Assert.True(opStatus.JobList.Count > 0);
@@ -85,18 +85,18 @@ namespace BackupServices.Tests
                     Name = opStatus.JobList[0]
                 };
 
-                var jobResponse = client.Job.ListAsync(queryParams, GetCustomRequestHeaders()).Result.List.Value;
-                var opId = client.Job.StopAsync(jobResponse[0].Name, GetCustomRequestHeaders()).Result;
+                var jobResponse = client.Job.ListAsync(BackupServicesTestsBase.ResourceGroupName, BackupServicesTestsBase.ResourceName, queryParams, GetCustomRequestHeaders()).Result.List.Value;
+                var opId = client.Job.StopAsync(BackupServicesTestsBase.ResourceGroupName, BackupServicesTestsBase.ResourceName, jobResponse[0].Name, GetCustomRequestHeaders()).Result;
 
                 // TODO: Wait till the WF completes
-                opStatus = client.OperationStatus.CSMGetAsync(opId.OperationId.ToString(), GetCustomRequestHeaders()).Result;
+                opStatus = client.OperationStatus.CSMGetAsync(BackupServicesTestsBase.ResourceGroupName, BackupServicesTestsBase.ResourceName, opId.OperationId.ToString(), GetCustomRequestHeaders()).Result;
                 while (opStatus.Status == "InProgress")
                 {
-                    opStatus = client.OperationStatus.CSMGetAsync(opId.OperationId.ToString(), GetCustomRequestHeaders()).Result;
+                    opStatus = client.OperationStatus.CSMGetAsync(BackupServicesTestsBase.ResourceGroupName, BackupServicesTestsBase.ResourceName, opId.OperationId.ToString(), GetCustomRequestHeaders()).Result;
                 }
                 Assert.Equal(opStatus.Status, "Succeeded");
 
-                var response = client.Job.GetAsync(jobResponse[0].Name, GetCustomRequestHeaders()).Result.Value;
+                var response = client.Job.GetAsync(BackupServicesTestsBase.ResourceGroupName, BackupServicesTestsBase.ResourceName, jobResponse[0].Name, GetCustomRequestHeaders()).Result.Value;
                 Assert.True((response.JobDetailedProperties.Status.CompareTo("Cancelled") == 0) || (response.JobDetailedProperties.Status.CompareTo("Cancelling") == 0));
             }
         }

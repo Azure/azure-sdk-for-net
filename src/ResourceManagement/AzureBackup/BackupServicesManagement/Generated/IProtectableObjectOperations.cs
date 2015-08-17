@@ -48,6 +48,6 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a CSMItemListOperationResponse.
         /// </returns>
-        Task<CSMItemListOperationResponse> ListCSMAsync(CSMItemQueryObject csmparameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<CSMItemListOperationResponse> ListCSMAsync(string resourceGroupName, string resourceName, CSMItemQueryObject csmparameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
     }
 }

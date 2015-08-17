@@ -65,6 +65,12 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <summary>
         /// Enable the container reregistration.
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Required.
+        /// </param>
         /// <param name='containerId'>
         /// Required. MARS container ID.
         /// </param>
@@ -80,9 +86,17 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a Operation Response.
         /// </returns>
-        public async Task<OperationResponse> EnableMarsContainerReregistrationAsync(string containerId, EnableReregistrationRequest enableReregistrationRequest, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<OperationResponse> EnableMarsContainerReregistrationAsync(string resourceGroupName, string resourceName, string containerId, EnableReregistrationRequest enableReregistrationRequest, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException("resourceName");
+            }
             if (containerId == null)
             {
                 throw new ArgumentNullException("containerId");
@@ -99,6 +113,8 @@ namespace Microsoft.Azure.Management.BackupServices
             {
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("resourceName", resourceName);
                 tracingParameters.Add("containerId", containerId);
                 tracingParameters.Add("enableReregistrationRequest", enableReregistrationRequest);
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
@@ -113,13 +129,13 @@ namespace Microsoft.Azure.Management.BackupServices
                 url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
             }
             url = url + "/resourceGroups/";
-            url = url + Uri.EscapeDataString(this.Client.ResourceGroupName);
+            url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
             url = url + "Microsoft.Backup";
             url = url + "/";
             url = url + "BackupVault";
             url = url + "/";
-            url = url + Uri.EscapeDataString(this.Client.ResourceName);
+            url = url + Uri.EscapeDataString(resourceName);
             url = url + "/backupContainers/";
             url = url + Uri.EscapeDataString(containerId);
             url = url + "/enableReRegister";
@@ -253,6 +269,12 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Get the list of all container based on the given query filter
         /// string.
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Required.
+        /// </param>
         /// <param name='containerType'>
         /// Required. Type of container.
         /// </param>
@@ -265,9 +287,17 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// List of Microsoft Azure Recovery Services (MARS) containers.
         /// </returns>
-        public async Task<ListMarsContainerOperationResponse> ListMarsContainersByTypeAsync(MarsContainerType containerType, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<ListMarsContainerOperationResponse> ListMarsContainersByTypeAsync(string resourceGroupName, string resourceName, MarsContainerType containerType, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException("resourceName");
+            }
             
             // Tracing
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -276,6 +306,8 @@ namespace Microsoft.Azure.Management.BackupServices
             {
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("resourceName", resourceName);
                 tracingParameters.Add("containerType", containerType);
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
                 TracingAdapter.Enter(invocationId, this, "ListMarsContainersByTypeAsync", tracingParameters);
@@ -289,13 +321,13 @@ namespace Microsoft.Azure.Management.BackupServices
                 url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
             }
             url = url + "/resourceGroups/";
-            url = url + Uri.EscapeDataString(this.Client.ResourceGroupName);
+            url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
             url = url + "Microsoft.Backup";
             url = url + "/";
             url = url + "BackupVault";
             url = url + "/";
-            url = url + Uri.EscapeDataString(this.Client.ResourceName);
+            url = url + Uri.EscapeDataString(resourceName);
             url = url + "/backupContainers";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-03-15");
@@ -539,6 +571,12 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Get the list of all container based on the given query filter
         /// string.
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Required.
+        /// </param>
         /// <param name='containerType'>
         /// Required. Type of container.
         /// </param>
@@ -554,9 +592,17 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// List of Microsoft Azure Recovery Services (MARS) containers.
         /// </returns>
-        public async Task<ListMarsContainerOperationResponse> ListMarsContainersByTypeAndFriendlyNameAsync(MarsContainerType containerType, string friendlyName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<ListMarsContainerOperationResponse> ListMarsContainersByTypeAndFriendlyNameAsync(string resourceGroupName, string resourceName, MarsContainerType containerType, string friendlyName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException("resourceName");
+            }
             if (friendlyName == null)
             {
                 throw new ArgumentNullException("friendlyName");
@@ -569,6 +615,8 @@ namespace Microsoft.Azure.Management.BackupServices
             {
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("resourceName", resourceName);
                 tracingParameters.Add("containerType", containerType);
                 tracingParameters.Add("friendlyName", friendlyName);
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
@@ -583,13 +631,13 @@ namespace Microsoft.Azure.Management.BackupServices
                 url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
             }
             url = url + "/resourceGroups/";
-            url = url + Uri.EscapeDataString(this.Client.ResourceGroupName);
+            url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
             url = url + "Microsoft.Backup";
             url = url + "/";
             url = url + "BackupVault";
             url = url + "/";
-            url = url + Uri.EscapeDataString(this.Client.ResourceName);
+            url = url + Uri.EscapeDataString(resourceName);
             url = url + "/backupContainers";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-03-15");
@@ -830,6 +878,12 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <summary>
         /// Unregister the container.
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Required.
+        /// </param>
         /// <param name='containerId'>
         /// Required. MARS container ID.
         /// </param>
@@ -842,9 +896,17 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a Operation Response.
         /// </returns>
-        public async Task<OperationResponse> UnregisterMarsContainerAsync(string containerId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<OperationResponse> UnregisterMarsContainerAsync(string resourceGroupName, string resourceName, string containerId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException("resourceName");
+            }
             if (containerId == null)
             {
                 throw new ArgumentNullException("containerId");
@@ -857,6 +919,8 @@ namespace Microsoft.Azure.Management.BackupServices
             {
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("resourceName", resourceName);
                 tracingParameters.Add("containerId", containerId);
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
                 TracingAdapter.Enter(invocationId, this, "UnregisterMarsContainerAsync", tracingParameters);
@@ -870,13 +934,13 @@ namespace Microsoft.Azure.Management.BackupServices
                 url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
             }
             url = url + "/resourceGroups/";
-            url = url + Uri.EscapeDataString(this.Client.ResourceGroupName);
+            url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
             url = url + "Microsoft.Backup";
             url = url + "/";
             url = url + "BackupVault";
             url = url + "/";
-            url = url + Uri.EscapeDataString(this.Client.ResourceName);
+            url = url + Uri.EscapeDataString(resourceName);
             url = url + "/backupContainers/";
             url = url + Uri.EscapeDataString(containerId);
             url = url + "/UnRegisterContainer";

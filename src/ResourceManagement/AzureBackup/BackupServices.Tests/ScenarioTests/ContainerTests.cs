@@ -35,7 +35,7 @@ namespace BackupServices.Tests
                 var client = GetServiceClient<BackupServicesManagementClient>();
 
                 string containerName = ConfigurationManager.AppSettings["ContainerName"];
-                var response = client.Container.Register(containerName, GetCustomRequestHeaders());
+                var response = client.Container.Register(BackupServicesTestsBase.ResourceGroupName, BackupServicesTestsBase.ResourceName, containerName, GetCustomRequestHeaders());
                 Assert.Equal(HttpStatusCode.Accepted, response.StatusCode);
             }
         }
@@ -49,7 +49,7 @@ namespace BackupServices.Tests
                 var client = GetServiceClient<BackupServicesManagementClient>();
 
                 string containerName = ConfigurationManager.AppSettings["ContainerName"];
-                var response = client.Container.Unregister(containerName, GetCustomRequestHeaders());
+                var response = client.Container.Unregister(BackupServicesTestsBase.ResourceGroupName, BackupServicesTestsBase.ResourceName, containerName, GetCustomRequestHeaders());
                 Assert.Equal(HttpStatusCode.Accepted, response.StatusCode);
             }
         }
@@ -63,7 +63,7 @@ namespace BackupServices.Tests
                 var client = GetServiceClient<BackupServicesManagementClient>();
 
                 string containerName = ConfigurationManager.AppSettings["ContainerName"];
-                var response = client.Container.Refresh(GetCustomRequestHeaders());
+                var response = client.Container.Refresh(BackupServicesTestsBase.ResourceGroupName, BackupServicesTestsBase.ResourceName, GetCustomRequestHeaders());
                 Assert.Equal(HttpStatusCode.Accepted, response.StatusCode);
             }
         }
@@ -86,7 +86,7 @@ namespace BackupServices.Tests
                 string friendlyName = ConfigurationManager.AppSettings["ContainerFriendlyName"];
                 string uniqueName = ConfigurationManager.AppSettings["ContainerUniqueName"];
 
-                ListMarsContainerOperationResponse response = client.Container.ListMarsContainersByType(MarsContainerType.Machine, GetCustomRequestHeaders());
+                ListMarsContainerOperationResponse response = client.Container.ListMarsContainersByType(BackupServicesTestsBase.ResourceGroupName, BackupServicesTestsBase.ResourceName, MarsContainerType.Machine, GetCustomRequestHeaders());
 
                 // Response Validation
                 Assert.NotNull(response);
@@ -126,7 +126,7 @@ namespace BackupServices.Tests
                 string friendlyName = ConfigurationManager.AppSettings["ContainerFriendlyName"];
                 string uniqueName = ConfigurationManager.AppSettings["ContainerUniqueName"];
 
-                ListMarsContainerOperationResponse response = client.Container.ListMarsContainersByTypeAndFriendlyName(MarsContainerType.Machine, friendlyName, GetCustomRequestHeaders());
+                ListMarsContainerOperationResponse response = client.Container.ListMarsContainersByTypeAndFriendlyName(BackupServicesTestsBase.ResourceGroupName, BackupServicesTestsBase.ResourceName, MarsContainerType.Machine, friendlyName, GetCustomRequestHeaders());
 
                 // Response Validation
                 Assert.NotNull(response);
@@ -159,7 +159,7 @@ namespace BackupServices.Tests
                 string containerId = ConfigurationManager.AppSettings["ContainerId"];
                 string friendlyName = ConfigurationManager.AppSettings["ContainerFriendlyName"];
 
-                OperationResponse response = client.Container.UnregisterMarsContainer(containerId, GetCustomRequestHeaders());
+                OperationResponse response = client.Container.UnregisterMarsContainer(BackupServicesTestsBase.ResourceGroupName, BackupServicesTestsBase.ResourceName, containerId, GetCustomRequestHeaders());
                 // Response Validation
                 Assert.NotNull(response);
                 Assert.True(response.StatusCode == HttpStatusCode.NoContent, "Status code should be NoContent");
@@ -167,7 +167,7 @@ namespace BackupServices.Tests
                 bool containerDeleted = false;
                 try
                 {
-                    ListMarsContainerOperationResponse getResponse = client.Container.ListMarsContainersByTypeAndFriendlyName(MarsContainerType.Machine, friendlyName, GetCustomRequestHeaders());
+                    ListMarsContainerOperationResponse getResponse = client.Container.ListMarsContainersByTypeAndFriendlyName(BackupServicesTestsBase.ResourceGroupName, BackupServicesTestsBase.ResourceName, MarsContainerType.Machine, friendlyName, GetCustomRequestHeaders());
                     if (getResponse.ListMarsContainerResponse.Value.Count == 0)
                     {
                         containerDeleted = true;
@@ -211,13 +211,13 @@ namespace BackupServices.Tests
                     },
                 };
 
-                OperationResponse response = client.Container.EnableMarsContainerReregistration(containerId, request, GetCustomRequestHeaders());
+                OperationResponse response = client.Container.EnableMarsContainerReregistration(BackupServicesTestsBase.ResourceGroupName, BackupServicesTestsBase.ResourceName, containerId, request, GetCustomRequestHeaders());
                 // Response Validation
                 Assert.NotNull(response);
                 Assert.True(response.StatusCode == HttpStatusCode.NoContent, "Status code should be NoContent");
 
                 // Basic Validation
-                ListMarsContainerOperationResponse getResponse = client.Container.ListMarsContainersByTypeAndFriendlyName(MarsContainerType.Machine, friendlyName, GetCustomRequestHeaders());
+                ListMarsContainerOperationResponse getResponse = client.Container.ListMarsContainersByTypeAndFriendlyName(BackupServicesTestsBase.ResourceGroupName, BackupServicesTestsBase.ResourceName, MarsContainerType.Machine, friendlyName, GetCustomRequestHeaders());
                 Assert.True(getResponse.ListMarsContainerResponse.Value.Any(marsContainer =>
                 {
                     return marsContainer.ContainerType == MarsContainerType.Machine.ToString() &&
@@ -245,7 +245,7 @@ namespace BackupServices.Tests
                 string containerHealthStatus = ConfigurationManager.AppSettings["BMSContainerHealthStatus"];
                 string containerParentId = ConfigurationManager.AppSettings["BMSContainerParentId"];
 
-                CSMContainerListOperationResponse response = client.Container.List(null, GetCustomRequestHeaders());
+                CSMContainerListOperationResponse response = client.Container.List(BackupServicesTestsBase.ResourceGroupName, BackupServicesTestsBase.ResourceName, null, GetCustomRequestHeaders());
 
                 // Response Validation
                 Assert.NotNull(response);
@@ -286,8 +286,8 @@ namespace BackupServices.Tests
 
                 ContainerQueryParameters parameters = new ContainerQueryParameters();
                 parameters.FriendlyName = friendlyName;
-                
-                CSMContainerListOperationResponse response = client.Container.List(parameters, GetCustomRequestHeaders());
+
+                CSMContainerListOperationResponse response = client.Container.List(BackupServicesTestsBase.ResourceGroupName, BackupServicesTestsBase.ResourceName, parameters, GetCustomRequestHeaders());
 
                 // Response Validation
                 Assert.NotNull(response);
@@ -330,7 +330,7 @@ namespace BackupServices.Tests
                 parameters.ContainerType = containerType;
                 parameters.Status = containerStatus;
 
-                CSMContainerListOperationResponse response = client.Container.List(parameters, GetCustomRequestHeaders());
+                CSMContainerListOperationResponse response = client.Container.List(BackupServicesTestsBase.ResourceGroupName, BackupServicesTestsBase.ResourceName, parameters, GetCustomRequestHeaders());
 
                 // Response Validation
                 Assert.NotNull(response);
@@ -374,7 +374,7 @@ namespace BackupServices.Tests
                 parameters.FriendlyName = friendlyName;
                 parameters.Status = containerStatus;
 
-                CSMContainerListOperationResponse response = client.Container.List(parameters, GetCustomRequestHeaders());
+                CSMContainerListOperationResponse response = client.Container.List(BackupServicesTestsBase.ResourceGroupName, BackupServicesTestsBase.ResourceName, parameters, GetCustomRequestHeaders());
 
                 // Response Validation
                 Assert.NotNull(response);

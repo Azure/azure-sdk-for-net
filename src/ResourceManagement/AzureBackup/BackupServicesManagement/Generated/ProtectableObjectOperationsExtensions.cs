@@ -37,6 +37,12 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Reference to the
         /// Microsoft.Azure.Management.BackupServices.IProtectableObjectOperations.
         /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Required.
+        /// </param>
         /// <param name='csmparameters'>
         /// Optional. Protectable objects query parameter.
         /// </param>
@@ -46,11 +52,11 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a CSMItemListOperationResponse.
         /// </returns>
-        public static CSMItemListOperationResponse ListCSM(this IProtectableObjectOperations operations, CSMItemQueryObject csmparameters, CustomRequestHeaders customRequestHeaders)
+        public static CSMItemListOperationResponse ListCSM(this IProtectableObjectOperations operations, string resourceGroupName, string resourceName, CSMItemQueryObject csmparameters, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IProtectableObjectOperations)s).ListCSMAsync(csmparameters, customRequestHeaders);
+                return ((IProtectableObjectOperations)s).ListCSMAsync(resourceGroupName, resourceName, csmparameters, customRequestHeaders);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -62,6 +68,12 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Reference to the
         /// Microsoft.Azure.Management.BackupServices.IProtectableObjectOperations.
         /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Required.
+        /// </param>
         /// <param name='csmparameters'>
         /// Optional. Protectable objects query parameter.
         /// </param>
@@ -71,9 +83,9 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a CSMItemListOperationResponse.
         /// </returns>
-        public static Task<CSMItemListOperationResponse> ListCSMAsync(this IProtectableObjectOperations operations, CSMItemQueryObject csmparameters, CustomRequestHeaders customRequestHeaders)
+        public static Task<CSMItemListOperationResponse> ListCSMAsync(this IProtectableObjectOperations operations, string resourceGroupName, string resourceName, CSMItemQueryObject csmparameters, CustomRequestHeaders customRequestHeaders)
         {
-            return operations.ListCSMAsync(csmparameters, customRequestHeaders, CancellationToken.None);
+            return operations.ListCSMAsync(resourceGroupName, resourceName, csmparameters, customRequestHeaders, CancellationToken.None);
         }
     }
 }

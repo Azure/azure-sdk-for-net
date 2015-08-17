@@ -43,7 +43,9 @@ namespace BackupServices.Tests
                 string itemName = ConfigurationManager.AppSettings["AzureBackupItemName"];
                 string containerName = ConfigurationManager.AppSettings["ContainerName"];
 
-                var response = client.DataSource.EnableProtectionCSM(GetCustomRequestHeaders(), 
+                var response = client.DataSource.EnableProtectionCSM(BackupServicesTestsBase.ResourceGroupName, 
+                    BackupServicesTestsBase.ResourceName, 
+                    GetCustomRequestHeaders(), 
                     containerName, 
                     itemName, 
                     input);
@@ -66,7 +68,9 @@ namespace BackupServices.Tests
                 string containerName = ConfigurationManager.AppSettings["ContainerName"];
                 input.Properties.PolicyId = string.Empty;
 
-                var response = client.DataSource.UpdateProtectionCSM(GetCustomRequestHeaders(),
+                var response = client.DataSource.UpdateProtectionCSM(BackupServicesTestsBase.ResourceGroupName, 
+                    BackupServicesTestsBase.ResourceName, 
+                    GetCustomRequestHeaders(),
                     containerName,
                     itemName,
                     input);
@@ -85,7 +89,9 @@ namespace BackupServices.Tests
 
                 string itemName = ConfigurationManager.AppSettings["AzureBackupItemName"];
                 string containerName = ConfigurationManager.AppSettings["ContainerName"];
-                var response = client.DataSource.DisableProtectionCSM(GetCustomRequestHeaders(),
+                var response = client.DataSource.DisableProtectionCSM(BackupServicesTestsBase.ResourceGroupName, 
+                    BackupServicesTestsBase.ResourceName, 
+                    GetCustomRequestHeaders(),
                     containerName,
                     itemName);
 
@@ -108,7 +114,7 @@ namespace BackupServices.Tests
 
                 var client = GetServiceClient<BackupServicesManagementClient>();
 
-                var response = client.ProtectableObject.ListCSMAsync(POQueryParam, GetCustomRequestHeaders()).Result;
+                var response = client.ProtectableObject.ListCSMAsync(BackupServicesTestsBase.ResourceGroupName, BackupServicesTestsBase.ResourceName, POQueryParam, GetCustomRequestHeaders()).Result;
 
                 Assert.True(response.CSMItemListResponse.Value.Count > 0, "Protectable Object Result count can't be less than 1");
 
@@ -142,7 +148,7 @@ namespace BackupServices.Tests
 
                 var client = GetServiceClient<BackupServicesManagementClient>();
 
-                var response = client.DataSource.ListCSMAsync(DSQueryParam, GetCustomRequestHeaders()).Result;
+                var response = client.DataSource.ListCSMAsync(BackupServicesTestsBase.ResourceGroupName, BackupServicesTestsBase.ResourceName, DSQueryParam, GetCustomRequestHeaders()).Result;
                 foreach (var ds in response.CSMProtectedItemListResponse.Value)
                 {
                     Assert.True(!string.IsNullOrEmpty(ds.Properties.ContainerId), "ContainerId can't be null or empty");
