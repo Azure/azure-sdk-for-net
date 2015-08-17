@@ -15,9 +15,7 @@
 using Microsoft.Azure.Common.Authentication;
 using Microsoft.Azure.Common.Authentication.Models;
 using Microsoft.WindowsAzure.Commands.Common.Test.Mocks;
-using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using Xunit;
@@ -129,7 +127,7 @@ namespace Common.Authentication.Test
             string path = Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile);
             var dataStore = new MockDataStore();
             AzureSession.DataStore = dataStore;
-            var profile = new AzureRMProfile(path);
+            AzureRMProfile profile = new AzureRMProfile(path);
             var tenantId = new Guid("3c0ff8a7-e8bb-40e8-ae66-271343379af6");
             var environment = new AzureEnvironment
             {
@@ -158,7 +156,7 @@ namespace Common.Authentication.Test
             profile.DefaultContext = new AzureContext(sub, account, environment, tenant);
             profile.Environments[environment.Name] = environment;
             profile.TokenCache = new byte[] { 1, 2, 3, 4, 5, 6, 8, 9, 0 };
-            profile.Save(profile.ProfilePath);
+            profile.Save();
             string actual = dataStore.ReadFileAsText(path);
             Assert.Equal(expected, actual);
         }

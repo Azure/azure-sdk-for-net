@@ -193,7 +193,7 @@ namespace Microsoft.Azure.Common.Authentication.Models
         /// <summary>
         /// Writes profile to a specified path.
         /// </summary>
-        /// <param name="path"></param>
+        /// <param name="path">File path on disk to save profile to</param>
         public void Save(string path)
         {
             if (string.IsNullOrEmpty(path))

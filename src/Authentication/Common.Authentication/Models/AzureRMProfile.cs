@@ -15,6 +15,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Microsoft.Azure.Common.Authentication.Models
 {
@@ -58,6 +59,7 @@ namespace Microsoft.Azure.Common.Authentication.Models
             {
                 string contents = AzureSession.DataStore.ReadFileAsText(ProfilePath);
                 AzureRMProfile profile = JsonConvert.DeserializeObject<AzureRMProfile>(contents);
+                Debug.Assert(profile != null);
                 this.DefaultContext = profile.DefaultContext;
                 this.Environments = profile.Environments;
                 this.TokenCache = profile.TokenCache;
@@ -88,9 +90,20 @@ namespace Microsoft.Azure.Common.Authentication.Models
         }
 
         /// <summary>
+        /// Writes profile to the disk it was opened from disk.
+        /// </summary>
+        public void Save()
+        {
+            if (!string.IsNullOrEmpty(ProfilePath))
+            {
+                Save(ProfilePath);
+            }
+        }
+
+        /// <summary>
         /// Writes profile to a specified path.
         /// </summary>
-        /// <param name="path"></param>
+        /// <param name="path">File path on disk to save profile to</param>
         public void Save(string path)
         {
             if (string.IsNullOrEmpty(path))

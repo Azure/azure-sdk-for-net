@@ -82,7 +82,7 @@ namespace Microsoft.Azure.Common.Authentication
             ProfileDirectory = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
                 Resources.AzureDirectoryName); ;
-            ProfileFile = "AzureSMProfile.json";
+            ProfileFile = "AzureProfile.json";
             TokenCacheFile = "TokenCache.dat";
         }
     }
