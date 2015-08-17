@@ -64,6 +64,12 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <summary>
         /// Get the list of all items
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Required.
+        /// </param>
         /// <param name='csmparameters'>
         /// Optional. Protectable objects query parameter.
         /// </param>
@@ -76,9 +82,17 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a CSMItemListOperationResponse.
         /// </returns>
-        public async Task<CSMItemListOperationResponse> ListCSMAsync(CSMItemQueryObject csmparameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<CSMItemListOperationResponse> ListCSMAsync(string resourceGroupName, string resourceName, CSMItemQueryObject csmparameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException("resourceName");
+            }
             
             // Tracing
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -87,6 +101,8 @@ namespace Microsoft.Azure.Management.BackupServices
             {
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("resourceName", resourceName);
                 tracingParameters.Add("csmparameters", csmparameters);
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
                 TracingAdapter.Enter(invocationId, this, "ListCSMAsync", tracingParameters);
@@ -100,13 +116,13 @@ namespace Microsoft.Azure.Management.BackupServices
                 url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
             }
             url = url + "/resourceGroups/";
-            url = url + Uri.EscapeDataString(this.Client.ResourceGroupName);
+            url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
             url = url + "Microsoft.Backup";
             url = url + "/";
             url = url + "BackupVault";
             url = url + "/";
-            url = url + Uri.EscapeDataString(this.Client.ResourceName);
+            url = url + Uri.EscapeDataString(resourceName);
             url = url + "/items";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2014-09-01");

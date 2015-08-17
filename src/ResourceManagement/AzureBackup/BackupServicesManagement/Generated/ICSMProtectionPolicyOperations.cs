@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<AzureOperationResponse> AddAsync(string policyName, CSMAddProtectionPolicyRequest cSMAddProtectionPolicyRequest, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> AddAsync(string resourceGroupName, string resourceName, string policyName, CSMAddProtectionPolicyRequest cSMAddProtectionPolicyRequest, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
         /// Delete a Protection Policy.
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<AzureOperationResponse> DeleteAsync(string policyName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> DeleteAsync(string resourceGroupName, string resourceName, string policyName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
         /// Get the list of all Protection Policy.
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a CSMProtectionPolicyListOperationResponse.
         /// </returns>
-        Task<CSMProtectionPolicyListOperationResponse> ListAsync(CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<CSMProtectionPolicyListOperationResponse> ListAsync(string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
         /// Update Protection Policy.
@@ -106,6 +106,6 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a Operation Response.
         /// </returns>
-        Task<OperationResponse> UpdateAsync(string policyName, CSMUpdateProtectionPolicyRequest cSMUpdateProtectionPolicyRequest, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<OperationResponse> UpdateAsync(string resourceGroupName, string resourceName, string policyName, CSMUpdateProtectionPolicyRequest cSMUpdateProtectionPolicyRequest, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
     }
 }

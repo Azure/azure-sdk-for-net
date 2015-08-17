@@ -45,6 +45,6 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a Operation Response.
         /// </returns>
-        Task<OperationResponse> TriggerResotreAsync(CustomRequestHeaders customRequestHeaders, string containerName, string itemName, string recoveryPointName, CSMRestoreRequest parameters, CancellationToken cancellationToken);
+        Task<OperationResponse> TriggerResotreAsync(string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string containerName, string itemName, string recoveryPointName, CSMRestoreRequest parameters, CancellationToken cancellationToken);
     }
 }

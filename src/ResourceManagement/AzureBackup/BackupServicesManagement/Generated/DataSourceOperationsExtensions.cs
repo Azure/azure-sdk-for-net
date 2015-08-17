@@ -37,6 +37,12 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Reference to the
         /// Microsoft.Azure.Management.BackupServices.IDataSourceOperations.
         /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Required.
+        /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
@@ -49,11 +55,11 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a Operation Response.
         /// </returns>
-        public static OperationResponse DisableProtectionCSM(this IDataSourceOperations operations, CustomRequestHeaders customRequestHeaders, string containerName, string itemName)
+        public static OperationResponse DisableProtectionCSM(this IDataSourceOperations operations, string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string containerName, string itemName)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IDataSourceOperations)s).DisableProtectionCSMAsync(customRequestHeaders, containerName, itemName);
+                return ((IDataSourceOperations)s).DisableProtectionCSMAsync(resourceGroupName, resourceName, customRequestHeaders, containerName, itemName);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -65,6 +71,12 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Reference to the
         /// Microsoft.Azure.Management.BackupServices.IDataSourceOperations.
         /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Required.
+        /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
@@ -77,9 +89,9 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a Operation Response.
         /// </returns>
-        public static Task<OperationResponse> DisableProtectionCSMAsync(this IDataSourceOperations operations, CustomRequestHeaders customRequestHeaders, string containerName, string itemName)
+        public static Task<OperationResponse> DisableProtectionCSMAsync(this IDataSourceOperations operations, string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string containerName, string itemName)
         {
-            return operations.DisableProtectionCSMAsync(customRequestHeaders, containerName, itemName, CancellationToken.None);
+            return operations.DisableProtectionCSMAsync(resourceGroupName, resourceName, customRequestHeaders, containerName, itemName, CancellationToken.None);
         }
         
         /// <summary>
@@ -88,6 +100,12 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.Azure.Management.BackupServices.IDataSourceOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Required.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
@@ -104,11 +122,11 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a Operation Response.
         /// </returns>
-        public static OperationResponse EnableProtectionCSM(this IDataSourceOperations operations, CustomRequestHeaders customRequestHeaders, string containerName, string itemName, CSMSetProtectionRequest csmparameters)
+        public static OperationResponse EnableProtectionCSM(this IDataSourceOperations operations, string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string containerName, string itemName, CSMSetProtectionRequest csmparameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IDataSourceOperations)s).EnableProtectionCSMAsync(customRequestHeaders, containerName, itemName, csmparameters);
+                return ((IDataSourceOperations)s).EnableProtectionCSMAsync(resourceGroupName, resourceName, customRequestHeaders, containerName, itemName, csmparameters);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -120,6 +138,12 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Reference to the
         /// Microsoft.Azure.Management.BackupServices.IDataSourceOperations.
         /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Required.
+        /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
@@ -135,9 +159,9 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a Operation Response.
         /// </returns>
-        public static Task<OperationResponse> EnableProtectionCSMAsync(this IDataSourceOperations operations, CustomRequestHeaders customRequestHeaders, string containerName, string itemName, CSMSetProtectionRequest csmparameters)
+        public static Task<OperationResponse> EnableProtectionCSMAsync(this IDataSourceOperations operations, string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string containerName, string itemName, CSMSetProtectionRequest csmparameters)
         {
-            return operations.EnableProtectionCSMAsync(customRequestHeaders, containerName, itemName, csmparameters, CancellationToken.None);
+            return operations.EnableProtectionCSMAsync(resourceGroupName, resourceName, customRequestHeaders, containerName, itemName, csmparameters, CancellationToken.None);
         }
         
         /// <summary>
@@ -146,6 +170,12 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.Azure.Management.BackupServices.IDataSourceOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Required.
         /// </param>
         /// <param name='csmparameters'>
         /// Optional. DataSource query parameter.
@@ -156,11 +186,11 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a CSMProtectedItemListOperationResponse.
         /// </returns>
-        public static CSMProtectedItemListOperationResponse ListCSM(this IDataSourceOperations operations, CSMProtectedItemQueryObject csmparameters, CustomRequestHeaders customRequestHeaders)
+        public static CSMProtectedItemListOperationResponse ListCSM(this IDataSourceOperations operations, string resourceGroupName, string resourceName, CSMProtectedItemQueryObject csmparameters, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IDataSourceOperations)s).ListCSMAsync(csmparameters, customRequestHeaders);
+                return ((IDataSourceOperations)s).ListCSMAsync(resourceGroupName, resourceName, csmparameters, customRequestHeaders);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -172,6 +202,12 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Reference to the
         /// Microsoft.Azure.Management.BackupServices.IDataSourceOperations.
         /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Required.
+        /// </param>
         /// <param name='csmparameters'>
         /// Optional. DataSource query parameter.
         /// </param>
@@ -181,9 +217,9 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a CSMProtectedItemListOperationResponse.
         /// </returns>
-        public static Task<CSMProtectedItemListOperationResponse> ListCSMAsync(this IDataSourceOperations operations, CSMProtectedItemQueryObject csmparameters, CustomRequestHeaders customRequestHeaders)
+        public static Task<CSMProtectedItemListOperationResponse> ListCSMAsync(this IDataSourceOperations operations, string resourceGroupName, string resourceName, CSMProtectedItemQueryObject csmparameters, CustomRequestHeaders customRequestHeaders)
         {
-            return operations.ListCSMAsync(csmparameters, customRequestHeaders, CancellationToken.None);
+            return operations.ListCSMAsync(resourceGroupName, resourceName, csmparameters, customRequestHeaders, CancellationToken.None);
         }
         
         /// <summary>
@@ -192,6 +228,12 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.Azure.Management.BackupServices.IDataSourceOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Required.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
@@ -208,11 +250,11 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a Operation Response.
         /// </returns>
-        public static OperationResponse UpdateProtectionCSM(this IDataSourceOperations operations, CustomRequestHeaders customRequestHeaders, string containerName, string itemName, CSMUpdateProtectionRequest csmparameters)
+        public static OperationResponse UpdateProtectionCSM(this IDataSourceOperations operations, string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string containerName, string itemName, CSMUpdateProtectionRequest csmparameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IDataSourceOperations)s).UpdateProtectionCSMAsync(customRequestHeaders, containerName, itemName, csmparameters);
+                return ((IDataSourceOperations)s).UpdateProtectionCSMAsync(resourceGroupName, resourceName, customRequestHeaders, containerName, itemName, csmparameters);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -224,6 +266,12 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Reference to the
         /// Microsoft.Azure.Management.BackupServices.IDataSourceOperations.
         /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Required.
+        /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
@@ -239,9 +287,9 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a Operation Response.
         /// </returns>
-        public static Task<OperationResponse> UpdateProtectionCSMAsync(this IDataSourceOperations operations, CustomRequestHeaders customRequestHeaders, string containerName, string itemName, CSMUpdateProtectionRequest csmparameters)
+        public static Task<OperationResponse> UpdateProtectionCSMAsync(this IDataSourceOperations operations, string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string containerName, string itemName, CSMUpdateProtectionRequest csmparameters)
         {
-            return operations.UpdateProtectionCSMAsync(customRequestHeaders, containerName, itemName, csmparameters, CancellationToken.None);
+            return operations.UpdateProtectionCSMAsync(resourceGroupName, resourceName, customRequestHeaders, containerName, itemName, csmparameters, CancellationToken.None);
         }
     }
 }

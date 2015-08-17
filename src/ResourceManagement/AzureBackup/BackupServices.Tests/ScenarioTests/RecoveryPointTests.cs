@@ -21,7 +21,7 @@ namespace BackupServices.Tests
                 string containerName = ConfigurationManager.AppSettings["ContainerName"];
                 string itemName = ConfigurationManager.AppSettings["ItemName"];
 
-                var response = client.RecoveryPoint.List(GetCustomRequestHeaders(), containerName, itemName);
+                var response = client.RecoveryPoint.List(BackupServicesTestsBase.ResourceGroupName, BackupServicesTestsBase.ResourceName, GetCustomRequestHeaders(), containerName, itemName);
 
                 if (response != null &&
                     response.CSMRecoveryPointListResponse != null &&
@@ -50,7 +50,7 @@ namespace BackupServices.Tests
                 string itemName = ConfigurationManager.AppSettings["ItemName"];
                 string recoveryPointName = ConfigurationManager.AppSettings["RecoveryPointName"];
 
-                var response = client.RecoveryPoint.Get(GetCustomRequestHeaders(), containerName, itemName, recoveryPointName);
+                var response = client.RecoveryPoint.Get(BackupServicesTestsBase.ResourceGroupName, BackupServicesTestsBase.ResourceName, GetCustomRequestHeaders(), containerName, itemName, recoveryPointName);
 
                 if (response != null &&
                     response.CSMRecoveryPointResponse != null)
