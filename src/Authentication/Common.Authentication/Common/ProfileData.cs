@@ -147,8 +147,6 @@ namespace Microsoft.Azure.Common.Authentication
             if (!string.IsNullOrEmpty(this.ManagementCertificate))
             {
                 subscription.Account = this.ManagementCertificate;
-                subscription.SetProperty(AzureSubscription.Property.SupportedModes,
-                    AzureModule.AzureServiceManagement.ToString());
             }
 
             if (!string.IsNullOrEmpty(this.ActiveDirectoryUserId))

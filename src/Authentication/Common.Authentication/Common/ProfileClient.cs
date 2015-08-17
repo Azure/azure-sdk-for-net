@@ -701,8 +701,6 @@ namespace Microsoft.Azure.Common.Authentication
                     };
                     account.SetOrAppendProperty(AzureAccount.Property.Subscriptions, subscription.Id.ToString());
                     AddOrSetAccount(account);
-                    subscription.SetOrAppendProperty(AzureSubscription.Property.SupportedModes,
-                        AzureModule.AzureServiceManagement.ToString());
 
                     if (!Profile.Subscriptions.ContainsKey(subscription.Id))
                     {
@@ -901,12 +899,6 @@ namespace Microsoft.Azure.Common.Authentication
 
             mergedSubscription.SetProperty(AzureSubscription.Property.RegisteredResourceProviders, registeredProviders.ToArray());
 
-            // Merge SupportedMode
-            var supportedModes = subscription1.GetPropertyAsArray(AzureSubscription.Property.SupportedModes)
-                    .Union(subscription2.GetPropertyAsArray(AzureSubscription.Property.SupportedModes), StringComparer.CurrentCultureIgnoreCase);
-
-            mergedSubscription.SetProperty(AzureSubscription.Property.SupportedModes, supportedModes.ToArray());
-
             // Merge Tenants
             var tenants = subscription1.GetPropertyAsArray(AzureSubscription.Property.Tenants)
                     .Union(subscription2.GetPropertyAsArray(AzureSubscription.Property.Tenants), StringComparer.CurrentCultureIgnoreCase);
@@ -1025,7 +1017,6 @@ namespace Microsoft.Azure.Common.Authentication
                                 Name = subscription.DisplayName,
                                 Environment = environment.Name
                             };
-                            psSubscription.SetProperty(AzureSubscription.Property.SupportedModes, AzureModule.AzureResourceManager.ToString());
                             psSubscription.SetProperty(AzureSubscription.Property.Tenants, tenant);
                             psSubscription.Account = tenantAccount.Id;
                             tenantAccount.SetOrAppendProperty(AzureAccount.Property.Subscriptions, new string[] { psSubscription.Id.ToString() });
@@ -1093,8 +1084,6 @@ namespace Microsoft.Azure.Common.Authentication
                                     Name = subscription.SubscriptionName,
                                     Environment = environment.Name
                                 };
-                                psSubscription.Properties[AzureSubscription.Property.SupportedModes] =
-                                    AzureModule.AzureServiceManagement.ToString();
                                 psSubscription.SetProperty(AzureSubscription.Property.Tenants,
                                     subscription.ActiveDirectoryTenantId);
                                 psSubscription.Account = tenantAccount.Id;
