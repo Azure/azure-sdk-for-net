@@ -290,7 +290,7 @@ namespace Microsoft.Azure.Common.Authentication
             //  AzureResourceManager
             //      <Service Commands Folders>
             // Profile
-            //  AzureProfile
+            //  AzureSMProfile
             //      <Service Commands Folders>
             return Directory.GetParent(currentPath).FullName;
         }
