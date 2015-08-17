@@ -39,24 +39,6 @@
     <Compile Include="Interfaces\IClientFactory.cs" />
     <Compile Include="Interfaces\IDataStore.cs" />
     <Compile Include="Interfaces\IProfileSerializer.cs" />
-    <Compile Include="Management.Rdfe\IManagementClient.cs" />
-    <Compile Include="Management.Rdfe\ISubscriptionOperations.cs" />
-    <Compile Include="Management.Rdfe\Subscriptions\ISubscriptionClient.cs" />
-    <Compile Include="Management.Rdfe\Subscriptions\ISubscriptionOperations.cs" />
-    <Compile Include="Management.Rdfe\Subscriptions\Models\Subscription.cs" />
-    <Compile Include="Management.Rdfe\Subscriptions\Models\SubscriptionListOperationResponse.cs" />
-    <Compile Include="Management.Rdfe\Subscriptions\Models\SubscriptionStatus.cs" />
-    <Compile Include="Management.Rdfe\Subscriptions\SubscriptionClient.cs" />
-    <Compile Include="Management.Rdfe\Subscriptions\SubscriptionOperations.cs" />
-    <Compile Include="Management.Rdfe\Subscriptions\SubscriptionOperationsExtensions.cs" />
-    <Compile Include="Management.Rdfe\ManagementClient.cs" />
-    <Compile Include="Management.Rdfe\Models\SubscriptionGetResponse.cs" />
-    <Compile Include="Management.Rdfe\Models\SubscriptionListOperationsParameters.cs" />
-    <Compile Include="Management.Rdfe\Models\SubscriptionListOperationsResponse.cs" />
-    <Compile Include="Management.Rdfe\Models\SubscriptionOperationNames.cs" />
-    <Compile Include="Management.Rdfe\Models\SubscriptionStatus.cs" />
-    <Compile Include="Management.Rdfe\SubscriptionOperations.cs" />
-    <Compile Include="Management.Rdfe\SubscriptionOperationsExtensions.cs" />
     <Compile Include="Models\AzureAccount.cs" />
     <Compile Include="Models\AzureAccount.Methods.cs" />
     <Compile Include="Models\AzureContext.cs" />
@@ -79,31 +61,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Management.Csm\IProviderOperations.cs" />
-    <Compile Include="Management.Csm\IResourceManagementClient.cs" />
-    <Compile Include="Management.Csm\ISubscriptionClient.cs" />
-    <Compile Include="Management.Csm\ISubscriptionOperations.cs" />
-    <Compile Include="Management.Csm\ITenantOperations.cs" />
-    <Compile Include="Management.Csm\ProviderOperations.cs" />
-    <Compile Include="Management.Csm\ProviderOperationsExtensions.cs" />
-    <Compile Include="Management.Csm\ResourceManagementClient.cs" />
-    <Compile Include="Management.Csm\SubscriptionClient.cs" />
-    <Compile Include="Management.Csm\SubscriptionOperations.cs" />
-    <Compile Include="Management.Csm\SubscriptionOperationsExtensions.cs" />
-    <Compile Include="Management.Csm\TenantOperations.cs" />
-    <Compile Include="Management.Csm\TenantOperationsExtensions.cs" />
-    <Compile Include="Management.Csm\Models\GetSubscriptionResult.cs" />
-    <Compile Include="Management.Csm\Models\Provider.cs" />
-    <Compile Include="Management.Csm\Models\ProviderGetResult.cs" />
-    <Compile Include="Management.Csm\Models\ProviderListParameters.cs" />
-    <Compile Include="Management.Csm\Models\ProviderListResult.cs" />
-    <Compile Include="Management.Csm\Models\ProviderRegistrationState.cs" />
-    <Compile Include="Management.Csm\Models\ProviderResourceType.cs" />
-    <Compile Include="Management.Csm\Models\RegistrationState.cs" />
-    <Compile Include="Management.Csm\Models\Subscription.cs" />
-    <Compile Include="Management.Csm\Models\SubscriptionListResult.cs" />
-    <Compile Include="Management.Csm\Models\TenantIdDescription.cs" />
-    <Compile Include="Management.Csm\Models\TenantListResult.cs" />
     <Compile Include="Utilities\DictionaryExtensions.cs" />
     <Compile Include="Utilities\FileUtilities.cs" />
     <Compile Include="Utilities\JsonUtilities.cs" />

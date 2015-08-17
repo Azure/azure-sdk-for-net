@@ -55,7 +55,6 @@
     <Compile Include="ClientFactoryTests.cs" />
     <Compile Include="AuthenticationFactoryTests.cs" />
     <Compile Include="ConversionUtilitiesTests.cs" />
-    <Compile Include="Mocks\ClientMocks.cs" />
     <Compile Include="Mocks\MockAccessToken.cs" />
     <Compile Include="Mocks\MockAccessTokenProvider.cs" />
     <Compile Include="Mocks\MockCertificateAuthenticationFactory.cs" />
