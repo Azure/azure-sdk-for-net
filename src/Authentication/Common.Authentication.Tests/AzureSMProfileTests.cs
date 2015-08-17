@@ -30,9 +30,8 @@ namespace Common.Authentication.Test
         public void ProfileSaveDoesNotSerializeContext()
         {
             var dataStore = new MockDataStore();
-            var currentProfile = new AzureSMProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
+            var profile = new AzureSMProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
             AzureSession.DataStore = dataStore;
-            var client = new ProfileClient(currentProfile);
             var tenant = Guid.NewGuid().ToString();
             var environment = new AzureEnvironment
             {
@@ -54,13 +53,13 @@ namespace Common.Authentication.Test
                 Properties = { { AzureSubscription.Property.Tenants, tenant } }
             };
 
-            client.AddOrSetEnvironment(environment);
-            client.AddOrSetAccount(account);
-            client.AddOrSetSubscription(sub);
+            profile.Environments[environment.Name] = environment;
+            profile.Accounts[account.Id] = account;
+            profile.Subscriptions[sub.Id] = sub;
 
-            currentProfile.Save();
+            profile.Save();
 
-            var profileFile = currentProfile.ProfilePath;
+            var profileFile = profile.ProfilePath;
             string profileContents = dataStore.ReadFileAsText(profileFile);
             var readProfile = JsonConvert.DeserializeObject<Dictionary<string, object>>(profileContents);
             Assert.False(readProfile.ContainsKey("DefaultContext"));
@@ -80,9 +79,8 @@ namespace Common.Authentication.Test
         public void ProfileSerializeDeserializeWorks()
         {
             var dataStore = new MockDataStore();
-            var currentProfile = new AzureSMProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
+            var profile = new AzureSMProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
             AzureSession.DataStore = dataStore;
-            var client = new ProfileClient(currentProfile);
             var tenant = Guid.NewGuid().ToString();
             var environment = new AzureEnvironment
             {
@@ -104,9 +102,9 @@ namespace Common.Authentication.Test
                 Properties = { { AzureSubscription.Property.Tenants, tenant } }
             };
 
-            client.AddOrSetEnvironment(environment);
-            client.AddOrSetAccount(account);
-            client.AddOrSetSubscription(sub);
+            profile.Environments[environment.Name] = environment;
+            profile.Accounts[account.Id] = account;
+            profile.Subscriptions[sub.Id] = sub;
 
             AzureSMProfile deserializedProfile;
             // Round-trip the exception: Serialize and de-serialize with a BinaryFormatter
@@ -114,7 +112,7 @@ namespace Common.Authentication.Test
             using (MemoryStream ms = new MemoryStream())
             {
                 // "Save" object state
-                bf.Serialize(ms, currentProfile);
+                bf.Serialize(ms, profile);
 
                 // Re-use the same stream for de-serialization
                 ms.Seek(0, 0);
@@ -123,7 +121,7 @@ namespace Common.Authentication.Test
                 deserializedProfile = (AzureSMProfile)bf.Deserialize(ms);
             }
             Assert.NotNull(deserializedProfile);
-            var jCurrentProfile = JsonConvert.SerializeObject(currentProfile);
+            var jCurrentProfile = JsonConvert.SerializeObject(profile);
             var jDeserializedProfile = JsonConvert.SerializeObject(deserializedProfile);
             Assert.Equal(jCurrentProfile, jDeserializedProfile);
         }
