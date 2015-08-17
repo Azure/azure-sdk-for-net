@@ -35,35 +35,6 @@ namespace Microsoft.Azure.Common.Authentication.Factories
             UserAgents = new List<ProductInfoHeaderValue>();
         }
 
-        /// <summary>
-        /// </summary>
-        /// <typeparam name="TClient"></typeparam>
-        /// <param name="subscription"></param>
-        /// <param name="endpoint"></param>
-        /// <returns></returns>
-        public virtual TClient CreateArmClient<TClient>(AzureSMProfile profile, AzureSubscription subscription, AzureEnvironment.Endpoint endpoint) where TClient : Microsoft.Rest.ServiceClient<TClient>
-        {
-            if (subscription == null)
-            {
-                throw new ApplicationException(Resources.InvalidDefaultSubscription);
-            }
-
-            ProfileClient profileClient = new ProfileClient(profile);
-            AzureContext context = new AzureContext(subscription,
-                profileClient.GetAccount(subscription.Account),
-                profileClient.GetEnvironmentOrDefault(subscription.Environment));
-
-            var creds = AzureSession.AuthenticationFactory.GetServiceClientCredentials(context);
-            TClient client = CreateCustomArmClient<TClient>(context.Environment.GetEndpointAsUri(endpoint), creds, new DelegatingHandler[]{});
-
-            foreach (IClientAction action in actions.Values)
-            {
-                action.ApplyArm<TClient>(client, profile, endpoint);
-            }
-
-            return client;
-        }
-
         public virtual TClient CreateArmClient<TClient>(AzureContext context, AzureEnvironment.Endpoint endpoint) where TClient : Microsoft.Rest.ServiceClient<TClient>
         {
             if (context == null)
@@ -146,10 +117,19 @@ namespace Microsoft.Azure.Common.Authentication.Factories
                 throw new ApplicationException(Resources.InvalidDefaultSubscription);
             }
 
-            ProfileClient profileClient = new ProfileClient(profile);
+            if (!profile.Accounts.ContainsKey(subscription.Account))
+            {
+                throw new ArgumentException(string.Format("Account with name '{0}' does not exist.", subscription.Account), "accountName");
+            }
+
+            if (!profile.Environments.ContainsKey(subscription.Environment))
+            {
+                throw new ArgumentException(string.Format(Resources.EnvironmentNotFound, subscription.Environment));
+            }
+
             AzureContext context = new AzureContext(subscription,
-                profileClient.GetAccount(subscription.Account),
-                profileClient.GetEnvironmentOrDefault(subscription.Environment));
+                profile.Accounts[subscription.Account],
+                profile.Environments[subscription.Environment]);
 
             TClient client = CreateClient<TClient>(context, endpoint);
 

@@ -36,7 +36,7 @@ namespace Microsoft.WindowsAzure.Commands.Common.Test.Mocks
             where TClient : ServiceClient<TClient>
         {
             SubscriptionCloudCredentials creds = new TokenCloudCredentials(subscription.Id.ToString(), "fake_token");
-            Uri endpointUri = (new ProfileClient(profile)).Profile.Environments[subscription.Environment].GetEndpointAsUri(endpoint);
+            Uri endpointUri = profile.Environments[subscription.Environment].GetEndpointAsUri(endpoint);
             return CreateCustomClient<TClient>(creds, endpointUri);
         }
 

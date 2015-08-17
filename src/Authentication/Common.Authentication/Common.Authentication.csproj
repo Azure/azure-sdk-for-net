@@ -30,10 +30,7 @@
     <Compile Include="Authentication\UserTokenProvider.cs" />
     <Compile Include="AzureSession.cs" />
     <Compile Include="Common\AzureModule.cs" />
-    <Compile Include="Common\ProfileClient.cs" />
     <Compile Include="Common\ProfileData.cs" />
-    <Compile Include="Common\PublishSettingsImporter.cs" />
-    <Compile Include="Common\RequiredResourceLookup.cs" />
     <Compile Include="Common\Validate.cs" />
     <Compile Include="Extensions\CloudExceptionExtensions.cs" />
     <Compile Include="Factories\AuthenticationFactory.cs" />
@@ -75,7 +72,6 @@
     <Compile Include="Models\DiskDataStore.cs" />
     <Compile Include="Models\JsonProfileSerializer.cs" />
     <Compile Include="Models\MemoryDataStore.cs" />
-    <Compile Include="Models\RPRegistrationAction.cs" />
     <Compile Include="Models\XmlProfileSerializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
