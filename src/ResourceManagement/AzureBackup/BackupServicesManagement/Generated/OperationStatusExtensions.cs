@@ -37,6 +37,12 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Reference to the
         /// Microsoft.Azure.Management.BackupServices.IOperationStatus.
         /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Required.
+        /// </param>
         /// <param name='operationId'>
         /// Required. OperationId.
         /// </param>
@@ -46,11 +52,11 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a CSMOperationResult.
         /// </returns>
-        public static CSMOperationResult CSMGet(this IOperationStatus operations, string operationId, CustomRequestHeaders customRequestHeaders)
+        public static CSMOperationResult CSMGet(this IOperationStatus operations, string resourceGroupName, string resourceName, string operationId, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IOperationStatus)s).CSMGetAsync(operationId, customRequestHeaders);
+                return ((IOperationStatus)s).CSMGetAsync(resourceGroupName, resourceName, operationId, customRequestHeaders);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -62,6 +68,12 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Reference to the
         /// Microsoft.Azure.Management.BackupServices.IOperationStatus.
         /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Required.
+        /// </param>
         /// <param name='operationId'>
         /// Required. OperationId.
         /// </param>
@@ -71,9 +83,9 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a CSMOperationResult.
         /// </returns>
-        public static Task<CSMOperationResult> CSMGetAsync(this IOperationStatus operations, string operationId, CustomRequestHeaders customRequestHeaders)
+        public static Task<CSMOperationResult> CSMGetAsync(this IOperationStatus operations, string resourceGroupName, string resourceName, string operationId, CustomRequestHeaders customRequestHeaders)
         {
-            return operations.CSMGetAsync(operationId, customRequestHeaders, CancellationToken.None);
+            return operations.CSMGetAsync(resourceGroupName, resourceName, operationId, customRequestHeaders, CancellationToken.None);
         }
     }
 }

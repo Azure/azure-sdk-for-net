@@ -64,6 +64,12 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <summary>
         /// Get details of a particular job.
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Required.
+        /// </param>
         /// <param name='name'>
         /// Optional. Name of the job whose details should be retrieved.
         /// </param>
@@ -76,9 +82,17 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// Response model for job details operation
         /// </returns>
-        public async Task<CSMJobDetails> GetAsync(string name, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<CSMJobDetails> GetAsync(string resourceGroupName, string resourceName, string name, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException("resourceName");
+            }
             
             // Tracing
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -87,6 +101,8 @@ namespace Microsoft.Azure.Management.BackupServices
             {
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("resourceName", resourceName);
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
                 TracingAdapter.Enter(invocationId, this, "GetAsync", tracingParameters);
@@ -100,13 +116,13 @@ namespace Microsoft.Azure.Management.BackupServices
                 url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
             }
             url = url + "/resourceGroups/";
-            url = url + Uri.EscapeDataString(this.Client.ResourceGroupName);
+            url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
             url = url + "Microsoft.Backup";
             url = url + "/";
             url = url + "BackupVault";
             url = url + "/";
-            url = url + Uri.EscapeDataString(this.Client.ResourceName);
+            url = url + Uri.EscapeDataString(resourceName);
             url = url + "/jobs/";
             if (name != null)
             {
@@ -425,6 +441,12 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <summary>
         /// Get the list of all jobs queried by specified filters.
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Required.
+        /// </param>
         /// <param name='parameters'>
         /// Optional. Job query parameter.
         /// </param>
@@ -437,9 +459,17 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// Powershell response object
         /// </returns>
-        public async Task<CSMJobList> ListAsync(CSMJobQueryObject parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<CSMJobList> ListAsync(string resourceGroupName, string resourceName, CSMJobQueryObject parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException("resourceName");
+            }
             
             // Tracing
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -448,6 +478,8 @@ namespace Microsoft.Azure.Management.BackupServices
             {
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("resourceName", resourceName);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
                 TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
@@ -461,13 +493,13 @@ namespace Microsoft.Azure.Management.BackupServices
                 url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId.ToString());
             }
             url = url + "/resourceGroups/";
-            url = url + Uri.EscapeDataString(this.Client.ResourceGroupName);
+            url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
             url = url + "Microsoft.Backup";
             url = url + "/";
             url = url + "BackupVault";
             url = url + "/";
-            url = url + Uri.EscapeDataString(this.Client.ResourceName);
+            url = url + Uri.EscapeDataString(resourceName);
             url = url + "/jobs";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2014-09-01");
@@ -772,6 +804,12 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <summary>
         /// Trigger cancellation of a job.
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Required.
+        /// </param>
         /// <param name='name'>
         /// Optional. Name of the job which should be stopped.
         /// </param>
@@ -784,9 +822,17 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a Operation Response.
         /// </returns>
-        public async Task<OperationResponse> StopAsync(string name, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<OperationResponse> StopAsync(string resourceGroupName, string resourceName, string name, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException("resourceName");
+            }
             
             // Tracing
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -795,6 +841,8 @@ namespace Microsoft.Azure.Management.BackupServices
             {
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("resourceName", resourceName);
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
                 TracingAdapter.Enter(invocationId, this, "StopAsync", tracingParameters);
@@ -808,13 +856,13 @@ namespace Microsoft.Azure.Management.BackupServices
                 url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
             }
             url = url + "/resourceGroups/";
-            url = url + Uri.EscapeDataString(this.Client.ResourceGroupName);
+            url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
             url = url + "Microsoft.Backup";
             url = url + "/";
             url = url + "BackupVault";
             url = url + "/";
-            url = url + Uri.EscapeDataString(this.Client.ResourceName);
+            url = url + Uri.EscapeDataString(resourceName);
             url = url + "/jobs/";
             if (name != null)
             {

@@ -37,6 +37,12 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Reference to the
         /// Microsoft.Azure.Management.BackupServices.IJobOperations.
         /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Required.
+        /// </param>
         /// <param name='name'>
         /// Optional. Name of the job whose details should be retrieved.
         /// </param>
@@ -46,11 +52,11 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// Response model for job details operation
         /// </returns>
-        public static CSMJobDetails Get(this IJobOperations operations, string name, CustomRequestHeaders customRequestHeaders)
+        public static CSMJobDetails Get(this IJobOperations operations, string resourceGroupName, string resourceName, string name, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IJobOperations)s).GetAsync(name, customRequestHeaders);
+                return ((IJobOperations)s).GetAsync(resourceGroupName, resourceName, name, customRequestHeaders);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -62,6 +68,12 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Reference to the
         /// Microsoft.Azure.Management.BackupServices.IJobOperations.
         /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Required.
+        /// </param>
         /// <param name='name'>
         /// Optional. Name of the job whose details should be retrieved.
         /// </param>
@@ -71,9 +83,9 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// Response model for job details operation
         /// </returns>
-        public static Task<CSMJobDetails> GetAsync(this IJobOperations operations, string name, CustomRequestHeaders customRequestHeaders)
+        public static Task<CSMJobDetails> GetAsync(this IJobOperations operations, string resourceGroupName, string resourceName, string name, CustomRequestHeaders customRequestHeaders)
         {
-            return operations.GetAsync(name, customRequestHeaders, CancellationToken.None);
+            return operations.GetAsync(resourceGroupName, resourceName, name, customRequestHeaders, CancellationToken.None);
         }
         
         /// <summary>
@@ -82,6 +94,12 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.Azure.Management.BackupServices.IJobOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Required.
         /// </param>
         /// <param name='parameters'>
         /// Optional. Job query parameter.
@@ -92,11 +110,11 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// Powershell response object
         /// </returns>
-        public static CSMJobList List(this IJobOperations operations, CSMJobQueryObject parameters, CustomRequestHeaders customRequestHeaders)
+        public static CSMJobList List(this IJobOperations operations, string resourceGroupName, string resourceName, CSMJobQueryObject parameters, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IJobOperations)s).ListAsync(parameters, customRequestHeaders);
+                return ((IJobOperations)s).ListAsync(resourceGroupName, resourceName, parameters, customRequestHeaders);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -108,6 +126,12 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Reference to the
         /// Microsoft.Azure.Management.BackupServices.IJobOperations.
         /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Required.
+        /// </param>
         /// <param name='parameters'>
         /// Optional. Job query parameter.
         /// </param>
@@ -117,9 +141,9 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// Powershell response object
         /// </returns>
-        public static Task<CSMJobList> ListAsync(this IJobOperations operations, CSMJobQueryObject parameters, CustomRequestHeaders customRequestHeaders)
+        public static Task<CSMJobList> ListAsync(this IJobOperations operations, string resourceGroupName, string resourceName, CSMJobQueryObject parameters, CustomRequestHeaders customRequestHeaders)
         {
-            return operations.ListAsync(parameters, customRequestHeaders, CancellationToken.None);
+            return operations.ListAsync(resourceGroupName, resourceName, parameters, customRequestHeaders, CancellationToken.None);
         }
         
         /// <summary>
@@ -128,6 +152,12 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.Azure.Management.BackupServices.IJobOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Required.
         /// </param>
         /// <param name='name'>
         /// Optional. Name of the job which should be stopped.
@@ -138,11 +168,11 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a Operation Response.
         /// </returns>
-        public static OperationResponse Stop(this IJobOperations operations, string name, CustomRequestHeaders customRequestHeaders)
+        public static OperationResponse Stop(this IJobOperations operations, string resourceGroupName, string resourceName, string name, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IJobOperations)s).StopAsync(name, customRequestHeaders);
+                return ((IJobOperations)s).StopAsync(resourceGroupName, resourceName, name, customRequestHeaders);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -154,6 +184,12 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Reference to the
         /// Microsoft.Azure.Management.BackupServices.IJobOperations.
         /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Required.
+        /// </param>
         /// <param name='name'>
         /// Optional. Name of the job which should be stopped.
         /// </param>
@@ -163,9 +199,9 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a Operation Response.
         /// </returns>
-        public static Task<OperationResponse> StopAsync(this IJobOperations operations, string name, CustomRequestHeaders customRequestHeaders)
+        public static Task<OperationResponse> StopAsync(this IJobOperations operations, string resourceGroupName, string resourceName, string name, CustomRequestHeaders customRequestHeaders)
         {
-            return operations.StopAsync(name, customRequestHeaders, CancellationToken.None);
+            return operations.StopAsync(resourceGroupName, resourceName, name, customRequestHeaders, CancellationToken.None);
         }
     }
 }

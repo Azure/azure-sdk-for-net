@@ -29,6 +29,15 @@ namespace BackupServices.Tests
 {
     public class BackupServicesTestsBase : TestBase
     {
+        public static string ResourceGroupName;
+        public static string ResourceName;
+
+        public BackupServicesTestsBase()
+        {
+            BackupServicesTestsBase.ResourceGroupName = ConfigurationManager.AppSettings["ResourceGroupName"];
+            BackupServicesTestsBase.ResourceName = ConfigurationManager.AppSettings["ResourceName"];
+        }
+
         public new static T GetServiceClient<T>() where T : class
         {
             var factory = (TestEnvironmentFactory)new CSMTestEnvironmentFactory();
@@ -36,25 +45,18 @@ namespace BackupServices.Tests
             var testEnvironment = factory.GetTestEnvironment();
             ServicePointManager.ServerCertificateValidationCallback = IgnoreCertificateErrorHandler;
 
-            string resourceName = ConfigurationManager.AppSettings["ResourceName"];
-            string resourceGroupName = ConfigurationManager.AppSettings["ResourceGroupName"];
-
             if (typeof(T) == typeof(BackupServicesManagementClient))
             {
                 BackupServicesManagementClient client;
                 if (testEnvironment.UsesCustomUri())
                 {
                     client = new BackupServicesManagementClient(
-                        resourceName,
-                        resourceGroupName,
                         testEnvironment.Credentials as SubscriptionCloudCredentials,
                         testEnvironment.BaseUri);
                 }
                 else
                 {
                     client = new BackupServicesManagementClient(
-                        resourceName,
-                        resourceGroupName,
                         testEnvironment.Credentials as SubscriptionCloudCredentials);
                 }
 
@@ -66,16 +68,12 @@ namespace BackupServices.Tests
                 if (testEnvironment.UsesCustomUri())
                 {
                     client = new BackupVaultServicesManagementClient(
-                        resourceName,
-                        resourceGroupName,
                         testEnvironment.Credentials as SubscriptionCloudCredentials,
                         testEnvironment.BaseUri);
                 }
                 else
                 {
                     client = new BackupVaultServicesManagementClient(
-                        resourceName,
-                        resourceGroupName,
                         testEnvironment.Credentials as SubscriptionCloudCredentials);
                 }
 

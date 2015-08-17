@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a Operation Response.
         /// </returns>
-        Task<OperationResponse> DisableProtectionCSMAsync(CustomRequestHeaders customRequestHeaders, string containerName, string itemName, CancellationToken cancellationToken);
+        Task<OperationResponse> DisableProtectionCSMAsync(string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string containerName, string itemName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Enable protection for given item.
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a Operation Response.
         /// </returns>
-        Task<OperationResponse> EnableProtectionCSMAsync(CustomRequestHeaders customRequestHeaders, string containerName, string itemName, CSMSetProtectionRequest csmparameters, CancellationToken cancellationToken);
+        Task<OperationResponse> EnableProtectionCSMAsync(string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string containerName, string itemName, CSMSetProtectionRequest csmparameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Get the list of all Datasources.
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a CSMProtectedItemListOperationResponse.
         /// </returns>
-        Task<CSMProtectedItemListOperationResponse> ListCSMAsync(CSMProtectedItemQueryObject csmparameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<CSMProtectedItemListOperationResponse> ListCSMAsync(string resourceGroupName, string resourceName, CSMProtectedItemQueryObject csmparameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
         /// Enable protection for given item.
@@ -114,6 +114,6 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a Operation Response.
         /// </returns>
-        Task<OperationResponse> UpdateProtectionCSMAsync(CustomRequestHeaders customRequestHeaders, string containerName, string itemName, CSMUpdateProtectionRequest csmparameters, CancellationToken cancellationToken);
+        Task<OperationResponse> UpdateProtectionCSMAsync(string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string containerName, string itemName, CSMUpdateProtectionRequest csmparameters, CancellationToken cancellationToken);
     }
 }

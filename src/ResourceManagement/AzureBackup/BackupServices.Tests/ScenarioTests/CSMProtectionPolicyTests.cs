@@ -19,7 +19,7 @@ namespace BackupServices.Tests
                 context.Start();
                 var client = GetServiceClient<BackupServicesManagementClient>();
 
-                var response = client.CSMProtectionPolicy.List(GetCustomRequestHeaders());
+                var response = client.CSMProtectionPolicy.List(BackupServicesTestsBase.ResourceGroupName, BackupServicesTestsBase.ResourceName, GetCustomRequestHeaders());
 
                 Assert.True(response.CSMProtectionPolicyListResponse.Value.Count > 0, "Protection Policies Result count can't be less than 1");
 
@@ -62,7 +62,7 @@ namespace BackupServices.Tests
                 addProtectionPolicyRequest.Properties.BackupSchedule = backupSchedule;
                 addProtectionPolicyRequest.Properties.WorkloadType = ConfigurationManager.AppSettings["WorkloadType"];
                 addProtectionPolicyRequest.Properties.LtrRetentionPolicy = GetRetentionPolicy(backupSchedule.ScheduleRunTimes);
-                var response = client.CSMProtectionPolicy.Add(policyName, addProtectionPolicyRequest, GetCustomRequestHeaders());
+                var response = client.CSMProtectionPolicy.Add(BackupServicesTestsBase.ResourceGroupName, BackupServicesTestsBase.ResourceName, policyName, addProtectionPolicyRequest, GetCustomRequestHeaders());
 
                 Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             }
@@ -83,7 +83,7 @@ namespace BackupServices.Tests
                 string policyName = ConfigurationManager.AppSettings["PolicyName"];
                 updateProtectionPolicyRequest.Properties.BackupSchedule = backupSchedule;
                 updateProtectionPolicyRequest.Properties.LtrRetentionPolicy = GetRetentionPolicy(backupSchedule.ScheduleRunTimes);
-                var response = client.CSMProtectionPolicy.Update(policyName, updateProtectionPolicyRequest, GetCustomRequestHeaders());
+                var response = client.CSMProtectionPolicy.Update(BackupServicesTestsBase.ResourceGroupName, BackupServicesTestsBase.ResourceName, policyName, updateProtectionPolicyRequest, GetCustomRequestHeaders());
                 var isSuccess = (response.StatusCode == HttpStatusCode.OK || response.StatusCode == HttpStatusCode.Accepted) ? true : false;
                 Assert.Equal(true, isSuccess);
             }
@@ -97,7 +97,7 @@ namespace BackupServices.Tests
                 context.Start();
                 var client = GetServiceClient<BackupServicesManagementClient>();
                 string policyName = ConfigurationManager.AppSettings["ModifiedPolicyName"];
-                var response = client.CSMProtectionPolicy.Delete(policyName, GetCustomRequestHeaders());
+                var response = client.CSMProtectionPolicy.Delete(BackupServicesTestsBase.ResourceGroupName, BackupServicesTestsBase.ResourceName, policyName, GetCustomRequestHeaders());
 
                 Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
             }

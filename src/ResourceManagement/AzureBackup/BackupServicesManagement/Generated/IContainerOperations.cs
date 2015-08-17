@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a CSMContainerListOperationResponse.
         /// </returns>
-        Task<CSMContainerListOperationResponse> ListAsync(ContainerQueryParameters parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<CSMContainerListOperationResponse> ListAsync(string resourceGroupName, string resourceName, ContainerQueryParameters parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
         /// Trigger the Discovery.
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a Operation Response.
         /// </returns>
-        Task<OperationResponse> RefreshAsync(CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<OperationResponse> RefreshAsync(string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
         /// Register the container.
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a Operation Response.
         /// </returns>
-        Task<OperationResponse> RegisterAsync(string containerName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<OperationResponse> RegisterAsync(string resourceGroupName, string resourceName, string containerName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
         /// Unregister the container.
@@ -97,6 +97,6 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a Operation Response.
         /// </returns>
-        Task<OperationResponse> UnregisterAsync(string containerName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<OperationResponse> UnregisterAsync(string resourceGroupName, string resourceName, string containerName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
     }
 }

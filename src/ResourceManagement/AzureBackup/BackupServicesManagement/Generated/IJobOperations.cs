@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// Response model for job details operation
         /// </returns>
-        Task<CSMJobDetails> GetAsync(string name, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<CSMJobDetails> GetAsync(string resourceGroupName, string resourceName, string name, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
         /// Get the list of all jobs queried by specified filters.
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// Powershell response object
         /// </returns>
-        Task<CSMJobList> ListAsync(CSMJobQueryObject parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<CSMJobList> ListAsync(string resourceGroupName, string resourceName, CSMJobQueryObject parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
         /// Trigger cancellation of a job.
@@ -82,6 +82,6 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a Operation Response.
         /// </returns>
-        Task<OperationResponse> StopAsync(string name, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<OperationResponse> StopAsync(string resourceGroupName, string resourceName, string name, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
     }
 }

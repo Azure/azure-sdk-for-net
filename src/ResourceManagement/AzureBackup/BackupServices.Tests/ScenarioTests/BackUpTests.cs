@@ -36,7 +36,7 @@ namespace BackupServices.Tests
                 string containerName = ConfigurationManager.AppSettings["ContainerName"];
                 string itemName = ConfigurationManager.AppSettings["ItemName"];
 
-                var response = client.BackUp.TriggerBackUp(GetCustomRequestHeaders(), containerName, itemName);
+                var response = client.BackUp.TriggerBackUp(BackupServicesTestsBase.ResourceGroupName, BackupServicesTestsBase.ResourceName, GetCustomRequestHeaders(), containerName, itemName);
                 Assert.Equal(HttpStatusCode.Accepted, response.StatusCode);
             }
         }

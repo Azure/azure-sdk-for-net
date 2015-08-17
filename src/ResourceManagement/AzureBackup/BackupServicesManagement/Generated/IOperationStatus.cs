@@ -48,6 +48,6 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a CSMOperationResult.
         /// </returns>
-        Task<CSMOperationResult> CSMGetAsync(string operationId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<CSMOperationResult> CSMGetAsync(string resourceGroupName, string resourceName, string operationId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
     }
 }

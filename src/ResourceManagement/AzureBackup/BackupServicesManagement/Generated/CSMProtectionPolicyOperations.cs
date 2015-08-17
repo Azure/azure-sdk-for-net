@@ -68,6 +68,12 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <summary>
         /// Create new Protection Policy.
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Required.
+        /// </param>
         /// <param name='policyName'>
         /// Required. The protection policy Name to be updated.
         /// </param>
@@ -84,9 +90,17 @@ namespace Microsoft.Azure.Management.BackupServices
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<AzureOperationResponse> AddAsync(string policyName, CSMAddProtectionPolicyRequest cSMAddProtectionPolicyRequest, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> AddAsync(string resourceGroupName, string resourceName, string policyName, CSMAddProtectionPolicyRequest cSMAddProtectionPolicyRequest, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException("resourceName");
+            }
             if (policyName == null)
             {
                 throw new ArgumentNullException("policyName");
@@ -121,6 +135,8 @@ namespace Microsoft.Azure.Management.BackupServices
             {
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("resourceName", resourceName);
                 tracingParameters.Add("policyName", policyName);
                 tracingParameters.Add("cSMAddProtectionPolicyRequest", cSMAddProtectionPolicyRequest);
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
@@ -135,13 +151,13 @@ namespace Microsoft.Azure.Management.BackupServices
                 url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
             }
             url = url + "/resourceGroups/";
-            url = url + Uri.EscapeDataString(this.Client.ResourceGroupName);
+            url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
             url = url + "Microsoft.Backup";
             url = url + "/";
             url = url + "BackupVault";
             url = url + "/";
-            url = url + Uri.EscapeDataString(this.Client.ResourceName);
+            url = url + Uri.EscapeDataString(resourceName);
             url = url + "/protectionPolicies/";
             url = url + Uri.EscapeDataString(policyName);
             List<string> queryParameters = new List<string>();
@@ -537,6 +553,12 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <summary>
         /// Delete a Protection Policy.
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Required.
+        /// </param>
         /// <param name='policyName'>
         /// Required. The protection policy Name to be deleted.
         /// </param>
@@ -550,9 +572,17 @@ namespace Microsoft.Azure.Management.BackupServices
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<AzureOperationResponse> DeleteAsync(string policyName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> DeleteAsync(string resourceGroupName, string resourceName, string policyName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException("resourceName");
+            }
             if (policyName == null)
             {
                 throw new ArgumentNullException("policyName");
@@ -565,6 +595,8 @@ namespace Microsoft.Azure.Management.BackupServices
             {
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("resourceName", resourceName);
                 tracingParameters.Add("policyName", policyName);
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
                 TracingAdapter.Enter(invocationId, this, "DeleteAsync", tracingParameters);
@@ -578,13 +610,13 @@ namespace Microsoft.Azure.Management.BackupServices
                 url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
             }
             url = url + "/resourceGroups/";
-            url = url + Uri.EscapeDataString(this.Client.ResourceGroupName);
+            url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
             url = url + "Microsoft.Backup";
             url = url + "/";
             url = url + "BackupVault";
             url = url + "/";
-            url = url + Uri.EscapeDataString(this.Client.ResourceName);
+            url = url + Uri.EscapeDataString(resourceName);
             url = url + "/protectionPolicies/";
             url = url + Uri.EscapeDataString(policyName);
             List<string> queryParameters = new List<string>();
@@ -680,6 +712,12 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <summary>
         /// Get the list of all Protection Policy.
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Required.
+        /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
@@ -689,9 +727,17 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a CSMProtectionPolicyListOperationResponse.
         /// </returns>
-        public async Task<CSMProtectionPolicyListOperationResponse> ListAsync(CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<CSMProtectionPolicyListOperationResponse> ListAsync(string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException("resourceName");
+            }
             
             // Tracing
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -700,6 +746,8 @@ namespace Microsoft.Azure.Management.BackupServices
             {
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("resourceName", resourceName);
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
                 TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
             }
@@ -712,13 +760,13 @@ namespace Microsoft.Azure.Management.BackupServices
                 url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId.ToString());
             }
             url = url + "/resourceGroups/";
-            url = url + Uri.EscapeDataString(this.Client.ResourceGroupName);
+            url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
             url = url + "Microsoft.Backup";
             url = url + "/";
             url = url + "BackupVault";
             url = url + "/";
-            url = url + Uri.EscapeDataString(this.Client.ResourceName);
+            url = url + Uri.EscapeDataString(resourceName);
             url = url + "/protectionPolicies";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2014-09-01");
@@ -1269,6 +1317,12 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <summary>
         /// Update Protection Policy.
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Required.
+        /// </param>
         /// <param name='policyName'>
         /// Required. The protection policy Name to be updated.
         /// </param>
@@ -1284,9 +1338,17 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a Operation Response.
         /// </returns>
-        public async Task<OperationResponse> UpdateAsync(string policyName, CSMUpdateProtectionPolicyRequest cSMUpdateProtectionPolicyRequest, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<OperationResponse> UpdateAsync(string resourceGroupName, string resourceName, string policyName, CSMUpdateProtectionPolicyRequest cSMUpdateProtectionPolicyRequest, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException("resourceName");
+            }
             if (policyName == null)
             {
                 throw new ArgumentNullException("policyName");
@@ -1322,6 +1384,8 @@ namespace Microsoft.Azure.Management.BackupServices
             {
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("resourceName", resourceName);
                 tracingParameters.Add("policyName", policyName);
                 tracingParameters.Add("cSMUpdateProtectionPolicyRequest", cSMUpdateProtectionPolicyRequest);
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
@@ -1336,13 +1400,13 @@ namespace Microsoft.Azure.Management.BackupServices
                 url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
             }
             url = url + "/resourceGroups/";
-            url = url + Uri.EscapeDataString(this.Client.ResourceGroupName);
+            url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
             url = url + "Microsoft.Backup";
             url = url + "/";
             url = url + "BackupVault";
             url = url + "/";
-            url = url + Uri.EscapeDataString(this.Client.ResourceName);
+            url = url + Uri.EscapeDataString(resourceName);
             url = url + "/protectionPolicies/";
             url = url + Uri.EscapeDataString(policyName);
             List<string> queryParameters = new List<string>();
