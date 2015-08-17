@@ -306,7 +306,7 @@ namespace Microsoft.Azure.Common.Authentication
                     return "AzureResourceManager";
 
                 case AzureModule.AzureProfile:
-                    return "AzureSMProfile";
+                    return "AzureProfile";
 
                 default:
                     throw new ArgumentOutOfRangeException(module.ToString());
