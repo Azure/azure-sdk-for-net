@@ -30,7 +30,7 @@ namespace BackupServices.Tests
 {
     public class CSMAzureBackupItem : BackupServicesTestsBase
     {
-        [Fact]
+        //[Fact]
         public void EnableAzureBackupProtectionTest()
         {
             using (UndoContext context = UndoContext.Current)
@@ -52,7 +52,7 @@ namespace BackupServices.Tests
             }
         }
 
-        [Fact]
+        //[Fact]
         public void UpdateAzureBackupProtectionTest()
         {
             using (UndoContext context = UndoContext.Current)
@@ -75,7 +75,7 @@ namespace BackupServices.Tests
             }
         }
 
-        [Fact]
+        //[Fact]
         public void DisableAzureBackupProtectionTest()
         {
             using (UndoContext context = UndoContext.Current)
