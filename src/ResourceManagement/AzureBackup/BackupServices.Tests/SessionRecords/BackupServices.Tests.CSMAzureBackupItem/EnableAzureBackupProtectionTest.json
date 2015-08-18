@@ -1,0 +1,76 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/f5303a0b-fae4-4cdb-b44d-0e4c032dde26/resourceGroups/backuprg/providers/Microsoft.Backup/BackupVault/backuprn/registeredContainers/iaasvmcontainer%3Bhydrarecordvm%3Bhydrarecordvm/protectedItems/iaasvmcontainer%3Bhydrarecordvm%3Bhydrarecordvm?api-version=2014-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjUzMDNhMGItZmFlNC00Y2RiLWI0NGQtMGU0YzAzMmRkZTI2L3Jlc291cmNlR3JvdXBzL2JhY2t1cHJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuQmFja3VwL0JhY2t1cFZhdWx0L2JhY2t1cHJuL3JlZ2lzdGVyZWRDb250YWluZXJzL2lhYXN2bWNvbnRhaW5lciUzQmh5ZHJhcmVjb3Jkdm0lM0JoeWRyYXJlY29yZHZtL3Byb3RlY3RlZEl0ZW1zL2lhYXN2bWNvbnRhaW5lciUzQmh5ZHJhcmVjb3Jkdm0lM0JoeWRyYXJlY29yZHZtP2FwaS12ZXJzaW9uPTIwMTQtMDktMDE=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"policyId\": \"/subscriptions/f5303a0b-fae4-4cdb-b44d-0e4c032dde26/resourceGroups/backuprg/providers/Microsoft.Backup/BackupVault/backuprn/protectionPolicies/ProtPolicy01\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Content-Length": [
+          "203"
+        ],
+        "Accept-Language": [
+          "en-us"
+        ],
+        "x-ms-client-request-id": [
+          "0b674ff5-f40d-450f-8ad1-18320466be81"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.BackupServices.BackupServicesManagementClient/0.0.0.0"
+        ]
+      },
+      "ResponseBody": "\"a19cf5c9-26f3-432d-9156-e8c3fe7a5755\"",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "38"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "6661a1e1-903f-4bc5-820d-b2c993035a0f"
+        ],
+        "x-ms-client-request-id": [
+          "0b674ff5-f40d-450f-8ad1-18320466be81",
+          "0b674ff5-f40d-450f-8ad1-18320466be81"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1198"
+        ],
+        "x-ms-correlation-request-id": [
+          "6661a1e1-903f-4bc5-820d-b2c993035a0f"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20150813T152815Z:6661a1e1-903f-4bc5-820d-b2c993035a0f"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 13 Aug 2015 15:28:15 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 202
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}

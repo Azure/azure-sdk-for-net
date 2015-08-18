@@ -24,8 +24,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Hyak.Common;
@@ -38,7 +36,7 @@ namespace Microsoft.Azure.Management.BackupServices
     /// <summary>
     /// Definition of Container operations for the Azure Backup extension.
     /// </summary>
-    internal partial class ContainerOperations : IServiceOperations<BackupVaultServicesManagementClient>, IContainerOperations
+    internal partial class ContainerOperations : IServiceOperations<BackupServicesManagementClient>, IContainerOperations
     {
         /// <summary>
         /// Initializes a new instance of the ContainerOperations class.
@@ -46,30 +44,34 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal ContainerOperations(BackupVaultServicesManagementClient client)
+        internal ContainerOperations(BackupServicesManagementClient client)
         {
             this._client = client;
         }
         
-        private BackupVaultServicesManagementClient _client;
+        private BackupServicesManagementClient _client;
         
         /// <summary>
         /// Gets a reference to the
-        /// Microsoft.Azure.Management.BackupServices.BackupVaultServicesManagementClient.
+        /// Microsoft.Azure.Management.BackupServices.BackupServicesManagementClient.
         /// </summary>
-        public BackupVaultServicesManagementClient Client
+        public BackupServicesManagementClient Client
         {
             get { return this._client; }
         }
         
         /// <summary>
-        /// Enable the container reregistration.
+        /// Get the list of all container based on the given query filter
+        /// string.
         /// </summary>
-        /// <param name='containerId'>
-        /// Required. MARS container ID.
+        /// <param name='resourceGroupName'>
+        /// Required.
         /// </param>
-        /// <param name='enableReregistrationRequest'>
-        /// Required. Enable Reregistration Request.
+        /// <param name='resourceName'>
+        /// Required.
+        /// </param>
+        /// <param name='parameters'>
+        /// Optional. Container query parameters.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
@@ -78,18 +80,18 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The definition of a Operation Response.
+        /// The definition of a CSMContainerListOperationResponse.
         /// </returns>
-        public async Task<OperationResponse> EnableMarsContainerReregistrationAsync(string containerId, EnableReregistrationRequest enableReregistrationRequest, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<CSMContainerListOperationResponse> ListAsync(string resourceGroupName, string resourceName, ContainerQueryParameters parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
-            if (containerId == null)
+            if (resourceGroupName == null)
             {
-                throw new ArgumentNullException("containerId");
+                throw new ArgumentNullException("resourceGroupName");
             }
-            if (enableReregistrationRequest == null)
+            if (resourceName == null)
             {
-                throw new ArgumentNullException("enableReregistrationRequest");
+                throw new ArgumentNullException("resourceName");
             }
             
             // Tracing
@@ -99,10 +101,11 @@ namespace Microsoft.Azure.Management.BackupServices
             {
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("containerId", containerId);
-                tracingParameters.Add("enableReregistrationRequest", enableReregistrationRequest);
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("resourceName", resourceName);
+                tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
-                TracingAdapter.Enter(invocationId, this, "EnableMarsContainerReregistrationAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
             }
             
             // Construct URL
@@ -113,18 +116,33 @@ namespace Microsoft.Azure.Management.BackupServices
                 url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
             }
             url = url + "/resourceGroups/";
-            url = url + Uri.EscapeDataString(this.Client.ResourceGroupName);
+            url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
             url = url + "Microsoft.Backup";
             url = url + "/";
             url = url + "BackupVault";
             url = url + "/";
-            url = url + Uri.EscapeDataString(this.Client.ResourceName);
-            url = url + "/backupContainers/";
-            url = url + Uri.EscapeDataString(containerId);
-            url = url + "/enableReRegister";
+            url = url + Uri.EscapeDataString(resourceName);
+            url = url + "/containers";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-03-15");
+            queryParameters.Add("api-version=2014-09-01");
+            List<string> odataFilter = new List<string>();
+            if (parameters != null && parameters.ContainerType != null)
+            {
+                odataFilter.Add("containerType eq '" + Uri.EscapeDataString(parameters.ContainerType) + "'");
+            }
+            if (parameters != null && parameters.FriendlyName != null)
+            {
+                odataFilter.Add("friendlyName eq '" + Uri.EscapeDataString(parameters.FriendlyName) + "'");
+            }
+            if (parameters != null && parameters.Status != null)
+            {
+                odataFilter.Add("status eq '" + Uri.EscapeDataString(parameters.Status) + "'");
+            }
+            if (odataFilter.Count > 0)
+            {
+                queryParameters.Add("$filter=" + string.Join(" and ", odataFilter));
+            }
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -147,7 +165,7 @@ namespace Microsoft.Azure.Management.BackupServices
             try
             {
                 httpRequest = new HttpRequestMessage();
-                httpRequest.Method = new HttpMethod("PATCH");
+                httpRequest.Method = HttpMethod.Get;
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
@@ -157,25 +175,6 @@ namespace Microsoft.Azure.Management.BackupServices
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
                 await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Serialize Request
-                string requestContent = null;
-                JToken requestDoc = null;
-                
-                JObject enableReregistrationRequestValue = new JObject();
-                requestDoc = enableReregistrationRequestValue;
-                
-                if (enableReregistrationRequest.ContainerReregistrationState != null)
-                {
-                    JObject propertiesValue = new JObject();
-                    enableReregistrationRequestValue["properties"] = propertiesValue;
-                    
-                    propertiesValue["enableReRegister"] = enableReregistrationRequest.ContainerReregistrationState.EnableReregistration;
-                }
-                
-                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
-                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -192,10 +191,278 @@ namespace Microsoft.Azure.Management.BackupServices
                         TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.NoContent)
+                    if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    CSMContainerListOperationResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new CSMContainerListOperationResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            CSMContainerListResponse cSMContainerListResponseInstance = new CSMContainerListResponse();
+                            result.CSMContainerListResponse = cSMContainerListResponseInstance;
+                            
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken valueValue in ((JArray)valueArray))
+                                {
+                                    CSMContainerResponse cSMContainerResponseInstance = new CSMContainerResponse();
+                                    cSMContainerListResponseInstance.Value.Add(cSMContainerResponseInstance);
+                                    
+                                    JToken propertiesValue = valueValue["properties"];
+                                    if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                                    {
+                                        CSMContainerProperties propertiesInstance = new CSMContainerProperties();
+                                        cSMContainerResponseInstance.Properties = propertiesInstance;
+                                        
+                                        JToken friendlyNameValue = propertiesValue["friendlyName"];
+                                        if (friendlyNameValue != null && friendlyNameValue.Type != JTokenType.Null)
+                                        {
+                                            string friendlyNameInstance = ((string)friendlyNameValue);
+                                            propertiesInstance.FriendlyName = friendlyNameInstance;
+                                        }
+                                        
+                                        JToken statusValue = propertiesValue["status"];
+                                        if (statusValue != null && statusValue.Type != JTokenType.Null)
+                                        {
+                                            string statusInstance = ((string)statusValue);
+                                            propertiesInstance.Status = statusInstance;
+                                        }
+                                        
+                                        JToken healthStatusValue = propertiesValue["healthStatus"];
+                                        if (healthStatusValue != null && healthStatusValue.Type != JTokenType.Null)
+                                        {
+                                            string healthStatusInstance = ((string)healthStatusValue);
+                                            propertiesInstance.HealthStatus = healthStatusInstance;
+                                        }
+                                        
+                                        JToken containerTypeValue = propertiesValue["containerType"];
+                                        if (containerTypeValue != null && containerTypeValue.Type != JTokenType.Null)
+                                        {
+                                            string containerTypeInstance = ((string)containerTypeValue);
+                                            propertiesInstance.ContainerType = containerTypeInstance;
+                                        }
+                                        
+                                        JToken parentContainerIdValue = propertiesValue["parentContainerId"];
+                                        if (parentContainerIdValue != null && parentContainerIdValue.Type != JTokenType.Null)
+                                        {
+                                            string parentContainerIdInstance = ((string)parentContainerIdValue);
+                                            propertiesInstance.ParentContainerId = parentContainerIdInstance;
+                                        }
+                                    }
+                                    
+                                    JToken idValue = valueValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
+                                    {
+                                        string idInstance = ((string)idValue);
+                                        cSMContainerResponseInstance.Id = idInstance;
+                                    }
+                                    
+                                    JToken nameValue = valueValue["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance = ((string)nameValue);
+                                        cSMContainerResponseInstance.Name = nameInstance;
+                                    }
+                                    
+                                    JToken typeValue = valueValue["type"];
+                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                    {
+                                        string typeInstance = ((string)typeValue);
+                                        cSMContainerResponseInstance.Type = typeInstance;
+                                    }
+                                }
+                            }
+                            
+                            JToken nextLinkValue = responseDoc["nextLink"];
+                            if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
+                            {
+                                string nextLinkInstance = ((string)nextLinkValue);
+                                cSMContainerListResponseInstance.NextLink = nextLinkInstance;
+                            }
+                            
+                            JToken idValue2 = responseDoc["id"];
+                            if (idValue2 != null && idValue2.Type != JTokenType.Null)
+                            {
+                                string idInstance2 = ((string)idValue2);
+                                cSMContainerListResponseInstance.Id = idInstance2;
+                            }
+                            
+                            JToken nameValue2 = responseDoc["name"];
+                            if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                            {
+                                string nameInstance2 = ((string)nameValue2);
+                                cSMContainerListResponseInstance.Name = nameInstance2;
+                            }
+                            
+                            JToken typeValue2 = responseDoc["type"];
+                            if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
+                            {
+                                string typeInstance2 = ((string)typeValue2);
+                                cSMContainerListResponseInstance.Type = typeInstance2;
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Trigger the Discovery.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Required.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The definition of a Operation Response.
+        /// </returns>
+        public async Task<OperationResponse> RefreshAsync(string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException("resourceName");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("resourceName", resourceName);
+                tracingParameters.Add("customRequestHeaders", customRequestHeaders);
+                TracingAdapter.Enter(invocationId, this, "RefreshAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/Subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/";
+            url = url + "Microsoft.Backup";
+            url = url + "/";
+            url = url + "BackupVault";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(resourceName);
+            url = url + "/refreshContainers";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-09-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Post;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("Accept-Language", "en-us");
+                httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
+                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             TracingAdapter.Error(invocationId, ex);
@@ -206,7 +473,7 @@ namespace Microsoft.Azure.Management.BackupServices
                     // Create Result
                     OperationResponse result = null;
                     // Deserialize Response
-                    if (statusCode == HttpStatusCode.NoContent)
+                    if (statusCode == HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -250,11 +517,16 @@ namespace Microsoft.Azure.Management.BackupServices
         }
         
         /// <summary>
-        /// Get the list of all container based on the given query filter
-        /// string.
+        /// Register the container.
         /// </summary>
-        /// <param name='containerType'>
-        /// Required. Type of container.
+        /// <param name='resourceGroupName'>
+        /// Required.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Required.
+        /// </param>
+        /// <param name='containerName'>
+        /// Required. Container to be register.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
@@ -263,11 +535,23 @@ namespace Microsoft.Azure.Management.BackupServices
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// List of Microsoft Azure Recovery Services (MARS) containers.
+        /// The definition of a Operation Response.
         /// </returns>
-        public async Task<ListMarsContainerOperationResponse> ListMarsContainersByTypeAsync(MarsContainerType containerType, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<OperationResponse> RegisterAsync(string resourceGroupName, string resourceName, string containerName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException("resourceName");
+            }
+            if (containerName == null)
+            {
+                throw new ArgumentNullException("containerName");
+            }
             
             // Tracing
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -276,9 +560,11 @@ namespace Microsoft.Azure.Management.BackupServices
             {
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("containerType", containerType);
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("resourceName", resourceName);
+                tracingParameters.Add("containerName", containerName);
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
-                TracingAdapter.Enter(invocationId, this, "ListMarsContainersByTypeAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "RegisterAsync", tracingParameters);
             }
             
             // Construct URL
@@ -289,22 +575,17 @@ namespace Microsoft.Azure.Management.BackupServices
                 url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
             }
             url = url + "/resourceGroups/";
-            url = url + Uri.EscapeDataString(this.Client.ResourceGroupName);
+            url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
             url = url + "Microsoft.Backup";
             url = url + "/";
             url = url + "BackupVault";
             url = url + "/";
-            url = url + Uri.EscapeDataString(this.Client.ResourceName);
-            url = url + "/backupContainers";
+            url = url + Uri.EscapeDataString(resourceName);
+            url = url + "/registeredContainers/";
+            url = url + Uri.EscapeDataString(containerName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-03-15");
-            List<string> odataFilter = new List<string>();
-            odataFilter.Add("type eq '" + Uri.EscapeDataString(containerType.ToString()) + "'");
-            if (odataFilter.Count > 0)
-            {
-                queryParameters.Add("$filter=" + string.Join(null, odataFilter));
-            }
+            queryParameters.Add("api-version=2014-09-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -327,11 +608,13 @@ namespace Microsoft.Azure.Management.BackupServices
             try
             {
                 httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Get;
+                httpRequest.Method = HttpMethod.Put;
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
                 httpRequest.Headers.Add("Accept-Language", "en-us");
+                httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
+                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -352,7 +635,7 @@ namespace Microsoft.Azure.Management.BackupServices
                         TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
+                    if (statusCode != HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
@@ -364,13 +647,13 @@ namespace Microsoft.Azure.Management.BackupServices
                     }
                     
                     // Create Result
-                    ListMarsContainerOperationResponse result = null;
+                    OperationResponse result = null;
                     // Deserialize Response
-                    if (statusCode == HttpStatusCode.OK)
+                    if (statusCode == HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new ListMarsContainerOperationResponse();
+                        result = new OperationResponse();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -379,433 +662,12 @@ namespace Microsoft.Azure.Management.BackupServices
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            ListMarsContainerResponse listMarsContainerResponseInstance = new ListMarsContainerResponse();
-                            result.ListMarsContainerResponse = listMarsContainerResponseInstance;
-                            
-                            JToken valueArray = responseDoc["value"];
-                            if (valueArray != null && valueArray.Type != JTokenType.Null)
-                            {
-                                foreach (JToken valueValue in ((JArray)valueArray))
-                                {
-                                    MarsContainerResponse marsContainerResponseInstance = new MarsContainerResponse();
-                                    listMarsContainerResponseInstance.Value.Add(marsContainerResponseInstance);
-                                    
-                                    JToken uniqueNameValue = valueValue["uniqueName"];
-                                    if (uniqueNameValue != null && uniqueNameValue.Type != JTokenType.Null)
-                                    {
-                                        string uniqueNameInstance = ((string)uniqueNameValue);
-                                        marsContainerResponseInstance.UniqueName = uniqueNameInstance;
-                                    }
-                                    
-                                    JToken containerTypeValue = valueValue["containerType"];
-                                    if (containerTypeValue != null && containerTypeValue.Type != JTokenType.Null)
-                                    {
-                                        string containerTypeInstance = ((string)containerTypeValue);
-                                        marsContainerResponseInstance.ContainerType = containerTypeInstance;
-                                    }
-                                    
-                                    JToken propertiesValue = valueValue["properties"];
-                                    if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
-                                    {
-                                        MarsContainerProperties propertiesInstance = new MarsContainerProperties();
-                                        marsContainerResponseInstance.Properties = propertiesInstance;
-                                        
-                                        JToken containerIdValue = propertiesValue["containerId"];
-                                        if (containerIdValue != null && containerIdValue.Type != JTokenType.Null)
-                                        {
-                                            long containerIdInstance = ((long)containerIdValue);
-                                            propertiesInstance.ContainerId = containerIdInstance;
-                                        }
-                                        
-                                        JToken friendlyNameValue = propertiesValue["friendlyName"];
-                                        if (friendlyNameValue != null && friendlyNameValue.Type != JTokenType.Null)
-                                        {
-                                            string friendlyNameInstance = ((string)friendlyNameValue);
-                                            propertiesInstance.FriendlyName = friendlyNameInstance;
-                                        }
-                                        
-                                        JToken containerStampIdValue = propertiesValue["containerStampId"];
-                                        if (containerStampIdValue != null && containerStampIdValue.Type != JTokenType.Null)
-                                        {
-                                            Guid containerStampIdInstance = Guid.Parse(((string)containerStampIdValue));
-                                            propertiesInstance.ContainerStampId = containerStampIdInstance;
-                                        }
-                                        
-                                        JToken containerStampUriValue = propertiesValue["containerStampUri"];
-                                        if (containerStampUriValue != null && containerStampUriValue.Type != JTokenType.Null)
-                                        {
-                                            string containerStampUriInstance = ((string)containerStampUriValue);
-                                            propertiesInstance.ContainerStampUri = containerStampUriInstance;
-                                        }
-                                        
-                                        JToken canReRegisterValue = propertiesValue["canReRegister"];
-                                        if (canReRegisterValue != null && canReRegisterValue.Type != JTokenType.Null)
-                                        {
-                                            bool canReRegisterInstance = ((bool)canReRegisterValue);
-                                            propertiesInstance.CanReRegister = canReRegisterInstance;
-                                        }
-                                        
-                                        JToken customerTypeValue = propertiesValue["customerType"];
-                                        if (customerTypeValue != null && customerTypeValue.Type != JTokenType.Null)
-                                        {
-                                            string customerTypeInstance = ((string)customerTypeValue);
-                                            propertiesInstance.CustomerType = customerTypeInstance;
-                                        }
-                                    }
-                                    
-                                    JToken idValue = valueValue["id"];
-                                    if (idValue != null && idValue.Type != JTokenType.Null)
-                                    {
-                                        string idInstance = ((string)idValue);
-                                        marsContainerResponseInstance.Id = idInstance;
-                                    }
-                                    
-                                    JToken nameValue = valueValue["name"];
-                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                    {
-                                        string nameInstance = ((string)nameValue);
-                                        marsContainerResponseInstance.Name = nameInstance;
-                                    }
-                                    
-                                    JToken typeValue = valueValue["type"];
-                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
-                                    {
-                                        string typeInstance = ((string)typeValue);
-                                        marsContainerResponseInstance.Type = typeInstance;
-                                    }
-                                }
-                            }
-                            
-                            JToken nextLinkValue = responseDoc["nextLink"];
-                            if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
-                            {
-                                string nextLinkInstance = ((string)nextLinkValue);
-                                listMarsContainerResponseInstance.NextLink = nextLinkInstance;
-                            }
-                            
-                            JToken idValue2 = responseDoc["id"];
-                            if (idValue2 != null && idValue2.Type != JTokenType.Null)
-                            {
-                                string idInstance2 = ((string)idValue2);
-                                listMarsContainerResponseInstance.Id = idInstance2;
-                            }
-                            
-                            JToken nameValue2 = responseDoc["name"];
-                            if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
-                            {
-                                string nameInstance2 = ((string)nameValue2);
-                                listMarsContainerResponseInstance.Name = nameInstance2;
-                            }
-                            
-                            JToken typeValue2 = responseDoc["type"];
-                            if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
-                            {
-                                string typeInstance2 = ((string)typeValue2);
-                                listMarsContainerResponseInstance.Type = typeInstance2;
-                            }
+                            Guid operationIdInstance = Guid.Parse(((string)responseDoc));
+                            result.OperationId = operationIdInstance;
                         }
                         
                     }
                     result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-client-request-id"))
-                    {
-                        customRequestHeaders.ClientRequestId = httpResponse.Headers.GetValues("x-ms-client-request-id").FirstOrDefault();
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// Get the list of all container based on the given query filter
-        /// string.
-        /// </summary>
-        /// <param name='containerType'>
-        /// Required. Type of container.
-        /// </param>
-        /// <param name='friendlyName'>
-        /// Required. Friendly name of container.
-        /// </param>
-        /// <param name='customRequestHeaders'>
-        /// Optional. Request header parameters.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// List of Microsoft Azure Recovery Services (MARS) containers.
-        /// </returns>
-        public async Task<ListMarsContainerOperationResponse> ListMarsContainersByTypeAndFriendlyNameAsync(MarsContainerType containerType, string friendlyName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (friendlyName == null)
-            {
-                throw new ArgumentNullException("friendlyName");
-            }
-            
-            // Tracing
-            bool shouldTrace = TracingAdapter.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = TracingAdapter.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("containerType", containerType);
-                tracingParameters.Add("friendlyName", friendlyName);
-                tracingParameters.Add("customRequestHeaders", customRequestHeaders);
-                TracingAdapter.Enter(invocationId, this, "ListMarsContainersByTypeAndFriendlyNameAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = "";
-            url = url + "/Subscriptions/";
-            if (this.Client.Credentials.SubscriptionId != null)
-            {
-                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
-            }
-            url = url + "/resourceGroups/";
-            url = url + Uri.EscapeDataString(this.Client.ResourceGroupName);
-            url = url + "/providers/";
-            url = url + "Microsoft.Backup";
-            url = url + "/";
-            url = url + "BackupVault";
-            url = url + "/";
-            url = url + Uri.EscapeDataString(this.Client.ResourceName);
-            url = url + "/backupContainers";
-            List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-03-15");
-            List<string> odataFilter = new List<string>();
-            odataFilter.Add("type eq '" + Uri.EscapeDataString(containerType.ToString()) + "'");
-            odataFilter.Add("friendlyName eq '" + Uri.EscapeDataString(friendlyName) + "'");
-            if (odataFilter.Count > 0)
-            {
-                queryParameters.Add("$filter=" + string.Join(" and ", odataFilter));
-            }
-            if (queryParameters.Count > 0)
-            {
-                url = url + "?" + string.Join("&", queryParameters);
-            }
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            // Trim '/' character from the end of baseUrl and beginning of url.
-            if (baseUrl[baseUrl.Length - 1] == '/')
-            {
-                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
-            }
-            if (url[0] == '/')
-            {
-                url = url.Substring(1);
-            }
-            url = baseUrl + "/" + url;
-            url = url.Replace(" ", "%20");
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Get;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                httpRequest.Headers.Add("Accept-Language", "en-us");
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            TracingAdapter.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    ListMarsContainerOperationResponse result = null;
-                    // Deserialize Response
-                    if (statusCode == HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new ListMarsContainerOperationResponse();
-                        JToken responseDoc = null;
-                        if (string.IsNullOrEmpty(responseContent) == false)
-                        {
-                            responseDoc = JToken.Parse(responseContent);
-                        }
-                        
-                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                        {
-                            ListMarsContainerResponse listMarsContainerResponseInstance = new ListMarsContainerResponse();
-                            result.ListMarsContainerResponse = listMarsContainerResponseInstance;
-                            
-                            JToken valueArray = responseDoc["value"];
-                            if (valueArray != null && valueArray.Type != JTokenType.Null)
-                            {
-                                foreach (JToken valueValue in ((JArray)valueArray))
-                                {
-                                    MarsContainerResponse marsContainerResponseInstance = new MarsContainerResponse();
-                                    listMarsContainerResponseInstance.Value.Add(marsContainerResponseInstance);
-                                    
-                                    JToken uniqueNameValue = valueValue["uniqueName"];
-                                    if (uniqueNameValue != null && uniqueNameValue.Type != JTokenType.Null)
-                                    {
-                                        string uniqueNameInstance = ((string)uniqueNameValue);
-                                        marsContainerResponseInstance.UniqueName = uniqueNameInstance;
-                                    }
-                                    
-                                    JToken containerTypeValue = valueValue["containerType"];
-                                    if (containerTypeValue != null && containerTypeValue.Type != JTokenType.Null)
-                                    {
-                                        string containerTypeInstance = ((string)containerTypeValue);
-                                        marsContainerResponseInstance.ContainerType = containerTypeInstance;
-                                    }
-                                    
-                                    JToken propertiesValue = valueValue["properties"];
-                                    if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
-                                    {
-                                        MarsContainerProperties propertiesInstance = new MarsContainerProperties();
-                                        marsContainerResponseInstance.Properties = propertiesInstance;
-                                        
-                                        JToken containerIdValue = propertiesValue["containerId"];
-                                        if (containerIdValue != null && containerIdValue.Type != JTokenType.Null)
-                                        {
-                                            long containerIdInstance = ((long)containerIdValue);
-                                            propertiesInstance.ContainerId = containerIdInstance;
-                                        }
-                                        
-                                        JToken friendlyNameValue = propertiesValue["friendlyName"];
-                                        if (friendlyNameValue != null && friendlyNameValue.Type != JTokenType.Null)
-                                        {
-                                            string friendlyNameInstance = ((string)friendlyNameValue);
-                                            propertiesInstance.FriendlyName = friendlyNameInstance;
-                                        }
-                                        
-                                        JToken containerStampIdValue = propertiesValue["containerStampId"];
-                                        if (containerStampIdValue != null && containerStampIdValue.Type != JTokenType.Null)
-                                        {
-                                            Guid containerStampIdInstance = Guid.Parse(((string)containerStampIdValue));
-                                            propertiesInstance.ContainerStampId = containerStampIdInstance;
-                                        }
-                                        
-                                        JToken containerStampUriValue = propertiesValue["containerStampUri"];
-                                        if (containerStampUriValue != null && containerStampUriValue.Type != JTokenType.Null)
-                                        {
-                                            string containerStampUriInstance = ((string)containerStampUriValue);
-                                            propertiesInstance.ContainerStampUri = containerStampUriInstance;
-                                        }
-                                        
-                                        JToken canReRegisterValue = propertiesValue["canReRegister"];
-                                        if (canReRegisterValue != null && canReRegisterValue.Type != JTokenType.Null)
-                                        {
-                                            bool canReRegisterInstance = ((bool)canReRegisterValue);
-                                            propertiesInstance.CanReRegister = canReRegisterInstance;
-                                        }
-                                        
-                                        JToken customerTypeValue = propertiesValue["customerType"];
-                                        if (customerTypeValue != null && customerTypeValue.Type != JTokenType.Null)
-                                        {
-                                            string customerTypeInstance = ((string)customerTypeValue);
-                                            propertiesInstance.CustomerType = customerTypeInstance;
-                                        }
-                                    }
-                                    
-                                    JToken idValue = valueValue["id"];
-                                    if (idValue != null && idValue.Type != JTokenType.Null)
-                                    {
-                                        string idInstance = ((string)idValue);
-                                        marsContainerResponseInstance.Id = idInstance;
-                                    }
-                                    
-                                    JToken nameValue = valueValue["name"];
-                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                    {
-                                        string nameInstance = ((string)nameValue);
-                                        marsContainerResponseInstance.Name = nameInstance;
-                                    }
-                                    
-                                    JToken typeValue = valueValue["type"];
-                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
-                                    {
-                                        string typeInstance = ((string)typeValue);
-                                        marsContainerResponseInstance.Type = typeInstance;
-                                    }
-                                }
-                            }
-                            
-                            JToken nextLinkValue = responseDoc["nextLink"];
-                            if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
-                            {
-                                string nextLinkInstance = ((string)nextLinkValue);
-                                listMarsContainerResponseInstance.NextLink = nextLinkInstance;
-                            }
-                            
-                            JToken idValue2 = responseDoc["id"];
-                            if (idValue2 != null && idValue2.Type != JTokenType.Null)
-                            {
-                                string idInstance2 = ((string)idValue2);
-                                listMarsContainerResponseInstance.Id = idInstance2;
-                            }
-                            
-                            JToken nameValue2 = responseDoc["name"];
-                            if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
-                            {
-                                string nameInstance2 = ((string)nameValue2);
-                                listMarsContainerResponseInstance.Name = nameInstance2;
-                            }
-                            
-                            JToken typeValue2 = responseDoc["type"];
-                            if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
-                            {
-                                string typeInstance2 = ((string)typeValue2);
-                                listMarsContainerResponseInstance.Type = typeInstance2;
-                            }
-                        }
-                        
-                    }
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-client-request-id"))
-                    {
-                        customRequestHeaders.ClientRequestId = httpResponse.Headers.GetValues("x-ms-client-request-id").FirstOrDefault();
-                    }
                     
                     if (shouldTrace)
                     {
@@ -833,11 +695,17 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <summary>
         /// Unregister the container.
         /// </summary>
-        /// <param name='containerId'>
-        /// Required. MARS container ID.
+        /// <param name='resourceGroupName'>
+        /// Required.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Required.
+        /// </param>
+        /// <param name='containerName'>
+        /// Required. Container which we want to unregister.
         /// </param>
         /// <param name='customRequestHeaders'>
-        /// Optional. Request header parameters.
+        /// Required. Request header parameters.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -845,12 +713,24 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a Operation Response.
         /// </returns>
-        public async Task<OperationResponse> UnregisterMarsContainerAsync(string containerId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<OperationResponse> UnregisterAsync(string resourceGroupName, string resourceName, string containerName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
-            if (containerId == null)
+            if (resourceGroupName == null)
             {
-                throw new ArgumentNullException("containerId");
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException("resourceName");
+            }
+            if (containerName == null)
+            {
+                throw new ArgumentNullException("containerName");
+            }
+            if (customRequestHeaders == null)
+            {
+                throw new ArgumentNullException("customRequestHeaders");
             }
             
             // Tracing
@@ -860,9 +740,11 @@ namespace Microsoft.Azure.Management.BackupServices
             {
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("containerId", containerId);
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("resourceName", resourceName);
+                tracingParameters.Add("containerName", containerName);
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
-                TracingAdapter.Enter(invocationId, this, "UnregisterMarsContainerAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "UnregisterAsync", tracingParameters);
             }
             
             // Construct URL
@@ -873,18 +755,17 @@ namespace Microsoft.Azure.Management.BackupServices
                 url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
             }
             url = url + "/resourceGroups/";
-            url = url + Uri.EscapeDataString(this.Client.ResourceGroupName);
+            url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/";
             url = url + "Microsoft.Backup";
             url = url + "/";
             url = url + "BackupVault";
             url = url + "/";
-            url = url + Uri.EscapeDataString(this.Client.ResourceName);
-            url = url + "/backupContainers/";
-            url = url + Uri.EscapeDataString(containerId);
-            url = url + "/UnRegisterContainer";
+            url = url + Uri.EscapeDataString(resourceName);
+            url = url + "/registeredContainers/";
+            url = url + Uri.EscapeDataString(containerName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-03-15");
+            queryParameters.Add("api-version=2014-09-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -933,7 +814,7 @@ namespace Microsoft.Azure.Management.BackupServices
                         TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.NoContent)
+                    if (statusCode != HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
@@ -947,7 +828,7 @@ namespace Microsoft.Azure.Management.BackupServices
                     // Create Result
                     OperationResponse result = null;
                     // Deserialize Response
-                    if (statusCode == HttpStatusCode.NoContent)
+                    if (statusCode == HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
