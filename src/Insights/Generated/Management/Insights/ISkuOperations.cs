@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Insights
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<AntaresSkuGetResponse> GetAntaresCurrentSkuInternalAsync(string resourceId, string apiVersion, CancellationToken cancellationToken);
+        Task<SkuGetResponse> GetCurrentSkuAsync(string resourceId, string apiVersion, CancellationToken cancellationToken);
         
         /// <param name='resourceId'>
         /// The resource id.
@@ -60,22 +60,7 @@ namespace Microsoft.Azure.Management.Insights
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<SkuGetResponse> GetCurrentSkuInternalAsync(string resourceId, string apiVersion, CancellationToken cancellationToken);
-        
-        /// <param name='resourceId'>
-        /// The resource id.
-        /// </param>
-        /// <param name='apiVersion'>
-        /// The resource provider api version.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        Task<SkuListResponse> ListSkuDefinitionsInternalAsync(string resourceId, string apiVersion, CancellationToken cancellationToken);
+        Task<SkuListResponse> ListSkuDefinitionsAsync(string resourceId, string apiVersion, CancellationToken cancellationToken);
         
         /// <param name='apiVersion'>
         /// The resource provider api version.
@@ -87,18 +72,6 @@ namespace Microsoft.Azure.Management.Insights
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<SkuUpdateResponse> UpdateAntaresCurrentSkuInternalAsync(string resourceId, AntaresSkuUpdateRequest parameters, string apiVersion, CancellationToken cancellationToken);
-        
-        /// <param name='apiVersion'>
-        /// The resource provider api version.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        Task<SkuUpdateResponse> UpdateCurrentSkuInternalAsync(string resourceId, SkuUpdateParameters parameters, string apiVersion, CancellationToken cancellationToken);
+        Task<SkuUpdateResponse> UpdateCurrentSkuAsync(string resourceId, SkuUpdateParameters parameters, string apiVersion, CancellationToken cancellationToken);
     }
 }
