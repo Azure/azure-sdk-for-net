@@ -25,15 +25,15 @@ using System.Linq;
 namespace Microsoft.Azure.Management.SiteRecovery.Models
 {
     /// <summary>
-    /// Profile operation provider specific input.
+    /// Create profile provider specific input.
     /// </summary>
-    public partial class ProtectionProfileProviderSpecificInput
+    public partial class FailoverReplicationProviderSpecificInput
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// ProtectionProfileProviderSpecificInput class.
+        /// FailoverReplicationProviderSpecificInput class.
         /// </summary>
-        public ProtectionProfileProviderSpecificInput()
+        public FailoverReplicationProviderSpecificInput()
         {
         }
     }

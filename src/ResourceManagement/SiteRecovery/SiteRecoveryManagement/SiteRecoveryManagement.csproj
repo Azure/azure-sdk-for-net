@@ -31,7 +31,10 @@
     <Compile Include="Generated\IVaultOperations.cs" />
     <Compile Include="Generated\JobOperations.cs" />
     <Compile Include="Generated\JobOperationsExtensions.cs" />
+    <Compile Include="Generated\Models\AzureFailbackInput.cs" />
+    <Compile Include="Generated\Models\AzureFailoverInput.cs" />
     <Compile Include="Generated\Models\AzureProtectionEntityProviderSettings.cs" />
+    <Compile Include="Generated\Models\AzureReprotectInput.cs" />
     <Compile Include="Generated\Models\AzureVmDiskDetails.cs" />
     <Compile Include="Generated\Models\CertificateArgs.cs" />
     <Compile Include="Generated\Models\CertificateProperties.cs" />
@@ -40,6 +43,9 @@
     <Compile Include="Generated\Models\CustomerStorageAccount.cs" />
     <Compile Include="Generated\Models\CustomRequestHeaders.cs" />
     <Compile Include="Generated\Models\FailoverOperationResponse.cs" />
+    <Compile Include="Generated\Models\FailoverReplicationProviderSpecificInput.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Generated\Models\HyperVReplicaAzureProtectionProfileDetails.cs" />
     <Compile Include="Generated\Models\HyperVReplicaAzureProtectionProfileInput.cs" />
     <Compile Include="Generated\Models\HyperVReplicaProtectionProfileDetails.cs" />
@@ -163,7 +169,9 @@
     <None Include="Microsoft.Azure.Management.SiteRecovery.nuget.proj">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Microsoft.Azure.Management.SiteRecovery.nuspec" />
+    <None Include="Microsoft.Azure.Management.SiteRecovery.nuspec">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
