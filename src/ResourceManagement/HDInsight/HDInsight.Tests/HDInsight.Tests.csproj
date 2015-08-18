@@ -4,6 +4,7 @@
     <ProjectGuid>{033442D6-65E4-4A90-A6C0-9608B821A13B}</ProjectGuid>
     <RootNamespace>HDInsight.Tests</RootNamespace>
     <AssemblyName>HDInsight.Tests</AssemblyName>
+    <NuGetPackageImportStamp>c7e9322a</NuGetPackageImportStamp>
   </PropertyGroup>
   <Import Project="..\..\..\..\tools\Library.Settings.targets" />
   <Import Project="$(LibraryToolsFolder)\Test.Dependencies.target" />
@@ -14,13 +15,17 @@
     <Compile Include="ScenarioTests\CreateClusterTests.cs" />
     <Compile Include="ScenarioTests\GetCapabilitiesTests.cs" />
     <Compile Include="ScenarioTests\RdpTests.cs" />
+    <Compile Include="ScenarioTests\GetConfigurationTests.cs" />
     <Compile Include="ScenarioTests\ResizeTests.cs" />
     <Compile Include="ScenarioTests\HttpTests.cs" />
     <Compile Include="ScenarioTests\ListClusterTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="app.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="SessionRecords\HDInsight.Tests.CreateClusterTests\TestCreateDuplicateCluster.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -34,6 +39,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\HDInsight.Tests.GetCapabilitiesTests\TestGetCapabilities.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\HDInsight.Tests.GetConfigurationTests\TestGetConfigCoreSiteCluster.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\HDInsight.Tests.HttpTests\TestDisableEnableHttp.json">
@@ -96,4 +104,11 @@
       <Name>HDInsightManagement</Name>
     </ProjectReference>
   </ItemGroup>
+  <Import Project="..\..\..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets'))" />
+  </Target>
 </Project>
