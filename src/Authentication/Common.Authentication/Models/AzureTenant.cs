@@ -12,16 +12,24 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
-using Hyak.Common;
+using System;
 
 namespace Microsoft.Azure.Common.Authentication.Models
 {
-    public interface IClientAction
+    /// <summary>
+    /// Represents an AD tenant.
+    /// </summary>
+    [Serializable]
+    public class AzureTenant
     {
-        IClientFactory ClientFactory { get; set; }
+        /// <summary>
+        /// Gets or sets the tenant id.
+        /// </summary>
+        public Guid Id { get; set; }
 
-        void Apply<TClient>(TClient client, AzureSMProfile profile, AzureEnvironment.Endpoint endpoint) where TClient : ServiceClient<TClient>;
-
-        void ApplyArm<TClient>(TClient client, AzureRMProfile profile, AzureEnvironment.Endpoint endpoint) where TClient : Microsoft.Rest.ServiceClient<TClient>;
+        /// <summary>
+        /// Gets or sets the tenant domain.
+        /// </summary>
+        public string Domain { get; set; }
     }
 }
