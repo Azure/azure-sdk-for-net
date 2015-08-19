@@ -232,6 +232,9 @@
     <None Include="SessionRecords\Microsoft.Azure.Search.Tests.SearchTests\CanSearchStaticallyTypedDocuments.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\Microsoft.Azure.Search.Tests.SearchTests\CanSearchWithDateTimeInStaticModel.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\Microsoft.Azure.Search.Tests.SearchTests\CanSearchWithMinimumCoverage.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -278,6 +281,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Microsoft.Azure.Search.Tests.SuggestTests\CanSuggestStaticallyTypedDocuments.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Microsoft.Azure.Search.Tests.SuggestTests\CanSuggestWithDateTimeInStaticModel.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Microsoft.Azure.Search.Tests.SuggestTests\CanSuggestWithMinimumCoverage.json">

@@ -69,6 +69,7 @@ namespace Microsoft.Azure.Search
                     { 
                         new GeographyPointConverter(),
                         new DocumentConverter(),
+                        new DateTimeConverter(),
                         new SearchResultConverter<TSearchResult, TDoc>(),
                         new SuggestResultConverter<TSuggestResult, TDoc>()
                     }
