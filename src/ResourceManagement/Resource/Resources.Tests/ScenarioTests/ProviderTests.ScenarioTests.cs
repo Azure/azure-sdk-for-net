@@ -16,6 +16,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Helpers;
 using Microsoft.Azure;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
@@ -37,6 +38,18 @@ namespace ResourceGroups.Tests
         {
             handler.IsPassThrough = true;
             return this.GetResourceManagementClient().WithHandler(handler);
+        }
+
+        [Fact]
+        public void DemonstrateClient()
+        {
+            using (var undoContext = UndoContext.Current)
+            {
+                undoContext.Start();
+                var client = this.GetResourceManagementClientWithSpn();
+                var result = client.Providers.List(null);
+            }
+
         }
 
         [Fact]

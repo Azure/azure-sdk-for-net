@@ -7,6 +7,9 @@
   <Import Project="..\..\..\..\tools\Library.Settings.targets" />
   <Import Project="$(LibraryToolsFolder)\Test.Dependencies.target" />
   <ItemGroup>
+    <Compile Include="Helpers\AuthenticationHelper.cs" />
+    <Compile Include="Helpers\ClientExtensions.cs" />
+    <Compile Include="Helpers\CsmSpnFactory.cs" />
     <Compile Include="InMemoryTests\FeatureTests.InMemory.cs" />
     <Compile Include="ScenarioTests\TagTests.ScenarioTests.cs" />
     <Compile Include="ScenarioTests\ProviderTests.ScenarioTests.cs" />
@@ -162,5 +165,11 @@
       <Project>{165ef660-235b-45af-83cb-0d32bef4c1a2}</Project>
       <Name>ResourceManagement</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.IdentityModel.Clients.ActiveDirectory, Version=2.12.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\packages\Microsoft.IdentityModel.Clients.ActiveDirectory.2.12.111071459\lib\net45\Microsoft.IdentityModel.Clients.ActiveDirectory.dll</HintPath>
+    </Reference>
   </ItemGroup>
 </Project>
