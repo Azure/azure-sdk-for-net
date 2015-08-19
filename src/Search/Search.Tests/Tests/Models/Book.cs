@@ -36,7 +36,11 @@ namespace Microsoft.Azure.Search.Tests
                 return false;
             }
 
-            return ISBN == other.ISBN && Title == other.Title && Author == other.Author;
+            return 
+                ISBN == other.ISBN && 
+                Title == other.Title && 
+                Author == other.Author &&
+                PublishDate == other.PublishDate;
         }
 
         public override int GetHashCode()
@@ -46,7 +50,12 @@ namespace Microsoft.Azure.Search.Tests
 
         public override string ToString()
         {
-            return string.Format("ISBN: {0}; Title: {1}; Author: {2}", ISBN, Title, Author);
+            return string.Format(
+                "ISBN: {0}; Title: {1}; Author: {2}; PublishDate: {3}", 
+                ISBN, 
+                Title, 
+                Author, 
+                PublishDate);
         }
     }
 }

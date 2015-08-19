@@ -20,6 +20,7 @@ using System.Net;
 using Hyak.Common;
 using Microsoft.Azure.Search.Models;
 using Microsoft.Azure.Search.Tests.Utilities;
+using Microsoft.Azure.Test;
 using Microsoft.Azure.Test.TestCategories;
 using Xunit;
 
@@ -304,6 +305,45 @@ namespace Microsoft.Azure.Search.Tests
 
                 Assert.Equal(HttpStatusCode.OK, response.StatusCode);
                 Assert.Equal(100, response.Coverage);
+            });
+        }
+
+        [Fact]
+        public void CanSuggestWithDateTimeInStaticModel()
+        {
+            Run(() =>
+            {
+                SearchServiceClient serviceClient = Data.GetSearchServiceClient();
+
+                Index index =
+                    new Index()
+                    {
+                        Name = TestUtilities.GenerateName(),
+                        Fields = new[]
+                        {
+                            new Field("ISBN", DataType.String) { IsKey = true },
+                            new Field("Title", DataType.String) { IsSearchable = true },
+                            new Field("Author", DataType.String),
+                            new Field("PublishDate", DataType.DateTimeOffset)
+                        },
+                        Suggesters = new[] { new Suggester("sg", SuggesterSearchMode.AnalyzingInfixMatching, "Title") }
+                    };
+
+                IndexDefinitionResponse createIndexResponse = serviceClient.Indexes.Create(index);
+                SearchIndexClient indexClient = Data.GetSearchIndexClient(createIndexResponse.Index.Name);
+
+                var doc1 = new Book() { ISBN = "123", Title = "Lord of the Rings", Author = "J.R.R. Tolkien" };
+                var doc2 = new Book() { ISBN = "456", Title = "War and Peace", PublishDate = new DateTime(2015, 8, 18) };
+                var batch = IndexBatch.Create(IndexAction.Create(doc1), IndexAction.Create(doc2));
+
+                indexClient.Documents.Index(batch);
+                SearchTestUtilities.WaitForIndexing();
+
+                var parameters = new SuggestParameters() { Select = new[] { "ISBN", "Title", "PublishDate" } };
+                DocumentSuggestResponse<Book> response = indexClient.Documents.Suggest<Book>("War", "sg", parameters);
+                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+                Assert.Equal(1, response.Results.Count);
+                Assert.Equal(doc2, response.Results[0].Document);
             });
         }
 
