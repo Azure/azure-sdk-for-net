@@ -13,11 +13,11 @@
 // ----------------------------------------------------------------------------------
 
 using Hyak.Common;
+using Microsoft.Azure.Common.Authentication.Properties;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Azure.Common.Authentication.Properties;
-using Newtonsoft.Json;
 
 namespace Microsoft.Azure.Common.Authentication.Models
 {
@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Common.Authentication.Models
     /// Represents Azure profile structure with multiple environments, subscriptions, and accounts.
     /// </summary>
     [Serializable]
-    public sealed class AzureProfile
+    public sealed class AzureSMProfile : IAzureProfile
     {
         /// <summary>
         /// Gets Azure Accounts
@@ -76,10 +76,10 @@ namespace Microsoft.Azure.Common.Authentication.Models
         public Dictionary<string, AzureEnvironment> Environments { get; set; }
 
         /// <summary>
-        /// Gets current Azure context 
+        /// Gets the default azure context object.
         /// </summary>
         [JsonIgnore]
-        public AzureContext Context 
+        public AzureContext DefaultContext 
         { 
             get
             {
@@ -127,9 +127,9 @@ namespace Microsoft.Azure.Common.Authentication.Models
         public string ProfilePath { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of AzureProfile
+        /// Initializes a new instance of AzureSMProfile
         /// </summary>
-        public AzureProfile()
+        public AzureSMProfile()
         {
             Environments = new Dictionary<string, AzureEnvironment>(StringComparer.InvariantCultureIgnoreCase);
             Subscriptions = new Dictionary<Guid, AzureSubscription>();
@@ -143,11 +143,11 @@ namespace Microsoft.Azure.Common.Authentication.Models
         }
 
         /// <summary>
-        /// Initializes a new instance of AzureProfile and loads its content from specified path.
+        /// Initializes a new instance of AzureSMProfile and loads its content from specified path.
         /// Any errors generated in the process are stored in ProfileLoadErrors collection.
         /// </summary>
         /// <param name="path">Location of profile file on disk.</param>
-        public AzureProfile(string path) : this()
+        public AzureSMProfile(string path) : this()
         {
             ProfilePath = path;
             ProfileLoadErrors = new List<string>();
@@ -193,7 +193,7 @@ namespace Microsoft.Azure.Common.Authentication.Models
         /// <summary>
         /// Writes profile to a specified path.
         /// </summary>
-        /// <param name="path"></param>
+        /// <param name="path">File path on disk to save profile to</param>
         public void Save(string path)
         {
             if (string.IsNullOrEmpty(path))

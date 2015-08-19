@@ -28,7 +28,7 @@ namespace WebSites.Tests.ScenarioTests
 {
     public class WebSiteSlotScenarioTests : TestBase
     {
-        [Fact(Skip = "TEMPORARILY DISABLING TESTS DUE TO ENVIRONMENT ISSUE")]
+        [Fact]
         public void CreateAndVerifyGetOnAWebsiteSlot()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -85,7 +85,7 @@ namespace WebSites.Tests.ScenarioTests
             }
         }
 
-        [Fact(Skip = "TEMPORARILY DISABLING TESTS DUE TO ENVIRONMENT ISSUE")]
+        [Fact]
         public void CreateAndVerifyListOfSlots()
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
@@ -144,7 +144,7 @@ namespace WebSites.Tests.ScenarioTests
             }
         }
 
-        [Fact(Skip = "TEMPORARILY DISABLING TESTS DUE TO ENVIRONMENT ISSUE")]
+        [Fact]
         public void CreateAndDeleteWebSiteSlot()
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };

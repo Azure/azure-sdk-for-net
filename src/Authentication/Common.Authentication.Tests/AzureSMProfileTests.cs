@@ -24,15 +24,14 @@ using Xunit;
 
 namespace Common.Authentication.Test
 {
-    public class ProfileTests
+    public class AzureSMProfileTests
     {
         [Fact]
         public void ProfileSaveDoesNotSerializeContext()
         {
             var dataStore = new MockDataStore();
-            var currentProfile = new AzureProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
+            var profile = new AzureSMProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
             AzureSession.DataStore = dataStore;
-            var client = new ProfileClient(currentProfile);
             var tenant = Guid.NewGuid().ToString();
             var environment = new AzureEnvironment
             {
@@ -54,17 +53,17 @@ namespace Common.Authentication.Test
                 Properties = { { AzureSubscription.Property.Tenants, tenant } }
             };
 
-            client.AddOrSetEnvironment(environment);
-            client.AddOrSetAccount(account);
-            client.AddOrSetSubscription(sub);
+            profile.Environments[environment.Name] = environment;
+            profile.Accounts[account.Id] = account;
+            profile.Subscriptions[sub.Id] = sub;
 
-            currentProfile.Save();
+            profile.Save();
 
-            var profileFile = currentProfile.ProfilePath;
+            var profileFile = profile.ProfilePath;
             string profileContents = dataStore.ReadFileAsText(profileFile);
             var readProfile = JsonConvert.DeserializeObject<Dictionary<string, object>>(profileContents);
-            Assert.False(readProfile.ContainsKey("Context"));
-            AzureProfile parsedProfile = new AzureProfile();
+            Assert.False(readProfile.ContainsKey("DefaultContext"));
+            AzureSMProfile parsedProfile = new AzureSMProfile();
             var serializer = new JsonProfileSerializer();
             Assert.True(serializer.Deserialize(profileContents, parsedProfile));
             Assert.NotNull(parsedProfile);
@@ -80,9 +79,8 @@ namespace Common.Authentication.Test
         public void ProfileSerializeDeserializeWorks()
         {
             var dataStore = new MockDataStore();
-            var currentProfile = new AzureProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
+            var profile = new AzureSMProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
             AzureSession.DataStore = dataStore;
-            var client = new ProfileClient(currentProfile);
             var tenant = Guid.NewGuid().ToString();
             var environment = new AzureEnvironment
             {
@@ -104,26 +102,26 @@ namespace Common.Authentication.Test
                 Properties = { { AzureSubscription.Property.Tenants, tenant } }
             };
 
-            client.AddOrSetEnvironment(environment);
-            client.AddOrSetAccount(account);
-            client.AddOrSetSubscription(sub);
+            profile.Environments[environment.Name] = environment;
+            profile.Accounts[account.Id] = account;
+            profile.Subscriptions[sub.Id] = sub;
 
-            AzureProfile deserializedProfile;
+            AzureSMProfile deserializedProfile;
             // Round-trip the exception: Serialize and de-serialize with a BinaryFormatter
             BinaryFormatter bf = new BinaryFormatter();
             using (MemoryStream ms = new MemoryStream())
             {
                 // "Save" object state
-                bf.Serialize(ms, currentProfile);
+                bf.Serialize(ms, profile);
 
                 // Re-use the same stream for de-serialization
                 ms.Seek(0, 0);
 
                 // Replace the original exception with de-serialized one
-                deserializedProfile = (AzureProfile)bf.Deserialize(ms);
+                deserializedProfile = (AzureSMProfile)bf.Deserialize(ms);
             }
             Assert.NotNull(deserializedProfile);
-            var jCurrentProfile = JsonConvert.SerializeObject(currentProfile);
+            var jCurrentProfile = JsonConvert.SerializeObject(profile);
             var jDeserializedProfile = JsonConvert.SerializeObject(deserializedProfile);
             Assert.Equal(jCurrentProfile, jDeserializedProfile);
         }
@@ -131,7 +129,7 @@ namespace Common.Authentication.Test
         [Fact]
         public void AccountMatchingIgnoresCase()
         {
-            var profile = new AzureProfile();
+            var profile = new AzureSMProfile();
             string accountName = "howdy@contoso.com";
             string accountNameCase = "Howdy@Contoso.com";
             var subscriptionId = Guid.NewGuid();
@@ -155,12 +153,34 @@ namespace Common.Authentication.Test
             subscription.SetProperty(AzureSubscription.Property.Tenants, tenantId.ToString());
             profile.Accounts.Add(accountName, account);
             profile.Subscriptions.Add(subscriptionId, subscription);
-            Assert.NotNull(profile.Context);
-            Assert.NotNull(profile.Context.Account);
-            Assert.NotNull(profile.Context.Environment);
-            Assert.NotNull(profile.Context.Subscription);
-            Assert.Equal(account, profile.Context.Account);
-            Assert.Equal(subscription, profile.Context.Subscription);
+            Assert.NotNull(profile.DefaultContext);
+            Assert.NotNull(profile.DefaultContext.Account);
+            Assert.NotNull(profile.DefaultContext.Environment);
+            Assert.NotNull(profile.DefaultContext.Subscription);
+            Assert.Equal(account, profile.DefaultContext.Account);
+            Assert.Equal(subscription, profile.DefaultContext.Subscription);
+        }
+
+        [Fact]
+        public void GetsCorrectContext()
+        {
+            AzureSMProfile profile = new AzureSMProfile();
+            string accountId = "accountId";
+            Guid subscriptionId = Guid.NewGuid();
+            profile.Accounts.Add(accountId, new AzureAccount { Id = accountId, Type = AzureAccount.AccountType.User });
+            profile.Subscriptions.Add(subscriptionId, new AzureSubscription
+            {
+                Account = accountId,
+                Environment = EnvironmentName.AzureChinaCloud,
+                Name = "hello",
+                Id = subscriptionId
+            });
+            profile.DefaultSubscription = profile.Subscriptions[subscriptionId];
+            AzureContext context = profile.DefaultContext;
+
+            Assert.Equal(accountId, context.Account.Id);
+            Assert.Equal(subscriptionId, context.Subscription.Id);
+            Assert.Equal(EnvironmentName.AzureChinaCloud, context.Environment.Name);
         }
     }
 }

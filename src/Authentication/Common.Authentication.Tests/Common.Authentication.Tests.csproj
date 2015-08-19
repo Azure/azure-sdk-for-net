@@ -51,19 +51,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AzureProfileTests.cs" />
+    <Compile Include="AzureRMProfileTests.cs" />
     <Compile Include="ClientFactoryTests.cs" />
     <Compile Include="AuthenticationFactoryTests.cs" />
     <Compile Include="ConversionUtilitiesTests.cs" />
-    <Compile Include="Mocks\ClientMocks.cs" />
     <Compile Include="Mocks\MockAccessToken.cs" />
     <Compile Include="Mocks\MockAccessTokenProvider.cs" />
     <Compile Include="Mocks\MockCertificateAuthenticationFactory.cs" />
     <Compile Include="Mocks\MockClientFactory.cs" />
     <Compile Include="Mocks\MockDataStore.cs" />
     <Compile Include="Mocks\MockTokenAuthenticationFactory.cs" />
-    <Compile Include="ProfileClientTests.cs" />
-    <Compile Include="ProfileTests.cs" />
+    <Compile Include="AzureSMProfileTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>

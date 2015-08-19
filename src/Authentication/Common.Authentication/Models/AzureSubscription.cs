@@ -38,11 +38,6 @@ namespace Microsoft.Azure.Common.Authentication.Models
             RegisteredResourceProviders,
 
             /// <summary>
-            /// Comma separated mode names that this subscription supports, i.e.: AzureResourceManager,AzureServiceManagement
-            /// </summary>
-            SupportedModes,
-
-            /// <summary>
             /// Associated tenants
             /// </summary>
             Tenants,
