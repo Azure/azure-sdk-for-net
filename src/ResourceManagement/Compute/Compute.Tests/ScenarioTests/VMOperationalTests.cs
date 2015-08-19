@@ -55,7 +55,6 @@ namespace Compute.Tests
                 string storageAccountName = TestUtilities.GenerateName(TestPrefix);
                 VirtualMachine inputVM1;
 
-                bool passed = false;
                 try
                 {
                     // Create Storage Account, so that both the VMs can share it
@@ -78,14 +77,11 @@ namespace Compute.Tests
 
                     var captureResponse = m_CrpClient.VirtualMachines.Capture(rg1Name, vm1.Name, captureParams);
 
-                    // [TODO] AutoRest Problem: captureResponse is null
-                    // Assert.NotNull(captureResponse.Properties.Output);
-                    // string outputAsString = captureResponse.Properties.Output.ToString();
-                    // Assert.Equal('{', outputAsString[0]);
-                    // Assert.True(outputAsString.Contains(captureParams.DestinationContainerName.ToLowerInvariant()));
-                    // Assert.True(outputAsString.ToLowerInvariant().Contains(captureParams.VhdPrefix.ToLowerInvariant()));
-
-                    passed = true;
+                    Assert.NotNull(captureResponse.Properties.Output);
+                    string outputAsString = captureResponse.Properties.Output.ToString();
+                    Assert.Equal('{', outputAsString[0]);
+                    Assert.True(outputAsString.Contains(captureParams.DestinationContainerName.ToLowerInvariant()));
+                    Assert.True(outputAsString.ToLowerInvariant().Contains(captureParams.VhdPrefix.ToLowerInvariant()));
                 }
                 finally
                 {
@@ -93,8 +89,6 @@ namespace Compute.Tests
                     // of the test to cover deletion. CSM does persistent retrying over all RG resources.
                     m_ResourcesClient.ResourceGroups.Delete(rg1Name);
                 }
-
-                Assert.True(passed);
             }
         }
     }
