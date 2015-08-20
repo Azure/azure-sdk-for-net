@@ -28,25 +28,14 @@ using Microsoft.Azure.Management.Sql.Models;
 namespace Microsoft.Azure.Management.Sql.Models
 {
     /// <summary>
-    /// Represents the Service Level Objectives (SLO) capabilities.
+    /// Represents the Azure SQL Server edition capabilities.
     /// </summary>
-    public partial class ServiceLevelObjectiveCapability
+    public partial class EditionCapability
     {
-        private string _id;
-        
-        /// <summary>
-        /// Optional. Gets the SLO ID (Unique GUID).
-        /// </summary>
-        public string Id
-        {
-            get { return this._id; }
-            set { this._id = value; }
-        }
-        
         private string _name;
         
         /// <summary>
-        /// Optional. Gets the SLO name.
+        /// Optional. Gets the edition name.
         /// </summary>
         public string Name
         {
@@ -57,7 +46,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         private string _status;
         
         /// <summary>
-        /// Optional. Gets the status of the SLO.
+        /// Optional. Gets the status of the Azure SQL Server edition.
         /// </summary>
         public string Status
         {
@@ -65,25 +54,24 @@ namespace Microsoft.Azure.Management.Sql.Models
             set { this._status = value; }
         }
         
-        private IList<MaxSizeCapability> _supportedMaxSizes;
+        private IList<ServiceObjectiveCapability> _supportedServiceObjectives;
         
         /// <summary>
-        /// Optional. Gets the list of supported maximum Azure SQL Database
-        /// sizes for this SLO.
+        /// Optional. Gets the list of supported Service Objectives for the
+        /// edition.
         /// </summary>
-        public IList<MaxSizeCapability> SupportedMaxSizes
+        public IList<ServiceObjectiveCapability> SupportedServiceObjectives
         {
-            get { return this._supportedMaxSizes; }
-            set { this._supportedMaxSizes = value; }
+            get { return this._supportedServiceObjectives; }
+            set { this._supportedServiceObjectives = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ServiceLevelObjectiveCapability
-        /// class.
+        /// Initializes a new instance of the EditionCapability class.
         /// </summary>
-        public ServiceLevelObjectiveCapability()
+        public EditionCapability()
         {
-            this.SupportedMaxSizes = new LazyList<MaxSizeCapability>();
+            this.SupportedServiceObjectives = new LazyList<ServiceObjectiveCapability>();
         }
     }
 }

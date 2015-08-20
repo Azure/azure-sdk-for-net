@@ -28,14 +28,14 @@ using Microsoft.Azure.Management.Sql.Models;
 namespace Microsoft.Azure.Management.Sql.Models
 {
     /// <summary>
-    /// Represents the Azure SQL Server capabilities.
+    /// Represents the Azure SQL capabilities for a region.
     /// </summary>
-    public partial class ServerVersionCapabilities
+    public partial class LocationCapability
     {
         private string _name;
         
         /// <summary>
-        /// Optional. Gets the server version name.
+        /// Optional. Gets the region name.
         /// </summary>
         public string Name
         {
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         private string _status;
         
         /// <summary>
-        /// Optional. Gets the status of the Azure SQL Server version.
+        /// Optional. Gets the status for the region with respect to Azure SQL.
         /// </summary>
         public string Status
         {
@@ -54,23 +54,23 @@ namespace Microsoft.Azure.Management.Sql.Models
             set { this._status = value; }
         }
         
-        private IList<EditionCapabilities> _supportedEditions;
+        private IList<ServerVersionCapability> _supportedServerVersions;
         
         /// <summary>
-        /// Optional. Gets the list of supported Azure SQL Server editions.
+        /// Optional. Gets the list of supported Azure SQL Server versions.
         /// </summary>
-        public IList<EditionCapabilities> SupportedEditions
+        public IList<ServerVersionCapability> SupportedServerVersions
         {
-            get { return this._supportedEditions; }
-            set { this._supportedEditions = value; }
+            get { return this._supportedServerVersions; }
+            set { this._supportedServerVersions = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ServerVersionCapabilities class.
+        /// Initializes a new instance of the LocationCapability class.
         /// </summary>
-        public ServerVersionCapabilities()
+        public LocationCapability()
         {
-            this.SupportedEditions = new LazyList<EditionCapabilities>();
+            this.SupportedServerVersions = new LazyList<ServerVersionCapability>();
         }
     }
 }

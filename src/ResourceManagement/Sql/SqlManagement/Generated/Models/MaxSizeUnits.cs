@@ -21,33 +21,20 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure;
-using Microsoft.Azure.Management.Sql.Models;
 
-namespace Microsoft.Azure.Management.Sql.Responses
+namespace Microsoft.Azure.Management.Sql.Models
 {
     /// <summary>
-    /// Represents the response to a Get Azure Sql capabilities request
+    /// Defines the valid units for Azure SQL Database max sizes.
     /// </summary>
-    public partial class LocationCapabilitiesGetResponse : AzureOperationResponse
+    public static partial class MaxSizeUnits
     {
-        private LocationCapability _capabilities;
+        public const string Megabytes = "Megabytes";
         
-        /// <summary>
-        /// Optional. Gets or sets the Azure Sql capabilities for a region.
-        /// </summary>
-        public LocationCapability Capabilities
-        {
-            get { return this._capabilities; }
-            set { this._capabilities = value; }
-        }
+        public const string Gigabytes = "Gigabytes";
         
-        /// <summary>
-        /// Initializes a new instance of the LocationCapabilitiesGetResponse
-        /// class.
-        /// </summary>
-        public LocationCapabilitiesGetResponse()
-        {
-        }
+        public const string Terabytes = "Terabytes";
+        
+        public const string Petabytes = "Petabytes";
     }
 }

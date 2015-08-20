@@ -183,7 +183,7 @@ namespace Microsoft.Azure.Management.Sql
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            LocationCapabilities capabilitiesInstance = new LocationCapabilities();
+                            LocationCapability capabilitiesInstance = new LocationCapability();
                             result.Capabilities = capabilitiesInstance;
                             
                             JToken nameValue = responseDoc["name"];
@@ -205,21 +205,21 @@ namespace Microsoft.Azure.Management.Sql
                             {
                                 foreach (JToken supportedServerVersionsValue in ((JArray)supportedServerVersionsArray))
                                 {
-                                    ServerVersionCapabilities serverVersionCapabilitiesInstance = new ServerVersionCapabilities();
-                                    capabilitiesInstance.SupportedServerVersions.Add(serverVersionCapabilitiesInstance);
+                                    ServerVersionCapability serverVersionCapabilityInstance = new ServerVersionCapability();
+                                    capabilitiesInstance.SupportedServerVersions.Add(serverVersionCapabilityInstance);
                                     
                                     JToken nameValue2 = supportedServerVersionsValue["name"];
                                     if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
                                     {
                                         string nameInstance2 = ((string)nameValue2);
-                                        serverVersionCapabilitiesInstance.Name = nameInstance2;
+                                        serverVersionCapabilityInstance.Name = nameInstance2;
                                     }
                                     
                                     JToken statusValue2 = supportedServerVersionsValue["status"];
                                     if (statusValue2 != null && statusValue2.Type != JTokenType.Null)
                                     {
                                         string statusInstance2 = ((string)statusValue2);
-                                        serverVersionCapabilitiesInstance.Status = statusInstance2;
+                                        serverVersionCapabilityInstance.Status = statusInstance2;
                                     }
                                     
                                     JToken supportedEditionsArray = supportedServerVersionsValue["supportedEditions"];
@@ -227,21 +227,21 @@ namespace Microsoft.Azure.Management.Sql
                                     {
                                         foreach (JToken supportedEditionsValue in ((JArray)supportedEditionsArray))
                                         {
-                                            EditionCapabilities editionCapabilitiesInstance = new EditionCapabilities();
-                                            serverVersionCapabilitiesInstance.SupportedEditions.Add(editionCapabilitiesInstance);
+                                            EditionCapability editionCapabilityInstance = new EditionCapability();
+                                            serverVersionCapabilityInstance.SupportedEditions.Add(editionCapabilityInstance);
                                             
                                             JToken nameValue3 = supportedEditionsValue["name"];
                                             if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
                                             {
                                                 string nameInstance3 = ((string)nameValue3);
-                                                editionCapabilitiesInstance.Name = nameInstance3;
+                                                editionCapabilityInstance.Name = nameInstance3;
                                             }
                                             
                                             JToken statusValue3 = supportedEditionsValue["status"];
                                             if (statusValue3 != null && statusValue3.Type != JTokenType.Null)
                                             {
                                                 string statusInstance3 = ((string)statusValue3);
-                                                editionCapabilitiesInstance.Status = statusInstance3;
+                                                editionCapabilityInstance.Status = statusInstance3;
                                             }
                                             
                                             JToken supportedServiceLevelObjectivesArray = supportedEditionsValue["supportedServiceLevelObjectives"];
@@ -249,28 +249,28 @@ namespace Microsoft.Azure.Management.Sql
                                             {
                                                 foreach (JToken supportedServiceLevelObjectivesValue in ((JArray)supportedServiceLevelObjectivesArray))
                                                 {
-                                                    ServiceLevelObjectiveCapability serviceLevelObjectiveCapabilityInstance = new ServiceLevelObjectiveCapability();
-                                                    editionCapabilitiesInstance.SupportedServiceLevelObjectives.Add(serviceLevelObjectiveCapabilityInstance);
+                                                    ServiceObjectiveCapability serviceObjectiveCapabilityInstance = new ServiceObjectiveCapability();
+                                                    editionCapabilityInstance.SupportedServiceObjectives.Add(serviceObjectiveCapabilityInstance);
                                                     
                                                     JToken nameValue4 = supportedServiceLevelObjectivesValue["name"];
                                                     if (nameValue4 != null && nameValue4.Type != JTokenType.Null)
                                                     {
                                                         string nameInstance4 = ((string)nameValue4);
-                                                        serviceLevelObjectiveCapabilityInstance.Name = nameInstance4;
+                                                        serviceObjectiveCapabilityInstance.Name = nameInstance4;
                                                     }
                                                     
                                                     JToken statusValue4 = supportedServiceLevelObjectivesValue["status"];
                                                     if (statusValue4 != null && statusValue4.Type != JTokenType.Null)
                                                     {
                                                         string statusInstance4 = ((string)statusValue4);
-                                                        serviceLevelObjectiveCapabilityInstance.Status = statusInstance4;
+                                                        serviceObjectiveCapabilityInstance.Status = statusInstance4;
                                                     }
                                                     
                                                     JToken idValue = supportedServiceLevelObjectivesValue["id"];
                                                     if (idValue != null && idValue.Type != JTokenType.Null)
                                                     {
-                                                        string idInstance = ((string)idValue);
-                                                        serviceLevelObjectiveCapabilityInstance.Id = idInstance;
+                                                        Guid idInstance = Guid.Parse(((string)idValue));
+                                                        serviceObjectiveCapabilityInstance.Id = idInstance;
                                                     }
                                                     
                                                     JToken supportedMaxSizesArray = supportedServiceLevelObjectivesValue["supportedMaxSizes"];
@@ -279,7 +279,7 @@ namespace Microsoft.Azure.Management.Sql
                                                         foreach (JToken supportedMaxSizesValue in ((JArray)supportedMaxSizesArray))
                                                         {
                                                             MaxSizeCapability maxSizeCapabilityInstance = new MaxSizeCapability();
-                                                            serviceLevelObjectiveCapabilityInstance.SupportedMaxSizes.Add(maxSizeCapabilityInstance);
+                                                            serviceObjectiveCapabilityInstance.SupportedMaxSizes.Add(maxSizeCapabilityInstance);
                                                             
                                                             JToken limitValue = supportedMaxSizesValue["limit"];
                                                             if (limitValue != null && limitValue.Type != JTokenType.Null)

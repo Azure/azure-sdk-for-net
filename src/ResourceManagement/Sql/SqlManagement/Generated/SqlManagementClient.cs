@@ -175,15 +175,15 @@ namespace Microsoft.Azure.Management.Sql
             get { return this._firewallRules; }
         }
         
-        private ILocationCapabilitiesOperations _locationCapabilities;
+        private ILocationCapabilitiesOperations _capabilities;
         
         /// <summary>
         /// Represents all the operations for determining the set of
         /// capabilites available in a specified region.
         /// </summary>
-        public virtual ILocationCapabilitiesOperations LocationCapabilities
+        public virtual ILocationCapabilitiesOperations Capabilities
         {
-            get { return this._locationCapabilities; }
+            get { return this._capabilities; }
         }
         
         private IRecommendedElasticPoolOperations _recommendedElasticPools;
@@ -316,7 +316,7 @@ namespace Microsoft.Azure.Management.Sql
             this._dataMasking = new DataMaskingOperations(this);
             this._elasticPools = new ElasticPoolOperations(this);
             this._firewallRules = new FirewallRuleOperations(this);
-            this._locationCapabilities = new LocationCapabilitiesOperations(this);
+            this._capabilities = new LocationCapabilitiesOperations(this);
             this._recommendedElasticPools = new RecommendedElasticPoolOperations(this);
             this._recommendedIndexes = new RecommendedIndexOperations(this);
             this._databaseReplicationLinks = new ReplicationLinkOperations(this);
@@ -399,7 +399,7 @@ namespace Microsoft.Azure.Management.Sql
             this._dataMasking = new DataMaskingOperations(this);
             this._elasticPools = new ElasticPoolOperations(this);
             this._firewallRules = new FirewallRuleOperations(this);
-            this._locationCapabilities = new LocationCapabilitiesOperations(this);
+            this._capabilities = new LocationCapabilitiesOperations(this);
             this._recommendedElasticPools = new RecommendedElasticPoolOperations(this);
             this._recommendedIndexes = new RecommendedIndexOperations(this);
             this._databaseReplicationLinks = new ReplicationLinkOperations(this);

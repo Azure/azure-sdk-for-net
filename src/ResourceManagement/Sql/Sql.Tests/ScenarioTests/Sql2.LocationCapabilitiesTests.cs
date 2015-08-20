@@ -43,7 +43,7 @@ namespace Sql2.Tests.ScenarioTests
 
                 string regionName = "North Europe";
 
-                var capabilities = sqlClient.LocationCapabilities.Get(regionName);
+                var capabilities = sqlClient.Capabilities.Get(regionName);
                 TestUtilities.ValidateOperationResponse(capabilities);
 
                 // Make sure the right region is returned
@@ -51,7 +51,7 @@ namespace Sql2.Tests.ScenarioTests
 
                 // Ensure at least one server version is returned
                 var supportedVersions = capabilities.Capabilities.SupportedServerVersions;
-                Assert.True(supportedVersions.Count >= 1, string.Format("Location : '{0}' does not have any available server versions.", regionName));
+                Assert.True(supportedVersions.Count > 0, string.Format("Location : '{0}' does not have any available server versions.", regionName));
 
                 // Validate all the supported versions
                 foreach (var version in capabilities.Capabilities.SupportedServerVersions)
@@ -69,14 +69,14 @@ namespace Sql2.Tests.ScenarioTests
                         Assert.True(!string.IsNullOrEmpty(edition.Status));
 
                         // Ensure that the edition has at least one SLO available
-                        Assert.True(edition.SupportedServiceLevelObjectives.Count > 0, string.Format("Edition: '{0}.{1}' does not have any available SLOs", version.Name, edition.Name));
+                        Assert.True(edition.SupportedServiceObjectives.Count > 0, string.Format("Edition: '{0}.{1}' does not have any available SLOs", version.Name, edition.Name));
 
                         // Validate the avialable max sizes.
-                        foreach (var slo in edition.SupportedServiceLevelObjectives)
+                        foreach (var slo in edition.SupportedServiceObjectives)
                         {
                             Assert.True(!string.IsNullOrEmpty(slo.Name));
                             Assert.True(!string.IsNullOrEmpty(slo.Status));
-                            Assert.True(!string.IsNullOrEmpty(slo.Id));
+                            Assert.True(Guid.Empty != slo.Id);
 
                             // Ensure that the SLO has at least 1 max size available.
                             Assert.True(slo.SupportedMaxSizes.Count > 0, string.Format("SLO: '{0}.{1},{2}' does not have any available max sizes", version.Name, edition.Name, slo.Name));

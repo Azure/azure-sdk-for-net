@@ -151,7 +151,7 @@ namespace Microsoft.Azure.Management.Sql
         /// Represents all the operations for determining the set of
         /// capabilites available in a specified region.
         /// </summary>
-        ILocationCapabilitiesOperations LocationCapabilities
+        ILocationCapabilitiesOperations Capabilities
         {
             get; 
         }
