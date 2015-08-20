@@ -37,12 +37,24 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
-    <None Include="ScenarioTests\CheckNamespaceNameAvailability.json" />
-    <None Include="ScenarioTests\CheckNotificationHubNameAvailability.json" />
-    <None Include="ScenarioTests\NamespaceCreateGetUpdateDelete.json" />
-    <None Include="ScenarioTests\NamespaceCreateGetUpdateDeleteAuthorizationRules.json" />
-    <None Include="ScenarioTests\NotificationHubCreateGetUpdateDelete.json" />
-    <None Include="ScenarioTests\NotificationHubCreateGetUpdateDeleteAuthorizationRules.json" />
+    <None Include="ScenarioTests\CheckNamespaceNameAvailability.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ScenarioTests\CheckNotificationHubNameAvailability.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ScenarioTests\NamespaceCreateGetUpdateDelete.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ScenarioTests\NamespaceCreateGetUpdateDeleteAuthorizationRules.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ScenarioTests\NotificationHubCreateGetUpdateDelete.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ScenarioTests\NotificationHubCreateGetUpdateDeleteAuthorizationRules.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <!--<ItemGroup>
     <Reference Include="Microsoft.Azure.Test.Framework, Version=1.0.5568.26003, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -53,7 +65,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\packages\Microsoft.Azure.Test.HttpRecorder.2.0.5658.29898-prerelease\lib\net45\Microsoft.Azure.Test.HttpRecorder.dll</HintPath>
     </Reference>
-  </ItemGroup>--><!--
+  </ItemGroup>-->
+  <!--
   <Import Project="..\..\..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
