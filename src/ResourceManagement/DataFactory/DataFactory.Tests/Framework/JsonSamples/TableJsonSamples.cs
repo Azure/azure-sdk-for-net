@@ -28,7 +28,7 @@ namespace DataFactory.Tests.Framework.JsonSamples
     name: ""CustomTable"",
     properties:
     {
-        type: ""CustomDataSet"",
+        type: ""CustomDataset"",
         linkedServiceName: ""MyCustomServiceName"",
         typeProperties:
         {   
