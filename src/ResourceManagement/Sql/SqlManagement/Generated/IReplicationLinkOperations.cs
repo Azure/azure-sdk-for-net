@@ -63,6 +63,62 @@ namespace Microsoft.Azure.Management.Sql
         Task<AzureOperationResponse> DeleteAsync(string resourceGroupName, string serverName, string databaseName, string linkId, CancellationToken cancellationToken);
         
         /// <summary>
+        /// Fails over the Azure SQL Database Replication Link with the given
+        /// id.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the Resource Group to which the Azure SQL Server
+        /// belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// The name of the Azure SQL Server on which the Azure SQL Database is
+        /// hosted.
+        /// </param>
+        /// <param name='databaseName'>
+        /// The name of the Azure SQL Database that has the replication link to
+        /// be failed over.
+        /// </param>
+        /// <param name='linkId'>
+        /// The id of the replication link to be failed over.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<AzureOperationResponse> FailoverAsync(string resourceGroupName, string serverName, string databaseName, string linkId, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Forces failover of the Azure SQL Database Replication Link with the
+        /// given id which may result in data loss.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the Resource Group to which the Azure SQL Server
+        /// belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// The name of the Azure SQL Server on which the Azure SQL Database is
+        /// hosted.
+        /// </param>
+        /// <param name='databaseName'>
+        /// The name of the Azure SQL Database that has the replication link to
+        /// be failed over.
+        /// </param>
+        /// <param name='linkId'>
+        /// The id of the replication link to be failed over.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<AzureOperationResponse> FailoverAllowDataLossAsync(string resourceGroupName, string serverName, string databaseName, string linkId, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// Returns information about an Azure SQL Database Replication Link.
         /// </summary>
         /// <param name='resourceGroupName'>
