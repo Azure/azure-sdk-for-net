@@ -4,28 +4,28 @@
       "RequestUri": "/Subscriptions/f5303a0b-fae4-4cdb-b44d-0e4c032dde26/resourceGroups/backuprg/providers/Microsoft.Backup/BackupVault/delTestRes?api-version=2015-03-15",
       "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvZjUzMDNhMGItZmFlNC00Y2RiLWI0NGQtMGU0YzAzMmRkZTI2L3Jlc291cmNlR3JvdXBzL2JhY2t1cHJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuQmFja3VwL0JhY2t1cFZhdWx0L2RlbFRlc3RSZXM/YXBpLXZlcnNpb249MjAxNS0wMy0xNQ==",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"sku\": {\r\n      \"name\": \"standard\"\r\n    }\r\n  },\r\n  \"location\": \"West US\",\r\n  \"tags\": {}\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"sku\": {\r\n      \"name\": \"standard\"\r\n    }\r\n  },\r\n  \"location\": \"southeastasia\",\r\n  \"tags\": {}\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "116"
+          "122"
         ],
         "Accept-Language": [
           "en-us"
         ],
         "x-ms-client-request-id": [
-          "f78a3493-e757-42fc-afec-bb9e88925096"
+          "4c504d34-ba37-4495-b28e-ec496d99d140"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.BackupServices.BackupServicesManagementClient/0.0.0.0"
+          "Microsoft.Azure.Management.BackupServices.BackupVaultServicesManagementClient/0.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"Location\": \"westus\",\r\n  \"Name\": \"delTestRes\",\r\n  \"ETag\": \"84171c0e-a086-446e-989f-5854243fa652\",\r\n  \"Tags\": {},\r\n  \"Properties\": {\r\n    \"sku\": {\r\n      \"name\": \"standard\"\r\n    },\r\n    \"ProvisioningState\": \"Succeeded\"\r\n  },\r\n  \"Id\": \"/subscriptions/f5303a0b-fae4-4cdb-b44d-0e4c032dde26/resourceGroups/backuprg/providers/Microsoft.Backup/BackupVault/delTestRes\",\r\n  \"Type\": \"Microsoft.Backup/BackupVault\"\r\n}",
+      "ResponseBody": "{\r\n  \"location\": \"southeastasia\",\r\n  \"name\": \"delTestRes\",\r\n  \"etag\": \"5e40cc1c-2b56-498c-87ad-62b09b7770de\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"sku\": {\r\n      \"name\": \"standard\"\r\n    },\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"id\": \"/subscriptions/f5303a0b-fae4-4cdb-b44d-0e4c032dde26/resourceGroups/backuprg/providers/Microsoft.Backup/BackupVault/delTestRes\",\r\n  \"type\": \"Microsoft.Backup/BackupVault\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "341"
+          "348"
         ],
         "Content-Type": [
           "application/json"
@@ -37,28 +37,28 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "43bf335a-2916-4877-9e46-9121e3673a8a"
+          "d683772d-ae4e-4aff-8064-dcf6b5ed6456"
         ],
         "x-ms-client-request-id": [
-          "f78a3493-e757-42fc-afec-bb9e88925096"
+          "4c504d34-ba37-4495-b28e-ec496d99d140"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1193"
+          "999999"
         ],
         "x-ms-correlation-request-id": [
-          "43bf335a-2916-4877-9e46-9121e3673a8a"
+          "d683772d-ae4e-4aff-8064-dcf6b5ed6456"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20150703T071434Z:43bf335a-2916-4877-9e46-9121e3673a8a"
+          "CENTRALUS:20150814T042444Z:d683772d-ae4e-4aff-8064-dcf6b5ed6456"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Fri, 03 Jul 2015 07:14:34 GMT"
+          "Fri, 14 Aug 2015 04:24:44 GMT"
         ],
         "Server": [
           "Microsoft-IIS/8.0"
@@ -76,10 +76,10 @@
           "en-us"
         ],
         "x-ms-client-request-id": [
-          "37f9cc33-14c6-447d-813f-3bc691f93d85"
+          "c592557a-c774-437e-a0b9-7422bae5023d"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.BackupServices.BackupServicesManagementClient/0.0.0.0"
+          "Microsoft.Azure.Management.BackupServices.BackupVaultServicesManagementClient/0.0.0.0"
         ]
       },
       "ResponseBody": "",
@@ -94,28 +94,28 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "5742ca84-9425-4df7-b48d-f2191c9b06ec"
+          "5524c9fe-eea4-4917-a153-daad15ef01fe"
         ],
         "x-ms-client-request-id": [
-          "37f9cc33-14c6-447d-813f-3bc691f93d85"
+          "c592557a-c774-437e-a0b9-7422bae5023d"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1192"
+          "999998"
         ],
         "x-ms-correlation-request-id": [
-          "5742ca84-9425-4df7-b48d-f2191c9b06ec"
+          "5524c9fe-eea4-4917-a153-daad15ef01fe"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20150703T071436Z:5742ca84-9425-4df7-b48d-f2191c9b06ec"
+          "CENTRALUS:20150814T042446Z:5524c9fe-eea4-4917-a153-daad15ef01fe"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Fri, 03 Jul 2015 07:14:36 GMT"
+          "Fri, 14 Aug 2015 04:24:45 GMT"
         ]
       },
       "StatusCode": 200
@@ -130,16 +130,16 @@
           "en-us"
         ],
         "x-ms-client-request-id": [
-          "776d420d-a565-4f27-a448-1c1bc42a900e"
+          "b586d970-db36-48cf-b485-66d9f5af23b5"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.BackupServices.BackupServicesManagementClient/0.0.0.0"
+          "Microsoft.Azure.Management.BackupServices.BackupVaultServicesManagementClient/0.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceNotFound\",\r\n    \"message\": \"Resource not found.\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceNotFound\",\r\n    \"message\": \"The Resource 'Microsoft.Backup/BackupVault/delTestRes' under resource group 'backuprg' was not found.\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "69"
+          "151"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -154,13 +154,13 @@
           "gateway"
         ],
         "x-ms-request-id": [
-          "9f4ec6ce-b211-4087-b54b-775af2e9e70f"
+          "dd297bb6-da31-44fd-8459-165c5f053806"
         ],
         "x-ms-correlation-request-id": [
-          "9f4ec6ce-b211-4087-b54b-775af2e9e70f"
+          "dd297bb6-da31-44fd-8459-165c5f053806"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20150703T071437Z:9f4ec6ce-b211-4087-b54b-775af2e9e70f"
+          "CENTRALUS:20150814T042446Z:dd297bb6-da31-44fd-8459-165c5f053806"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -169,7 +169,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 03 Jul 2015 07:14:36 GMT"
+          "Fri, 14 Aug 2015 04:24:45 GMT"
         ]
       },
       "StatusCode": 404

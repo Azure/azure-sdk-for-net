@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <param name='resourceGroupName'>
         /// The name of resource group to which vault belongs
         /// </param>
-        /// <param name='vaultName'>
+        /// <param name='resourceName'>
         /// The name of the vault
         /// </param>
         /// <param name='parameters'>
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// Vault information.
         /// </returns>
-        Task<AzureBackupVaultGetResponse> CreateOrUpdateAsync(string resourceGroupName, string vaultName, AzureBackupVaultCreateOrUpdateParameters parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<AzureBackupVaultGetResponse> CreateOrUpdateAsync(string resourceGroupName, string resourceName, AzureBackupVaultCreateOrUpdateParameters parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
         /// Deletes the specified Azure backup vault.
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <param name='resourceGroupName'>
         /// The name of resource group to which vault belongs
         /// </param>
-        /// <param name='vaultName'>
+        /// <param name='resourceName'>
         /// The name of the vault
         /// </param>
         /// <param name='customRequestHeaders'>
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// Vault information.
         /// </returns>
-        Task<AzureBackupVaultGetResponse> DeleteAsync(string resourceGroupName, string vaultName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<AzureBackupVaultGetResponse> DeleteAsync(string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
         /// Gets the specified Azure key vault.
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <param name='resourceGroupName'>
         /// The name of resource group to which vault belongs
         /// </param>
-        /// <param name='vaultName'>
+        /// <param name='resourceName'>
         /// The name of the vault
         /// </param>
         /// <param name='customRequestHeaders'>
@@ -94,7 +94,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// Vault information.
         /// </returns>
-        Task<AzureBackupVaultGetResponse> GetAsync(string resourceGroupName, string vaultName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<AzureBackupVaultGetResponse> GetAsync(string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
         /// Fetches resource storage config.
@@ -102,7 +102,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <param name='resourceGroupName'>
         /// The name of resource group to which vault belongs
         /// </param>
-        /// <param name='vaultName'>
+        /// <param name='resourceName'>
         /// The name of the vault
         /// </param>
         /// <param name='customRequestHeaders'>
@@ -114,7 +114,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a get resource storage config response.
         /// </returns>
-        Task<GetResourceStorageConfigResponse> GetResourceStorageConfigAsync(string resourceGroupName, string vaultName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<GetResourceStorageConfigResponse> GetResourceStorageConfigAsync(string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
         /// Gets information of the backup vaults associated with subscription.
@@ -170,7 +170,7 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a Operation Response.
         /// </returns>
-        Task<OperationResponse> UpdateStorageTypeAsync(UpdateVaultStorageTypeRequest updateVaultStorageTypeRequest, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<OperationResponse> UpdateStorageTypeAsync(string resourceGroupName, string resourceName, UpdateVaultStorageTypeRequest updateVaultStorageTypeRequest, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
         /// Uploads vault credential certificate.
@@ -190,6 +190,6 @@ namespace Microsoft.Azure.Management.BackupServices
         /// <returns>
         /// The definition of a certificate response.
         /// </returns>
-        Task<VaultCredUploadCertResponse> UploadCertificateAsync(string certificateName, VaultCredUploadCertRequest vaultCredUploadCertRequest, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<VaultCredUploadCertResponse> UploadCertificateAsync(string resourceGroupName, string resourceName, string certificateName, VaultCredUploadCertRequest vaultCredUploadCertRequest, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
     }
 }

@@ -578,6 +578,58 @@ namespace Microsoft.Azure.Management.HDInsight
         }
         
         /// <summary>
+        /// Gets the configuration for the specified cluster.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.HDInsight.IClusterOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// Required. The name of the cluster.
+        /// </param>
+        /// <param name='configurationName'>
+        /// Required. The name of the cluster.
+        /// </param>
+        /// <returns>
+        /// The Cluster Configurations operation response.
+        /// </returns>
+        public static ClusterConfigurationsResponse GetClusterConfigurations(this IClusterOperations operations, string resourceGroupName, string clusterName, string configurationName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IClusterOperations)s).GetClusterConfigurationsAsync(resourceGroupName, clusterName, configurationName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Gets the configuration for the specified cluster.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.HDInsight.IClusterOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// Required. The name of the cluster.
+        /// </param>
+        /// <param name='configurationName'>
+        /// Required. The name of the cluster.
+        /// </param>
+        /// <returns>
+        /// The Cluster Configurations operation response.
+        /// </returns>
+        public static Task<ClusterConfigurationsResponse> GetClusterConfigurationsAsync(this IClusterOperations operations, string resourceGroupName, string clusterName, string configurationName)
+        {
+            return operations.GetClusterConfigurationsAsync(resourceGroupName, clusterName, configurationName, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Gets the connectivity settings for the specified cluster.
         /// </summary>
         /// <param name='operations'>

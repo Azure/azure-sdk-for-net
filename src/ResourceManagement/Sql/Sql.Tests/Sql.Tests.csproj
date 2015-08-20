@@ -45,12 +45,6 @@
     <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2ElasticPoolScenarioTests\ElasticPoolDatabaseOperations.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2ElasticPoolScenarioTests\ElasticPoolMetricDefinitionsOperations.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2ElasticPoolScenarioTests\ElasticPoolMetricsOperations.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2RecommendedElasticPoolScenarioTests\GetDatabasesForPool.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

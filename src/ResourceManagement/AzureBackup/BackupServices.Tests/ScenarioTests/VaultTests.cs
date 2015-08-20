@@ -61,7 +61,7 @@ namespace BackupServices.Tests
                 };
 
                 VaultCredUploadCertResponse response =
-                    client.Vault.UploadCertificate("IdMgmtInternalCert", vaultCredUploadCertRequest, GetCustomRequestHeaders());
+                    client.Vault.UploadCertificate(BackupServicesTestsBase.ResourceGroupName, BackupServicesTestsBase.ResourceName, "IdMgmtInternalCert", vaultCredUploadCertRequest, GetCustomRequestHeaders());
 
                 // Response Validation
                 Assert.NotNull(response);
@@ -101,7 +101,7 @@ namespace BackupServices.Tests
                     },
                 };
 
-                OperationResponse response = client.Vault.UpdateStorageType(updateVaultStorageTypeRequest, GetCustomRequestHeaders());
+                OperationResponse response = client.Vault.UpdateStorageType(BackupServicesTestsBase.ResourceGroupName, BackupServicesTestsBase.ResourceName, updateVaultStorageTypeRequest, GetCustomRequestHeaders());
 
                 // Response Validation
                 Assert.NotNull(response);

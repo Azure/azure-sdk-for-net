@@ -25,7 +25,7 @@ using System.Linq;
 namespace Microsoft.Azure.Management.SiteRecovery.Models
 {
     /// <summary>
-    /// Create profile provider specific input.
+    /// Profile operation provider specific input.
     /// </summary>
     public partial class ProtectionProfileProviderSpecificInput
     {

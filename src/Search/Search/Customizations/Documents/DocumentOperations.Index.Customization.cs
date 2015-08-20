@@ -144,7 +144,7 @@ namespace Microsoft.Azure.Search
                     if (string.IsNullOrEmpty(responseContent) == false)
                     {
                         var deserializedResult = 
-                            JsonConvert.DeserializeObject<DocumentIndexResponseFormat>(responseContent);
+                            JsonConvert.DeserializeObject<DocumentIndexResponsePayload>(responseContent);
                         result.Results = new LazyList<IndexResult>(deserializedResult.Value);
                     }
 
@@ -188,7 +188,7 @@ namespace Microsoft.Azure.Search
             }
         }
 
-        private class DocumentIndexResponseFormat
+        private class DocumentIndexResponsePayload
         {
             public List<IndexResult> Value { get; set; }
         }

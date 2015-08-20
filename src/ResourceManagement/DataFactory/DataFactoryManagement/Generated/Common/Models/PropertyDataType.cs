@@ -82,7 +82,7 @@ namespace Microsoft.Azure.Management.DataFactories.Common.Models
         /// <summary>
         /// DateTime type.
         /// </summary>
-        public const string DateTime = "DateTime";
+        public const string DateTime = "Datetime";
         
         /// <summary>
         /// DateTimeOffset type.

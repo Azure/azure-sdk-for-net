@@ -32,6 +32,19 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
     /// </summary>
     public partial class ConfigurationSet
     {
+        private AdditionalUnattendContentSettings _additionalUnattendContent;
+        
+        /// <summary>
+        /// Optional. Specifies additional base-64 encoded XML formatted
+        /// information that can be included in the Unattend.xml file, which
+        /// is used by Windows Setup.
+        /// </summary>
+        public AdditionalUnattendContentSettings AdditionalUnattendContent
+        {
+            get { return this._additionalUnattendContent; }
+            set { this._additionalUnattendContent = value; }
+        }
+        
         private string _adminPassword;
         
         /// <summary>

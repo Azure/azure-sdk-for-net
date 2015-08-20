@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     /// <summary>
     /// Custom location.
     /// </summary>
-    [AdfTypeName("CustomDataSet")]
+    [AdfTypeName("CustomDataset")]
     public sealed class CustomDataset : TableTypeProperties, IGenericTypeProperties
     {
         public IDictionary<string, JToken> ServiceExtraProperties { get; set; } 

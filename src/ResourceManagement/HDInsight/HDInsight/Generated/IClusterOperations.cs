@@ -239,6 +239,26 @@ namespace Microsoft.Azure.Management.HDInsight
         Task<CapabilitiesResponse> GetCapabilitiesAsync(string location, CancellationToken cancellationToken);
         
         /// <summary>
+        /// Gets the configuration for the specified cluster.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// The name of the cluster.
+        /// </param>
+        /// <param name='configurationName'>
+        /// The name of the cluster.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The Cluster Configurations operation response.
+        /// </returns>
+        Task<ClusterConfigurationsResponse> GetClusterConfigurationsAsync(string resourceGroupName, string clusterName, string configurationName, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// Gets the connectivity settings for the specified cluster.
         /// </summary>
         /// <param name='resourceGroupName'>
