@@ -458,12 +458,6 @@ namespace Microsoft.Azure.Management.HDInsight
             };
             roles.Add(workerNode);
 
-            if (clusterCreateParameters.ClusterType == HDInsightClusterType.Hadoop ||
-                clusterCreateParameters.ClusterType == HDInsightClusterType.Spark)
-            {
-                return roles;
-            }
-
             string zookeeperNodeSize = clusterCreateParameters.ZookeeperNodeSize ?? "Medium";
 
             var zookeepernode = new Role
