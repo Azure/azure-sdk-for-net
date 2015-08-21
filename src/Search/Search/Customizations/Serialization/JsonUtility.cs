@@ -16,17 +16,34 @@
 using Microsoft.Azure.Search.Models;
 using Microsoft.Azure.Search.Serialization;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 
 namespace Microsoft.Azure.Search
 {
     internal static class JsonUtility
     {
+        public static readonly JsonSerializerSettings DefaultSerializerSettings = CreateDefaultSettings();
+
         public static readonly JsonSerializerSettings DocumentSerializerSettings = 
             CreateSerializerSettings<Document>(useCamelCase: false);
 
         public static readonly JsonSerializerSettings DocumentDeserializerSettings =
             CreateDeserializerSettings<SearchResult, SuggestResult, Document>();
+
+        public static JsonSerializerSettings CreateDefaultSettings()
+        {
+            var settings = new JsonSerializerSettings()
+            {
+                Formatting = Formatting.Indented,
+                DefaultValueHandling = DefaultValueHandling.Ignore,
+                ContractResolver = new CamelCasePropertyNamesContractResolver()
+            };
+
+            settings.Converters.Add(new StringEnumConverter() { CamelCaseText = true });
+
+            return settings;
+        }
 
         public static JsonSerializerSettings CreateSerializerSettings<T>(bool useCamelCase) where T : class
         {
@@ -69,6 +86,7 @@ namespace Microsoft.Azure.Search
                     { 
                         new GeographyPointConverter(),
                         new DocumentConverter(),
+                        new DateTimeConverter(),
                         new SearchResultConverter<TSearchResult, TDoc>(),
                         new SuggestResultConverter<TSuggestResult, TDoc>()
                     }
