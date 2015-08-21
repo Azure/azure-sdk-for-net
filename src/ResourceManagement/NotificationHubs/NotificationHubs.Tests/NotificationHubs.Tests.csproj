@@ -37,23 +37,23 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
-    <None Include="ScenarioTests\CheckNamespaceNameAvailability.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="SessionRecords\ScenarioTests\CheckNamespaceNameAvailability.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="ScenarioTests\CheckNotificationHubNameAvailability.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="SessionRecords\ScenarioTests\CheckNotificationHubNameAvailability.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="ScenarioTests\NamespaceCreateGetUpdateDelete.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="SessionRecords\ScenarioTests\NamespaceCreateGetUpdateDelete.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="ScenarioTests\NamespaceCreateGetUpdateDeleteAuthorizationRules.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="SessionRecords\ScenarioTests\NamespaceCreateGetUpdateDeleteAuthorizationRules.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="ScenarioTests\NotificationHubCreateGetUpdateDelete.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="SessionRecords\ScenarioTests\NotificationHubCreateGetUpdateDelete.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="ScenarioTests\NotificationHubCreateGetUpdateDeleteAuthorizationRules.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="SessionRecords\ScenarioTests\NotificationHubCreateGetUpdateDeleteAuthorizationRules.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <!--<ItemGroup>
