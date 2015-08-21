@@ -38,6 +38,142 @@ namespace Microsoft.Azure.Management.Sql
     public static partial class ReplicationLinkOperationsExtensions
     {
         /// <summary>
+        /// Begins failover of the Azure SQL Database Replication Link with the
+        /// given id.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Sql.IReplicationLinkOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the Resource Group to which the Azure SQL
+        /// Server belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// Required. The name of the Azure SQL Server on which the Azure SQL
+        /// Database is hosted.
+        /// </param>
+        /// <param name='databaseName'>
+        /// Required. The name of the Azure SQL Database that has the
+        /// replication link to be failed over.
+        /// </param>
+        /// <param name='linkId'>
+        /// Required. The id of the replication link to be failed over.
+        /// </param>
+        /// <returns>
+        /// Response for long running Azure Sql Database replication failover
+        /// operations.
+        /// </returns>
+        public static ReplicationLinkFailoverResponse BeginFailover(this IReplicationLinkOperations operations, string resourceGroupName, string serverName, string databaseName, string linkId)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IReplicationLinkOperations)s).BeginFailoverAsync(resourceGroupName, serverName, databaseName, linkId);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Begins failover of the Azure SQL Database Replication Link with the
+        /// given id.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Sql.IReplicationLinkOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the Resource Group to which the Azure SQL
+        /// Server belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// Required. The name of the Azure SQL Server on which the Azure SQL
+        /// Database is hosted.
+        /// </param>
+        /// <param name='databaseName'>
+        /// Required. The name of the Azure SQL Database that has the
+        /// replication link to be failed over.
+        /// </param>
+        /// <param name='linkId'>
+        /// Required. The id of the replication link to be failed over.
+        /// </param>
+        /// <returns>
+        /// Response for long running Azure Sql Database replication failover
+        /// operations.
+        /// </returns>
+        public static Task<ReplicationLinkFailoverResponse> BeginFailoverAsync(this IReplicationLinkOperations operations, string resourceGroupName, string serverName, string databaseName, string linkId)
+        {
+            return operations.BeginFailoverAsync(resourceGroupName, serverName, databaseName, linkId, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Begins a forced failover of the Azure SQL Database Replication Link
+        /// with the given id which may result in data loss.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Sql.IReplicationLinkOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the Resource Group to which the Azure SQL
+        /// Server belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// Required. The name of the Azure SQL Server on which the Azure SQL
+        /// Database is hosted.
+        /// </param>
+        /// <param name='databaseName'>
+        /// Required. The name of the Azure SQL Database that has the
+        /// replication link to be failed over.
+        /// </param>
+        /// <param name='linkId'>
+        /// Required. The id of the replication link to be failed over.
+        /// </param>
+        /// <returns>
+        /// Response for long running Azure Sql Database replication failover
+        /// operations.
+        /// </returns>
+        public static ReplicationLinkFailoverResponse BeginFailoverAllowDataLoss(this IReplicationLinkOperations operations, string resourceGroupName, string serverName, string databaseName, string linkId)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IReplicationLinkOperations)s).BeginFailoverAllowDataLossAsync(resourceGroupName, serverName, databaseName, linkId);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Begins a forced failover of the Azure SQL Database Replication Link
+        /// with the given id which may result in data loss.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Sql.IReplicationLinkOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the Resource Group to which the Azure SQL
+        /// Server belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// Required. The name of the Azure SQL Server on which the Azure SQL
+        /// Database is hosted.
+        /// </param>
+        /// <param name='databaseName'>
+        /// Required. The name of the Azure SQL Database that has the
+        /// replication link to be failed over.
+        /// </param>
+        /// <param name='linkId'>
+        /// Required. The id of the replication link to be failed over.
+        /// </param>
+        /// <returns>
+        /// Response for long running Azure Sql Database replication failover
+        /// operations.
+        /// </returns>
+        public static Task<ReplicationLinkFailoverResponse> BeginFailoverAllowDataLossAsync(this IReplicationLinkOperations operations, string resourceGroupName, string serverName, string databaseName, string linkId)
+        {
+            return operations.BeginFailoverAllowDataLossAsync(resourceGroupName, serverName, databaseName, linkId, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Deletes the Azure SQL Database Replication Link with the given id.
         /// </summary>
         /// <param name='operations'>
@@ -127,10 +263,10 @@ namespace Microsoft.Azure.Management.Sql
         /// Required. The id of the replication link to be failed over.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Response for long running Azure Sql Database replication failover
+        /// operations.
         /// </returns>
-        public static AzureOperationResponse Failover(this IReplicationLinkOperations operations, string resourceGroupName, string serverName, string databaseName, string linkId)
+        public static ReplicationLinkFailoverResponse Failover(this IReplicationLinkOperations operations, string resourceGroupName, string serverName, string databaseName, string linkId)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -163,10 +299,10 @@ namespace Microsoft.Azure.Management.Sql
         /// Required. The id of the replication link to be failed over.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Response for long running Azure Sql Database replication failover
+        /// operations.
         /// </returns>
-        public static Task<AzureOperationResponse> FailoverAsync(this IReplicationLinkOperations operations, string resourceGroupName, string serverName, string databaseName, string linkId)
+        public static Task<ReplicationLinkFailoverResponse> FailoverAsync(this IReplicationLinkOperations operations, string resourceGroupName, string serverName, string databaseName, string linkId)
         {
             return operations.FailoverAsync(resourceGroupName, serverName, databaseName, linkId, CancellationToken.None);
         }
@@ -195,10 +331,10 @@ namespace Microsoft.Azure.Management.Sql
         /// Required. The id of the replication link to be failed over.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Response for long running Azure Sql Database replication failover
+        /// operations.
         /// </returns>
-        public static AzureOperationResponse FailoverAllowDataLoss(this IReplicationLinkOperations operations, string resourceGroupName, string serverName, string databaseName, string linkId)
+        public static ReplicationLinkFailoverResponse FailoverAllowDataLoss(this IReplicationLinkOperations operations, string resourceGroupName, string serverName, string databaseName, string linkId)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -231,10 +367,10 @@ namespace Microsoft.Azure.Management.Sql
         /// Required. The id of the replication link to be failed over.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Response for long running Azure Sql Database replication failover
+        /// operations.
         /// </returns>
-        public static Task<AzureOperationResponse> FailoverAllowDataLossAsync(this IReplicationLinkOperations operations, string resourceGroupName, string serverName, string databaseName, string linkId)
+        public static Task<ReplicationLinkFailoverResponse> FailoverAllowDataLossAsync(this IReplicationLinkOperations operations, string resourceGroupName, string serverName, string databaseName, string linkId)
         {
             return operations.FailoverAllowDataLossAsync(resourceGroupName, serverName, databaseName, linkId, CancellationToken.None);
         }
@@ -301,6 +437,50 @@ namespace Microsoft.Azure.Management.Sql
         public static Task<ReplicationLinkGetResponse> GetAsync(this IReplicationLinkOperations operations, string resourceGroupName, string serverName, string databaseName, string linkId)
         {
             return operations.GetAsync(resourceGroupName, serverName, databaseName, linkId, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Gets the status of an Azure SQL Database replication link failover
+        /// operation.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Sql.IReplicationLinkOperations.
+        /// </param>
+        /// <param name='operationStatusLink'>
+        /// Required. Location value returned by the Begin operation
+        /// </param>
+        /// <returns>
+        /// Response for long running Azure Sql Database replication failover
+        /// operations.
+        /// </returns>
+        public static ReplicationLinkFailoverResponse GetReplicationLinkOperationStatus(this IReplicationLinkOperations operations, string operationStatusLink)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IReplicationLinkOperations)s).GetReplicationLinkOperationStatusAsync(operationStatusLink);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Gets the status of an Azure SQL Database replication link failover
+        /// operation.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Sql.IReplicationLinkOperations.
+        /// </param>
+        /// <param name='operationStatusLink'>
+        /// Required. Location value returned by the Begin operation
+        /// </param>
+        /// <returns>
+        /// Response for long running Azure Sql Database replication failover
+        /// operations.
+        /// </returns>
+        public static Task<ReplicationLinkFailoverResponse> GetReplicationLinkOperationStatusAsync(this IReplicationLinkOperations operations, string operationStatusLink)
+        {
+            return operations.GetReplicationLinkOperationStatusAsync(operationStatusLink, CancellationToken.None);
         }
         
         /// <summary>
