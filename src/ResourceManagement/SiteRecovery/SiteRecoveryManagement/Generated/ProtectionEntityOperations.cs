@@ -126,7 +126,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(this.Client.ResourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.SiteRecovery";
+            url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             url = url + "/";
             url = url + "SiteRecoveryVault";
             url = url + "/";
@@ -187,7 +187,72 @@ namespace Microsoft.Azure.Management.SiteRecovery
                 
                 if (parameters.ReplicationProviderSettings != null)
                 {
-                    commitFailoverRequestValue["replicationProviderSettings"] = parameters.ReplicationProviderSettings;
+                    JObject replicationProviderSettingsValue = new JObject();
+                    commitFailoverRequestValue["replicationProviderSettings"] = replicationProviderSettingsValue;
+                    if (parameters.ReplicationProviderSettings is AzureFailoverInput)
+                    {
+                        replicationProviderSettingsValue["__type"] = "AzureFailoverInput";
+                        AzureFailoverInput derived = ((AzureFailoverInput)parameters.ReplicationProviderSettings);
+                        
+                        if (derived.VaultLocation != null)
+                        {
+                            replicationProviderSettingsValue["vaultLocation"] = derived.VaultLocation;
+                        }
+                        
+                        if (derived.PrimaryKekCertificatePfx != null)
+                        {
+                            replicationProviderSettingsValue["primaryKekCertificatePfx"] = derived.PrimaryKekCertificatePfx;
+                        }
+                        
+                        if (derived.SecondaryKekCertificatePfx != null)
+                        {
+                            replicationProviderSettingsValue["secondaryKekCertificatePfx"] = derived.SecondaryKekCertificatePfx;
+                        }
+                    }
+                    if (parameters.ReplicationProviderSettings is AzureFailbackInput)
+                    {
+                        replicationProviderSettingsValue["__type"] = "AzureFailbackInput";
+                        AzureFailbackInput derived2 = ((AzureFailbackInput)parameters.ReplicationProviderSettings);
+                        
+                        replicationProviderSettingsValue["skipDataSync"] = derived2.SkipDataSync;
+                        
+                        replicationProviderSettingsValue["createRecoveryVmIfDoesntExist"] = derived2.CreateRecoveryVmIfDoesntExist;
+                    }
+                    if (parameters.ReplicationProviderSettings is AzureReprotectInput)
+                    {
+                        replicationProviderSettingsValue["__type"] = "AzureReprotectInput";
+                        AzureReprotectInput derived3 = ((AzureReprotectInput)parameters.ReplicationProviderSettings);
+                        
+                        if (derived3.HvHostVmId != null)
+                        {
+                            replicationProviderSettingsValue["hvHostVmId"] = derived3.HvHostVmId;
+                        }
+                        
+                        if (derived3.VmName != null)
+                        {
+                            replicationProviderSettingsValue["vmName"] = derived3.VmName;
+                        }
+                        
+                        if (derived3.OSType != null)
+                        {
+                            replicationProviderSettingsValue["oSType"] = derived3.OSType;
+                        }
+                        
+                        if (derived3.VHDId != null)
+                        {
+                            replicationProviderSettingsValue["vHDId"] = derived3.VHDId;
+                        }
+                        
+                        if (derived3.StorageAccountName != null)
+                        {
+                            replicationProviderSettingsValue["storageAccountName"] = derived3.StorageAccountName;
+                        }
+                        
+                        if (derived3.StorageAccountSubscriptionId != null)
+                        {
+                            replicationProviderSettingsValue["storageAccountSubscriptionId"] = derived3.StorageAccountSubscriptionId;
+                        }
+                    }
                 }
                 
                 if (parameters.FailoverDirection != null)
@@ -331,7 +396,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(this.Client.ResourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.SiteRecovery";
+            url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             url = url + "/";
             url = url + "SiteRecoveryVault";
             url = url + "/";
@@ -392,7 +457,72 @@ namespace Microsoft.Azure.Management.SiteRecovery
                 
                 if (parameters.ReplicationProviderSettings != null)
                 {
-                    plannedFailoverRequestValue["replicationProviderSettings"] = parameters.ReplicationProviderSettings;
+                    JObject replicationProviderSettingsValue = new JObject();
+                    plannedFailoverRequestValue["replicationProviderSettings"] = replicationProviderSettingsValue;
+                    if (parameters.ReplicationProviderSettings is AzureFailoverInput)
+                    {
+                        replicationProviderSettingsValue["__type"] = "AzureFailoverInput";
+                        AzureFailoverInput derived = ((AzureFailoverInput)parameters.ReplicationProviderSettings);
+                        
+                        if (derived.VaultLocation != null)
+                        {
+                            replicationProviderSettingsValue["vaultLocation"] = derived.VaultLocation;
+                        }
+                        
+                        if (derived.PrimaryKekCertificatePfx != null)
+                        {
+                            replicationProviderSettingsValue["primaryKekCertificatePfx"] = derived.PrimaryKekCertificatePfx;
+                        }
+                        
+                        if (derived.SecondaryKekCertificatePfx != null)
+                        {
+                            replicationProviderSettingsValue["secondaryKekCertificatePfx"] = derived.SecondaryKekCertificatePfx;
+                        }
+                    }
+                    if (parameters.ReplicationProviderSettings is AzureFailbackInput)
+                    {
+                        replicationProviderSettingsValue["__type"] = "AzureFailbackInput";
+                        AzureFailbackInput derived2 = ((AzureFailbackInput)parameters.ReplicationProviderSettings);
+                        
+                        replicationProviderSettingsValue["skipDataSync"] = derived2.SkipDataSync;
+                        
+                        replicationProviderSettingsValue["createRecoveryVmIfDoesntExist"] = derived2.CreateRecoveryVmIfDoesntExist;
+                    }
+                    if (parameters.ReplicationProviderSettings is AzureReprotectInput)
+                    {
+                        replicationProviderSettingsValue["__type"] = "AzureReprotectInput";
+                        AzureReprotectInput derived3 = ((AzureReprotectInput)parameters.ReplicationProviderSettings);
+                        
+                        if (derived3.HvHostVmId != null)
+                        {
+                            replicationProviderSettingsValue["hvHostVmId"] = derived3.HvHostVmId;
+                        }
+                        
+                        if (derived3.VmName != null)
+                        {
+                            replicationProviderSettingsValue["vmName"] = derived3.VmName;
+                        }
+                        
+                        if (derived3.OSType != null)
+                        {
+                            replicationProviderSettingsValue["oSType"] = derived3.OSType;
+                        }
+                        
+                        if (derived3.VHDId != null)
+                        {
+                            replicationProviderSettingsValue["vHDId"] = derived3.VHDId;
+                        }
+                        
+                        if (derived3.StorageAccountName != null)
+                        {
+                            replicationProviderSettingsValue["storageAccountName"] = derived3.StorageAccountName;
+                        }
+                        
+                        if (derived3.StorageAccountSubscriptionId != null)
+                        {
+                            replicationProviderSettingsValue["storageAccountSubscriptionId"] = derived3.StorageAccountSubscriptionId;
+                        }
+                    }
                 }
                 
                 if (parameters.FailoverDirection != null)
@@ -536,7 +666,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(this.Client.ResourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.SiteRecovery";
+            url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             url = url + "/";
             url = url + "SiteRecoveryVault";
             url = url + "/";
@@ -597,7 +727,72 @@ namespace Microsoft.Azure.Management.SiteRecovery
                 
                 if (parameters.ReplicationProviderSettings != null)
                 {
-                    reprotectRequestValue["replicationProviderSettings"] = parameters.ReplicationProviderSettings;
+                    JObject replicationProviderSettingsValue = new JObject();
+                    reprotectRequestValue["replicationProviderSettings"] = replicationProviderSettingsValue;
+                    if (parameters.ReplicationProviderSettings is AzureFailoverInput)
+                    {
+                        replicationProviderSettingsValue["__type"] = "AzureFailoverInput";
+                        AzureFailoverInput derived = ((AzureFailoverInput)parameters.ReplicationProviderSettings);
+                        
+                        if (derived.VaultLocation != null)
+                        {
+                            replicationProviderSettingsValue["vaultLocation"] = derived.VaultLocation;
+                        }
+                        
+                        if (derived.PrimaryKekCertificatePfx != null)
+                        {
+                            replicationProviderSettingsValue["primaryKekCertificatePfx"] = derived.PrimaryKekCertificatePfx;
+                        }
+                        
+                        if (derived.SecondaryKekCertificatePfx != null)
+                        {
+                            replicationProviderSettingsValue["secondaryKekCertificatePfx"] = derived.SecondaryKekCertificatePfx;
+                        }
+                    }
+                    if (parameters.ReplicationProviderSettings is AzureFailbackInput)
+                    {
+                        replicationProviderSettingsValue["__type"] = "AzureFailbackInput";
+                        AzureFailbackInput derived2 = ((AzureFailbackInput)parameters.ReplicationProviderSettings);
+                        
+                        replicationProviderSettingsValue["skipDataSync"] = derived2.SkipDataSync;
+                        
+                        replicationProviderSettingsValue["createRecoveryVmIfDoesntExist"] = derived2.CreateRecoveryVmIfDoesntExist;
+                    }
+                    if (parameters.ReplicationProviderSettings is AzureReprotectInput)
+                    {
+                        replicationProviderSettingsValue["__type"] = "AzureReprotectInput";
+                        AzureReprotectInput derived3 = ((AzureReprotectInput)parameters.ReplicationProviderSettings);
+                        
+                        if (derived3.HvHostVmId != null)
+                        {
+                            replicationProviderSettingsValue["hvHostVmId"] = derived3.HvHostVmId;
+                        }
+                        
+                        if (derived3.VmName != null)
+                        {
+                            replicationProviderSettingsValue["vmName"] = derived3.VmName;
+                        }
+                        
+                        if (derived3.OSType != null)
+                        {
+                            replicationProviderSettingsValue["oSType"] = derived3.OSType;
+                        }
+                        
+                        if (derived3.VHDId != null)
+                        {
+                            replicationProviderSettingsValue["vHDId"] = derived3.VHDId;
+                        }
+                        
+                        if (derived3.StorageAccountName != null)
+                        {
+                            replicationProviderSettingsValue["storageAccountName"] = derived3.StorageAccountName;
+                        }
+                        
+                        if (derived3.StorageAccountSubscriptionId != null)
+                        {
+                            replicationProviderSettingsValue["storageAccountSubscriptionId"] = derived3.StorageAccountSubscriptionId;
+                        }
+                    }
                 }
                 
                 if (parameters.FailoverDirection != null)
@@ -749,7 +944,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(this.Client.ResourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.SiteRecovery";
+            url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             url = url + "/";
             url = url + "SiteRecoveryVault";
             url = url + "/";
@@ -814,7 +1009,72 @@ namespace Microsoft.Azure.Management.SiteRecovery
                 
                 if (parameters.ReplicationProviderSettings != null)
                 {
-                    testFailoverRequestValue["replicationProviderSettings"] = parameters.ReplicationProviderSettings;
+                    JObject replicationProviderSettingsValue = new JObject();
+                    testFailoverRequestValue["replicationProviderSettings"] = replicationProviderSettingsValue;
+                    if (parameters.ReplicationProviderSettings is AzureFailoverInput)
+                    {
+                        replicationProviderSettingsValue["__type"] = "AzureFailoverInput";
+                        AzureFailoverInput derived = ((AzureFailoverInput)parameters.ReplicationProviderSettings);
+                        
+                        if (derived.VaultLocation != null)
+                        {
+                            replicationProviderSettingsValue["vaultLocation"] = derived.VaultLocation;
+                        }
+                        
+                        if (derived.PrimaryKekCertificatePfx != null)
+                        {
+                            replicationProviderSettingsValue["primaryKekCertificatePfx"] = derived.PrimaryKekCertificatePfx;
+                        }
+                        
+                        if (derived.SecondaryKekCertificatePfx != null)
+                        {
+                            replicationProviderSettingsValue["secondaryKekCertificatePfx"] = derived.SecondaryKekCertificatePfx;
+                        }
+                    }
+                    if (parameters.ReplicationProviderSettings is AzureFailbackInput)
+                    {
+                        replicationProviderSettingsValue["__type"] = "AzureFailbackInput";
+                        AzureFailbackInput derived2 = ((AzureFailbackInput)parameters.ReplicationProviderSettings);
+                        
+                        replicationProviderSettingsValue["skipDataSync"] = derived2.SkipDataSync;
+                        
+                        replicationProviderSettingsValue["createRecoveryVmIfDoesntExist"] = derived2.CreateRecoveryVmIfDoesntExist;
+                    }
+                    if (parameters.ReplicationProviderSettings is AzureReprotectInput)
+                    {
+                        replicationProviderSettingsValue["__type"] = "AzureReprotectInput";
+                        AzureReprotectInput derived3 = ((AzureReprotectInput)parameters.ReplicationProviderSettings);
+                        
+                        if (derived3.HvHostVmId != null)
+                        {
+                            replicationProviderSettingsValue["hvHostVmId"] = derived3.HvHostVmId;
+                        }
+                        
+                        if (derived3.VmName != null)
+                        {
+                            replicationProviderSettingsValue["vmName"] = derived3.VmName;
+                        }
+                        
+                        if (derived3.OSType != null)
+                        {
+                            replicationProviderSettingsValue["oSType"] = derived3.OSType;
+                        }
+                        
+                        if (derived3.VHDId != null)
+                        {
+                            replicationProviderSettingsValue["vHDId"] = derived3.VHDId;
+                        }
+                        
+                        if (derived3.StorageAccountName != null)
+                        {
+                            replicationProviderSettingsValue["storageAccountName"] = derived3.StorageAccountName;
+                        }
+                        
+                        if (derived3.StorageAccountSubscriptionId != null)
+                        {
+                            replicationProviderSettingsValue["storageAccountSubscriptionId"] = derived3.StorageAccountSubscriptionId;
+                        }
+                    }
                 }
                 
                 if (parameters.FailoverDirection != null)
@@ -962,7 +1222,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(this.Client.ResourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.SiteRecovery";
+            url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             url = url + "/";
             url = url + "SiteRecoveryVault";
             url = url + "/";
@@ -1025,7 +1285,72 @@ namespace Microsoft.Azure.Management.SiteRecovery
                 
                 if (parameters.ReplicationProviderSettings != null)
                 {
-                    unplannedFailoverRequestValue["replicationProviderSettings"] = parameters.ReplicationProviderSettings;
+                    JObject replicationProviderSettingsValue = new JObject();
+                    unplannedFailoverRequestValue["replicationProviderSettings"] = replicationProviderSettingsValue;
+                    if (parameters.ReplicationProviderSettings is AzureFailoverInput)
+                    {
+                        replicationProviderSettingsValue["__type"] = "AzureFailoverInput";
+                        AzureFailoverInput derived = ((AzureFailoverInput)parameters.ReplicationProviderSettings);
+                        
+                        if (derived.VaultLocation != null)
+                        {
+                            replicationProviderSettingsValue["vaultLocation"] = derived.VaultLocation;
+                        }
+                        
+                        if (derived.PrimaryKekCertificatePfx != null)
+                        {
+                            replicationProviderSettingsValue["primaryKekCertificatePfx"] = derived.PrimaryKekCertificatePfx;
+                        }
+                        
+                        if (derived.SecondaryKekCertificatePfx != null)
+                        {
+                            replicationProviderSettingsValue["secondaryKekCertificatePfx"] = derived.SecondaryKekCertificatePfx;
+                        }
+                    }
+                    if (parameters.ReplicationProviderSettings is AzureFailbackInput)
+                    {
+                        replicationProviderSettingsValue["__type"] = "AzureFailbackInput";
+                        AzureFailbackInput derived2 = ((AzureFailbackInput)parameters.ReplicationProviderSettings);
+                        
+                        replicationProviderSettingsValue["skipDataSync"] = derived2.SkipDataSync;
+                        
+                        replicationProviderSettingsValue["createRecoveryVmIfDoesntExist"] = derived2.CreateRecoveryVmIfDoesntExist;
+                    }
+                    if (parameters.ReplicationProviderSettings is AzureReprotectInput)
+                    {
+                        replicationProviderSettingsValue["__type"] = "AzureReprotectInput";
+                        AzureReprotectInput derived3 = ((AzureReprotectInput)parameters.ReplicationProviderSettings);
+                        
+                        if (derived3.HvHostVmId != null)
+                        {
+                            replicationProviderSettingsValue["hvHostVmId"] = derived3.HvHostVmId;
+                        }
+                        
+                        if (derived3.VmName != null)
+                        {
+                            replicationProviderSettingsValue["vmName"] = derived3.VmName;
+                        }
+                        
+                        if (derived3.OSType != null)
+                        {
+                            replicationProviderSettingsValue["oSType"] = derived3.OSType;
+                        }
+                        
+                        if (derived3.VHDId != null)
+                        {
+                            replicationProviderSettingsValue["vHDId"] = derived3.VHDId;
+                        }
+                        
+                        if (derived3.StorageAccountName != null)
+                        {
+                            replicationProviderSettingsValue["storageAccountName"] = derived3.StorageAccountName;
+                        }
+                        
+                        if (derived3.StorageAccountSubscriptionId != null)
+                        {
+                            replicationProviderSettingsValue["storageAccountSubscriptionId"] = derived3.StorageAccountSubscriptionId;
+                        }
+                    }
                 }
                 
                 if (parameters.FailoverDirection != null)
@@ -1236,7 +1561,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(this.Client.ResourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.SiteRecovery";
+            url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             url = url + "/";
             url = url + "SiteRecoveryVault";
             url = url + "/";
@@ -1447,7 +1772,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(this.Client.ResourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.SiteRecovery";
+            url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             url = url + "/";
             url = url + "SiteRecoveryVault";
             url = url + "/";
@@ -1509,63 +1834,63 @@ namespace Microsoft.Azure.Management.SiteRecovery
                     
                     if (input.ProviderSettings != null)
                     {
-                        JObject providerSettingsValue = new JObject();
-                        enableProtectionInputValue["ProviderSettings"] = providerSettingsValue;
+                        JObject replicationProviderInputValue = new JObject();
+                        enableProtectionInputValue["replicationProviderInput"] = replicationProviderInputValue;
                         if (input.ProviderSettings is AzureEnableProtectionInput)
                         {
-                            providerSettingsValue["__type"] = "AzureEnableProtectionInput";
+                            replicationProviderInputValue["__type"] = "AzureEnableProtectionInput";
                             AzureEnableProtectionInput derived = ((AzureEnableProtectionInput)input.ProviderSettings);
                             
                             if (derived.HvHostVmId != null)
                             {
-                                providerSettingsValue["HvHostVmId"] = derived.HvHostVmId;
+                                replicationProviderInputValue["hvHostVmId"] = derived.HvHostVmId;
                             }
                             
                             if (derived.VmName != null)
                             {
-                                providerSettingsValue["vmName"] = derived.VmName;
+                                replicationProviderInputValue["vmName"] = derived.VmName;
                             }
                             
                             if (derived.OSType != null)
                             {
-                                providerSettingsValue["osType"] = derived.OSType;
+                                replicationProviderInputValue["osType"] = derived.OSType;
                             }
                             
                             if (derived.VHDId != null)
                             {
-                                providerSettingsValue["vHDId"] = derived.VHDId;
+                                replicationProviderInputValue["vHDId"] = derived.VHDId;
                             }
                         }
                         if (input.ProviderSettings is SanEnableProtectionInput)
                         {
-                            providerSettingsValue["__type"] = "SanEnableProtectionInput";
+                            replicationProviderInputValue["__type"] = "SanEnableProtectionInput";
                             SanEnableProtectionInput derived2 = ((SanEnableProtectionInput)input.ProviderSettings);
                             
                             if (derived2.FabricId != null)
                             {
-                                providerSettingsValue["fabricId"] = derived2.FabricId;
+                                replicationProviderInputValue["fabricId"] = derived2.FabricId;
                             }
                             
                             if (derived2.CloudId != null)
                             {
-                                providerSettingsValue["cloudId"] = derived2.CloudId;
+                                replicationProviderInputValue["cloudId"] = derived2.CloudId;
                             }
                             
                             if (derived2.FabricReplicationGroupId != null)
                             {
-                                providerSettingsValue["fabricReplicationGroupId"] = derived2.FabricReplicationGroupId;
+                                replicationProviderInputValue["fabricReplicationGroupId"] = derived2.FabricReplicationGroupId;
                             }
                             
                             if (derived2.ReplicationType != null)
                             {
-                                providerSettingsValue["replicationType"] = derived2.ReplicationType;
+                                replicationProviderInputValue["replicationType"] = derived2.ReplicationType;
                             }
                             
-                            providerSettingsValue["recoveryPointObjective"] = derived2.RecoveryPointObjective;
+                            replicationProviderInputValue["recoveryPointObjective"] = derived2.RecoveryPointObjective;
                             
                             if (derived2.RemoteArrayId != null)
                             {
-                                providerSettingsValue["remoteArrayId"] = derived2.RemoteArrayId;
+                                replicationProviderInputValue["remoteArrayId"] = derived2.RemoteArrayId;
                             }
                         }
                     }
@@ -1699,7 +2024,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(this.Client.ResourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.SiteRecovery";
+            url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             url = url + "/";
             url = url + "SiteRecoveryVault";
             url = url + "/";
@@ -6384,7 +6709,7 @@ namespace Microsoft.Azure.Management.SiteRecovery
             url = url + "/resourceGroups/";
             url = url + Uri.EscapeDataString(this.Client.ResourceGroupName);
             url = url + "/providers/";
-            url = url + "Microsoft.SiteRecovery";
+            url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             url = url + "/";
             url = url + "SiteRecoveryVault";
             url = url + "/";

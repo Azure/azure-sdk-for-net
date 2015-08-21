@@ -26,47 +26,36 @@ using Microsoft.Azure.Management.SiteRecovery.Models;
 namespace Microsoft.Azure.Management.SiteRecovery.Models
 {
     /// <summary>
-    /// The definition of a recovery plan planned failover request object.
+    /// The HyperV Azure failback input.
     /// </summary>
-    public partial class RpPlannedFailoverRequest
+    public partial class AzureFailbackInput : FailoverReplicationProviderSpecificInput
     {
-        private string _failoverDirection;
+        private bool _createRecoveryVmIfDoesntExist;
         
         /// <summary>
-        /// Optional. Failover direction.
+        /// Optional. Secondary key encryption key certificate.
         /// </summary>
-        public string FailoverDirection
+        public bool CreateRecoveryVmIfDoesntExist
         {
-            get { return this._failoverDirection; }
-            set { this._failoverDirection = value; }
+            get { return this._createRecoveryVmIfDoesntExist; }
+            set { this._createRecoveryVmIfDoesntExist = value; }
         }
         
-        private string _replicationProvider;
+        private bool _skipDataSync;
         
         /// <summary>
-        /// Optional. Replication provider name.
+        /// Optional. Secondary key encryption key certificate.
         /// </summary>
-        public string ReplicationProvider
+        public bool SkipDataSync
         {
-            get { return this._replicationProvider; }
-            set { this._replicationProvider = value; }
-        }
-        
-        private FailoverReplicationProviderSpecificInput _replicationProviderSettings;
-        
-        /// <summary>
-        /// Optional. Replication provider settings.
-        /// </summary>
-        public FailoverReplicationProviderSpecificInput ReplicationProviderSettings
-        {
-            get { return this._replicationProviderSettings; }
-            set { this._replicationProviderSettings = value; }
+            get { return this._skipDataSync; }
+            set { this._skipDataSync = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the RpPlannedFailoverRequest class.
+        /// Initializes a new instance of the AzureFailbackInput class.
         /// </summary>
-        public RpPlannedFailoverRequest()
+        public AzureFailbackInput()
         {
         }
     }

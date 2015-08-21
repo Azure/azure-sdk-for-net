@@ -26,47 +26,47 @@ using Microsoft.Azure.Management.SiteRecovery.Models;
 namespace Microsoft.Azure.Management.SiteRecovery.Models
 {
     /// <summary>
-    /// The definition of a recovery plan planned failover request object.
+    /// The HyperV Azure failover input.
     /// </summary>
-    public partial class RpPlannedFailoverRequest
+    public partial class AzureFailoverInput : FailoverReplicationProviderSpecificInput
     {
-        private string _failoverDirection;
+        private string _primaryKekCertificatePfx;
         
         /// <summary>
-        /// Optional. Failover direction.
+        /// Optional.
         /// </summary>
-        public string FailoverDirection
+        public string PrimaryKekCertificatePfx
         {
-            get { return this._failoverDirection; }
-            set { this._failoverDirection = value; }
+            get { return this._primaryKekCertificatePfx; }
+            set { this._primaryKekCertificatePfx = value; }
         }
         
-        private string _replicationProvider;
+        private string _secondaryKekCertificatePfx;
         
         /// <summary>
-        /// Optional. Replication provider name.
+        /// Optional.
         /// </summary>
-        public string ReplicationProvider
+        public string SecondaryKekCertificatePfx
         {
-            get { return this._replicationProvider; }
-            set { this._replicationProvider = value; }
+            get { return this._secondaryKekCertificatePfx; }
+            set { this._secondaryKekCertificatePfx = value; }
         }
         
-        private FailoverReplicationProviderSpecificInput _replicationProviderSettings;
+        private string _vaultLocation;
         
         /// <summary>
-        /// Optional. Replication provider settings.
+        /// Optional.
         /// </summary>
-        public FailoverReplicationProviderSpecificInput ReplicationProviderSettings
+        public string VaultLocation
         {
-            get { return this._replicationProviderSettings; }
-            set { this._replicationProviderSettings = value; }
+            get { return this._vaultLocation; }
+            set { this._vaultLocation = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the RpPlannedFailoverRequest class.
+        /// Initializes a new instance of the AzureFailoverInput class.
         /// </summary>
-        public RpPlannedFailoverRequest()
+        public AzureFailoverInput()
         {
         }
     }
