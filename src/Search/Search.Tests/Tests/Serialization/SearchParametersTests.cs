@@ -14,6 +14,8 @@
 // 
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Azure.Search.Models;
 using Xunit;
 
@@ -102,6 +104,79 @@ namespace Microsoft.Azure.Search.Tests
                 "$count=false&facet={0}&$filter={0}&highlightPreTag={0}&highlightPostTag={0}&searchMode=any";
 
             Assert.Equal(String.Format(ExpectedQueryStringFormat, EscapedString), parameters.ToString());
+        }
+
+        [Fact]
+        public void CanConvertToPostPayload()
+        {
+            var parameters =
+                new SearchParameters()
+                {
+                    Facets = new[] { "abc", "efg" },
+                    Filter = "x eq y",
+                    HighlightFields = new[] { "a", "b" },
+                    HighlightPostTag = "</em>",
+                    HighlightPreTag = "<em>",
+                    IncludeTotalResultCount = true,
+                    MinimumCoverage = 33.3,
+                    OrderBy = new[] { "a", "b desc" },
+                    ScoringParameters = new[] { "a:b", "c:d" },
+                    ScoringProfile = "xyz",
+                    SearchFields = new[] { "a", "b", "c" },
+                    SearchMode = SearchMode.All,
+                    Select = new[] { "e", "f", "g" },
+                    Skip = 10,
+                    Top = 5
+                };
+
+            SearchParametersPayload payload = parameters.ToPayload("find me");
+
+            Assert.True(parameters.Facets.SequenceEqual(payload.Facets));
+            Assert.Equal(parameters.Filter, payload.Filter);
+            Assert.Equal(parameters.HighlightFields.ToCommaSeparatedString(), payload.Highlight);
+            Assert.Equal(parameters.HighlightPostTag, payload.HighlightPostTag);
+            Assert.Equal(parameters.HighlightPreTag, payload.HighlightPreTag);
+            Assert.Equal(parameters.IncludeTotalResultCount, payload.Count);
+            Assert.Equal(parameters.MinimumCoverage, payload.MinimumCoverage);
+            Assert.Equal(parameters.OrderBy.ToCommaSeparatedString(), payload.OrderBy);
+            Assert.True(parameters.ScoringParameters.SequenceEqual(payload.ScoringParameters));
+            Assert.Equal(parameters.ScoringProfile, payload.ScoringProfile);
+            Assert.Equal("find me", payload.Search);
+            Assert.Equal(parameters.SearchFields.ToCommaSeparatedString(), payload.SearchFields);
+            Assert.Equal(parameters.SearchMode, payload.SearchMode);
+            Assert.Equal(parameters.Select.ToCommaSeparatedString(), payload.Select);
+            Assert.Equal(parameters.Skip, payload.Skip);
+            Assert.Equal(parameters.Top, payload.Top);
+        }
+
+        [Fact]
+        public void MissingParametersAreMissingInThePayload()
+        {
+            var parameters = new SearchParameters();
+
+            // Search text can never be null.
+            SearchParametersPayload payload = parameters.ToPayload("*");
+
+            Assert.True(payload.Count.HasValue);
+            Assert.False(payload.Count.Value);  // IncludeTotalCount is non-nullable in the client contract.
+            Assert.NotNull(payload.Facets);
+            Assert.False(payload.Facets.Any());
+            Assert.Null(payload.Filter);
+            Assert.Null(payload.Highlight);
+            Assert.Null(payload.HighlightPostTag);
+            Assert.Null(payload.HighlightPreTag);
+            Assert.Null(payload.MinimumCoverage);
+            Assert.Null(payload.OrderBy);
+            Assert.NotNull(payload.ScoringParameters);
+            Assert.False(payload.ScoringParameters.Any());
+            Assert.Null(payload.ScoringProfile);
+            Assert.Equal("*", payload.Search);
+            Assert.Null(payload.SearchFields);
+            Assert.True(payload.SearchMode.HasValue);
+            Assert.Equal(SearchMode.Any, payload.SearchMode.Value); // SearchMode is non-nullable in the client contract.
+            Assert.Null(payload.Select);
+            Assert.Null(payload.Skip);
+            Assert.Null(payload.Top);
         }
     }
 }
