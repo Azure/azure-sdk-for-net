@@ -957,6 +957,8 @@
     ]
   },
   "Variables": {
-    "SubscriptionId": "111c36dc-4047-4c69-acd5-301072ff1fc2"
+    "SubscriptionId": "111c36dc-4047-4c69-acd5-301072ff1fc2",
+    "CreatePrimaryKey": "jqmFtmi+35gNMy1DbWRNNO3rfIsc8PsP+gqcvPM3MvY=",
+    "UpdatePrimaryKey":  "eP9Nv8dnXXjvm7i58zq69yHIDzSEqfhbd0pjIr66xNc="
   }
 }
