@@ -31,6 +31,48 @@ namespace BackupServices.Tests
     public class ContainerTests : BackupServicesTestsBase
     {
         [Fact]
+        public void RegisterContainerTest()
+        {
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+                var client = GetServiceClient<BackupServicesManagementClient>();
+                
+                string containerName = ConfigurationManager.AppSettings["ContainerName2"];
+                var response = client.Container.Register(BackupServicesTestsBase.ResourceGroupName, BackupServicesTestsBase.ResourceName, containerName, GetCustomRequestHeaders());
+                Assert.Equal(HttpStatusCode.Accepted, response.StatusCode);
+            }
+        }
+
+        [Fact]
+        public void UnregisterContainerTest()
+        {
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+                var client = GetServiceClient<BackupServicesManagementClient>();
+
+                string containerName = ConfigurationManager.AppSettings["ContainerName2"];
+                var response = client.Container.Unregister(BackupServicesTestsBase.ResourceGroupName, BackupServicesTestsBase.ResourceName, containerName, GetCustomRequestHeaders());
+                Assert.Equal(HttpStatusCode.Accepted, response.StatusCode);
+            }
+        }
+
+        [Fact]
+        public void RefreshContainerTest()
+        {
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+                var client = GetServiceClient<BackupServicesManagementClient>();
+
+                string containerName = ConfigurationManager.AppSettings["ContainerName"];
+                var response = client.Container.Refresh(BackupServicesTestsBase.ResourceGroupName, BackupServicesTestsBase.ResourceName, GetCustomRequestHeaders());
+                Assert.Equal(HttpStatusCode.Accepted, response.StatusCode);
+            }
+        }
+
+        [Fact]
         void ListMarsContainersByTypeReturnsNonZeroContainers()
         {
             using (UndoContext undoContext = UndoContext.Current)
@@ -48,7 +90,7 @@ namespace BackupServices.Tests
                 string friendlyName = ConfigurationManager.AppSettings["ContainerFriendlyName"];
                 string uniqueName = ConfigurationManager.AppSettings["ContainerUniqueName"];
 
-                ListMarsContainerOperationResponse response = client.Container.ListMarsContainersByType(MarsContainerType.Machine, GetCustomRequestHeaders());
+                ListMarsContainerOperationResponse response = client.Container.ListMarsContainersByType(BackupServicesTestsBase.ResourceGroupName, BackupServicesTestsBase.ResourceName, MarsContainerType.Machine, GetCustomRequestHeaders());
 
                 // Response Validation
                 Assert.NotNull(response);
@@ -88,7 +130,7 @@ namespace BackupServices.Tests
                 string friendlyName = ConfigurationManager.AppSettings["ContainerFriendlyName"];
                 string uniqueName = ConfigurationManager.AppSettings["ContainerUniqueName"];
 
-                ListMarsContainerOperationResponse response = client.Container.ListMarsContainersByTypeAndFriendlyName(MarsContainerType.Machine, friendlyName, GetCustomRequestHeaders());
+                ListMarsContainerOperationResponse response = client.Container.ListMarsContainersByTypeAndFriendlyName(BackupServicesTestsBase.ResourceGroupName, BackupServicesTestsBase.ResourceName, MarsContainerType.Machine, friendlyName, GetCustomRequestHeaders());
 
                 // Response Validation
                 Assert.NotNull(response);
@@ -121,7 +163,7 @@ namespace BackupServices.Tests
                 string containerId = ConfigurationManager.AppSettings["ContainerId"];
                 string friendlyName = ConfigurationManager.AppSettings["ContainerFriendlyName"];
 
-                OperationResponse response = client.Container.UnregisterMarsContainer(containerId, GetCustomRequestHeaders());
+                OperationResponse response = client.Container.UnregisterMarsContainer(BackupServicesTestsBase.ResourceGroupName, BackupServicesTestsBase.ResourceName, containerId, GetCustomRequestHeaders());
                 // Response Validation
                 Assert.NotNull(response);
                 Assert.True(response.StatusCode == HttpStatusCode.NoContent, "Status code should be NoContent");
@@ -129,7 +171,7 @@ namespace BackupServices.Tests
                 bool containerDeleted = false;
                 try
                 {
-                    ListMarsContainerOperationResponse getResponse = client.Container.ListMarsContainersByTypeAndFriendlyName(MarsContainerType.Machine, friendlyName, GetCustomRequestHeaders());
+                    ListMarsContainerOperationResponse getResponse = client.Container.ListMarsContainersByTypeAndFriendlyName(BackupServicesTestsBase.ResourceGroupName, BackupServicesTestsBase.ResourceName, MarsContainerType.Machine, friendlyName, GetCustomRequestHeaders());
                     if (getResponse.ListMarsContainerResponse.Value.Count == 0)
                     {
                         containerDeleted = true;
@@ -173,13 +215,13 @@ namespace BackupServices.Tests
                     },
                 };
 
-                OperationResponse response = client.Container.EnableMarsContainerReregistration(containerId, request, GetCustomRequestHeaders());
+                OperationResponse response = client.Container.EnableMarsContainerReregistration(BackupServicesTestsBase.ResourceGroupName, BackupServicesTestsBase.ResourceName, containerId, request, GetCustomRequestHeaders());
                 // Response Validation
                 Assert.NotNull(response);
                 Assert.True(response.StatusCode == HttpStatusCode.NoContent, "Status code should be NoContent");
 
                 // Basic Validation
-                ListMarsContainerOperationResponse getResponse = client.Container.ListMarsContainersByTypeAndFriendlyName(MarsContainerType.Machine, friendlyName, GetCustomRequestHeaders());
+                ListMarsContainerOperationResponse getResponse = client.Container.ListMarsContainersByTypeAndFriendlyName(BackupServicesTestsBase.ResourceGroupName, BackupServicesTestsBase.ResourceName, MarsContainerType.Machine, friendlyName, GetCustomRequestHeaders());
                 Assert.True(getResponse.ListMarsContainerResponse.Value.Any(marsContainer =>
                 {
                     return marsContainer.ContainerType == MarsContainerType.Machine.ToString() &&
@@ -187,6 +229,174 @@ namespace BackupServices.Tests
                            string.Equals(marsContainer.Properties.FriendlyName, friendlyName, StringComparison.OrdinalIgnoreCase) &&
                            marsContainer.Properties.CanReRegister == true;
                 }), "Reregistration doesn't appear to have been enabled for the input container");
+            }
+        }
+
+        [Fact]
+        void ListContainersReturnsNonZeroContainers()
+        {
+            using (UndoContext undoContext = UndoContext.Current)
+            {
+                undoContext.Start();
+
+                BackupServicesManagementClient client = GetServiceClient<BackupServicesManagementClient>();
+
+                string containerId = ConfigurationManager.AppSettings["BMSContainerIdPanbha45"];
+                string friendlyName = ConfigurationManager.AppSettings["BMSContainerFriendlyNamePanbha45"];
+                string name = ConfigurationManager.AppSettings["BMSContainerNamePanbha45"];
+                string containerType = ConfigurationManager.AppSettings["BMSContainerType"];
+                string containerStatus = ConfigurationManager.AppSettings["BMSContainerStatus"];
+                string containerHealthStatus = ConfigurationManager.AppSettings["BMSContainerHealthStatus"];
+                string containerParentId = ConfigurationManager.AppSettings["BMSParentContainerIdPanbha45"];
+
+                CSMContainerListOperationResponse response = client.Container.List(BackupServicesTestsBase.ResourceGroupName, BackupServicesTestsBase.ResourceName, null, GetCustomRequestHeaders());
+
+                // Response Validation
+                Assert.NotNull(response);
+                Assert.True(response.StatusCode == HttpStatusCode.OK, "Status code should be OK");
+                Assert.NotNull(response.CSMContainerListResponse);
+
+                // Basic Validation
+                Assert.True(response.CSMContainerListResponse.Value.Any(container =>
+                {
+                    return container.Id == containerId &&
+                           string.Equals(container.Name, name, StringComparison.OrdinalIgnoreCase) &&
+                           container.Properties != null &&
+                           container.Properties.ContainerType == containerType &&
+                           string.Equals(container.Properties.FriendlyName, friendlyName, StringComparison.OrdinalIgnoreCase) &&
+                           container.Properties.HealthStatus == containerHealthStatus &&
+                           container.Properties.ParentContainerId == containerParentId &&
+                           container.Properties.Status == containerStatus;
+                }), "Obtained container list doesn't contain the input container");
+            }
+        }
+
+        [Fact]
+        void ListContainersByFriendlyNameReturnsValidResponse()
+        {
+            using (UndoContext undoContext = UndoContext.Current)
+            {
+                undoContext.Start();
+
+                BackupServicesManagementClient client = GetServiceClient<BackupServicesManagementClient>();
+
+                string containerId = ConfigurationManager.AppSettings["BMSContainerIdPanbha45"];
+                string friendlyName = ConfigurationManager.AppSettings["BMSContainerFriendlyNamePanbha45"];
+                string name = ConfigurationManager.AppSettings["BMSContainerNamePanbha45"];
+                string containerType = ConfigurationManager.AppSettings["BMSContainerType"];
+                string containerStatus = ConfigurationManager.AppSettings["BMSContainerStatus"];
+                string containerHealthStatus = ConfigurationManager.AppSettings["BMSContainerHealthStatus"];
+                string containerParentId = ConfigurationManager.AppSettings["BMSParentContainerIdPanbha45"];
+
+                ContainerQueryParameters parameters = new ContainerQueryParameters();
+                parameters.FriendlyName = friendlyName;
+
+                CSMContainerListOperationResponse response = client.Container.List(BackupServicesTestsBase.ResourceGroupName, BackupServicesTestsBase.ResourceName, parameters, GetCustomRequestHeaders());
+
+                // Response Validation
+                Assert.NotNull(response);
+                Assert.True(response.StatusCode == HttpStatusCode.OK, "Status code should be OK");
+                Assert.NotNull(response.CSMContainerListResponse);
+
+                // Basic Validation
+                Assert.True(response.CSMContainerListResponse.Value.Any(container =>
+                {
+                    return container.Id == containerId &&
+                           string.Equals(container.Name, name, StringComparison.OrdinalIgnoreCase) &&
+                           container.Properties != null &&
+                           container.Properties.ContainerType == containerType &&
+                           string.Equals(container.Properties.FriendlyName, friendlyName, StringComparison.OrdinalIgnoreCase) &&
+                           container.Properties.HealthStatus == containerHealthStatus &&
+                           container.Properties.ParentContainerId == containerParentId &&
+                           container.Properties.Status == containerStatus;
+                }), "Obtained container list doesn't contain the input container");
+            }
+        }
+
+        [Fact]
+        void ListContainersByStatusReturnsValidResponse()
+        {
+            using (UndoContext undoContext = UndoContext.Current)
+            {
+                undoContext.Start();
+
+                BackupServicesManagementClient client = GetServiceClient<BackupServicesManagementClient>();
+
+                string containerId = ConfigurationManager.AppSettings["BMSContainerIdPanbha45"];
+                string friendlyName = ConfigurationManager.AppSettings["BMSContainerFriendlyNamePanbha45"];
+                string name = ConfigurationManager.AppSettings["BMSContainerNamePanbha45"];
+                string containerType = ConfigurationManager.AppSettings["BMSContainerType"];
+                string containerStatus = ConfigurationManager.AppSettings["BMSContainerStatus"];
+                string containerHealthStatus = ConfigurationManager.AppSettings["BMSContainerHealthStatus"];
+                string containerParentId = ConfigurationManager.AppSettings["BMSParentContainerIdPanbha45"];
+
+                ContainerQueryParameters parameters = new ContainerQueryParameters();
+                parameters.ContainerType = containerType;
+                parameters.Status = containerStatus;
+
+                CSMContainerListOperationResponse response = client.Container.List(BackupServicesTestsBase.ResourceGroupName, BackupServicesTestsBase.ResourceName, parameters, GetCustomRequestHeaders());
+
+                // Response Validation
+                Assert.NotNull(response);
+                Assert.True(response.StatusCode == HttpStatusCode.OK, "Status code should be OK");
+                Assert.NotNull(response.CSMContainerListResponse);
+
+                // Basic Validation
+                Assert.True(response.CSMContainerListResponse.Value.Any(container =>
+                {
+                    return container.Id == containerId &&
+                           string.Equals(container.Name, name, StringComparison.OrdinalIgnoreCase) &&
+                           container.Properties != null &&
+                           container.Properties.ContainerType == containerType &&
+                           string.Equals(container.Properties.FriendlyName, friendlyName, StringComparison.OrdinalIgnoreCase) &&
+                           container.Properties.HealthStatus == containerHealthStatus &&
+                           container.Properties.ParentContainerId == containerParentId &&
+                           container.Properties.Status == containerStatus;
+                }), "Obtained container list doesn't contain the input container");
+            }
+        }
+
+        [Fact]
+        void ListContainersByFriendlyNameAndStatusReturnsValidResponse()
+        {
+            using (UndoContext undoContext = UndoContext.Current)
+            {
+                undoContext.Start();
+
+                BackupServicesManagementClient client = GetServiceClient<BackupServicesManagementClient>();
+
+                string containerId = ConfigurationManager.AppSettings["BMSContainerIdPanbha45"];
+                string friendlyName = ConfigurationManager.AppSettings["BMSContainerFriendlyNamePanbha45"];
+                string name = ConfigurationManager.AppSettings["BMSContainerNamePanbha45"];
+                string containerType = ConfigurationManager.AppSettings["BMSContainerType"];
+                string containerStatus = ConfigurationManager.AppSettings["BMSContainerStatus"];
+                string containerHealthStatus = ConfigurationManager.AppSettings["BMSContainerHealthStatus"];
+                string containerParentId = ConfigurationManager.AppSettings["BMSParentContainerIdPanbha45"];
+
+                ContainerQueryParameters parameters = new ContainerQueryParameters();
+                parameters.ContainerType = containerType;
+                parameters.FriendlyName = friendlyName;
+                parameters.Status = containerStatus;
+
+                CSMContainerListOperationResponse response = client.Container.List(BackupServicesTestsBase.ResourceGroupName, BackupServicesTestsBase.ResourceName, parameters, GetCustomRequestHeaders());
+
+                // Response Validation
+                Assert.NotNull(response);
+                Assert.True(response.StatusCode == HttpStatusCode.OK, "Status code should be OK");
+                Assert.NotNull(response.CSMContainerListResponse);
+
+                // Basic Validation
+                Assert.True(response.CSMContainerListResponse.Value.Any(container =>
+                {
+                    return container.Id == containerId &&
+                           string.Equals(container.Name, name, StringComparison.OrdinalIgnoreCase) &&
+                           container.Properties != null &&
+                           container.Properties.ContainerType == containerType &&
+                           string.Equals(container.Properties.FriendlyName, friendlyName, StringComparison.OrdinalIgnoreCase) &&
+                           container.Properties.HealthStatus == containerHealthStatus &&
+                           container.Properties.ParentContainerId == containerParentId &&
+                           container.Properties.Status == containerStatus;
+                }), "Obtained container list doesn't contain the input container");
             }
         }
     }

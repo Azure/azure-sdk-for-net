@@ -18,6 +18,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Hyak.Common;
@@ -53,26 +55,26 @@ namespace Microsoft.Azure.Search
                 DeserializeForSearch<T>);
         }
 
-        private static DocumentSearchResponseFormat<SearchResult<T>, T> DeserializeForSearch<T>(string payload) 
+        private static DocumentSearchResponsePayload<SearchResult<T>, T> DeserializeForSearch<T>(string payload) 
             where T : class
         {
-            return JsonConvert.DeserializeObject<DocumentSearchResponseFormat<SearchResult<T>, T>>(
+            return JsonConvert.DeserializeObject<DocumentSearchResponsePayload<SearchResult<T>, T>>(
                 payload, 
                 JsonUtility.CreateTypedDeserializerSettings<T>());
         }
 
-        private static DocumentSearchResponseFormat<SearchResult, Document> DeserializeForSearch(string payload)
+        private static DocumentSearchResponsePayload<SearchResult, Document> DeserializeForSearch(string payload)
         {
-            return JsonConvert.DeserializeObject<DocumentSearchResponseFormat<SearchResult, Document>>(
+            return JsonConvert.DeserializeObject<DocumentSearchResponsePayload<SearchResult, Document>>(
                 payload, 
                 JsonUtility.DocumentDeserializerSettings);
         }
 
         private Task<TResponse> DoSearchAsync<TResponse, TResult, TDoc>(
             string searchText,
-            SearchParameters searchParameters, 
+            SearchParameters searchParameters,
             CancellationToken cancellationToken,
-            Func<string, DocumentSearchResponseFormat<TResult, TDoc>> deserialize)
+            Func<string, DocumentSearchResponsePayload<TResult, TDoc>> deserialize)
             where TResponse : DocumentSearchResponseBase<TResult, TDoc>, new()
             where TResult : SearchResultBase<TDoc>
             where TDoc : class
@@ -99,9 +101,13 @@ namespace Microsoft.Azure.Search
             }
 
             // Construct URL
+            bool useGet = Client.UseHttpGetForQueries;
+            const string ApiVersion = "api-version=2015-02-28";
             string searchOption = "search=" + Uri.EscapeDataString(searchText);
-            string url = 
-                String.Format("docs?{0}&{1}&api-version=2015-02-28", searchOption, searchParameters.ToString());
+            string url =
+                useGet ?
+                    String.Format("docs?{0}&{1}&{2}", searchOption, searchParameters.ToString(), ApiVersion) :
+                    String.Format("docs/search.post.search?{0}", ApiVersion);
             
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
 
@@ -115,7 +121,9 @@ namespace Microsoft.Azure.Search
             url = url.Replace(" ", "%20");
 
             return DoContinueSearchAsync<TResponse, TResult, TDoc>(
-                url, 
+                url,
+                searchParameters.ToPayload(searchText),
+                useGet,
                 shouldTrace, 
                 invocationId, 
                 cancellationToken, 
@@ -124,10 +132,12 @@ namespace Microsoft.Azure.Search
 
         private async Task<TResponse> DoContinueSearchAsync<TResponse, TResult, TDoc>(
             string url,
+            SearchParametersPayload searchParameters,
+            bool useGet,
             bool shouldTrace,
             string invocationId,
             CancellationToken cancellationToken,
-            Func<string, DocumentSearchResponseFormat<TResult, TDoc>> deserialize)
+            Func<string, DocumentSearchResponsePayload<TResult, TDoc>> deserialize)
             where TResponse : DocumentSearchResponseBase<TResult, TDoc>, new()
             where TResult : SearchResultBase<TDoc>
             where TDoc : class
@@ -137,7 +147,7 @@ namespace Microsoft.Azure.Search
             try
             {
                 httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Get;
+                httpRequest.Method = useGet ? HttpMethod.Get : HttpMethod.Post;
                 httpRequest.RequestUri = new Uri(url);
 
                 // Set Headers
@@ -146,6 +156,15 @@ namespace Microsoft.Azure.Search
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
                 await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+
+                // Serialize Request for POST only
+                if (!useGet)
+                {
+                    string requestContent = 
+                        JsonConvert.SerializeObject(searchParameters, JsonUtility.DefaultSerializerSettings);
+                    httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                    httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
+                }
 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -182,14 +201,17 @@ namespace Microsoft.Azure.Search
                     result = new TResponse();
                     if (string.IsNullOrEmpty(responseContent) == false)
                     {
-                        DocumentSearchResponseFormat<TResult, TDoc> deserializedResult = deserialize(responseContent);
+                        DocumentSearchResponsePayload<TResult, TDoc> deserializedResult = deserialize(responseContent);
                         result.Count = deserializedResult.Count;
                         result.Coverage = deserializedResult.Coverage;
                         result.Facets = deserializedResult.Facets;
                         result.Results = deserializedResult.Documents;
                         result.ContinuationToken =
                             deserializedResult.NextLink != null ?
-                                new SearchContinuationToken(deserializedResult.NextLink) : null;
+                                new SearchContinuationToken(
+                                    deserializedResult.NextLink, 
+                                    deserializedResult.NextPageParameters) : 
+                                null;
                     }
 
                     result.StatusCode = statusCode;
@@ -222,7 +244,7 @@ namespace Microsoft.Azure.Search
             }
         }
 
-        private class DocumentSearchResponseFormat<TResult, TDoc>
+        private class DocumentSearchResponsePayload<TResult, TDoc>
             where TResult : SearchResultBase<TDoc>
             where TDoc : class 
         {
@@ -240,6 +262,9 @@ namespace Microsoft.Azure.Search
 
             [JsonProperty("@odata.nextLink")]
             public string NextLink { get; set; }
+
+            [JsonProperty("@search.nextPageParameters")]
+            public SearchParametersPayload NextPageParameters { get; set; }
         }
     }
 }
