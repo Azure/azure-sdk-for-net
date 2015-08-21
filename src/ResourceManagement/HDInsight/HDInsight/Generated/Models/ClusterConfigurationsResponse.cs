@@ -20,21 +20,36 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
+using Microsoft.Azure;
 
-namespace Microsoft.Azure.Management.SiteRecovery.Models
+namespace Microsoft.Azure.Management.HDInsight.Models
 {
     /// <summary>
-    /// Profile operation provider specific input.
+    /// The Cluster Configurations operation response.
     /// </summary>
-    public partial class ProtectionProfileProviderSpecificInput
+    public partial class ClusterConfigurationsResponse : AzureOperationResponse
     {
+        private IDictionary<string, string> _configuration;
+        
         /// <summary>
-        /// Initializes a new instance of the
-        /// ProtectionProfileProviderSpecificInput class.
+        /// Optional.
         /// </summary>
-        public ProtectionProfileProviderSpecificInput()
+        public IDictionary<string, string> Configuration
         {
+            get { return this._configuration; }
+            set { this._configuration = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the ClusterConfigurationsResponse
+        /// class.
+        /// </summary>
+        public ClusterConfigurationsResponse()
+        {
+            this.Configuration = new LazyDictionary<string, string>();
         }
     }
 }

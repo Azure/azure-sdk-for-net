@@ -21,6 +21,7 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure.Management.SiteRecovery.Models;
 
 namespace Microsoft.Azure.Management.SiteRecovery.Models
 {
@@ -62,12 +63,12 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._recoveryProtectionContainerId = value; }
         }
         
-        private string _replicationProviderSettings;
+        private ProtectionProfileProviderSpecificInput _replicationProviderSettings;
         
         /// <summary>
-        /// Optional.
+        /// Optional. the replication provider settings.
         /// </summary>
-        public string ReplicationProviderSettings
+        public ProtectionProfileProviderSpecificInput ReplicationProviderSettings
         {
             get { return this._replicationProviderSettings; }
             set { this._replicationProviderSettings = value; }
