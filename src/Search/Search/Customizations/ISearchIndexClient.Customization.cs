@@ -20,6 +20,12 @@ namespace Microsoft.Azure.Search
     public partial interface ISearchIndexClient
     {
         /// <summary>
+        /// Indicates whether the index client should use HTTP GET for making Search and Suggest requests to the
+        /// Azure Search REST API. The default is <c>false</c>, which indicates that HTTP POST will be used.
+        /// </summary>
+        bool UseHttpGetForQueries { get; set; }
+
+        /// <summary>
         /// Adds the given tracking ID to the HTTP request headers.
         /// </summary>
         /// <param name="guid">Tracking ID to add to the request.</param>
