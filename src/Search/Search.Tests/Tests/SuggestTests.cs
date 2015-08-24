@@ -26,325 +26,268 @@ using Xunit;
 
 namespace Microsoft.Azure.Search.Tests
 {
-    public sealed class SuggestTests : SearchTestBase<DocumentsFixture>
+    // MAINTENANCE NOTE: Test methods (those marked with [Fact]) need to be in the derived classes in order for
+    // the mock recording/playback to work properly.
+    public abstract class SuggestTests : QueryTests
     {
-        [Fact]
-        [Trait(TestTraits.AcceptanceType, TestTraits.LiveBVT)]
-        public void CanSuggestStaticallyTypedDocuments()
+        protected void TestCanSuggestStaticallyTypedDocuments()
         {
-            Run(() =>
-            {
-                SearchIndexClient client = Data.GetSearchIndexClientForQuery();
+            SearchIndexClient client = GetClientForQuery();
 
-                var suggestParameters = new SuggestParameters() { OrderBy = new[] { "hotelId" } };
-                DocumentSuggestResponse<Hotel> response =
-                    client.Documents.Suggest<Hotel>("good", "sg", suggestParameters);
+            var suggestParameters = new SuggestParameters() { OrderBy = new[] { "hotelId" } };
+            DocumentSuggestResponse<Hotel> response =
+                client.Documents.Suggest<Hotel>("good", "sg", suggestParameters);
 
-                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-                Assert.Null(response.Coverage);
-                Assert.NotNull(response.Results);
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.Null(response.Coverage);
+            Assert.NotNull(response.Results);
 
-                IEnumerable<Hotel> expectedDocs =
-                    Data.TestDocuments.Where(h => h.HotelId == "4" || h.HotelId == "5").OrderBy(h => h.HotelId);
+            IEnumerable<Hotel> expectedDocs =
+                Data.TestDocuments.Where(h => h.HotelId == "4" || h.HotelId == "5").OrderBy(h => h.HotelId);
                 
-                SearchAssert.SequenceEqual(
-                    expectedDocs,
-                    response.Results.Select(r => r.Document));
+            SearchAssert.SequenceEqual(
+                expectedDocs,
+                response.Results.Select(r => r.Document));
 
-                SearchAssert.SequenceEqual(
-                    expectedDocs.Select(h => h.Description),
-                    response.Results.Select(r => r.Text));
-            });
+            SearchAssert.SequenceEqual(
+                expectedDocs.Select(h => h.Description),
+                response.Results.Select(r => r.Text));
         }
 
-        [Fact]
-        [Trait(TestTraits.AcceptanceType, TestTraits.LiveBVT)]
-        public void CanSuggestDynamicDocuments()
+        protected void TestCanSuggestDynamicDocuments()
         {
-            Run(() =>
+            SearchIndexClient client = GetClientForQuery();
+
+            var suggestParameters = new SuggestParameters() { OrderBy = new[] { "hotelId" } };
+            DocumentSuggestResponse response = client.Documents.Suggest("good", "sg", suggestParameters);
+
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.Null(response.Coverage);
+            Assert.NotNull(response.Results);
+
+            Document[] expectedDocs =
+                Data.TestDocuments
+                    .Where(h => h.HotelId == "4" || h.HotelId == "5")
+                    .OrderBy(h => h.HotelId)
+                    .Select(h => h.AsDocument())
+                    .ToArray();
+
+            Assert.Equal(expectedDocs.Length, response.Results.Count);
+            for (int i = 0; i < expectedDocs.Length; i++)
             {
-                SearchIndexClient client = Data.GetSearchIndexClientForQuery();
+                SearchAssert.DocumentsEqual(expectedDocs[i], response.Results[i].Document);
+                Assert.Equal(expectedDocs[i]["description"], response.Results[i].Text);
+            }
+        }
 
-                var suggestParameters = new SuggestParameters() { OrderBy = new[] { "hotelId" } };
-                DocumentSuggestResponse response = client.Documents.Suggest("good", "sg", suggestParameters);
+        protected void TestSuggestThrowsWhenRequestIsMalformed()
+        {
+            SearchIndexClient client = GetClient();
 
-                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-                Assert.Null(response.Coverage);
-                Assert.NotNull(response.Results);
+            var invalidParameters = new SuggestParameters() { OrderBy = new[] { "This is not a valid orderby." } };
+            CloudException e =
+                Assert.Throws<CloudException>(() => client.Documents.Suggest("hotel", "sg", invalidParameters));
 
-                Document[] expectedDocs =
-                    Data.TestDocuments
-                        .Where(h => h.HotelId == "4" || h.HotelId == "5")
-                        .OrderBy(h => h.HotelId)
-                        .Select(h => h.AsDocument())
-                        .ToArray();
+            Assert.Equal(HttpStatusCode.BadRequest, e.Response.StatusCode);
+            Assert.Contains(
+                "Invalid expression: Syntax error at position 7 in 'This is not a valid orderby.'",
+                e.Message);
+        }
 
-                Assert.Equal(expectedDocs.Length, response.Results.Count);
-                for (int i = 0; i < expectedDocs.Length; i++)
+        protected void TestSuggestThrowsWhenGivenBadSuggesterName()
+        {
+            SearchIndexClient client = GetClient();
+
+            CloudException e =
+                Assert.Throws<CloudException>(
+                    () => client.Documents.Suggest("hotel", "Suggester does not exist", new SuggestParameters()));
+
+            Assert.Equal(HttpStatusCode.BadRequest, e.Response.StatusCode);
+            Assert.Contains(
+                "The specified suggester name 'Suggester does not exist' does not exist in this index definition.",
+                e.Message);
+        }
+
+        protected void TestFuzzyIsOffByDefault()
+        {
+            SearchIndexClient client = GetClientForQuery();
+            DocumentSuggestResponse<Hotel> response =
+                client.Documents.Suggest<Hotel>("hitel", "sg");
+
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.NotNull(response.Results);
+            Assert.Equal(0, response.Results.Count);
+        }
+
+        protected void TestCanGetFuzzySuggestions()
+        {
+            SearchIndexClient client = GetClientForQuery();
+
+            var suggestParameters = new SuggestParameters() { UseFuzzyMatching = true };
+            DocumentSuggestResponse<Hotel> response =
+                client.Documents.Suggest<Hotel>("hitel", "sg", suggestParameters);
+
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.NotNull(response.Results);
+            Assert.Equal(5, response.Results.Count);
+        }
+
+        protected void TestCanFilter()
+        {
+            SearchIndexClient client = GetClientForQuery();
+
+            var suggestParameters =
+                new SuggestParameters() { Filter = "rating gt 3 and lastRenovationDate gt 2000-01-01T00:00:00Z" };
+            DocumentSuggestResponse<Hotel> response =
+                client.Documents.Suggest<Hotel>("hotel", "sg", suggestParameters);
+
+            AssertKeySequenceEqual(response, "1", "5");
+        }
+
+        protected void TestCanUseHitHighlighting()
+        {
+            SearchIndexClient client = GetClientForQuery();
+
+            var suggestParameters =
+                new SuggestParameters()
                 {
-                    SearchAssert.DocumentsEqual(expectedDocs[i], response.Results[i].Document);
-                    Assert.Equal(expectedDocs[i]["description"], response.Results[i].Text);
-                }
-            });
+                    HighlightPreTag = "<b>",
+                    HighlightPostTag = "</b>",
+                    Filter = "category eq 'Luxury'",
+                    Top = 1
+                };
+
+            DocumentSuggestResponse<Hotel> response =
+                client.Documents.Suggest<Hotel>("hotel", "sg", suggestParameters);
+
+            AssertKeySequenceEqual(response, "1");
+
+            // Note: Highlighting is not perfect due to the way Azure Search builds edge n-grams for suggestions.
+            Assert.True(
+                response.Results[0].Text.StartsWith("Best <b>hotel in</b> town", StringComparison.Ordinal));
         }
 
-        [Fact]
-        public void SuggestThrowsWhenRequestIsMalformed()
+        protected void TestOrderByProgressivelyBreaksTies()
         {
-            Run(() =>
-            {
-                SearchIndexClient client = Data.GetSearchIndexClient();
+            SearchIndexClient client = GetClientForQuery();
 
-                var invalidParameters = new SuggestParameters() { OrderBy = new[] { "This is not a valid orderby." } };
-                CloudException e =
-                    Assert.Throws<CloudException>(() => client.Documents.Suggest("hotel", "sg", invalidParameters));
+            var suggestParameters =
+                new SuggestParameters()
+                {
+                    OrderBy = new string[] 
+                    { 
+                        "rating desc",
+                        "lastRenovationDate asc",
+                        "geo.distance(location, geography'POINT(-122.0 49.0)')"
+                    }
+                };
 
-                Assert.Equal(HttpStatusCode.BadRequest, e.Response.StatusCode);
-                Assert.Contains(
-                    "Invalid expression: Syntax error at position 7 in 'This is not a valid orderby.'",
-                    e.Message);
-            });
+            DocumentSuggestResponse<Hotel> response =
+                client.Documents.Suggest<Hotel>("hotel", "sg", suggestParameters);
+
+            AssertKeySequenceEqual(response, "1", "4", "3", "5", "2");
         }
 
-        [Fact]
-        public void SuggestThrowsWhenGivenBadSuggesterName()
+        protected void TestTopTrimsResults()
         {
-            Run(() =>
-            {
-                SearchIndexClient client = Data.GetSearchIndexClient();
+            SearchIndexClient client = GetClientForQuery();
 
-                CloudException e =
-                    Assert.Throws<CloudException>(
-                        () => client.Documents.Suggest("hotel", "Suggester does not exist", new SuggestParameters()));
+            var suggestParameters =
+                new SuggestParameters()
+                {
+                    OrderBy = new string[] { "hotelId" },
+                    Top = 3
+                };
 
-                Assert.Equal(HttpStatusCode.BadRequest, e.Response.StatusCode);
-                Assert.Contains(
-                    "The specified suggester name 'Suggester does not exist' does not exist in this index definition.",
-                    e.Message);
-            });
+            DocumentSuggestResponse<Hotel> response =
+                client.Documents.Suggest<Hotel>("hotel", "sg", suggestParameters);
+
+            AssertKeySequenceEqual(response, "1", "2", "3");
         }
 
-        [Fact]
-        public void FuzzyIsOffByDefault()
+        protected void TestCanSuggestWithSelectedFields()
         {
-            Run(() =>
-            {
-                SearchIndexClient client = Data.GetSearchIndexClientForQuery();
-                DocumentSuggestResponse<Hotel> response =
-                    client.Documents.Suggest<Hotel>("hitel", "sg");
+            SearchIndexClient client = GetClientForQuery();
 
-                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-                Assert.NotNull(response.Results);
-                Assert.Equal(0, response.Results.Count);
-            });
+            var suggestParameters =
+                new SuggestParameters()
+                {
+                    Select = new[] { "hotelName", "baseRate" }
+                };
+
+            DocumentSuggestResponse<Hotel> response =
+                client.Documents.Suggest<Hotel>("luxury", "sg", suggestParameters);
+
+            var expectedDoc = new Hotel() { HotelName = "Fancy Stay", BaseRate = 199.0 };
+
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.NotNull(response.Results);
+            Assert.Equal(1, response.Results.Count);
+            Assert.Equal(expectedDoc, response.Results.First().Document);
         }
 
-        [Fact]
-        public void CanGetFuzzySuggestions()
+        protected void TestSearchFieldsExcludesFieldsFromSuggest()
         {
-            Run(() =>
-            {
-                SearchIndexClient client = Data.GetSearchIndexClientForQuery();
+            SearchIndexClient client = GetClientForQuery();
 
-                var suggestParameters = new SuggestParameters() { UseFuzzyMatching = true };
-                DocumentSuggestResponse<Hotel> response =
-                    client.Documents.Suggest<Hotel>("hitel", "sg", suggestParameters);
+            var suggestParameters =
+                new SuggestParameters()
+                {
+                    SearchFields = new[] { "hotelName" },
+                };
 
-                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-                Assert.NotNull(response.Results);
-                Assert.Equal(5, response.Results.Count);
-            });
+            DocumentSuggestResponse<Hotel> response =
+                client.Documents.Suggest<Hotel>("luxury", "sg", suggestParameters);
+
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.NotNull(response.Results);
+            Assert.Equal(0, response.Results.Count);
         }
 
-        [Fact]
-        public void CanFilter()
+        protected void TestCanSuggestWithMinimumCoverage()
         {
-            Run(() =>
-            {
-                SearchIndexClient client = Data.GetSearchIndexClientForQuery();
+            SearchIndexClient client = GetClientForQuery();
 
-                var suggestParameters =
-                    new SuggestParameters() { Filter = "rating gt 3 and lastRenovationDate gt 2000-01-01T00:00:00Z" };
-                DocumentSuggestResponse<Hotel> response =
-                    client.Documents.Suggest<Hotel>("hotel", "sg", suggestParameters);
+            var parameters = new SuggestParameters() { MinimumCoverage = 50 };
+            DocumentSuggestResponse<Hotel> response = client.Documents.Suggest<Hotel>("luxury", "sg", parameters);
 
-                AssertKeySequenceEqual(response, "1", "5");
-            });
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.Equal(100, response.Coverage);
         }
 
-        [Fact]
-        public void CanUseHitHighlighting()
+        protected void TestCanSuggestWithDateTimeInStaticModel()
         {
-            Run(() =>
-            {
-                SearchIndexClient client = Data.GetSearchIndexClientForQuery();
+            SearchServiceClient serviceClient = Data.GetSearchServiceClient();
 
-                var suggestParameters =
-                    new SuggestParameters()
+            Index index =
+                new Index()
+                {
+                    Name = TestUtilities.GenerateName(),
+                    Fields = new[]
                     {
-                        HighlightPreTag = "<b>",
-                        HighlightPostTag = "</b>",
-                        Filter = "category eq 'Luxury'",
-                        Top = 1
-                    };
+                        new Field("ISBN", DataType.String) { IsKey = true },
+                        new Field("Title", DataType.String) { IsSearchable = true },
+                        new Field("Author", DataType.String),
+                        new Field("PublishDate", DataType.DateTimeOffset)
+                    },
+                    Suggesters = new[] { new Suggester("sg", SuggesterSearchMode.AnalyzingInfixMatching, "Title") }
+                };
 
-                DocumentSuggestResponse<Hotel> response =
-                    client.Documents.Suggest<Hotel>("hotel", "sg", suggestParameters);
+            IndexDefinitionResponse createIndexResponse = serviceClient.Indexes.Create(index);
+            SearchIndexClient indexClient = Data.GetSearchIndexClient(createIndexResponse.Index.Name);
 
-                AssertKeySequenceEqual(response, "1");
+            var doc1 = new Book() { ISBN = "123", Title = "Lord of the Rings", Author = "J.R.R. Tolkien" };
+            var doc2 = new Book() { ISBN = "456", Title = "War and Peace", PublishDate = new DateTime(2015, 8, 18) };
+            var batch = IndexBatch.Create(IndexAction.Create(doc1), IndexAction.Create(doc2));
 
-                // Note: Highlighting is not perfect due to the way Azure Search builds edge n-grams for suggestions.
-                Assert.True(
-                    response.Results[0].Text.StartsWith("Best <b>hotel in</b> town", StringComparison.Ordinal));
-            });
-        }
+            indexClient.Documents.Index(batch);
+            SearchTestUtilities.WaitForIndexing();
 
-        [Fact]
-        public void OrderByProgressivelyBreaksTies()
-        {
-            Run(() =>
-            {
-                SearchIndexClient client = Data.GetSearchIndexClientForQuery();
-
-                var suggestParameters =
-                    new SuggestParameters()
-                    {
-                        OrderBy = new string[] 
-                        { 
-                            "rating desc",
-                            "lastRenovationDate asc",
-                            "geo.distance(location, geography'POINT(-122.0 49.0)')"
-                        }
-                    };
-
-                DocumentSuggestResponse<Hotel> response =
-                    client.Documents.Suggest<Hotel>("hotel", "sg", suggestParameters);
-
-                AssertKeySequenceEqual(response, "1", "4", "3", "5", "2");
-            });
-        }
-
-        [Fact]
-        public void TopTrimsResults()
-        {
-            Run(() =>
-            {
-                SearchIndexClient client = Data.GetSearchIndexClientForQuery();
-
-                var suggestParameters =
-                    new SuggestParameters()
-                    {
-                        OrderBy = new string[] { "hotelId" },
-                        Top = 3
-                    };
-
-                DocumentSuggestResponse<Hotel> response =
-                    client.Documents.Suggest<Hotel>("hotel", "sg", suggestParameters);
-
-                AssertKeySequenceEqual(response, "1", "2", "3");
-            });
-        }
-
-        [Fact]
-        public void CanSuggestWithSelectedFields()
-        {
-            Run(() =>
-            {
-                SearchIndexClient client = Data.GetSearchIndexClientForQuery();
-
-                var suggestParameters =
-                    new SuggestParameters()
-                    {
-                        Select = new[] { "hotelName", "baseRate" }
-                    };
-
-                DocumentSuggestResponse<Hotel> response =
-                    client.Documents.Suggest<Hotel>("luxury", "sg", suggestParameters);
-
-                var expectedDoc = new Hotel() { HotelName = "Fancy Stay", BaseRate = 199.0 };
-
-                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-                Assert.NotNull(response.Results);
-                Assert.Equal(1, response.Results.Count);
-                Assert.Equal(expectedDoc, response.Results.First().Document);
-            });
-        }
-
-        [Fact]
-        public void SearchFieldsExcludesFieldsFromSuggest()
-        {
-            Run(() =>
-            {
-                SearchIndexClient client = Data.GetSearchIndexClientForQuery();
-
-                var suggestParameters =
-                    new SuggestParameters()
-                    {
-                        SearchFields = new[] { "hotelName" },
-                    };
-
-                DocumentSuggestResponse<Hotel> response =
-                    client.Documents.Suggest<Hotel>("luxury", "sg", suggestParameters);
-
-                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-                Assert.NotNull(response.Results);
-                Assert.Equal(0, response.Results.Count);
-            });
-        }
-
-        [Fact]
-        [Trait(TestTraits.AcceptanceType, TestTraits.LiveBVT)]
-        public void CanSuggestWithMinimumCoverage()
-        {
-            Run(() =>
-            {
-                SearchIndexClient client = Data.GetSearchIndexClientForQuery();
-
-                var parameters = new SuggestParameters() { MinimumCoverage = 50 };
-                DocumentSuggestResponse<Hotel> response = client.Documents.Suggest<Hotel>("luxury", "sg", parameters);
-
-                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-                Assert.Equal(100, response.Coverage);
-            });
-        }
-
-        [Fact]
-        public void CanSuggestWithDateTimeInStaticModel()
-        {
-            Run(() =>
-            {
-                SearchServiceClient serviceClient = Data.GetSearchServiceClient();
-
-                Index index =
-                    new Index()
-                    {
-                        Name = TestUtilities.GenerateName(),
-                        Fields = new[]
-                        {
-                            new Field("ISBN", DataType.String) { IsKey = true },
-                            new Field("Title", DataType.String) { IsSearchable = true },
-                            new Field("Author", DataType.String),
-                            new Field("PublishDate", DataType.DateTimeOffset)
-                        },
-                        Suggesters = new[] { new Suggester("sg", SuggesterSearchMode.AnalyzingInfixMatching, "Title") }
-                    };
-
-                IndexDefinitionResponse createIndexResponse = serviceClient.Indexes.Create(index);
-                SearchIndexClient indexClient = Data.GetSearchIndexClient(createIndexResponse.Index.Name);
-
-                var doc1 = new Book() { ISBN = "123", Title = "Lord of the Rings", Author = "J.R.R. Tolkien" };
-                var doc2 = new Book() { ISBN = "456", Title = "War and Peace", PublishDate = new DateTime(2015, 8, 18) };
-                var batch = IndexBatch.Create(IndexAction.Create(doc1), IndexAction.Create(doc2));
-
-                indexClient.Documents.Index(batch);
-                SearchTestUtilities.WaitForIndexing();
-
-                var parameters = new SuggestParameters() { Select = new[] { "ISBN", "Title", "PublishDate" } };
-                DocumentSuggestResponse<Book> response = indexClient.Documents.Suggest<Book>("War", "sg", parameters);
-                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-                Assert.Equal(1, response.Results.Count);
-                Assert.Equal(doc2, response.Results[0].Document);
-            });
+            var parameters = new SuggestParameters() { Select = new[] { "ISBN", "Title", "PublishDate" } };
+            DocumentSuggestResponse<Book> response = indexClient.Documents.Suggest<Book>("War", "sg", parameters);
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.Equal(1, response.Results.Count);
+            Assert.Equal(doc2, response.Results[0].Document);
         }
 
         private void AssertKeySequenceEqual(DocumentSuggestResponse<Hotel> response, params string[] expectedKeys)
