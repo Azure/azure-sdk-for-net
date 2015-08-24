@@ -129,7 +129,7 @@ namespace Microsoft.Azure.Management.BackupServices
             List<string> odataFilter = new List<string>();
             if (parameters != null && parameters.ContainerType != null)
             {
-                odataFilter.Add("containerType eq '" + Uri.EscapeDataString(parameters.ContainerType) + "'");
+                odataFilter.Add("type eq '" + Uri.EscapeDataString(parameters.ContainerType) + "'");
             }
             if (parameters != null && parameters.FriendlyName != null)
             {
