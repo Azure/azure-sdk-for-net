@@ -241,13 +241,13 @@ namespace BackupServices.Tests
 
                 BackupServicesManagementClient client = GetServiceClient<BackupServicesManagementClient>();
 
-                string containerId = ConfigurationManager.AppSettings["BMSContainerIdPanbha45"];
-                string friendlyName = ConfigurationManager.AppSettings["BMSContainerFriendlyNamePanbha45"];
-                string name = ConfigurationManager.AppSettings["BMSContainerNamePanbha45"];
+                string containerId = ConfigurationManager.AppSettings["BMSContainerId"];
+                string friendlyName = ConfigurationManager.AppSettings["BMSContainerFriendlyName"];
+                string name = ConfigurationManager.AppSettings["BMSContainerName"];
                 string containerType = ConfigurationManager.AppSettings["BMSContainerType"];
                 string containerStatus = ConfigurationManager.AppSettings["BMSContainerStatus"];
                 string containerHealthStatus = ConfigurationManager.AppSettings["BMSContainerHealthStatus"];
-                string containerParentId = ConfigurationManager.AppSettings["BMSParentContainerIdPanbha45"];
+                string containerParentId = ConfigurationManager.AppSettings["BMSContainerParentId"];
 
                 CSMContainerListOperationResponse response = client.Container.List(BackupServicesTestsBase.ResourceGroupName, BackupServicesTestsBase.ResourceName, null, GetCustomRequestHeaders());
 
@@ -280,13 +280,13 @@ namespace BackupServices.Tests
 
                 BackupServicesManagementClient client = GetServiceClient<BackupServicesManagementClient>();
 
-                string containerId = ConfigurationManager.AppSettings["BMSContainerIdPanbha45"];
-                string friendlyName = ConfigurationManager.AppSettings["BMSContainerFriendlyNamePanbha45"];
-                string name = ConfigurationManager.AppSettings["BMSContainerNamePanbha45"];
+                string containerId = ConfigurationManager.AppSettings["BMSContainerId"];
+                string friendlyName = ConfigurationManager.AppSettings["BMSContainerFriendlyName"];
+                string name = ConfigurationManager.AppSettings["BMSContainerName"];
                 string containerType = ConfigurationManager.AppSettings["BMSContainerType"];
                 string containerStatus = ConfigurationManager.AppSettings["BMSContainerStatus"];
                 string containerHealthStatus = ConfigurationManager.AppSettings["BMSContainerHealthStatus"];
-                string containerParentId = ConfigurationManager.AppSettings["BMSParentContainerIdPanbha45"];
+                string containerParentId = ConfigurationManager.AppSettings["BMSContainerParentId"];
 
                 ContainerQueryParameters parameters = new ContainerQueryParameters();
                 parameters.FriendlyName = friendlyName;
@@ -322,13 +322,13 @@ namespace BackupServices.Tests
 
                 BackupServicesManagementClient client = GetServiceClient<BackupServicesManagementClient>();
 
-                string containerId = ConfigurationManager.AppSettings["BMSContainerIdPanbha45"];
-                string friendlyName = ConfigurationManager.AppSettings["BMSContainerFriendlyNamePanbha45"];
-                string name = ConfigurationManager.AppSettings["BMSContainerNamePanbha45"];
+                string containerId = ConfigurationManager.AppSettings["BMSContainerId"];
+                string friendlyName = ConfigurationManager.AppSettings["BMSContainerFriendlyName"];
+                string name = ConfigurationManager.AppSettings["BMSContainerName"];
                 string containerType = ConfigurationManager.AppSettings["BMSContainerType"];
                 string containerStatus = ConfigurationManager.AppSettings["BMSContainerStatus"];
                 string containerHealthStatus = ConfigurationManager.AppSettings["BMSContainerHealthStatus"];
-                string containerParentId = ConfigurationManager.AppSettings["BMSParentContainerIdPanbha45"];
+                string containerParentId = ConfigurationManager.AppSettings["BMSContainerParentId"];
 
                 ContainerQueryParameters parameters = new ContainerQueryParameters();
                 parameters.ContainerType = containerType;
@@ -365,13 +365,13 @@ namespace BackupServices.Tests
 
                 BackupServicesManagementClient client = GetServiceClient<BackupServicesManagementClient>();
 
-                string containerId = ConfigurationManager.AppSettings["BMSContainerIdPanbha45"];
-                string friendlyName = ConfigurationManager.AppSettings["BMSContainerFriendlyNamePanbha45"];
-                string name = ConfigurationManager.AppSettings["BMSContainerNamePanbha45"];
+                string containerId = ConfigurationManager.AppSettings["BMSContainerId"];
+                string friendlyName = ConfigurationManager.AppSettings["BMSContainerFriendlyName"];
+                string name = ConfigurationManager.AppSettings["BMSContainerName"];
                 string containerType = ConfigurationManager.AppSettings["BMSContainerType"];
                 string containerStatus = ConfigurationManager.AppSettings["BMSContainerStatus"];
                 string containerHealthStatus = ConfigurationManager.AppSettings["BMSContainerHealthStatus"];
-                string containerParentId = ConfigurationManager.AppSettings["BMSParentContainerIdPanbha45"];
+                string containerParentId = ConfigurationManager.AppSettings["BMSContainerParentId"];
 
                 ContainerQueryParameters parameters = new ContainerQueryParameters();
                 parameters.ContainerType = containerType;
