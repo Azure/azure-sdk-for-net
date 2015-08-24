@@ -38,7 +38,7 @@ namespace BackupServices.Tests
                 context.Start();
                 var client = GetServiceClient<BackupServicesManagementClient>();
                 
-                string containerName = ConfigurationManager.AppSettings["ContainerName2"];
+                string containerName = ConfigurationManager.AppSettings["ContainerName"];
                 var response = client.Container.Register(BackupServicesTestsBase.ResourceGroupName, BackupServicesTestsBase.ResourceName, containerName, GetCustomRequestHeaders());
                 Assert.Equal(HttpStatusCode.Accepted, response.StatusCode);
             }
@@ -52,7 +52,7 @@ namespace BackupServices.Tests
                 context.Start();
                 var client = GetServiceClient<BackupServicesManagementClient>();
 
-                string containerName = ConfigurationManager.AppSettings["ContainerName2"];
+                string containerName = ConfigurationManager.AppSettings["ContainerName"];
                 var response = client.Container.Unregister(BackupServicesTestsBase.ResourceGroupName, BackupServicesTestsBase.ResourceName, containerName, GetCustomRequestHeaders());
                 Assert.Equal(HttpStatusCode.Accepted, response.StatusCode);
             }
