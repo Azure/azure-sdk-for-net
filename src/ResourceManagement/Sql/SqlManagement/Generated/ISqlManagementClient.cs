@@ -148,6 +148,15 @@ namespace Microsoft.Azure.Management.Sql
         }
         
         /// <summary>
+        /// Represents all the operations for determining the set of
+        /// capabilites available in a specified region.
+        /// </summary>
+        ILocationCapabilitiesOperations Capabilities
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Represents all the operations for operating on Azure SQL
         /// Recommended Elastic Pools.  Contains operations to: Retrieve.
         /// </summary>
@@ -162,6 +171,16 @@ namespace Microsoft.Azure.Management.Sql
         /// index and update state.
         /// </summary>
         IRecommendedIndexOperations RecommendedIndexes
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Represents all the operations for operating on Azure SQL Database
+        /// Replication Links.  Contains operations to: Delete and Retrieve
+        /// replication links.
+        /// </summary>
+        IReplicationLinkOperations DatabaseReplicationLinks
         {
             get; 
         }

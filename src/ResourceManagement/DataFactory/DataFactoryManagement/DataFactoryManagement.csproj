@@ -14,6 +14,7 @@
   <Import Project="..\..\..\..\tools\Library.Settings.targets" />
   <ItemGroup>
     <Compile Include="Customizations\Conversion\DictionaryConverter.cs" />
+    <Compile Include="Customizations\Models\Activities\AzureMLBatchExecutionActivity .cs" />
     <Compile Include="Customizations\Models\Activities\CopySinks\CopyBehavior\CopyBehaviorType.cs" />
     <Compile Include="Customizations\Models\Activities\CopySinks\FileSystemSink.cs" />
     <Compile Include="Customizations\Models\Activities\CopySinks\SqlDWSink.cs" />
