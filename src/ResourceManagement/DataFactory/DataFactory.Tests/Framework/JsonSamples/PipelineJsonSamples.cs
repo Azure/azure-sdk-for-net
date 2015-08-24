@@ -670,6 +670,111 @@ namespace DataFactory.Tests.Framework.JsonSamples
 //    }
 //}";
 
+        [JsonSample(propertyBagKeys: new string[]
+                {
+                        "properties.activities[0].typeProperties.globalParameters.oNe",
+                        "properties.activities[0].typeProperties.globalParameters.two NAME",
+                        "properties.activities[0].typeProperties.webServiceOutputs.output 1",
+                        "properties.activities[0].typeProperties.webServiceInput"
+                })]
+        public const string AzureMLBatchExecutionPipelineWithAllParams = @"
+{
+    name: ""My machine learning pipeline3"",
+    properties: 
+    {
+        description : ""ML pipeline description"",
+        hubName : ""someHub"",
+        activities:
+        [
+            {
+                name: ""MLActivity3"",
+                description: ""Test activity description"", 
+                type: ""AzureMLBatchExecution"",
+                inputs: 
+                [ 
+                    {
+                        name: ""csvBlob"",
+                        name: ""someOtherInput""
+                    }
+                ],
+                outputs: 
+                [ 
+                    {
+                        name: ""someOtherOutput"",
+                        name: ""sasCopyBlob""
+                    }
+                ],
+                linkedServiceName: ""mlLinkedService"",
+                policy:
+                {
+                    concurrency: 3,
+                    executionPriorityOrder: ""NewestFirst"",
+                    retry: 3,
+                    timeout: ""00:00:05"",
+                    delay: ""00:00:01""
+                },
+                typeProperties:
+                {
+                    globalParameters:
+                    {
+                        ""oNe"": ""one value"",
+                        ""two NAME"": ""$$Text.Format('macro{0:yyyyMMddHH-mm}', Time.AddMinutes(SliceStart, 0))""
+                    },
+                    webServiceOutputs:
+                    {
+                        ""output 1"": ""sasCopyBlob"",
+                    },
+                    webServiceInput: ""csvBlob""
+                }
+            }
+        ]
+    }
+}
+";
+
+        [JsonSample]
+        public const string AzureMLBatchExecutionPipelineWithNoParams = @"
+{
+    name: ""My machine learning pipeline3"",
+    properties: 
+    {
+        description : ""ML pipeline description"",
+        hubName : ""someHub"",
+        activities:
+        [
+            {
+                name: ""MLActivity3"",
+                description: ""Test activity description"", 
+                type: ""AzureMLBatchExecution"",
+                inputs: 
+                [ 
+                    {
+                        name: ""csvBlob"",
+                        name: ""someOtherInput""
+                    }
+                ],
+                outputs: 
+                [ 
+                    {
+                        name: ""someOtherOutput"",
+                        name: ""sasCopyBlob""
+                    }
+                ],
+                linkedServiceName: ""mlLinkedService"",
+                policy:
+                {
+                    concurrency: 3,
+                    executionPriorityOrder: ""NewestFirst"",
+                    retry: 3,
+                    timeout: ""00:00:05"",
+                    delay: ""00:00:01""
+                },
+            }
+        ]
+    }
+}
+";
+
         [JsonSample(propertyBagKeys: new string[] 
             { 
                 // Identify user-provided property names. These should always be cased exactly as the user specified, rather than converted to camel/Pascal-cased.

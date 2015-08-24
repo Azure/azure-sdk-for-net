@@ -18,6 +18,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Hyak.Common;
@@ -57,17 +59,17 @@ namespace Microsoft.Azure.Search
                 DeserializeForSuggest<T>);
         }
 
-        private static DocumentSuggestResponseFormat<SuggestResult<T>, T> DeserializeForSuggest<T>(string payload) 
+        private static DocumentSuggestResponsePayload<SuggestResult<T>, T> DeserializeForSuggest<T>(string payload) 
             where T : class
         {
-            return JsonConvert.DeserializeObject<DocumentSuggestResponseFormat<SuggestResult<T>, T>>(
+            return JsonConvert.DeserializeObject<DocumentSuggestResponsePayload<SuggestResult<T>, T>>(
                 payload,
                 JsonUtility.CreateTypedDeserializerSettings<T>());
         }
 
-        private static DocumentSuggestResponseFormat<SuggestResult, Document> DeserializeForSuggest(string payload)
+        private static DocumentSuggestResponsePayload<SuggestResult, Document> DeserializeForSuggest(string payload)
         {
-            return JsonConvert.DeserializeObject<DocumentSuggestResponseFormat<SuggestResult, Document>>(
+            return JsonConvert.DeserializeObject<DocumentSuggestResponsePayload<SuggestResult, Document>>(
                 payload, 
                 JsonUtility.DocumentDeserializerSettings);
         }
@@ -77,7 +79,7 @@ namespace Microsoft.Azure.Search
             string suggesterName,
             SuggestParameters suggestParameters, 
             CancellationToken cancellationToken,
-            Func<string, DocumentSuggestResponseFormat<TResult, TDoc>> deserialize)
+            Func<string, DocumentSuggestResponsePayload<TResult, TDoc>> deserialize)
             where TResponse : DocumentSuggestResponseBase<TResult, TDoc>, new()
             where TResult : SuggestResultBase<TDoc>
             where TDoc : class
@@ -113,12 +115,17 @@ namespace Microsoft.Azure.Search
             }
 
             // Construct URL
-            string url = 
-                String.Format(
-                    "docs/search.suggest?search={0}&suggesterName={1}&{2}&api-version=2015-02-28", 
-                    Uri.EscapeDataString(searchText),
-                    suggesterName,
-                    suggestParameters.ToString());
+            bool useGet = Client.UseHttpGetForQueries;
+            const string ApiVersion = "api-version=2015-02-28";
+            string url =
+                useGet ?
+                    String.Format(
+                        "docs/search.suggest?search={0}&suggesterName={1}&{2}&{3}",
+                        Uri.EscapeDataString(searchText),
+                        suggesterName,
+                        suggestParameters.ToString(),
+                        ApiVersion) :
+                    String.Format("docs/search.post.suggest?{0}", ApiVersion);
             
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
 
@@ -136,7 +143,7 @@ namespace Microsoft.Azure.Search
             try
             {
                 httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Get;
+                httpRequest.Method = useGet ? HttpMethod.Get : HttpMethod.Post;
                 httpRequest.RequestUri = new Uri(url);
 
                 // Set Headers
@@ -145,6 +152,16 @@ namespace Microsoft.Azure.Search
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
                 await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+
+                // Serialize Request for POST only
+                if (!useGet)
+                {
+                    SuggestParametersPayload payload = suggestParameters.ToPayload(searchText, suggesterName);
+                    string requestContent =
+                        JsonConvert.SerializeObject(payload, JsonUtility.DefaultSerializerSettings);
+                    httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                    httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
+                }
 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -181,7 +198,7 @@ namespace Microsoft.Azure.Search
                     result = new TResponse();
                     if (string.IsNullOrEmpty(responseContent) == false)
                     {
-                        DocumentSuggestResponseFormat<TResult, TDoc> deserializedResult = deserialize(responseContent);
+                        DocumentSuggestResponsePayload<TResult, TDoc> deserializedResult = deserialize(responseContent);
                         result.Coverage = deserializedResult.Coverage;
                         result.Results = deserializedResult.Documents;
                     }
@@ -216,7 +233,7 @@ namespace Microsoft.Azure.Search
             }
         }
 
-        private class DocumentSuggestResponseFormat<TResult, TDoc>
+        private class DocumentSuggestResponsePayload<TResult, TDoc>
             where TResult : SuggestResultBase<TDoc>
             where TDoc : class 
         {

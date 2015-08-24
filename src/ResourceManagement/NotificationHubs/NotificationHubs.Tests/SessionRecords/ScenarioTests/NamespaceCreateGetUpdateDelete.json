@@ -1,0 +1,902 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourcegroups?api-version=2014-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTExYzM2ZGMtNDA0Ny00YzY5LWFjZDUtMzAxMDcyZmYxZmMyL3Jlc291cmNlZ3JvdXBzP2FwaS12ZXJzaW9uPTIwMTQtMDQtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/aftest\",\r\n      \"name\": \"aftest\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/Api-Default-North-Central-US\",\r\n      \"name\": \"Api-Default-North-Central-US\",\r\n      \"location\": \"northcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/capptaintestvm\",\r\n      \"name\": \"capptaintestvm\",\r\n      \"location\": \"eastasia\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/Default-BizTalk-West-US\",\r\n      \"name\": \"Default-BizTalk-West-US\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/Default-SQL-SouthCentralUS\",\r\n      \"name\": \"Default-SQL-SouthCentralUS\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/Default-SQL-WestUS\",\r\n      \"name\": \"Default-SQL-WestUS\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/Default-Storage-EastAsia\",\r\n      \"name\": \"Default-Storage-EastAsia\",\r\n      \"location\": \"eastasia\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/Default-Storage-EastUS\",\r\n      \"name\": \"Default-Storage-EastUS\",\r\n      \"location\": \"eastus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/Default-Storage-SouthCentralUS\",\r\n      \"name\": \"Default-Storage-SouthCentralUS\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/Default-Storage-WestUS\",\r\n      \"name\": \"Default-Storage-WestUS\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/Default-Web-WestUS\",\r\n      \"name\": \"Default-Web-WestUS\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/MobileEngagement\",\r\n      \"name\": \"MobileEngagement\",\r\n      \"location\": \"centralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG1024\",\r\n      \"name\": \"NotificationHub-RG1024\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc40474c69acd5301072ff1fc2/resourceGroups/NotificationHub-RG1098\",\r\n      \"name\": \"NotificationHub-RG1098\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG114\",\r\n      \"name\": \"NotificationHub-RG114\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG1151\",\r\n      \"name\": \"NotificationHub-RG1151\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG1292\",\r\n      \"name\": \"NotificationHub-RG1292\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG1341\",\r\n      \"name\": \"NotificationHub-RG1341\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG1571\",\r\n      \"name\": \"NotificationHub-RG1571\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG1763\",\r\n      \"name\": \"NotificationHub-RG1763\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG2082\",\r\n      \"name\": \"NotificationHub-RG2082\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG2239\",\r\n      \"name\": \"NotificationHub-RG2239\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG2250\",\r\n      \"name\": \"NotificationHub-RG2250\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG2320\",\r\n      \"name\": \"NotificationHub-RG2320\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG2329\",\r\n      \"name\": \"NotificationHub-RG2329\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG2402\",\r\n      \"name\": \"NotificationHub-RG2402\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG2487\",\r\n      \"name\": \"NotificationHub-RG2487\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG2608\",\r\n      \"name\": \"NotificationHub-RG2608\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG2740\",\r\n      \"name\": \"NotificationHub-RG2740\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG2766\",\r\n      \"name\": \"NotificationHub-RG2766\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG2780\",\r\n      \"name\": \"NotificationHub-RG2780\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG287\",\r\n      \"name\": \"NotificationHub-RG287\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG2900\",\r\n      \"name\": \"NotificationHub-RG2900\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG2906\",\r\n      \"name\": \"NotificationHub-RG2906\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG3062\",\r\n      \"name\": \"NotificationHub-RG3062\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG3096\",\r\n      \"name\": \"NotificationHub-RG3096\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG3293\",\r\n      \"name\": \"NotificationHub-RG3293\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG3366\",\r\n      \"name\": \"NotificationHub-RG3366\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG3499\",\r\n      \"name\": \"NotificationHub-RG3499\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG3605\",\r\n      \"name\": \"NotificationHub-RG3605\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG3653\",\r\n      \"name\": \"NotificationHub-RG3653\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG3662\",\r\n      \"name\": \"NotificationHub-RG3662\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG3689\",\r\n      \"name\": \"NotificationHub-RG3689\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG3777\",\r\n      \"name\": \"NotificationHub-RG3777\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG3800\",\r\n      \"name\": \"NotificationHub-RG3800\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG3832\",\r\n      \"name\": \"NotificationHub-RG3832\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG3856\",\r\n      \"name\": \"NotificationHub-RG3856\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG3857\",\r\n      \"name\": \"NotificationHub-RG3857\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG3933\",\r\n      \"name\": \"NotificationHub-RG3933\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG4225\",\r\n      \"name\": \"NotificationHub-RG4225\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG4301\",\r\n      \"name\": \"NotificationHub-RG4301\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG4373\",\r\n      \"name\": \"NotificationHub-RG4373\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG4393\",\r\n      \"name\": \"NotificationHub-RG4393\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG4794\",\r\n      \"name\": \"NotificationHub-RG4794\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG4941\",\r\n      \"name\": \"NotificationHub-RG4941\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG500\",\r\n      \"name\": \"NotificationHub-RG500\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG502\",\r\n      \"name\": \"NotificationHub-RG502\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG5215\",\r\n      \"name\": \"NotificationHub-RG5215\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG5307\",\r\n      \"name\": \"NotificationHub-RG5307\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG5332\",\r\n      \"name\": \"NotificationHub-RG5332\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG5471\",\r\n      \"name\": \"NotificationHub-RG5471\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG5492\",\r\n      \"name\": \"NotificationHub-RG5492\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG5828\",\r\n      \"name\": \"NotificationHub-RG5828\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG5836\",\r\n      \"name\": \"NotificationHub-RG5836\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG5915\",\r\n      \"name\": \"NotificationHub-RG5915\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG6304\",\r\n      \"name\": \"NotificationHub-RG6304\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG6393\",\r\n      \"name\": \"NotificationHub-RG6393\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG6401\",\r\n      \"name\": \"NotificationHub-RG6401\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG6456\",\r\n      \"name\": \"NotificationHub-RG6456\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG6513\",\r\n      \"name\": \"NotificationHub-RG6513\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG6515\",\r\n      \"name\": \"NotificationHub-RG6515\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG6550\",\r\n      \"name\": \"NotificationHub-RG6550\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG682\",\r\n      \"name\": \"NotificationHub-RG682\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG6885\",\r\n      \"name\": \"NotificationHub-RG6885\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG7028\",\r\n      \"name\": \"NotificationHub-RG7028\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG7053\",\r\n      \"name\": \"NotificationHub-RG7053\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG7176\",\r\n      \"name\": \"NotificationHub-RG7176\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG7444\",\r\n      \"name\": \"NotificationHub-RG7444\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG7453\",\r\n      \"name\": \"NotificationHub-RG7453\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG7709\",\r\n      \"name\": \"NotificationHub-RG7709\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG7714\",\r\n      \"name\": \"NotificationHub-RG7714\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG7797\",\r\n      \"name\": \"NotificationHub-RG7797\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG7806\",\r\n      \"name\": \"NotificationHub-RG7806\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG8062\",\r\n      \"name\": \"NotificationHub-RG8062\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG8139\",\r\n      \"name\": \"NotificationHub-RG8139\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG8221\",\r\n      \"name\": \"NotificationHub-RG8221\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG8245\",\r\n      \"name\": \"NotificationHub-RG8245\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG8335\",\r\n      \"name\": \"NotificationHub-RG8335\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG8399\",\r\n      \"name\": \"NotificationHub-RG8399\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc40474c69acd5301072ff1fc2/resourceGroups/NotificationHub-RG8421\",\r\n      \"name\": \"NotificationHub-RG8421\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG8513\",\r\n      \"name\": \"NotificationHub-RG8513\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG8564\",\r\n      \"name\": \"NotificationHub-RG8564\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG8761\",\r\n      \"name\": \"NotificationHub-RG8761\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG882\",\r\n      \"name\": \"NotificationHub-RG882\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG8946\",\r\n      \"name\": \"NotificationHub-RG8946\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG9105\",\r\n      \"name\": \"NotificationHub-RG9105\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG9139\",\r\n      \"name\": \"NotificationHub-RG9139\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG9144\",\r\n      \"name\": \"NotificationHub-RG9144\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG9226\",\r\n      \"name\": \"NotificationHub-RG9226\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG9292\",\r\n      \"name\": \"NotificationHub-RG9292\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG9638\",\r\n      \"name\": \"NotificationHub-RG9638\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG9696\",\r\n      \"name\": \"NotificationHub-RG9696\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG9697\",\r\n      \"name\": \"NotificationHub-RG9697\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG9698\",\r\n      \"name\": \"NotificationHub-RG9698\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG9754\",\r\n      \"name\": \"NotificationHub-RG9754\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG9868\",\r\n      \"name\": \"NotificationHub-RG9868\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG9939\",\r\n      \"name\": \"NotificationHub-RG9939\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/PushNotification\",\r\n      \"name\": \"PushNotification\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/TestRG-123\",\r\n      \"name\": \"TestRG-123\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {\r\n        \"test\": \"namespace\",\r\n        \"notification\": \"hub\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/ubikod\",\r\n      \"name\": \"ubikod\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "22525"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14999"
+        ],
+        "x-ms-request-id": [
+          "582cdfd0-bab7-44fd-8c4f-64e0e55e669a"
+        ],
+        "x-ms-correlation-request-id": [
+          "582cdfd0-bab7-44fd-8c4f-64e0e55e669a"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHCENTRALUS:20150813T042122Z:582cdfd0-bab7-44fd-8c4f-64e0e55e669a"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 13 Aug 2015 04:21:22 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourcegroups/NotificationHub-RG9856?api-version=2014-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTExYzM2ZGMtNDA0Ny00YzY5LWFjZDUtMzAxMDcyZmYxZmMyL3Jlc291cmNlZ3JvdXBzL05vdGlmaWNhdGlvbkh1Yi1SRzk4NTY/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1wcmV2aWV3",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"South Central US\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "38"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG9856\",\r\n  \"name\": \"NotificationHub-RG9856\",\r\n  \"location\": \"southcentralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "205"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "21b01bcb-5eca-4e8e-b92c-ff598ef1c2ce"
+        ],
+        "x-ms-correlation-request-id": [
+          "21b01bcb-5eca-4e8e-b92c-ff598ef1c2ce"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHCENTRALUS:20150813T042123Z:21b01bcb-5eca-4e8e-b92c-ff598ef1c2ce"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 13 Aug 2015 04:21:22 GMT"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG9856/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace7315?api-version=2014-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTExYzM2ZGMtNDA0Ny00YzY5LWFjZDUtMzAxMDcyZmYxZmMyL3Jlc291cmNlR3JvdXBzL05vdGlmaWNhdGlvbkh1Yi1SRzk4NTYvcHJvdmlkZXJzL01pY3Jvc29mdC5Ob3RpZmljYXRpb25IdWJzL25hbWVzcGFjZXMvSHlkcmFOSC1OYW1lc3BhY2U3MzE1P2FwaS12ZXJzaW9uPTIwMTQtMDktMDE=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"South Central US\",\r\n  \"properties\": {\r\n    \"createdAt\": \"0001-01-01T00:00:00\",\r\n    \"enabled\": false,\r\n    \"critical\": false,\r\n    \"namespaceType\": \"NotificationHub\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Content-Length": [
+          "191"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.NotificationHubs.NotificationHubsManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": null,\r\n  \"name\": null,\r\n  \"type\": null,\r\n  \"location\": \"South Central US\",\r\n  \"tags\": null,\r\n  \"properties\": {\r\n    \"provisioningState\": \"Activating\",\r\n    \"name\": \"HydraNH-Namespace7315\",\r\n    \"region\": \"South Central US\",\r\n    \"enabled\": false,\r\n    \"critical\": false,\r\n    \"namespaceType\": \"NotificationHub\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "251"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "a4ee2727-46a5-488b-b172-28cfcd145e5e_M3_M3"
+        ],
+        "Server-SB": [
+          "Service-Bus-Resource-Provider/SN1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-correlation-request-id": [
+          "4906b0ba-bf94-44a7-a206-94a71ac94b85"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHCENTRALUS:20150813T042128Z:4906b0ba-bf94-44a7-a206-94a71ac94b85"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Date": [
+          "Thu, 13 Aug 2015 04:21:28 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG9856/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace7315?api-version=2014-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTExYzM2ZGMtNDA0Ny00YzY5LWFjZDUtMzAxMDcyZmYxZmMyL3Jlc291cmNlR3JvdXBzL05vdGlmaWNhdGlvbkh1Yi1SRzk4NTYvcHJvdmlkZXJzL01pY3Jvc29mdC5Ob3RpZmljYXRpb25IdWJzL25hbWVzcGFjZXMvSHlkcmFOSC1OYW1lc3BhY2U3MzE1P2FwaS12ZXJzaW9uPTIwMTQtMDktMDE=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"South Central US\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\",\r\n    \"tag3\": \"value3\",\r\n    \"tag4\": \"value4\"\r\n  },\r\n  \"properties\": {\r\n    \"createdAt\": \"0001-01-01T00:00:00\",\r\n    \"enabled\": false,\r\n    \"critical\": false,\r\n    \"namespaceType\": \"Messaging\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Content-Length": [
+          "295"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.NotificationHubs.NotificationHubsManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": null,\r\n  \"name\": null,\r\n  \"type\": null,\r\n  \"location\": \"South Central US\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\",\r\n    \"tag3\": \"value3\",\r\n    \"tag4\": \"value4\"\r\n  },\r\n  \"properties\": {\r\n    \"provisioningState\": \"Active\",\r\n    \"name\": \"HydraNH-Namespace7315\",\r\n    \"region\": \"South Central US\",\r\n    \"status\": \"Active\",\r\n    \"enabled\": false,\r\n    \"critical\": false,\r\n    \"namespaceType\": \"Messaging\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "320"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "bc96ba1e-cd92-47cc-890d-1d92b6ad3d98_M3_M3"
+        ],
+        "Server-SB": [
+          "Service-Bus-Resource-Provider/SN1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1198"
+        ],
+        "x-ms-correlation-request-id": [
+          "8841c8c8-7d37-4197-8f3d-1781a5b7b475"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHCENTRALUS:20150813T042134Z:8841c8c8-7d37-4197-8f3d-1781a5b7b475"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Date": [
+          "Thu, 13 Aug 2015 04:21:34 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG9856/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace7315?api-version=2014-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTExYzM2ZGMtNDA0Ny00YzY5LWFjZDUtMzAxMDcyZmYxZmMyL3Jlc291cmNlR3JvdXBzL05vdGlmaWNhdGlvbkh1Yi1SRzk4NTYvcHJvdmlkZXJzL01pY3Jvc29mdC5Ob3RpZmljYXRpb25IdWJzL25hbWVzcGFjZXMvSHlkcmFOSC1OYW1lc3BhY2U3MzE1P2FwaS12ZXJzaW9uPTIwMTQtMDktMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.NotificationHubs.NotificationHubsManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG9856/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace7315\",\r\n  \"name\": \"HydraNH-Namespace7315\",\r\n  \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n  \"location\": \"South Central US\",\r\n  \"tags\": null,\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"name\": \"HydraNH-Namespace7315\",\r\n    \"region\": \"South Central US\",\r\n    \"status\": \"Active\",\r\n    \"createdAt\": \"2015-08-13T04:21:27.673Z\",\r\n    \"serviceBusEndpoint\": \"https://HydraNH-Namespace7315.servicebus.windows.net:443/\",\r\n    \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n    \"enabled\": true,\r\n    \"critical\": false,\r\n    \"updatedAt\": \"2015-08-13T04:21:30.747Z\",\r\n    \"namespaceType\": \"NotificationHub\",\r\n    \"resourceGroup\": \"NotificationHub-RG9856\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "730"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "1bf235ee-c163-42dc-bf91-3fabfae44c99_M3_M3"
+        ],
+        "Server-SB": [
+          "Service-Bus-Resource-Provider/SN1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14999"
+        ],
+        "x-ms-correlation-request-id": [
+          "38b57b9b-7145-4d04-904d-cb31129e8044"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHCENTRALUS:20150813T042133Z:38b57b9b-7145-4d04-904d-cb31129e8044"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Date": [
+          "Thu, 13 Aug 2015 04:21:33 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG9856/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace7315?api-version=2014-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTExYzM2ZGMtNDA0Ny00YzY5LWFjZDUtMzAxMDcyZmYxZmMyL3Jlc291cmNlR3JvdXBzL05vdGlmaWNhdGlvbkh1Yi1SRzk4NTYvcHJvdmlkZXJzL01pY3Jvc29mdC5Ob3RpZmljYXRpb25IdWJzL25hbWVzcGFjZXMvSHlkcmFOSC1OYW1lc3BhY2U3MzE1P2FwaS12ZXJzaW9uPTIwMTQtMDktMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.NotificationHubs.NotificationHubsManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG9856/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace7315\",\r\n  \"name\": \"HydraNH-Namespace7315\",\r\n  \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n  \"location\": \"South Central US\",\r\n  \"tags\": null,\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"name\": \"HydraNH-Namespace7315\",\r\n    \"region\": \"South Central US\",\r\n    \"status\": \"Active\",\r\n    \"createdAt\": \"2015-08-13T04:21:27.673Z\",\r\n    \"serviceBusEndpoint\": \"https://HydraNH-Namespace7315.servicebus.windows.net:443/\",\r\n    \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n    \"enabled\": true,\r\n    \"critical\": false,\r\n    \"updatedAt\": \"2015-08-13T04:21:30.747Z\",\r\n    \"namespaceType\": \"NotificationHub\",\r\n    \"resourceGroup\": \"NotificationHub-RG9856\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "730"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "1cac8c3d-0a4f-4e11-8b5b-12678b77a884_M3_M3"
+        ],
+        "Server-SB": [
+          "Service-Bus-Resource-Provider/SN1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14998"
+        ],
+        "x-ms-correlation-request-id": [
+          "0701f3a9-843f-4032-a685-3ef1c583289f"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHCENTRALUS:20150813T042133Z:0701f3a9-843f-4032-a685-3ef1c583289f"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Date": [
+          "Thu, 13 Aug 2015 04:21:33 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG9856/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace7315?api-version=2014-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTExYzM2ZGMtNDA0Ny00YzY5LWFjZDUtMzAxMDcyZmYxZmMyL3Jlc291cmNlR3JvdXBzL05vdGlmaWNhdGlvbkh1Yi1SRzk4NTYvcHJvdmlkZXJzL01pY3Jvc29mdC5Ob3RpZmljYXRpb25IdWJzL25hbWVzcGFjZXMvSHlkcmFOSC1OYW1lc3BhY2U3MzE1P2FwaS12ZXJzaW9uPTIwMTQtMDktMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.NotificationHubs.NotificationHubsManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG9856/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace7315\",\r\n  \"name\": \"HydraNH-Namespace7315\",\r\n  \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n  \"location\": \"South Central US\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\",\r\n    \"tag3\": \"value3\",\r\n    \"tag4\": \"value4\"\r\n  },\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"name\": \"HydraNH-Namespace7315\",\r\n    \"region\": \"South Central US\",\r\n    \"status\": \"Active\",\r\n    \"createdAt\": \"2015-08-13T04:21:27.673Z\",\r\n    \"serviceBusEndpoint\": \"https://HydraNH-Namespace7315.servicebus.windows.net:443/\",\r\n    \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n    \"enabled\": true,\r\n    \"critical\": false,\r\n    \"updatedAt\": \"2015-08-13T04:21:33.97Z\",\r\n    \"namespaceType\": \"NotificationHub\",\r\n    \"resourceGroup\": \"NotificationHub-RG9856\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "790"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "89210c04-d297-4915-83d1-0c711c71a87b_M3_M3"
+        ],
+        "Server-SB": [
+          "Service-Bus-Resource-Provider/SN1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14995"
+        ],
+        "x-ms-correlation-request-id": [
+          "66fbf6c7-cd68-4fab-a0bb-843639aa8072"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHCENTRALUS:20150813T042139Z:66fbf6c7-cd68-4fab-a0bb-843639aa8072"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Date": [
+          "Thu, 13 Aug 2015 04:21:39 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG9856/providers/Microsoft.NotificationHubs/namespaces?api-version=2014-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTExYzM2ZGMtNDA0Ny00YzY5LWFjZDUtMzAxMDcyZmYxZmMyL3Jlc291cmNlR3JvdXBzL05vdGlmaWNhdGlvbkh1Yi1SRzk4NTYvcHJvdmlkZXJzL01pY3Jvc29mdC5Ob3RpZmljYXRpb25IdWJzL25hbWVzcGFjZXM/YXBpLXZlcnNpb249MjAxNC0wOS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.NotificationHubs.NotificationHubsManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG9856/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace7315\",\r\n      \"name\": \"HydraNH-Namespace7315\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace7315\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-13T04:21:27.673Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace7315.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": false,\r\n        \"updatedAt\": \"2015-08-13T04:21:30.747Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG9856\"\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": null\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "758"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "e3df23cd-eee4-484d-aca9-e330ae977fd3_M1_M1"
+        ],
+        "Server-SB": [
+          "Service-Bus-Resource-Provider/SN1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14997"
+        ],
+        "x-ms-correlation-request-id": [
+          "9b2d3fe0-c8aa-479e-9dd6-b6ea236c917c"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHCENTRALUS:20150813T042133Z:9b2d3fe0-c8aa-479e-9dd6-b6ea236c917c"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Date": [
+          "Thu, 13 Aug 2015 04:21:33 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces?api-version=2014-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTExYzM2ZGMtNDA0Ny00YzY5LWFjZDUtMzAxMDcyZmYxZmMyL3Byb3ZpZGVycy9NaWNyb3NvZnQuTm90aWZpY2F0aW9uSHVicy9uYW1lc3BhY2VzP2FwaS12ZXJzaW9uPTIwMTQtMDktMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.NotificationHubs.NotificationHubsManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace1927\",\r\n      \"name\": \"HydraNH-Namespace1927\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": {\r\n        \"tag1\": \"value1\",\r\n        \"tag2\": \"value2\",\r\n        \"tag3\": \"value3\",\r\n        \"tag4\": \"value4\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace1927\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-07T23:04:54.09Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace1927.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": true,\r\n        \"updatedAt\": \"2015-08-07T23:05:08.22Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG5492\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace1339\",\r\n      \"name\": \"HydraNH-Namespace1339\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": {\r\n        \"tag1\": \"value1\",\r\n        \"tag2\": \"value2\",\r\n        \"tag3\": \"value3\",\r\n        \"tag4\": \"value4\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace1339\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-10T23:29:57.37Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace1339.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": true,\r\n        \"updatedAt\": \"2015-08-10T23:30:09.187Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG7797\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace2465\",\r\n      \"name\": \"HydraNH-Namespace2465\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": {\r\n        \"tag1\": \"value1\",\r\n        \"tag2\": \"value2\",\r\n        \"tag3\": \"value3\",\r\n        \"tag4\": \"value4\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace2465\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-07T23:02:54.267Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace2465.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": true,\r\n        \"updatedAt\": \"2015-08-07T23:03:06.707Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG6304\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace5414\",\r\n      \"name\": \"HydraNH-Namespace5414\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace5414\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-12T05:36:58.33Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace5414.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": false,\r\n        \"updatedAt\": \"2015-08-12T05:37:01.073Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG4225\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace5239\",\r\n      \"name\": \"HydraNH-Namespace5239\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace5239\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-12T04:29:31.797Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace5239.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": false,\r\n        \"updatedAt\": \"2015-08-12T04:29:33.917Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG8139\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace5809\",\r\n      \"name\": \"HydraNH-Namespace5809\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace5809\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-12T06:39:09.097Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace5809.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": false,\r\n        \"updatedAt\": \"2015-08-12T06:39:11.557Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG8062\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace9364\",\r\n      \"name\": \"HydraNH-Namespace9364\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace9364\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-08T00:22:50.57Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace9364.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": false,\r\n        \"updatedAt\": \"2015-08-08T00:22:53.957Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG4373\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace6246\",\r\n      \"name\": \"HydraNH-Namespace6246\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": {\r\n        \"tag1\": \"value1\",\r\n        \"tag2\": \"value2\",\r\n        \"tag3\": \"value3\",\r\n        \"tag4\": \"value4\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace6246\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-11T17:14:09.5Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace6246.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": true,\r\n        \"updatedAt\": \"2015-08-11T17:14:15.61Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG9292\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace2745\",\r\n      \"name\": \"HydraNH-Namespace2745\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": {\r\n        \"tag1\": \"value1\",\r\n        \"tag2\": \"value2\",\r\n        \"tag3\": \"value3\",\r\n        \"tag4\": \"value4\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace2745\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-07T22:20:20.967Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace2745.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": true,\r\n        \"updatedAt\": \"2015-08-07T22:20:36.853Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG9144\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace89\",\r\n      \"name\": \"HydraNH-Namespace89\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": {\r\n        \"tag1\": \"value1\",\r\n        \"tag2\": \"value2\",\r\n        \"tag3\": \"value3\",\r\n        \"tag4\": \"value4\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace89\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-12T07:21:53.73Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace89.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": true,\r\n        \"updatedAt\": \"2015-08-12T07:21:59.83Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG502\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace191\",\r\n      \"name\": \"HydraNH-Namespace191\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace191\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-12T05:41:49.933Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace191.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": false,\r\n        \"updatedAt\": \"2015-08-12T05:41:54.06Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG9697\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace1495\",\r\n      \"name\": \"HydraNH-Namespace1495\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace1495\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-08T00:20:14.93Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace1495.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": false,\r\n        \"updatedAt\": \"2015-08-08T00:20:19.73Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG9105\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace7434\",\r\n      \"name\": \"HydraNH-Namespace7434\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace7434\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-05T02:07:03.313Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace7434.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": false,\r\n        \"updatedAt\": \"2015-08-05T02:07:15.843Z\",\r\n        \"eventHubEnabled\": true,\r\n        \"namespaceType\": \"Messaging\",\r\n        \"resourceGroup\": \"NotificationHub-RG3293\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace9571\",\r\n      \"name\": \"HydraNH-Namespace9571\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace9571\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-05T02:21:37.19Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace9571.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": false,\r\n        \"updatedAt\": \"2015-08-05T02:21:40.153Z\",\r\n        \"eventHubEnabled\": true,\r\n        \"namespaceType\": \"Messaging\",\r\n        \"resourceGroup\": \"NotificationHub-RG5828\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace9830\",\r\n      \"name\": \"HydraNH-Namespace9830\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace9830\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-05T21:38:13.02Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace9830.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": false,\r\n        \"updatedAt\": \"2015-08-05T21:38:13.713Z\",\r\n        \"eventHubEnabled\": true,\r\n        \"namespaceType\": \"Messaging\",\r\n        \"resourceGroup\": \"NotificationHub-RG8761\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace4032\",\r\n      \"name\": \"HydraNH-Namespace4032\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace4032\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-08T23:37:55.453Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace4032.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": false,\r\n        \"updatedAt\": \"2015-08-08T23:37:57.097Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG7028\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace3915\",\r\n      \"name\": \"HydraNH-Namespace3915\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": {\r\n        \"tag1\": \"value1\",\r\n        \"tag2\": \"value2\",\r\n        \"tag3\": \"value3\",\r\n        \"tag4\": \"value4\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace3915\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-07T22:25:13.627Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace3915.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": true,\r\n        \"updatedAt\": \"2015-08-07T22:25:32.213Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG2740\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace9834\",\r\n      \"name\": \"HydraNH-Namespace9834\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace9834\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-07T19:20:18.857Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace9834.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": false,\r\n        \"updatedAt\": \"2015-08-07T19:20:21.747Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG2900\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace9423\",\r\n      \"name\": \"HydraNH-Namespace9423\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace9423\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-12T05:51:33.847Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace9423.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": false,\r\n        \"updatedAt\": \"2015-08-12T05:51:38.433Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG882\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/TestSku111\",\r\n      \"name\": \"TestSku111\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"Southeast Asia\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"TestSku111\",\r\n        \"region\": \"Southeast Asia\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2014-09-11T01:15:57.983Z\",\r\n        \"serviceBusEndpoint\": \"https://TestSku111.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": false,\r\n        \"updatedAt\": \"2014-09-11T01:16:03.02Z\",\r\n        \"eventHubEnabled\": true,\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace6226\",\r\n      \"name\": \"HydraNH-Namespace6226\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace6226\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-05T02:28:39.357Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace6226.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": false,\r\n        \"updatedAt\": \"2015-08-05T02:28:41.743Z\",\r\n        \"eventHubEnabled\": true,\r\n        \"namespaceType\": \"Messaging\",\r\n        \"resourceGroup\": \"NotificationHub-RG2487\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/CSM-SBTestInfra\",\r\n      \"name\": \"CSM-SBTestInfra\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"CSM-SBTestInfra\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2014-05-12T18:04:56.787Z\",\r\n        \"serviceBusEndpoint\": \"https://CSM-SBTestInfra.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": false,\r\n        \"updatedAt\": \"2014-05-12T18:23:13.52Z\",\r\n        \"createACSNamespace\": true,\r\n        \"resourceGroup\": \"\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace8625\",\r\n      \"name\": \"HydraNH-Namespace8625\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace8625\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-12T04:08:42.94Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace8625.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": false,\r\n        \"updatedAt\": \"2015-08-12T04:08:46.653Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG9868\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace2979\",\r\n      \"name\": \"HydraNH-Namespace2979\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace2979\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-12T04:15:15.53Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace2979.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": false,\r\n        \"updatedAt\": \"2015-08-12T04:15:17.953Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG2608\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace2039\",\r\n      \"name\": \"HydraNH-Namespace2039\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace2039\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-10T21:54:19.68Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace2039.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": false,\r\n        \"updatedAt\": \"2015-08-10T21:54:21.6Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG8513\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace3864\",\r\n      \"name\": \"HydraNH-Namespace3864\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace3864\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-11T22:54:56.913Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace3864.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": false,\r\n        \"updatedAt\": \"2015-08-11T22:54:59.947Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG9139\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace8768\",\r\n      \"name\": \"HydraNH-Namespace8768\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace8768\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-09T00:48:57.073Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace8768.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": false,\r\n        \"updatedAt\": \"2015-08-09T00:48:59.56Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG2239\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace2562\",\r\n      \"name\": \"HydraNH-Namespace2562\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace2562\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-07T21:26:47.64Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace2562.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": false,\r\n        \"updatedAt\": \"2015-08-07T21:26:50.423Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG3800\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace7393\",\r\n      \"name\": \"HydraNH-Namespace7393\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": {\r\n        \"tag1\": \"value1\",\r\n        \"tag2\": \"value2\",\r\n        \"tag3\": \"value3\",\r\n        \"tag4\": \"value4\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace7393\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-07T23:01:16.977Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace7393.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": true,\r\n        \"updatedAt\": \"2015-08-07T23:01:29.83Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG7053\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace3943\",\r\n      \"name\": \"HydraNH-Namespace3943\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace3943\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-12T06:08:20.687Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace3943.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": false,\r\n        \"updatedAt\": \"2015-08-12T06:08:25.543Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG7176\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace2992\",\r\n      \"name\": \"HydraNH-Namespace2992\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": {\r\n        \"tag1\": \"value1\",\r\n        \"tag2\": \"value2\",\r\n        \"tag3\": \"value3\",\r\n        \"tag4\": \"value4\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace2992\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-07T22:55:53.537Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace2992.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": true,\r\n        \"updatedAt\": \"2015-08-07T22:56:06.76Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG3605\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace2320\",\r\n      \"name\": \"HydraNH-Namespace2320\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace2320\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-07T21:10:33.943Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace2320.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": false,\r\n        \"updatedAt\": \"2015-08-07T21:10:37.233Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG3366\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace774\",\r\n      \"name\": \"HydraNH-Namespace774\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace774\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-13T00:07:03.117Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace774.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": false,\r\n        \"updatedAt\": \"2015-08-13T00:07:06.903Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG1151\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace8885\",\r\n      \"name\": \"HydraNH-Namespace8885\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace8885\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-12T06:41:59.293Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace8885.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": false,\r\n        \"updatedAt\": \"2015-08-12T06:42:00.683Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG682\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/NS-11fd83cf-97a2-4ab6-8a13-c7ba10255e63\",\r\n      \"name\": \"NS-11fd83cf-97a2-4ab6-8a13-c7ba10255e63\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"East US\",\r\n      \"tags\": {\r\n        \"test\": \"namespace\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"NS-11fd83cf-97a2-4ab6-8a13-c7ba10255e63\",\r\n        \"region\": \"East US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-03-12T23:08:14.88Z\",\r\n        \"serviceBusEndpoint\": \"https://NS-11fd83cf-97a2-4ab6-8a13-c7ba10255e63.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": false,\r\n        \"updatedAt\": \"2015-03-12T23:08:17.447Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"TestRG-123\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace1408\",\r\n      \"name\": \"HydraNH-Namespace1408\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace1408\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-05T02:25:40.13Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace1408.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": false,\r\n        \"updatedAt\": \"2015-08-05T02:25:41.87Z\",\r\n        \"eventHubEnabled\": true,\r\n        \"namespaceType\": \"Messaging\",\r\n        \"resourceGroup\": \"NotificationHub-RG3857\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace4260\",\r\n      \"name\": \"HydraNH-Namespace4260\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": {\r\n        \"tag1\": \"value1\",\r\n        \"tag2\": \"value2\",\r\n        \"tag3\": \"value3\",\r\n        \"tag4\": \"value4\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace4260\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-07T21:54:47.87Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace4260.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": true,\r\n        \"updatedAt\": \"2015-08-07T21:55:03.113Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG9939\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace4418\",\r\n      \"name\": \"HydraNH-Namespace4418\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": {\r\n        \"tag1\": \"value1\",\r\n        \"tag2\": \"value2\",\r\n        \"tag3\": \"value3\",\r\n        \"tag4\": \"value4\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace4418\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-10T22:46:16.21Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace4418.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": true,\r\n        \"updatedAt\": \"2015-08-10T22:46:31.107Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG1292\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace5042\",\r\n      \"name\": \"HydraNH-Namespace5042\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": {\r\n        \"tag1\": \"value1\",\r\n        \"tag2\": \"value2\",\r\n        \"tag3\": \"value3\",\r\n        \"tag4\": \"value4\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace5042\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-11T23:39:09.16Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace5042.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": true,\r\n        \"updatedAt\": \"2015-08-11T23:39:15.593Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG5332\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace4411\",\r\n      \"name\": \"HydraNH-Namespace4411\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace4411\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-11T21:05:48.8Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace4411.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": false,\r\n        \"updatedAt\": \"2015-08-11T21:05:51.443Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG6393\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace1398\",\r\n      \"name\": \"HydraNH-Namespace1398\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace1398\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-12T05:17:35.367Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace1398.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": false,\r\n        \"updatedAt\": \"2015-08-12T05:17:38.353Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG5836\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace3619\",\r\n      \"name\": \"HydraNH-Namespace3619\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace3619\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-12T06:26:35.9Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace3619.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": false,\r\n        \"updatedAt\": \"2015-08-12T06:26:39.997Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG114\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace1652\",\r\n      \"name\": \"HydraNH-Namespace1652\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": {\r\n        \"tag1\": \"value1\",\r\n        \"tag2\": \"value2\",\r\n        \"tag3\": \"value3\",\r\n        \"tag4\": \"value4\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace1652\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-07T22:06:45.87Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace1652.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": true,\r\n        \"updatedAt\": \"2015-08-07T22:07:03.36Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG1024\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace7349\",\r\n      \"name\": \"HydraNH-Namespace7349\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": {\r\n        \"tag1\": \"value1\",\r\n        \"tag2\": \"value2\",\r\n        \"tag3\": \"value3\",\r\n        \"tag4\": \"value4\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace7349\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-07T21:55:45.867Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace7349.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": true,\r\n        \"updatedAt\": \"2015-08-07T21:55:56.81Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG9698\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace7885\",\r\n      \"name\": \"HydraNH-Namespace7885\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": {\r\n        \"tag1\": \"value1\",\r\n        \"tag2\": \"value2\",\r\n        \"tag3\": \"value3\",\r\n        \"tag4\": \"value4\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace7885\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-07T22:57:15.08Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace7885.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": true,\r\n        \"updatedAt\": \"2015-08-07T22:57:28.83Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG3856\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace980\",\r\n      \"name\": \"HydraNH-Namespace980\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace980\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-12T06:34:42.52Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace980.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": false,\r\n        \"updatedAt\": \"2015-08-12T06:34:47.117Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG3662\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace9627\",\r\n      \"name\": \"HydraNH-Namespace9627\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace9627\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-08T00:19:22.523Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace9627.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": false,\r\n        \"updatedAt\": \"2015-08-08T00:19:25.073Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG3689\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace5887\",\r\n      \"name\": \"HydraNH-Namespace5887\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace5887\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-05T02:00:50.88Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace5887.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": false,\r\n        \"updatedAt\": \"2015-08-05T02:00:54.417Z\",\r\n        \"eventHubEnabled\": true,\r\n        \"namespaceType\": \"Messaging\",\r\n        \"resourceGroup\": \"NotificationHub-RG8564\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace2525\",\r\n      \"name\": \"HydraNH-Namespace2525\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace2525\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-05T02:23:39.91Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace2525.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": false,\r\n        \"updatedAt\": \"2015-08-05T02:23:40.823Z\",\r\n        \"eventHubEnabled\": true,\r\n        \"namespaceType\": \"Messaging\",\r\n        \"resourceGroup\": \"NotificationHub-RG7709\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace9705\",\r\n      \"name\": \"HydraNH-Namespace9705\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace9705\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-12T06:20:28.363Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace9705.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": false,\r\n        \"updatedAt\": \"2015-08-12T06:20:33.35Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG2766\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace1535\",\r\n      \"name\": \"HydraNH-Namespace1535\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": {\r\n        \"tag1\": \"value1\",\r\n        \"tag2\": \"value2\",\r\n        \"tag3\": \"value3\",\r\n        \"tag4\": \"value4\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace1535\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-09T00:11:59.727Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace1535.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": true,\r\n        \"updatedAt\": \"2015-08-09T00:12:13.233Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG2402\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace6431\",\r\n      \"name\": \"HydraNH-Namespace6431\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace6431\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-11T23:07:23.813Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace6431.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": false,\r\n        \"updatedAt\": \"2015-08-11T23:07:26.96Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG8221\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace251\",\r\n      \"name\": \"HydraNH-Namespace251\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": {\r\n        \"tag1\": \"value1\",\r\n        \"tag2\": \"value2\",\r\n        \"tag3\": \"value3\",\r\n        \"tag4\": \"value4\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace251\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-07T22:33:01.393Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace251.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": true,\r\n        \"updatedAt\": \"2015-08-07T22:33:13.69Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG8335\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace2376\",\r\n      \"name\": \"HydraNH-Namespace2376\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace2376\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-08T00:36:32.113Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace2376.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": false,\r\n        \"updatedAt\": \"2015-08-08T00:36:34.547Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG3062\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace7143\",\r\n      \"name\": \"HydraNH-Namespace7143\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace7143\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-07T23:55:03.03Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace7143.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": false,\r\n        \"updatedAt\": \"2015-08-07T23:55:06.363Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG9226\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/loctestns0004\",\r\n      \"name\": \"loctestns0004\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"Central US\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"loctestns0004\",\r\n        \"region\": \"Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2014-10-21T18:30:52.017Z\",\r\n        \"serviceBusEndpoint\": \"https://loctestns0004.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": false,\r\n        \"updatedAt\": \"2014-10-21T18:30:54.913Z\",\r\n        \"eventHubEnabled\": true,\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace226\",\r\n      \"name\": \"HydraNH-Namespace226\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": {\r\n        \"tag1\": \"value1\",\r\n        \"tag2\": \"value2\",\r\n        \"tag3\": \"value3\",\r\n        \"tag4\": \"value4\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace226\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-11T21:01:54.48Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace226.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": true,\r\n        \"updatedAt\": \"2015-08-11T21:02:00.863Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG6401\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace9101\",\r\n      \"name\": \"HydraNH-Namespace9101\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace9101\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-10T21:39:03.35Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace9101.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": false,\r\n        \"updatedAt\": \"2015-08-10T21:39:05.49Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG7444\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace7983\",\r\n      \"name\": \"HydraNH-Namespace7983\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace7983\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-08T23:26:27.06Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace7983.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": false,\r\n        \"updatedAt\": \"2015-08-08T23:26:29.313Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG5915\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace8154\",\r\n      \"name\": \"HydraNH-Namespace8154\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace8154\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-07T21:17:04.05Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace8154.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": false,\r\n        \"updatedAt\": \"2015-08-07T21:17:05.917Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG4393\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace8262\",\r\n      \"name\": \"HydraNH-Namespace8262\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": {\r\n        \"tag1\": \"value1\",\r\n        \"tag2\": \"value2\",\r\n        \"tag3\": \"value3\",\r\n        \"tag4\": \"value4\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace8262\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-12T03:41:20.96Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace8262.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": true,\r\n        \"updatedAt\": \"2015-08-12T03:41:27.067Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG2082\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace5264\",\r\n      \"name\": \"HydraNH-Namespace5264\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": {\r\n        \"tag1\": \"value1\",\r\n        \"tag2\": \"value2\",\r\n        \"tag3\": \"value3\",\r\n        \"tag4\": \"value4\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace5264\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-08T22:27:48.503Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace5264.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": true,\r\n        \"updatedAt\": \"2015-08-08T22:28:01.393Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG500\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace5980\",\r\n      \"name\": \"HydraNH-Namespace5980\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace5980\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-05T01:49:41.903Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace5980.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": false,\r\n        \"updatedAt\": \"2015-08-05T01:49:47.403Z\",\r\n        \"eventHubEnabled\": true,\r\n        \"namespaceType\": \"Messaging\",\r\n        \"resourceGroup\": \"NotificationHub-RG287\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace5892\",\r\n      \"name\": \"HydraNH-Namespace5892\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": {\r\n        \"tag1\": \"value1\",\r\n        \"tag2\": \"value2\",\r\n        \"tag3\": \"value3\",\r\n        \"tag4\": \"value4\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace5892\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-11T19:20:44.62Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace5892.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": true,\r\n        \"updatedAt\": \"2015-08-11T19:20:51.1Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG1763\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace316\",\r\n      \"name\": \"HydraNH-Namespace316\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace316\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-05T02:27:28.25Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace316.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": false,\r\n        \"updatedAt\": \"2015-08-05T02:27:30.71Z\",\r\n        \"eventHubEnabled\": true,\r\n        \"namespaceType\": \"Messaging\",\r\n        \"resourceGroup\": \"NotificationHub-RG8245\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace3109\",\r\n      \"name\": \"HydraNH-Namespace3109\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace3109\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-11T23:10:11.517Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace3109.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": false,\r\n        \"updatedAt\": \"2015-08-11T23:10:16.317Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG4941\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace4607\",\r\n      \"name\": \"HydraNH-Namespace4607\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace4607\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-05T18:43:19.723Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace4607.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": false,\r\n        \"updatedAt\": \"2015-08-05T18:43:21.71Z\",\r\n        \"eventHubEnabled\": true,\r\n        \"namespaceType\": \"Messaging\",\r\n        \"resourceGroup\": \"NotificationHub-RG9638\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/testns-nhonly123\",\r\n      \"name\": \"testns-nhonly123\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"West US\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"testns-nhonly123\",\r\n        \"region\": \"West US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-02-09T21:18:56.073Z\",\r\n        \"serviceBusEndpoint\": \"https://testns-nhonly123.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": false,\r\n        \"updatedAt\": \"2015-02-09T21:18:59.313Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace2455\",\r\n      \"name\": \"HydraNH-Namespace2455\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace2455\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-08T00:14:49.95Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace2455.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": false,\r\n        \"updatedAt\": \"2015-08-08T00:14:52.423Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG3499\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/prod-6-2-bl2-SBAC2-1\",\r\n      \"name\": \"prod-6-2-bl2-SBAC2-1\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"East US\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"prod-6-2-bl2-SBAC2-1\",\r\n        \"region\": \"East US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2012-06-03T02:47:54.277Z\",\r\n        \"serviceBusEndpoint\": \"https://prod-6-2-bl2-SBAC2-1.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": false,\r\n        \"updatedAt\": \"2012-06-03T02:58:56.033Z\",\r\n        \"createACSNamespace\": true,\r\n        \"resourceGroup\": \"\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace7315\",\r\n      \"name\": \"HydraNH-Namespace7315\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace7315\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-13T04:21:27.673Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace7315.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": false,\r\n        \"updatedAt\": \"2015-08-13T04:21:30.747Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG9856\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace5206\",\r\n      \"name\": \"HydraNH-Namespace5206\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": {\r\n        \"tag1\": \"value1\",\r\n        \"tag2\": \"value2\",\r\n        \"tag3\": \"value3\",\r\n        \"tag4\": \"value4\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace5206\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-07T22:04:15.74Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace5206.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": true,\r\n        \"updatedAt\": \"2015-08-07T22:04:28.87Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG1341\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace3270\",\r\n      \"name\": \"HydraNH-Namespace3270\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace3270\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-07T18:35:46.607Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace3270.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": false,\r\n        \"updatedAt\": \"2015-08-07T18:35:50.3Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG5215\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace1729\",\r\n      \"name\": \"HydraNH-Namespace1729\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": {\r\n        \"tag1\": \"value1\",\r\n        \"tag2\": \"value2\",\r\n        \"tag3\": \"value3\",\r\n        \"tag4\": \"value4\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace1729\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-07T22:46:43.05Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace1729.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": true,\r\n        \"updatedAt\": \"2015-08-07T22:46:56.523Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG6885\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace8871\",\r\n      \"name\": \"HydraNH-Namespace8871\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": {\r\n        \"tag1\": \"value1\",\r\n        \"tag2\": \"value2\",\r\n        \"tag3\": \"value3\",\r\n        \"tag4\": \"value4\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace8871\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-07T21:57:04.503Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace8871.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": true,\r\n        \"updatedAt\": \"2015-08-07T21:57:20.38Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG3777\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace4809\",\r\n      \"name\": \"HydraNH-Namespace4809\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace4809\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-07T23:42:49Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace4809.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": false,\r\n        \"updatedAt\": \"2015-08-07T23:42:52.887Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG6515\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace687\",\r\n      \"name\": \"HydraNH-Namespace687\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace687\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-10T19:30:03.337Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace687.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": false,\r\n        \"updatedAt\": \"2015-08-10T19:30:04.823Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG1571\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace7012\",\r\n      \"name\": \"HydraNH-Namespace7012\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace7012\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-12T04:21:50.72Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace7012.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": false,\r\n        \"updatedAt\": \"2015-08-12T04:21:55.593Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG2250\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace4516\",\r\n      \"name\": \"HydraNH-Namespace4516\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace4516\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-08T00:05:03.22Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace4516.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": false,\r\n        \"updatedAt\": \"2015-08-08T00:05:04.53Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG3653\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace265\",\r\n      \"name\": \"HydraNH-Namespace265\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace265\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-11T16:59:55.577Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace265.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": false,\r\n        \"updatedAt\": \"2015-08-11T16:59:58.427Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG7806\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace5019\",\r\n      \"name\": \"HydraNH-Namespace5019\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": {\r\n        \"tag1\": \"value1\",\r\n        \"tag2\": \"value2\",\r\n        \"tag3\": \"value3\",\r\n        \"tag4\": \"value4\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace5019\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-08T01:32:58.133Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace5019.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": true,\r\n        \"updatedAt\": \"2015-08-08T01:33:10.617Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG4301\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace6970\",\r\n      \"name\": \"HydraNH-Namespace6970\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": {\r\n        \"tag1\": \"value1\",\r\n        \"tag2\": \"value2\",\r\n        \"tag3\": \"value3\",\r\n        \"tag4\": \"value4\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace6970\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-07T22:18:08.26Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace6970.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": true,\r\n        \"updatedAt\": \"2015-08-07T22:18:23.5Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG2780\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace5016\",\r\n      \"name\": \"HydraNH-Namespace5016\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": {\r\n        \"tag1\": \"value1\",\r\n        \"tag2\": \"value2\",\r\n        \"tag3\": \"value3\",\r\n        \"tag4\": \"value4\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace5016\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-10T23:22:02.64Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace5016.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": true,\r\n        \"updatedAt\": \"2015-08-10T23:22:27.597Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG5307\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace1169\",\r\n      \"name\": \"HydraNH-Namespace1169\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": {\r\n        \"tag1\": \"value1\",\r\n        \"tag2\": \"value2\",\r\n        \"tag3\": \"value3\",\r\n        \"tag4\": \"value4\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace1169\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-12T07:39:41.147Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace1169.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": true,\r\n        \"updatedAt\": \"2015-08-12T07:39:52.433Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG2329\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace921\",\r\n      \"name\": \"HydraNH-Namespace921\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace921\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-10T19:19:00.23Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace921.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": false,\r\n        \"updatedAt\": \"2015-08-10T19:19:04.583Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG8946\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace2610\",\r\n      \"name\": \"HydraNH-Namespace2610\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": {\r\n        \"tag1\": \"value1\",\r\n        \"tag2\": \"value2\",\r\n        \"tag3\": \"value3\",\r\n        \"tag4\": \"value4\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace2610\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-07T22:51:43.667Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace2610.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": true,\r\n        \"updatedAt\": \"2015-08-07T22:51:56.793Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG6513\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace2778\",\r\n      \"name\": \"HydraNH-Namespace2778\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace2778\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-07T18:53:16.637Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace2778.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": false,\r\n        \"updatedAt\": \"2015-08-07T18:53:20.38Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG6456\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace3669\",\r\n      \"name\": \"HydraNH-Namespace3669\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace3669\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-07T18:45:14.04Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace3669.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": false,\r\n        \"updatedAt\": \"2015-08-07T18:45:15.507Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG8399\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace9255\",\r\n      \"name\": \"HydraNH-Namespace9255\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace9255\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-07T23:16:22.06Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace9255.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": false,\r\n        \"updatedAt\": \"2015-08-07T23:16:27.503Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG2320\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace7711\",\r\n      \"name\": \"HydraNH-Namespace7711\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": {\r\n        \"tag1\": \"value1\",\r\n        \"tag2\": \"value2\",\r\n        \"tag3\": \"value3\",\r\n        \"tag4\": \"value4\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace7711\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-12T03:51:40.333Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace7711.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": true,\r\n        \"updatedAt\": \"2015-08-12T03:51:46.557Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG6550\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace6913\",\r\n      \"name\": \"HydraNH-Namespace6913\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": {\r\n        \"tag1\": \"value1\",\r\n        \"tag2\": \"value2\",\r\n        \"tag3\": \"value3\",\r\n        \"tag4\": \"value4\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace6913\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-11T20:54:40.73Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace6913.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": true,\r\n        \"updatedAt\": \"2015-08-11T20:54:48.26Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG7453\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace5941\",\r\n      \"name\": \"HydraNH-Namespace5941\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace5941\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-12T05:33:33.25Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace5941.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": false,\r\n        \"updatedAt\": \"2015-08-12T05:33:35.193Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG3933\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace7137\",\r\n      \"name\": \"HydraNH-Namespace7137\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": {\r\n        \"tag1\": \"value1\",\r\n        \"tag2\": \"value2\",\r\n        \"tag3\": \"value3\",\r\n        \"tag4\": \"value4\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace7137\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-11T17:42:44.45Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace7137.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": true,\r\n        \"updatedAt\": \"2015-08-11T17:42:54.713Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG2906\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/TestDM2\",\r\n      \"name\": \"TestDM2\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"Central US\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"TestDM2\",\r\n        \"region\": \"Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2014-08-29T18:09:43.41Z\",\r\n        \"serviceBusEndpoint\": \"https://TestDM2.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": false,\r\n        \"updatedAt\": \"2014-08-29T18:09:45.047Z\",\r\n        \"eventHubEnabled\": true,\r\n        \"resourceGroup\": \"\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace2892\",\r\n      \"name\": \"HydraNH-Namespace2892\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace2892\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-07T23:46:48.993Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace2892.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": false,\r\n        \"updatedAt\": \"2015-08-07T23:46:51.05Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG4794\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace3788\",\r\n      \"name\": \"HydraNH-Namespace3788\",\r\n      \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n      \"location\": \"South Central US\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"name\": \"HydraNH-Namespace3788\",\r\n        \"region\": \"South Central US\",\r\n        \"status\": \"Active\",\r\n        \"createdAt\": \"2015-08-07T23:23:39.56Z\",\r\n        \"serviceBusEndpoint\": \"https://HydraNH-Namespace3788.servicebus.windows.net:443/\",\r\n        \"subscriptionId\": \"111c36dc40474c69acd5301072ff1fc2\",\r\n        \"enabled\": true,\r\n        \"critical\": false,\r\n        \"updatedAt\": \"2015-08-07T23:23:41.643Z\",\r\n        \"namespaceType\": \"NotificationHub\",\r\n        \"resourceGroup\": \"NotificationHub-RG3832\"\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": null\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "68207"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "dd589a22-0837-413f-bb27-72828b482df2_M1_M1"
+        ],
+        "Server-SB": [
+          "Service-Bus-Resource-Provider/SN1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14996"
+        ],
+        "x-ms-correlation-request-id": [
+          "009a6017-8622-416a-9649-b910f5c037f7"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHCENTRALUS:20150813T042133Z:009a6017-8622-416a-9649-b910f5c037f7"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Date": [
+          "Thu, 13 Aug 2015 04:21:33 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG9856/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace7557?api-version=2014-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTExYzM2ZGMtNDA0Ny00YzY5LWFjZDUtMzAxMDcyZmYxZmMyL3Jlc291cmNlR3JvdXBzL05vdGlmaWNhdGlvbkh1Yi1SRzk4NTYvcHJvdmlkZXJzL01pY3Jvc29mdC5Ob3RpZmljYXRpb25IdWJzL25hbWVzcGFjZXMvSHlkcmFOSC1OYW1lc3BhY2U3NTU3P2FwaS12ZXJzaW9uPTIwMTQtMDktMDE=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"South Central US\",\r\n  \"properties\": {\r\n    \"createdAt\": \"0001-01-01T00:00:00\",\r\n    \"enabled\": false,\r\n    \"critical\": false,\r\n    \"namespaceType\": \"NotificationHub\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Content-Length": [
+          "191"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.NotificationHubs.NotificationHubsManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": null,\r\n  \"name\": null,\r\n  \"type\": null,\r\n  \"location\": \"South Central US\",\r\n  \"tags\": null,\r\n  \"properties\": {\r\n    \"provisioningState\": \"Activating\",\r\n    \"name\": \"HydraNH-Namespace7557\",\r\n    \"region\": \"South Central US\",\r\n    \"enabled\": false,\r\n    \"critical\": false,\r\n    \"namespaceType\": \"NotificationHub\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "251"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "91b2c219-ecd5-4d3a-b175-045227e0a91c_M3_M3"
+        ],
+        "Server-SB": [
+          "Service-Bus-Resource-Provider/SN1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1197"
+        ],
+        "x-ms-correlation-request-id": [
+          "c624c6c7-ead0-4bff-8c1d-0262c85bbc17"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHCENTRALUS:20150813T042139Z:c624c6c7-ead0-4bff-8c1d-0262c85bbc17"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Date": [
+          "Thu, 13 Aug 2015 04:21:39 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG9856/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace7557?api-version=2014-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTExYzM2ZGMtNDA0Ny00YzY5LWFjZDUtMzAxMDcyZmYxZmMyL3Jlc291cmNlR3JvdXBzL05vdGlmaWNhdGlvbkh1Yi1SRzk4NTYvcHJvdmlkZXJzL01pY3Jvc29mdC5Ob3RpZmljYXRpb25IdWJzL25hbWVzcGFjZXMvSHlkcmFOSC1OYW1lc3BhY2U3NTU3P2FwaS12ZXJzaW9uPTIwMTQtMDktMDE=",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.NotificationHubs.NotificationHubsManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "d37e29b2-922c-4372-b600-d3d6f7d64c5f_M3_M3"
+        ],
+        "Server-SB": [
+          "Service-Bus-Resource-Provider/SN1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG9856/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace7557/operationresults/HydraNH-Namespace7557?api-version=2014-09-01"
+        ],
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1196"
+        ],
+        "x-ms-correlation-request-id": [
+          "5b8bda80-54a8-48ba-95cd-e8f122dfe846"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHCENTRALUS:20150813T042150Z:5b8bda80-54a8-48ba-95cd-e8f122dfe846"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Date": [
+          "Thu, 13 Aug 2015 04:21:49 GMT"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG9856/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace7557/operationresults/HydraNH-Namespace7557?api-version=2014-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTExYzM2ZGMtNDA0Ny00YzY5LWFjZDUtMzAxMDcyZmYxZmMyL3Jlc291cmNlR3JvdXBzL05vdGlmaWNhdGlvbkh1Yi1SRzk4NTYvcHJvdmlkZXJzL01pY3Jvc29mdC5Ob3RpZmljYXRpb25IdWJzL25hbWVzcGFjZXMvSHlkcmFOSC1OYW1lc3BhY2U3NTU3L29wZXJhdGlvbnJlc3VsdHMvSHlkcmFOSC1OYW1lc3BhY2U3NTU3P2FwaS12ZXJzaW9uPTIwMTQtMDktMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2014-09-01"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.NotificationHubs.NotificationHubsManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "7cee3287-0580-40d3-a773-f24542cb408e_M3_M3"
+        ],
+        "Server-SB": [
+          "Service-Bus-Resource-Provider/SN1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG9856/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace7557/operationresults/HydraNH-Namespace7557?api-version=2014-09-01"
+        ],
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14994"
+        ],
+        "x-ms-correlation-request-id": [
+          "6b33e5b4-b69a-49a2-b1c6-005f2f84ea81"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHCENTRALUS:20150813T042150Z:6b33e5b4-b69a-49a2-b1c6-005f2f84ea81"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Date": [
+          "Thu, 13 Aug 2015 04:21:49 GMT"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG9856/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace7557/operationresults/HydraNH-Namespace7557?api-version=2014-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTExYzM2ZGMtNDA0Ny00YzY5LWFjZDUtMzAxMDcyZmYxZmMyL3Jlc291cmNlR3JvdXBzL05vdGlmaWNhdGlvbkh1Yi1SRzk4NTYvcHJvdmlkZXJzL01pY3Jvc29mdC5Ob3RpZmljYXRpb25IdWJzL25hbWVzcGFjZXMvSHlkcmFOSC1OYW1lc3BhY2U3NTU3L29wZXJhdGlvbnJlc3VsdHMvSHlkcmFOSC1OYW1lc3BhY2U3NTU3P2FwaS12ZXJzaW9uPTIwMTQtMDktMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2014-09-01"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.NotificationHubs.NotificationHubsManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceNotFound\",\r\n    \"message\": \"The Resource 'Microsoft.NotificationHubs/namespaces/HydraNH-Namespace7557' under resource group 'NotificationHub-RG9856' was not found.\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "185"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-failure-cause": [
+          "gateway"
+        ],
+        "x-ms-request-id": [
+          "8d9af9a5-ec17-41f9-8b94-9e2dc34ca46f"
+        ],
+        "x-ms-correlation-request-id": [
+          "8d9af9a5-ec17-41f9-8b94-9e2dc34ca46f"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHCENTRALUS:20150813T042250Z:8d9af9a5-ec17-41f9-8b94-9e2dc34ca46f"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 13 Aug 2015 04:22:49 GMT"
+        ]
+      },
+      "StatusCode": 404
+    },
+    {
+      "RequestUri": "/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG9856/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace7315?api-version=2014-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTExYzM2ZGMtNDA0Ny00YzY5LWFjZDUtMzAxMDcyZmYxZmMyL3Jlc291cmNlR3JvdXBzL05vdGlmaWNhdGlvbkh1Yi1SRzk4NTYvcHJvdmlkZXJzL01pY3Jvc29mdC5Ob3RpZmljYXRpb25IdWJzL25hbWVzcGFjZXMvSHlkcmFOSC1OYW1lc3BhY2U3MzE1P2FwaS12ZXJzaW9uPTIwMTQtMDktMDE=",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.NotificationHubs.NotificationHubsManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "598fada7-56a1-4628-8b0f-1ac3ddd14b3e_M2_M2"
+        ],
+        "Server-SB": [
+          "Service-Bus-Resource-Provider/SN1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG9856/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace7315/operationresults/HydraNH-Namespace7315?api-version=2014-09-01"
+        ],
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1195"
+        ],
+        "x-ms-correlation-request-id": [
+          "0f611ec4-3770-4f88-b90e-5462bae8d3b4"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHCENTRALUS:20150813T042250Z:0f611ec4-3770-4f88-b90e-5462bae8d3b4"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Date": [
+          "Thu, 13 Aug 2015 04:22:50 GMT"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG9856/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace7315/operationresults/HydraNH-Namespace7315?api-version=2014-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTExYzM2ZGMtNDA0Ny00YzY5LWFjZDUtMzAxMDcyZmYxZmMyL3Jlc291cmNlR3JvdXBzL05vdGlmaWNhdGlvbkh1Yi1SRzk4NTYvcHJvdmlkZXJzL01pY3Jvc29mdC5Ob3RpZmljYXRpb25IdWJzL25hbWVzcGFjZXMvSHlkcmFOSC1OYW1lc3BhY2U3MzE1L29wZXJhdGlvbnJlc3VsdHMvSHlkcmFOSC1OYW1lc3BhY2U3MzE1P2FwaS12ZXJzaW9uPTIwMTQtMDktMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2014-09-01"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.NotificationHubs.NotificationHubsManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "9c21fdb3-9d5c-444a-9be8-cae8fa198c62_M2_M2"
+        ],
+        "Server-SB": [
+          "Service-Bus-Resource-Provider/SN1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG9856/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace7315/operationresults/HydraNH-Namespace7315?api-version=2014-09-01"
+        ],
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14992"
+        ],
+        "x-ms-correlation-request-id": [
+          "8e8198d2-6d85-446b-913f-874c36e961dd"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHCENTRALUS:20150813T042251Z:8e8198d2-6d85-446b-913f-874c36e961dd"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Date": [
+          "Thu, 13 Aug 2015 04:22:50 GMT"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG9856/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace7315/operationresults/HydraNH-Namespace7315?api-version=2014-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTExYzM2ZGMtNDA0Ny00YzY5LWFjZDUtMzAxMDcyZmYxZmMyL3Jlc291cmNlR3JvdXBzL05vdGlmaWNhdGlvbkh1Yi1SRzk4NTYvcHJvdmlkZXJzL01pY3Jvc29mdC5Ob3RpZmljYXRpb25IdWJzL25hbWVzcGFjZXMvSHlkcmFOSC1OYW1lc3BhY2U3MzE1L29wZXJhdGlvbnJlc3VsdHMvSHlkcmFOSC1OYW1lc3BhY2U3MzE1P2FwaS12ZXJzaW9uPTIwMTQtMDktMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2014-09-01"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.NotificationHubs.NotificationHubsManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceNotFound\",\r\n    \"message\": \"The Resource 'Microsoft.NotificationHubs/namespaces/HydraNH-Namespace7315' under resource group 'NotificationHub-RG9856' was not found.\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "185"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-failure-cause": [
+          "gateway"
+        ],
+        "x-ms-request-id": [
+          "6101aead-c050-446a-8d88-4d5830007579"
+        ],
+        "x-ms-correlation-request-id": [
+          "6101aead-c050-446a-8d88-4d5830007579"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHCENTRALUS:20150813T042351Z:6101aead-c050-446a-8d88-4d5830007579"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 13 Aug 2015 04:23:51 GMT"
+        ]
+      },
+      "StatusCode": 404
+    }
+  ],
+  "Names": {
+    "NamespaceCreateGetUpdateDelete": [
+      "NotificationHub-RG9856",
+      "HydraNH-Namespace7315",
+      "HydraNH-Namespace7557"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "111c36dc-4047-4c69-acd5-301072ff1fc2"
+  }
+}

@@ -594,7 +594,13 @@ namespace ResourceGroups.Tests
             {
             };
             response.Headers.Add("x-ms-request-id", "1");
-            var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.OK };
+            response.Headers.Add("Location", "http://foo");
+
+            var handler = new RecordedDelegatingHandler(response)
+            {
+                StatusCodeToReturn = HttpStatusCode.Accepted,
+                SubsequentStatusCodeToReturn = HttpStatusCode.NoContent
+            };
            
             var client = GetResourceManagementClient(handler);
 
@@ -610,30 +616,11 @@ namespace ResourceGroups.Tests
             var moveResult = client.Resources.MoveResources("resourceGroup0", resourceToMove);
 
             // Validate headers 
-            Assert.Equal(HttpMethod.Post, handler.Method);
+            Assert.Equal(HttpMethod.Get, handler.Method);
             Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
 
-            //Valid payload
-            //Construct expected URL
-            string expectedUrl = "/subscriptions/" + Uri.EscapeDataString(client.Credentials.SubscriptionId) + "/resourceGroups/resourceGroup0/moveResources?";
-            expectedUrl = expectedUrl + "api-version=2014-04-01-preview";
-            string baseUrl = client.BaseUri.AbsoluteUri;
-            // Trim '/' character from the end of baseUrl and beginning of url.
-            if (baseUrl[baseUrl.Length - 1] == '/')
-            {
-                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
-            }
-            if (expectedUrl[0] == '/')
-            {
-                expectedUrl = expectedUrl.Substring(1);
-            }
-            expectedUrl = baseUrl + "/" + expectedUrl;
-            expectedUrl = expectedUrl.Replace(" ", "%20");
-
-            Assert.Equal(expectedUrl, handler.Uri.ToString());
-            
             // Valid response
-            Assert.Equal(moveResult.StatusCode, HttpStatusCode.Accepted);
+            Assert.Equal(moveResult.StatusCode, HttpStatusCode.NoContent);
            
            
         }
