@@ -9,14 +9,17 @@
         "Accept-Language": [
           "en-us"
         ],
+        "x-ms-client-request-id": [
+          "2eafe8e9-a598-4b63-af34-9687e119899b"
+        ],
         "User-Agent": [
-          "Microsoft.Azure.Management.BackupServices.BackupServicesManagementClient/0.0.0.0"
+          "Microsoft.Azure.Management.BackupServices.BackupServicesManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"friendlyName\": \"panbha45\",\r\n        \"status\": \"Registered\",\r\n        \"healthStatus\": \"Healthy\",\r\n        \"containerType\": \"IaasVM\",\r\n        \"parentContainerId\": \"/subscriptions/f5303a0b-fae4-4cdb-b44d-0e4c032dde26/resourceGroups/backuprg/providers/Microsoft.Backup/BackupVault/backuprn/containers/panbha45\"\r\n      },\r\n      \"id\": \"/subscriptions/f5303a0b-fae4-4cdb-b44d-0e4c032dde26/resourceGroups/backuprg/providers/Microsoft.Backup/BackupVault/backuprn/containers/iaasvmcontainer;panbha45;panbha45\",\r\n      \"name\": \"iaasvmcontainer;panbha45;panbha45\",\r\n      \"type\": \"Microsoft.Backup/BackupVault/containers\"\r\n    }\r\n  ],\r\n  \"nextLink\": null\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"friendlyName\": \"hydrarecordvm\",\r\n        \"status\": \"Registered\",\r\n        \"healthStatus\": \"Healthy\",\r\n        \"containerType\": \"IaasVM\",\r\n        \"parentContainerId\": \"/subscriptions/f5303a0b-fae4-4cdb-b44d-0e4c032dde26/resourceGroups/backuprg/providers/Microsoft.Backup/BackupVault/backuprn/containers/hydrarecordvm\"\r\n      },\r\n      \"id\": \"/subscriptions/f5303a0b-fae4-4cdb-b44d-0e4c032dde26/resourceGroups/backuprg/providers/Microsoft.Backup/BackupVault/backuprn/containers/iaasvmcontainer;hydrarecordvm;hydrarecordvm\",\r\n      \"name\": \"iaasvmcontainer;hydrarecordvm;hydrarecordvm\",\r\n      \"type\": \"Microsoft.Backup/BackupVault/containers\"\r\n    }\r\n  ],\r\n  \"nextLink\": null\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "576"
+          "606"
         ],
         "Content-Type": [
           "application/json"
@@ -28,29 +31,29 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "718cd2cc-07ff-4b41-bba0-ac608db4d1d7"
+          "7550fbb2-89a9-4726-bee4-e55e2a15fd74"
         ],
         "x-ms-client-request-id": [
-          "3c57c38e-be92-4248-90bb-f621474bbe6d",
-          "3c57c38e-be92-4248-90bb-f621474bbe6d"
+          "2eafe8e9-a598-4b63-af34-9687e119899b",
+          "2eafe8e9-a598-4b63-af34-9687e119899b"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14969"
+          "14997"
         ],
         "x-ms-correlation-request-id": [
-          "718cd2cc-07ff-4b41-bba0-ac608db4d1d7"
+          "7550fbb2-89a9-4726-bee4-e55e2a15fd74"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20150804T103424Z:718cd2cc-07ff-4b41-bba0-ac608db4d1d7"
+          "CENTRALUS:20150824T091745Z:7550fbb2-89a9-4726-bee4-e55e2a15fd74"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 04 Aug 2015 10:34:23 GMT"
+          "Mon, 24 Aug 2015 09:17:45 GMT"
         ],
         "Server": [
           "Microsoft-IIS/8.0"
