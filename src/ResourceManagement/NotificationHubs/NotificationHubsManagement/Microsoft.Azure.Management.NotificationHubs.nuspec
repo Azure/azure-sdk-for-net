@@ -3,7 +3,6 @@
   <metadata minClientVersion="2.5">
     <id>Microsoft.Azure.Management.NotificationHubs</id>
     <title>Microsoft Azure NotificationHubs Service Management Library</title>
-    <releaseNotes>__BASELINE_RELEASE_NOTES__</releaseNotes>
     <version>$version$</version>
     <authors>Microsoft</authors>
     <owners>azure-sdk, Microsoft</owners>
@@ -19,9 +18,6 @@
       <group targetFramework="portable-net45+wp8+wpa81+win">
         <reference file="Microsoft.Azure.Management.NotificationHubs.dll" />
       </group>
-      <!--<group targetFramework="net40">
-        <reference file="Microsoft.Azure.Management.NotificationHubs.dll" />
-      </group>-->
     </references>
     <dependencies>
       <dependency id="Microsoft.Azure.Common" version="[2.1.0,3.0)" />
@@ -32,8 +28,5 @@
     <file src="..\binaries\portable\Microsoft.Azure.Management.NotificationHubs.dll" target="lib\portable-net45+wp8+wpa81+win" />
     <file src="..\binaries\portable\Microsoft.Azure.Management.NotificationHubs.pdb" target="lib\portable-net45+wp8+wpa81+win" />
     <file src="..\binaries\portable\Microsoft.Azure.Management.NotificationHubs.xml" target="lib\portable-net45+wp8+wpa81+win" />
-    <!--<file src="..\binaries\net40\Microsoft.Azure.Management.NotificationHubs.dll" target="lib\net40" />
-    <file src="..\binaries\net40\Microsoft.Azure.Management.NotificationHubs.pdb" target="lib\net40" />
-    <file src="..\binaries\net40\Microsoft.Azure.Management.NotificationHubs.xml" target="lib\net40" />-->
   </files>
 </package>

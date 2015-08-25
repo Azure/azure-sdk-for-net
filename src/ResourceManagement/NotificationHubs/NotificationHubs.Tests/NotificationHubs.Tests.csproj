@@ -35,8 +35,6 @@
     <Compile Include="Tests\ScenarioTests.NamespaceTests.CheckAvailability.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
-    <None Include="packages.config" />
     <None Include="SessionRecords\ScenarioTests\CheckNamespaceNameAvailability.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -56,22 +54,4 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <!--<ItemGroup>
-    <Reference Include="Microsoft.Azure.Test.Framework, Version=1.0.5568.26003, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\packages\Microsoft.Azure.Test.Framework.2.0.5658.29898-prerelease\lib\net45\Microsoft.Azure.Test.Framework.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Azure.Test.HttpRecorder, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\packages\Microsoft.Azure.Test.HttpRecorder.2.0.5658.29898-prerelease\lib\net45\Microsoft.Azure.Test.HttpRecorder.dll</HintPath>
-    </Reference>
-  </ItemGroup>-->
-  <!--
-  <Import Project="..\..\..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\..\..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets'))" />
-  </Target>-->
 </Project>
