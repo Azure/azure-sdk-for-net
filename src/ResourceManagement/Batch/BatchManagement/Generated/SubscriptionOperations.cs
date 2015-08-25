@@ -62,8 +62,8 @@ namespace Microsoft.Azure.Management.Batch
         }
         
         /// <summary>
-        /// The Get Batch Properties operation returns the Batch properties of
-        /// this subscription in the Batch Service.
+        /// The Get Subscription Quotas operation returns the quotas of the
+        /// subscription in the Batch service.
         /// </summary>
         /// <param name='locationName'>
         /// Required.
@@ -72,9 +72,9 @@ namespace Microsoft.Azure.Management.Batch
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Values returned by the Get Batch Properties operation.
+        /// Values returned by the Get Subscription Quotas operation.
         /// </returns>
-        public async Task<BatchPropertiesGetResponse> GetBatchPropertiesAsync(string locationName, CancellationToken cancellationToken)
+        public async Task<SubscriptionQuotasGetResponse> GetSubscriptionQuotasAsync(string locationName, CancellationToken cancellationToken)
         {
             // Validate
             if (locationName == null)
@@ -90,7 +90,7 @@ namespace Microsoft.Azure.Management.Batch
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("locationName", locationName);
-                TracingAdapter.Enter(invocationId, this, "GetBatchPropertiesAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetSubscriptionQuotasAsync", tracingParameters);
             }
             
             // Construct URL
@@ -102,11 +102,9 @@ namespace Microsoft.Azure.Management.Batch
             }
             url = url + "/providers/";
             url = url + "Microsoft.Batch";
-            url = url + "/";
-            url = url + "batchAccounts";
             url = url + "/locations/";
             url = url + Uri.EscapeDataString(locationName);
-            url = url + "/batchproperties";
+            url = url + "/quotas";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-09-01");
             if (queryParameters.Count > 0)
@@ -168,13 +166,13 @@ namespace Microsoft.Azure.Management.Batch
                     }
                     
                     // Create Result
-                    BatchPropertiesGetResponse result = null;
+                    SubscriptionQuotasGetResponse result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new BatchPropertiesGetResponse();
+                        result = new SubscriptionQuotasGetResponse();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {

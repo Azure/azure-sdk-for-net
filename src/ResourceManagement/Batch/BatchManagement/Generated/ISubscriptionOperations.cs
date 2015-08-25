@@ -34,15 +34,15 @@ namespace Microsoft.Azure.Management.Batch
     public partial interface ISubscriptionOperations
     {
         /// <summary>
-        /// The Get Batch Properties operation returns the Batch properties of
-        /// this subscription in the Batch Service.
+        /// The Get Subscription Quotas operation returns the quotas of the
+        /// subscription in the Batch service.
         /// </summary>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Values returned by the Get Batch Properties operation.
+        /// Values returned by the Get Subscription Quotas operation.
         /// </returns>
-        Task<BatchPropertiesGetResponse> GetBatchPropertiesAsync(string locationName, CancellationToken cancellationToken);
+        Task<SubscriptionQuotasGetResponse> GetSubscriptionQuotasAsync(string locationName, CancellationToken cancellationToken);
     }
 }

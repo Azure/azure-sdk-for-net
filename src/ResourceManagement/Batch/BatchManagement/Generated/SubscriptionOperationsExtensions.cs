@@ -31,8 +31,8 @@ namespace Microsoft.Azure.Management.Batch
     public static partial class SubscriptionOperationsExtensions
     {
         /// <summary>
-        /// The Get Batch Properties operation returns the Batch properties of
-        /// this subscription in the Batch Service.
+        /// The Get Subscription Quotas operation returns the quotas of the
+        /// subscription in the Batch service.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -42,20 +42,20 @@ namespace Microsoft.Azure.Management.Batch
         /// Required.
         /// </param>
         /// <returns>
-        /// Values returned by the Get Batch Properties operation.
+        /// Values returned by the Get Subscription Quotas operation.
         /// </returns>
-        public static BatchPropertiesGetResponse GetBatchProperties(this ISubscriptionOperations operations, string locationName)
+        public static SubscriptionQuotasGetResponse GetSubscriptionQuotas(this ISubscriptionOperations operations, string locationName)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((ISubscriptionOperations)s).GetBatchPropertiesAsync(locationName);
+                return ((ISubscriptionOperations)s).GetSubscriptionQuotasAsync(locationName);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// The Get Batch Properties operation returns the Batch properties of
-        /// this subscription in the Batch Service.
+        /// The Get Subscription Quotas operation returns the quotas of the
+        /// subscription in the Batch service.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -65,11 +65,11 @@ namespace Microsoft.Azure.Management.Batch
         /// Required.
         /// </param>
         /// <returns>
-        /// Values returned by the Get Batch Properties operation.
+        /// Values returned by the Get Subscription Quotas operation.
         /// </returns>
-        public static Task<BatchPropertiesGetResponse> GetBatchPropertiesAsync(this ISubscriptionOperations operations, string locationName)
+        public static Task<SubscriptionQuotasGetResponse> GetSubscriptionQuotasAsync(this ISubscriptionOperations operations, string locationName)
         {
-            return operations.GetBatchPropertiesAsync(locationName, CancellationToken.None);
+            return operations.GetSubscriptionQuotasAsync(locationName, CancellationToken.None);
         }
     }
 }

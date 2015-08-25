@@ -34,16 +34,16 @@ namespace Microsoft.Azure.Batch.Tests
         }
 
         [Fact]
-        public void GetBatchPropertiesThrowsException()
+        public void GetSubscriptionQuotasThrowsException()
         {
             var handler = new RecordedDelegatingHandler();
             var client = GetBatchManagementClient(handler);
 
-            Assert.Throws<ArgumentNullException>(() => client.Subscriptions.GetBatchProperties(null));
+            Assert.Throws<ArgumentNullException>(() => client.Subscriptions.GetSubscriptionQuotas(null));
         }
 
         [Fact]
-        public void GetBatchPropertiesValidateResponse()
+        public void GetSubscriptionQuotasValidateResponse()
         {
             var response = new HttpResponseMessage(HttpStatusCode.OK)
             {
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Batch.Tests
             var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.OK };
             var client = GetBatchManagementClient(handler);
 
-            var result = client.Subscriptions.GetBatchProperties("westus");
+            var result = client.Subscriptions.GetSubscriptionQuotas("westus");
 
             // Validate headers
             Assert.Equal(HttpMethod.Get, handler.Method);

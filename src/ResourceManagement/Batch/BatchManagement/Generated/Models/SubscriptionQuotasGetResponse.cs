@@ -26,9 +26,9 @@ using Microsoft.Azure;
 namespace Microsoft.Azure.Management.Batch.Models
 {
     /// <summary>
-    /// Values returned by the Get Batch Properties operation.
+    /// Values returned by the Get Subscription Quotas operation.
     /// </summary>
-    public partial class BatchPropertiesGetResponse : AzureOperationResponse
+    public partial class SubscriptionQuotasGetResponse : AzureOperationResponse
     {
         private int _accountQuota;
         
@@ -43,9 +43,10 @@ namespace Microsoft.Azure.Management.Batch.Models
         }
         
         /// <summary>
-        /// Initializes a new instance of the BatchPropertiesGetResponse class.
+        /// Initializes a new instance of the SubscriptionQuotasGetResponse
+        /// class.
         /// </summary>
-        public BatchPropertiesGetResponse()
+        public SubscriptionQuotasGetResponse()
         {
         }
     }
