@@ -8,27 +8,9 @@
   <Import Project="..\..\..\..\tools\Library.Settings.targets" />
   <Import Project="$(LibraryToolsFolder)\Test.Dependencies.target" />
   <ItemGroup>
-    <Compile Include="Helpers\ApiConstants.cs" />
-    <Compile Include="Helpers\ComputeManagementTestUtilities.cs" />
-    <Compile Include="Helpers\Helpers.cs" />
-    <Compile Include="Helpers\RecordedDelegatingHandler.cs" />
-    <Compile Include="Helpers\VaultCertComparer.cs" />
-    <Compile Include="ScenarioTests\AvailabilitySetTests.cs" />
-    <Compile Include="ScenarioTests\VMMarketplaceTest.cs" />
-    <Compile Include="ScenarioTests\VMNetworkInterfaceTests.cs" />
-    <Compile Include="ScenarioTests\ListVMTests.cs" />
-    <Compile Include="ScenarioTests\UsageTests.cs" />
-    <Compile Include="ScenarioTests\VMCertificateTests.cs" />
-    <Compile Include="ScenarioTests\ExtImgTests.cs" />
-    <Compile Include="ScenarioTests\VMImageTests.cs" />
-    <Compile Include="ScenarioTests\VMOperationalTests.cs" />
-    <Compile Include="ScenarioTests\ExtensionTests.cs" />
-    <Compile Include="ScenarioTests\VMDataDiskTests.cs" />
-    <Compile Include="ScenarioTests\VMScenarioTests.cs" />
-    <Compile Include="ScenarioTests\VMDiskSizeTests.cs" />
-    <Compile Include="ScenarioTests\VMSizesTests.cs" />
-    <Compile Include="ScenarioTests\VMTestBase.cs" />
-    <Compile Include="ScenarioTests\OSProfileTests.cs" />
+    <Compile Include="Helpers\*.cs" />
+    <Compile Include="ScenarioTests\*.cs" />
+
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\WinRMCertificate.json">
@@ -41,82 +23,85 @@
   <ItemGroup>
     <None Include="Resources\CreateKeyVaultAndCertificateScript.ps1" />
     <None Include="SessionRecords\Compute.Tests.AvailabilitySetTests\TestOperations.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Compute.Tests.ExtensionTests\TestVMExtensionOperations.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Compute.Tests.ExtImgTests\TestExtImgGet.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Compute.Tests.ExtImgTests\TestExtImgListTypes.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Compute.Tests.ExtImgTests\TestExtImgListVersionsFilters.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Compute.Tests.ExtImgTests\TestExtImgListVersionsNoFilter.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Compute.Tests.ListVMTests\TestListVMInSubscriptionWithPaging.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Compute.Tests.UsageTests\TestListUsages.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Compute.Tests.VMCertificateTests\TestVMCertificatesOperations.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Compute.Tests.VMDataDiskTests\TestVMDataDiskScenario.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Compute.Tests.VMDiagnosticsTests\TestVMBootDiagnostics.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Compute.Tests.VMDiskSizeTests\TestVMDiskSizeScenario.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Compute.Tests.VMMarketplaceTest\TestVMMarketplace.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Compute.Tests.VMNetworkInterfaceTests\TestMultiNicVirtualMachineReference.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Compute.Tests.VMNetworkInterfaceTests\TestNicVirtualMachineReference.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Compute.Tests.VMImagesTests\TestVMImageGet.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Compute.Tests.VMImagesTests\TestVMImageListFilters.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Compute.Tests.VMImagesTests\TestVMImageListNoFilter.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Compute.Tests.VMImagesTests\TestVMImageListOffers.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Compute.Tests.VMImagesTests\TestVMImageListPublishers.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Compute.Tests.VMImagesTests\TestVMImageListSkus.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Compute.Tests.VMOperationalTests\TestVMOperations.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Compute.Tests.VMScenarioTests\TestVMScenarioOperations.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Compute.Tests.VMSizesTests\TestListVMSizes.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Compute.Tests.ListVMTests\TestListVMInSubscription.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Compute.Tests.OSProfileTests\TestVMWithWindowsOSProfile.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Compute.Tests.OSProfileTests\TestVMWithLinuxOSProfile.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>

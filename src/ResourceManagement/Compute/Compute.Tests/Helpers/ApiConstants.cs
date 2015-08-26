@@ -25,4 +25,9 @@ namespace Compute.Tests
             AvailabilitySets = "availabilitySets",
             ResourceProviderNamespace = "Microsoft.Compute";
     }
+
+    public static class Constants
+    {
+        public const string StorageAccountBlobUriTemplate = "https://{0}.blob.core.windows.net/";
+    }
 }
