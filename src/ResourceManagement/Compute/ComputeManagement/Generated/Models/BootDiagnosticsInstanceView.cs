@@ -21,30 +21,40 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.Compute.Models;
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
     /// <summary>
-    /// Describes an OS profile.
+    /// The instance view of a virtual machine boot diagnostics.
     /// </summary>
-    public partial class OSProfile : OSProfileBase
+    public partial class BootDiagnosticsInstanceView
     {
-        private string _computerName;
+        private Uri _consoleScreenshotBlobUri;
         
         /// <summary>
-        /// Optional. Gets or sets the computer name.
+        /// Optional. Gets or sets the console screenshot blob Uri.
         /// </summary>
-        public string ComputerName
+        public Uri ConsoleScreenshotBlobUri
         {
-            get { return this._computerName; }
-            set { this._computerName = value; }
+            get { return this._consoleScreenshotBlobUri; }
+            set { this._consoleScreenshotBlobUri = value; }
+        }
+        
+        private Uri _serialConsoleLogBlobUri;
+        
+        /// <summary>
+        /// Optional. Gets or sets the Linux serial console log blob Uri.
+        /// </summary>
+        public Uri SerialConsoleLogBlobUri
+        {
+            get { return this._serialConsoleLogBlobUri; }
+            set { this._serialConsoleLogBlobUri = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the OSProfile class.
+        /// Initializes a new instance of the BootDiagnosticsInstanceView class.
         /// </summary>
-        public OSProfile()
+        public BootDiagnosticsInstanceView()
         {
         }
     }

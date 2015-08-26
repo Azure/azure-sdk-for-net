@@ -26,25 +26,25 @@ using Microsoft.Azure.Management.Compute.Models;
 namespace Microsoft.Azure.Management.Compute.Models
 {
     /// <summary>
-    /// Describes an OS profile.
+    /// Describes a diagnostics profile.
     /// </summary>
-    public partial class OSProfile : OSProfileBase
+    public partial class DiagnosticsProfile
     {
-        private string _computerName;
+        private BootDiagnostics _bootDiagnostics;
         
         /// <summary>
-        /// Optional. Gets or sets the computer name.
+        /// Optional. Gets or sets the boot diagnostics.
         /// </summary>
-        public string ComputerName
+        public BootDiagnostics BootDiagnostics
         {
-            get { return this._computerName; }
-            set { this._computerName = value; }
+            get { return this._bootDiagnostics; }
+            set { this._bootDiagnostics = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the OSProfile class.
+        /// Initializes a new instance of the DiagnosticsProfile class.
         /// </summary>
-        public OSProfile()
+        public DiagnosticsProfile()
         {
         }
     }
