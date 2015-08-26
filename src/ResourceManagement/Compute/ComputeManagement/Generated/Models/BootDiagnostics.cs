@@ -21,30 +21,42 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.Compute.Models;
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
     /// <summary>
-    /// Describes an OS profile.
+    /// Describes Boot Diagnostics.
     /// </summary>
-    public partial class OSProfile : OSProfileBase
+    public partial class BootDiagnostics
     {
-        private string _computerName;
+        private bool? _enabled;
         
         /// <summary>
-        /// Optional. Gets or sets the computer name.
+        /// Optional. Gets or sets whether VM Agent should be provisioned on
+        /// the Virtual Machine.
         /// </summary>
-        public string ComputerName
+        public bool? Enabled
         {
-            get { return this._computerName; }
-            set { this._computerName = value; }
+            get { return this._enabled; }
+            set { this._enabled = value; }
+        }
+        
+        private Uri _storageUri;
+        
+        /// <summary>
+        /// Optional. Gets or sets the boot diagnostics storage Uri. It should
+        /// be a valid Uri
+        /// </summary>
+        public Uri StorageUri
+        {
+            get { return this._storageUri; }
+            set { this._storageUri = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the OSProfile class.
+        /// Initializes a new instance of the BootDiagnostics class.
         /// </summary>
-        public OSProfile()
+        public BootDiagnostics()
         {
         }
     }
