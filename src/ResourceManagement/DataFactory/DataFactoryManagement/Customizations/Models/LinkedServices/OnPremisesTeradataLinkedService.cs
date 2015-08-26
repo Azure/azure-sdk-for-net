@@ -28,12 +28,6 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         public string AuthenticationType { get; set; }
 
         /// <summary>
-        /// Required. Database name for connection.
-        /// </summary>
-        [AdfRequired]
-        public string Database { get; set; }
-
-        /// <summary>
         /// Optional. The encrypted credential for authentication.
         /// </summary>]
         public string EncryptedCredential { get; set; }
@@ -48,11 +42,6 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// Optional. Password for authentication.
         /// </summary>
         public string Password { get; set; }
-
-        /// <summary>
-        /// Optional. Schema name for connection.
-        /// </summary>
-        public string Schema { get; set; }
 
         /// <summary>
         /// Required. Server name for connection.
@@ -72,18 +61,15 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         public OnPremisesTeradataLinkedService(
             string gatewayName, 
             string server, 
-            string database,
             string authenticationType)
             : this()
         {
             Ensure.IsNotNullOrEmpty(gatewayName, "gatewayName");
             Ensure.IsNotNullOrEmpty(server, "server");
-            Ensure.IsNotNullOrEmpty(database, "database");
             Ensure.IsNotNullOrEmpty(authenticationType, "authenticationType");
 
             this.GatewayName = gatewayName;
             this.Server = server;
-            this.Database = database;
             this.AuthenticationType = authenticationType;
         }
     }
