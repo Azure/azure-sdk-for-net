@@ -17,11 +17,13 @@
     <Compile Include="Authentication\AccessTokenCredential.cs" />
     <Compile Include="Authentication\AdalConfiguration.cs" />
     <Compile Include="Authentication\AdalTokenProvider.cs" />
+    <Compile Include="Authentication\BasicCredentialProvider.cs" />
     <Compile Include="Authentication\ConsoleParentWindow.cs" />
     <Compile Include="Authentication\CredStore.cs" />
     <Compile Include="Authentication\IAccessToken.cs" />
     <Compile Include="Authentication\ITokenProvider.cs" />
-    <Compile Include="Authentication\KeyStoreApplicationCredentialProvider.cs" />
+    <Compile Include="Authentication\MemoryApplicationCredentialStore.cs" />
+    <Compile Include="Authentication\KeyStoreApplicationCredentialStore.cs" />
     <Compile Include="Authentication\LoginType.cs" />
     <Compile Include="Authentication\ProtectedFileTokenCache.cs" />
     <Compile Include="Authentication\ServicePrincipalKeyStore.cs" />
@@ -38,6 +40,7 @@
     <Compile Include="Extensions\CloudExceptionExtensions.cs" />
     <Compile Include="Factories\AuthenticationFactory.cs" />
     <Compile Include="Factories\ClientFactory.cs" />
+    <Compile Include="Authentication\IApplicationCredentialStore.cs" />
     <Compile Include="Interfaces\IAuthenticationFactory.cs" />
     <Compile Include="Interfaces\IClientFactory.cs" />
     <Compile Include="Interfaces\IDataStore.cs" />

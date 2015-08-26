@@ -13,18 +13,55 @@
 // ----------------------------------------------------------------------------------
 
 using Hyak.Common;
+using Microsoft.Azure.Common.Authentication.Authentication;
+using Microsoft.Azure.Common.Authentication.Interfaces;
 using Microsoft.Azure.Common.Authentication.Models;
 using Microsoft.Azure.Common.Authentication.Properties;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using System;
 using System.Collections.Generic;
 using System.Security;
+using Microsoft.Rest.Azure.Authentication;
 
 namespace Microsoft.Azure.Common.Authentication
 {
     internal class ServicePrincipalTokenProvider : ITokenProvider
     {
         private static readonly TimeSpan expirationThreshold = TimeSpan.FromMinutes(5);
+        private IApplicationCredentialStore _credentialStore;
+
+        public ServicePrincipalTokenProvider()
+        {
+            bool canAccessCredentialStore = false;
+            try
+            {
+                var testPassword = Guid.NewGuid().ToString();
+                SecureString secureTestPassword = new SecureString();
+                foreach (var passwordChar in testPassword)
+                {
+                    secureTestPassword.AppendChar(passwordChar);
+                }
+
+                var testAppId = Guid.NewGuid().ToString();
+                var testTenant = Guid.NewGuid().ToString();
+                ServicePrincipalKeyStore.SaveKey(testAppId, testTenant, secureTestPassword);
+                var key = ServicePrincipalKeyStore.GetKey(testAppId, testTenant);
+                ServicePrincipalKeyStore.DeleteKey(testAppId, testTenant);
+                canAccessCredentialStore = key != null;
+            }
+            catch 
+            {
+            }
+
+            if (canAccessCredentialStore)
+            {
+                this._credentialStore = new KeyStoreApplicationCredentialStore();
+            }
+            else
+            {
+                this._credentialStore = new MemoryApplicationCredentialStore();
+            }
+        }
 
         public IAccessToken GetAccessToken(AdalConfiguration config, ShowDialog promptBehavior, string userId, SecureString password,
             AzureAccount.AccountType credentialType)
@@ -68,12 +105,12 @@ namespace Microsoft.Azure.Common.Authentication
 
         private SecureString LoadAppKey(string appId, string tenantId)
         {
-            return ServicePrincipalKeyStore.GetKey(appId, tenantId);
+            return _credentialStore.GetCredential(appId, tenantId);
         }
 
         private void StoreAppKey(string appId, string tenantId, SecureString appKey)
         {
-            ServicePrincipalKeyStore.SaveKey(appId, tenantId, appKey);
+            _credentialStore.AddCredential(appId, tenantId, appKey);
         }
 
 
