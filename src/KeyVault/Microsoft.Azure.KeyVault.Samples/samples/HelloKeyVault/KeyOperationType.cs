@@ -32,6 +32,8 @@ namespace Sample.Microsoft.HelloKeyVault
         CREATE_SECRET,
         GET_SECRET,
         LIST_SECRETS,
-        DELETE_SECRET
+        DELETE_SECRET,
+        ENCRYPT,
+        DECRYPT
     }
 }
