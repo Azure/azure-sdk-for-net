@@ -19,7 +19,7 @@
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Logic.LogicManagementClient/0.9.0.0"
+          "Microsoft.Azure.Management.Logic.LogicManagementClient/0.1.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"properties\": {\r\n    \"createdTime\": \"2015-07-29T05:30:35.2713202Z\",\r\n    \"changedTime\": \"2015-07-29T05:30:35.2713202Z\",\r\n    \"state\": \"Enabled\",\r\n    \"version\": \"08587634590503892213\",\r\n    \"accessEndpoint\": \"https://westus.logic.azure.com/subscriptions/df602c9c-7aa0-407d-a6fb-eb20c8bd1192/resourceGroups/flowrg/providers/Microsoft.Logic/workflows/logicwf453\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\"\r\n    },\r\n    \"definition\": {\r\n      \"$schema\": \"http://schema.management.azure.com/providers/Microsoft.Logic/schemas/2014-12-01-preview/workflowdefinition.json#\",\r\n      \"contentVersion\": \"1.0.0.0\",\r\n      \"parameters\": {},\r\n      \"triggers\": {\r\n        \"httpTrigger\": {\r\n          \"recurrence\": {\r\n            \"frequency\": \"Minute\",\r\n            \"interval\": 60\r\n          },\r\n          \"type\": \"Http\",\r\n          \"inputs\": {\r\n            \"method\": \"GET\",\r\n            \"uri\": \"invalidUri\"\r\n          }\r\n        }\r\n      },\r\n      \"actions\": {},\r\n      \"outputs\": {\r\n        \"output1\": {\r\n          \"type\": \"String\",\r\n          \"value\": \"@trigger().outputs\"\r\n        }\r\n      }\r\n    },\r\n    \"parameters\": {}\r\n  },\r\n  \"id\": \"/subscriptions/df602c9c-7aa0-407d-a6fb-eb20c8bd1192/resourceGroups/flowrg/providers/Microsoft.Logic/workflows/logicwf453\",\r\n  \"name\": \"logicwf453\",\r\n  \"type\": \"Microsoft.Logic/workflows\",\r\n  \"location\": \"westus\"\r\n}",
@@ -79,7 +79,7 @@
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Logic.LogicManagementClient/0.9.0.0"
+          "Microsoft.Azure.Management.Logic.LogicManagementClient/0.1.0.0"
         ]
       },
       "ResponseBody": "",
@@ -136,7 +136,7 @@
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Logic.LogicManagementClient/0.9.0.0"
+          "Microsoft.Azure.Management.Logic.LogicManagementClient/0.1.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"InvalidRequestContent\",\r\n    \"message\": \"The request content is invalid and could not be deserialized: 'Error converting value \\\"invalid definition\\\" to type 'Microsoft.Azure.Flow.Templates.Schema.FlowTemplate'. Path 'properties.definition', line 7, position 39.'.\"\r\n  }\r\n}",
@@ -196,7 +196,7 @@
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Logic.LogicManagementClient/0.9.0.0"
+          "Microsoft.Azure.Management.Logic.LogicManagementClient/0.1.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"properties\": {\r\n    \"startTime\": \"2015-07-29T05:30:38.5906077Z\",\r\n    \"endTime\": \"2015-07-29T05:30:38.6197992Z\",\r\n    \"status\": \"Running\",\r\n    \"correlationId\": \"a01d0004-8750-4e2b-bd5e-3a3609d9b2ba\",\r\n    \"workflow\": {\r\n      \"name\": \"logicwf453/08587634590503892213\",\r\n      \"id\": \"/subscriptions/df602c9c-7aa0-407d-a6fb-eb20c8bd1192/resourceGroups/flowrg/providers/Microsoft.Logic/workflows/logicwf453/versions/08587634590503892213\",\r\n      \"type\": \"Microsoft.Logic/workflows/versions\"\r\n    },\r\n    \"trigger\": {\r\n      \"name\": \"pushTrigger\",\r\n      \"outputsLink\": {\r\n        \"uri\": \"https://flowprodcu04by01.blob.core.windows.net/flow83f0a74477444f0d9cae4361ab58ddd620150729t000000zcontent/3F4F4_f9a0c9efc03a45dfb09889ddadaecf84_pushTrigger:5Foutputs:2Ejson?sv=2014-02-14&sr=b&sig=5VKJsinN8xUu65Zpmlr0xGsl8c%2F7kiOMRmwKqNlqCBY%3D&se=2015-07-29T09%3A30%3A38Z&sp=r\",\r\n        \"contentVersion\": \"\\\"0x8D297D6D64ED185\\\"\",\r\n        \"contentSize\": 10,\r\n        \"contentHash\": {\r\n          \"algorithm\": \"md5\",\r\n          \"value\": \"/HpQRzEMSx5SHH3zrZURuQ==\"\r\n        }\r\n      }\r\n    },\r\n    \"outputs\": {\r\n      \"output1\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"@trigger().outputs\"\r\n      }\r\n    }\r\n  },\r\n  \"id\": \"/subscriptions/df602c9c-7aa0-407d-a6fb-eb20c8bd1192/resourceGroups/flowrg/providers/Microsoft.Logic/workflows/logicwf453/runs/08587634590470169073\",\r\n  \"name\": \"08587634590470169073\",\r\n  \"type\": \"Microsoft.Logic/workflows/runs\"\r\n}",
@@ -250,7 +250,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "Microsoft.Azure.Management.Logic.LogicManagementClient/0.9.0.0"
+          "Microsoft.Azure.Management.Logic.LogicManagementClient/0.1.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"properties\": {\r\n    \"startTime\": \"2015-07-29T05:30:38.5906077Z\",\r\n    \"endTime\": \"2015-07-29T05:30:39.0041884Z\",\r\n    \"status\": \"Succeeded\",\r\n    \"correlationId\": \"a01d0004-8750-4e2b-bd5e-3a3609d9b2ba\",\r\n    \"workflow\": {\r\n      \"name\": \"logicwf453/08587634590503892213\",\r\n      \"id\": \"/subscriptions/df602c9c-7aa0-407d-a6fb-eb20c8bd1192/resourceGroups/flowrg/providers/Microsoft.Logic/workflows/logicwf453/versions/08587634590503892213\",\r\n      \"type\": \"Microsoft.Logic/workflows/versions\"\r\n    },\r\n    \"trigger\": {\r\n      \"name\": \"pushTrigger\",\r\n      \"outputsLink\": {\r\n        \"uri\": \"https://flowprodcu04by01.blob.core.windows.net/flow83f0a74477444f0d9cae4361ab58ddd620150729t000000zcontent/3F4F4_f9a0c9efc03a45dfb09889ddadaecf84_pushTrigger:5Foutputs:2Ejson?sv=2014-02-14&sr=b&sig=32hrXCYlBTD9%2FR%2BVrymO0%2BgDP4WsRfkgZIqCs1oQy9I%3D&se=2015-07-29T09%3A30%3A49Z&sp=r\",\r\n        \"contentVersion\": \"\\\"0x8D297D6D64ED185\\\"\",\r\n        \"contentSize\": 10,\r\n        \"contentHash\": {\r\n          \"algorithm\": \"md5\",\r\n          \"value\": \"/HpQRzEMSx5SHH3zrZURuQ==\"\r\n        }\r\n      }\r\n    },\r\n    \"outputs\": {\r\n      \"output1\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"testbody\"\r\n      }\r\n    }\r\n  },\r\n  \"id\": \"/subscriptions/df602c9c-7aa0-407d-a6fb-eb20c8bd1192/resourceGroups/flowrg/providers/Microsoft.Logic/workflows/logicwf453/runs/08587634590470169073\",\r\n  \"name\": \"08587634590470169073\",\r\n  \"type\": \"Microsoft.Logic/workflows/runs\"\r\n}",
