@@ -1,6 +1,6 @@
 ﻿// ----------------------------------------------------------------------------------
-//
 // Copyright Microsoft Corporation
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -12,43 +12,43 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Azure.Common.Authentication.Interfaces;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using Microsoft.Rest.Azure.Authentication;
+using System.Security;
+using System.Threading.Tasks;
 
-namespace Microsoft.Azure.Common.Authentication
+namespace Microsoft.Azure.Common.Authentication.Authentication
 {
     /// <summary>
-    /// Interface to the keystore for obtaiing credentials
+    /// A Credential provider that makes use of a credential store.
     /// </summary>
-    internal sealed class KeyStoreApplicationCredentialProvider : IApplicationCredentialProvider
+    public class BasicCredentialProvider : IApplicationCredentialProvider
     {
+        private IApplicationCredentialStore _backingStore;
         private string _tenantId;
 
         /// <summary>
-        /// Create a credential provider
+        /// Create a credential provider using the given credential store and tenant Id.
         /// </summary>
-        /// <param name="tenant"></param>
-        public KeyStoreApplicationCredentialProvider(string tenant)
+        /// <param name="backingStore">The store containing application credentials.</param>
+        /// <param name="tenantId">The tenant to get credentials for.</param>
+        public BasicCredentialProvider(IApplicationCredentialStore backingStore, string tenantId)
         {
-            this._tenantId = tenant;
+            this._backingStore = backingStore;
+            this._tenantId = tenantId;
         }
 
         /// <summary>
-        /// Get the secret for the specified client from the key store.
+        /// Get credential for use in authentication requests
         /// </summary>
-        /// <param name="clientId">The active directory client id for the application.</param>
-        /// <returns>A client credential for the application.</returns>
-        public async Task<ClientCredential> GetCredentialAsync(string clientId)
+        /// <param name="clientId">The client Id contianing the request</param>
+        /// <returns>The client credential for the given application.</returns>
+        public async Task<IdentityModel.Clients.ActiveDirectory.ClientCredential> GetCredentialAsync(string clientId)
         {
             var task = new Task<SecureString>(() =>
             {
-                return ServicePrincipalKeyStore.GetKey(clientId, _tenantId);
+                return _backingStore.GetCredential(clientId, _tenantId);
             });
             task.Start();
             var key = await task.ConfigureAwait(false);

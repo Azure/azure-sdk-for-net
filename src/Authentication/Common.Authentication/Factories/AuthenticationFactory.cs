@@ -16,6 +16,7 @@ using System;
 using System.Linq;
 using System.Security;
 using Hyak.Common;
+using Microsoft.Azure.Common.Authentication.Authentication;
 using Microsoft.Rest;
 using Microsoft.Azure.Common.Authentication.Models;
 using Microsoft.Azure.Common.Authentication.Properties;
@@ -171,7 +172,7 @@ namespace Microsoft.Azure.Common.Authentication.Factories
                 {
                     return ApplicationTokenProvider.LoginSilentAsync(
                         tenant, context.Account.Id,
-                        new KeyStoreApplicationCredentialProvider(tenant),
+                        new KeyStoreApplicationCredentialStore().GetCredentialProvider(tenant),
                         env, AzureSession.TokenCache).ConfigureAwait(false).GetAwaiter().GetResult();
                 }
 
