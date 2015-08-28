@@ -139,7 +139,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + "/runs/";
             url = url + Uri.EscapeDataString(runId);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-08-01");
+            queryParameters.Add("api-version=2015-09-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -592,7 +592,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + Uri.EscapeDataString(dataSliceRunId);
             url = url + "/logInfo";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-08-01");
+            queryParameters.Add("api-version=2015-09-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -797,12 +797,12 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/Microsoft.DataFactory/datafactories/";
             url = url + Uri.EscapeDataString(dataFactoryName);
-            url = url + "/tables/";
+            url = url + "/datasets/";
             url = url + Uri.EscapeDataString(tableName);
             url = url + "/sliceruns";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("startTime=" + Uri.EscapeDataString(parameters.DataSliceStartTime));
-            queryParameters.Add("api-version=2015-08-01");
+            queryParameters.Add("api-version=2015-09-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
