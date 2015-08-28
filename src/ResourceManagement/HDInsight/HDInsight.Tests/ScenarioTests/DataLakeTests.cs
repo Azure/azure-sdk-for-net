@@ -70,7 +70,7 @@ namespace HDInsight.Tests
 
             var dataLakeConfigs = new Dictionary<string, string>
             {
-                {"clusterIdentity.appPrincipalId", ApplicationId},
+                {"clusterIdentity.applicationId", ApplicationId},
                 {"clusterIdentity.aadTenantId", AadTenantId},
                 {"clusterIdentity.certificate", Convert.ToBase64String(CertificateFileBytes)},
                 {"clusterIdentity.certificatePassword", CertificatePassword},
