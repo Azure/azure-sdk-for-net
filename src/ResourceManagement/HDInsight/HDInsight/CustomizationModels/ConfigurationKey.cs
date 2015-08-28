@@ -87,6 +87,10 @@ namespace Microsoft.Azure.Management.HDInsight
         /// The constant for Gateway configs.
         /// </summary>
         public const string Gateway = "gateway";
-        public const string Datalake = "datalake";
+
+        /// <summary>
+        /// The constant for cluster identity configs.
+        /// </summary>
+        public const string ClusterIdentity = "clusterIdentity";
     }
 }

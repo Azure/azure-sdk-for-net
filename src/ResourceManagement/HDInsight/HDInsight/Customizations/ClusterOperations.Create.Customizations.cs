@@ -329,7 +329,7 @@ namespace Microsoft.Azure.Management.HDInsight
             //datalake configs
             var datalakeConfigExists = true;
             Dictionary<string, string> datalakeConfig;
-            configurations.TryGetValue(ConfigurationKey.Datalake, out datalakeConfig);
+            configurations.TryGetValue(ConfigurationKey.ClusterIdentity, out datalakeConfig);
 
             if (datalakeConfig == null)
             {
@@ -341,19 +341,19 @@ namespace Microsoft.Azure.Management.HDInsight
             {
                 datalakeConfig = new Dictionary<string, string>();
                 ServicePrincipal servicePrincipalObj = (ServicePrincipal)clusterCreateParameters.Principal;
-                datalakeConfig.Add("serviceAccountClientCredential.appPrincipalId", servicePrincipalObj.AppPrincipalId.ToString());
-                datalakeConfig.Add("serviceAccountClientCredential.aadTenantId", servicePrincipalObj.AADTenantId.ToString());
-                datalakeConfig.Add("serviceAccountClientCredential.certificate", Convert.ToBase64String(servicePrincipalObj.ClientCertificate));
-                datalakeConfig.Add("serviceAccountClientCredential.certificatePassword", servicePrincipalObj.ClientCertificatePassword);
-                datalakeConfig.Add("serviceAccountClientCredential.resourceUri", servicePrincipalObj.ResourceUri.ToString());
+                datalakeConfig.Add("clusterIdentity.applicationId", servicePrincipalObj.ApplicationId.ToString());
+                datalakeConfig.Add("clusterIdentity.aadTenantId", servicePrincipalObj.AADTenantId.ToString());
+                datalakeConfig.Add("clusterIdentity.certificate", Convert.ToBase64String(servicePrincipalObj.CertificateFileBytes));
+                datalakeConfig.Add("clusterIdentity.certificatePassword", servicePrincipalObj.CertificatePassword);
+                datalakeConfig.Add("clusterIdentity.resourceUri", servicePrincipalObj.ResourceUri.ToString());
 
                 if (!datalakeConfigExists)
                 {
-                    configurations.Add(ConfigurationKey.Datalake, datalakeConfig);
+                    configurations.Add(ConfigurationKey.ClusterIdentity, datalakeConfig);
                 }
                 else
                 {
-                    configurations[ConfigurationKey.Datalake] = datalakeConfig;
+                    configurations[ConfigurationKey.ClusterIdentity] = datalakeConfig;
                 }
             }
 

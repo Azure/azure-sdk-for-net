@@ -28,9 +28,9 @@ namespace HDInsight.Tests
     public class DataLakeTests
     {
         //Since we are validating the fields these should have default values.
-        private string AppPrincipalId = "11111111-1111-1111-1111-111111111111";
+        private string ApplicationId = "11111111-1111-1111-1111-111111111111";
         private string AadTenantId = "http://default";
-        private byte[] Certificate = { };
+        private byte[] CertificateFileBytes = { };
         private string CertificatePassword = "";
         private string ResourceUri = "";
 
@@ -70,14 +70,14 @@ namespace HDInsight.Tests
 
             var dataLakeConfigs = new Dictionary<string, string>
             {
-                {"serviceAccountClientCredential.appPrincipalId", AppPrincipalId},
-                {"serviceAccountClientCredential.aadTenantId", AadTenantId},
-                {"serviceAccountClientCredential.certificate", Convert.ToBase64String(Certificate)},
-                {"serviceAccountClientCredential.certificatePassword", CertificatePassword},
-                {"serviceAccountClientCredential.resourceUri", ResourceUri}
+                {"clusterIdentity.appPrincipalId", ApplicationId},
+                {"clusterIdentity.aadTenantId", AadTenantId},
+                {"clusterIdentity.certificate", Convert.ToBase64String(CertificateFileBytes)},
+                {"clusterIdentity.certificatePassword", CertificatePassword},
+                {"clusteridentity.resourceUri", ResourceUri}
             };
 
-            var spec = GetClusterSpecHelpers.AddConfigurations(cluster, ConfigurationKey.Datalake, dataLakeConfigs);
+            var spec = GetClusterSpecHelpers.AddConfigurations(cluster, ConfigurationKey.ClusterIdentity, dataLakeConfigs);
             return spec;
         }
 
@@ -115,7 +115,7 @@ namespace HDInsight.Tests
         {
             var spec = GetClusterSpecHelpers.GetPaasCreateParameters();
 
-            ServicePrincipal servicePrincipal = new ServicePrincipal(new Guid(AppPrincipalId), new Uri(AadTenantId), Certificate,
+            ServicePrincipal servicePrincipal = new ServicePrincipal(new Guid(ApplicationId), new Uri(AadTenantId), CertificateFileBytes,
                 CertificatePassword);
             spec.Principal = servicePrincipal;
             return spec;

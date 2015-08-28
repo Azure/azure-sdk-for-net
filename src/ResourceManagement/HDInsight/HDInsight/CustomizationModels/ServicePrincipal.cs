@@ -24,19 +24,19 @@ namespace Microsoft.Azure.Management.HDInsight.Models
     public class ServicePrincipal : Principal
     {
         /// <summary>
-        /// Gets Application principal id of the service principal 
+        /// Gets Application id of the service principal 
         /// </summary>
-        public Guid AppPrincipalId { get; private set; }
+        public Guid ApplicationId { get; private set; }
 
         /// <summary>
-        /// Gets client certificate associated with service principal
+        /// Gets certificate file bytes associated with service principal
         /// </summary>
-        public byte[] ClientCertificate { get; private set; }
+        public byte[] CertificateFileBytes { get; private set; }
 
         /// <summary>
-        /// Gets client certificate password associated with service principal
+        /// Gets certificate password associated with service principal
         /// </summary>
-        public string ClientCertificatePassword { get; private set; }
+        public string CertificatePassword { get; private set; }
 
         /// <summary>
         /// Gets AAD tenant uri of the service principal
@@ -51,25 +51,25 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// <summary>
         /// Initializes a new instance of the ServicePrincipal class.
         /// </summary>
-        /// <param name="appPrincipalId">Application principal id of the service principal.</param>
-        /// <param name="clientCertificate">client certificate associated with service principal.</param>
-        /// <param name="clientCertificatePassword">client certificate password associated with service principal.</param>
+        /// <param name="applicationId">Application id of the service principal.</param>
+        /// <param name="certificateFileBytes">certificate file bytes associated with service principal.</param>
+        /// <param name="certificatePassword">certificate password associated with service principal.</param>
         /// <param name="aadTenantId">AAD tenant uri of the service principal</param>
-        public ServicePrincipal(Guid appPrincipalId, Uri aadTenantId, byte[] clientCertificate, string clientCertificatePassword)
+        public ServicePrincipal(Guid applicationId, Uri aadTenantId, byte[] certificateFileBytes, string certificatePassword)
         {
-            if (appPrincipalId == Guid.Empty)
-                throw new ArgumentException("Input cannot be empty", "appPrincipalId");
+            if (applicationId == Guid.Empty)
+                throw new ArgumentException("Input cannot be empty", "applicationId");
 
             if (aadTenantId == null)
                 throw new ArgumentNullException("aadTenantId");
             
-            if (clientCertificate == null)
-                throw new ArgumentNullException("clientCertificate");
+            if (certificateFileBytes == null)
+                throw new ArgumentNullException("certificateFileBytes");
     
-            this.AppPrincipalId = appPrincipalId;
+            this.ApplicationId = applicationId;
             this.AADTenantId = aadTenantId;
-            this.ClientCertificate = clientCertificate;
-            this.ClientCertificatePassword = clientCertificatePassword;
+            this.CertificateFileBytes = certificateFileBytes;
+            this.CertificatePassword = certificatePassword;
 
             //Resource Uri of data lake 
             this.ResourceUri = new Uri("https://management.core.windows.net/");
