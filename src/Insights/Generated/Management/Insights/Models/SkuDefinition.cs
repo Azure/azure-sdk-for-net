@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Insights.Models
     public partial class SkuDefinition
     {
         private Capacity _capacity;
-        
+
         /// <summary>
         /// Optional. Gets or sets the capacity of the sku.
         /// </summary>
@@ -40,20 +40,21 @@ namespace Microsoft.Azure.Management.Insights.Models
             get { return this._capacity; }
             set { this._capacity = value; }
         }
-        
-        private Display _display;
-        
+
+        private string _resourceType;
+
         /// <summary>
-        /// Optional. Gets or sets the capacity of the sku.
+        /// Optional. Gets or sets the type of the resource e.g.
+        /// 'Microsoft.Compute/virtualMachines'.
         /// </summary>
-        public Display Display
+        public string ResourceType
         {
-            get { return this._display; }
-            set { this._display = value; }
+            get { return this._resourceType; }
+            set { this._resourceType = value; }
         }
-        
+
         private Sku _sku;
-        
+
         /// <summary>
         /// Optional. Gets or sets the sku.
         /// </summary>
@@ -62,7 +63,7 @@ namespace Microsoft.Azure.Management.Insights.Models
             get { return this._sku; }
             set { this._sku = value; }
         }
-        
+
         /// <summary>
         /// Initializes a new instance of the SkuDefinition class.
         /// </summary>

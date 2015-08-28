@@ -19,6 +19,10 @@
 // Changes to this file may cause incorrect behavior and will be lost if the
 // code is regenerated.
 
+// IMPORTANT: This code was machine generated and then modified by humans.
+// Updating this file with the machine generated one might overwrite important changes. 
+// Please review and revert unintended changes carefully.
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -80,7 +84,7 @@ namespace Microsoft.Azure.Insights
         /// <returns>
         /// The List Metric Definitions operation response.
         /// </returns>
-        public async Task<MetricDefinitionListResponse> GetMetricDefinitionsAsync(string resourceUri, string filterString, CancellationToken cancellationToken)
+        public async Task<MetricDefinitionListResponse> GetMetricDefinitionsInternalAsync(string resourceUri, string filterString, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceUri == null)
@@ -110,15 +114,7 @@ namespace Microsoft.Azure.Insights
             List<string> odataFilter = new List<string>();
             if (filterString != null)
             {
-                odataFilter.Add(Uri.EscapeDataString(filterString));
-            }
-            if (odataFilter.Count > 0)
-            {
-                queryParameters.Add("$filter=" + string.Join(null, odataFilter));
-            }
-            if (queryParameters.Count > 0)
-            {
-                url = url + "?" + string.Join("&", queryParameters);
+                url = url + "&$filter=" + Uri.EscapeDataString(filterString);
             }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
