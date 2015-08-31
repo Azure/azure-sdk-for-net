@@ -21,6 +21,7 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure.Management.HDInsight.Job.Models;
 
 namespace Microsoft.Azure.Management.HDInsight.Job.Models
 {
@@ -29,12 +30,12 @@ namespace Microsoft.Azure.Management.HDInsight.Job.Models
     /// </summary>
     public partial class JobListJsonObject
     {
-        private object _detail;
+        private JobDetailRootJsonObject _detail;
         
         /// <summary>
         /// Optional. Gets or sets the detail of the job.
         /// </summary>
-        public object Detail
+        public JobDetailRootJsonObject Detail
         {
             get { return this._detail; }
             set { this._detail = value; }
