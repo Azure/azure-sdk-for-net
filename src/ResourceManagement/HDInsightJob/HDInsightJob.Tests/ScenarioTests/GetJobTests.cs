@@ -24,7 +24,7 @@ namespace HDInsightJob.Tests
 {
     public class GetJobTests
     {
-//        [Fact]
+        [Fact]
         public void ListJobs()
         {
             using (var context = UndoContext.Current)
@@ -49,7 +49,7 @@ namespace HDInsightJob.Tests
             }
         }
 
-//        [Fact]
+        [Fact]
         public void GetHiveJob()
         {
             using (var context = UndoContext.Current)
@@ -82,7 +82,7 @@ namespace HDInsightJob.Tests
             }
         }
 
-//        [Fact]
+        [Fact]
         public void GetPigJob()
         {
             using (var context = UndoContext.Current)

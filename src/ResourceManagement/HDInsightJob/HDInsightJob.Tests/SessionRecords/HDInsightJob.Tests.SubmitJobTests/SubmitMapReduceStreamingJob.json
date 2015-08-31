@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "/templeton/v1/mapreduce/streaming?user.name=sameuser",
-      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9tYXByZWR1Y2Uvc3RyZWFtaW5nP3VzZXIubmFtZT1zYW1ldXNlcg==",
+      "RequestUri": "/templeton/v1/mapreduce/streaming?user.name=admin",
+      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9tYXByZWR1Y2Uvc3RyZWFtaW5nP3VzZXIubmFtZT1hZG1pbg==",
       "RequestMethod": "POST",
-      "RequestBody": "user.name=sameuser&input=/example/data/gutenberg/davinci.txt&output=/example/data/gutenberg/wcout&mapper=cat.exe&reducer=wc.exe&File=&define=&cmdenv=&arg=&statusdir=&enablelog=",
+      "RequestBody": "user.name=admin&input=/example/data/gutenberg/davinci.txt&output=/example/data/gutenberg/wcout&mapper=cat.exe&reducer=wc.exe&File=&define=&cmdenv=&arg=&statusdir=&enablelog=",
       "RequestHeaders": {
         "Content-Type": [
           "application/text"
         ],
         "Content-Length": [
-          "176"
+          "173"
         ],
         "accept": [
           "application/json"
@@ -26,7 +26,7 @@
           "submission"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"job_1438899342432_0018\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"job_1441022937859_0019\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "31"
@@ -35,16 +35,16 @@
           "application/json"
         ],
         "x-ms-hdi-servedby": [
-          "GATEWAY1"
+          "GATEWAY0"
         ],
         "x-ms-hdi-active": [
-          "headnode1.nemadj-ssh-test.b5.internal.cloudapp.net"
+          "headnode0.nemadj-prod-sdk.b4.internal.cloudapp.net"
         ],
         "x-ms-leader-detect-time": [
           "0"
         ],
         "Set-Cookie": [
-          "hadoop.auth=\"u=sameuser&p=sameuser&t=simple&e=1439291367481&s=kxFRRaemPA+hiEfD/S/IIYEqZJE=\"; Version=1; Path=/; Expires=Tue, 11-Aug-2015 11:09:27 GMT; HttpOnly"
+          "hadoop.auth=\"u=admin&p=admin&t=simple&e=1441095707119&s=Hr686xjm9knO5CGZYEoTBzLWz44=\"; Path=/; Expires=Tue, 01-Sep-2015 08:21:47 GMT; HttpOnly"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -60,7 +60,7 @@
           "max-age=31536000"
         ],
         "Date": [
-          "Tue, 11 Aug 2015 01:09:31 GMT"
+          "Mon, 31 Aug 2015 22:21:49 GMT"
         ]
       },
       "StatusCode": 200
