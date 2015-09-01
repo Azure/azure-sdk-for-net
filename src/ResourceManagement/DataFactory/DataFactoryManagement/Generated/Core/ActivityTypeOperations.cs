@@ -151,7 +151,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + "/activityTypes/";
             url = url + Uri.EscapeDataString(activityTypeName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-08-01");
+            queryParameters.Add("api-version=2015-09-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -369,7 +369,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + "/activityTypes/";
             url = url + Uri.EscapeDataString(parameters.ActivityType.Name);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-08-01");
+            queryParameters.Add("api-version=2015-09-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -636,7 +636,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + "/activityTypes/";
             url = url + Uri.EscapeDataString(activityTypeName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-08-01");
+            queryParameters.Add("api-version=2015-09-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -954,7 +954,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + "/activityTypes/";
             url = url + Uri.EscapeDataString(parameters.ActivityTypeName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-08-01");
+            queryParameters.Add("api-version=2015-09-01");
             queryParameters.Add("scope=" + Uri.EscapeDataString(parameters.RegistrationScope));
             queryParameters.Add("resolved=" + Uri.EscapeDataString(parameters.Resolved.ToString().ToLower()));
             if (queryParameters.Count > 0)
@@ -1178,7 +1178,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + Uri.EscapeDataString(dataFactoryName);
             url = url + "/activityTypes";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-08-01");
+            queryParameters.Add("api-version=2015-09-01");
             if (parameters.ActivityTypeName != null)
             {
                 queryParameters.Add("name=" + Uri.EscapeDataString(parameters.ActivityTypeName));

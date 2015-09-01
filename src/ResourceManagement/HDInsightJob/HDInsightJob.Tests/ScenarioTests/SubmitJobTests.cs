@@ -27,7 +27,7 @@ namespace HDInsightJob.Tests
 {
     public class SubmitJobTests
     {
-//        [Fact]
+        [Fact]
         public void KillMapReduceStreamingJob()
         {
             using (var context = UndoContext.Current)
@@ -75,7 +75,7 @@ namespace HDInsightJob.Tests
             }
         }
 
-//        [Fact]
+        [Fact]
         public void SubmitHiveJob()
         {
             using (var context = UndoContext.Current)
@@ -117,7 +117,7 @@ namespace HDInsightJob.Tests
             }
         }
 
-//        [Fact]
+        [Fact]
         public void SubmitMapReduceJob()
         {
             using (var context = UndoContext.Current)
@@ -161,7 +161,7 @@ namespace HDInsightJob.Tests
             }
         }
 
-//       [Fact]
+       [Fact]
         public void SubmitMapReduceStreamingJob()
         {
             using (var context = UndoContext.Current)
@@ -197,7 +197,7 @@ namespace HDInsightJob.Tests
             }
         }
 
-//        [Fact]
+        [Fact]
         public void SubmitPigJob()
         {
             using (var context = UndoContext.Current)

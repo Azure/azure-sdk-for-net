@@ -20,8 +20,8 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyTitle("Microsoft Azure Data Factory Management Library")]
 [assembly: AssemblyDescription("Provides Microsoft Azure Data Factory management operations.")]
 
-[assembly: AssemblyVersion("2.0.0.0")]
-[assembly: AssemblyFileVersion("2.1.0.0")]
+[assembly: AssemblyVersion("3.0.0.0")]
+[assembly: AssemblyFileVersion("3.0.0.0")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]

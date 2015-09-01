@@ -104,6 +104,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
             {
                 queryParameters.Add("user.name=" + Uri.EscapeDataString(this.Client.Credentials.Username));
             }
+            queryParameters.Add("fields=*");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -584,7 +585,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
                                 JToken fileValue = userargsValue["file"];
                                 if (fileValue != null && fileValue.Type != JTokenType.Null)
                                 {
-                                    string fileInstance = ((string)fileValue);
+                                    string fileInstance = fileValue.ToString(Newtonsoft.Json.Formatting.Indented);
                                     userargsInstance.File = fileInstance;
                                 }
                                 
@@ -1152,7 +1153,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
                                 JToken fileValue = userargsValue["file"];
                                 if (fileValue != null && fileValue.Type != JTokenType.Null)
                                 {
-                                    string fileInstance = ((string)fileValue);
+                                    string fileInstance = fileValue.ToString(Newtonsoft.Json.Formatting.Indented);
                                     userargsInstance.File = fileInstance;
                                 }
                                 
@@ -1232,6 +1233,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
                 queryParameters.Add("user.name=" + Uri.EscapeDataString(this.Client.Credentials.Username));
             }
             queryParameters.Add("showall=true");
+            queryParameters.Add("fields=*");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1308,15 +1310,446 @@ namespace Microsoft.Azure.Management.HDInsight.Job
                                     JToken detailValue = jobListValue["detail"];
                                     if (detailValue != null && detailValue.Type != JTokenType.Null)
                                     {
-                                        object detailInstance = ((string)detailValue);
+                                        JobDetailRootJsonObject detailInstance = new JobDetailRootJsonObject();
                                         jobListJsonObjectInstance.Detail = detailInstance;
+                                        
+                                        JToken statusValue = detailValue["status"];
+                                        if (statusValue != null && statusValue.Type != JTokenType.Null)
+                                        {
+                                            Status statusInstance = new Status();
+                                            detailInstance.Status = statusInstance;
+                                            
+                                            JToken jpValue = statusValue["jp"];
+                                            if (jpValue != null && jpValue.Type != JTokenType.Null)
+                                            {
+                                                string jpInstance = ((string)jpValue);
+                                                statusInstance.JobPriority = jpInstance;
+                                            }
+                                            
+                                            JToken jobIDValue = statusValue["jobID"];
+                                            if (jobIDValue != null && jobIDValue.Type != JTokenType.Null)
+                                            {
+                                                JobID jobIDInstance = new JobID();
+                                                statusInstance.JobID = jobIDInstance;
+                                                
+                                                JToken jtIdentifierValue = jobIDValue["jtIdentifier"];
+                                                if (jtIdentifierValue != null && jtIdentifierValue.Type != JTokenType.Null)
+                                                {
+                                                    string jtIdentifierInstance = ((string)jtIdentifierValue);
+                                                    jobIDInstance.JtIdentifier = jtIdentifierInstance;
+                                                }
+                                                
+                                                JToken idValue = jobIDValue["id"];
+                                                if (idValue != null && idValue.Type != JTokenType.Null)
+                                                {
+                                                    string idInstance = ((string)idValue);
+                                                    jobIDInstance.Id = idInstance;
+                                                }
+                                            }
+                                            
+                                            JToken jobIdValue = statusValue["jobId"];
+                                            if (jobIdValue != null && jobIdValue.Type != JTokenType.Null)
+                                            {
+                                                string jobIdInstance = ((string)jobIdValue);
+                                                statusInstance.JobId = jobIdInstance;
+                                            }
+                                            
+                                            JToken runStateValue = statusValue["runState"];
+                                            if (runStateValue != null && runStateValue.Type != JTokenType.Null)
+                                            {
+                                                int runStateInstance = ((int)runStateValue);
+                                                statusInstance.RunState = runStateInstance;
+                                            }
+                                            
+                                            JToken userValue = statusValue["user"];
+                                            if (userValue != null && userValue.Type != JTokenType.Null)
+                                            {
+                                                string userInstance = ((string)userValue);
+                                                statusInstance.Username = userInstance;
+                                            }
+                                            
+                                            JToken jobFileValue = statusValue["jobFile"];
+                                            if (jobFileValue != null && jobFileValue.Type != JTokenType.Null)
+                                            {
+                                                string jobFileInstance = ((string)jobFileValue);
+                                                statusInstance.JobFile = jobFileInstance;
+                                            }
+                                            
+                                            JToken jobCompleteValue = statusValue["jobComplete"];
+                                            if (jobCompleteValue != null && jobCompleteValue.Type != JTokenType.Null)
+                                            {
+                                                bool jobCompleteInstance = ((bool)jobCompleteValue);
+                                                statusInstance.JobComplete = jobCompleteInstance;
+                                            }
+                                            
+                                            JToken priorityValue = statusValue["priority"];
+                                            if (priorityValue != null && priorityValue.Type != JTokenType.Null)
+                                            {
+                                                string priorityInstance = ((string)priorityValue);
+                                                statusInstance.Priority = priorityInstance;
+                                            }
+                                            
+                                            JToken stateValue = statusValue["state"];
+                                            if (stateValue != null && stateValue.Type != JTokenType.Null)
+                                            {
+                                                string stateInstance = ((string)stateValue);
+                                                statusInstance.State = stateInstance;
+                                            }
+                                            
+                                            JToken numReservedSlotsValue = statusValue["numReservedSlots"];
+                                            if (numReservedSlotsValue != null && numReservedSlotsValue.Type != JTokenType.Null)
+                                            {
+                                                string numReservedSlotsInstance = ((string)numReservedSlotsValue);
+                                                statusInstance.NumReservedSlots = numReservedSlotsInstance;
+                                            }
+                                            
+                                            JToken schedulingInfoValue = statusValue["schedulingInfo"];
+                                            if (schedulingInfoValue != null && schedulingInfoValue.Type != JTokenType.Null)
+                                            {
+                                                string schedulingInfoInstance = ((string)schedulingInfoValue);
+                                                statusInstance.SchedulingInfo = schedulingInfoInstance;
+                                            }
+                                            
+                                            JToken reservedMemValue = statusValue["reservedMem"];
+                                            if (reservedMemValue != null && reservedMemValue.Type != JTokenType.Null)
+                                            {
+                                                string reservedMemInstance = ((string)reservedMemValue);
+                                                statusInstance.ReservedMem = reservedMemInstance;
+                                            }
+                                            
+                                            JToken numUsedSlotsValue = statusValue["numUsedSlots"];
+                                            if (numUsedSlotsValue != null && numUsedSlotsValue.Type != JTokenType.Null)
+                                            {
+                                                string numUsedSlotsInstance = ((string)numUsedSlotsValue);
+                                                statusInstance.NumUsedSlots = numUsedSlotsInstance;
+                                            }
+                                            
+                                            JToken failureInfoValue = statusValue["failureInfo"];
+                                            if (failureInfoValue != null && failureInfoValue.Type != JTokenType.Null)
+                                            {
+                                                string failureInfoInstance = ((string)failureInfoValue);
+                                                statusInstance.FailureInfo = failureInfoInstance;
+                                            }
+                                            
+                                            JToken usedMemValue = statusValue["usedMem"];
+                                            if (usedMemValue != null && usedMemValue.Type != JTokenType.Null)
+                                            {
+                                                string usedMemInstance = ((string)usedMemValue);
+                                                statusInstance.UsedMem = usedMemInstance;
+                                            }
+                                            
+                                            JToken neededMemValue = statusValue["neededMem"];
+                                            if (neededMemValue != null && neededMemValue.Type != JTokenType.Null)
+                                            {
+                                                string neededMemInstance = ((string)neededMemValue);
+                                                statusInstance.NeededMem = neededMemInstance;
+                                            }
+                                            
+                                            JToken finishTimeValue = statusValue["finishTime"];
+                                            if (finishTimeValue != null && finishTimeValue.Type != JTokenType.Null)
+                                            {
+                                                string finishTimeInstance = ((string)finishTimeValue);
+                                                statusInstance.FinishTime = finishTimeInstance;
+                                            }
+                                            
+                                            JToken trackingUrlValue = statusValue["trackingUrl"];
+                                            if (trackingUrlValue != null && trackingUrlValue.Type != JTokenType.Null)
+                                            {
+                                                string trackingUrlInstance = ((string)trackingUrlValue);
+                                                statusInstance.TrackingUrl = trackingUrlInstance;
+                                            }
+                                            
+                                            JToken startTimeValue = statusValue["startTime"];
+                                            if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
+                                            {
+                                                long startTimeInstance = ((long)startTimeValue);
+                                                statusInstance.StartTime = startTimeInstance;
+                                            }
+                                            
+                                            JToken jobNameValue = statusValue["jobName"];
+                                            if (jobNameValue != null && jobNameValue.Type != JTokenType.Null)
+                                            {
+                                                string jobNameInstance = ((string)jobNameValue);
+                                                statusInstance.JobName = jobNameInstance;
+                                            }
+                                            
+                                            JToken retiredValue = statusValue["retired"];
+                                            if (retiredValue != null && retiredValue.Type != JTokenType.Null)
+                                            {
+                                                bool retiredInstance = ((bool)retiredValue);
+                                                statusInstance.Retired = retiredInstance;
+                                            }
+                                            
+                                            JToken jobACLsValue = statusValue["jobACLs"];
+                                            if (jobACLsValue != null && jobACLsValue.Type != JTokenType.Null)
+                                            {
+                                                JobACLs jobACLsInstance = new JobACLs();
+                                                statusInstance.JobACLs = jobACLsInstance;
+                                            }
+                                            
+                                            JToken queueValue = statusValue["queue"];
+                                            if (queueValue != null && queueValue.Type != JTokenType.Null)
+                                            {
+                                                string queueInstance = ((string)queueValue);
+                                                statusInstance.Queue = queueInstance;
+                                            }
+                                            
+                                            JToken uberValue = statusValue["uber"];
+                                            if (uberValue != null && uberValue.Type != JTokenType.Null)
+                                            {
+                                                bool uberInstance = ((bool)uberValue);
+                                                statusInstance.Uber = uberInstance;
+                                            }
+                                            
+                                            JToken reduceProgressValue = statusValue["reduceProgress"];
+                                            if (reduceProgressValue != null && reduceProgressValue.Type != JTokenType.Null)
+                                            {
+                                                double reduceProgressInstance = ((double)reduceProgressValue);
+                                                statusInstance.ReduceProgress = reduceProgressInstance;
+                                            }
+                                            
+                                            JToken cleanupProgressValue = statusValue["cleanupProgress"];
+                                            if (cleanupProgressValue != null && cleanupProgressValue.Type != JTokenType.Null)
+                                            {
+                                                double cleanupProgressInstance = ((double)cleanupProgressValue);
+                                                statusInstance.CleanupProgress = cleanupProgressInstance;
+                                            }
+                                            
+                                            JToken mapProgressValue = statusValue["mapProgress"];
+                                            if (mapProgressValue != null && mapProgressValue.Type != JTokenType.Null)
+                                            {
+                                                double mapProgressInstance = ((double)mapProgressValue);
+                                                statusInstance.MapProgress = mapProgressInstance;
+                                            }
+                                            
+                                            JToken historyFileValue = statusValue["historyFile"];
+                                            if (historyFileValue != null && historyFileValue.Type != JTokenType.Null)
+                                            {
+                                                string historyFileInstance = ((string)historyFileValue);
+                                                statusInstance.HistoryFile = historyFileInstance;
+                                            }
+                                            
+                                            JToken setupProgressValue = statusValue["setupProgress"];
+                                            if (setupProgressValue != null && setupProgressValue.Type != JTokenType.Null)
+                                            {
+                                                double setupProgressInstance = ((double)setupProgressValue);
+                                                statusInstance.SetupProgress = setupProgressInstance;
+                                            }
+                                        }
+                                        
+                                        JToken profileValue = detailValue["profile"];
+                                        if (profileValue != null && profileValue.Type != JTokenType.Null)
+                                        {
+                                            Profile profileInstance = new Profile();
+                                            detailInstance.Profile = profileInstance;
+                                            
+                                            JToken jobFileValue2 = profileValue["jobFile"];
+                                            if (jobFileValue2 != null && jobFileValue2.Type != JTokenType.Null)
+                                            {
+                                                string jobFileInstance2 = ((string)jobFileValue2);
+                                                profileInstance.JobFile = jobFileInstance2;
+                                            }
+                                            
+                                            JToken urlValue = profileValue["url"];
+                                            if (urlValue != null && urlValue.Type != JTokenType.Null)
+                                            {
+                                                string urlInstance = ((string)urlValue);
+                                                profileInstance.Url = urlInstance;
+                                            }
+                                            
+                                            JToken queueNameValue = profileValue["queueName"];
+                                            if (queueNameValue != null && queueNameValue.Type != JTokenType.Null)
+                                            {
+                                                string queueNameInstance = ((string)queueNameValue);
+                                                profileInstance.QueueName = queueNameInstance;
+                                            }
+                                            
+                                            JToken jobIDValue2 = profileValue["jobID"];
+                                            if (jobIDValue2 != null && jobIDValue2.Type != JTokenType.Null)
+                                            {
+                                                JobID jobIDInstance2 = new JobID();
+                                                profileInstance.JobID = jobIDInstance2;
+                                                
+                                                JToken jtIdentifierValue2 = jobIDValue2["jtIdentifier"];
+                                                if (jtIdentifierValue2 != null && jtIdentifierValue2.Type != JTokenType.Null)
+                                                {
+                                                    string jtIdentifierInstance2 = ((string)jtIdentifierValue2);
+                                                    jobIDInstance2.JtIdentifier = jtIdentifierInstance2;
+                                                }
+                                                
+                                                JToken idValue2 = jobIDValue2["id"];
+                                                if (idValue2 != null && idValue2.Type != JTokenType.Null)
+                                                {
+                                                    string idInstance2 = ((string)idValue2);
+                                                    jobIDInstance2.Id = idInstance2;
+                                                }
+                                            }
+                                            
+                                            JToken jobNameValue2 = profileValue["jobName"];
+                                            if (jobNameValue2 != null && jobNameValue2.Type != JTokenType.Null)
+                                            {
+                                                string jobNameInstance2 = ((string)jobNameValue2);
+                                                profileInstance.JobName = jobNameInstance2;
+                                            }
+                                            
+                                            JToken userValue2 = profileValue["user"];
+                                            if (userValue2 != null && userValue2.Type != JTokenType.Null)
+                                            {
+                                                string userInstance2 = ((string)userValue2);
+                                                profileInstance.User = userInstance2;
+                                            }
+                                            
+                                            JToken jobIdValue2 = profileValue["jobId"];
+                                            if (jobIdValue2 != null && jobIdValue2.Type != JTokenType.Null)
+                                            {
+                                                string jobIdInstance2 = ((string)jobIdValue2);
+                                                profileInstance.JobId = jobIdInstance2;
+                                            }
+                                        }
+                                        
+                                        JToken idValue3 = detailValue["id"];
+                                        if (idValue3 != null && idValue3.Type != JTokenType.Null)
+                                        {
+                                            string idInstance3 = ((string)idValue3);
+                                            detailInstance.Id = idInstance3;
+                                        }
+                                        
+                                        JToken parentIdValue = detailValue["parentId"];
+                                        if (parentIdValue != null && parentIdValue.Type != JTokenType.Null)
+                                        {
+                                            string parentIdInstance = ((string)parentIdValue);
+                                            detailInstance.ParentId = parentIdInstance;
+                                        }
+                                        
+                                        JToken percentCompleteValue = detailValue["percentComplete"];
+                                        if (percentCompleteValue != null && percentCompleteValue.Type != JTokenType.Null)
+                                        {
+                                            string percentCompleteInstance = ((string)percentCompleteValue);
+                                            detailInstance.PercentComplete = percentCompleteInstance;
+                                        }
+                                        
+                                        JToken exitValueValue = detailValue["exitValue"];
+                                        if (exitValueValue != null && exitValueValue.Type != JTokenType.Null)
+                                        {
+                                            int exitValueInstance = ((int)exitValueValue);
+                                            detailInstance.ExitValue = exitValueInstance;
+                                        }
+                                        
+                                        JToken userValue3 = detailValue["user"];
+                                        if (userValue3 != null && userValue3.Type != JTokenType.Null)
+                                        {
+                                            string userInstance3 = ((string)userValue3);
+                                            detailInstance.User = userInstance3;
+                                        }
+                                        
+                                        JToken callbackValue = detailValue["callback"];
+                                        if (callbackValue != null && callbackValue.Type != JTokenType.Null)
+                                        {
+                                            object callbackInstance = ((string)callbackValue);
+                                            detailInstance.Callback = callbackInstance;
+                                        }
+                                        
+                                        JToken completedValue = detailValue["completed"];
+                                        if (completedValue != null && completedValue.Type != JTokenType.Null)
+                                        {
+                                            string completedInstance = ((string)completedValue);
+                                            detailInstance.Completed = completedInstance;
+                                        }
+                                        
+                                        JToken userargsValue = detailValue["userargs"];
+                                        if (userargsValue != null && userargsValue.Type != JTokenType.Null)
+                                        {
+                                            Userargs userargsInstance = new Userargs();
+                                            detailInstance.Userargs = userargsInstance;
+                                            
+                                            JToken argArray = userargsValue["arg"];
+                                            if (argArray != null && argArray.Type != JTokenType.Null)
+                                            {
+                                                foreach (JToken argValue in ((JArray)argArray))
+                                                {
+                                                    userargsInstance.Arg.Add(((string)argValue));
+                                                }
+                                            }
+                                            
+                                            JToken statusdirValue = userargsValue["statusdir"];
+                                            if (statusdirValue != null && statusdirValue.Type != JTokenType.Null)
+                                            {
+                                                object statusdirInstance = ((string)statusdirValue);
+                                                userargsInstance.Statusdir = statusdirInstance;
+                                            }
+                                            
+                                            JToken filesValue = userargsValue["files"];
+                                            if (filesValue != null && filesValue.Type != JTokenType.Null)
+                                            {
+                                                object filesInstance = ((string)filesValue);
+                                                userargsInstance.Files = filesInstance;
+                                            }
+                                            
+                                            JToken defineArray = userargsValue["define"];
+                                            if (defineArray != null && defineArray.Type != JTokenType.Null)
+                                            {
+                                                foreach (JToken defineValue in ((JArray)defineArray))
+                                                {
+                                                    userargsInstance.Define.Add(((string)defineValue));
+                                                }
+                                            }
+                                            
+                                            JToken enablelogValue = userargsValue["enablelog"];
+                                            if (enablelogValue != null && enablelogValue.Type != JTokenType.Null)
+                                            {
+                                                string enablelogInstance = ((string)enablelogValue);
+                                                userargsInstance.Enablelog = enablelogInstance;
+                                            }
+                                            
+                                            JToken executeValue = userargsValue["execute"];
+                                            if (executeValue != null && executeValue.Type != JTokenType.Null)
+                                            {
+                                                string executeInstance = ((string)executeValue);
+                                                userargsInstance.Execute = executeInstance;
+                                            }
+                                            
+                                            JToken usernameValue = userargsValue["user.name"];
+                                            if (usernameValue != null && usernameValue.Type != JTokenType.Null)
+                                            {
+                                                string usernameInstance = ((string)usernameValue);
+                                                userargsInstance.Username = usernameInstance;
+                                            }
+                                            
+                                            JToken callbackValue2 = userargsValue["callback"];
+                                            if (callbackValue2 != null && callbackValue2.Type != JTokenType.Null)
+                                            {
+                                                object callbackInstance2 = ((string)callbackValue2);
+                                                userargsInstance.Callback = callbackInstance2;
+                                            }
+                                            
+                                            JToken fileValue = userargsValue["file"];
+                                            if (fileValue != null && fileValue.Type != JTokenType.Null)
+                                            {
+                                                string fileInstance = fileValue.ToString(Newtonsoft.Json.Formatting.Indented);
+                                                userargsInstance.File = fileInstance;
+                                            }
+                                            
+                                            JToken jarValue = userargsValue["jar"];
+                                            if (jarValue != null && jarValue.Type != JTokenType.Null)
+                                            {
+                                                string jarInstance = ((string)jarValue);
+                                                userargsInstance.Jar = jarInstance;
+                                            }
+                                        }
+                                        
+                                        JToken msgValue = detailValue["msg"];
+                                        if (msgValue != null && msgValue.Type != JTokenType.Null)
+                                        {
+                                            object msgInstance = ((string)msgValue);
+                                            detailInstance.Msg = msgInstance;
+                                        }
                                     }
                                     
-                                    JToken idValue = jobListValue["id"];
-                                    if (idValue != null && idValue.Type != JTokenType.Null)
+                                    JToken idValue4 = jobListValue["id"];
+                                    if (idValue4 != null && idValue4.Type != JTokenType.Null)
                                     {
-                                        string idInstance = ((string)idValue);
-                                        jobListJsonObjectInstance.Id = idInstance;
+                                        string idInstance4 = ((string)idValue4);
+                                        jobListJsonObjectInstance.Id = idInstance4;
                                     }
                                 }
                             }

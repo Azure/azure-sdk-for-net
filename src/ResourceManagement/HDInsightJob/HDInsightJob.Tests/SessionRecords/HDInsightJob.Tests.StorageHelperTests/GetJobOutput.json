@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "/templeton/v1/hive?user.name=sameuser",
-      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9oaXZlP3VzZXIubmFtZT1zYW1ldXNlcg==",
+      "RequestUri": "/templeton/v1/hive?user.name=admin",
+      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9oaXZlP3VzZXIubmFtZT1hZG1pbg==",
       "RequestMethod": "POST",
-      "RequestBody": "user.name=sameuser&execute=SHOW TABLES;&file=&arg=&files=&statusdir=jobstatus&enablelog=",
+      "RequestBody": "user.name=admin&execute=SHOW TABLES;&file=&arg=&files=&statusdir=jobstatus&enablelog=",
       "RequestHeaders": {
         "Content-Type": [
           "application/text"
         ],
         "Content-Length": [
-          "88"
+          "85"
         ],
         "accept": [
           "application/json"
@@ -25,7 +25,7 @@
           "submission"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"job_1438899342432_0014\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"job_1441022937859_0013\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "31"
@@ -37,13 +37,13 @@
           "GATEWAY1"
         ],
         "x-ms-hdi-active": [
-          "headnode1.nemadj-ssh-test.b5.internal.cloudapp.net"
+          "headnode0.nemadj-prod-sdk.b4.internal.cloudapp.net"
         ],
         "x-ms-leader-detect-time": [
           "0"
         ],
         "Set-Cookie": [
-          "hadoop.auth=\"u=sameuser&p=sameuser&t=simple&e=1439291353297&s=fg5yfCWu3X5rziYXjxg07MbZHI4=\"; Version=1; Path=/; Expires=Tue, 11-Aug-2015 11:09:13 GMT; HttpOnly"
+          "hadoop.auth=\"u=admin&p=admin&t=simple&e=1441095683586&s=oUbPGF4LtZGPpZuY0+7i/brxkDY=\"; Path=/; Expires=Tue, 01-Sep-2015 08:21:23 GMT; HttpOnly"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -59,14 +59,14 @@
           "max-age=31536000"
         ],
         "Date": [
-          "Tue, 11 Aug 2015 01:09:15 GMT"
+          "Mon, 31 Aug 2015 22:21:26 GMT"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/templeton/v1/jobs/job_1438899342432_0014?user.name=sameuser",
-      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDM4ODk5MzQyNDMyXzAwMTQ/dXNlci5uYW1lPXNhbWV1c2Vy",
+      "RequestUri": "/templeton/v1/jobs/job_1441022937859_0013?user.name=admin&fields=*",
+      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDQxMDIyOTM3ODU5XzAwMTM/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -82,10 +82,10 @@
           "job"
         ]
       },
-      "ResponseBody": "{\r\n  \"status\": {\r\n    \"jobID\": {\r\n      \"jtIdentifier\": \"1438899342432\",\r\n      \"id\": 14\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"runState\": 4,\r\n    \"jobId\": \"job_1438899342432_0014\",\r\n    \"jobFile\": \"/user/sameuser/.staging/job_1438899342432_0014/job.xml\",\r\n    \"username\": \"sameuser\",\r\n    \"priority\": \"NORMAL\",\r\n    \"state\": \"PREP\",\r\n    \"usedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"retired\": false,\r\n    \"finishTime\": 0,\r\n    \"startTime\": 1439255355689,\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"queue\": \"default\",\r\n    \"trackingUrl\": \"http://headnodehost:9014/proxy/application_1438899342432_0014/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"schedulingInfo\": \"NA\",\r\n    \"reservedMem\": 0,\r\n    \"failureInfo\": \"NA\",\r\n    \"uber\": false,\r\n    \"mapProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"setupProgress\": 0.0,\r\n    \"historyFile\": \"\",\r\n    \"jobComplete\": false,\r\n    \"jobACLs\": {}\r\n  },\r\n  \"profile\": {\r\n    \"jobFile\": \"/user/sameuser/.staging/job_1438899342432_0014/job.xml\",\r\n    \"url\": \"http://headnodehost:9014/proxy/application_1438899342432_0014/\",\r\n    \"jobID\": {\r\n      \"jtIdentifier\": \"1438899342432\",\r\n      \"id\": 14\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"queueName\": \"default\",\r\n    \"user\": \"sameuser\",\r\n    \"jobId\": \"job_1438899342432_0014\"\r\n  },\r\n  \"id\": \"job_1438899342432_0014\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"sameuser\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"jobstatus\",\r\n    \"files\": \"\",\r\n    \"define\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"SHOW TABLES;\",\r\n    \"user.name\": \"sameuser\",\r\n    \"file\": \"\",\r\n    \"callback\": null\r\n  },\r\n  \"msg\": null\r\n}",
+      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 0.0,\r\n    \"runState\": 4,\r\n    \"startTime\": 1441059686003,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"/user/admin/.staging/job_1441022937859_0013/job.xml\",\r\n    \"finishTime\": 0,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"http://headnodehost:9014/proxy/application_1441022937859_0013/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"jobID\": {\r\n      \"id\": 13,\r\n      \"jtIdentifier\": \"1441022937859\"\r\n    },\r\n    \"username\": \"admin\",\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobId\": \"job_1441022937859_0013\",\r\n    \"state\": \"PREP\",\r\n    \"jobComplete\": false,\r\n    \"retired\": false,\r\n    \"uber\": false\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"admin\",\r\n    \"jobFile\": \"/user/admin/.staging/job_1441022937859_0013/job.xml\",\r\n    \"url\": \"http://headnodehost:9014/proxy/application_1441022937859_0013/\",\r\n    \"queueName\": \"default\",\r\n    \"jobID\": {\r\n      \"id\": 13,\r\n      \"jtIdentifier\": \"1441022937859\"\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobId\": \"job_1441022937859_0013\"\r\n  },\r\n  \"id\": \"job_1441022937859_0013\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"admin\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"jobstatus\",\r\n    \"files\": \"\",\r\n    \"define\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"SHOW TABLES;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": \"\",\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "1317"
+          "1325"
         ],
         "Content-Type": [
           "application/json"
@@ -94,7 +94,7 @@
           "GATEWAY1"
         ],
         "x-ms-hdi-active": [
-          "headnode1.nemadj-ssh-test.b5.internal.cloudapp.net"
+          "headnode0.nemadj-prod-sdk.b4.internal.cloudapp.net"
         ],
         "x-ms-leader-detect-time": [
           "0"
@@ -113,14 +113,14 @@
           "max-age=31536000"
         ],
         "Date": [
-          "Tue, 11 Aug 2015 01:09:15 GMT"
+          "Mon, 31 Aug 2015 22:21:26 GMT"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/templeton/v1/jobs/job_1438899342432_0014?user.name=sameuser",
-      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDM4ODk5MzQyNDMyXzAwMTQ/dXNlci5uYW1lPXNhbWV1c2Vy",
+      "RequestUri": "/templeton/v1/jobs/job_1441022937859_0013?user.name=admin&fields=*",
+      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDQxMDIyOTM3ODU5XzAwMTM/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -136,10 +136,10 @@
           "job"
         ]
       },
-      "ResponseBody": "{\r\n  \"status\": {\r\n    \"jobID\": {\r\n      \"jtIdentifier\": \"1438899342432\",\r\n      \"id\": 14\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"runState\": 4,\r\n    \"jobId\": \"job_1438899342432_0014\",\r\n    \"jobFile\": \"/user/sameuser/.staging/job_1438899342432_0014/job.xml\",\r\n    \"username\": \"sameuser\",\r\n    \"priority\": \"NORMAL\",\r\n    \"state\": \"PREP\",\r\n    \"usedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"retired\": false,\r\n    \"finishTime\": 0,\r\n    \"startTime\": 1439255355689,\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"queue\": \"default\",\r\n    \"trackingUrl\": \"http://headnodehost:9014/proxy/application_1438899342432_0014/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"schedulingInfo\": \"NA\",\r\n    \"reservedMem\": 0,\r\n    \"failureInfo\": \"NA\",\r\n    \"uber\": false,\r\n    \"mapProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"setupProgress\": 0.0,\r\n    \"historyFile\": \"\",\r\n    \"jobComplete\": false,\r\n    \"jobACLs\": {}\r\n  },\r\n  \"profile\": {\r\n    \"jobFile\": \"/user/sameuser/.staging/job_1438899342432_0014/job.xml\",\r\n    \"url\": \"http://headnodehost:9014/proxy/application_1438899342432_0014/\",\r\n    \"jobID\": {\r\n      \"jtIdentifier\": \"1438899342432\",\r\n      \"id\": 14\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"queueName\": \"default\",\r\n    \"user\": \"sameuser\",\r\n    \"jobId\": \"job_1438899342432_0014\"\r\n  },\r\n  \"id\": \"job_1438899342432_0014\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"sameuser\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"jobstatus\",\r\n    \"files\": \"\",\r\n    \"define\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"SHOW TABLES;\",\r\n    \"user.name\": \"sameuser\",\r\n    \"file\": \"\",\r\n    \"callback\": null\r\n  },\r\n  \"msg\": null\r\n}",
+      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 0.0,\r\n    \"runState\": 4,\r\n    \"startTime\": 1441059686003,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"/user/admin/.staging/job_1441022937859_0013/job.xml\",\r\n    \"finishTime\": 0,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"http://headnodehost:9014/proxy/application_1441022937859_0013/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"jobID\": {\r\n      \"id\": 13,\r\n      \"jtIdentifier\": \"1441022937859\"\r\n    },\r\n    \"username\": \"admin\",\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobId\": \"job_1441022937859_0013\",\r\n    \"state\": \"PREP\",\r\n    \"jobComplete\": false,\r\n    \"retired\": false,\r\n    \"uber\": false\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"admin\",\r\n    \"jobFile\": \"/user/admin/.staging/job_1441022937859_0013/job.xml\",\r\n    \"url\": \"http://headnodehost:9014/proxy/application_1441022937859_0013/\",\r\n    \"queueName\": \"default\",\r\n    \"jobID\": {\r\n      \"id\": 13,\r\n      \"jtIdentifier\": \"1441022937859\"\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobId\": \"job_1441022937859_0013\"\r\n  },\r\n  \"id\": \"job_1441022937859_0013\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"admin\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"jobstatus\",\r\n    \"files\": \"\",\r\n    \"define\": [],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"SHOW TABLES;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": \"\",\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "1317"
+          "1325"
         ],
         "Content-Type": [
           "application/json"
@@ -148,7 +148,7 @@
           "GATEWAY1"
         ],
         "x-ms-hdi-active": [
-          "headnode1.nemadj-ssh-test.b5.internal.cloudapp.net"
+          "headnode0.nemadj-prod-sdk.b4.internal.cloudapp.net"
         ],
         "x-ms-leader-detect-time": [
           "0"
@@ -167,7 +167,7 @@
           "max-age=31536000"
         ],
         "Date": [
-          "Tue, 11 Aug 2015 01:09:15 GMT"
+          "Mon, 31 Aug 2015 22:21:26 GMT"
         ]
       },
       "StatusCode": 200
