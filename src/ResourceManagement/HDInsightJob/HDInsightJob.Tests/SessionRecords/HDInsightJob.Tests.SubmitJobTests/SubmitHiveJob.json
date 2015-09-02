@@ -25,7 +25,7 @@
           "submission"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"job_1441139801399_0049\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"job_1441139801399_0060\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "31"
@@ -34,7 +34,7 @@
           "application/json"
         ],
         "Set-Cookie": [
-          "hadoop.auth=\"u=admin&p=admin&t=simple&e=1441262159527&s=76VMzm3geDrvE21CjSIj4THXUHU=\"; Path=/; Expires=Thu, 03-Sep-2015 06:35:59 GMT; HttpOnly; path=/; secure"
+          "hadoop.auth=\"u=admin&p=admin&t=simple&e=1441265375707&s=Xnig6ZLgX+BIphTZyji8u2bDOSw=\"; Path=/; Expires=Thu, 03-Sep-2015 07:29:35 GMT; HttpOnly; path=/; secure"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -44,7 +44,7 @@
           "ASP.NET"
         ],
         "Date": [
-          "Wed, 02 Sep 2015 20:36:18 GMT"
+          "Wed, 02 Sep 2015 21:30:01 GMT"
         ]
       },
       "StatusCode": 200

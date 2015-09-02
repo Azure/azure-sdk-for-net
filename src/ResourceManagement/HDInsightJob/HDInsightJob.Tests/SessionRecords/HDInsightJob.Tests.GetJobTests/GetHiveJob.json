@@ -25,7 +25,7 @@
           "submission"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"job_1441139801399_0045\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"job_1441139801399_0056\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "31"
@@ -34,7 +34,7 @@
           "application/json"
         ],
         "Set-Cookie": [
-          "hadoop.auth=\"u=admin&p=admin&t=simple&e=1441262107020&s=w7O+ZtDNHIuoyMWVXHuWIM8ISWE=\"; Path=/; Expires=Thu, 03-Sep-2015 06:35:07 GMT; HttpOnly; path=/; secure"
+          "hadoop.auth=\"u=admin&p=admin&t=simple&e=1441265339452&s=ATIc/6o45OM8r/I0rVQTlQTkN+M=\"; Path=/; Expires=Thu, 03-Sep-2015 07:28:59 GMT; HttpOnly; path=/; secure"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -44,14 +44,14 @@
           "ASP.NET"
         ],
         "Date": [
-          "Wed, 02 Sep 2015 20:35:40 GMT"
+          "Wed, 02 Sep 2015 21:29:17 GMT"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/templeton/v1/jobs/job_1441139801399_0045?user.name=admin&fields=*",
-      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDQxMTM5ODAxMzk5XzAwNDU/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
+      "RequestUri": "/templeton/v1/jobs/job_1441139801399_0056?user.name=admin&fields=*",
+      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDQxMTM5ODAxMzk5XzAwNTY/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -67,7 +67,7 @@
           "job"
         ]
       },
-      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 0.0,\r\n    \"runState\": 4,\r\n    \"startTime\": 1441226138408,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"/mapreducestaging/admin/.staging/job_1441139801399_0045/job.xml\",\r\n    \"finishTime\": 0,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"http://headnode1.4m32muw04giu3klb5maicsedtd.dx.internal.cloudapp.net:8088/proxy/application_1441139801399_0045/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"jobId\": \"job_1441139801399_0045\",\r\n    \"username\": \"admin\",\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobID\": {\r\n      \"id\": 45,\r\n      \"jtIdentifier\": \"1441139801399\"\r\n    },\r\n    \"jobComplete\": false,\r\n    \"retired\": false,\r\n    \"uber\": false,\r\n    \"state\": \"PREP\"\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"admin\",\r\n    \"jobFile\": \"/mapreducestaging/admin/.staging/job_1441139801399_0045/job.xml\",\r\n    \"url\": \"http://headnode1.4m32muw04giu3klb5maicsedtd.dx.internal.cloudapp.net:8088/proxy/application_1441139801399_0045/\",\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1441139801399_0045\",\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobID\": {\r\n      \"id\": 45,\r\n      \"jtIdentifier\": \"1441139801399\"\r\n    }\r\n  },\r\n  \"id\": \"job_1441139801399_0045\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"admin\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"\",\r\n    \"files\": \"\",\r\n    \"define\": [\r\n      \"\"\r\n    ],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"SHOW TABLES;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": \"\",\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
+      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 0.0,\r\n    \"runState\": 4,\r\n    \"startTime\": 1441229357251,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"/mapreducestaging/admin/.staging/job_1441139801399_0056/job.xml\",\r\n    \"finishTime\": 0,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"http://headnode1.4m32muw04giu3klb5maicsedtd.dx.internal.cloudapp.net:8088/proxy/application_1441139801399_0056/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"jobId\": \"job_1441139801399_0056\",\r\n    \"username\": \"admin\",\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobID\": {\r\n      \"id\": 56,\r\n      \"jtIdentifier\": \"1441139801399\"\r\n    },\r\n    \"jobComplete\": false,\r\n    \"retired\": false,\r\n    \"uber\": false,\r\n    \"state\": \"PREP\"\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"admin\",\r\n    \"jobFile\": \"/mapreducestaging/admin/.staging/job_1441139801399_0056/job.xml\",\r\n    \"url\": \"http://headnode1.4m32muw04giu3klb5maicsedtd.dx.internal.cloudapp.net:8088/proxy/application_1441139801399_0056/\",\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1441139801399_0056\",\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobID\": {\r\n      \"id\": 56,\r\n      \"jtIdentifier\": \"1441139801399\"\r\n    }\r\n  },\r\n  \"id\": \"job_1441139801399_0056\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"admin\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"\",\r\n    \"files\": \"\",\r\n    \"define\": [\r\n      \"\"\r\n    ],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"SHOW TABLES;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": \"\",\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "1440"
@@ -83,7 +83,7 @@
           "ASP.NET"
         ],
         "Date": [
-          "Wed, 02 Sep 2015 20:35:41 GMT"
+          "Wed, 02 Sep 2015 21:29:17 GMT"
         ]
       },
       "StatusCode": 200
