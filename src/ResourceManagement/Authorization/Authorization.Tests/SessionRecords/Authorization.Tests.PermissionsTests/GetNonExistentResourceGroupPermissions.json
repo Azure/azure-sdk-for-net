@@ -7,7 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "Microsoft.Azure.Management.Authorization.AuthorizationManagementClient/0.9.0.0"
+          "Microsoft.Azure.Management.Authorization.AuthorizationManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"actions\": [\r\n        \"*\"\r\n      ],\r\n      \"notActions\": []\r\n    }\r\n  ],\r\n  \"nextLink\": null\r\n}",
@@ -25,10 +25,10 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "ba7ad839-a02b-44c4-83fc-9a382620d64d"
+          "ad65e89f-06e6-4282-aceb-4d7adaec4201"
         ],
         "x-ms-gateway-service-instanceid": [
-          "PASFE_IN_3"
+          "PASFE_IN_0"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -37,22 +37,22 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14992"
+          "14998"
         ],
         "x-ms-correlation-request-id": [
-          "e24caa78-760f-4711-882f-c06170ec7d3d"
+          "9696f0d5-3ac7-4bc9-a88a-8984b0b0b4e2"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20150902T193337Z:e24caa78-760f-4711-882f-c06170ec7d3d"
+          "WESTUS:20150902T220611Z:9696f0d5-3ac7-4bc9-a88a-8984b0b0b4e2"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Wed, 02 Sep 2015 19:33:36 GMT"
+          "Wed, 02 Sep 2015 22:06:10 GMT"
         ],
         "Set-Cookie": [
-          "x-ms-gateway-slice=productiona; path=/; secure; HttpOnly"
+          "x-ms-gateway-slice=productionb; path=/; secure; HttpOnly"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
