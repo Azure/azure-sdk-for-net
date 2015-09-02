@@ -31,6 +31,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using Hyak.Common;
 using Hyak.Common.Internals;
+using Microsoft.Azure.Insights;
 using Microsoft.Azure.Management.Insights;
 using Microsoft.Azure.Management.Insights.Models;
 using Newtonsoft.Json.Linq;
@@ -85,7 +86,13 @@ namespace Microsoft.Azure.Management.Insights
             {
                 throw new ArgumentNullException("resourceUri");
             }
-            
+
+            // Only valid for storage resources
+            if (!Util.IsStorageResourceProvider(resourceUri))
+            {
+                throw new ArgumentException("This is not a valid storage resource Id.", "resourceUri");
+            }
+
             // Tracing
             bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
@@ -101,9 +108,11 @@ namespace Microsoft.Azure.Management.Insights
             string url = "";
             url = url + "/";
             url = url + Uri.EscapeDataString(resourceUri);
-            url = url + "/diagnosticSettings/storage";
+
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-04-01");
+            url = url + "/providers/microsoft.insights/diagnosticSettings/storage";
+            queryParameters.Add("api-version=2015-07-01");
+            
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -331,7 +340,13 @@ namespace Microsoft.Azure.Management.Insights
             {
                 throw new ArgumentNullException("parameters");
             }
-            
+
+            // Only valid for storage resources
+            if (!Util.IsStorageResourceProvider(resourceUri))
+            {
+                throw new ArgumentException("This is not a valid storage resource Id.", "resourceUri");
+            }
+
             // Tracing
             bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
@@ -348,9 +363,11 @@ namespace Microsoft.Azure.Management.Insights
             string url = "";
             url = url + "/";
             url = url + Uri.EscapeDataString(resourceUri);
-            url = url + "/diagnosticSettings/storage";
+
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-04-01");
+            url = url + "/providers/microsoft.insights/diagnosticSettings/storage";
+            queryParameters.Add("api-version=2015-07-01");
+
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);

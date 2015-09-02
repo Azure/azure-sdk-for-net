@@ -29,6 +29,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Hyak.Common;
+using Microsoft.Azure.Insights;
 using Microsoft.Azure.Management.Insights;
 using Microsoft.Azure.Management.Insights.Models;
 using Newtonsoft.Json.Linq;
@@ -84,6 +85,12 @@ namespace Microsoft.Azure.Management.Insights
                 throw new ArgumentNullException("resourceUri");
             }
             
+            // Only valid for compute resources
+            if (!Util.IsComputeResourceProvider(resourceUri))
+            {
+                throw new ArgumentException("This is not a valid compute resource Id.", "resourceUri");
+            }
+
             // Tracing
             bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
@@ -275,7 +282,13 @@ namespace Microsoft.Azure.Management.Insights
             {
                 throw new ArgumentNullException("parameters");
             }
-            
+
+            // Only valid for compute resources
+            if (!Util.IsComputeResourceProvider(resourceUri))
+            {
+                throw new ArgumentException("This is not a valid compute resource Id.", "resourceUri");
+            }
+
             // Tracing
             bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;

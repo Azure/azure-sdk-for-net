@@ -20,12 +20,27 @@ namespace Microsoft.Azure.Insights
             new UriTemplate("subscriptions/{subscriptionId}/providers/{providerName}/*")
         };
 
+        private static readonly HashSet<string> StorageResourceProviders = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+        {
+            "microsoft.classicstorage",
+            "microsoft.storage"
+        };
+
+        private static readonly HashSet<string> ComputeResourceProviders = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+        {
+            "microsoft.classiccompute",
+            "microsoft.compute"
+        };
+
         /// <summary>
         /// Collection of legacy resource providers.
         /// </summary>
         public static readonly HashSet<string> LegacyResourceProviders = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
         {
-            "microsoft.documentdb"
+            "microsoft.documentdb",
+            "microsoft.sql",
+            "microsoft.web",
+            "newrelic.apm"
         };
 
         /// <summary>
@@ -37,6 +52,38 @@ namespace Microsoft.Azure.Insights
         {
             string resourceProvider = ExtractResourceProvider(resourceId);
             return LegacyResourceProviders.Contains(resourceProvider);
+        }
+
+        /// <summary>
+        /// Check to see if the resourceId is backed by the storage resource provider
+        /// </summary>
+        /// <param name="resourceId">resource id</param>
+        /// <returns>true, if the resource id is for a storage resource</returns>
+        internal static bool IsStorageResourceProvider(string resourceId)
+        {
+            if (resourceId == null)
+            {
+                throw new ArgumentNullException("resourceId");
+            }
+            
+            string resourceProvider = ExtractResourceProvider(resourceId);
+            return StorageResourceProviders.Contains(resourceProvider);
+        }
+
+        /// <summary>
+        /// Check to see if the resourceId is backed by the compute resource provider
+        /// </summary>
+        /// <param name="resourceId">resource id</param>
+        /// <returns>true, if the resource id is for a compute resource</returns>
+        internal static bool IsComputeResourceProvider(string resourceId)
+        {
+            if (resourceId == null)
+            {
+                throw new ArgumentNullException("resourceId");
+            }
+
+            string resourceProvider = ExtractResourceProvider(resourceId);
+            return ComputeResourceProviders.Contains(resourceProvider);
         }
 
         /// <summary>

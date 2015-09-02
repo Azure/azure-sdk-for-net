@@ -90,7 +90,7 @@
     <Compile Include="Generated\Insights\Models\UsageMetricCollectionDeprecated.cs" />
     <Compile Include="Generated\Insights\Models\UsageMetricDeprecated.cs" />
     <Compile Include="Generated\Insights\Models\UsageMetricListResponseDeprecated.cs" />
-    <Compile Include="Generated\Management\Insights\AgentDiagnosticSettingsOperations.cs" />
+    <Compile Include="OnetimeGenerated\Management\AgentDiagnosticSettingsOperations.cs" />
     <Compile Include="Generated\Management\Insights\AgentDiagnosticSettingsOperationsExtensions.cs" />
     <Compile Include="Generated\Management\Insights\IAgentDiagnosticSettingsOperations.cs" />
     <Compile Include="Generated\Management\Insights\IServiceDiagnosticSettingsOperations.cs" />
@@ -123,7 +123,7 @@
     <Compile Include="Generated\Management\Insights\Models\TimeAggregationOperator.cs" />
     <Compile Include="Generated\Management\Insights\ServiceDiagnosticSettingsOperations.cs" />
     <Compile Include="Generated\Management\Insights\ServiceDiagnosticSettingsOperationsExtensions.cs" />
-    <Compile Include="Generated\Management\Insights\StorageDiagnosticSettingsOperations.cs" />
+    <Compile Include="OnetimeGenerated\Management\StorageDiagnosticSettingsOperations.cs" />
     <Compile Include="Generated\Management\Insights\StorageDiagnosticSettingsOperationsExtensions.cs" />
     <Compile Include="Generated\Management\Insights\Models\SkuUpdateResponse.cs" />
     <Compile Include="Customizations\Sku\SkuOperationsExtensions.Customizations.cs" />
