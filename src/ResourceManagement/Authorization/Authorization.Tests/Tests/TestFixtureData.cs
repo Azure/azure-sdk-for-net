@@ -140,6 +140,11 @@ namespace Authorization.Tests
             }
         }
 
+        internal void AddMemberToGroup(string groupId, string memberObjectId)
+        {
+            this.GraphClient.AddMemberToGroup(groupId, memberObjectId);
+        }
+
         private void CleanupTestData()
         {
             foreach (var user in this.createdUsers)

@@ -37,6 +37,38 @@ namespace Authorization.Tests
         }
 
         [Fact]
+        public void ClassicAdministratorListTests()
+        {
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+                var client = testContext.GetAuthorizationManagementClient();
+
+                Assert.NotNull(client);
+                Assert.NotNull(client.HttpClient);
+
+                var allClassicAdmins = client.ClassicAdministrators.List();
+
+                Assert.NotNull(allClassicAdmins);
+                Assert.NotNull(allClassicAdmins.ClassicAdministrators);
+
+                foreach (var classicAdmin in allClassicAdmins.ClassicAdministrators)
+                {
+                    Assert.NotNull(classicAdmin);
+                    Assert.NotNull(classicAdmin.Id);
+                    Assert.True(classicAdmin.Id.Contains("/providers/Microsoft.Authorization/classicAdministrators/"));
+                    Assert.True(classicAdmin.Id.Contains("/subscriptions/" + client.Credentials.SubscriptionId));
+                    Assert.NotNull(classicAdmin.Name);
+                    Assert.NotNull(classicAdmin.Type);
+                    Assert.Equal("Microsoft.Authorization/classicAdministrators", classicAdmin.Type);
+                    Assert.NotNull(classicAdmin.Properties);
+                    Assert.NotNull(classicAdmin.Properties.EmailAddress);
+                    Assert.NotNull(classicAdmin.Properties.Role);
+                }
+            }
+        }
+
+        [Fact]
         public void RoleAssignmentByIdTests()
         {
             using (UndoContext context = UndoContext.Current)
@@ -325,6 +357,80 @@ namespace Authorization.Tests
                     Assert.NotNull(assignment.Properties.RoleDefinitionId);
                     Assert.NotNull(assignment.Properties.Scope);
                 }
+            }
+        }
+
+        [Fact]
+        public void RoleAssignmentListWithAssignedToFilterTest()
+        {
+            var principalId = testContext.Users.ElementAt(1);
+
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+                var client = testContext.GetAuthorizationManagementClient();
+
+                Assert.NotNull(client);
+                Assert.NotNull(client.HttpClient);
+
+                var scope = "subscriptions/" + client.Credentials.SubscriptionId;
+                var roleDefinition = client.RoleDefinitions.List().RoleDefinitions.First();
+                
+                // Get user and group and add the user to the group
+                var userId = testContext.Users.First();
+                var groupId = testContext.Groups.First();
+            //    testContext.AddMemberToGroup(groupId, userId.ToString());
+
+                // create assignment to group
+               // var pId = testContext.Users.ElementAt(i);
+                var newRoleAssignmentToGroupParams = new RoleAssignmentCreateParameters()
+                {
+                    Properties = new RoleAssignmentProperties()
+                    {
+                        RoleDefinitionId = roleDefinition.Id,
+                        PrincipalId = Guid.Parse(groupId)
+                    }
+                };
+                var assignmentName = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "AssignmentName_Group");
+                var assignmentToGroup = client.RoleAssignments.Create(scope, assignmentName, newRoleAssignmentToGroupParams);
+
+                // create assignment to user
+                var newRoleAssignmentToUserParams = new RoleAssignmentCreateParameters()
+                {
+                    Properties = new RoleAssignmentProperties()
+                    {
+                        RoleDefinitionId = roleDefinition.Id,
+                        PrincipalId = userId
+                    }
+                };
+                
+                assignmentName = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "AssignmentName_User");
+                var assignmentToUser = client.RoleAssignments.Create(scope, assignmentName, newRoleAssignmentToUserParams);
+            
+                // List role assignments with AssignedTo filter = user id
+                var allRoleAssignments = client.RoleAssignments.List(new ListAssignmentsFilterParameters
+                {
+                    AssignedToPrincipalId = userId
+                });
+
+                Assert.NotNull(allRoleAssignments);
+                Assert.NotNull(allRoleAssignments.RoleAssignments);
+                Assert.True(allRoleAssignments.RoleAssignments.Count >= 2);
+
+                foreach (var assignment in allRoleAssignments.RoleAssignments)
+                {
+                    Assert.NotNull(assignment);
+                    Assert.NotNull(assignment.Id);
+                    Assert.NotNull(assignment.Name);
+                    Assert.NotNull(assignment.Type);
+                    Assert.NotNull(assignment.Properties);
+                    Assert.NotNull(assignment.Properties.PrincipalId);
+                    Assert.NotNull(assignment.Properties.RoleDefinitionId);
+                    Assert.NotNull(assignment.Properties.Scope);
+                }
+
+                // Returned assignments contain assignment to group
+                Assert.True(allRoleAssignments.RoleAssignments.Count(a => a.Properties.PrincipalId.ToString() == groupId) >= 1);
             }
         }
 

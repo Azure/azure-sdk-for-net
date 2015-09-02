@@ -25,6 +25,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Xunit;
 
 namespace Authorization.Tests
 {
@@ -42,6 +43,10 @@ namespace Authorization.Tests
 
         private const string GraphGroupsSuffix = "groups";
 
+        private const string GraphDirectoryObjectsSuffix = "directoryObjects";
+
+        private const string GraphGroupMemberSuffix = @"$links/members";
+
         private const string CreateUserJsonFormatter = @"{0}
     ""accountEnabled"": true,
     ""displayName"": ""{2}"",
@@ -50,12 +55,16 @@ namespace Authorization.Tests
     ""userPrincipalName"": ""{2}{3}""
 {1}";
 
-    private const string CreateGroupJsonFormatter = @"{0}
+        private const string CreateGroupJsonFormatter = @"{0}
   ""displayName"":""{2}"",
   ""mailNickname"":""{2}"",
   ""mailEnabled"":false,
   ""securityEnabled"":true
 {1}";
+   
+        private const string AddMemberToGroupJsonFormatter = @"{0}
+  ""url"":""{2}"",
+  {1}";
         private TestEnvironment testEnvironment;
 
         public string UserDomain { get; private set; }
@@ -178,10 +187,36 @@ namespace Authorization.Tests
                     this.GetGraphUriString(GraphManagementClient.GraphGroupsSuffix + "/" + groupName),
                     HttpMethod.Delete,
                     null);
-
             var response = this.CallServerSync(request);
         }
-        
+
+        public void AddMemberToGroup(string groupId, string memberObjectId)
+        {
+            var memberObjectUri = this.GetGraphUriString(GraphManagementClient.GraphDirectoryObjectsSuffix + "/" + memberObjectId);
+            var index = memberObjectUri.IndexOf("?", StringComparison.Ordinal);
+            memberObjectUri = memberObjectUri.Remove(index);
+
+            var addGroupMemberRequestBody = string.Format(
+              GraphManagementClient.AddMemberToGroupJsonFormatter,
+              "{",
+              "}",
+              memberObjectUri);
+
+            var request = this.CreateRequest(
+                this.GetGraphUriString(GraphManagementClient.GraphGroupsSuffix + "/" + groupId + "/" + GraphManagementClient.GraphGroupMemberSuffix), 
+                HttpMethod.Post, 
+                addGroupMemberRequestBody);
+
+            try
+            {
+                var response = this.CallServerSync(request);
+            }
+            catch (Exception ex)
+            {
+                Assert.NotNull(ex);
+            }
+        }
+
         public IEnumerable<string> ListGroups(string groupNameFilter = null)
         {
             var returnValue = new List<string>();
