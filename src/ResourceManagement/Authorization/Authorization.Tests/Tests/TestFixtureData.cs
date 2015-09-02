@@ -83,6 +83,8 @@ namespace Authorization.Tests
 
                 this.CreateGroups(10);
                 this.CreateUsers(10);
+
+                TestUtilities.Wait(1000*10);
             }
         }
         

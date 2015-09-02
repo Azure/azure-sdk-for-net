@@ -363,8 +363,6 @@ namespace Authorization.Tests
         [Fact]
         public void RoleAssignmentListWithAssignedToFilterTest()
         {
-            var principalId = testContext.Users.ElementAt(1);
-
             using (UndoContext context = UndoContext.Current)
             {
                 context.Start();
@@ -379,10 +377,9 @@ namespace Authorization.Tests
                 // Get user and group and add the user to the group
                 var userId = testContext.Users.First();
                 var groupId = testContext.Groups.First();
-            //    testContext.AddMemberToGroup(groupId, userId.ToString());
+                testContext.AddMemberToGroup(groupId, userId.ToString());
 
                 // create assignment to group
-               // var pId = testContext.Users.ElementAt(i);
                 var newRoleAssignmentToGroupParams = new RoleAssignmentCreateParameters()
                 {
                     Properties = new RoleAssignmentProperties()
@@ -592,7 +589,7 @@ namespace Authorization.Tests
                     }
                     catch (CloudException ce)
                     {
-                        Assert.Equal("CreateRoleDefinitionFailed", ce.Error.Code);
+                        Assert.Equal("RoleDefinitionNameNullOrEmpty", ce.Error.Code);
                         Assert.Equal(HttpStatusCode.BadRequest, ce.Response.StatusCode);
                     }
                 }
@@ -674,8 +671,8 @@ namespace Authorization.Tests
                 }
                 catch (CloudException ce)
                 {
-                    Assert.Equal("CreateRoleDefinitionFailed", ce.Error.Code);
-                    Assert.Equal(HttpStatusCode.BadRequest, ce.Response.StatusCode);
+                    Assert.Equal("RoleDefinitionWithSameNameExists", ce.Error.Code);
+                    Assert.Equal(HttpStatusCode.Conflict, ce.Response.StatusCode);
                 }
                 finally
                 {
@@ -696,8 +693,8 @@ namespace Authorization.Tests
                 }
                 catch (CloudException ce)
                 {
-                    Assert.Equal("CreateRoleDefinitionFailed", ce.Error.Code);
-                    Assert.Equal(HttpStatusCode.BadRequest, ce.Response.StatusCode);
+                    Assert.Equal("RoleDefinitionExists", ce.Error.Code);
+                    Assert.Equal(HttpStatusCode.Conflict, ce.Response.StatusCode);
                 }
               
                 // Negative test - create a roledefinition with type=BuiltInRole
@@ -724,7 +721,7 @@ namespace Authorization.Tests
                 }
                 catch (CloudException ce)
                 {
-                    Assert.Equal("CreateRoleDefinitionFailed", ce.Error.Code);
+                    Assert.Equal("RoleDefinitionNameNullOrEmpty", ce.Error.Code);
                     Assert.Equal(HttpStatusCode.BadRequest, ce.Response.StatusCode);
                 }
 
