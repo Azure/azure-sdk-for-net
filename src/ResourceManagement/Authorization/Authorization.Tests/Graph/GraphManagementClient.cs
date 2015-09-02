@@ -33,7 +33,7 @@ namespace Authorization.Tests
     {
         private const string DefaultUserDomain = "@aad191.ccsctp.net";
 
-        private const string DefaultTenantId = "e80a6e61-8b40-4a0b-9c90-fdc4db897423";
+        private const string DefaultTenantId = "1273adef-00a3-4086-a51a-dbcce1857d36";
         
         private const string GraphApiVersion = "1.42-previewInternal";
 
@@ -207,14 +207,7 @@ namespace Authorization.Tests
                 HttpMethod.Post, 
                 addGroupMemberRequestBody);
 
-            try
-            {
-                var response = this.CallServerSync(request);
-            }
-            catch (Exception ex)
-            {
-                Assert.NotNull(ex);
-            }
+            this.CallServerSync(request);
         }
 
         public IEnumerable<string> ListGroups(string groupNameFilter = null)
