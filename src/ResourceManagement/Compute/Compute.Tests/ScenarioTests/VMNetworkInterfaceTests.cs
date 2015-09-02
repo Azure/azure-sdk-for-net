@@ -13,6 +13,8 @@
 // limitations under the License.
 //
 
+using System.Collections;
+using System.Collections.Generic;
 using System.Net;
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
@@ -22,16 +24,55 @@ using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
 using Xunit;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework.HttpRecorder;
 
 namespace Compute.Tests
 {
     public class VMNetworkInterfaceTests : VMTestBase
     {
+
+        public static void FixRecords()
+        {
+            if (HttpMockServer.Mode == HttpRecorderMode.Playback)
+            {
+                var records = new Dictionary<string, Queue<RecordEntry>>();
+                foreach (var record in HttpMockServer.Records.GetAllEntities())
+                {
+                    var key = HttpMockServer.Matcher.GetMatchingKey(record);
+                    if (!records.ContainsKey(key))
+                    {
+                        records[key] = new Queue<RecordEntry>();
+                    }
+
+                    records[key].Enqueue(record);
+                }
+
+                var newRecords = new Dictionary<string, Queue<RecordEntry>>();
+                foreach (var key in records.Keys)
+                {
+                    Queue<RecordEntry> newRecord = new Queue<RecordEntry>();
+                    var queue = records[key];
+
+                    while (queue.Count > 0)
+                    {
+                        newRecord.Enqueue(queue.Dequeue());
+                        queue.Dequeue();
+                        queue.Dequeue();
+                        queue.Dequeue();
+                    }
+
+                    newRecords[key] = newRecord;
+                }
+                HttpMockServer.Records = new Records( newRecords, HttpMockServer.Matcher);
+            }
+        }
+
         [Fact]
         public void TestNicVirtualMachineReference()
         {
             using (MockContext context = MockContext.Start())
             {
+                FixRecords();
                 EnsureClientsInitialized(context);
 
                 ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
@@ -40,7 +81,6 @@ namespace Compute.Tests
                 string asName = TestUtilities.GenerateName("as");
                 string storageAccountName = TestUtilities.GenerateName(TestPrefix);
                 VirtualMachine inputVM;
-
                 try
                 {   
                     // Create the resource Group, it might have been already created during StorageAccount creation.
@@ -78,9 +118,9 @@ namespace Compute.Tests
 
                     var getNicResponse = m_NrpClient.NetworkInterfaces.Get(rgName, nicResponse.Name);
                     // TODO AutoRest: Recording Passed, but these assertions failed in Playback mode
-                    // Assert.NotNull(getNicResponse.MacAddress);
-                    // Assert.NotNull(getNicResponse.Primary);
-                    // Assert.True(getNicResponse.Primary != null && getNicResponse.Primary.Value);
+                    Assert.NotNull(getNicResponse.MacAddress);
+                    Assert.NotNull(getNicResponse.Primary);
+                    Assert.True(getNicResponse.Primary != null && getNicResponse.Primary.Value);
                 }
                 finally
                 {
@@ -95,6 +135,7 @@ namespace Compute.Tests
         {
             using (MockContext context = MockContext.Start())
             {
+                FixRecords();
                 EnsureClientsInitialized(context);
 
                 ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
@@ -149,15 +190,15 @@ namespace Compute.Tests
 
                     var getNicResponse1 = m_NrpClient.NetworkInterfaces.Get(rgName, nicResponse1.Name);
                     // TODO AutoRest: Recording Passed, but these assertions failed in Playback mode
-                    // Assert.NotNull(getNicResponse1.MacAddress);
-                    // Assert.NotNull(getNicResponse1.Primary);
-                    // Assert.True(getNicResponse1.Primary != null && !getNicResponse1.Primary.Value);
+                   Assert.NotNull(getNicResponse1.MacAddress);
+                   Assert.NotNull(getNicResponse1.Primary);
+                   Assert.True(getNicResponse1.Primary != null && !getNicResponse1.Primary.Value);
 
                     var getNicResponse2 = m_NrpClient.NetworkInterfaces.Get(rgName, nicResponse2.Name);
                     // TODO AutoRest: Recording Passed, but these assertions failed in Playback mode
-                    // Assert.NotNull(getNicResponse2.MacAddress);
-                    // Assert.NotNull(getNicResponse2.Primary);
-                    // Assert.True(getNicResponse2.Primary != null && getNicResponse2.Primary.Value);
+                    Assert.NotNull(getNicResponse2.MacAddress);
+                    Assert.NotNull(getNicResponse2.Primary);
+                    Assert.True(getNicResponse2.Primary != null && getNicResponse2.Primary.Value);
                 }
                 finally
                 {
