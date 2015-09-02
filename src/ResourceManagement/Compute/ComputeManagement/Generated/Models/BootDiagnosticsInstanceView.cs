@@ -21,41 +21,40 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.HDInsight.Job.Models;
 
-namespace Microsoft.Azure.Management.HDInsight.Job.Models
+namespace Microsoft.Azure.Management.Compute.Models
 {
     /// <summary>
-    /// The List Job operation response.
+    /// The instance view of a virtual machine boot diagnostics.
     /// </summary>
-    public partial class JobListJsonObject
+    public partial class BootDiagnosticsInstanceView
     {
-        private JobDetailRootJsonObject _detail;
+        private Uri _consoleScreenshotBlobUri;
         
         /// <summary>
-        /// Optional. Gets or sets the detail of the job.
+        /// Optional. Gets or sets the console screenshot blob Uri.
         /// </summary>
-        public JobDetailRootJsonObject Detail
+        public Uri ConsoleScreenshotBlobUri
         {
-            get { return this._detail; }
-            set { this._detail = value; }
+            get { return this._consoleScreenshotBlobUri; }
+            set { this._consoleScreenshotBlobUri = value; }
         }
         
-        private string _id;
+        private Uri _serialConsoleLogBlobUri;
         
         /// <summary>
-        /// Optional. Gets or sets the Id of the job.
+        /// Optional. Gets or sets the Linux serial console log blob Uri.
         /// </summary>
-        public string Id
+        public Uri SerialConsoleLogBlobUri
         {
-            get { return this._id; }
-            set { this._id = value; }
+            get { return this._serialConsoleLogBlobUri; }
+            set { this._serialConsoleLogBlobUri = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the JobListJsonObject class.
+        /// Initializes a new instance of the BootDiagnosticsInstanceView class.
         /// </summary>
-        public JobListJsonObject()
+        public BootDiagnosticsInstanceView()
         {
         }
     }

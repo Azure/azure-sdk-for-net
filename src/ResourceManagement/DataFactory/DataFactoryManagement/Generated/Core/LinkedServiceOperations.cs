@@ -169,7 +169,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                 url = url + Uri.EscapeDataString(parameters.LinkedService.Name);
             }
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-08-01");
+            queryParameters.Add("api-version=2015-09-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -483,7 +483,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + "/linkedservices/";
             url = url + Uri.EscapeDataString(linkedServiceName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-08-01");
+            queryParameters.Add("api-version=2015-09-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -739,7 +739,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + "/linkedservices/";
             url = url + Uri.EscapeDataString(linkedServiceName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-08-01");
+            queryParameters.Add("api-version=2015-09-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -819,11 +819,11 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                     {
                         result.Status = OperationStatus.Failed;
                     }
-                    if (statusCode == HttpStatusCode.NoContent)
+                    if (statusCode == HttpStatusCode.OK)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
-                    if (statusCode == HttpStatusCode.OK)
+                    if (statusCode == HttpStatusCode.NoContent)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
@@ -1152,7 +1152,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + "/linkedservices/";
             url = url + Uri.EscapeDataString(linkedServiceName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-08-01");
+            queryParameters.Add("api-version=2015-09-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1360,7 +1360,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                 
                 // Set Headers
                 httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
-                httpRequest.Headers.Add("x-ms-version", "2015-08-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-09-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1576,7 +1576,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             url = url + Uri.EscapeDataString(dataFactoryName);
             url = url + "/linkedServices";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-08-01");
+            queryParameters.Add("api-version=2015-09-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);

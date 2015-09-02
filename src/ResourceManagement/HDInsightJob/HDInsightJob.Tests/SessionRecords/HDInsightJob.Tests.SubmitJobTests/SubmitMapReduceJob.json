@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "/templeton/v1/mapreduce/jar?user.name=sameuser",
-      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9tYXByZWR1Y2UvamFyP3VzZXIubmFtZT1zYW1ldXNlcg==",
+      "RequestUri": "/templeton/v1/mapreduce/jar?user.name=admin",
+      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9tYXByZWR1Y2UvamFyP3VzZXIubmFtZT1hZG1pbg==",
       "RequestMethod": "POST",
-      "RequestBody": "user.name=sameuser&jar=/example/jars/hadoop-mapreduce-examples.jar&class=pi&define=mapreduce.map.maxattempts%3D10&define=mapreduce.reduce.maxattempts%3D10&define=mapreduce.task.timeout%3D60000&arg=10&arg=1000&statusdir=&enablelog=&LibJars=&Files=",
+      "RequestBody": "user.name=admin&jar=/example/jars/hadoop-mapreduce-examples.jar&class=pi&define=mapreduce.map.maxattempts%3D10&define=mapreduce.reduce.maxattempts%3D10&define=mapreduce.task.timeout%3D60000&arg=10&arg=1000&statusdir=&enablelog=&LibJars=&Files=",
       "RequestHeaders": {
         "Content-Type": [
           "application/text"
         ],
         "Content-Length": [
-          "246"
+          "243"
         ],
         "accept": [
           "application/json"
@@ -25,7 +25,7 @@
           "submission"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"job_1438899342432_0017\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"job_1441022937859_0015\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "31"
@@ -37,13 +37,13 @@
           "GATEWAY0"
         ],
         "x-ms-hdi-active": [
-          "headnode1.nemadj-ssh-test.b5.internal.cloudapp.net"
+          "headnode0.nemadj-prod-sdk.b4.internal.cloudapp.net"
         ],
         "x-ms-leader-detect-time": [
           "0"
         ],
         "Set-Cookie": [
-          "hadoop.auth=\"u=sameuser&p=sameuser&t=simple&e=1439291364500&s=gC9w1CTEbteUmOHBgiohMByvlMA=\"; Version=1; Path=/; Expires=Tue, 11-Aug-2015 11:09:24 GMT; HttpOnly"
+          "hadoop.auth=\"u=admin&p=admin&t=simple&e=1441095692577&s=RXAUrMcYO5h13Nt2u4dkybd2oOg=\"; Path=/; Expires=Tue, 01-Sep-2015 08:21:32 GMT; HttpOnly"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -59,7 +59,7 @@
           "max-age=31536000"
         ],
         "Date": [
-          "Tue, 11 Aug 2015 01:09:27 GMT"
+          "Mon, 31 Aug 2015 22:21:35 GMT"
         ]
       },
       "StatusCode": 200

@@ -21,41 +21,42 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.HDInsight.Job.Models;
 
-namespace Microsoft.Azure.Management.HDInsight.Job.Models
+namespace Microsoft.Azure.Management.Compute.Models
 {
     /// <summary>
-    /// The List Job operation response.
+    /// Describes Boot Diagnostics.
     /// </summary>
-    public partial class JobListJsonObject
+    public partial class BootDiagnostics
     {
-        private JobDetailRootJsonObject _detail;
+        private bool? _enabled;
         
         /// <summary>
-        /// Optional. Gets or sets the detail of the job.
+        /// Optional. Gets or sets whether VM Agent should be provisioned on
+        /// the Virtual Machine.
         /// </summary>
-        public JobDetailRootJsonObject Detail
+        public bool? Enabled
         {
-            get { return this._detail; }
-            set { this._detail = value; }
+            get { return this._enabled; }
+            set { this._enabled = value; }
         }
         
-        private string _id;
+        private Uri _storageUri;
         
         /// <summary>
-        /// Optional. Gets or sets the Id of the job.
+        /// Optional. Gets or sets the boot diagnostics storage Uri. It should
+        /// be a valid Uri
         /// </summary>
-        public string Id
+        public Uri StorageUri
         {
-            get { return this._id; }
-            set { this._id = value; }
+            get { return this._storageUri; }
+            set { this._storageUri = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the JobListJsonObject class.
+        /// Initializes a new instance of the BootDiagnostics class.
         /// </summary>
-        public JobListJsonObject()
+        public BootDiagnostics()
         {
         }
     }

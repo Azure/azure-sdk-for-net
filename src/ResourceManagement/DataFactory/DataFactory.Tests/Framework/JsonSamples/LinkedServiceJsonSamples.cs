@@ -281,5 +281,22 @@ namespace DataFactory.Tests.Framework.JsonSamples
         }
     }
 }";
+
+        [JsonSample]
+        public const string TeradataLinkedService = @"
+{
+    name: ""Test-Teradata-linkedService"",
+    properties:
+    {
+        type: ""OnPremisesTeradata"",
+        typeProperties: {
+            server: ""volvo2.teradata.ws"",
+            username: ""microsoft"",
+            password: ""fakepassword"",
+            gatewayName: ""MSourceDemoGateway"",
+            authenticationType: ""Basic""
+        }
+    }
+}";
     }
 }

@@ -21,41 +21,30 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.HDInsight.Job.Models;
+using Microsoft.Azure.Management.Compute.Models;
 
-namespace Microsoft.Azure.Management.HDInsight.Job.Models
+namespace Microsoft.Azure.Management.Compute.Models
 {
     /// <summary>
-    /// The List Job operation response.
+    /// Describes a diagnostics profile.
     /// </summary>
-    public partial class JobListJsonObject
+    public partial class DiagnosticsProfile
     {
-        private JobDetailRootJsonObject _detail;
+        private BootDiagnostics _bootDiagnostics;
         
         /// <summary>
-        /// Optional. Gets or sets the detail of the job.
+        /// Optional. Gets or sets the boot diagnostics.
         /// </summary>
-        public JobDetailRootJsonObject Detail
+        public BootDiagnostics BootDiagnostics
         {
-            get { return this._detail; }
-            set { this._detail = value; }
-        }
-        
-        private string _id;
-        
-        /// <summary>
-        /// Optional. Gets or sets the Id of the job.
-        /// </summary>
-        public string Id
-        {
-            get { return this._id; }
-            set { this._id = value; }
+            get { return this._bootDiagnostics; }
+            set { this._bootDiagnostics = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the JobListJsonObject class.
+        /// Initializes a new instance of the DiagnosticsProfile class.
         /// </summary>
-        public JobListJsonObject()
+        public DiagnosticsProfile()
         {
         }
     }

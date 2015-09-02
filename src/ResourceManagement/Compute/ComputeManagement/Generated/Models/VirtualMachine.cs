@@ -44,6 +44,17 @@ namespace Microsoft.Azure.Management.Compute.Models
             set { this._availabilitySetReference = value; }
         }
         
+        private DiagnosticsProfile _diagnosticsProfile;
+        
+        /// <summary>
+        /// Optional. Gets or sets the diagnostics profile.
+        /// </summary>
+        public DiagnosticsProfile DiagnosticsProfile
+        {
+            get { return this._diagnosticsProfile; }
+            set { this._diagnosticsProfile = value; }
+        }
+        
         private IList<VirtualMachineExtension> _extensions;
         
         /// <summary>

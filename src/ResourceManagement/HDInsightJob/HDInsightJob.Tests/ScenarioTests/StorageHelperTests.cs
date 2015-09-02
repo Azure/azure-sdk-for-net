@@ -25,7 +25,7 @@ namespace HDInsightJob.Tests
 {
     public class StorageHelperTests
     {
-//        [Fact]
+        [Fact]
         public void GetJobOutput()
         {
             using (var context = UndoContext.Current)
@@ -64,7 +64,7 @@ namespace HDInsightJob.Tests
             }
         }
 
-//        [Fact]
+        [Fact]
         public void GetJobError()
         {
             using (var context = UndoContext.Current)

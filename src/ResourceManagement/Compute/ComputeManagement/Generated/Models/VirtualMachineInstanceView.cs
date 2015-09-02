@@ -32,6 +32,17 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// </summary>
     public partial class VirtualMachineInstanceView : ResourceInstanceView
     {
+        private BootDiagnosticsInstanceView _bootDiagnostics;
+        
+        /// <summary>
+        /// Optional. Gets or sets the boot diagnostics.
+        /// </summary>
+        public BootDiagnosticsInstanceView BootDiagnostics
+        {
+            get { return this._bootDiagnostics; }
+            set { this._bootDiagnostics = value; }
+        }
+        
         private IList<DiskInstanceView> _disks;
         
         /// <summary>
