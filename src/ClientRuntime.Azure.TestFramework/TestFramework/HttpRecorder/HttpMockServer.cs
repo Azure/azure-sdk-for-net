@@ -244,5 +244,11 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework.HttpRecorder
             return mode;
         }
 
+        public static Records Records
+        {
+            get { return records; }
+            set { records = value; }
+        }
+
     }
 }
