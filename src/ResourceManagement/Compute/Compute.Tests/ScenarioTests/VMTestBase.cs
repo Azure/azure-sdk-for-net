@@ -56,12 +56,10 @@ namespace Compute.Tests
                 {
                     if (!m_initialized)
                     {
-                        var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
-
-                        m_ResourcesClient = ComputeManagementTestUtilities.GetResourceManagementClient(context, handler);
-                        m_CrpClient = ComputeManagementTestUtilities.GetComputeManagementClient(context, handler);
-                        m_SrpClient = ComputeManagementTestUtilities.GetStorageManagementClient(context, handler);
-                        m_NrpClient = ComputeManagementTestUtilities.GetNetworkResourceProviderClient(context, handler);
+                        m_ResourcesClient = ComputeManagementTestUtilities.GetResourceManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+                        m_CrpClient = ComputeManagementTestUtilities.GetComputeManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+                        m_SrpClient = ComputeManagementTestUtilities.GetStorageManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+                        m_NrpClient = ComputeManagementTestUtilities.GetNetworkResourceProviderClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
                         m_subId = m_CrpClient.SubscriptionId;
                         m_location = ComputeManagementTestUtilities.DefaultLocation;
