@@ -56,9 +56,9 @@ namespace Compute.Tests
                     while (queue.Count > 0)
                     {
                         newRecord.Enqueue(queue.Dequeue());
-                        queue.Dequeue();
-                        queue.Dequeue();
-                        queue.Dequeue();
+                        //queue.Dequeue();
+                        //queue.Dequeue();
+                        //queue.Dequeue();
                     }
 
                     newRecords[key] = newRecord;
@@ -72,7 +72,7 @@ namespace Compute.Tests
         {
             using (MockContext context = MockContext.Start())
             {
-                FixRecords();
+                //FixRecords();
                 EnsureClientsInitialized(context);
 
                 ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
@@ -135,7 +135,7 @@ namespace Compute.Tests
         {
             using (MockContext context = MockContext.Start())
             {
-                FixRecords();
+                //FixRecords();
                 EnsureClientsInitialized(context);
 
                 ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);

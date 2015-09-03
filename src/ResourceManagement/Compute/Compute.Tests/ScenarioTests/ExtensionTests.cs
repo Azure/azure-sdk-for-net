@@ -53,7 +53,7 @@ namespace Compute.Tests
             using (MockContext context = MockContext.Start())
             {
                 EnsureClientsInitialized(context);
-                VMNetworkInterfaceTests.FixRecords();
+                //VMNetworkInterfaceTests.FixRecords();
 
                 ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
                 // Create resource group
