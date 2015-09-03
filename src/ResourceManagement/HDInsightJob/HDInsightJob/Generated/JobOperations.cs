@@ -1846,7 +1846,7 @@ namespace Microsoft.Azure.Management.HDInsight.Job
                 await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                 
                 // Serialize Request
-                string requestContent = "user.name=" + parameters.UserName + "&execute=" + parameters.Query + "&file=" + parameters.File + "&arg=" + parameters.Arguments + "&files=" + parameters.Files + "&statusdir=" + parameters.StatusDir + "&enablelog=" + parameters.EnableLog + parameters.Defines;
+                string requestContent = "user.name=" + parameters.UserName + "&execute=" + parameters.Query + "&file=" + parameters.File + "&arg=" + parameters.Arguments + "&files=" + parameters.Files + "&statusdir=" + parameters.StatusDir + "&enablelog=" + parameters.EnableLog + "&define=" + parameters.Defines;
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/text");
                 

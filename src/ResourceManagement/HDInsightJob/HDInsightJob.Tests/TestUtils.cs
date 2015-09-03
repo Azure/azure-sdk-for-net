@@ -23,12 +23,12 @@ namespace HDInsightJob.Tests
 {
     public static class TestUtils
     {
-        public static string ClusterName = "nemadj-ssh-test.hdinsight-stable.azure-test.net";
-        public static string UserName = "";
-        public static string Password = "";
+        public static string ClusterName = "shvohralinuxtest2.azurehdinsight.net";
+        public static string UserName = "admin";
+        public static string Password = "Password1!";
         public static string StorageAccountName = "giyerwestus1";
-        public static string StorageAccountKey = "";
-        public static string DefaultContainer = "giyertestcsmv2";
+        public static string StorageAccountKey = "O9EQvp3A3AjXq/W27rst1GQfLllhp01qlJMJfSU1hVW2K42gUeiUUn2D8zX2lU3taiXSSfqkZlcPv+nQcYUxYw==";
+        public static string DefaultContainer = "defaultcontainer";
 
         public static HDInsightJobManagementClient GetHDInsightJobManagementClient(string dnsName, BasicAuthenticationCloudCredentials creds)
         {
