@@ -24,7 +24,7 @@ namespace HDInsightJob.Tests
     public static class TestUtils
     {
         public static string ClusterName = "shvohralinuxtest2.azurehdinsight.net";
-        public static string UserName = "";
+        public static string UserName = "admin";
         public static string Password = "";
         public static string StorageAccountName = "giyerwestus1";
         public static string StorageAccountKey = "";
