@@ -136,7 +136,7 @@ namespace Microsoft.Azure.Management.Authorization
             url = url + Uri.EscapeDataString(identity.ResourceName);
             url = url + "/providers/Microsoft.Authorization/permissions";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-07-01-preview");
+            queryParameters.Add("api-version=2015-07-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -312,7 +312,7 @@ namespace Microsoft.Azure.Management.Authorization
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/Microsoft.Authorization/permissions";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-07-01-preview");
+            queryParameters.Add("api-version=2015-07-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);

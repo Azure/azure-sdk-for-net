@@ -108,7 +108,7 @@ namespace Microsoft.Azure.Management.Authorization
             url = url + "/providers/Microsoft.Authorization/roleDefinitions/";
             url = url + Uri.EscapeDataString(roleDefinitionId.ToString());
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-07-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -135,7 +135,7 @@ namespace Microsoft.Azure.Management.Authorization
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-05-01-preview");
+                httpRequest.Headers.Add("x-ms-version", "2015-07-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -439,7 +439,7 @@ namespace Microsoft.Azure.Management.Authorization
             url = url + "/";
             url = url + roleDefinitionId;
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-07-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -466,7 +466,7 @@ namespace Microsoft.Azure.Management.Authorization
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-05-01-preview");
+                httpRequest.Headers.Add("x-ms-version", "2015-07-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -671,7 +671,7 @@ namespace Microsoft.Azure.Management.Authorization
             url = url + "/providers/Microsoft.Authorization/roleDefinitions/";
             url = url + Uri.EscapeDataString(roleDefinitionName.ToString());
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-07-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -698,7 +698,7 @@ namespace Microsoft.Azure.Management.Authorization
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-05-01-preview");
+                httpRequest.Headers.Add("x-ms-version", "2015-07-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -902,7 +902,7 @@ namespace Microsoft.Azure.Management.Authorization
             url = url + "/";
             url = url + roleDefinitionId;
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-07-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -929,7 +929,7 @@ namespace Microsoft.Azure.Management.Authorization
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-05-01-preview");
+                httpRequest.Headers.Add("x-ms-version", "2015-07-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1129,7 +1129,7 @@ namespace Microsoft.Azure.Management.Authorization
             }
             url = url + "/providers/Microsoft.Authorization/roleDefinitions";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-05-01-preview");
+            queryParameters.Add("api-version=2015-07-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1156,7 +1156,7 @@ namespace Microsoft.Azure.Management.Authorization
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2015-05-01-preview");
+                httpRequest.Headers.Add("x-ms-version", "2015-07-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
