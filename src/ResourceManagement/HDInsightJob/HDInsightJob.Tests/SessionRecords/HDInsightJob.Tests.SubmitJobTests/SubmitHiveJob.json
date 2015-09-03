@@ -4,13 +4,13 @@
       "RequestUri": "/templeton/v1/hive?user.name=admin",
       "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9oaXZlP3VzZXIubmFtZT1hZG1pbg==",
       "RequestMethod": "POST",
-      "RequestBody": "user.name=admin&execute=SHOW TABLES;&file=&arg=argA&arg=argB&files=&statusdir=&enablelog=hive.execution.engine%3Dravi&define=hive.exec.reducers.max%3D1",
+      "RequestBody": "user.name=admin&execute=SHOW TABLES;&file=&arg=argA&arg=argB&files=&statusdir=&enablelog=&define=hive.execution.engine%3Dravi&define=hive.exec.reducers.max%3D1",
       "RequestHeaders": {
         "Content-Type": [
           "application/text"
         ],
         "Content-Length": [
-          "151"
+          "159"
         ],
         "accept": [
           "application/json"
@@ -25,7 +25,7 @@
           "submission"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"job_1441022937859_0017\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"job_1441139801399_0060\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "31"
@@ -33,17 +33,8 @@
         "Content-Type": [
           "application/json"
         ],
-        "x-ms-hdi-servedby": [
-          "GATEWAY0"
-        ],
-        "x-ms-hdi-active": [
-          "headnode0.nemadj-prod-sdk.b4.internal.cloudapp.net"
-        ],
-        "x-ms-leader-detect-time": [
-          "0"
-        ],
         "Set-Cookie": [
-          "hadoop.auth=\"u=admin&p=admin&t=simple&e=1441095700472&s=DJdSMt5rb7gwWC0n8EVD+LfxrDE=\"; Path=/; Expires=Tue, 01-Sep-2015 08:21:40 GMT; HttpOnly"
+          "hadoop.auth=\"u=admin&p=admin&t=simple&e=1441265375707&s=Xnig6ZLgX+BIphTZyji8u2bDOSw=\"; Path=/; Expires=Thu, 03-Sep-2015 07:29:35 GMT; HttpOnly; path=/; secure"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -52,14 +43,8 @@
           "ARR/2.5",
           "ASP.NET"
         ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000"
-        ],
         "Date": [
-          "Mon, 31 Aug 2015 22:21:43 GMT"
+          "Wed, 02 Sep 2015 21:30:01 GMT"
         ]
       },
       "StatusCode": 200
