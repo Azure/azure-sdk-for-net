@@ -5,6 +5,7 @@
 namespace Microsoft.Azure.Management.WebSites
 {
     using System;
+    using System.Linq;
     using System.Collections.Generic;
     using System.Net;
     using System.Net.Http;
@@ -15,7 +16,6 @@ namespace Microsoft.Azure.Management.WebSites
     using System.Threading.Tasks;
     using Microsoft.Rest;
     using Newtonsoft.Json;
-    using System.Linq;
     using Microsoft.Rest.Azure;
     using Models;
 
@@ -1661,6 +1661,682 @@ namespace Microsoft.Azure.Management.WebSites
 
         /// <summary>
         /// </summary>
+        /// <param name='subscriptionName'>
+        /// Azure subscription
+        /// </param>
+        /// <param name='webspaceName'>
+        /// Webspace
+        /// </param>
+        /// <param name='name'>
+        /// Website Name
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// </param>
+        /// <param name='slot'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<object>> GetSiteSnapshotsOnSkuSlotWithHttpMessagesAsync(string subscriptionName, string webspaceName, string name, string resourceGroupName, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (subscriptionName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "subscriptionName");
+            }
+            if (webspaceName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "webspaceName");
+            }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (slot == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "slot");
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool shouldTrace = ServiceClientTracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("subscriptionName", subscriptionName);
+                tracingParameters.Add("webspaceName", webspaceName);
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("slot", slot);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(invocationId, this, "GetSiteSnapshotsOnSkuSlot", tracingParameters);
+            }
+            // Construct URL
+            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/restorableSnapshots").ToString();
+            url = url.Replace("{name}", Uri.EscapeDataString(name));
+            url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            url = url.Replace("{slot}", Uri.EscapeDataString(slot));
+            url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            List<string> queryParameters = new List<string>();
+            if (subscriptionName != null)
+            {
+                queryParameters.Add(string.Format("subscriptionName={0}", Uri.EscapeDataString(subscriptionName)));
+            }
+            if (webspaceName != null)
+            {
+                queryParameters.Add(string.Format("webspaceName={0}", Uri.EscapeDataString(webspaceName)));
+            }
+            if (this.Client.ApiVersion != null)
+            {
+                queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (queryParameters.Count > 0)
+            {
+                url += "?" + string.Join("&", queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = new HttpRequestMessage();
+            httpRequest.Method = new HttpMethod("PUT");
+            httpRequest.RequestUri = new Uri(url);
+            // Set Headers
+            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (httpRequest.Headers.Contains("accept-language"))
+                {
+                    httpRequest.Headers.Remove("accept-language");
+                }
+                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var header in customHeaders)
+                {
+                    if (httpRequest.Headers.Contains(header.Key))
+                    {
+                        httpRequest.Headers.Remove(header.Key);
+                    }
+                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                }
+            }
+
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(invocationId, httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+            if (shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
+            }
+            HttpStatusCode statusCode = httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK")))
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
+                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
+                if (errorBody != null)
+                {
+                    ex = new CloudException(errorBody.Message);
+                    ex.Body = errorBody;
+                }
+                ex.Request = httpRequest;
+                ex.Response = httpResponse;
+                if (shouldTrace)
+                {
+                    ServiceClientTracing.Error(invocationId, ex);
+                }
+                throw ex;
+            }
+            // Create Result
+            var result = new AzureOperationResponse<object>();
+            result.Request = httpRequest;
+            result.Response = httpResponse;
+            if (httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
+            {
+                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                result.Body = JsonConvert.DeserializeObject<object>(responseContent, this.Client.DeserializationSettings);
+            }
+            if (shouldTrace)
+            {
+                ServiceClientTracing.Exit(invocationId, result);
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name='subscriptionName'>
+        /// Azure subscription
+        /// </param>
+        /// <param name='webspaceName'>
+        /// Webspace
+        /// </param>
+        /// <param name='name'>
+        /// Website Name
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<object>> GetSiteSnapshotsOnSkuWithHttpMessagesAsync(string subscriptionName, string webspaceName, string name, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (subscriptionName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "subscriptionName");
+            }
+            if (webspaceName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "webspaceName");
+            }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool shouldTrace = ServiceClientTracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("subscriptionName", subscriptionName);
+                tracingParameters.Add("webspaceName", webspaceName);
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(invocationId, this, "GetSiteSnapshotsOnSku", tracingParameters);
+            }
+            // Construct URL
+            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/restorableSnapshots").ToString();
+            url = url.Replace("{name}", Uri.EscapeDataString(name));
+            url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            List<string> queryParameters = new List<string>();
+            if (subscriptionName != null)
+            {
+                queryParameters.Add(string.Format("subscriptionName={0}", Uri.EscapeDataString(subscriptionName)));
+            }
+            if (webspaceName != null)
+            {
+                queryParameters.Add(string.Format("webspaceName={0}", Uri.EscapeDataString(webspaceName)));
+            }
+            if (this.Client.ApiVersion != null)
+            {
+                queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (queryParameters.Count > 0)
+            {
+                url += "?" + string.Join("&", queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = new HttpRequestMessage();
+            httpRequest.Method = new HttpMethod("PUT");
+            httpRequest.RequestUri = new Uri(url);
+            // Set Headers
+            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (httpRequest.Headers.Contains("accept-language"))
+                {
+                    httpRequest.Headers.Remove("accept-language");
+                }
+                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var header in customHeaders)
+                {
+                    if (httpRequest.Headers.Contains(header.Key))
+                    {
+                        httpRequest.Headers.Remove(header.Key);
+                    }
+                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                }
+            }
+
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(invocationId, httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+            if (shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
+            }
+            HttpStatusCode statusCode = httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK")))
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
+                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
+                if (errorBody != null)
+                {
+                    ex = new CloudException(errorBody.Message);
+                    ex.Body = errorBody;
+                }
+                ex.Request = httpRequest;
+                ex.Response = httpResponse;
+                if (shouldTrace)
+                {
+                    ServiceClientTracing.Error(invocationId, ex);
+                }
+                throw ex;
+            }
+            // Create Result
+            var result = new AzureOperationResponse<object>();
+            result.Request = httpRequest;
+            result.Response = httpResponse;
+            if (httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
+            {
+                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                result.Body = JsonConvert.DeserializeObject<object>(responseContent, this.Client.DeserializationSettings);
+            }
+            if (shouldTrace)
+            {
+                ServiceClientTracing.Exit(invocationId, result);
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name='subscriptionName'>
+        /// Azure subscription
+        /// </param>
+        /// <param name='webspaceName'>
+        /// Webspace
+        /// </param>
+        /// <param name='name'>
+        /// Website Name
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<object>> GetSiteSnapshotsWithHttpMessagesAsync(string subscriptionName, string webspaceName, string name, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (subscriptionName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "subscriptionName");
+            }
+            if (webspaceName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "webspaceName");
+            }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool shouldTrace = ServiceClientTracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("subscriptionName", subscriptionName);
+                tracingParameters.Add("webspaceName", webspaceName);
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(invocationId, this, "GetSiteSnapshots", tracingParameters);
+            }
+            // Construct URL
+            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/snapshots").ToString();
+            url = url.Replace("{name}", Uri.EscapeDataString(name));
+            url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            List<string> queryParameters = new List<string>();
+            if (subscriptionName != null)
+            {
+                queryParameters.Add(string.Format("subscriptionName={0}", Uri.EscapeDataString(subscriptionName)));
+            }
+            if (webspaceName != null)
+            {
+                queryParameters.Add(string.Format("webspaceName={0}", Uri.EscapeDataString(webspaceName)));
+            }
+            if (this.Client.ApiVersion != null)
+            {
+                queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (queryParameters.Count > 0)
+            {
+                url += "?" + string.Join("&", queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = new HttpRequestMessage();
+            httpRequest.Method = new HttpMethod("PUT");
+            httpRequest.RequestUri = new Uri(url);
+            // Set Headers
+            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (httpRequest.Headers.Contains("accept-language"))
+                {
+                    httpRequest.Headers.Remove("accept-language");
+                }
+                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var header in customHeaders)
+                {
+                    if (httpRequest.Headers.Contains(header.Key))
+                    {
+                        httpRequest.Headers.Remove(header.Key);
+                    }
+                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                }
+            }
+
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(invocationId, httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+            if (shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
+            }
+            HttpStatusCode statusCode = httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK")))
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
+                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
+                if (errorBody != null)
+                {
+                    ex = new CloudException(errorBody.Message);
+                    ex.Body = errorBody;
+                }
+                ex.Request = httpRequest;
+                ex.Response = httpResponse;
+                if (shouldTrace)
+                {
+                    ServiceClientTracing.Error(invocationId, ex);
+                }
+                throw ex;
+            }
+            // Create Result
+            var result = new AzureOperationResponse<object>();
+            result.Request = httpRequest;
+            result.Response = httpResponse;
+            if (httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
+            {
+                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                result.Body = JsonConvert.DeserializeObject<object>(responseContent, this.Client.DeserializationSettings);
+            }
+            if (shouldTrace)
+            {
+                ServiceClientTracing.Exit(invocationId, result);
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name='subscriptionName'>
+        /// Azure subscription
+        /// </param>
+        /// <param name='webspaceName'>
+        /// Webspace
+        /// </param>
+        /// <param name='name'>
+        /// Website Name
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// </param>
+        /// <param name='slot'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<object>> GetSiteSnapshotsSlotWithHttpMessagesAsync(string subscriptionName, string webspaceName, string name, string resourceGroupName, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (subscriptionName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "subscriptionName");
+            }
+            if (webspaceName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "webspaceName");
+            }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (slot == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "slot");
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool shouldTrace = ServiceClientTracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("subscriptionName", subscriptionName);
+                tracingParameters.Add("webspaceName", webspaceName);
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("slot", slot);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(invocationId, this, "GetSiteSnapshotsSlot", tracingParameters);
+            }
+            // Construct URL
+            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/snapshots").ToString();
+            url = url.Replace("{name}", Uri.EscapeDataString(name));
+            url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            url = url.Replace("{slot}", Uri.EscapeDataString(slot));
+            url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            List<string> queryParameters = new List<string>();
+            if (subscriptionName != null)
+            {
+                queryParameters.Add(string.Format("subscriptionName={0}", Uri.EscapeDataString(subscriptionName)));
+            }
+            if (webspaceName != null)
+            {
+                queryParameters.Add(string.Format("webspaceName={0}", Uri.EscapeDataString(webspaceName)));
+            }
+            if (this.Client.ApiVersion != null)
+            {
+                queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (queryParameters.Count > 0)
+            {
+                url += "?" + string.Join("&", queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = new HttpRequestMessage();
+            httpRequest.Method = new HttpMethod("PUT");
+            httpRequest.RequestUri = new Uri(url);
+            // Set Headers
+            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (httpRequest.Headers.Contains("accept-language"))
+                {
+                    httpRequest.Headers.Remove("accept-language");
+                }
+                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var header in customHeaders)
+                {
+                    if (httpRequest.Headers.Contains(header.Key))
+                    {
+                        httpRequest.Headers.Remove(header.Key);
+                    }
+                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                }
+            }
+
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(invocationId, httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+            if (shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
+            }
+            HttpStatusCode statusCode = httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK")))
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
+                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
+                if (errorBody != null)
+                {
+                    ex = new CloudException(errorBody.Message);
+                    ex.Body = errorBody;
+                }
+                ex.Request = httpRequest;
+                ex.Response = httpResponse;
+                if (shouldTrace)
+                {
+                    ServiceClientTracing.Error(invocationId, ex);
+                }
+                throw ex;
+            }
+            // Create Result
+            var result = new AzureOperationResponse<object>();
+            result.Request = httpRequest;
+            result.Response = httpResponse;
+            if (httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
+            {
+                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                result.Body = JsonConvert.DeserializeObject<object>(responseContent, this.Client.DeserializationSettings);
+            }
+            if (shouldTrace)
+            {
+                ServiceClientTracing.Exit(invocationId, result);
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of resource group
         /// </param>
@@ -1968,7 +2644,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<SiteInstanceCollection>> GetSiteSlotInstanceIdentifiersWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SiteInstanceCollection>> GetSiteInstanceIdentifiersSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -2001,7 +2677,7 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("slot", slot);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "GetSiteSlotInstanceIdentifiers", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "GetSiteInstanceIdentifiersSlot", tracingParameters);
             }
             // Construct URL
             var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances").ToString();
@@ -2110,13 +2786,17 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='name'>
         /// Name of web app
         /// </param>
+        /// <param name='slot'>
+        /// Name of web app slot. If not specified then will default to production
+        /// slot.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<HostNameBindingCollection>> GetSiteHostNameBindingsWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<HostNameBindingCollection>> GetSiteHostNameBindingsSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -2125,6 +2805,10 @@ namespace Microsoft.Azure.Management.WebSites
             if (name == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (slot == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "slot");
             }
             if (this.Client.SubscriptionId == null)
             {
@@ -2143,13 +2827,15 @@ namespace Microsoft.Azure.Management.WebSites
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("name", name);
+                tracingParameters.Add("slot", slot);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "GetSiteHostNameBindings", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "GetSiteHostNameBindingsSlot", tracingParameters);
             }
             // Construct URL
-            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostNameBindings").ToString();
+            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hostNameBindings").ToString();
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             url = url.Replace("{name}", Uri.EscapeDataString(name));
+            url = url.Replace("{slot}", Uri.EscapeDataString(slot));
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
@@ -2252,17 +2938,13 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='name'>
         /// Name of web app
         /// </param>
-        /// <param name='slot'>
-        /// Name of web app slot. If not specified then will default to production
-        /// slot.
-        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<HostNameBindingCollection>> GetSiteSlotHostNameBindingsWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<HostNameBindingCollection>> GetSiteHostNameBindingsWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -2271,10 +2953,6 @@ namespace Microsoft.Azure.Management.WebSites
             if (name == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "name");
-            }
-            if (slot == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "slot");
             }
             if (this.Client.SubscriptionId == null)
             {
@@ -2293,15 +2971,13 @@ namespace Microsoft.Azure.Management.WebSites
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("name", name);
-                tracingParameters.Add("slot", slot);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "GetSiteSlotHostNameBindings", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "GetSiteHostNameBindings", tracingParameters);
             }
             // Construct URL
-            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hostNameBindings").ToString();
+            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostNameBindings").ToString();
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             url = url.Replace("{name}", Uri.EscapeDataString(name));
-            url = url.Replace("{slot}", Uri.EscapeDataString(slot));
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
@@ -2882,7 +3558,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<HostNameBinding>> GetSiteSlotHostNameBindingWithHttpMessagesAsync(string resourceGroupName, string name, string slot, string hostName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<HostNameBinding>> GetSiteHostNameBindingSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, string hostName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -2920,7 +3596,7 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("slot", slot);
                 tracingParameters.Add("hostName", hostName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "GetSiteSlotHostNameBinding", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "GetSiteHostNameBindingSlot", tracingParameters);
             }
             // Construct URL
             var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hostNameBindings/{hostName}").ToString();
@@ -3046,7 +3722,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<HostNameBinding>> CreateOrUpdateSiteSlotHostNameBindingWithHttpMessagesAsync(string resourceGroupName, string name, string hostName, HostNameBinding hostNameBinding, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<HostNameBinding>> CreateOrUpdateSiteHostNameBindingSlotWithHttpMessagesAsync(string resourceGroupName, string name, string hostName, HostNameBinding hostNameBinding, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -3089,7 +3765,7 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("hostNameBinding", hostNameBinding);
                 tracingParameters.Add("slot", slot);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "CreateOrUpdateSiteSlotHostNameBinding", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "CreateOrUpdateSiteHostNameBindingSlot", tracingParameters);
             }
             // Construct URL
             var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hostNameBindings/{hostName}").ToString();
@@ -3216,7 +3892,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<object>> DeleteSiteSlotHostNameBindingWithHttpMessagesAsync(string resourceGroupName, string name, string slot, string hostName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<object>> DeleteSiteHostNameBindingSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, string hostName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -3254,7 +3930,7 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("slot", slot);
                 tracingParameters.Add("hostName", hostName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "DeleteSiteSlotHostNameBinding", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "DeleteSiteHostNameBindingSlot", tracingParameters);
             }
             // Construct URL
             var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hostNameBindings/{hostName}").ToString();
@@ -3824,7 +4500,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<SiteConfig>> GetSiteSlotConfigWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SiteConfig>> GetSiteConfigSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -3857,7 +4533,7 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("slot", slot);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "GetSiteSlotConfig", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "GetSiteConfigSlot", tracingParameters);
             }
             // Construct URL
             var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web").ToString();
@@ -3979,7 +4655,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<SiteConfig>> CreateOrUpdateSiteSlotConfigWithHttpMessagesAsync(string resourceGroupName, string name, SiteConfig siteConfig, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SiteConfig>> CreateOrUpdateSiteConfigSlotWithHttpMessagesAsync(string resourceGroupName, string name, SiteConfig siteConfig, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -4017,7 +4693,7 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("siteConfig", siteConfig);
                 tracingParameters.Add("slot", slot);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "CreateOrUpdateSiteSlotConfig", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "CreateOrUpdateSiteConfigSlot", tracingParameters);
             }
             // Construct URL
             var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web").ToString();
@@ -4143,7 +4819,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<SiteConfig>> UpdateSiteSlotConfigWithHttpMessagesAsync(string resourceGroupName, string name, SiteConfig siteConfig, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SiteConfig>> UpdateSiteConfigSlotWithHttpMessagesAsync(string resourceGroupName, string name, SiteConfig siteConfig, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -4181,7 +4857,7 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("siteConfig", siteConfig);
                 tracingParameters.Add("slot", slot);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "UpdateSiteSlotConfig", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "UpdateSiteConfigSlot", tracingParameters);
             }
             // Construct URL
             var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web").ToString();
@@ -4896,7 +5572,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<SiteSourceControl>> GetSiteSlotSourceControlWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SiteSourceControl>> GetSiteSourceControlSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -4929,7 +5605,7 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("slot", slot);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "GetSiteSlotSourceControl", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "GetSiteSourceControlSlot", tracingParameters);
             }
             // Construct URL
             var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sourcecontrols/web").ToString();
@@ -5051,7 +5727,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<SiteSourceControl>> CreateOrUpdateSiteSlotSourceControlWithHttpMessagesAsync(string resourceGroupName, string name, SiteSourceControl siteSourceControl, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SiteSourceControl>> CreateOrUpdateSiteSourceControlSlotWithHttpMessagesAsync(string resourceGroupName, string name, SiteSourceControl siteSourceControl, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -5089,7 +5765,7 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("siteSourceControl", siteSourceControl);
                 tracingParameters.Add("slot", slot);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "CreateOrUpdateSiteSlotSourceControl", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "CreateOrUpdateSiteSourceControlSlot", tracingParameters);
             }
             // Construct URL
             var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sourcecontrols/web").ToString();
@@ -5212,7 +5888,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<object>> DeleteSiteSlotSourceControlWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<object>> DeleteSiteSourceControlSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -5245,7 +5921,7 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("slot", slot);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "DeleteSiteSlotSourceControl", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "DeleteSiteSourceControlSlot", tracingParameters);
             }
             // Construct URL
             var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sourcecontrols/web").ToString();
@@ -5367,7 +6043,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<SiteSourceControl>> UpdateSiteSlotSourceControlWithHttpMessagesAsync(string resourceGroupName, string name, SiteSourceControl siteSourceControl, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SiteSourceControl>> UpdateSiteSourceControlSlotWithHttpMessagesAsync(string resourceGroupName, string name, SiteSourceControl siteSourceControl, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -5405,7 +6081,7 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("siteSourceControl", siteSourceControl);
                 tracingParameters.Add("slot", slot);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "UpdateSiteSlotSourceControl", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "UpdateSiteSourceControlSlot", tracingParameters);
             }
             // Construct URL
             var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sourcecontrols/web").ToString();
@@ -5524,7 +6200,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<IDictionary<string, string>>> ListSiteAppSettingsWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<StringDictionary>> ListSiteAppSettingsWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -5632,7 +6308,7 @@ namespace Microsoft.Azure.Management.WebSites
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<IDictionary<string, string>>();
+            var result = new AzureOperationResponse<StringDictionary>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             if (httpResponse.Headers.Contains("x-ms-request-id"))
@@ -5643,7 +6319,7 @@ namespace Microsoft.Azure.Management.WebSites
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<IDictionary<string, string>>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<StringDictionary>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -5670,7 +6346,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<IDictionary<string, string>>> ListSiteSlotAppSettingsWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<StringDictionary>> ListSiteAppSettingsSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -5703,7 +6379,7 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("slot", slot);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "ListSiteSlotAppSettings", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "ListSiteAppSettingsSlot", tracingParameters);
             }
             // Construct URL
             var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/appsettings/list").ToString();
@@ -5784,7 +6460,7 @@ namespace Microsoft.Azure.Management.WebSites
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<IDictionary<string, string>>();
+            var result = new AzureOperationResponse<StringDictionary>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             if (httpResponse.Headers.Contains("x-ms-request-id"))
@@ -5795,7 +6471,7 @@ namespace Microsoft.Azure.Management.WebSites
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<IDictionary<string, string>>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<StringDictionary>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -5821,7 +6497,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<IDictionary<string, string>>> UpdateSiteAppSettingsWithHttpMessagesAsync(string resourceGroupName, string name, IDictionary<string, string> appSettings, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<StringDictionary>> UpdateSiteAppSettingsWithHttpMessagesAsync(string resourceGroupName, string name, StringDictionary appSettings, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -5938,7 +6614,7 @@ namespace Microsoft.Azure.Management.WebSites
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<IDictionary<string, string>>();
+            var result = new AzureOperationResponse<StringDictionary>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             if (httpResponse.Headers.Contains("x-ms-request-id"))
@@ -5949,7 +6625,7 @@ namespace Microsoft.Azure.Management.WebSites
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<IDictionary<string, string>>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<StringDictionary>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -5979,7 +6655,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<IDictionary<string, string>>> UpdateSiteSlotAppSettingsWithHttpMessagesAsync(string resourceGroupName, string name, IDictionary<string, string> appSettings, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<StringDictionary>> UpdateSiteAppSettingsSlotWithHttpMessagesAsync(string resourceGroupName, string name, StringDictionary appSettings, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -6017,7 +6693,7 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("appSettings", appSettings);
                 tracingParameters.Add("slot", slot);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "UpdateSiteSlotAppSettings", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "UpdateSiteAppSettingsSlot", tracingParameters);
             }
             // Construct URL
             var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/appsettings").ToString();
@@ -6102,7 +6778,7 @@ namespace Microsoft.Azure.Management.WebSites
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<IDictionary<string, string>>();
+            var result = new AzureOperationResponse<StringDictionary>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             if (httpResponse.Headers.Contains("x-ms-request-id"))
@@ -6113,7 +6789,7 @@ namespace Microsoft.Azure.Management.WebSites
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<IDictionary<string, string>>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<StringDictionary>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -6136,7 +6812,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<IDictionary<string, ConnStringValueTypePair>>> ListSiteConnectionStringsWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ConnectionStringDictionary>> ListSiteConnectionStringsWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -6244,7 +6920,7 @@ namespace Microsoft.Azure.Management.WebSites
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<IDictionary<string, ConnStringValueTypePair>>();
+            var result = new AzureOperationResponse<ConnectionStringDictionary>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             if (httpResponse.Headers.Contains("x-ms-request-id"))
@@ -6255,7 +6931,7 @@ namespace Microsoft.Azure.Management.WebSites
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<IDictionary<string, ConnStringValueTypePair>>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<ConnectionStringDictionary>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -6282,7 +6958,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<IDictionary<string, ConnStringValueTypePair>>> ListSiteSlotConnectionStringsWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ConnectionStringDictionary>> ListSiteConnectionStringsSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -6315,7 +6991,7 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("slot", slot);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "ListSiteSlotConnectionStrings", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "ListSiteConnectionStringsSlot", tracingParameters);
             }
             // Construct URL
             var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/connectionstrings/list").ToString();
@@ -6396,7 +7072,7 @@ namespace Microsoft.Azure.Management.WebSites
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<IDictionary<string, ConnStringValueTypePair>>();
+            var result = new AzureOperationResponse<ConnectionStringDictionary>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             if (httpResponse.Headers.Contains("x-ms-request-id"))
@@ -6407,7 +7083,7 @@ namespace Microsoft.Azure.Management.WebSites
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<IDictionary<string, ConnStringValueTypePair>>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<ConnectionStringDictionary>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -6433,7 +7109,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<IDictionary<string, ConnStringValueTypePair>>> UpdateSiteConnectionStringsWithHttpMessagesAsync(string resourceGroupName, string name, IDictionary<string, ConnStringValueTypePair> connectionStrings, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ConnectionStringDictionary>> UpdateSiteConnectionStringsWithHttpMessagesAsync(string resourceGroupName, string name, ConnectionStringDictionary connectionStrings, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -6550,7 +7226,7 @@ namespace Microsoft.Azure.Management.WebSites
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<IDictionary<string, ConnStringValueTypePair>>();
+            var result = new AzureOperationResponse<ConnectionStringDictionary>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             if (httpResponse.Headers.Contains("x-ms-request-id"))
@@ -6561,7 +7237,7 @@ namespace Microsoft.Azure.Management.WebSites
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<IDictionary<string, ConnStringValueTypePair>>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<ConnectionStringDictionary>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -6591,7 +7267,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<IDictionary<string, ConnStringValueTypePair>>> UpdateSiteSlotConnectionStringsWithHttpMessagesAsync(string resourceGroupName, string name, IDictionary<string, ConnStringValueTypePair> connectionStrings, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ConnectionStringDictionary>> UpdateSiteConnectionStringsSlotWithHttpMessagesAsync(string resourceGroupName, string name, ConnectionStringDictionary connectionStrings, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -6629,7 +7305,7 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("connectionStrings", connectionStrings);
                 tracingParameters.Add("slot", slot);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "UpdateSiteSlotConnectionStrings", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "UpdateSiteConnectionStringsSlot", tracingParameters);
             }
             // Construct URL
             var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/connectionstrings").ToString();
@@ -6714,7 +7390,7 @@ namespace Microsoft.Azure.Management.WebSites
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<IDictionary<string, ConnStringValueTypePair>>();
+            var result = new AzureOperationResponse<ConnectionStringDictionary>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             if (httpResponse.Headers.Contains("x-ms-request-id"))
@@ -6725,7 +7401,7 @@ namespace Microsoft.Azure.Management.WebSites
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<IDictionary<string, ConnStringValueTypePair>>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<ConnectionStringDictionary>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -6916,10 +7592,10 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<User>> ListSiteSlotPublishingCredentialsWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<User>> ListSitePublishingCredentialsSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse<User> response = await BeginListSiteSlotPublishingCredentialsWithHttpMessagesAsync(
+            AzureOperationResponse<User> response = await BeginListSitePublishingCredentialsSlotWithHttpMessagesAsync(
                 resourceGroupName, name, slot, customHeaders, cancellationToken);
             return await this.Client.GetPostOrDeleteOperationResultAsync(response, customHeaders, cancellationToken);
         }
@@ -6942,7 +7618,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<User>> BeginListSiteSlotPublishingCredentialsWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<User>> BeginListSitePublishingCredentialsSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -6975,7 +7651,7 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("slot", slot);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "BeginListSiteSlotPublishingCredentials", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "BeginListSitePublishingCredentialsSlot", tracingParameters);
             }
             // Construct URL
             var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/publishingcredentials/list").ToString();
@@ -7090,7 +7766,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<IDictionary<string, string>>> ListSiteMetadataWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<StringDictionary>> ListSiteMetadataWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -7198,7 +7874,7 @@ namespace Microsoft.Azure.Management.WebSites
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<IDictionary<string, string>>();
+            var result = new AzureOperationResponse<StringDictionary>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             if (httpResponse.Headers.Contains("x-ms-request-id"))
@@ -7209,7 +7885,7 @@ namespace Microsoft.Azure.Management.WebSites
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<IDictionary<string, string>>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<StringDictionary>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -7236,7 +7912,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<IDictionary<string, string>>> ListSiteSlotMetadataWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<StringDictionary>> ListSiteMetadataSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -7269,7 +7945,7 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("slot", slot);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "ListSiteSlotMetadata", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "ListSiteMetadataSlot", tracingParameters);
             }
             // Construct URL
             var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/metadata/list").ToString();
@@ -7350,7 +8026,7 @@ namespace Microsoft.Azure.Management.WebSites
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<IDictionary<string, string>>();
+            var result = new AzureOperationResponse<StringDictionary>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             if (httpResponse.Headers.Contains("x-ms-request-id"))
@@ -7361,7 +8037,7 @@ namespace Microsoft.Azure.Management.WebSites
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<IDictionary<string, string>>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<StringDictionary>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -7387,7 +8063,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<IDictionary<string, string>>> UpdateSiteMetadataWithHttpMessagesAsync(string resourceGroupName, string name, IDictionary<string, string> metadata, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<StringDictionary>> UpdateSiteMetadataWithHttpMessagesAsync(string resourceGroupName, string name, StringDictionary metadata, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -7504,7 +8180,7 @@ namespace Microsoft.Azure.Management.WebSites
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<IDictionary<string, string>>();
+            var result = new AzureOperationResponse<StringDictionary>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             if (httpResponse.Headers.Contains("x-ms-request-id"))
@@ -7515,7 +8191,7 @@ namespace Microsoft.Azure.Management.WebSites
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<IDictionary<string, string>>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<StringDictionary>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -7545,7 +8221,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<IDictionary<string, string>>> UpdateSiteSlotMetadataWithHttpMessagesAsync(string resourceGroupName, string name, IDictionary<string, string> metadata, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<StringDictionary>> UpdateSiteMetadataSlotWithHttpMessagesAsync(string resourceGroupName, string name, StringDictionary metadata, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -7583,7 +8259,7 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("metadata", metadata);
                 tracingParameters.Add("slot", slot);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "UpdateSiteSlotMetadata", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "UpdateSiteMetadataSlot", tracingParameters);
             }
             // Construct URL
             var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/metadata").ToString();
@@ -7668,7 +8344,7 @@ namespace Microsoft.Azure.Management.WebSites
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<IDictionary<string, string>>();
+            var result = new AzureOperationResponse<StringDictionary>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             if (httpResponse.Headers.Contains("x-ms-request-id"))
@@ -7679,7 +8355,7 @@ namespace Microsoft.Azure.Management.WebSites
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<IDictionary<string, string>>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<StringDictionary>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -8002,7 +8678,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<SiteLogsConfig>> GetSiteSlotLogsConfigWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SiteLogsConfig>> GetSiteLogsConfigSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -8035,7 +8711,7 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("slot", slot);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "GetSiteSlotLogsConfig", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "GetSiteLogsConfigSlot", tracingParameters);
             }
             // Construct URL
             var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/logs").ToString();
@@ -8157,7 +8833,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<SiteLogsConfig>> UpdateSiteSlotLogsConfigWithHttpMessagesAsync(string resourceGroupName, string name, SiteLogsConfig siteLogsConfig, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SiteLogsConfig>> UpdateSiteLogsConfigSlotWithHttpMessagesAsync(string resourceGroupName, string name, SiteLogsConfig siteLogsConfig, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -8195,7 +8871,7 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("siteLogsConfig", siteLogsConfig);
                 tracingParameters.Add("slot", slot);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "UpdateSiteSlotLogsConfig", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "UpdateSiteLogsConfigSlot", tracingParameters);
             }
             // Construct URL
             var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/logs").ToString();
@@ -8454,7 +9130,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<object>> ListSiteSlotPremierAddOnsWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<object>> ListSitePremierAddOnsSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -8487,7 +9163,7 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("slot", slot);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "ListSiteSlotPremierAddOns", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "ListSitePremierAddOnsSlot", tracingParameters);
             }
             // Construct URL
             var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/premieraddons").ToString();
@@ -9059,7 +9735,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<object>> GetSiteSlotPremierAddOnWithHttpMessagesAsync(string resourceGroupName, string name, string premierAddOnName, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<object>> GetSitePremierAddOnSlotWithHttpMessagesAsync(string resourceGroupName, string name, string premierAddOnName, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -9097,7 +9773,7 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("premierAddOnName", premierAddOnName);
                 tracingParameters.Add("slot", slot);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "GetSiteSlotPremierAddOn", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "GetSitePremierAddOnSlot", tracingParameters);
             }
             // Construct URL
             var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/premieraddons/{premierAddOnName}").ToString();
@@ -9217,7 +9893,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<object>> AddSiteSlotPremierAddOnWithHttpMessagesAsync(string resourceGroupName, string name, string premierAddOnName, PremierAddOnRequest premierAddOn, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<object>> AddSitePremierAddOnSlotWithHttpMessagesAsync(string resourceGroupName, string name, string premierAddOnName, PremierAddOnRequest premierAddOn, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -9260,7 +9936,7 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("premierAddOn", premierAddOn);
                 tracingParameters.Add("slot", slot);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "AddSiteSlotPremierAddOn", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "AddSitePremierAddOnSlot", tracingParameters);
             }
             // Construct URL
             var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/premieraddons/{premierAddOnName}").ToString();
@@ -9382,7 +10058,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<object>> DeleteSiteSlotPremierAddOnWithHttpMessagesAsync(string resourceGroupName, string name, string premierAddOnName, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<object>> DeleteSitePremierAddOnSlotWithHttpMessagesAsync(string resourceGroupName, string name, string premierAddOnName, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -9420,7 +10096,7 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("premierAddOnName", premierAddOnName);
                 tracingParameters.Add("slot", slot);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "DeleteSiteSlotPremierAddOn", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "DeleteSitePremierAddOnSlot", tracingParameters);
             }
             // Construct URL
             var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/premieraddons/{premierAddOnName}").ToString();
@@ -9978,7 +10654,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<BackupRequest>> GetSiteSlotBackupConfigurationWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<BackupRequest>> GetSiteBackupConfigurationSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -10011,7 +10687,7 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("slot", slot);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "GetSiteSlotBackupConfiguration", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "GetSiteBackupConfigurationSlot", tracingParameters);
             }
             // Construct URL
             var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/backup/config").ToString();
@@ -10133,7 +10809,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<BackupRequest>> UpdateSiteSlotBackupConfigurationWithHttpMessagesAsync(string resourceGroupName, string name, BackupRequest request, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<BackupRequest>> UpdateSiteBackupConfigurationSlotWithHttpMessagesAsync(string resourceGroupName, string name, BackupRequest request, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -10171,7 +10847,7 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("request", request);
                 tracingParameters.Add("slot", slot);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "UpdateSiteSlotBackupConfiguration", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "UpdateSiteBackupConfigurationSlot", tracingParameters);
             }
             // Construct URL
             var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/backup/config").ToString();
@@ -10294,7 +10970,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<BackupRequest>> ListSiteSlotBackupConfigurationWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<BackupRequest>> ListSiteBackupConfigurationSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -10327,7 +11003,7 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("slot", slot);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "ListSiteSlotBackupConfiguration", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "ListSiteBackupConfigurationSlot", tracingParameters);
             }
             // Construct URL
             var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/backup/config").ToString();
@@ -10420,160 +11096,6 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 result.Body = JsonConvert.DeserializeObject<BackupRequest>(responseContent, this.Client.DeserializationSettings);
-            }
-            if (shouldTrace)
-            {
-                ServiceClientTracing.Exit(invocationId, result);
-            }
-            return result;
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Name of resource group
-        /// </param>
-        /// <param name='name'>
-        /// Name of web app
-        /// </param>
-        /// <param name='request'>
-        /// Information on backup request
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async Task<AzureOperationResponse<BackupItem>> BackupSiteWithHttpMessagesAsync(string resourceGroupName, string name, BackupRequest request, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (name == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "name");
-            }
-            if (request == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "request");
-            }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            // Tracing
-            bool shouldTrace = ServiceClientTracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("name", name);
-                tracingParameters.Add("request", request);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "BackupSite", tracingParameters);
-            }
-            // Construct URL
-            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/backup").ToString();
-            url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
-            url = url.Replace("{name}", Uri.EscapeDataString(name));
-            url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
-            List<string> queryParameters = new List<string>();
-            if (this.Client.ApiVersion != null)
-            {
-                queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
-            }
-            if (queryParameters.Count > 0)
-            {
-                url += "?" + string.Join("&", queryParameters);
-            }
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = new HttpRequestMessage();
-            httpRequest.Method = new HttpMethod("PUT");
-            httpRequest.RequestUri = new Uri(url);
-            // Set Headers
-            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            if (this.Client.AcceptLanguage != null)
-            {
-                if (httpRequest.Headers.Contains("accept-language"))
-                {
-                    httpRequest.Headers.Remove("accept-language");
-                }
-                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
-            }
-            if (customHeaders != null)
-            {
-                foreach(var header in customHeaders)
-                {
-                    if (httpRequest.Headers.Contains(header.Key))
-                    {
-                        httpRequest.Headers.Remove(header.Key);
-                    }
-                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
-                }
-            }
-
-            // Set Credentials
-            if (this.Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Serialize Request
-            string requestContent = JsonConvert.SerializeObject(request, this.Client.SerializationSettings);
-            httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-            httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
-            // Send Request
-            if (shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(invocationId, httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            if (shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
-            }
-            HttpStatusCode statusCode = httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK")))
-            {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
-                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
-                if (errorBody != null)
-                {
-                    ex = new CloudException(errorBody.Message);
-                    ex.Body = errorBody;
-                }
-                ex.Request = httpRequest;
-                ex.Response = httpResponse;
-                if (shouldTrace)
-                {
-                    ServiceClientTracing.Error(invocationId, ex);
-                }
-                throw ex;
-            }
-            // Create Result
-            var result = new AzureOperationResponse<BackupItem>();
-            result.Request = httpRequest;
-            result.Response = httpResponse;
-            if (httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
-            {
-                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<BackupItem>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -10755,6 +11277,160 @@ namespace Microsoft.Azure.Management.WebSites
         /// Name of web app
         /// </param>
         /// <param name='request'>
+        /// Information on backup request
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<BackupItem>> BackupSiteWithHttpMessagesAsync(string resourceGroupName, string name, BackupRequest request, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (request == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "request");
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool shouldTrace = ServiceClientTracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("request", request);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(invocationId, this, "BackupSite", tracingParameters);
+            }
+            // Construct URL
+            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/backup").ToString();
+            url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            url = url.Replace("{name}", Uri.EscapeDataString(name));
+            url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            List<string> queryParameters = new List<string>();
+            if (this.Client.ApiVersion != null)
+            {
+                queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (queryParameters.Count > 0)
+            {
+                url += "?" + string.Join("&", queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = new HttpRequestMessage();
+            httpRequest.Method = new HttpMethod("PUT");
+            httpRequest.RequestUri = new Uri(url);
+            // Set Headers
+            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (httpRequest.Headers.Contains("accept-language"))
+                {
+                    httpRequest.Headers.Remove("accept-language");
+                }
+                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var header in customHeaders)
+                {
+                    if (httpRequest.Headers.Contains(header.Key))
+                    {
+                        httpRequest.Headers.Remove(header.Key);
+                    }
+                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                }
+            }
+
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Serialize Request
+            string requestContent = JsonConvert.SerializeObject(request, this.Client.SerializationSettings);
+            httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+            httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            // Send Request
+            if (shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(invocationId, httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+            if (shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
+            }
+            HttpStatusCode statusCode = httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK")))
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
+                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
+                if (errorBody != null)
+                {
+                    ex = new CloudException(errorBody.Message);
+                    ex.Body = errorBody;
+                }
+                ex.Request = httpRequest;
+                ex.Response = httpResponse;
+                if (shouldTrace)
+                {
+                    ServiceClientTracing.Error(invocationId, ex);
+                }
+                throw ex;
+            }
+            // Create Result
+            var result = new AzureOperationResponse<BackupItem>();
+            result.Request = httpRequest;
+            result.Response = httpResponse;
+            if (httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
+            {
+                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                result.Body = JsonConvert.DeserializeObject<BackupItem>(responseContent, this.Client.DeserializationSettings);
+            }
+            if (shouldTrace)
+            {
+                ServiceClientTracing.Exit(invocationId, result);
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of resource group
+        /// </param>
+        /// <param name='name'>
+        /// Name of web app
+        /// </param>
+        /// <param name='request'>
         /// Information on restore request
         /// </param>
         /// <param name='slot'>
@@ -10767,7 +11443,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<RestoreRequest>> DiscoverSiteSlotRestoreWithHttpMessagesAsync(string resourceGroupName, string name, RestoreRequest request, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<RestoreRequest>> DiscoverSiteRestoreSlotWithHttpMessagesAsync(string resourceGroupName, string name, RestoreRequest request, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -10805,7 +11481,7 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("request", request);
                 tracingParameters.Add("slot", slot);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "DiscoverSiteSlotRestore", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "DiscoverSiteRestoreSlot", tracingParameters);
             }
             // Construct URL
             var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/restore/discover").ToString();
@@ -11224,7 +11900,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<BackupItemCollection>> ListSiteSlotBackupsWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<BackupItemCollection>> ListSiteBackupsSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -11257,7 +11933,7 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("slot", slot);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "ListSiteSlotBackups", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "ListSiteBackupsSlot", tracingParameters);
             }
             // Construct URL
             var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/restore").ToString();
@@ -11350,6 +12026,167 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 result.Body = JsonConvert.DeserializeObject<BackupItemCollection>(responseContent, this.Client.DeserializationSettings);
+            }
+            if (shouldTrace)
+            {
+                ServiceClientTracing.Exit(invocationId, result);
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of resource group
+        /// </param>
+        /// <param name='name'>
+        /// Name of web app
+        /// </param>
+        /// <param name='backupId'>
+        /// Id of backup
+        /// </param>
+        /// <param name='slot'>
+        /// Name of web app slot. If not specified then will default to production
+        /// slot.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<BackupItem>> GetSiteBackupStatusSlotWithHttpMessagesAsync(string resourceGroupName, string name, string backupId, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (backupId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "backupId");
+            }
+            if (slot == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "slot");
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool shouldTrace = ServiceClientTracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("backupId", backupId);
+                tracingParameters.Add("slot", slot);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(invocationId, this, "GetSiteBackupStatusSlot", tracingParameters);
+            }
+            // Construct URL
+            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/backups/{backupId}").ToString();
+            url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            url = url.Replace("{name}", Uri.EscapeDataString(name));
+            url = url.Replace("{backupId}", Uri.EscapeDataString(backupId));
+            url = url.Replace("{slot}", Uri.EscapeDataString(slot));
+            url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            List<string> queryParameters = new List<string>();
+            if (this.Client.ApiVersion != null)
+            {
+                queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (queryParameters.Count > 0)
+            {
+                url += "?" + string.Join("&", queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = new HttpRequestMessage();
+            httpRequest.Method = new HttpMethod("GET");
+            httpRequest.RequestUri = new Uri(url);
+            // Set Headers
+            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (httpRequest.Headers.Contains("accept-language"))
+                {
+                    httpRequest.Headers.Remove("accept-language");
+                }
+                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var header in customHeaders)
+                {
+                    if (httpRequest.Headers.Contains(header.Key))
+                    {
+                        httpRequest.Headers.Remove(header.Key);
+                    }
+                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                }
+            }
+
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(invocationId, httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+            if (shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
+            }
+            HttpStatusCode statusCode = httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK")))
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
+                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
+                if (errorBody != null)
+                {
+                    ex = new CloudException(errorBody.Message);
+                    ex.Body = errorBody;
+                }
+                ex.Request = httpRequest;
+                ex.Response = httpResponse;
+                if (shouldTrace)
+                {
+                    ServiceClientTracing.Error(invocationId, ex);
+                }
+                throw ex;
+            }
+            // Create Result
+            var result = new AzureOperationResponse<BackupItem>();
+            result.Request = httpRequest;
+            result.Response = httpResponse;
+            if (httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
+            {
+                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                result.Body = JsonConvert.DeserializeObject<BackupItem>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -11517,180 +12354,13 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='name'>
         /// Name of web app
         /// </param>
-        /// <param name='backupId'>
-        /// Id of backup
-        /// </param>
-        /// <param name='slot'>
-        /// Name of web app slot. If not specified then will default to production
-        /// slot.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async Task<AzureOperationResponse<BackupItem>> GetSiteSlotBackupStatusWithHttpMessagesAsync(string resourceGroupName, string name, string backupId, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (name == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "name");
-            }
-            if (backupId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "backupId");
-            }
-            if (slot == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "slot");
-            }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            // Tracing
-            bool shouldTrace = ServiceClientTracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("name", name);
-                tracingParameters.Add("backupId", backupId);
-                tracingParameters.Add("slot", slot);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "GetSiteSlotBackupStatus", tracingParameters);
-            }
-            // Construct URL
-            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/backups/{backupId}").ToString();
-            url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
-            url = url.Replace("{name}", Uri.EscapeDataString(name));
-            url = url.Replace("{backupId}", Uri.EscapeDataString(backupId));
-            url = url.Replace("{slot}", Uri.EscapeDataString(slot));
-            url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
-            List<string> queryParameters = new List<string>();
-            if (this.Client.ApiVersion != null)
-            {
-                queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
-            }
-            if (queryParameters.Count > 0)
-            {
-                url += "?" + string.Join("&", queryParameters);
-            }
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = new HttpRequestMessage();
-            httpRequest.Method = new HttpMethod("GET");
-            httpRequest.RequestUri = new Uri(url);
-            // Set Headers
-            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            if (this.Client.AcceptLanguage != null)
-            {
-                if (httpRequest.Headers.Contains("accept-language"))
-                {
-                    httpRequest.Headers.Remove("accept-language");
-                }
-                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
-            }
-            if (customHeaders != null)
-            {
-                foreach(var header in customHeaders)
-                {
-                    if (httpRequest.Headers.Contains(header.Key))
-                    {
-                        httpRequest.Headers.Remove(header.Key);
-                    }
-                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
-                }
-            }
-
-            // Set Credentials
-            if (this.Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(invocationId, httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            if (shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
-            }
-            HttpStatusCode statusCode = httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK")))
-            {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
-                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
-                if (errorBody != null)
-                {
-                    ex = new CloudException(errorBody.Message);
-                    ex.Body = errorBody;
-                }
-                ex.Request = httpRequest;
-                ex.Response = httpResponse;
-                if (shouldTrace)
-                {
-                    ServiceClientTracing.Error(invocationId, ex);
-                }
-                throw ex;
-            }
-            // Create Result
-            var result = new AzureOperationResponse<BackupItem>();
-            result.Request = httpRequest;
-            result.Response = httpResponse;
-            if (httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
-            {
-                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<BackupItem>(responseContent, this.Client.DeserializationSettings);
-            }
-            if (shouldTrace)
-            {
-                ServiceClientTracing.Exit(invocationId, result);
-            }
-            return result;
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Name of resource group
-        /// </param>
-        /// <param name='name'>
-        /// Name of web app
-        /// </param>
-        /// <param name='names'>
-        /// Comma separated list of usage metrics
-        /// </param>
-        /// <param name='computeMode'>
-        /// Deprecated
-        /// </param>
-        /// <param name='siteMode'>
-        /// Deprecated
-        /// </param>
         /// <param name='filter'>
         /// Return only usages specified in the filter. Filter is specified by using
-        /// OData syntax. Example: $filter=name.value eq 'BytesSent' or name.value eq
-        /// BytesReceived.
+        /// OData syntax. Example: $filter=Return only usages/metrics specified in
+        /// the filter. Filter conforms to odata syntax. Example: $filter=(name.value
+        /// eq 'Metric1' or name.value eq 'Metric2') and startTime eq
+        /// '2014-01-01T00:00:00Z' and endTime eq '2014-12-31T23:59:59Z' and
+        /// timeGrain eq duration'[Hour|Minute|Day]'.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -11698,7 +12368,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<CsmUsageQuotaCollection>> GetSiteUsagesWithHttpMessagesAsync(string resourceGroupName, string name, string names = default(string), string computeMode = default(string), string siteMode = default(string), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<CsmUsageQuotaCollection>> GetSiteUsagesWithHttpMessagesAsync(string resourceGroupName, string name, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -11725,9 +12395,6 @@ namespace Microsoft.Azure.Management.WebSites
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("name", name);
-                tracingParameters.Add("names", names);
-                tracingParameters.Add("computeMode", computeMode);
-                tracingParameters.Add("siteMode", siteMode);
                 tracingParameters.Add("filter", filter);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(invocationId, this, "GetSiteUsages", tracingParameters);
@@ -11738,18 +12405,6 @@ namespace Microsoft.Azure.Management.WebSites
             url = url.Replace("{name}", Uri.EscapeDataString(name));
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> queryParameters = new List<string>();
-            if (names != null)
-            {
-                queryParameters.Add(string.Format("names={0}", Uri.EscapeDataString(names)));
-            }
-            if (computeMode != null)
-            {
-                queryParameters.Add(string.Format("computeMode={0}", Uri.EscapeDataString(computeMode)));
-            }
-            if (siteMode != null)
-            {
-                queryParameters.Add(string.Format("siteMode={0}", Uri.EscapeDataString(siteMode)));
-            }
             if (filter != null)
             {
                 queryParameters.Add(string.Format("$filter={0}", Uri.EscapeDataString(filter)));
@@ -11858,19 +12513,13 @@ namespace Microsoft.Azure.Management.WebSites
         /// Name of web app slot. If not specified then will default to production
         /// slot.
         /// </param>
-        /// <param name='names'>
-        /// Comma separated list of usage metrics
-        /// </param>
-        /// <param name='computeMode'>
-        /// Deprecated
-        /// </param>
-        /// <param name='siteMode'>
-        /// Deprecated
-        /// </param>
         /// <param name='filter'>
         /// Return only usages specified in the filter. Filter is specified by using
-        /// OData syntax. Example: $filter=name.value eq 'BytesSent' or name.value eq
-        /// BytesReceived.
+        /// OData syntax. Example: $filter=Return only usages/metrics specified in
+        /// the filter. Filter conforms to odata syntax. Example: $filter=(name.value
+        /// eq 'Metric1' or name.value eq 'Metric2') and startTime eq
+        /// '2014-01-01T00:00:00Z' and endTime eq '2014-12-31T23:59:59Z' and
+        /// timeGrain eq duration'[Hour|Minute|Day]'.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -11878,7 +12527,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<CsmUsageQuotaCollection>> GetSiteSlotUsagesWithHttpMessagesAsync(string resourceGroupName, string name, string slot, string names = default(string), string computeMode = default(string), string siteMode = default(string), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<CsmUsageQuotaCollection>> GetSiteUsagesSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -11910,12 +12559,9 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("slot", slot);
-                tracingParameters.Add("names", names);
-                tracingParameters.Add("computeMode", computeMode);
-                tracingParameters.Add("siteMode", siteMode);
                 tracingParameters.Add("filter", filter);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "GetSiteSlotUsages", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "GetSiteUsagesSlot", tracingParameters);
             }
             // Construct URL
             var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/usages").ToString();
@@ -11924,18 +12570,6 @@ namespace Microsoft.Azure.Management.WebSites
             url = url.Replace("{slot}", Uri.EscapeDataString(slot));
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> queryParameters = new List<string>();
-            if (names != null)
-            {
-                queryParameters.Add(string.Format("names={0}", Uri.EscapeDataString(names)));
-            }
-            if (computeMode != null)
-            {
-                queryParameters.Add(string.Format("computeMode={0}", Uri.EscapeDataString(computeMode)));
-            }
-            if (siteMode != null)
-            {
-                queryParameters.Add(string.Format("siteMode={0}", Uri.EscapeDataString(siteMode)));
-            }
             if (filter != null)
             {
                 queryParameters.Add(string.Format("$filter={0}", Uri.EscapeDataString(filter)));
@@ -12040,23 +12674,14 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='name'>
         /// Name of web app
         /// </param>
-        /// <param name='names'>
-        /// Names of metrics to inclued in response
-        /// </param>
-        /// <param name='startTime'>
-        /// Start time of metric
-        /// </param>
-        /// <param name='endTime'>
-        /// End time of metric
-        /// </param>
-        /// <param name='timeGrain'>
-        /// Granularity of time
-        /// </param>
         /// <param name='details'>
         /// If true, metric details are included in response
         /// </param>
-        /// <param name='slotView'>
-        /// If true, view of slots is included in response
+        /// <param name='filter'>
+        /// Return only usages/metrics specified in the filter. Filter conforms to
+        /// odata syntax. Example: $filter=(name.value eq 'Metric1' or name.value eq
+        /// 'Metric2') and startTime eq '2014-01-01T00:00:00Z' and endTime eq
+        /// '2014-12-31T23:59:59Z' and timeGrain eq duration'[Hour|Minute|Day]'.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -12064,7 +12689,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<MetricResponseCollection>> GetSiteMetricsWithHttpMessagesAsync(string resourceGroupName, string name, string names = default(string), string startTime = default(string), string endTime = default(string), string timeGrain = default(string), bool? details = default(bool?), bool? slotView = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<MetricResponseCollection>> GetSiteMetricsWithHttpMessagesAsync(string resourceGroupName, string name, bool? details = default(bool?), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -12091,12 +12716,8 @@ namespace Microsoft.Azure.Management.WebSites
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("name", name);
-                tracingParameters.Add("names", names);
-                tracingParameters.Add("startTime", startTime);
-                tracingParameters.Add("endTime", endTime);
-                tracingParameters.Add("timeGrain", timeGrain);
                 tracingParameters.Add("details", details);
-                tracingParameters.Add("slotView", slotView);
+                tracingParameters.Add("filter", filter);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(invocationId, this, "GetSiteMetrics", tracingParameters);
             }
@@ -12106,29 +12727,13 @@ namespace Microsoft.Azure.Management.WebSites
             url = url.Replace("{name}", Uri.EscapeDataString(name));
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> queryParameters = new List<string>();
-            if (names != null)
-            {
-                queryParameters.Add(string.Format("names={0}", Uri.EscapeDataString(names)));
-            }
-            if (startTime != null)
-            {
-                queryParameters.Add(string.Format("startTime={0}", Uri.EscapeDataString(startTime)));
-            }
-            if (endTime != null)
-            {
-                queryParameters.Add(string.Format("endTime={0}", Uri.EscapeDataString(endTime)));
-            }
-            if (timeGrain != null)
-            {
-                queryParameters.Add(string.Format("timeGrain={0}", Uri.EscapeDataString(timeGrain)));
-            }
             if (details != null)
             {
                 queryParameters.Add(string.Format("details={0}", Uri.EscapeDataString(JsonConvert.SerializeObject(details, this.Client.SerializationSettings).Trim('"'))));
             }
-            if (slotView != null)
+            if (filter != null)
             {
-                queryParameters.Add(string.Format("slotView={0}", Uri.EscapeDataString(JsonConvert.SerializeObject(slotView, this.Client.SerializationSettings).Trim('"'))));
+                queryParameters.Add(string.Format("$filter={0}", Uri.EscapeDataString(filter)));
             }
             if (this.Client.ApiVersion != null)
             {
@@ -12234,23 +12839,14 @@ namespace Microsoft.Azure.Management.WebSites
         /// Name of web app slot. If not specified then will default to production
         /// slot.
         /// </param>
-        /// <param name='names'>
-        /// Names of metrics to inclued in response
-        /// </param>
-        /// <param name='startTime'>
-        /// Start time of metric
-        /// </param>
-        /// <param name='endTime'>
-        /// End time of metric
-        /// </param>
-        /// <param name='timeGrain'>
-        /// Granularity of time
-        /// </param>
         /// <param name='details'>
         /// If true, metric details are included in response
         /// </param>
-        /// <param name='slotView'>
-        /// If true, view of slots is included in response
+        /// <param name='filter'>
+        /// Return only usages/metrics specified in the filter. Filter conforms to
+        /// odata syntax. Example: $filter=(name.value eq 'Metric1' or name.value eq
+        /// 'Metric2') and startTime eq '2014-01-01T00:00:00Z' and endTime eq
+        /// '2014-12-31T23:59:59Z' and timeGrain eq duration'[Hour|Minute|Day]'.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -12258,7 +12854,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<MetricResponseCollection>> GetSiteSlotMetricsWithHttpMessagesAsync(string resourceGroupName, string name, string slot, string names = default(string), string startTime = default(string), string endTime = default(string), string timeGrain = default(string), bool? details = default(bool?), bool? slotView = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<MetricResponseCollection>> GetSiteMetricsSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, bool? details = default(bool?), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -12290,14 +12886,10 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("slot", slot);
-                tracingParameters.Add("names", names);
-                tracingParameters.Add("startTime", startTime);
-                tracingParameters.Add("endTime", endTime);
-                tracingParameters.Add("timeGrain", timeGrain);
                 tracingParameters.Add("details", details);
-                tracingParameters.Add("slotView", slotView);
+                tracingParameters.Add("filter", filter);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "GetSiteSlotMetrics", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "GetSiteMetricsSlot", tracingParameters);
             }
             // Construct URL
             var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/metrics").ToString();
@@ -12306,29 +12898,13 @@ namespace Microsoft.Azure.Management.WebSites
             url = url.Replace("{slot}", Uri.EscapeDataString(slot));
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> queryParameters = new List<string>();
-            if (names != null)
-            {
-                queryParameters.Add(string.Format("names={0}", Uri.EscapeDataString(names)));
-            }
-            if (startTime != null)
-            {
-                queryParameters.Add(string.Format("startTime={0}", Uri.EscapeDataString(startTime)));
-            }
-            if (endTime != null)
-            {
-                queryParameters.Add(string.Format("endTime={0}", Uri.EscapeDataString(endTime)));
-            }
-            if (timeGrain != null)
-            {
-                queryParameters.Add(string.Format("timeGrain={0}", Uri.EscapeDataString(timeGrain)));
-            }
             if (details != null)
             {
                 queryParameters.Add(string.Format("details={0}", Uri.EscapeDataString(JsonConvert.SerializeObject(details, this.Client.SerializationSettings).Trim('"'))));
             }
-            if (slotView != null)
+            if (filter != null)
             {
-                queryParameters.Add(string.Format("slotView={0}", Uri.EscapeDataString(JsonConvert.SerializeObject(slotView, this.Client.SerializationSettings).Trim('"'))));
+                queryParameters.Add(string.Format("$filter={0}", Uri.EscapeDataString(filter)));
             }
             if (this.Client.ApiVersion != null)
             {
@@ -12582,7 +13158,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<MetricDefinitionCollection>> GetSiteSlotMetricDefinitionsWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<MetricDefinitionCollection>> GetSiteMetricDefinitionsSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -12615,7 +13191,7 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("slot", slot);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "GetSiteSlotMetricDefinitions", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "GetSiteMetricDefinitionsSlot", tracingParameters);
             }
             // Construct URL
             var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/metricdefinitions").ToString();
@@ -12728,17 +13304,13 @@ namespace Microsoft.Azure.Management.WebSites
         /// Specifies options for publishing profile. Pass
         /// CsmPublishingProfileOptions.Format=FileZilla3 for FileZilla FTP format.
         /// </param>
-        /// <param name='slot'>
-        /// Name of web app slot. If not specified then will default to production
-        /// slot.
-        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<object>> ListSiteSlotPublishingProfileXmlWithHttpMessagesAsync(string resourceGroupName, string name, CsmPublishingProfileOptions options, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<object>> ListSitePublishingProfileXmlWithHttpMessagesAsync(string resourceGroupName, string name, CsmPublishingProfileOptions options, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -12751,10 +13323,6 @@ namespace Microsoft.Azure.Management.WebSites
             if (options == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "options");
-            }
-            if (slot == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "slot");
             }
             if (this.Client.SubscriptionId == null)
             {
@@ -12774,15 +13342,13 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("options", options);
-                tracingParameters.Add("slot", slot);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "ListSiteSlotPublishingProfileXml", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "ListSitePublishingProfileXml", tracingParameters);
             }
             // Construct URL
-            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/publishxml").ToString();
+            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/publishxml").ToString();
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             url = url.Replace("{name}", Uri.EscapeDataString(name));
-            url = url.Replace("{slot}", Uri.EscapeDataString(slot));
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
@@ -12893,13 +13459,17 @@ namespace Microsoft.Azure.Management.WebSites
         /// Specifies options for publishing profile. Pass
         /// CsmPublishingProfileOptions.Format=FileZilla3 for FileZilla FTP format.
         /// </param>
+        /// <param name='slot'>
+        /// Name of web app slot. If not specified then will default to production
+        /// slot.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<object>> ListSitePublishingProfileXmlWithHttpMessagesAsync(string resourceGroupName, string name, CsmPublishingProfileOptions options, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<object>> ListSitePublishingProfileXmlSlotWithHttpMessagesAsync(string resourceGroupName, string name, CsmPublishingProfileOptions options, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -12912,6 +13482,10 @@ namespace Microsoft.Azure.Management.WebSites
             if (options == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "options");
+            }
+            if (slot == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "slot");
             }
             if (this.Client.SubscriptionId == null)
             {
@@ -12931,13 +13505,15 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("options", options);
+                tracingParameters.Add("slot", slot);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "ListSitePublishingProfileXml", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "ListSitePublishingProfileXmlSlot", tracingParameters);
             }
             // Construct URL
-            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/publishxml").ToString();
+            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/publishxml").ToString();
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             url = url.Replace("{name}", Uri.EscapeDataString(name));
+            url = url.Replace("{slot}", Uri.EscapeDataString(slot));
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
@@ -13372,17 +13948,13 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='name'>
         /// Name of web app
         /// </param>
-        /// <param name='slot'>
-        /// Name of web app slot. If not specified then will default to production
-        /// slot.
-        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<object>> StartSiteSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<object>> StartSiteWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -13391,10 +13963,6 @@ namespace Microsoft.Azure.Management.WebSites
             if (name == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "name");
-            }
-            if (slot == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "slot");
             }
             if (this.Client.SubscriptionId == null)
             {
@@ -13413,15 +13981,13 @@ namespace Microsoft.Azure.Management.WebSites
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("name", name);
-                tracingParameters.Add("slot", slot);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "StartSiteSlot", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "StartSite", tracingParameters);
             }
             // Construct URL
-            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/start").ToString();
+            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/start").ToString();
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             url = url.Replace("{name}", Uri.EscapeDataString(name));
-            url = url.Replace("{slot}", Uri.EscapeDataString(slot));
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
@@ -13524,13 +14090,17 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='name'>
         /// Name of web app
         /// </param>
+        /// <param name='slot'>
+        /// Name of web app slot. If not specified then will default to production
+        /// slot.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<object>> StartSiteWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<object>> StartSiteSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -13539,6 +14109,10 @@ namespace Microsoft.Azure.Management.WebSites
             if (name == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (slot == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "slot");
             }
             if (this.Client.SubscriptionId == null)
             {
@@ -13557,13 +14131,15 @@ namespace Microsoft.Azure.Management.WebSites
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("name", name);
+                tracingParameters.Add("slot", slot);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "StartSite", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "StartSiteSlot", tracingParameters);
             }
             // Construct URL
-            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/start").ToString();
+            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/start").ToString();
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             url = url.Replace("{name}", Uri.EscapeDataString(name));
+            url = url.Replace("{slot}", Uri.EscapeDataString(slot));
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
@@ -14106,7 +14682,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<object>> SyncSiteSlotRepositoryWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<object>> SyncSiteRepositorySlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -14139,7 +14715,7 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("slot", slot);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "SyncSiteSlotRepository", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "SyncSiteRepositorySlot", tracingParameters);
             }
             // Construct URL
             var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sync").ToString();
@@ -14400,7 +14976,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<object>> GenerateNewSiteSlotPublishingPasswordWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<object>> GenerateNewSitePublishingPasswordSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -14433,7 +15009,7 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("slot", slot);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "GenerateNewSiteSlotPublishingPassword", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "GenerateNewSitePublishingPasswordSlot", tracingParameters);
             }
             // Construct URL
             var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/newpassword").ToString();
@@ -14526,670 +15102,6 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 result.Body = JsonConvert.DeserializeObject<object>(responseContent, this.Client.DeserializationSettings);
-            }
-            if (shouldTrace)
-            {
-                ServiceClientTracing.Exit(invocationId, result);
-            }
-            return result;
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The resource group name
-        /// </param>
-        /// <param name='name'>
-        /// The name of the web app
-        /// </param>
-        /// <param name='entityName'>
-        /// The name by which the Hybrid Connection is identified
-        /// </param>
-        /// <param name='slot'>
-        /// The name of the slot for the web app.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async Task<AzureOperationResponse<RelayServiceConnectionEntity>> GetSiteSlotRelayServiceConnectionWithHttpMessagesAsync(string resourceGroupName, string name, string entityName, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (name == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "name");
-            }
-            if (entityName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "entityName");
-            }
-            if (slot == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "slot");
-            }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            // Tracing
-            bool shouldTrace = ServiceClientTracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("name", name);
-                tracingParameters.Add("entityName", entityName);
-                tracingParameters.Add("slot", slot);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "GetSiteSlotRelayServiceConnection", tracingParameters);
-            }
-            // Construct URL
-            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridconnection/{entityName}").ToString();
-            url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
-            url = url.Replace("{name}", Uri.EscapeDataString(name));
-            url = url.Replace("{entityName}", Uri.EscapeDataString(entityName));
-            url = url.Replace("{slot}", Uri.EscapeDataString(slot));
-            url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
-            List<string> queryParameters = new List<string>();
-            if (this.Client.ApiVersion != null)
-            {
-                queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
-            }
-            if (queryParameters.Count > 0)
-            {
-                url += "?" + string.Join("&", queryParameters);
-            }
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = new HttpRequestMessage();
-            httpRequest.Method = new HttpMethod("GET");
-            httpRequest.RequestUri = new Uri(url);
-            // Set Headers
-            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            if (this.Client.AcceptLanguage != null)
-            {
-                if (httpRequest.Headers.Contains("accept-language"))
-                {
-                    httpRequest.Headers.Remove("accept-language");
-                }
-                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
-            }
-            if (customHeaders != null)
-            {
-                foreach(var header in customHeaders)
-                {
-                    if (httpRequest.Headers.Contains(header.Key))
-                    {
-                        httpRequest.Headers.Remove(header.Key);
-                    }
-                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
-                }
-            }
-
-            // Set Credentials
-            if (this.Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(invocationId, httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            if (shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
-            }
-            HttpStatusCode statusCode = httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK")))
-            {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
-                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
-                if (errorBody != null)
-                {
-                    ex = new CloudException(errorBody.Message);
-                    ex.Body = errorBody;
-                }
-                ex.Request = httpRequest;
-                ex.Response = httpResponse;
-                if (shouldTrace)
-                {
-                    ServiceClientTracing.Error(invocationId, ex);
-                }
-                throw ex;
-            }
-            // Create Result
-            var result = new AzureOperationResponse<RelayServiceConnectionEntity>();
-            result.Request = httpRequest;
-            result.Response = httpResponse;
-            if (httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
-            {
-                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<RelayServiceConnectionEntity>(responseContent, this.Client.DeserializationSettings);
-            }
-            if (shouldTrace)
-            {
-                ServiceClientTracing.Exit(invocationId, result);
-            }
-            return result;
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The resource group name
-        /// </param>
-        /// <param name='name'>
-        /// The name of the web app
-        /// </param>
-        /// <param name='entityName'>
-        /// The name by which the Hybrid Connection is identified
-        /// </param>
-        /// <param name='connectionEnvelope'>
-        /// The details of the Hybrid Connection
-        /// </param>
-        /// <param name='slot'>
-        /// The name of the slot for the web app.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async Task<AzureOperationResponse<RelayServiceConnectionEntity>> CreateOrUpdateSiteSlotRelayServiceConnectionWithHttpMessagesAsync(string resourceGroupName, string name, string entityName, RelayServiceConnectionEntity connectionEnvelope, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (name == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "name");
-            }
-            if (entityName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "entityName");
-            }
-            if (connectionEnvelope == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "connectionEnvelope");
-            }
-            if (slot == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "slot");
-            }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            // Tracing
-            bool shouldTrace = ServiceClientTracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("name", name);
-                tracingParameters.Add("entityName", entityName);
-                tracingParameters.Add("connectionEnvelope", connectionEnvelope);
-                tracingParameters.Add("slot", slot);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "CreateOrUpdateSiteSlotRelayServiceConnection", tracingParameters);
-            }
-            // Construct URL
-            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridconnection/{entityName}").ToString();
-            url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
-            url = url.Replace("{name}", Uri.EscapeDataString(name));
-            url = url.Replace("{entityName}", Uri.EscapeDataString(entityName));
-            url = url.Replace("{slot}", Uri.EscapeDataString(slot));
-            url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
-            List<string> queryParameters = new List<string>();
-            if (this.Client.ApiVersion != null)
-            {
-                queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
-            }
-            if (queryParameters.Count > 0)
-            {
-                url += "?" + string.Join("&", queryParameters);
-            }
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = new HttpRequestMessage();
-            httpRequest.Method = new HttpMethod("PUT");
-            httpRequest.RequestUri = new Uri(url);
-            // Set Headers
-            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            if (this.Client.AcceptLanguage != null)
-            {
-                if (httpRequest.Headers.Contains("accept-language"))
-                {
-                    httpRequest.Headers.Remove("accept-language");
-                }
-                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
-            }
-            if (customHeaders != null)
-            {
-                foreach(var header in customHeaders)
-                {
-                    if (httpRequest.Headers.Contains(header.Key))
-                    {
-                        httpRequest.Headers.Remove(header.Key);
-                    }
-                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
-                }
-            }
-
-            // Set Credentials
-            if (this.Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Serialize Request
-            string requestContent = JsonConvert.SerializeObject(connectionEnvelope, this.Client.SerializationSettings);
-            httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-            httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
-            // Send Request
-            if (shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(invocationId, httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            if (shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
-            }
-            HttpStatusCode statusCode = httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK")))
-            {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
-                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
-                if (errorBody != null)
-                {
-                    ex = new CloudException(errorBody.Message);
-                    ex.Body = errorBody;
-                }
-                ex.Request = httpRequest;
-                ex.Response = httpResponse;
-                if (shouldTrace)
-                {
-                    ServiceClientTracing.Error(invocationId, ex);
-                }
-                throw ex;
-            }
-            // Create Result
-            var result = new AzureOperationResponse<RelayServiceConnectionEntity>();
-            result.Request = httpRequest;
-            result.Response = httpResponse;
-            if (httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
-            {
-                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<RelayServiceConnectionEntity>(responseContent, this.Client.DeserializationSettings);
-            }
-            if (shouldTrace)
-            {
-                ServiceClientTracing.Exit(invocationId, result);
-            }
-            return result;
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The resource group name
-        /// </param>
-        /// <param name='name'>
-        /// The name of the web app
-        /// </param>
-        /// <param name='entityName'>
-        /// The name by which the Hybrid Connection is identified
-        /// </param>
-        /// <param name='slot'>
-        /// The name of the slot for the web app.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async Task<AzureOperationResponse<object>> DeleteSiteSlotRelayServiceConnectionWithHttpMessagesAsync(string resourceGroupName, string name, string entityName, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (name == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "name");
-            }
-            if (entityName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "entityName");
-            }
-            if (slot == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "slot");
-            }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            // Tracing
-            bool shouldTrace = ServiceClientTracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("name", name);
-                tracingParameters.Add("entityName", entityName);
-                tracingParameters.Add("slot", slot);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "DeleteSiteSlotRelayServiceConnection", tracingParameters);
-            }
-            // Construct URL
-            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridconnection/{entityName}").ToString();
-            url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
-            url = url.Replace("{name}", Uri.EscapeDataString(name));
-            url = url.Replace("{entityName}", Uri.EscapeDataString(entityName));
-            url = url.Replace("{slot}", Uri.EscapeDataString(slot));
-            url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
-            List<string> queryParameters = new List<string>();
-            if (this.Client.ApiVersion != null)
-            {
-                queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
-            }
-            if (queryParameters.Count > 0)
-            {
-                url += "?" + string.Join("&", queryParameters);
-            }
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = new HttpRequestMessage();
-            httpRequest.Method = new HttpMethod("DELETE");
-            httpRequest.RequestUri = new Uri(url);
-            // Set Headers
-            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            if (this.Client.AcceptLanguage != null)
-            {
-                if (httpRequest.Headers.Contains("accept-language"))
-                {
-                    httpRequest.Headers.Remove("accept-language");
-                }
-                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
-            }
-            if (customHeaders != null)
-            {
-                foreach(var header in customHeaders)
-                {
-                    if (httpRequest.Headers.Contains(header.Key))
-                    {
-                        httpRequest.Headers.Remove(header.Key);
-                    }
-                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
-                }
-            }
-
-            // Set Credentials
-            if (this.Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(invocationId, httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            if (shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
-            }
-            HttpStatusCode statusCode = httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK")))
-            {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
-                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
-                if (errorBody != null)
-                {
-                    ex = new CloudException(errorBody.Message);
-                    ex.Body = errorBody;
-                }
-                ex.Request = httpRequest;
-                ex.Response = httpResponse;
-                if (shouldTrace)
-                {
-                    ServiceClientTracing.Error(invocationId, ex);
-                }
-                throw ex;
-            }
-            // Create Result
-            var result = new AzureOperationResponse<object>();
-            result.Request = httpRequest;
-            result.Response = httpResponse;
-            if (httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
-            {
-                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<object>(responseContent, this.Client.DeserializationSettings);
-            }
-            if (shouldTrace)
-            {
-                ServiceClientTracing.Exit(invocationId, result);
-            }
-            return result;
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The resource group name
-        /// </param>
-        /// <param name='name'>
-        /// The name of the web app
-        /// </param>
-        /// <param name='entityName'>
-        /// The name by which the Hybrid Connection is identified
-        /// </param>
-        /// <param name='connectionEnvelope'>
-        /// The details of the Hybrid Connection
-        /// </param>
-        /// <param name='slot'>
-        /// The name of the slot for the web app.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async Task<AzureOperationResponse<RelayServiceConnectionEntity>> UpdateSiteSlotRelayServiceConnectionWithHttpMessagesAsync(string resourceGroupName, string name, string entityName, RelayServiceConnectionEntity connectionEnvelope, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (name == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "name");
-            }
-            if (entityName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "entityName");
-            }
-            if (connectionEnvelope == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "connectionEnvelope");
-            }
-            if (slot == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "slot");
-            }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            // Tracing
-            bool shouldTrace = ServiceClientTracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("name", name);
-                tracingParameters.Add("entityName", entityName);
-                tracingParameters.Add("connectionEnvelope", connectionEnvelope);
-                tracingParameters.Add("slot", slot);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "UpdateSiteSlotRelayServiceConnection", tracingParameters);
-            }
-            // Construct URL
-            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridconnection/{entityName}").ToString();
-            url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
-            url = url.Replace("{name}", Uri.EscapeDataString(name));
-            url = url.Replace("{entityName}", Uri.EscapeDataString(entityName));
-            url = url.Replace("{slot}", Uri.EscapeDataString(slot));
-            url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
-            List<string> queryParameters = new List<string>();
-            if (this.Client.ApiVersion != null)
-            {
-                queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
-            }
-            if (queryParameters.Count > 0)
-            {
-                url += "?" + string.Join("&", queryParameters);
-            }
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = new HttpRequestMessage();
-            httpRequest.Method = new HttpMethod("PATCH");
-            httpRequest.RequestUri = new Uri(url);
-            // Set Headers
-            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            if (this.Client.AcceptLanguage != null)
-            {
-                if (httpRequest.Headers.Contains("accept-language"))
-                {
-                    httpRequest.Headers.Remove("accept-language");
-                }
-                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
-            }
-            if (customHeaders != null)
-            {
-                foreach(var header in customHeaders)
-                {
-                    if (httpRequest.Headers.Contains(header.Key))
-                    {
-                        httpRequest.Headers.Remove(header.Key);
-                    }
-                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
-                }
-            }
-
-            // Set Credentials
-            if (this.Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Serialize Request
-            string requestContent = JsonConvert.SerializeObject(connectionEnvelope, this.Client.SerializationSettings);
-            httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-            httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
-            // Send Request
-            if (shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(invocationId, httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            if (shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
-            }
-            HttpStatusCode statusCode = httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK")))
-            {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
-                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
-                if (errorBody != null)
-                {
-                    ex = new CloudException(errorBody.Message);
-                    ex.Body = errorBody;
-                }
-                ex.Request = httpRequest;
-                ex.Response = httpResponse;
-                if (shouldTrace)
-                {
-                    ServiceClientTracing.Error(invocationId, ex);
-                }
-                throw ex;
-            }
-            // Create Result
-            var result = new AzureOperationResponse<RelayServiceConnectionEntity>();
-            result.Request = httpRequest;
-            result.Response = httpResponse;
-            if (httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
-            {
-                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<RelayServiceConnectionEntity>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -15834,6 +15746,9 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='name'>
         /// The name of the web app
         /// </param>
+        /// <param name='entityName'>
+        /// The name by which the Hybrid Connection is identified
+        /// </param>
         /// <param name='slot'>
         /// The name of the slot for the web app.
         /// </param>
@@ -15843,7 +15758,668 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<RelayServiceConnectionEntity>> ListSiteSlotRelayServiceConnectionsWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<RelayServiceConnectionEntity>> GetSiteRelayServiceConnectionSlotWithHttpMessagesAsync(string resourceGroupName, string name, string entityName, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (entityName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "entityName");
+            }
+            if (slot == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "slot");
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool shouldTrace = ServiceClientTracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("entityName", entityName);
+                tracingParameters.Add("slot", slot);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(invocationId, this, "GetSiteRelayServiceConnectionSlot", tracingParameters);
+            }
+            // Construct URL
+            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridconnection/{entityName}").ToString();
+            url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            url = url.Replace("{name}", Uri.EscapeDataString(name));
+            url = url.Replace("{entityName}", Uri.EscapeDataString(entityName));
+            url = url.Replace("{slot}", Uri.EscapeDataString(slot));
+            url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            List<string> queryParameters = new List<string>();
+            if (this.Client.ApiVersion != null)
+            {
+                queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (queryParameters.Count > 0)
+            {
+                url += "?" + string.Join("&", queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = new HttpRequestMessage();
+            httpRequest.Method = new HttpMethod("GET");
+            httpRequest.RequestUri = new Uri(url);
+            // Set Headers
+            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (httpRequest.Headers.Contains("accept-language"))
+                {
+                    httpRequest.Headers.Remove("accept-language");
+                }
+                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var header in customHeaders)
+                {
+                    if (httpRequest.Headers.Contains(header.Key))
+                    {
+                        httpRequest.Headers.Remove(header.Key);
+                    }
+                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                }
+            }
+
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(invocationId, httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+            if (shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
+            }
+            HttpStatusCode statusCode = httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK")))
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
+                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
+                if (errorBody != null)
+                {
+                    ex = new CloudException(errorBody.Message);
+                    ex.Body = errorBody;
+                }
+                ex.Request = httpRequest;
+                ex.Response = httpResponse;
+                if (shouldTrace)
+                {
+                    ServiceClientTracing.Error(invocationId, ex);
+                }
+                throw ex;
+            }
+            // Create Result
+            var result = new AzureOperationResponse<RelayServiceConnectionEntity>();
+            result.Request = httpRequest;
+            result.Response = httpResponse;
+            if (httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
+            {
+                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                result.Body = JsonConvert.DeserializeObject<RelayServiceConnectionEntity>(responseContent, this.Client.DeserializationSettings);
+            }
+            if (shouldTrace)
+            {
+                ServiceClientTracing.Exit(invocationId, result);
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name
+        /// </param>
+        /// <param name='name'>
+        /// The name of the web app
+        /// </param>
+        /// <param name='entityName'>
+        /// The name by which the Hybrid Connection is identified
+        /// </param>
+        /// <param name='connectionEnvelope'>
+        /// The details of the Hybrid Connection
+        /// </param>
+        /// <param name='slot'>
+        /// The name of the slot for the web app.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<RelayServiceConnectionEntity>> CreateOrUpdateSiteRelayServiceConnectionSlotWithHttpMessagesAsync(string resourceGroupName, string name, string entityName, RelayServiceConnectionEntity connectionEnvelope, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (entityName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "entityName");
+            }
+            if (connectionEnvelope == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "connectionEnvelope");
+            }
+            if (slot == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "slot");
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool shouldTrace = ServiceClientTracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("entityName", entityName);
+                tracingParameters.Add("connectionEnvelope", connectionEnvelope);
+                tracingParameters.Add("slot", slot);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(invocationId, this, "CreateOrUpdateSiteRelayServiceConnectionSlot", tracingParameters);
+            }
+            // Construct URL
+            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridconnection/{entityName}").ToString();
+            url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            url = url.Replace("{name}", Uri.EscapeDataString(name));
+            url = url.Replace("{entityName}", Uri.EscapeDataString(entityName));
+            url = url.Replace("{slot}", Uri.EscapeDataString(slot));
+            url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            List<string> queryParameters = new List<string>();
+            if (this.Client.ApiVersion != null)
+            {
+                queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (queryParameters.Count > 0)
+            {
+                url += "?" + string.Join("&", queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = new HttpRequestMessage();
+            httpRequest.Method = new HttpMethod("PUT");
+            httpRequest.RequestUri = new Uri(url);
+            // Set Headers
+            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (httpRequest.Headers.Contains("accept-language"))
+                {
+                    httpRequest.Headers.Remove("accept-language");
+                }
+                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var header in customHeaders)
+                {
+                    if (httpRequest.Headers.Contains(header.Key))
+                    {
+                        httpRequest.Headers.Remove(header.Key);
+                    }
+                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                }
+            }
+
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Serialize Request
+            string requestContent = JsonConvert.SerializeObject(connectionEnvelope, this.Client.SerializationSettings);
+            httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+            httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            // Send Request
+            if (shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(invocationId, httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+            if (shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
+            }
+            HttpStatusCode statusCode = httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK")))
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
+                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
+                if (errorBody != null)
+                {
+                    ex = new CloudException(errorBody.Message);
+                    ex.Body = errorBody;
+                }
+                ex.Request = httpRequest;
+                ex.Response = httpResponse;
+                if (shouldTrace)
+                {
+                    ServiceClientTracing.Error(invocationId, ex);
+                }
+                throw ex;
+            }
+            // Create Result
+            var result = new AzureOperationResponse<RelayServiceConnectionEntity>();
+            result.Request = httpRequest;
+            result.Response = httpResponse;
+            if (httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
+            {
+                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                result.Body = JsonConvert.DeserializeObject<RelayServiceConnectionEntity>(responseContent, this.Client.DeserializationSettings);
+            }
+            if (shouldTrace)
+            {
+                ServiceClientTracing.Exit(invocationId, result);
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name
+        /// </param>
+        /// <param name='name'>
+        /// The name of the web app
+        /// </param>
+        /// <param name='entityName'>
+        /// The name by which the Hybrid Connection is identified
+        /// </param>
+        /// <param name='slot'>
+        /// The name of the slot for the web app.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<object>> DeleteSiteRelayServiceConnectionSlotWithHttpMessagesAsync(string resourceGroupName, string name, string entityName, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (entityName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "entityName");
+            }
+            if (slot == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "slot");
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool shouldTrace = ServiceClientTracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("entityName", entityName);
+                tracingParameters.Add("slot", slot);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(invocationId, this, "DeleteSiteRelayServiceConnectionSlot", tracingParameters);
+            }
+            // Construct URL
+            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridconnection/{entityName}").ToString();
+            url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            url = url.Replace("{name}", Uri.EscapeDataString(name));
+            url = url.Replace("{entityName}", Uri.EscapeDataString(entityName));
+            url = url.Replace("{slot}", Uri.EscapeDataString(slot));
+            url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            List<string> queryParameters = new List<string>();
+            if (this.Client.ApiVersion != null)
+            {
+                queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (queryParameters.Count > 0)
+            {
+                url += "?" + string.Join("&", queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = new HttpRequestMessage();
+            httpRequest.Method = new HttpMethod("DELETE");
+            httpRequest.RequestUri = new Uri(url);
+            // Set Headers
+            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (httpRequest.Headers.Contains("accept-language"))
+                {
+                    httpRequest.Headers.Remove("accept-language");
+                }
+                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var header in customHeaders)
+                {
+                    if (httpRequest.Headers.Contains(header.Key))
+                    {
+                        httpRequest.Headers.Remove(header.Key);
+                    }
+                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                }
+            }
+
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(invocationId, httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+            if (shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
+            }
+            HttpStatusCode statusCode = httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK")))
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
+                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
+                if (errorBody != null)
+                {
+                    ex = new CloudException(errorBody.Message);
+                    ex.Body = errorBody;
+                }
+                ex.Request = httpRequest;
+                ex.Response = httpResponse;
+                if (shouldTrace)
+                {
+                    ServiceClientTracing.Error(invocationId, ex);
+                }
+                throw ex;
+            }
+            // Create Result
+            var result = new AzureOperationResponse<object>();
+            result.Request = httpRequest;
+            result.Response = httpResponse;
+            if (httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
+            {
+                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                result.Body = JsonConvert.DeserializeObject<object>(responseContent, this.Client.DeserializationSettings);
+            }
+            if (shouldTrace)
+            {
+                ServiceClientTracing.Exit(invocationId, result);
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name
+        /// </param>
+        /// <param name='name'>
+        /// The name of the web app
+        /// </param>
+        /// <param name='entityName'>
+        /// The name by which the Hybrid Connection is identified
+        /// </param>
+        /// <param name='connectionEnvelope'>
+        /// The details of the Hybrid Connection
+        /// </param>
+        /// <param name='slot'>
+        /// The name of the slot for the web app.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<RelayServiceConnectionEntity>> UpdateSiteRelayServiceConnectionSlotWithHttpMessagesAsync(string resourceGroupName, string name, string entityName, RelayServiceConnectionEntity connectionEnvelope, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (entityName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "entityName");
+            }
+            if (connectionEnvelope == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "connectionEnvelope");
+            }
+            if (slot == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "slot");
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool shouldTrace = ServiceClientTracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("entityName", entityName);
+                tracingParameters.Add("connectionEnvelope", connectionEnvelope);
+                tracingParameters.Add("slot", slot);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(invocationId, this, "UpdateSiteRelayServiceConnectionSlot", tracingParameters);
+            }
+            // Construct URL
+            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridconnection/{entityName}").ToString();
+            url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            url = url.Replace("{name}", Uri.EscapeDataString(name));
+            url = url.Replace("{entityName}", Uri.EscapeDataString(entityName));
+            url = url.Replace("{slot}", Uri.EscapeDataString(slot));
+            url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            List<string> queryParameters = new List<string>();
+            if (this.Client.ApiVersion != null)
+            {
+                queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (queryParameters.Count > 0)
+            {
+                url += "?" + string.Join("&", queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = new HttpRequestMessage();
+            httpRequest.Method = new HttpMethod("PATCH");
+            httpRequest.RequestUri = new Uri(url);
+            // Set Headers
+            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (httpRequest.Headers.Contains("accept-language"))
+                {
+                    httpRequest.Headers.Remove("accept-language");
+                }
+                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var header in customHeaders)
+                {
+                    if (httpRequest.Headers.Contains(header.Key))
+                    {
+                        httpRequest.Headers.Remove(header.Key);
+                    }
+                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                }
+            }
+
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Serialize Request
+            string requestContent = JsonConvert.SerializeObject(connectionEnvelope, this.Client.SerializationSettings);
+            httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+            httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            // Send Request
+            if (shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(invocationId, httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+            if (shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
+            }
+            HttpStatusCode statusCode = httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK")))
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
+                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
+                if (errorBody != null)
+                {
+                    ex = new CloudException(errorBody.Message);
+                    ex.Body = errorBody;
+                }
+                ex.Request = httpRequest;
+                ex.Response = httpResponse;
+                if (shouldTrace)
+                {
+                    ServiceClientTracing.Error(invocationId, ex);
+                }
+                throw ex;
+            }
+            // Create Result
+            var result = new AzureOperationResponse<RelayServiceConnectionEntity>();
+            result.Request = httpRequest;
+            result.Response = httpResponse;
+            if (httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
+            {
+                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                result.Body = JsonConvert.DeserializeObject<RelayServiceConnectionEntity>(responseContent, this.Client.DeserializationSettings);
+            }
+            if (shouldTrace)
+            {
+                ServiceClientTracing.Exit(invocationId, result);
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name
+        /// </param>
+        /// <param name='name'>
+        /// The name of the web app
+        /// </param>
+        /// <param name='slot'>
+        /// The name of the slot for the web app.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<RelayServiceConnectionEntity>> ListSiteRelayServiceConnectionsSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -15876,7 +16452,7 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("slot", slot);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "ListSiteSlotRelayServiceConnections", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "ListSiteRelayServiceConnectionsSlot", tracingParameters);
             }
             // Construct URL
             var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridconnection").ToString();
@@ -16111,6 +16687,540 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 result.Body = JsonConvert.DeserializeObject<RelayServiceConnectionEntity>(responseContent, this.Client.DeserializationSettings);
+            }
+            if (shouldTrace)
+            {
+                ServiceClientTracing.Exit(invocationId, result);
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name
+        /// </param>
+        /// <param name='name'>
+        /// The name of the web app
+        /// </param>
+        /// <param name='vnetName'>
+        /// The name of the Virtual Network
+        /// </param>
+        /// <param name='gatewayName'>
+        /// The name of the gateway. The only gateway that exists presently is
+        /// "primary"
+        /// </param>
+        /// <param name='slot'>
+        /// The name of the slot for this web app.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<object>> GetSiteVnetGatewaySlotWithHttpMessagesAsync(string resourceGroupName, string name, string vnetName, string gatewayName, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (vnetName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "vnetName");
+            }
+            if (gatewayName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "gatewayName");
+            }
+            if (slot == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "slot");
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool shouldTrace = ServiceClientTracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("vnetName", vnetName);
+                tracingParameters.Add("gatewayName", gatewayName);
+                tracingParameters.Add("slot", slot);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(invocationId, this, "GetSiteVnetGatewaySlot", tracingParameters);
+            }
+            // Construct URL
+            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}").ToString();
+            url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            url = url.Replace("{name}", Uri.EscapeDataString(name));
+            url = url.Replace("{vnetName}", Uri.EscapeDataString(vnetName));
+            url = url.Replace("{gatewayName}", Uri.EscapeDataString(gatewayName));
+            url = url.Replace("{slot}", Uri.EscapeDataString(slot));
+            url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            List<string> queryParameters = new List<string>();
+            if (this.Client.ApiVersion != null)
+            {
+                queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (queryParameters.Count > 0)
+            {
+                url += "?" + string.Join("&", queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = new HttpRequestMessage();
+            httpRequest.Method = new HttpMethod("GET");
+            httpRequest.RequestUri = new Uri(url);
+            // Set Headers
+            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (httpRequest.Headers.Contains("accept-language"))
+                {
+                    httpRequest.Headers.Remove("accept-language");
+                }
+                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var header in customHeaders)
+                {
+                    if (httpRequest.Headers.Contains(header.Key))
+                    {
+                        httpRequest.Headers.Remove(header.Key);
+                    }
+                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                }
+            }
+
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(invocationId, httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+            if (shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
+            }
+            HttpStatusCode statusCode = httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK") || statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "NotFound")))
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
+                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
+                if (errorBody != null)
+                {
+                    ex = new CloudException(errorBody.Message);
+                    ex.Body = errorBody;
+                }
+                ex.Request = httpRequest;
+                ex.Response = httpResponse;
+                if (shouldTrace)
+                {
+                    ServiceClientTracing.Error(invocationId, ex);
+                }
+                throw ex;
+            }
+            // Create Result
+            var result = new AzureOperationResponse<object>();
+            result.Request = httpRequest;
+            result.Response = httpResponse;
+            if (httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
+            {
+                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                result.Body = JsonConvert.DeserializeObject<object>(responseContent, this.Client.DeserializationSettings);
+            }
+            if (shouldTrace)
+            {
+                ServiceClientTracing.Exit(invocationId, result);
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name
+        /// </param>
+        /// <param name='name'>
+        /// The name of the web app
+        /// </param>
+        /// <param name='vnetName'>
+        /// The name of the Virtual Network
+        /// </param>
+        /// <param name='gatewayName'>
+        /// The name of the gateway. The only gateway that exists presently is
+        /// "primary"
+        /// </param>
+        /// <param name='connectionEnvelope'>
+        /// The properties to update this gateway with.
+        /// </param>
+        /// <param name='slot'>
+        /// The name of the slot for this web app.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<VnetGateway>> CreateOrUpdateSiteVNETConnectionGatewaySlotWithHttpMessagesAsync(string resourceGroupName, string name, string vnetName, string gatewayName, VnetGateway connectionEnvelope, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (vnetName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "vnetName");
+            }
+            if (gatewayName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "gatewayName");
+            }
+            if (connectionEnvelope == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "connectionEnvelope");
+            }
+            if (slot == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "slot");
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool shouldTrace = ServiceClientTracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("vnetName", vnetName);
+                tracingParameters.Add("gatewayName", gatewayName);
+                tracingParameters.Add("connectionEnvelope", connectionEnvelope);
+                tracingParameters.Add("slot", slot);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(invocationId, this, "CreateOrUpdateSiteVNETConnectionGatewaySlot", tracingParameters);
+            }
+            // Construct URL
+            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}").ToString();
+            url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            url = url.Replace("{name}", Uri.EscapeDataString(name));
+            url = url.Replace("{vnetName}", Uri.EscapeDataString(vnetName));
+            url = url.Replace("{gatewayName}", Uri.EscapeDataString(gatewayName));
+            url = url.Replace("{slot}", Uri.EscapeDataString(slot));
+            url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            List<string> queryParameters = new List<string>();
+            if (this.Client.ApiVersion != null)
+            {
+                queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (queryParameters.Count > 0)
+            {
+                url += "?" + string.Join("&", queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = new HttpRequestMessage();
+            httpRequest.Method = new HttpMethod("PUT");
+            httpRequest.RequestUri = new Uri(url);
+            // Set Headers
+            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (httpRequest.Headers.Contains("accept-language"))
+                {
+                    httpRequest.Headers.Remove("accept-language");
+                }
+                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var header in customHeaders)
+                {
+                    if (httpRequest.Headers.Contains(header.Key))
+                    {
+                        httpRequest.Headers.Remove(header.Key);
+                    }
+                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                }
+            }
+
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Serialize Request
+            string requestContent = JsonConvert.SerializeObject(connectionEnvelope, this.Client.SerializationSettings);
+            httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+            httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            // Send Request
+            if (shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(invocationId, httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+            if (shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
+            }
+            HttpStatusCode statusCode = httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK")))
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
+                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
+                if (errorBody != null)
+                {
+                    ex = new CloudException(errorBody.Message);
+                    ex.Body = errorBody;
+                }
+                ex.Request = httpRequest;
+                ex.Response = httpResponse;
+                if (shouldTrace)
+                {
+                    ServiceClientTracing.Error(invocationId, ex);
+                }
+                throw ex;
+            }
+            // Create Result
+            var result = new AzureOperationResponse<VnetGateway>();
+            result.Request = httpRequest;
+            result.Response = httpResponse;
+            if (httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
+            {
+                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                result.Body = JsonConvert.DeserializeObject<VnetGateway>(responseContent, this.Client.DeserializationSettings);
+            }
+            if (shouldTrace)
+            {
+                ServiceClientTracing.Exit(invocationId, result);
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name
+        /// </param>
+        /// <param name='name'>
+        /// The name of the web app
+        /// </param>
+        /// <param name='vnetName'>
+        /// The name of the Virtual Network
+        /// </param>
+        /// <param name='gatewayName'>
+        /// The name of the gateway. The only gateway that exists presently is
+        /// "primary"
+        /// </param>
+        /// <param name='connectionEnvelope'>
+        /// The properties to update this gateway with.
+        /// </param>
+        /// <param name='slot'>
+        /// The name of the slot for this web app.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<VnetGateway>> UpdateSiteVNETConnectionGatewaySlotWithHttpMessagesAsync(string resourceGroupName, string name, string vnetName, string gatewayName, VnetGateway connectionEnvelope, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (vnetName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "vnetName");
+            }
+            if (gatewayName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "gatewayName");
+            }
+            if (connectionEnvelope == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "connectionEnvelope");
+            }
+            if (slot == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "slot");
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool shouldTrace = ServiceClientTracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("vnetName", vnetName);
+                tracingParameters.Add("gatewayName", gatewayName);
+                tracingParameters.Add("connectionEnvelope", connectionEnvelope);
+                tracingParameters.Add("slot", slot);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(invocationId, this, "UpdateSiteVNETConnectionGatewaySlot", tracingParameters);
+            }
+            // Construct URL
+            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}").ToString();
+            url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            url = url.Replace("{name}", Uri.EscapeDataString(name));
+            url = url.Replace("{vnetName}", Uri.EscapeDataString(vnetName));
+            url = url.Replace("{gatewayName}", Uri.EscapeDataString(gatewayName));
+            url = url.Replace("{slot}", Uri.EscapeDataString(slot));
+            url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            List<string> queryParameters = new List<string>();
+            if (this.Client.ApiVersion != null)
+            {
+                queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (queryParameters.Count > 0)
+            {
+                url += "?" + string.Join("&", queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = new HttpRequestMessage();
+            httpRequest.Method = new HttpMethod("PATCH");
+            httpRequest.RequestUri = new Uri(url);
+            // Set Headers
+            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (httpRequest.Headers.Contains("accept-language"))
+                {
+                    httpRequest.Headers.Remove("accept-language");
+                }
+                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var header in customHeaders)
+                {
+                    if (httpRequest.Headers.Contains(header.Key))
+                    {
+                        httpRequest.Headers.Remove(header.Key);
+                    }
+                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                }
+            }
+
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Serialize Request
+            string requestContent = JsonConvert.SerializeObject(connectionEnvelope, this.Client.SerializationSettings);
+            httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+            httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            // Send Request
+            if (shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(invocationId, httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+            if (shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
+            }
+            HttpStatusCode statusCode = httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK")))
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
+                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
+                if (errorBody != null)
+                {
+                    ex = new CloudException(errorBody.Message);
+                    ex.Body = errorBody;
+                }
+                ex.Request = httpRequest;
+                ex.Response = httpResponse;
+                if (shouldTrace)
+                {
+                    ServiceClientTracing.Error(invocationId, ex);
+                }
+                throw ex;
+            }
+            // Create Result
+            var result = new AzureOperationResponse<VnetGateway>();
+            result.Request = httpRequest;
+            result.Response = httpResponse;
+            if (httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
+            {
+                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                result.Body = JsonConvert.DeserializeObject<VnetGateway>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -16528,540 +17638,6 @@ namespace Microsoft.Azure.Management.WebSites
             url = url.Replace("{name}", Uri.EscapeDataString(name));
             url = url.Replace("{vnetName}", Uri.EscapeDataString(vnetName));
             url = url.Replace("{gatewayName}", Uri.EscapeDataString(gatewayName));
-            url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
-            List<string> queryParameters = new List<string>();
-            if (this.Client.ApiVersion != null)
-            {
-                queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
-            }
-            if (queryParameters.Count > 0)
-            {
-                url += "?" + string.Join("&", queryParameters);
-            }
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = new HttpRequestMessage();
-            httpRequest.Method = new HttpMethod("PATCH");
-            httpRequest.RequestUri = new Uri(url);
-            // Set Headers
-            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            if (this.Client.AcceptLanguage != null)
-            {
-                if (httpRequest.Headers.Contains("accept-language"))
-                {
-                    httpRequest.Headers.Remove("accept-language");
-                }
-                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
-            }
-            if (customHeaders != null)
-            {
-                foreach(var header in customHeaders)
-                {
-                    if (httpRequest.Headers.Contains(header.Key))
-                    {
-                        httpRequest.Headers.Remove(header.Key);
-                    }
-                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
-                }
-            }
-
-            // Set Credentials
-            if (this.Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Serialize Request
-            string requestContent = JsonConvert.SerializeObject(connectionEnvelope, this.Client.SerializationSettings);
-            httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-            httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
-            // Send Request
-            if (shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(invocationId, httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            if (shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
-            }
-            HttpStatusCode statusCode = httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK")))
-            {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
-                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
-                if (errorBody != null)
-                {
-                    ex = new CloudException(errorBody.Message);
-                    ex.Body = errorBody;
-                }
-                ex.Request = httpRequest;
-                ex.Response = httpResponse;
-                if (shouldTrace)
-                {
-                    ServiceClientTracing.Error(invocationId, ex);
-                }
-                throw ex;
-            }
-            // Create Result
-            var result = new AzureOperationResponse<VnetGateway>();
-            result.Request = httpRequest;
-            result.Response = httpResponse;
-            if (httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
-            {
-                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<VnetGateway>(responseContent, this.Client.DeserializationSettings);
-            }
-            if (shouldTrace)
-            {
-                ServiceClientTracing.Exit(invocationId, result);
-            }
-            return result;
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The resource group name
-        /// </param>
-        /// <param name='name'>
-        /// The name of the web app
-        /// </param>
-        /// <param name='vnetName'>
-        /// The name of the Virtual Network
-        /// </param>
-        /// <param name='gatewayName'>
-        /// The name of the gateway. The only gateway that exists presently is
-        /// "primary"
-        /// </param>
-        /// <param name='slot'>
-        /// The name of the slot for this web app.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async Task<AzureOperationResponse<object>> GetSiteSlotVnetGatewayWithHttpMessagesAsync(string resourceGroupName, string name, string vnetName, string gatewayName, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (name == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "name");
-            }
-            if (vnetName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "vnetName");
-            }
-            if (gatewayName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "gatewayName");
-            }
-            if (slot == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "slot");
-            }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            // Tracing
-            bool shouldTrace = ServiceClientTracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("name", name);
-                tracingParameters.Add("vnetName", vnetName);
-                tracingParameters.Add("gatewayName", gatewayName);
-                tracingParameters.Add("slot", slot);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "GetSiteSlotVnetGateway", tracingParameters);
-            }
-            // Construct URL
-            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}").ToString();
-            url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
-            url = url.Replace("{name}", Uri.EscapeDataString(name));
-            url = url.Replace("{vnetName}", Uri.EscapeDataString(vnetName));
-            url = url.Replace("{gatewayName}", Uri.EscapeDataString(gatewayName));
-            url = url.Replace("{slot}", Uri.EscapeDataString(slot));
-            url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
-            List<string> queryParameters = new List<string>();
-            if (this.Client.ApiVersion != null)
-            {
-                queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
-            }
-            if (queryParameters.Count > 0)
-            {
-                url += "?" + string.Join("&", queryParameters);
-            }
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = new HttpRequestMessage();
-            httpRequest.Method = new HttpMethod("GET");
-            httpRequest.RequestUri = new Uri(url);
-            // Set Headers
-            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            if (this.Client.AcceptLanguage != null)
-            {
-                if (httpRequest.Headers.Contains("accept-language"))
-                {
-                    httpRequest.Headers.Remove("accept-language");
-                }
-                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
-            }
-            if (customHeaders != null)
-            {
-                foreach(var header in customHeaders)
-                {
-                    if (httpRequest.Headers.Contains(header.Key))
-                    {
-                        httpRequest.Headers.Remove(header.Key);
-                    }
-                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
-                }
-            }
-
-            // Set Credentials
-            if (this.Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(invocationId, httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            if (shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
-            }
-            HttpStatusCode statusCode = httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK") || statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "NotFound")))
-            {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
-                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
-                if (errorBody != null)
-                {
-                    ex = new CloudException(errorBody.Message);
-                    ex.Body = errorBody;
-                }
-                ex.Request = httpRequest;
-                ex.Response = httpResponse;
-                if (shouldTrace)
-                {
-                    ServiceClientTracing.Error(invocationId, ex);
-                }
-                throw ex;
-            }
-            // Create Result
-            var result = new AzureOperationResponse<object>();
-            result.Request = httpRequest;
-            result.Response = httpResponse;
-            if (httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
-            {
-                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<object>(responseContent, this.Client.DeserializationSettings);
-            }
-            if (shouldTrace)
-            {
-                ServiceClientTracing.Exit(invocationId, result);
-            }
-            return result;
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The resource group name
-        /// </param>
-        /// <param name='name'>
-        /// The name of the web app
-        /// </param>
-        /// <param name='vnetName'>
-        /// The name of the Virtual Network
-        /// </param>
-        /// <param name='gatewayName'>
-        /// The name of the gateway. The only gateway that exists presently is
-        /// "primary"
-        /// </param>
-        /// <param name='connectionEnvelope'>
-        /// The properties to update this gateway with.
-        /// </param>
-        /// <param name='slot'>
-        /// The name of the slot for this web app.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async Task<AzureOperationResponse<VnetGateway>> CreateOrUpdateSiteSlotVNETConnectionGatewayWithHttpMessagesAsync(string resourceGroupName, string name, string vnetName, string gatewayName, VnetGateway connectionEnvelope, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (name == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "name");
-            }
-            if (vnetName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "vnetName");
-            }
-            if (gatewayName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "gatewayName");
-            }
-            if (connectionEnvelope == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "connectionEnvelope");
-            }
-            if (slot == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "slot");
-            }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            // Tracing
-            bool shouldTrace = ServiceClientTracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("name", name);
-                tracingParameters.Add("vnetName", vnetName);
-                tracingParameters.Add("gatewayName", gatewayName);
-                tracingParameters.Add("connectionEnvelope", connectionEnvelope);
-                tracingParameters.Add("slot", slot);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "CreateOrUpdateSiteSlotVNETConnectionGateway", tracingParameters);
-            }
-            // Construct URL
-            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}").ToString();
-            url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
-            url = url.Replace("{name}", Uri.EscapeDataString(name));
-            url = url.Replace("{vnetName}", Uri.EscapeDataString(vnetName));
-            url = url.Replace("{gatewayName}", Uri.EscapeDataString(gatewayName));
-            url = url.Replace("{slot}", Uri.EscapeDataString(slot));
-            url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
-            List<string> queryParameters = new List<string>();
-            if (this.Client.ApiVersion != null)
-            {
-                queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
-            }
-            if (queryParameters.Count > 0)
-            {
-                url += "?" + string.Join("&", queryParameters);
-            }
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = new HttpRequestMessage();
-            httpRequest.Method = new HttpMethod("PUT");
-            httpRequest.RequestUri = new Uri(url);
-            // Set Headers
-            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            if (this.Client.AcceptLanguage != null)
-            {
-                if (httpRequest.Headers.Contains("accept-language"))
-                {
-                    httpRequest.Headers.Remove("accept-language");
-                }
-                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
-            }
-            if (customHeaders != null)
-            {
-                foreach(var header in customHeaders)
-                {
-                    if (httpRequest.Headers.Contains(header.Key))
-                    {
-                        httpRequest.Headers.Remove(header.Key);
-                    }
-                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
-                }
-            }
-
-            // Set Credentials
-            if (this.Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Serialize Request
-            string requestContent = JsonConvert.SerializeObject(connectionEnvelope, this.Client.SerializationSettings);
-            httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-            httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
-            // Send Request
-            if (shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(invocationId, httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            if (shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
-            }
-            HttpStatusCode statusCode = httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK")))
-            {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
-                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
-                if (errorBody != null)
-                {
-                    ex = new CloudException(errorBody.Message);
-                    ex.Body = errorBody;
-                }
-                ex.Request = httpRequest;
-                ex.Response = httpResponse;
-                if (shouldTrace)
-                {
-                    ServiceClientTracing.Error(invocationId, ex);
-                }
-                throw ex;
-            }
-            // Create Result
-            var result = new AzureOperationResponse<VnetGateway>();
-            result.Request = httpRequest;
-            result.Response = httpResponse;
-            if (httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
-            {
-                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<VnetGateway>(responseContent, this.Client.DeserializationSettings);
-            }
-            if (shouldTrace)
-            {
-                ServiceClientTracing.Exit(invocationId, result);
-            }
-            return result;
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The resource group name
-        /// </param>
-        /// <param name='name'>
-        /// The name of the web app
-        /// </param>
-        /// <param name='vnetName'>
-        /// The name of the Virtual Network
-        /// </param>
-        /// <param name='gatewayName'>
-        /// The name of the gateway. The only gateway that exists presently is
-        /// "primary"
-        /// </param>
-        /// <param name='connectionEnvelope'>
-        /// The properties to update this gateway with.
-        /// </param>
-        /// <param name='slot'>
-        /// The name of the slot for this web app.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async Task<AzureOperationResponse<VnetGateway>> UpdateSiteSlotVNETConnectionGatewayWithHttpMessagesAsync(string resourceGroupName, string name, string vnetName, string gatewayName, VnetGateway connectionEnvelope, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (name == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "name");
-            }
-            if (vnetName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "vnetName");
-            }
-            if (gatewayName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "gatewayName");
-            }
-            if (connectionEnvelope == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "connectionEnvelope");
-            }
-            if (slot == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "slot");
-            }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            // Tracing
-            bool shouldTrace = ServiceClientTracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("name", name);
-                tracingParameters.Add("vnetName", vnetName);
-                tracingParameters.Add("gatewayName", gatewayName);
-                tracingParameters.Add("connectionEnvelope", connectionEnvelope);
-                tracingParameters.Add("slot", slot);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "UpdateSiteSlotVNETConnectionGateway", tracingParameters);
-            }
-            // Construct URL
-            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}").ToString();
-            url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
-            url = url.Replace("{name}", Uri.EscapeDataString(name));
-            url = url.Replace("{vnetName}", Uri.EscapeDataString(vnetName));
-            url = url.Replace("{gatewayName}", Uri.EscapeDataString(gatewayName));
-            url = url.Replace("{slot}", Uri.EscapeDataString(slot));
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
@@ -17808,7 +18384,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<VnetInfo>> GetSiteSlotVNETConnectionWithHttpMessagesAsync(string resourceGroupName, string name, string vnetName, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<VnetInfo>> GetSiteVNETConnectionSlotWithHttpMessagesAsync(string resourceGroupName, string name, string vnetName, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -17846,7 +18422,7 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("vnetName", vnetName);
                 tracingParameters.Add("slot", slot);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "GetSiteSlotVNETConnection", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "GetSiteVNETConnectionSlot", tracingParameters);
             }
             // Construct URL
             var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections/{vnetName}").ToString();
@@ -17971,7 +18547,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<VnetInfo>> CreateOrUpdateSiteSlotVNETConnectionWithHttpMessagesAsync(string resourceGroupName, string name, string vnetName, VnetInfo connectionEnvelope, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<VnetInfo>> CreateOrUpdateSiteVNETConnectionSlotWithHttpMessagesAsync(string resourceGroupName, string name, string vnetName, VnetInfo connectionEnvelope, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -18014,7 +18590,7 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("connectionEnvelope", connectionEnvelope);
                 tracingParameters.Add("slot", slot);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "CreateOrUpdateSiteSlotVNETConnection", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "CreateOrUpdateSiteVNETConnectionSlot", tracingParameters);
             }
             // Construct URL
             var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections/{vnetName}").ToString();
@@ -18140,7 +18716,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<object>> DeleteSiteSlotVNETConnectionWithHttpMessagesAsync(string resourceGroupName, string name, string vnetName, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<object>> DeleteSiteVNETConnectionSlotWithHttpMessagesAsync(string resourceGroupName, string name, string vnetName, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -18178,7 +18754,7 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("vnetName", vnetName);
                 tracingParameters.Add("slot", slot);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "DeleteSiteSlotVNETConnection", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "DeleteSiteVNETConnectionSlot", tracingParameters);
             }
             // Construct URL
             var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections/{vnetName}").ToString();
@@ -18303,7 +18879,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<VnetInfo>> UpdateSiteSlotVNETConnectionWithHttpMessagesAsync(string resourceGroupName, string name, string vnetName, VnetInfo connectionEnvelope, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<VnetInfo>> UpdateSiteVNETConnectionSlotWithHttpMessagesAsync(string resourceGroupName, string name, string vnetName, VnetInfo connectionEnvelope, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -18346,7 +18922,7 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("connectionEnvelope", connectionEnvelope);
                 tracingParameters.Add("slot", slot);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "UpdateSiteSlotVNETConnection", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "UpdateSiteVNETConnectionSlot", tracingParameters);
             }
             // Construct URL
             var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections/{vnetName}").ToString();
@@ -18444,6 +19020,157 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 result.Body = JsonConvert.DeserializeObject<VnetInfo>(responseContent, this.Client.DeserializationSettings);
+            }
+            if (shouldTrace)
+            {
+                ServiceClientTracing.Exit(invocationId, result);
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name
+        /// </param>
+        /// <param name='name'>
+        /// The name of the web app
+        /// </param>
+        /// <param name='slot'>
+        /// The name of the slot for this web app.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<IList<VnetInfo>>> GetSiteVNETConnectionsSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (slot == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "slot");
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool shouldTrace = ServiceClientTracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("slot", slot);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(invocationId, this, "GetSiteVNETConnectionsSlot", tracingParameters);
+            }
+            // Construct URL
+            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections").ToString();
+            url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            url = url.Replace("{name}", Uri.EscapeDataString(name));
+            url = url.Replace("{slot}", Uri.EscapeDataString(slot));
+            url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            List<string> queryParameters = new List<string>();
+            if (this.Client.ApiVersion != null)
+            {
+                queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (queryParameters.Count > 0)
+            {
+                url += "?" + string.Join("&", queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = new HttpRequestMessage();
+            httpRequest.Method = new HttpMethod("GET");
+            httpRequest.RequestUri = new Uri(url);
+            // Set Headers
+            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (httpRequest.Headers.Contains("accept-language"))
+                {
+                    httpRequest.Headers.Remove("accept-language");
+                }
+                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var header in customHeaders)
+                {
+                    if (httpRequest.Headers.Contains(header.Key))
+                    {
+                        httpRequest.Headers.Remove(header.Key);
+                    }
+                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                }
+            }
+
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(invocationId, httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+            if (shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
+            }
+            HttpStatusCode statusCode = httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK")))
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
+                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
+                if (errorBody != null)
+                {
+                    ex = new CloudException(errorBody.Message);
+                    ex.Body = errorBody;
+                }
+                ex.Request = httpRequest;
+                ex.Response = httpResponse;
+                if (shouldTrace)
+                {
+                    ServiceClientTracing.Error(invocationId, ex);
+                }
+                throw ex;
+            }
+            // Create Result
+            var result = new AzureOperationResponse<IList<VnetInfo>>();
+            result.Request = httpRequest;
+            result.Response = httpResponse;
+            if (httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
+            {
+                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                result.Body = JsonConvert.DeserializeObject<IList<VnetInfo>>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -18602,6 +19329,9 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='name'>
         /// The name of the web app
         /// </param>
+        /// <param name='view'>
+        /// The type of view. This can either be "summary" or "detailed".
+        /// </param>
         /// <param name='slot'>
         /// The name of the slot for this web app.
         /// </param>
@@ -18611,7 +19341,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<IList<VnetInfo>>> GetSiteSlotVNETConnectionsWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<NetworkFeatures>> GetSiteNetworkFeaturesSlotWithHttpMessagesAsync(string resourceGroupName, string name, string view, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -18620,6 +19350,10 @@ namespace Microsoft.Azure.Management.WebSites
             if (name == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (view == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "view");
             }
             if (slot == null)
             {
@@ -18642,14 +19376,16 @@ namespace Microsoft.Azure.Management.WebSites
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("name", name);
+                tracingParameters.Add("view", view);
                 tracingParameters.Add("slot", slot);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "GetSiteSlotVNETConnections", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "GetSiteNetworkFeaturesSlot", tracingParameters);
             }
             // Construct URL
-            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections").ToString();
+            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/networkFeatures/{view}").ToString();
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             url = url.Replace("{name}", Uri.EscapeDataString(name));
+            url = url.Replace("{view}", Uri.EscapeDataString(view));
             url = url.Replace("{slot}", Uri.EscapeDataString(slot));
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> queryParameters = new List<string>();
@@ -18706,7 +19442,7 @@ namespace Microsoft.Azure.Management.WebSites
             }
             HttpStatusCode statusCode = httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
-            if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK")))
+            if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK") || statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "NotFound")))
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -18725,7 +19461,7 @@ namespace Microsoft.Azure.Management.WebSites
                 throw ex;
             }
             // Create Result
-            var result = new AzureOperationResponse<IList<VnetInfo>>();
+            var result = new AzureOperationResponse<NetworkFeatures>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             if (httpResponse.Headers.Contains("x-ms-request-id"))
@@ -18736,7 +19472,158 @@ namespace Microsoft.Azure.Management.WebSites
             if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
             {
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<IList<VnetInfo>>(responseContent, this.Client.DeserializationSettings);
+                result.Body = JsonConvert.DeserializeObject<NetworkFeatures>(responseContent, this.Client.DeserializationSettings);
+            }
+            if (shouldTrace)
+            {
+                ServiceClientTracing.Exit(invocationId, result);
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name
+        /// </param>
+        /// <param name='name'>
+        /// The name of the web app
+        /// </param>
+        /// <param name='view'>
+        /// The type of view. This can either be "summary" or "detailed".
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<NetworkFeatures>> GetSiteNetworkFeaturesWithHttpMessagesAsync(string resourceGroupName, string name, string view, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (view == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "view");
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool shouldTrace = ServiceClientTracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("view", view);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(invocationId, this, "GetSiteNetworkFeatures", tracingParameters);
+            }
+            // Construct URL
+            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/networkFeatures/{view}").ToString();
+            url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            url = url.Replace("{name}", Uri.EscapeDataString(name));
+            url = url.Replace("{view}", Uri.EscapeDataString(view));
+            url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            List<string> queryParameters = new List<string>();
+            if (this.Client.ApiVersion != null)
+            {
+                queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (queryParameters.Count > 0)
+            {
+                url += "?" + string.Join("&", queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = new HttpRequestMessage();
+            httpRequest.Method = new HttpMethod("GET");
+            httpRequest.RequestUri = new Uri(url);
+            // Set Headers
+            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (httpRequest.Headers.Contains("accept-language"))
+                {
+                    httpRequest.Headers.Remove("accept-language");
+                }
+                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var header in customHeaders)
+                {
+                    if (httpRequest.Headers.Contains(header.Key))
+                    {
+                        httpRequest.Headers.Remove(header.Key);
+                    }
+                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                }
+            }
+
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(invocationId, httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+            if (shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
+            }
+            HttpStatusCode statusCode = httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK") || statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "NotFound")))
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
+                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
+                if (errorBody != null)
+                {
+                    ex = new CloudException(errorBody.Message);
+                    ex.Body = errorBody;
+                }
+                ex.Request = httpRequest;
+                ex.Response = httpResponse;
+                if (shouldTrace)
+                {
+                    ServiceClientTracing.Error(invocationId, ex);
+                }
+                throw ex;
+            }
+            // Create Result
+            var result = new AzureOperationResponse<NetworkFeatures>();
+            result.Request = httpRequest;
+            result.Response = httpResponse;
+            if (httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
+            {
+                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                result.Body = JsonConvert.DeserializeObject<NetworkFeatures>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -18798,7 +19685,7 @@ namespace Microsoft.Azure.Management.WebSites
                 ServiceClientTracing.Enter(invocationId, this, "GetSiteOperation", tracingParameters);
             }
             // Construct URL
-            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/operations/{operationId}").ToString();
+            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/operationresults/{operationId}").ToString();
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             url = url.Replace("{name}", Uri.EscapeDataString(name));
             url = url.Replace("{operationId}", Uri.EscapeDataString(operationId));
@@ -18917,7 +19804,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<object>> GetSiteSlotOperationWithHttpMessagesAsync(string resourceGroupName, string name, string operationId, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<object>> GetSiteOperationSlotWithHttpMessagesAsync(string resourceGroupName, string name, string operationId, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -18955,10 +19842,10 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("operationId", operationId);
                 tracingParameters.Add("slot", slot);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "GetSiteSlotOperation", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "GetSiteOperationSlot", tracingParameters);
             }
             // Construct URL
-            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/operations/{operationId}").ToString();
+            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/operationresults/{operationId}").ToString();
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             url = url.Replace("{name}", Uri.EscapeDataString(name));
             url = url.Replace("{operationId}", Uri.EscapeDataString(operationId));
@@ -19237,7 +20124,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<object>> SwapSlotsWithHttpMessagesAsync(string resourceGroupName, string name, CsmSlotEntity slotSwapEntity, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<object>> SwapSlotsSlotWithHttpMessagesAsync(string resourceGroupName, string name, CsmSlotEntity slotSwapEntity, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -19275,7 +20162,7 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("slotSwapEntity", slotSwapEntity);
                 tracingParameters.Add("slot", slot);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "SwapSlots", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "SwapSlotsSlot", tracingParameters);
             }
             // Construct URL
             var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/slotsswap").ToString();
@@ -19560,7 +20447,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<SlotDifferenceCollection>> GetSlotsDifferencesWithHttpMessagesAsync(string resourceGroupName, string name, CsmSlotEntity slotSwapEntity, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SlotDifferenceCollection>> GetSlotsDifferencesSlotWithHttpMessagesAsync(string resourceGroupName, string name, CsmSlotEntity slotSwapEntity, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -19598,7 +20485,7 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("slotSwapEntity", slotSwapEntity);
                 tracingParameters.Add("slot", slot);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "GetSlotsDifferences", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "GetSlotsDifferencesSlot", tracingParameters);
             }
             // Construct URL
             var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/slotsdiffs").ToString();
@@ -19695,6 +20582,171 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 result.Body = JsonConvert.DeserializeObject<SlotDifferenceCollection>(responseContent, this.Client.DeserializationSettings);
+            }
+            if (shouldTrace)
+            {
+                ServiceClientTracing.Exit(invocationId, result);
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of resource group
+        /// </param>
+        /// <param name='name'>
+        /// Name of web app
+        /// </param>
+        /// <param name='slotSwapEntity'>
+        /// Request body that contains the target slot name. Settings from that slot
+        /// will be applied on the source slot
+        /// </param>
+        /// <param name='slot'>
+        /// Name of the source slot. Settings from the target slot will be applied
+        /// onto this slot
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<object>> ApplySlotConfigSlotWithHttpMessagesAsync(string resourceGroupName, string name, CsmSlotEntity slotSwapEntity, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (slotSwapEntity == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "slotSwapEntity");
+            }
+            if (slot == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "slot");
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool shouldTrace = ServiceClientTracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("slotSwapEntity", slotSwapEntity);
+                tracingParameters.Add("slot", slot);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(invocationId, this, "ApplySlotConfigSlot", tracingParameters);
+            }
+            // Construct URL
+            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/applySlotConfig").ToString();
+            url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            url = url.Replace("{name}", Uri.EscapeDataString(name));
+            url = url.Replace("{slot}", Uri.EscapeDataString(slot));
+            url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            List<string> queryParameters = new List<string>();
+            if (this.Client.ApiVersion != null)
+            {
+                queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (queryParameters.Count > 0)
+            {
+                url += "?" + string.Join("&", queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = new HttpRequestMessage();
+            httpRequest.Method = new HttpMethod("POST");
+            httpRequest.RequestUri = new Uri(url);
+            // Set Headers
+            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (httpRequest.Headers.Contains("accept-language"))
+                {
+                    httpRequest.Headers.Remove("accept-language");
+                }
+                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var header in customHeaders)
+                {
+                    if (httpRequest.Headers.Contains(header.Key))
+                    {
+                        httpRequest.Headers.Remove(header.Key);
+                    }
+                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                }
+            }
+
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Serialize Request
+            string requestContent = JsonConvert.SerializeObject(slotSwapEntity, this.Client.SerializationSettings);
+            httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+            httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            // Send Request
+            if (shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(invocationId, httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+            if (shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
+            }
+            HttpStatusCode statusCode = httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK")))
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
+                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
+                if (errorBody != null)
+                {
+                    ex = new CloudException(errorBody.Message);
+                    ex.Body = errorBody;
+                }
+                ex.Request = httpRequest;
+                ex.Response = httpResponse;
+                if (shouldTrace)
+                {
+                    ServiceClientTracing.Error(invocationId, ex);
+                }
+                throw ex;
+            }
+            // Create Result
+            var result = new AzureOperationResponse<object>();
+            result.Request = httpRequest;
+            result.Response = httpResponse;
+            if (httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
+            {
+                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                result.Body = JsonConvert.DeserializeObject<object>(responseContent, this.Client.DeserializationSettings);
             }
             if (shouldTrace)
             {
@@ -19866,171 +20918,6 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='name'>
         /// Name of web app
         /// </param>
-        /// <param name='slotSwapEntity'>
-        /// Request body that contains the target slot name. Settings from that slot
-        /// will be applied on the source slot
-        /// </param>
-        /// <param name='slot'>
-        /// Name of the source slot. Settings from the target slot will be applied
-        /// onto this slot
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async Task<AzureOperationResponse<object>> ApplySlotConfigWithHttpMessagesAsync(string resourceGroupName, string name, CsmSlotEntity slotSwapEntity, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (name == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "name");
-            }
-            if (slotSwapEntity == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "slotSwapEntity");
-            }
-            if (slot == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "slot");
-            }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            // Tracing
-            bool shouldTrace = ServiceClientTracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("name", name);
-                tracingParameters.Add("slotSwapEntity", slotSwapEntity);
-                tracingParameters.Add("slot", slot);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "ApplySlotConfig", tracingParameters);
-            }
-            // Construct URL
-            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/applySlotConfig").ToString();
-            url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
-            url = url.Replace("{name}", Uri.EscapeDataString(name));
-            url = url.Replace("{slot}", Uri.EscapeDataString(slot));
-            url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
-            List<string> queryParameters = new List<string>();
-            if (this.Client.ApiVersion != null)
-            {
-                queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
-            }
-            if (queryParameters.Count > 0)
-            {
-                url += "?" + string.Join("&", queryParameters);
-            }
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = new HttpRequestMessage();
-            httpRequest.Method = new HttpMethod("POST");
-            httpRequest.RequestUri = new Uri(url);
-            // Set Headers
-            httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            if (this.Client.AcceptLanguage != null)
-            {
-                if (httpRequest.Headers.Contains("accept-language"))
-                {
-                    httpRequest.Headers.Remove("accept-language");
-                }
-                httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
-            }
-            if (customHeaders != null)
-            {
-                foreach(var header in customHeaders)
-                {
-                    if (httpRequest.Headers.Contains(header.Key))
-                    {
-                        httpRequest.Headers.Remove(header.Key);
-                    }
-                    httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
-                }
-            }
-
-            // Set Credentials
-            if (this.Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Serialize Request
-            string requestContent = JsonConvert.SerializeObject(slotSwapEntity, this.Client.SerializationSettings);
-            httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-            httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
-            // Send Request
-            if (shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(invocationId, httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-            if (shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
-            }
-            HttpStatusCode statusCode = httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            if (!(statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK")))
-            {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", statusCode));
-                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                CloudError errorBody = JsonConvert.DeserializeObject<CloudError>(responseContent, this.Client.DeserializationSettings);
-                if (errorBody != null)
-                {
-                    ex = new CloudException(errorBody.Message);
-                    ex.Body = errorBody;
-                }
-                ex.Request = httpRequest;
-                ex.Response = httpResponse;
-                if (shouldTrace)
-                {
-                    ServiceClientTracing.Error(invocationId, ex);
-                }
-                throw ex;
-            }
-            // Create Result
-            var result = new AzureOperationResponse<object>();
-            result.Request = httpRequest;
-            result.Response = httpResponse;
-            if (httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if (statusCode == (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), "OK"))
-            {
-                string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                result.Body = JsonConvert.DeserializeObject<object>(responseContent, this.Client.DeserializationSettings);
-            }
-            if (shouldTrace)
-            {
-                ServiceClientTracing.Exit(invocationId, result);
-            }
-            return result;
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Name of resource group
-        /// </param>
-        /// <param name='name'>
-        /// Name of web app
-        /// </param>
         /// <param name='slot'>
         /// Name of web app slot. If not specified then will default to production
         /// slot.
@@ -20041,7 +20928,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<object>> ResetSlotConfigWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<object>> ResetSlotConfigSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -20074,7 +20961,7 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("slot", slot);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(invocationId, this, "ResetSlotConfig", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "ResetSlotConfigSlot", tracingParameters);
             }
             // Construct URL
             var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/resetSlotConfig").ToString();

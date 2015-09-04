@@ -5,6 +5,7 @@
 namespace Microsoft.Azure.Management.WebSites.Models
 {
     using System;
+    using System.Linq;
     using System.Collections.Generic;
     using Newtonsoft.Json;
     using Microsoft.Rest;
@@ -17,11 +18,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
     /// </summary>
     public partial class SlotDifference : Resource
     {
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "sku")]
-        public SkuDescription Sku { get; set; }
-
         /// <summary>
         /// Indicates the type of the difference: Information, Warning or
         /// Error.

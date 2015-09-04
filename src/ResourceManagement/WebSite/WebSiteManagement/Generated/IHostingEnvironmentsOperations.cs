@@ -10,7 +10,6 @@ namespace Microsoft.Azure.Management.WebSites
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Rest;
-    using System.Linq;
     using Microsoft.Rest.Azure;
     using Models;
 
@@ -191,20 +190,15 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='name'>
         /// Name of hostingEnvironment (App Service Environment)
         /// </param>
-        /// <param name='names'>
-        /// Comma separated list of metric names to retrieve
-        /// </param>
-        /// <param name='startTime'>
-        /// Beginning time of metrics query
-        /// </param>
-        /// <param name='endTime'>
-        /// End time of metrics query
-        /// </param>
-        /// <param name='timeGrain'>
-        /// Time granularity of metrics query
-        /// </param>
         /// <param name='details'>
         /// Include instance details
+        /// </param>
+        /// <param name='filter'>
+        /// Return only usages/metrics specified in the filter. Filter
+        /// conforms to odata syntax. Example: $filter=(name.value eq
+        /// 'Metric1' or name.value eq 'Metric2') and startTime eq
+        /// '2014-01-01T00:00:00Z' and endTime eq '2014-12-31T23:59:59Z' and
+        /// timeGrain eq duration'[Hour|Minute|Day]'.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -212,7 +206,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<MetricResponseCollection>> GetHostingEnvironmentMetricsWithHttpMessagesAsync(string resourceGroupName, string name, string names = default(string), string startTime = default(string), string endTime = default(string), string timeGrain = default(string), bool? details = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<MetricResponseCollection>> GetHostingEnvironmentMetricsWithHttpMessagesAsync(string resourceGroupName, string name, bool? details = default(bool?), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -236,8 +230,12 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='name'>
         /// Name of hostingEnvironment (App Service Environment)
         /// </param>
-        /// <param name='names'>
-        /// Comma separated list of usage names to retrieve
+        /// <param name='filter'>
+        /// Return only usages/metrics specified in the filter. Filter
+        /// conforms to odata syntax. Example: $filter=(name.value eq
+        /// 'Metric1' or name.value eq 'Metric2') and startTime eq
+        /// '2014-01-01T00:00:00Z' and endTime eq '2014-12-31T23:59:59Z' and
+        /// timeGrain eq duration'[Hour|Minute|Day]'.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -245,7 +243,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<CsmUsageQuotaCollection>> GetHostingEnvironmentUsagesWithHttpMessagesAsync(string resourceGroupName, string name, string names = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<CsmUsageQuotaCollection>> GetHostingEnvironmentUsagesWithHttpMessagesAsync(string resourceGroupName, string name, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -253,9 +251,6 @@ namespace Microsoft.Azure.Management.WebSites
         /// </param>
         /// <param name='name'>
         /// Name of hostingEnvironment (App Service Environment)
-        /// </param>
-        /// <param name='names'>
-        /// Comma separated list of metric names to retrieve
         /// </param>
         /// <param name='startTime'>
         /// Beginning time of metrics query
@@ -269,13 +264,20 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='details'>
         /// Include instance details
         /// </param>
+        /// <param name='filter'>
+        /// Return only usages/metrics specified in the filter. Filter
+        /// conforms to odata syntax. Example: $filter=(name.value eq
+        /// 'Metric1' or name.value eq 'Metric2') and startTime eq
+        /// '2014-01-01T00:00:00Z' and endTime eq '2014-12-31T23:59:59Z' and
+        /// timeGrain eq duration'[Hour|Minute|Day]'.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<MetricResponseCollection>> GetHostingEnvironmentMultiRoleMetricsWithHttpMessagesAsync(string resourceGroupName, string name, string names = default(string), string startTime = default(string), string endTime = default(string), string timeGrain = default(string), bool? details = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<MetricResponseCollection>> GetHostingEnvironmentMultiRoleMetricsWithHttpMessagesAsync(string resourceGroupName, string name, string startTime = default(string), string endTime = default(string), string timeGrain = default(string), bool? details = default(bool?), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -287,20 +289,15 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='workerSizeId'>
         /// Id of worker pool
         /// </param>
-        /// <param name='names'>
-        /// Comma separated list of metric names to retrieve
-        /// </param>
-        /// <param name='startTime'>
-        /// Beginning time of metrics query
-        /// </param>
-        /// <param name='endTime'>
-        /// End time of metrics query
-        /// </param>
-        /// <param name='timeGrain'>
-        /// Time granularity of metrics query
-        /// </param>
         /// <param name='details'>
         /// Include instance details
+        /// </param>
+        /// <param name='filter'>
+        /// Return only usages/metrics specified in the filter. Filter
+        /// conforms to odata syntax. Example: $filter=(name.value eq
+        /// 'Metric1' or name.value eq 'Metric2') and startTime eq
+        /// '2014-01-01T00:00:00Z' and endTime eq '2014-12-31T23:59:59Z' and
+        /// timeGrain eq duration'[Hour|Minute|Day]'.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -308,7 +305,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<MetricResponseCollection>> GetHostingEnvironmentWebWorkerMetricsWithHttpMessagesAsync(string resourceGroupName, string name, string workerSizeId, string names = default(string), string startTime = default(string), string endTime = default(string), string timeGrain = default(string), bool? details = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<MetricResponseCollection>> GetHostingEnvironmentWebWorkerMetricsWithHttpMessagesAsync(string resourceGroupName, string name, string workerSizeId, bool? details = default(bool?), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -350,16 +347,13 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='name'>
         /// Name of hostingEnvironment (App Service Environment)
         /// </param>
-        /// <param name='names'>
-        /// Comma separated list of usage names to retrieve
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<UsageCollection>> GetHostingEnvironmentMultiRoleUsagesWithHttpMessagesAsync(string resourceGroupName, string name, string names = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<UsageCollection>> GetHostingEnvironmentMultiRoleUsagesWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -371,16 +365,13 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='workerSizeId'>
         /// Id of worker pool
         /// </param>
-        /// <param name='names'>
-        /// Comma separated list of usage names to retrieve
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<UsageCollection>> GetHostingEnvironmentWebWorkerUsagesWithHttpMessagesAsync(string resourceGroupName, string name, string workerSizeId, string names = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<UsageCollection>> GetHostingEnvironmentWebWorkerUsagesWithHttpMessagesAsync(string resourceGroupName, string name, string workerSizeId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -413,7 +404,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<ServerFarmCollection>> GetHostingEnvironmentWebHostingPlansWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ServerFarmCollection>> GetHostingEnvironmentServerFarmsWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -428,7 +419,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<ServerFarmCollection>> GetHostingEnvironmentServerFarmsWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ServerFarmCollection>> GetHostingEnvironmentWebHostingPlansWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -587,20 +578,15 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='instance'>
         /// Name of instance in the worker pool
         /// </param>
-        /// <param name='names'>
-        /// Comma separated list of metric names to retrieve
-        /// </param>
-        /// <param name='startTime'>
-        /// Beginning time of metrics query
-        /// </param>
-        /// <param name='endTime'>
-        /// End time of metrics query
-        /// </param>
-        /// <param name='timeGrain'>
-        /// Time granularity of metrics query
-        /// </param>
         /// <param name='details'>
         /// Include instance details
+        /// </param>
+        /// <param name='filter'>
+        /// Return only usages/metrics specified in the filter. Filter
+        /// conforms to odata syntax. Example: $filter=(name.value eq
+        /// 'Metric1' or name.value eq 'Metric2') and startTime eq
+        /// '2014-01-01T00:00:00Z' and endTime eq '2014-12-31T23:59:59Z' and
+        /// timeGrain eq duration'[Hour|Minute|Day]'.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -608,7 +594,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<object>> GetWorkerPoolInstanceMetricsWithHttpMessagesAsync(string resourceGroupName, string name, string workerSizeId, string instance, string names = default(string), string startTime = default(string), string endTime = default(string), string timeGrain = default(string), bool? details = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<object>> GetWorkerPoolInstanceMetricsWithHttpMessagesAsync(string resourceGroupName, string name, string workerSizeId, string instance, bool? details = default(bool?), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -641,18 +627,6 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='instance'>
         /// Name of instance in the multiRole pool
         /// </param>
-        /// <param name='names'>
-        /// Comma separated list of metric names to retrieve
-        /// </param>
-        /// <param name='startTime'>
-        /// Beginning time of metrics query
-        /// </param>
-        /// <param name='endTime'>
-        /// End time of metrics query
-        /// </param>
-        /// <param name='timeGrain'>
-        /// Time granularity of metrics query
-        /// </param>
         /// <param name='details'>
         /// Include instance details
         /// </param>
@@ -662,7 +636,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<object>> GetMultiRolePoolInstanceMetricsWithHttpMessagesAsync(string resourceGroupName, string name, string instance, string names = default(string), string startTime = default(string), string endTime = default(string), string timeGrain = default(string), bool? details = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<object>> GetMultiRolePoolInstanceMetricsWithHttpMessagesAsync(string resourceGroupName, string name, string instance, bool? details = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// </summary>
         /// <param name='resourceGroupName'>

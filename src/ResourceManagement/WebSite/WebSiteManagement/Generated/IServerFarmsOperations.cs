@@ -10,7 +10,6 @@ namespace Microsoft.Azure.Management.WebSites
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Rest;
-    using System.Linq;
     using Microsoft.Rest.Azure;
     using Models;
 
@@ -30,7 +29,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<ServerFarmCollection>> GetWebHostingPlansWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ServerFarmCollection>> GetServerFarmsWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -42,7 +41,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<ServerFarmCollection>> GetServerFarmsWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ServerFarmCollection>> GetWebHostingPlansWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -195,20 +194,15 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='name'>
         /// Name of App Service Plan
         /// </param>
-        /// <param name='names'>
-        /// Coma separated list of metrics to query
-        /// </param>
-        /// <param name='startTime'>
-        /// Start of metric query window
-        /// </param>
-        /// <param name='endTime'>
-        /// End of metric query window
-        /// </param>
-        /// <param name='timeGrain'>
-        /// Granularity of time, can be Days(P1D), Hours(PT1H), Minutes(PT1M)
-        /// </param>
         /// <param name='details'>
         /// If true, metrics are broken down per App Service Plan instance
+        /// </param>
+        /// <param name='filter'>
+        /// Return only usages/metrics specified in the filter. Filter
+        /// conforms to odata syntax. Example: $filter=(name.value eq
+        /// 'Metric1' or name.value eq 'Metric2') and startTime eq
+        /// '2014-01-01T00:00:00Z' and endTime eq '2014-12-31T23:59:59Z' and
+        /// timeGrain eq duration'[Hour|Minute|Day]'.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -216,7 +210,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<MetricResponseCollection>> GetWebHostingPlanMetricsWithHttpMessagesAsync(string resourceGroupName, string name, string names = default(string), string startTime = default(string), string endTime = default(string), string timeGrain = default(string), bool? details = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<MetricResponseCollection>> GetServerFarmMetricsWithHttpMessagesAsync(string resourceGroupName, string name, bool? details = default(bool?), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -225,35 +219,15 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='name'>
         /// Name of App Service Plan
         /// </param>
-        /// <param name='names'>
-        /// Coma separated list of metrics to query
-        /// </param>
-        /// <param name='startTime'>
-        /// Start of metric query window
-        /// </param>
-        /// <param name='endTime'>
-        /// End of metric query window
-        /// </param>
-        /// <param name='timeGrain'>
-        /// Granularity of time, can be Days(P1D), Hours(PT1H), Minutes(PT1M)
-        /// </param>
         /// <param name='details'>
         /// If true, metrics are broken down per App Service Plan instance
         /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<MetricResponseCollection>> GetServerFarmMetricsWithHttpMessagesAsync(string resourceGroupName, string name, string names = default(string), string startTime = default(string), string endTime = default(string), string timeGrain = default(string), bool? details = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Name of resource group
-        /// </param>
-        /// <param name='name'>
-        /// Name of App Service Plan
+        /// <param name='filter'>
+        /// Return only usages/metrics specified in the filter. Filter
+        /// conforms to odata syntax. Example: $filter=(name.value eq
+        /// 'Metric1' or name.value eq 'Metric2') and startTime eq
+        /// '2014-01-01T00:00:00Z' and endTime eq '2014-12-31T23:59:59Z' and
+        /// timeGrain eq duration'[Hour|Minute|Day]'.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -261,7 +235,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<MetricDefinitionCollection>> GetWebHostingPlanMetricDefinitionsWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<MetricResponseCollection>> GetWebHostingPlanMetricsWithHttpMessagesAsync(string resourceGroupName, string name, bool? details = default(bool?), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -291,7 +265,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<IList<VnetInfo>>> GetVnetsForServerFarmWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<MetricDefinitionCollection>> GetWebHostingPlanMetricDefinitionsWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -307,6 +281,21 @@ namespace Microsoft.Azure.Management.WebSites
         /// The cancellation token.
         /// </param>
         Task<AzureOperationResponse<IList<VnetInfo>>> GetVnetsForWebHostingPlanWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of resource group
+        /// </param>
+        /// <param name='name'>
+        /// Name of App Service Plan
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<IList<VnetInfo>>> GetVnetsForServerFarmWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -379,96 +368,6 @@ namespace Microsoft.Azure.Management.WebSites
         /// The cancellation token.
         /// </param>
         Task<AzureOperationResponse<IList<VnetRoute>>> GetWebHostingPlanRoutesForVnetWithHttpMessagesAsync(string resourceGroupName, string name, string vnetName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Name of resource group
-        /// </param>
-        /// <param name='name'>
-        /// Name of App Service Plan
-        /// </param>
-        /// <param name='vnetName'>
-        /// Name of virtual network
-        /// </param>
-        /// <param name='routeName'>
-        /// Name of the virtual network route
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<IList<VnetRoute>>> GetRouteForVnetWithHttpMessagesAsync(string resourceGroupName, string name, string vnetName, string routeName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Name of resource group
-        /// </param>
-        /// <param name='name'>
-        /// Name of App Service Plan
-        /// </param>
-        /// <param name='vnetName'>
-        /// Name of virtual network
-        /// </param>
-        /// <param name='routeName'>
-        /// Name of the virtual network route
-        /// </param>
-        /// <param name='route'>
-        /// The route object
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<VnetRoute>> CreateOrUpdateVnetRouteWithHttpMessagesAsync(string resourceGroupName, string name, string vnetName, string routeName, VnetRoute route, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Name of resource group
-        /// </param>
-        /// <param name='name'>
-        /// Name of App Service Plan
-        /// </param>
-        /// <param name='vnetName'>
-        /// Name of virtual network
-        /// </param>
-        /// <param name='routeName'>
-        /// Name of the virtual network route
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<object>> DeleteVnetRouteWithHttpMessagesAsync(string resourceGroupName, string name, string vnetName, string routeName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Name of resource group
-        /// </param>
-        /// <param name='name'>
-        /// Name of App Service Plan
-        /// </param>
-        /// <param name='vnetName'>
-        /// Name of virtual network
-        /// </param>
-        /// <param name='routeName'>
-        /// Name of the virtual network route
-        /// </param>
-        /// <param name='route'>
-        /// The route object
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<VnetRoute>> UpdateVnetRouteWithHttpMessagesAsync(string resourceGroupName, string name, string vnetName, string routeName, VnetRoute route, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -567,6 +466,96 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='name'>
         /// Name of App Service Plan
         /// </param>
+        /// <param name='vnetName'>
+        /// Name of virtual network
+        /// </param>
+        /// <param name='routeName'>
+        /// Name of the virtual network route
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<IList<VnetRoute>>> GetRouteForVnetWithHttpMessagesAsync(string resourceGroupName, string name, string vnetName, string routeName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of resource group
+        /// </param>
+        /// <param name='name'>
+        /// Name of App Service Plan
+        /// </param>
+        /// <param name='vnetName'>
+        /// Name of virtual network
+        /// </param>
+        /// <param name='routeName'>
+        /// Name of the virtual network route
+        /// </param>
+        /// <param name='route'>
+        /// The route object
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<VnetRoute>> CreateOrUpdateVnetRouteWithHttpMessagesAsync(string resourceGroupName, string name, string vnetName, string routeName, VnetRoute route, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of resource group
+        /// </param>
+        /// <param name='name'>
+        /// Name of App Service Plan
+        /// </param>
+        /// <param name='vnetName'>
+        /// Name of virtual network
+        /// </param>
+        /// <param name='routeName'>
+        /// Name of the virtual network route
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<object>> DeleteVnetRouteWithHttpMessagesAsync(string resourceGroupName, string name, string vnetName, string routeName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of resource group
+        /// </param>
+        /// <param name='name'>
+        /// Name of App Service Plan
+        /// </param>
+        /// <param name='vnetName'>
+        /// Name of virtual network
+        /// </param>
+        /// <param name='routeName'>
+        /// Name of the virtual network route
+        /// </param>
+        /// <param name='route'>
+        /// The route object
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<VnetRoute>> UpdateVnetRouteWithHttpMessagesAsync(string resourceGroupName, string name, string vnetName, string routeName, VnetRoute route, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of resource group
+        /// </param>
+        /// <param name='name'>
+        /// Name of App Service Plan
+        /// </param>
         /// <param name='skipToken'>
         /// Skip to of web apps in a list. If specified, the resulting list
         /// will contain web apps starting from (including) the skipToken.
@@ -632,7 +621,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<object>> RebootWorkerForServerFarmWithHttpMessagesAsync(string resourceGroupName, string name, string workerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<object>> RebootWorkerForWebHostingPlanWithHttpMessagesAsync(string resourceGroupName, string name, string workerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -650,7 +639,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<object>> RebootWorkerForWebHostingPlanWithHttpMessagesAsync(string resourceGroupName, string name, string workerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<object>> RebootWorkerForServerFarmWithHttpMessagesAsync(string resourceGroupName, string name, string workerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -688,7 +677,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<ServerFarmWithRichSku>> GetServerFarmOperationWithHttpMessagesAsync(string resourceGroupName, string name, string operationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ServerFarmWithRichSku>> GetWebHostingPlanOperationWithHttpMessagesAsync(string resourceGroupName, string name, string operationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -706,7 +695,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<ServerFarmWithRichSku>> GetWebHostingPlanOperationWithHttpMessagesAsync(string resourceGroupName, string name, string operationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ServerFarmWithRichSku>> GetServerFarmOperationWithHttpMessagesAsync(string resourceGroupName, string name, string operationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// </summary>
         /// <param name='nextPageLink'>

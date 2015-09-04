@@ -686,6 +686,198 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='subscriptionName'>
+            /// Azure subscription
+            /// </param>
+            /// <param name='webspaceName'>
+            /// Webspace
+            /// </param>
+            /// <param name='name'>
+            /// Website Name
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// </param>
+            /// <param name='slot'>
+            /// </param>
+            public static object GetSiteSnapshotsOnSkuSlot(this ISitesOperations operations, string subscriptionName, string webspaceName, string name, string resourceGroupName, string slot)
+            {
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).GetSiteSnapshotsOnSkuSlotAsync(subscriptionName, webspaceName, name, resourceGroupName, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='subscriptionName'>
+            /// Azure subscription
+            /// </param>
+            /// <param name='webspaceName'>
+            /// Webspace
+            /// </param>
+            /// <param name='name'>
+            /// Website Name
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// </param>
+            /// <param name='slot'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> GetSiteSnapshotsOnSkuSlotAsync( this ISitesOperations operations, string subscriptionName, string webspaceName, string name, string resourceGroupName, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<object> result = await operations.GetSiteSnapshotsOnSkuSlotWithHttpMessagesAsync(subscriptionName, webspaceName, name, resourceGroupName, slot, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='subscriptionName'>
+            /// Azure subscription
+            /// </param>
+            /// <param name='webspaceName'>
+            /// Webspace
+            /// </param>
+            /// <param name='name'>
+            /// Website Name
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// </param>
+            public static object GetSiteSnapshotsOnSku(this ISitesOperations operations, string subscriptionName, string webspaceName, string name, string resourceGroupName)
+            {
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).GetSiteSnapshotsOnSkuAsync(subscriptionName, webspaceName, name, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='subscriptionName'>
+            /// Azure subscription
+            /// </param>
+            /// <param name='webspaceName'>
+            /// Webspace
+            /// </param>
+            /// <param name='name'>
+            /// Website Name
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> GetSiteSnapshotsOnSkuAsync( this ISitesOperations operations, string subscriptionName, string webspaceName, string name, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<object> result = await operations.GetSiteSnapshotsOnSkuWithHttpMessagesAsync(subscriptionName, webspaceName, name, resourceGroupName, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='subscriptionName'>
+            /// Azure subscription
+            /// </param>
+            /// <param name='webspaceName'>
+            /// Webspace
+            /// </param>
+            /// <param name='name'>
+            /// Website Name
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// </param>
+            public static object GetSiteSnapshots(this ISitesOperations operations, string subscriptionName, string webspaceName, string name, string resourceGroupName)
+            {
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).GetSiteSnapshotsAsync(subscriptionName, webspaceName, name, resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='subscriptionName'>
+            /// Azure subscription
+            /// </param>
+            /// <param name='webspaceName'>
+            /// Webspace
+            /// </param>
+            /// <param name='name'>
+            /// Website Name
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> GetSiteSnapshotsAsync( this ISitesOperations operations, string subscriptionName, string webspaceName, string name, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<object> result = await operations.GetSiteSnapshotsWithHttpMessagesAsync(subscriptionName, webspaceName, name, resourceGroupName, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='subscriptionName'>
+            /// Azure subscription
+            /// </param>
+            /// <param name='webspaceName'>
+            /// Webspace
+            /// </param>
+            /// <param name='name'>
+            /// Website Name
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// </param>
+            /// <param name='slot'>
+            /// </param>
+            public static object GetSiteSnapshotsSlot(this ISitesOperations operations, string subscriptionName, string webspaceName, string name, string resourceGroupName, string slot)
+            {
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).GetSiteSnapshotsSlotAsync(subscriptionName, webspaceName, name, resourceGroupName, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='subscriptionName'>
+            /// Azure subscription
+            /// </param>
+            /// <param name='webspaceName'>
+            /// Webspace
+            /// </param>
+            /// <param name='name'>
+            /// Website Name
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// </param>
+            /// <param name='slot'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> GetSiteSnapshotsSlotAsync( this ISitesOperations operations, string subscriptionName, string webspaceName, string name, string resourceGroupName, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<object> result = await operations.GetSiteSnapshotsSlotWithHttpMessagesAsync(subscriptionName, webspaceName, name, resourceGroupName, slot, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
             /// <param name='resourceGroupName'>
             /// Name of resource group
             /// </param>
@@ -774,9 +966,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of web app slot. If not specified then will default to production
             /// slot.
             /// </param>
-            public static SiteInstanceCollection GetSiteSlotInstanceIdentifiers(this ISitesOperations operations, string resourceGroupName, string name, string slot)
+            public static SiteInstanceCollection GetSiteInstanceIdentifiersSlot(this ISitesOperations operations, string resourceGroupName, string name, string slot)
             {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).GetSiteSlotInstanceIdentifiersAsync(resourceGroupName, name, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).GetSiteInstanceIdentifiersSlotAsync(resourceGroupName, name, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -797,9 +989,53 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SiteInstanceCollection> GetSiteSlotInstanceIdentifiersAsync( this ISitesOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SiteInstanceCollection> GetSiteInstanceIdentifiersSlotAsync( this ISitesOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<SiteInstanceCollection> result = await operations.GetSiteSlotInstanceIdentifiersWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<SiteInstanceCollection> result = await operations.GetSiteInstanceIdentifiersSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app
+            /// </param>
+            /// <param name='slot'>
+            /// Name of web app slot. If not specified then will default to production
+            /// slot.
+            /// </param>
+            public static HostNameBindingCollection GetSiteHostNameBindingsSlot(this ISitesOperations operations, string resourceGroupName, string name, string slot)
+            {
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).GetSiteHostNameBindingsSlotAsync(resourceGroupName, name, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app
+            /// </param>
+            /// <param name='slot'>
+            /// Name of web app slot. If not specified then will default to production
+            /// slot.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<HostNameBindingCollection> GetSiteHostNameBindingsSlotAsync( this ISitesOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<HostNameBindingCollection> result = await operations.GetSiteHostNameBindingsSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -836,50 +1072,6 @@ namespace Microsoft.Azure.Management.WebSites
             public static async Task<HostNameBindingCollection> GetSiteHostNameBindingsAsync( this ISitesOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
             {
                 AzureOperationResponse<HostNameBindingCollection> result = await operations.GetSiteHostNameBindingsWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
-            }
-
-            /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of resource group
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
-            /// <param name='slot'>
-            /// Name of web app slot. If not specified then will default to production
-            /// slot.
-            /// </param>
-            public static HostNameBindingCollection GetSiteSlotHostNameBindings(this ISitesOperations operations, string resourceGroupName, string name, string slot)
-            {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).GetSiteSlotHostNameBindingsAsync(resourceGroupName, name, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of resource group
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
-            /// <param name='slot'>
-            /// Name of web app slot. If not specified then will default to production
-            /// slot.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<HostNameBindingCollection> GetSiteSlotHostNameBindingsAsync( this ISitesOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                AzureOperationResponse<HostNameBindingCollection> result = await operations.GetSiteSlotHostNameBindingsWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -1033,9 +1225,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='hostName'>
             /// Name of host
             /// </param>
-            public static HostNameBinding GetSiteSlotHostNameBinding(this ISitesOperations operations, string resourceGroupName, string name, string slot, string hostName)
+            public static HostNameBinding GetSiteHostNameBindingSlot(this ISitesOperations operations, string resourceGroupName, string name, string slot, string hostName)
             {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).GetSiteSlotHostNameBindingAsync(resourceGroupName, name, slot, hostName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).GetSiteHostNameBindingSlotAsync(resourceGroupName, name, slot, hostName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1059,9 +1251,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<HostNameBinding> GetSiteSlotHostNameBindingAsync( this ISitesOperations operations, string resourceGroupName, string name, string slot, string hostName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<HostNameBinding> GetSiteHostNameBindingSlotAsync( this ISitesOperations operations, string resourceGroupName, string name, string slot, string hostName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<HostNameBinding> result = await operations.GetSiteSlotHostNameBindingWithHttpMessagesAsync(resourceGroupName, name, slot, hostName, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<HostNameBinding> result = await operations.GetSiteHostNameBindingSlotWithHttpMessagesAsync(resourceGroupName, name, slot, hostName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -1086,9 +1278,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of web app slot. If not specified then will default to production
             /// slot.
             /// </param>
-            public static HostNameBinding CreateOrUpdateSiteSlotHostNameBinding(this ISitesOperations operations, string resourceGroupName, string name, string hostName, HostNameBinding hostNameBinding, string slot)
+            public static HostNameBinding CreateOrUpdateSiteHostNameBindingSlot(this ISitesOperations operations, string resourceGroupName, string name, string hostName, HostNameBinding hostNameBinding, string slot)
             {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).CreateOrUpdateSiteSlotHostNameBindingAsync(resourceGroupName, name, hostName, hostNameBinding, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).CreateOrUpdateSiteHostNameBindingSlotAsync(resourceGroupName, name, hostName, hostNameBinding, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1115,9 +1307,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<HostNameBinding> CreateOrUpdateSiteSlotHostNameBindingAsync( this ISitesOperations operations, string resourceGroupName, string name, string hostName, HostNameBinding hostNameBinding, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<HostNameBinding> CreateOrUpdateSiteHostNameBindingSlotAsync( this ISitesOperations operations, string resourceGroupName, string name, string hostName, HostNameBinding hostNameBinding, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<HostNameBinding> result = await operations.CreateOrUpdateSiteSlotHostNameBindingWithHttpMessagesAsync(resourceGroupName, name, hostName, hostNameBinding, slot, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<HostNameBinding> result = await operations.CreateOrUpdateSiteHostNameBindingSlotWithHttpMessagesAsync(resourceGroupName, name, hostName, hostNameBinding, slot, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -1139,9 +1331,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='hostName'>
             /// Name of host
             /// </param>
-            public static object DeleteSiteSlotHostNameBinding(this ISitesOperations operations, string resourceGroupName, string name, string slot, string hostName)
+            public static object DeleteSiteHostNameBindingSlot(this ISitesOperations operations, string resourceGroupName, string name, string slot, string hostName)
             {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).DeleteSiteSlotHostNameBindingAsync(resourceGroupName, name, slot, hostName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).DeleteSiteHostNameBindingSlotAsync(resourceGroupName, name, slot, hostName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1165,9 +1357,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> DeleteSiteSlotHostNameBindingAsync( this ISitesOperations operations, string resourceGroupName, string name, string slot, string hostName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> DeleteSiteHostNameBindingSlotAsync( this ISitesOperations operations, string resourceGroupName, string name, string slot, string hostName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<object> result = await operations.DeleteSiteSlotHostNameBindingWithHttpMessagesAsync(resourceGroupName, name, slot, hostName, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<object> result = await operations.DeleteSiteHostNameBindingSlotWithHttpMessagesAsync(resourceGroupName, name, slot, hostName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -1306,9 +1498,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of web app slot. If not specified then will default to production
             /// slot.
             /// </param>
-            public static SiteConfig GetSiteSlotConfig(this ISitesOperations operations, string resourceGroupName, string name, string slot)
+            public static SiteConfig GetSiteConfigSlot(this ISitesOperations operations, string resourceGroupName, string name, string slot)
             {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).GetSiteSlotConfigAsync(resourceGroupName, name, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).GetSiteConfigSlotAsync(resourceGroupName, name, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1329,9 +1521,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SiteConfig> GetSiteSlotConfigAsync( this ISitesOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SiteConfig> GetSiteConfigSlotAsync( this ISitesOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<SiteConfig> result = await operations.GetSiteSlotConfigWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<SiteConfig> result = await operations.GetSiteConfigSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -1353,9 +1545,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of web app slot. If not specified then will default to production
             /// slot.
             /// </param>
-            public static SiteConfig CreateOrUpdateSiteSlotConfig(this ISitesOperations operations, string resourceGroupName, string name, SiteConfig siteConfig, string slot)
+            public static SiteConfig CreateOrUpdateSiteConfigSlot(this ISitesOperations operations, string resourceGroupName, string name, SiteConfig siteConfig, string slot)
             {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).CreateOrUpdateSiteSlotConfigAsync(resourceGroupName, name, siteConfig, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).CreateOrUpdateSiteConfigSlotAsync(resourceGroupName, name, siteConfig, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1379,9 +1571,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SiteConfig> CreateOrUpdateSiteSlotConfigAsync( this ISitesOperations operations, string resourceGroupName, string name, SiteConfig siteConfig, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SiteConfig> CreateOrUpdateSiteConfigSlotAsync( this ISitesOperations operations, string resourceGroupName, string name, SiteConfig siteConfig, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<SiteConfig> result = await operations.CreateOrUpdateSiteSlotConfigWithHttpMessagesAsync(resourceGroupName, name, siteConfig, slot, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<SiteConfig> result = await operations.CreateOrUpdateSiteConfigSlotWithHttpMessagesAsync(resourceGroupName, name, siteConfig, slot, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -1403,9 +1595,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of web app slot. If not specified then will default to production
             /// slot.
             /// </param>
-            public static SiteConfig UpdateSiteSlotConfig(this ISitesOperations operations, string resourceGroupName, string name, SiteConfig siteConfig, string slot)
+            public static SiteConfig UpdateSiteConfigSlot(this ISitesOperations operations, string resourceGroupName, string name, SiteConfig siteConfig, string slot)
             {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).UpdateSiteSlotConfigAsync(resourceGroupName, name, siteConfig, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).UpdateSiteConfigSlotAsync(resourceGroupName, name, siteConfig, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1429,9 +1621,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SiteConfig> UpdateSiteSlotConfigAsync( this ISitesOperations operations, string resourceGroupName, string name, SiteConfig siteConfig, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SiteConfig> UpdateSiteConfigSlotAsync( this ISitesOperations operations, string resourceGroupName, string name, SiteConfig siteConfig, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<SiteConfig> result = await operations.UpdateSiteSlotConfigWithHttpMessagesAsync(resourceGroupName, name, siteConfig, slot, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<SiteConfig> result = await operations.UpdateSiteConfigSlotWithHttpMessagesAsync(resourceGroupName, name, siteConfig, slot, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -1606,9 +1798,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of web app slot. If not specified then will default to production
             /// slot.
             /// </param>
-            public static SiteSourceControl GetSiteSlotSourceControl(this ISitesOperations operations, string resourceGroupName, string name, string slot)
+            public static SiteSourceControl GetSiteSourceControlSlot(this ISitesOperations operations, string resourceGroupName, string name, string slot)
             {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).GetSiteSlotSourceControlAsync(resourceGroupName, name, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).GetSiteSourceControlSlotAsync(resourceGroupName, name, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1629,9 +1821,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SiteSourceControl> GetSiteSlotSourceControlAsync( this ISitesOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SiteSourceControl> GetSiteSourceControlSlotAsync( this ISitesOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<SiteSourceControl> result = await operations.GetSiteSlotSourceControlWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<SiteSourceControl> result = await operations.GetSiteSourceControlSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -1653,103 +1845,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of web app slot. If not specified then will default to production
             /// slot.
             /// </param>
-            public static SiteSourceControl CreateOrUpdateSiteSlotSourceControl(this ISitesOperations operations, string resourceGroupName, string name, SiteSourceControl siteSourceControl, string slot)
+            public static SiteSourceControl CreateOrUpdateSiteSourceControlSlot(this ISitesOperations operations, string resourceGroupName, string name, SiteSourceControl siteSourceControl, string slot)
             {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).CreateOrUpdateSiteSlotSourceControlAsync(resourceGroupName, name, siteSourceControl, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of resource group
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
-            /// <param name='siteSourceControl'>
-            /// Request body that contains the source control parameters
-            /// </param>
-            /// <param name='slot'>
-            /// Name of web app slot. If not specified then will default to production
-            /// slot.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<SiteSourceControl> CreateOrUpdateSiteSlotSourceControlAsync( this ISitesOperations operations, string resourceGroupName, string name, SiteSourceControl siteSourceControl, string slot, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                AzureOperationResponse<SiteSourceControl> result = await operations.CreateOrUpdateSiteSlotSourceControlWithHttpMessagesAsync(resourceGroupName, name, siteSourceControl, slot, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
-            }
-
-            /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of resource group
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
-            /// <param name='slot'>
-            /// Name of web app slot. If not specified then will default to production
-            /// slot.
-            /// </param>
-            public static object DeleteSiteSlotSourceControl(this ISitesOperations operations, string resourceGroupName, string name, string slot)
-            {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).DeleteSiteSlotSourceControlAsync(resourceGroupName, name, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of resource group
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
-            /// <param name='slot'>
-            /// Name of web app slot. If not specified then will default to production
-            /// slot.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<object> DeleteSiteSlotSourceControlAsync( this ISitesOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                AzureOperationResponse<object> result = await operations.DeleteSiteSlotSourceControlWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
-            }
-
-            /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of resource group
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
-            /// <param name='siteSourceControl'>
-            /// Request body that contains the source control parameters
-            /// </param>
-            /// <param name='slot'>
-            /// Name of web app slot. If not specified then will default to production
-            /// slot.
-            /// </param>
-            public static SiteSourceControl UpdateSiteSlotSourceControl(this ISitesOperations operations, string resourceGroupName, string name, SiteSourceControl siteSourceControl, string slot)
-            {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).UpdateSiteSlotSourceControlAsync(resourceGroupName, name, siteSourceControl, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).CreateOrUpdateSiteSourceControlSlotAsync(resourceGroupName, name, siteSourceControl, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1773,9 +1871,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SiteSourceControl> UpdateSiteSlotSourceControlAsync( this ISitesOperations operations, string resourceGroupName, string name, SiteSourceControl siteSourceControl, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SiteSourceControl> CreateOrUpdateSiteSourceControlSlotAsync( this ISitesOperations operations, string resourceGroupName, string name, SiteSourceControl siteSourceControl, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<SiteSourceControl> result = await operations.UpdateSiteSlotSourceControlWithHttpMessagesAsync(resourceGroupName, name, siteSourceControl, slot, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<SiteSourceControl> result = await operations.CreateOrUpdateSiteSourceControlSlotWithHttpMessagesAsync(resourceGroupName, name, siteSourceControl, slot, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -1790,7 +1888,101 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='name'>
             /// Name of web app
             /// </param>
-            public static IDictionary<string, string> ListSiteAppSettings(this ISitesOperations operations, string resourceGroupName, string name)
+            /// <param name='slot'>
+            /// Name of web app slot. If not specified then will default to production
+            /// slot.
+            /// </param>
+            public static object DeleteSiteSourceControlSlot(this ISitesOperations operations, string resourceGroupName, string name, string slot)
+            {
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).DeleteSiteSourceControlSlotAsync(resourceGroupName, name, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app
+            /// </param>
+            /// <param name='slot'>
+            /// Name of web app slot. If not specified then will default to production
+            /// slot.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> DeleteSiteSourceControlSlotAsync( this ISitesOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<object> result = await operations.DeleteSiteSourceControlSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app
+            /// </param>
+            /// <param name='siteSourceControl'>
+            /// Request body that contains the source control parameters
+            /// </param>
+            /// <param name='slot'>
+            /// Name of web app slot. If not specified then will default to production
+            /// slot.
+            /// </param>
+            public static SiteSourceControl UpdateSiteSourceControlSlot(this ISitesOperations operations, string resourceGroupName, string name, SiteSourceControl siteSourceControl, string slot)
+            {
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).UpdateSiteSourceControlSlotAsync(resourceGroupName, name, siteSourceControl, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app
+            /// </param>
+            /// <param name='siteSourceControl'>
+            /// Request body that contains the source control parameters
+            /// </param>
+            /// <param name='slot'>
+            /// Name of web app slot. If not specified then will default to production
+            /// slot.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<SiteSourceControl> UpdateSiteSourceControlSlotAsync( this ISitesOperations operations, string resourceGroupName, string name, SiteSourceControl siteSourceControl, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<SiteSourceControl> result = await operations.UpdateSiteSourceControlSlotWithHttpMessagesAsync(resourceGroupName, name, siteSourceControl, slot, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app
+            /// </param>
+            public static StringDictionary ListSiteAppSettings(this ISitesOperations operations, string resourceGroupName, string name)
             {
                 return Task.Factory.StartNew(s => ((ISitesOperations)s).ListSiteAppSettingsAsync(resourceGroupName, name), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -1809,9 +2001,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IDictionary<string, string>> ListSiteAppSettingsAsync( this ISitesOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<StringDictionary> ListSiteAppSettingsAsync( this ISitesOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IDictionary<string, string>> result = await operations.ListSiteAppSettingsWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<StringDictionary> result = await operations.ListSiteAppSettingsWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -1830,9 +2022,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of web app slot. If not specified then will default to production
             /// slot.
             /// </param>
-            public static IDictionary<string, string> ListSiteSlotAppSettings(this ISitesOperations operations, string resourceGroupName, string name, string slot)
+            public static StringDictionary ListSiteAppSettingsSlot(this ISitesOperations operations, string resourceGroupName, string name, string slot)
             {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).ListSiteSlotAppSettingsAsync(resourceGroupName, name, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).ListSiteAppSettingsSlotAsync(resourceGroupName, name, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1853,9 +2045,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IDictionary<string, string>> ListSiteSlotAppSettingsAsync( this ISitesOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<StringDictionary> ListSiteAppSettingsSlotAsync( this ISitesOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IDictionary<string, string>> result = await operations.ListSiteSlotAppSettingsWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<StringDictionary> result = await operations.ListSiteAppSettingsSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -1873,7 +2065,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='appSettings'>
             /// Application settings of web app
             /// </param>
-            public static IDictionary<string, string> UpdateSiteAppSettings(this ISitesOperations operations, string resourceGroupName, string name, IDictionary<string, string> appSettings)
+            public static StringDictionary UpdateSiteAppSettings(this ISitesOperations operations, string resourceGroupName, string name, StringDictionary appSettings)
             {
                 return Task.Factory.StartNew(s => ((ISitesOperations)s).UpdateSiteAppSettingsAsync(resourceGroupName, name, appSettings), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -1895,9 +2087,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IDictionary<string, string>> UpdateSiteAppSettingsAsync( this ISitesOperations operations, string resourceGroupName, string name, IDictionary<string, string> appSettings, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<StringDictionary> UpdateSiteAppSettingsAsync( this ISitesOperations operations, string resourceGroupName, string name, StringDictionary appSettings, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IDictionary<string, string>> result = await operations.UpdateSiteAppSettingsWithHttpMessagesAsync(resourceGroupName, name, appSettings, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<StringDictionary> result = await operations.UpdateSiteAppSettingsWithHttpMessagesAsync(resourceGroupName, name, appSettings, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -1919,9 +2111,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of web app slot. If not specified then will default to production
             /// slot.
             /// </param>
-            public static IDictionary<string, string> UpdateSiteSlotAppSettings(this ISitesOperations operations, string resourceGroupName, string name, IDictionary<string, string> appSettings, string slot)
+            public static StringDictionary UpdateSiteAppSettingsSlot(this ISitesOperations operations, string resourceGroupName, string name, StringDictionary appSettings, string slot)
             {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).UpdateSiteSlotAppSettingsAsync(resourceGroupName, name, appSettings, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).UpdateSiteAppSettingsSlotAsync(resourceGroupName, name, appSettings, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1945,9 +2137,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IDictionary<string, string>> UpdateSiteSlotAppSettingsAsync( this ISitesOperations operations, string resourceGroupName, string name, IDictionary<string, string> appSettings, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<StringDictionary> UpdateSiteAppSettingsSlotAsync( this ISitesOperations operations, string resourceGroupName, string name, StringDictionary appSettings, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IDictionary<string, string>> result = await operations.UpdateSiteSlotAppSettingsWithHttpMessagesAsync(resourceGroupName, name, appSettings, slot, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<StringDictionary> result = await operations.UpdateSiteAppSettingsSlotWithHttpMessagesAsync(resourceGroupName, name, appSettings, slot, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -1962,7 +2154,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='name'>
             /// Name of web app
             /// </param>
-            public static IDictionary<string, ConnStringValueTypePair> ListSiteConnectionStrings(this ISitesOperations operations, string resourceGroupName, string name)
+            public static ConnectionStringDictionary ListSiteConnectionStrings(this ISitesOperations operations, string resourceGroupName, string name)
             {
                 return Task.Factory.StartNew(s => ((ISitesOperations)s).ListSiteConnectionStringsAsync(resourceGroupName, name), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -1981,9 +2173,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IDictionary<string, ConnStringValueTypePair>> ListSiteConnectionStringsAsync( this ISitesOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ConnectionStringDictionary> ListSiteConnectionStringsAsync( this ISitesOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IDictionary<string, ConnStringValueTypePair>> result = await operations.ListSiteConnectionStringsWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<ConnectionStringDictionary> result = await operations.ListSiteConnectionStringsWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -2002,9 +2194,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of web app slot. If not specified then will default to production
             /// slot.
             /// </param>
-            public static IDictionary<string, ConnStringValueTypePair> ListSiteSlotConnectionStrings(this ISitesOperations operations, string resourceGroupName, string name, string slot)
+            public static ConnectionStringDictionary ListSiteConnectionStringsSlot(this ISitesOperations operations, string resourceGroupName, string name, string slot)
             {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).ListSiteSlotConnectionStringsAsync(resourceGroupName, name, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).ListSiteConnectionStringsSlotAsync(resourceGroupName, name, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -2025,9 +2217,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IDictionary<string, ConnStringValueTypePair>> ListSiteSlotConnectionStringsAsync( this ISitesOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ConnectionStringDictionary> ListSiteConnectionStringsSlotAsync( this ISitesOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IDictionary<string, ConnStringValueTypePair>> result = await operations.ListSiteSlotConnectionStringsWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<ConnectionStringDictionary> result = await operations.ListSiteConnectionStringsSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -2045,7 +2237,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='connectionStrings'>
             /// Connection strings associated with web app
             /// </param>
-            public static IDictionary<string, ConnStringValueTypePair> UpdateSiteConnectionStrings(this ISitesOperations operations, string resourceGroupName, string name, IDictionary<string, ConnStringValueTypePair> connectionStrings)
+            public static ConnectionStringDictionary UpdateSiteConnectionStrings(this ISitesOperations operations, string resourceGroupName, string name, ConnectionStringDictionary connectionStrings)
             {
                 return Task.Factory.StartNew(s => ((ISitesOperations)s).UpdateSiteConnectionStringsAsync(resourceGroupName, name, connectionStrings), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -2067,9 +2259,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IDictionary<string, ConnStringValueTypePair>> UpdateSiteConnectionStringsAsync( this ISitesOperations operations, string resourceGroupName, string name, IDictionary<string, ConnStringValueTypePair> connectionStrings, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ConnectionStringDictionary> UpdateSiteConnectionStringsAsync( this ISitesOperations operations, string resourceGroupName, string name, ConnectionStringDictionary connectionStrings, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IDictionary<string, ConnStringValueTypePair>> result = await operations.UpdateSiteConnectionStringsWithHttpMessagesAsync(resourceGroupName, name, connectionStrings, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<ConnectionStringDictionary> result = await operations.UpdateSiteConnectionStringsWithHttpMessagesAsync(resourceGroupName, name, connectionStrings, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -2091,9 +2283,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of web app slot. If not specified then will default to production
             /// slot.
             /// </param>
-            public static IDictionary<string, ConnStringValueTypePair> UpdateSiteSlotConnectionStrings(this ISitesOperations operations, string resourceGroupName, string name, IDictionary<string, ConnStringValueTypePair> connectionStrings, string slot)
+            public static ConnectionStringDictionary UpdateSiteConnectionStringsSlot(this ISitesOperations operations, string resourceGroupName, string name, ConnectionStringDictionary connectionStrings, string slot)
             {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).UpdateSiteSlotConnectionStringsAsync(resourceGroupName, name, connectionStrings, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).UpdateSiteConnectionStringsSlotAsync(resourceGroupName, name, connectionStrings, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -2117,9 +2309,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IDictionary<string, ConnStringValueTypePair>> UpdateSiteSlotConnectionStringsAsync( this ISitesOperations operations, string resourceGroupName, string name, IDictionary<string, ConnStringValueTypePair> connectionStrings, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ConnectionStringDictionary> UpdateSiteConnectionStringsSlotAsync( this ISitesOperations operations, string resourceGroupName, string name, ConnectionStringDictionary connectionStrings, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IDictionary<string, ConnStringValueTypePair>> result = await operations.UpdateSiteSlotConnectionStringsWithHttpMessagesAsync(resourceGroupName, name, connectionStrings, slot, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<ConnectionStringDictionary> result = await operations.UpdateSiteConnectionStringsSlotWithHttpMessagesAsync(resourceGroupName, name, connectionStrings, slot, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -2210,9 +2402,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of web app slot. If not specified then will default to production
             /// slot.
             /// </param>
-            public static User ListSiteSlotPublishingCredentials(this ISitesOperations operations, string resourceGroupName, string name, string slot)
+            public static User ListSitePublishingCredentialsSlot(this ISitesOperations operations, string resourceGroupName, string name, string slot)
             {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).ListSiteSlotPublishingCredentialsAsync(resourceGroupName, name, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).ListSitePublishingCredentialsSlotAsync(resourceGroupName, name, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -2233,9 +2425,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<User> ListSiteSlotPublishingCredentialsAsync( this ISitesOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<User> ListSitePublishingCredentialsSlotAsync( this ISitesOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<User> result = await operations.ListSiteSlotPublishingCredentialsWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<User> result = await operations.ListSitePublishingCredentialsSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -2254,9 +2446,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of web app slot. If not specified then will default to production
             /// slot.
             /// </param>
-            public static User BeginListSiteSlotPublishingCredentials(this ISitesOperations operations, string resourceGroupName, string name, string slot)
+            public static User BeginListSitePublishingCredentialsSlot(this ISitesOperations operations, string resourceGroupName, string name, string slot)
             {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).BeginListSiteSlotPublishingCredentialsAsync(resourceGroupName, name, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).BeginListSitePublishingCredentialsSlotAsync(resourceGroupName, name, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -2277,9 +2469,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<User> BeginListSiteSlotPublishingCredentialsAsync( this ISitesOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<User> BeginListSitePublishingCredentialsSlotAsync( this ISitesOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<User> result = await operations.BeginListSiteSlotPublishingCredentialsWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<User> result = await operations.BeginListSitePublishingCredentialsSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -2294,7 +2486,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='name'>
             /// Name of web app
             /// </param>
-            public static IDictionary<string, string> ListSiteMetadata(this ISitesOperations operations, string resourceGroupName, string name)
+            public static StringDictionary ListSiteMetadata(this ISitesOperations operations, string resourceGroupName, string name)
             {
                 return Task.Factory.StartNew(s => ((ISitesOperations)s).ListSiteMetadataAsync(resourceGroupName, name), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -2313,9 +2505,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IDictionary<string, string>> ListSiteMetadataAsync( this ISitesOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<StringDictionary> ListSiteMetadataAsync( this ISitesOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IDictionary<string, string>> result = await operations.ListSiteMetadataWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<StringDictionary> result = await operations.ListSiteMetadataWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -2334,9 +2526,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of web app slot. If not specified then will default to production
             /// slot.
             /// </param>
-            public static IDictionary<string, string> ListSiteSlotMetadata(this ISitesOperations operations, string resourceGroupName, string name, string slot)
+            public static StringDictionary ListSiteMetadataSlot(this ISitesOperations operations, string resourceGroupName, string name, string slot)
             {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).ListSiteSlotMetadataAsync(resourceGroupName, name, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).ListSiteMetadataSlotAsync(resourceGroupName, name, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -2357,9 +2549,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IDictionary<string, string>> ListSiteSlotMetadataAsync( this ISitesOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<StringDictionary> ListSiteMetadataSlotAsync( this ISitesOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IDictionary<string, string>> result = await operations.ListSiteSlotMetadataWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<StringDictionary> result = await operations.ListSiteMetadataSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -2377,7 +2569,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='metadata'>
             /// Meta data of web app
             /// </param>
-            public static IDictionary<string, string> UpdateSiteMetadata(this ISitesOperations operations, string resourceGroupName, string name, IDictionary<string, string> metadata)
+            public static StringDictionary UpdateSiteMetadata(this ISitesOperations operations, string resourceGroupName, string name, StringDictionary metadata)
             {
                 return Task.Factory.StartNew(s => ((ISitesOperations)s).UpdateSiteMetadataAsync(resourceGroupName, name, metadata), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -2399,9 +2591,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IDictionary<string, string>> UpdateSiteMetadataAsync( this ISitesOperations operations, string resourceGroupName, string name, IDictionary<string, string> metadata, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<StringDictionary> UpdateSiteMetadataAsync( this ISitesOperations operations, string resourceGroupName, string name, StringDictionary metadata, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IDictionary<string, string>> result = await operations.UpdateSiteMetadataWithHttpMessagesAsync(resourceGroupName, name, metadata, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<StringDictionary> result = await operations.UpdateSiteMetadataWithHttpMessagesAsync(resourceGroupName, name, metadata, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -2423,9 +2615,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of web app slot. If not specified then will default to production
             /// slot.
             /// </param>
-            public static IDictionary<string, string> UpdateSiteSlotMetadata(this ISitesOperations operations, string resourceGroupName, string name, IDictionary<string, string> metadata, string slot)
+            public static StringDictionary UpdateSiteMetadataSlot(this ISitesOperations operations, string resourceGroupName, string name, StringDictionary metadata, string slot)
             {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).UpdateSiteSlotMetadataAsync(resourceGroupName, name, metadata, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).UpdateSiteMetadataSlotAsync(resourceGroupName, name, metadata, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -2449,9 +2641,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IDictionary<string, string>> UpdateSiteSlotMetadataAsync( this ISitesOperations operations, string resourceGroupName, string name, IDictionary<string, string> metadata, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<StringDictionary> UpdateSiteMetadataSlotAsync( this ISitesOperations operations, string resourceGroupName, string name, StringDictionary metadata, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IDictionary<string, string>> result = await operations.UpdateSiteSlotMetadataWithHttpMessagesAsync(resourceGroupName, name, metadata, slot, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<StringDictionary> result = await operations.UpdateSiteMetadataSlotWithHttpMessagesAsync(resourceGroupName, name, metadata, slot, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -2548,9 +2740,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of web app slot. If not specified then will default to production
             /// slot.
             /// </param>
-            public static SiteLogsConfig GetSiteSlotLogsConfig(this ISitesOperations operations, string resourceGroupName, string name, string slot)
+            public static SiteLogsConfig GetSiteLogsConfigSlot(this ISitesOperations operations, string resourceGroupName, string name, string slot)
             {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).GetSiteSlotLogsConfigAsync(resourceGroupName, name, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).GetSiteLogsConfigSlotAsync(resourceGroupName, name, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -2571,9 +2763,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SiteLogsConfig> GetSiteSlotLogsConfigAsync( this ISitesOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SiteLogsConfig> GetSiteLogsConfigSlotAsync( this ISitesOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<SiteLogsConfig> result = await operations.GetSiteSlotLogsConfigWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<SiteLogsConfig> result = await operations.GetSiteLogsConfigSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -2595,9 +2787,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of web app slot. If not specified then will default to production
             /// slot.
             /// </param>
-            public static SiteLogsConfig UpdateSiteSlotLogsConfig(this ISitesOperations operations, string resourceGroupName, string name, SiteLogsConfig siteLogsConfig, string slot)
+            public static SiteLogsConfig UpdateSiteLogsConfigSlot(this ISitesOperations operations, string resourceGroupName, string name, SiteLogsConfig siteLogsConfig, string slot)
             {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).UpdateSiteSlotLogsConfigAsync(resourceGroupName, name, siteLogsConfig, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).UpdateSiteLogsConfigSlotAsync(resourceGroupName, name, siteLogsConfig, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -2621,9 +2813,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SiteLogsConfig> UpdateSiteSlotLogsConfigAsync( this ISitesOperations operations, string resourceGroupName, string name, SiteLogsConfig siteLogsConfig, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SiteLogsConfig> UpdateSiteLogsConfigSlotAsync( this ISitesOperations operations, string resourceGroupName, string name, SiteLogsConfig siteLogsConfig, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<SiteLogsConfig> result = await operations.UpdateSiteSlotLogsConfigWithHttpMessagesAsync(resourceGroupName, name, siteLogsConfig, slot, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<SiteLogsConfig> result = await operations.UpdateSiteLogsConfigSlotWithHttpMessagesAsync(resourceGroupName, name, siteLogsConfig, slot, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -2670,9 +2862,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// </param>
             /// <param name='slot'>
             /// </param>
-            public static object ListSiteSlotPremierAddOns(this ISitesOperations operations, string resourceGroupName, string name, string slot)
+            public static object ListSitePremierAddOnsSlot(this ISitesOperations operations, string resourceGroupName, string name, string slot)
             {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).ListSiteSlotPremierAddOnsAsync(resourceGroupName, name, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).ListSitePremierAddOnsSlotAsync(resourceGroupName, name, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -2689,9 +2881,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> ListSiteSlotPremierAddOnsAsync( this ISitesOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> ListSitePremierAddOnsSlotAsync( this ISitesOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<object> result = await operations.ListSiteSlotPremierAddOnsWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<object> result = await operations.ListSitePremierAddOnsSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -2820,9 +3012,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// </param>
             /// <param name='slot'>
             /// </param>
-            public static object GetSiteSlotPremierAddOn(this ISitesOperations operations, string resourceGroupName, string name, string premierAddOnName, string slot)
+            public static object GetSitePremierAddOnSlot(this ISitesOperations operations, string resourceGroupName, string name, string premierAddOnName, string slot)
             {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).GetSiteSlotPremierAddOnAsync(resourceGroupName, name, premierAddOnName, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).GetSitePremierAddOnSlotAsync(resourceGroupName, name, premierAddOnName, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -2841,9 +3033,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> GetSiteSlotPremierAddOnAsync( this ISitesOperations operations, string resourceGroupName, string name, string premierAddOnName, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> GetSitePremierAddOnSlotAsync( this ISitesOperations operations, string resourceGroupName, string name, string premierAddOnName, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<object> result = await operations.GetSiteSlotPremierAddOnWithHttpMessagesAsync(resourceGroupName, name, premierAddOnName, slot, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<object> result = await operations.GetSitePremierAddOnSlotWithHttpMessagesAsync(resourceGroupName, name, premierAddOnName, slot, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -2862,9 +3054,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// </param>
             /// <param name='slot'>
             /// </param>
-            public static object AddSiteSlotPremierAddOn(this ISitesOperations operations, string resourceGroupName, string name, string premierAddOnName, PremierAddOnRequest premierAddOn, string slot)
+            public static object AddSitePremierAddOnSlot(this ISitesOperations operations, string resourceGroupName, string name, string premierAddOnName, PremierAddOnRequest premierAddOn, string slot)
             {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).AddSiteSlotPremierAddOnAsync(resourceGroupName, name, premierAddOnName, premierAddOn, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).AddSitePremierAddOnSlotAsync(resourceGroupName, name, premierAddOnName, premierAddOn, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -2885,9 +3077,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> AddSiteSlotPremierAddOnAsync( this ISitesOperations operations, string resourceGroupName, string name, string premierAddOnName, PremierAddOnRequest premierAddOn, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> AddSitePremierAddOnSlotAsync( this ISitesOperations operations, string resourceGroupName, string name, string premierAddOnName, PremierAddOnRequest premierAddOn, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<object> result = await operations.AddSiteSlotPremierAddOnWithHttpMessagesAsync(resourceGroupName, name, premierAddOnName, premierAddOn, slot, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<object> result = await operations.AddSitePremierAddOnSlotWithHttpMessagesAsync(resourceGroupName, name, premierAddOnName, premierAddOn, slot, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -2904,9 +3096,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// </param>
             /// <param name='slot'>
             /// </param>
-            public static object DeleteSiteSlotPremierAddOn(this ISitesOperations operations, string resourceGroupName, string name, string premierAddOnName, string slot)
+            public static object DeleteSitePremierAddOnSlot(this ISitesOperations operations, string resourceGroupName, string name, string premierAddOnName, string slot)
             {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).DeleteSiteSlotPremierAddOnAsync(resourceGroupName, name, premierAddOnName, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).DeleteSitePremierAddOnSlotAsync(resourceGroupName, name, premierAddOnName, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -2925,9 +3117,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> DeleteSiteSlotPremierAddOnAsync( this ISitesOperations operations, string resourceGroupName, string name, string premierAddOnName, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> DeleteSitePremierAddOnSlotAsync( this ISitesOperations operations, string resourceGroupName, string name, string premierAddOnName, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<object> result = await operations.DeleteSiteSlotPremierAddOnWithHttpMessagesAsync(resourceGroupName, name, premierAddOnName, slot, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<object> result = await operations.DeleteSitePremierAddOnSlotWithHttpMessagesAsync(resourceGroupName, name, premierAddOnName, slot, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -3060,9 +3252,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of web app slot. If not specified then will default to production
             /// slot.
             /// </param>
-            public static BackupRequest GetSiteSlotBackupConfiguration(this ISitesOperations operations, string resourceGroupName, string name, string slot)
+            public static BackupRequest GetSiteBackupConfigurationSlot(this ISitesOperations operations, string resourceGroupName, string name, string slot)
             {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).GetSiteSlotBackupConfigurationAsync(resourceGroupName, name, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).GetSiteBackupConfigurationSlotAsync(resourceGroupName, name, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -3083,9 +3275,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<BackupRequest> GetSiteSlotBackupConfigurationAsync( this ISitesOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<BackupRequest> GetSiteBackupConfigurationSlotAsync( this ISitesOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<BackupRequest> result = await operations.GetSiteSlotBackupConfigurationWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<BackupRequest> result = await operations.GetSiteBackupConfigurationSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -3107,9 +3299,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of web app slot. If not specified then will default to production
             /// slot.
             /// </param>
-            public static BackupRequest UpdateSiteSlotBackupConfiguration(this ISitesOperations operations, string resourceGroupName, string name, BackupRequest request, string slot)
+            public static BackupRequest UpdateSiteBackupConfigurationSlot(this ISitesOperations operations, string resourceGroupName, string name, BackupRequest request, string slot)
             {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).UpdateSiteSlotBackupConfigurationAsync(resourceGroupName, name, request, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).UpdateSiteBackupConfigurationSlotAsync(resourceGroupName, name, request, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -3133,9 +3325,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<BackupRequest> UpdateSiteSlotBackupConfigurationAsync( this ISitesOperations operations, string resourceGroupName, string name, BackupRequest request, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<BackupRequest> UpdateSiteBackupConfigurationSlotAsync( this ISitesOperations operations, string resourceGroupName, string name, BackupRequest request, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<BackupRequest> result = await operations.UpdateSiteSlotBackupConfigurationWithHttpMessagesAsync(resourceGroupName, name, request, slot, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<BackupRequest> result = await operations.UpdateSiteBackupConfigurationSlotWithHttpMessagesAsync(resourceGroupName, name, request, slot, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -3154,9 +3346,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of web app slot. If not specified then will default to production
             /// slot.
             /// </param>
-            public static BackupRequest ListSiteSlotBackupConfiguration(this ISitesOperations operations, string resourceGroupName, string name, string slot)
+            public static BackupRequest ListSiteBackupConfigurationSlot(this ISitesOperations operations, string resourceGroupName, string name, string slot)
             {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).ListSiteSlotBackupConfigurationAsync(resourceGroupName, name, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).ListSiteBackupConfigurationSlotAsync(resourceGroupName, name, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -3177,51 +3369,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<BackupRequest> ListSiteSlotBackupConfigurationAsync( this ISitesOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<BackupRequest> ListSiteBackupConfigurationSlotAsync( this ISitesOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<BackupRequest> result = await operations.ListSiteSlotBackupConfigurationWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
-            }
-
-            /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of resource group
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
-            /// <param name='request'>
-            /// Information on backup request
-            /// </param>
-            public static BackupItem BackupSite(this ISitesOperations operations, string resourceGroupName, string name, BackupRequest request)
-            {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).BackupSiteAsync(resourceGroupName, name, request), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of resource group
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
-            /// <param name='request'>
-            /// Information on backup request
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<BackupItem> BackupSiteAsync( this ISitesOperations operations, string resourceGroupName, string name, BackupRequest request, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                AzureOperationResponse<BackupItem> result = await operations.BackupSiteWithHttpMessagesAsync(resourceGroupName, name, request, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<BackupRequest> result = await operations.ListSiteBackupConfigurationSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -3287,15 +3437,57 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of web app
             /// </param>
             /// <param name='request'>
+            /// Information on backup request
+            /// </param>
+            public static BackupItem BackupSite(this ISitesOperations operations, string resourceGroupName, string name, BackupRequest request)
+            {
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).BackupSiteAsync(resourceGroupName, name, request), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app
+            /// </param>
+            /// <param name='request'>
+            /// Information on backup request
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<BackupItem> BackupSiteAsync( this ISitesOperations operations, string resourceGroupName, string name, BackupRequest request, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<BackupItem> result = await operations.BackupSiteWithHttpMessagesAsync(resourceGroupName, name, request, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app
+            /// </param>
+            /// <param name='request'>
             /// Information on restore request
             /// </param>
             /// <param name='slot'>
             /// Name of web app slot. If not specified then will default to production
             /// slot.
             /// </param>
-            public static RestoreRequest DiscoverSiteSlotRestore(this ISitesOperations operations, string resourceGroupName, string name, RestoreRequest request, string slot)
+            public static RestoreRequest DiscoverSiteRestoreSlot(this ISitesOperations operations, string resourceGroupName, string name, RestoreRequest request, string slot)
             {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).DiscoverSiteSlotRestoreAsync(resourceGroupName, name, request, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).DiscoverSiteRestoreSlotAsync(resourceGroupName, name, request, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -3319,9 +3511,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RestoreRequest> DiscoverSiteSlotRestoreAsync( this ISitesOperations operations, string resourceGroupName, string name, RestoreRequest request, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<RestoreRequest> DiscoverSiteRestoreSlotAsync( this ISitesOperations operations, string resourceGroupName, string name, RestoreRequest request, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<RestoreRequest> result = await operations.DiscoverSiteSlotRestoreWithHttpMessagesAsync(resourceGroupName, name, request, slot, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<RestoreRequest> result = await operations.DiscoverSiteRestoreSlotWithHttpMessagesAsync(resourceGroupName, name, request, slot, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -3418,9 +3610,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of web app slot. If not specified then will default to production
             /// slot.
             /// </param>
-            public static BackupItemCollection ListSiteSlotBackups(this ISitesOperations operations, string resourceGroupName, string name, string slot)
+            public static BackupItemCollection ListSiteBackupsSlot(this ISitesOperations operations, string resourceGroupName, string name, string slot)
             {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).ListSiteSlotBackupsAsync(resourceGroupName, name, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).ListSiteBackupsSlotAsync(resourceGroupName, name, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -3441,9 +3633,59 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<BackupItemCollection> ListSiteSlotBackupsAsync( this ISitesOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<BackupItemCollection> ListSiteBackupsSlotAsync( this ISitesOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<BackupItemCollection> result = await operations.ListSiteSlotBackupsWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<BackupItemCollection> result = await operations.ListSiteBackupsSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app
+            /// </param>
+            /// <param name='backupId'>
+            /// Id of backup
+            /// </param>
+            /// <param name='slot'>
+            /// Name of web app slot. If not specified then will default to production
+            /// slot.
+            /// </param>
+            public static BackupItem GetSiteBackupStatusSlot(this ISitesOperations operations, string resourceGroupName, string name, string backupId, string slot)
+            {
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).GetSiteBackupStatusSlotAsync(resourceGroupName, name, backupId, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app
+            /// </param>
+            /// <param name='backupId'>
+            /// Id of backup
+            /// </param>
+            /// <param name='slot'>
+            /// Name of web app slot. If not specified then will default to production
+            /// slot.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<BackupItem> GetSiteBackupStatusSlotAsync( this ISitesOperations operations, string resourceGroupName, string name, string backupId, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<BackupItem> result = await operations.GetSiteBackupStatusSlotWithHttpMessagesAsync(resourceGroupName, name, backupId, slot, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -3500,16 +3742,17 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='name'>
             /// Name of web app
             /// </param>
-            /// <param name='backupId'>
-            /// Id of backup
+            /// <param name='filter'>
+            /// Return only usages specified in the filter. Filter is specified by using
+            /// OData syntax. Example: $filter=Return only usages/metrics specified in
+            /// the filter. Filter conforms to odata syntax. Example: $filter=(name.value
+            /// eq 'Metric1' or name.value eq 'Metric2') and startTime eq
+            /// '2014-01-01T00:00:00Z' and endTime eq '2014-12-31T23:59:59Z' and
+            /// timeGrain eq duration'[Hour|Minute|Day]'.
             /// </param>
-            /// <param name='slot'>
-            /// Name of web app slot. If not specified then will default to production
-            /// slot.
-            /// </param>
-            public static BackupItem GetSiteSlotBackupStatus(this ISitesOperations operations, string resourceGroupName, string name, string backupId, string slot)
+            public static CsmUsageQuotaCollection GetSiteUsages(this ISitesOperations operations, string resourceGroupName, string name, string filter = default(string))
             {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).GetSiteSlotBackupStatusAsync(resourceGroupName, name, backupId, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).GetSiteUsagesAsync(resourceGroupName, name, filter), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -3523,83 +3766,20 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='name'>
             /// Name of web app
             /// </param>
-            /// <param name='backupId'>
-            /// Id of backup
-            /// </param>
-            /// <param name='slot'>
-            /// Name of web app slot. If not specified then will default to production
-            /// slot.
+            /// <param name='filter'>
+            /// Return only usages specified in the filter. Filter is specified by using
+            /// OData syntax. Example: $filter=Return only usages/metrics specified in
+            /// the filter. Filter conforms to odata syntax. Example: $filter=(name.value
+            /// eq 'Metric1' or name.value eq 'Metric2') and startTime eq
+            /// '2014-01-01T00:00:00Z' and endTime eq '2014-12-31T23:59:59Z' and
+            /// timeGrain eq duration'[Hour|Minute|Day]'.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<BackupItem> GetSiteSlotBackupStatusAsync( this ISitesOperations operations, string resourceGroupName, string name, string backupId, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<CsmUsageQuotaCollection> GetSiteUsagesAsync( this ISitesOperations operations, string resourceGroupName, string name, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<BackupItem> result = await operations.GetSiteSlotBackupStatusWithHttpMessagesAsync(resourceGroupName, name, backupId, slot, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
-            }
-
-            /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of resource group
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
-            /// <param name='names'>
-            /// Comma separated list of usage metrics
-            /// </param>
-            /// <param name='computeMode'>
-            /// Deprecated
-            /// </param>
-            /// <param name='siteMode'>
-            /// Deprecated
-            /// </param>
-            /// <param name='filter'>
-            /// Return only usages specified in the filter. Filter is specified by using
-            /// OData syntax. Example: $filter=name.value eq 'BytesSent' or name.value eq
-            /// BytesReceived.
-            /// </param>
-            public static CsmUsageQuotaCollection GetSiteUsages(this ISitesOperations operations, string resourceGroupName, string name, string names = default(string), string computeMode = default(string), string siteMode = default(string), string filter = default(string))
-            {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).GetSiteUsagesAsync(resourceGroupName, name, names, computeMode, siteMode, filter), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of resource group
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
-            /// <param name='names'>
-            /// Comma separated list of usage metrics
-            /// </param>
-            /// <param name='computeMode'>
-            /// Deprecated
-            /// </param>
-            /// <param name='siteMode'>
-            /// Deprecated
-            /// </param>
-            /// <param name='filter'>
-            /// Return only usages specified in the filter. Filter is specified by using
-            /// OData syntax. Example: $filter=name.value eq 'BytesSent' or name.value eq
-            /// BytesReceived.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<CsmUsageQuotaCollection> GetSiteUsagesAsync( this ISitesOperations operations, string resourceGroupName, string name, string names = default(string), string computeMode = default(string), string siteMode = default(string), string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
-            {
-                AzureOperationResponse<CsmUsageQuotaCollection> result = await operations.GetSiteUsagesWithHttpMessagesAsync(resourceGroupName, name, names, computeMode, siteMode, filter, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<CsmUsageQuotaCollection> result = await operations.GetSiteUsagesWithHttpMessagesAsync(resourceGroupName, name, filter, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -3618,23 +3798,17 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of web app slot. If not specified then will default to production
             /// slot.
             /// </param>
-            /// <param name='names'>
-            /// Comma separated list of usage metrics
-            /// </param>
-            /// <param name='computeMode'>
-            /// Deprecated
-            /// </param>
-            /// <param name='siteMode'>
-            /// Deprecated
-            /// </param>
             /// <param name='filter'>
             /// Return only usages specified in the filter. Filter is specified by using
-            /// OData syntax. Example: $filter=name.value eq 'BytesSent' or name.value eq
-            /// BytesReceived.
+            /// OData syntax. Example: $filter=Return only usages/metrics specified in
+            /// the filter. Filter conforms to odata syntax. Example: $filter=(name.value
+            /// eq 'Metric1' or name.value eq 'Metric2') and startTime eq
+            /// '2014-01-01T00:00:00Z' and endTime eq '2014-12-31T23:59:59Z' and
+            /// timeGrain eq duration'[Hour|Minute|Day]'.
             /// </param>
-            public static CsmUsageQuotaCollection GetSiteSlotUsages(this ISitesOperations operations, string resourceGroupName, string name, string slot, string names = default(string), string computeMode = default(string), string siteMode = default(string), string filter = default(string))
+            public static CsmUsageQuotaCollection GetSiteUsagesSlot(this ISitesOperations operations, string resourceGroupName, string name, string slot, string filter = default(string))
             {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).GetSiteSlotUsagesAsync(resourceGroupName, name, slot, names, computeMode, siteMode, filter), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).GetSiteUsagesSlotAsync(resourceGroupName, name, slot, filter), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -3652,26 +3826,20 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of web app slot. If not specified then will default to production
             /// slot.
             /// </param>
-            /// <param name='names'>
-            /// Comma separated list of usage metrics
-            /// </param>
-            /// <param name='computeMode'>
-            /// Deprecated
-            /// </param>
-            /// <param name='siteMode'>
-            /// Deprecated
-            /// </param>
             /// <param name='filter'>
             /// Return only usages specified in the filter. Filter is specified by using
-            /// OData syntax. Example: $filter=name.value eq 'BytesSent' or name.value eq
-            /// BytesReceived.
+            /// OData syntax. Example: $filter=Return only usages/metrics specified in
+            /// the filter. Filter conforms to odata syntax. Example: $filter=(name.value
+            /// eq 'Metric1' or name.value eq 'Metric2') and startTime eq
+            /// '2014-01-01T00:00:00Z' and endTime eq '2014-12-31T23:59:59Z' and
+            /// timeGrain eq duration'[Hour|Minute|Day]'.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CsmUsageQuotaCollection> GetSiteSlotUsagesAsync( this ISitesOperations operations, string resourceGroupName, string name, string slot, string names = default(string), string computeMode = default(string), string siteMode = default(string), string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<CsmUsageQuotaCollection> GetSiteUsagesSlotAsync( this ISitesOperations operations, string resourceGroupName, string name, string slot, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<CsmUsageQuotaCollection> result = await operations.GetSiteSlotUsagesWithHttpMessagesAsync(resourceGroupName, name, slot, names, computeMode, siteMode, filter, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<CsmUsageQuotaCollection> result = await operations.GetSiteUsagesSlotWithHttpMessagesAsync(resourceGroupName, name, slot, filter, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -3686,27 +3854,18 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='name'>
             /// Name of web app
             /// </param>
-            /// <param name='names'>
-            /// Names of metrics to inclued in response
-            /// </param>
-            /// <param name='startTime'>
-            /// Start time of metric
-            /// </param>
-            /// <param name='endTime'>
-            /// End time of metric
-            /// </param>
-            /// <param name='timeGrain'>
-            /// Granularity of time
-            /// </param>
             /// <param name='details'>
             /// If true, metric details are included in response
             /// </param>
-            /// <param name='slotView'>
-            /// If true, view of slots is included in response
+            /// <param name='filter'>
+            /// Return only usages/metrics specified in the filter. Filter conforms to
+            /// odata syntax. Example: $filter=(name.value eq 'Metric1' or name.value eq
+            /// 'Metric2') and startTime eq '2014-01-01T00:00:00Z' and endTime eq
+            /// '2014-12-31T23:59:59Z' and timeGrain eq duration'[Hour|Minute|Day]'.
             /// </param>
-            public static MetricResponseCollection GetSiteMetrics(this ISitesOperations operations, string resourceGroupName, string name, string names = default(string), string startTime = default(string), string endTime = default(string), string timeGrain = default(string), bool? details = default(bool?), bool? slotView = default(bool?))
+            public static MetricResponseCollection GetSiteMetrics(this ISitesOperations operations, string resourceGroupName, string name, bool? details = default(bool?), string filter = default(string))
             {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).GetSiteMetricsAsync(resourceGroupName, name, names, startTime, endTime, timeGrain, details, slotView), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).GetSiteMetricsAsync(resourceGroupName, name, details, filter), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -3720,30 +3879,21 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='name'>
             /// Name of web app
             /// </param>
-            /// <param name='names'>
-            /// Names of metrics to inclued in response
-            /// </param>
-            /// <param name='startTime'>
-            /// Start time of metric
-            /// </param>
-            /// <param name='endTime'>
-            /// End time of metric
-            /// </param>
-            /// <param name='timeGrain'>
-            /// Granularity of time
-            /// </param>
             /// <param name='details'>
             /// If true, metric details are included in response
             /// </param>
-            /// <param name='slotView'>
-            /// If true, view of slots is included in response
+            /// <param name='filter'>
+            /// Return only usages/metrics specified in the filter. Filter conforms to
+            /// odata syntax. Example: $filter=(name.value eq 'Metric1' or name.value eq
+            /// 'Metric2') and startTime eq '2014-01-01T00:00:00Z' and endTime eq
+            /// '2014-12-31T23:59:59Z' and timeGrain eq duration'[Hour|Minute|Day]'.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<MetricResponseCollection> GetSiteMetricsAsync( this ISitesOperations operations, string resourceGroupName, string name, string names = default(string), string startTime = default(string), string endTime = default(string), string timeGrain = default(string), bool? details = default(bool?), bool? slotView = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<MetricResponseCollection> GetSiteMetricsAsync( this ISitesOperations operations, string resourceGroupName, string name, bool? details = default(bool?), string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<MetricResponseCollection> result = await operations.GetSiteMetricsWithHttpMessagesAsync(resourceGroupName, name, names, startTime, endTime, timeGrain, details, slotView, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<MetricResponseCollection> result = await operations.GetSiteMetricsWithHttpMessagesAsync(resourceGroupName, name, details, filter, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -3762,27 +3912,18 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of web app slot. If not specified then will default to production
             /// slot.
             /// </param>
-            /// <param name='names'>
-            /// Names of metrics to inclued in response
-            /// </param>
-            /// <param name='startTime'>
-            /// Start time of metric
-            /// </param>
-            /// <param name='endTime'>
-            /// End time of metric
-            /// </param>
-            /// <param name='timeGrain'>
-            /// Granularity of time
-            /// </param>
             /// <param name='details'>
             /// If true, metric details are included in response
             /// </param>
-            /// <param name='slotView'>
-            /// If true, view of slots is included in response
+            /// <param name='filter'>
+            /// Return only usages/metrics specified in the filter. Filter conforms to
+            /// odata syntax. Example: $filter=(name.value eq 'Metric1' or name.value eq
+            /// 'Metric2') and startTime eq '2014-01-01T00:00:00Z' and endTime eq
+            /// '2014-12-31T23:59:59Z' and timeGrain eq duration'[Hour|Minute|Day]'.
             /// </param>
-            public static MetricResponseCollection GetSiteSlotMetrics(this ISitesOperations operations, string resourceGroupName, string name, string slot, string names = default(string), string startTime = default(string), string endTime = default(string), string timeGrain = default(string), bool? details = default(bool?), bool? slotView = default(bool?))
+            public static MetricResponseCollection GetSiteMetricsSlot(this ISitesOperations operations, string resourceGroupName, string name, string slot, bool? details = default(bool?), string filter = default(string))
             {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).GetSiteSlotMetricsAsync(resourceGroupName, name, slot, names, startTime, endTime, timeGrain, details, slotView), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).GetSiteMetricsSlotAsync(resourceGroupName, name, slot, details, filter), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -3800,30 +3941,21 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of web app slot. If not specified then will default to production
             /// slot.
             /// </param>
-            /// <param name='names'>
-            /// Names of metrics to inclued in response
-            /// </param>
-            /// <param name='startTime'>
-            /// Start time of metric
-            /// </param>
-            /// <param name='endTime'>
-            /// End time of metric
-            /// </param>
-            /// <param name='timeGrain'>
-            /// Granularity of time
-            /// </param>
             /// <param name='details'>
             /// If true, metric details are included in response
             /// </param>
-            /// <param name='slotView'>
-            /// If true, view of slots is included in response
+            /// <param name='filter'>
+            /// Return only usages/metrics specified in the filter. Filter conforms to
+            /// odata syntax. Example: $filter=(name.value eq 'Metric1' or name.value eq
+            /// 'Metric2') and startTime eq '2014-01-01T00:00:00Z' and endTime eq
+            /// '2014-12-31T23:59:59Z' and timeGrain eq duration'[Hour|Minute|Day]'.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<MetricResponseCollection> GetSiteSlotMetricsAsync( this ISitesOperations operations, string resourceGroupName, string name, string slot, string names = default(string), string startTime = default(string), string endTime = default(string), string timeGrain = default(string), bool? details = default(bool?), bool? slotView = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<MetricResponseCollection> GetSiteMetricsSlotAsync( this ISitesOperations operations, string resourceGroupName, string name, string slot, bool? details = default(bool?), string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<MetricResponseCollection> result = await operations.GetSiteSlotMetricsWithHttpMessagesAsync(resourceGroupName, name, slot, names, startTime, endTime, timeGrain, details, slotView, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<MetricResponseCollection> result = await operations.GetSiteMetricsSlotWithHttpMessagesAsync(resourceGroupName, name, slot, details, filter, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -3878,9 +4010,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of web app slot. If not specified then will default to production
             /// slot.
             /// </param>
-            public static MetricDefinitionCollection GetSiteSlotMetricDefinitions(this ISitesOperations operations, string resourceGroupName, string name, string slot)
+            public static MetricDefinitionCollection GetSiteMetricDefinitionsSlot(this ISitesOperations operations, string resourceGroupName, string name, string slot)
             {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).GetSiteSlotMetricDefinitionsAsync(resourceGroupName, name, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).GetSiteMetricDefinitionsSlotAsync(resourceGroupName, name, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -3901,61 +4033,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<MetricDefinitionCollection> GetSiteSlotMetricDefinitionsAsync( this ISitesOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<MetricDefinitionCollection> GetSiteMetricDefinitionsSlotAsync( this ISitesOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<MetricDefinitionCollection> result = await operations.GetSiteSlotMetricDefinitionsWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
-            }
-
-            /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of resource group
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
-            /// <param name='options'>
-            /// Specifies options for publishing profile. Pass
-            /// CsmPublishingProfileOptions.Format=FileZilla3 for FileZilla FTP format.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of web app slot. If not specified then will default to production
-            /// slot.
-            /// </param>
-            public static object ListSiteSlotPublishingProfileXml(this ISitesOperations operations, string resourceGroupName, string name, CsmPublishingProfileOptions options, string slot)
-            {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).ListSiteSlotPublishingProfileXmlAsync(resourceGroupName, name, options, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of resource group
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
-            /// <param name='options'>
-            /// Specifies options for publishing profile. Pass
-            /// CsmPublishingProfileOptions.Format=FileZilla3 for FileZilla FTP format.
-            /// </param>
-            /// <param name='slot'>
-            /// Name of web app slot. If not specified then will default to production
-            /// slot.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<object> ListSiteSlotPublishingProfileXmlAsync( this ISitesOperations operations, string resourceGroupName, string name, CsmPublishingProfileOptions options, string slot, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                AzureOperationResponse<object> result = await operations.ListSiteSlotPublishingProfileXmlWithHttpMessagesAsync(resourceGroupName, name, options, slot, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<MetricDefinitionCollection> result = await operations.GetSiteMetricDefinitionsSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -4000,6 +4080,58 @@ namespace Microsoft.Azure.Management.WebSites
             public static async Task<object> ListSitePublishingProfileXmlAsync( this ISitesOperations operations, string resourceGroupName, string name, CsmPublishingProfileOptions options, CancellationToken cancellationToken = default(CancellationToken))
             {
                 AzureOperationResponse<object> result = await operations.ListSitePublishingProfileXmlWithHttpMessagesAsync(resourceGroupName, name, options, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app
+            /// </param>
+            /// <param name='options'>
+            /// Specifies options for publishing profile. Pass
+            /// CsmPublishingProfileOptions.Format=FileZilla3 for FileZilla FTP format.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of web app slot. If not specified then will default to production
+            /// slot.
+            /// </param>
+            public static object ListSitePublishingProfileXmlSlot(this ISitesOperations operations, string resourceGroupName, string name, CsmPublishingProfileOptions options, string slot)
+            {
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).ListSitePublishingProfileXmlSlotAsync(resourceGroupName, name, options, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app
+            /// </param>
+            /// <param name='options'>
+            /// Specifies options for publishing profile. Pass
+            /// CsmPublishingProfileOptions.Format=FileZilla3 for FileZilla FTP format.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of web app slot. If not specified then will default to production
+            /// slot.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> ListSitePublishingProfileXmlSlotAsync( this ISitesOperations operations, string resourceGroupName, string name, CsmPublishingProfileOptions options, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<object> result = await operations.ListSitePublishingProfileXmlSlotWithHttpMessagesAsync(resourceGroupName, name, options, slot, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -4122,6 +4254,42 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='name'>
             /// Name of web app
             /// </param>
+            public static object StartSite(this ISitesOperations operations, string resourceGroupName, string name)
+            {
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).StartSiteAsync(resourceGroupName, name), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> StartSiteAsync( this ISitesOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<object> result = await operations.StartSiteWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app
+            /// </param>
             /// <param name='slot'>
             /// Name of web app slot. If not specified then will default to production
             /// slot.
@@ -4152,42 +4320,6 @@ namespace Microsoft.Azure.Management.WebSites
             public static async Task<object> StartSiteSlotAsync( this ISitesOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
                 AzureOperationResponse<object> result = await operations.StartSiteSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
-            }
-
-            /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of resource group
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
-            public static object StartSite(this ISitesOperations operations, string resourceGroupName, string name)
-            {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).StartSiteAsync(resourceGroupName, name), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of resource group
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<object> StartSiteAsync( this ISitesOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                AzureOperationResponse<object> result = await operations.StartSiteWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -4314,9 +4446,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// </param>
             /// <param name='slot'>
             /// </param>
-            public static object SyncSiteSlotRepository(this ISitesOperations operations, string resourceGroupName, string name, string slot)
+            public static object SyncSiteRepositorySlot(this ISitesOperations operations, string resourceGroupName, string name, string slot)
             {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).SyncSiteSlotRepositoryAsync(resourceGroupName, name, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).SyncSiteRepositorySlotAsync(resourceGroupName, name, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -4333,9 +4465,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> SyncSiteSlotRepositoryAsync( this ISitesOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> SyncSiteRepositorySlotAsync( this ISitesOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<object> result = await operations.SyncSiteSlotRepositoryWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<object> result = await operations.SyncSiteRepositorySlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -4390,9 +4522,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of web app slot. If not specified then will default to production
             /// slot.
             /// </param>
-            public static object GenerateNewSiteSlotPublishingPassword(this ISitesOperations operations, string resourceGroupName, string name, string slot)
+            public static object GenerateNewSitePublishingPasswordSlot(this ISitesOperations operations, string resourceGroupName, string name, string slot)
             {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).GenerateNewSiteSlotPublishingPasswordAsync(resourceGroupName, name, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).GenerateNewSitePublishingPasswordSlotAsync(resourceGroupName, name, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -4413,213 +4545,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> GenerateNewSiteSlotPublishingPasswordAsync( this ISitesOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> GenerateNewSitePublishingPasswordSlotAsync( this ISitesOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<object> result = await operations.GenerateNewSiteSlotPublishingPasswordWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
-            }
-
-            /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='name'>
-            /// The name of the web app
-            /// </param>
-            /// <param name='entityName'>
-            /// The name by which the Hybrid Connection is identified
-            /// </param>
-            /// <param name='slot'>
-            /// The name of the slot for the web app.
-            /// </param>
-            public static RelayServiceConnectionEntity GetSiteSlotRelayServiceConnection(this ISitesOperations operations, string resourceGroupName, string name, string entityName, string slot)
-            {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).GetSiteSlotRelayServiceConnectionAsync(resourceGroupName, name, entityName, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='name'>
-            /// The name of the web app
-            /// </param>
-            /// <param name='entityName'>
-            /// The name by which the Hybrid Connection is identified
-            /// </param>
-            /// <param name='slot'>
-            /// The name of the slot for the web app.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<RelayServiceConnectionEntity> GetSiteSlotRelayServiceConnectionAsync( this ISitesOperations operations, string resourceGroupName, string name, string entityName, string slot, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                AzureOperationResponse<RelayServiceConnectionEntity> result = await operations.GetSiteSlotRelayServiceConnectionWithHttpMessagesAsync(resourceGroupName, name, entityName, slot, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
-            }
-
-            /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='name'>
-            /// The name of the web app
-            /// </param>
-            /// <param name='entityName'>
-            /// The name by which the Hybrid Connection is identified
-            /// </param>
-            /// <param name='connectionEnvelope'>
-            /// The details of the Hybrid Connection
-            /// </param>
-            /// <param name='slot'>
-            /// The name of the slot for the web app.
-            /// </param>
-            public static RelayServiceConnectionEntity CreateOrUpdateSiteSlotRelayServiceConnection(this ISitesOperations operations, string resourceGroupName, string name, string entityName, RelayServiceConnectionEntity connectionEnvelope, string slot)
-            {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).CreateOrUpdateSiteSlotRelayServiceConnectionAsync(resourceGroupName, name, entityName, connectionEnvelope, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='name'>
-            /// The name of the web app
-            /// </param>
-            /// <param name='entityName'>
-            /// The name by which the Hybrid Connection is identified
-            /// </param>
-            /// <param name='connectionEnvelope'>
-            /// The details of the Hybrid Connection
-            /// </param>
-            /// <param name='slot'>
-            /// The name of the slot for the web app.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<RelayServiceConnectionEntity> CreateOrUpdateSiteSlotRelayServiceConnectionAsync( this ISitesOperations operations, string resourceGroupName, string name, string entityName, RelayServiceConnectionEntity connectionEnvelope, string slot, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                AzureOperationResponse<RelayServiceConnectionEntity> result = await operations.CreateOrUpdateSiteSlotRelayServiceConnectionWithHttpMessagesAsync(resourceGroupName, name, entityName, connectionEnvelope, slot, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
-            }
-
-            /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='name'>
-            /// The name of the web app
-            /// </param>
-            /// <param name='entityName'>
-            /// The name by which the Hybrid Connection is identified
-            /// </param>
-            /// <param name='slot'>
-            /// The name of the slot for the web app.
-            /// </param>
-            public static object DeleteSiteSlotRelayServiceConnection(this ISitesOperations operations, string resourceGroupName, string name, string entityName, string slot)
-            {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).DeleteSiteSlotRelayServiceConnectionAsync(resourceGroupName, name, entityName, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='name'>
-            /// The name of the web app
-            /// </param>
-            /// <param name='entityName'>
-            /// The name by which the Hybrid Connection is identified
-            /// </param>
-            /// <param name='slot'>
-            /// The name of the slot for the web app.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<object> DeleteSiteSlotRelayServiceConnectionAsync( this ISitesOperations operations, string resourceGroupName, string name, string entityName, string slot, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                AzureOperationResponse<object> result = await operations.DeleteSiteSlotRelayServiceConnectionWithHttpMessagesAsync(resourceGroupName, name, entityName, slot, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
-            }
-
-            /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='name'>
-            /// The name of the web app
-            /// </param>
-            /// <param name='entityName'>
-            /// The name by which the Hybrid Connection is identified
-            /// </param>
-            /// <param name='connectionEnvelope'>
-            /// The details of the Hybrid Connection
-            /// </param>
-            /// <param name='slot'>
-            /// The name of the slot for the web app.
-            /// </param>
-            public static RelayServiceConnectionEntity UpdateSiteSlotRelayServiceConnection(this ISitesOperations operations, string resourceGroupName, string name, string entityName, RelayServiceConnectionEntity connectionEnvelope, string slot)
-            {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).UpdateSiteSlotRelayServiceConnectionAsync(resourceGroupName, name, entityName, connectionEnvelope, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='name'>
-            /// The name of the web app
-            /// </param>
-            /// <param name='entityName'>
-            /// The name by which the Hybrid Connection is identified
-            /// </param>
-            /// <param name='connectionEnvelope'>
-            /// The details of the Hybrid Connection
-            /// </param>
-            /// <param name='slot'>
-            /// The name of the slot for the web app.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<RelayServiceConnectionEntity> UpdateSiteSlotRelayServiceConnectionAsync( this ISitesOperations operations, string resourceGroupName, string name, string entityName, RelayServiceConnectionEntity connectionEnvelope, string slot, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                AzureOperationResponse<RelayServiceConnectionEntity> result = await operations.UpdateSiteSlotRelayServiceConnectionWithHttpMessagesAsync(resourceGroupName, name, entityName, connectionEnvelope, slot, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<object> result = await operations.GenerateNewSitePublishingPasswordSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -4814,12 +4742,216 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='name'>
             /// The name of the web app
             /// </param>
+            /// <param name='entityName'>
+            /// The name by which the Hybrid Connection is identified
+            /// </param>
             /// <param name='slot'>
             /// The name of the slot for the web app.
             /// </param>
-            public static RelayServiceConnectionEntity ListSiteSlotRelayServiceConnections(this ISitesOperations operations, string resourceGroupName, string name, string slot)
+            public static RelayServiceConnectionEntity GetSiteRelayServiceConnectionSlot(this ISitesOperations operations, string resourceGroupName, string name, string entityName, string slot)
             {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).ListSiteSlotRelayServiceConnectionsAsync(resourceGroupName, name, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).GetSiteRelayServiceConnectionSlotAsync(resourceGroupName, name, entityName, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name
+            /// </param>
+            /// <param name='name'>
+            /// The name of the web app
+            /// </param>
+            /// <param name='entityName'>
+            /// The name by which the Hybrid Connection is identified
+            /// </param>
+            /// <param name='slot'>
+            /// The name of the slot for the web app.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<RelayServiceConnectionEntity> GetSiteRelayServiceConnectionSlotAsync( this ISitesOperations operations, string resourceGroupName, string name, string entityName, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<RelayServiceConnectionEntity> result = await operations.GetSiteRelayServiceConnectionSlotWithHttpMessagesAsync(resourceGroupName, name, entityName, slot, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name
+            /// </param>
+            /// <param name='name'>
+            /// The name of the web app
+            /// </param>
+            /// <param name='entityName'>
+            /// The name by which the Hybrid Connection is identified
+            /// </param>
+            /// <param name='connectionEnvelope'>
+            /// The details of the Hybrid Connection
+            /// </param>
+            /// <param name='slot'>
+            /// The name of the slot for the web app.
+            /// </param>
+            public static RelayServiceConnectionEntity CreateOrUpdateSiteRelayServiceConnectionSlot(this ISitesOperations operations, string resourceGroupName, string name, string entityName, RelayServiceConnectionEntity connectionEnvelope, string slot)
+            {
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).CreateOrUpdateSiteRelayServiceConnectionSlotAsync(resourceGroupName, name, entityName, connectionEnvelope, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name
+            /// </param>
+            /// <param name='name'>
+            /// The name of the web app
+            /// </param>
+            /// <param name='entityName'>
+            /// The name by which the Hybrid Connection is identified
+            /// </param>
+            /// <param name='connectionEnvelope'>
+            /// The details of the Hybrid Connection
+            /// </param>
+            /// <param name='slot'>
+            /// The name of the slot for the web app.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<RelayServiceConnectionEntity> CreateOrUpdateSiteRelayServiceConnectionSlotAsync( this ISitesOperations operations, string resourceGroupName, string name, string entityName, RelayServiceConnectionEntity connectionEnvelope, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<RelayServiceConnectionEntity> result = await operations.CreateOrUpdateSiteRelayServiceConnectionSlotWithHttpMessagesAsync(resourceGroupName, name, entityName, connectionEnvelope, slot, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name
+            /// </param>
+            /// <param name='name'>
+            /// The name of the web app
+            /// </param>
+            /// <param name='entityName'>
+            /// The name by which the Hybrid Connection is identified
+            /// </param>
+            /// <param name='slot'>
+            /// The name of the slot for the web app.
+            /// </param>
+            public static object DeleteSiteRelayServiceConnectionSlot(this ISitesOperations operations, string resourceGroupName, string name, string entityName, string slot)
+            {
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).DeleteSiteRelayServiceConnectionSlotAsync(resourceGroupName, name, entityName, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name
+            /// </param>
+            /// <param name='name'>
+            /// The name of the web app
+            /// </param>
+            /// <param name='entityName'>
+            /// The name by which the Hybrid Connection is identified
+            /// </param>
+            /// <param name='slot'>
+            /// The name of the slot for the web app.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> DeleteSiteRelayServiceConnectionSlotAsync( this ISitesOperations operations, string resourceGroupName, string name, string entityName, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<object> result = await operations.DeleteSiteRelayServiceConnectionSlotWithHttpMessagesAsync(resourceGroupName, name, entityName, slot, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name
+            /// </param>
+            /// <param name='name'>
+            /// The name of the web app
+            /// </param>
+            /// <param name='entityName'>
+            /// The name by which the Hybrid Connection is identified
+            /// </param>
+            /// <param name='connectionEnvelope'>
+            /// The details of the Hybrid Connection
+            /// </param>
+            /// <param name='slot'>
+            /// The name of the slot for the web app.
+            /// </param>
+            public static RelayServiceConnectionEntity UpdateSiteRelayServiceConnectionSlot(this ISitesOperations operations, string resourceGroupName, string name, string entityName, RelayServiceConnectionEntity connectionEnvelope, string slot)
+            {
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).UpdateSiteRelayServiceConnectionSlotAsync(resourceGroupName, name, entityName, connectionEnvelope, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name
+            /// </param>
+            /// <param name='name'>
+            /// The name of the web app
+            /// </param>
+            /// <param name='entityName'>
+            /// The name by which the Hybrid Connection is identified
+            /// </param>
+            /// <param name='connectionEnvelope'>
+            /// The details of the Hybrid Connection
+            /// </param>
+            /// <param name='slot'>
+            /// The name of the slot for the web app.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<RelayServiceConnectionEntity> UpdateSiteRelayServiceConnectionSlotAsync( this ISitesOperations operations, string resourceGroupName, string name, string entityName, RelayServiceConnectionEntity connectionEnvelope, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<RelayServiceConnectionEntity> result = await operations.UpdateSiteRelayServiceConnectionSlotWithHttpMessagesAsync(resourceGroupName, name, entityName, connectionEnvelope, slot, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name
+            /// </param>
+            /// <param name='name'>
+            /// The name of the web app
+            /// </param>
+            /// <param name='slot'>
+            /// The name of the slot for the web app.
+            /// </param>
+            public static RelayServiceConnectionEntity ListSiteRelayServiceConnectionsSlot(this ISitesOperations operations, string resourceGroupName, string name, string slot)
+            {
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).ListSiteRelayServiceConnectionsSlotAsync(resourceGroupName, name, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -4839,9 +4971,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RelayServiceConnectionEntity> ListSiteSlotRelayServiceConnectionsAsync( this ISitesOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<RelayServiceConnectionEntity> ListSiteRelayServiceConnectionsSlotAsync( this ISitesOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<RelayServiceConnectionEntity> result = await operations.ListSiteSlotRelayServiceConnectionsWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<RelayServiceConnectionEntity> result = await operations.ListSiteRelayServiceConnectionsSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -4878,6 +5010,186 @@ namespace Microsoft.Azure.Management.WebSites
             public static async Task<RelayServiceConnectionEntity> ListSiteRelayServiceConnectionsAsync( this ISitesOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
             {
                 AzureOperationResponse<RelayServiceConnectionEntity> result = await operations.ListSiteRelayServiceConnectionsWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name
+            /// </param>
+            /// <param name='name'>
+            /// The name of the web app
+            /// </param>
+            /// <param name='vnetName'>
+            /// The name of the Virtual Network
+            /// </param>
+            /// <param name='gatewayName'>
+            /// The name of the gateway. The only gateway that exists presently is
+            /// "primary"
+            /// </param>
+            /// <param name='slot'>
+            /// The name of the slot for this web app.
+            /// </param>
+            public static object GetSiteVnetGatewaySlot(this ISitesOperations operations, string resourceGroupName, string name, string vnetName, string gatewayName, string slot)
+            {
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).GetSiteVnetGatewaySlotAsync(resourceGroupName, name, vnetName, gatewayName, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name
+            /// </param>
+            /// <param name='name'>
+            /// The name of the web app
+            /// </param>
+            /// <param name='vnetName'>
+            /// The name of the Virtual Network
+            /// </param>
+            /// <param name='gatewayName'>
+            /// The name of the gateway. The only gateway that exists presently is
+            /// "primary"
+            /// </param>
+            /// <param name='slot'>
+            /// The name of the slot for this web app.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> GetSiteVnetGatewaySlotAsync( this ISitesOperations operations, string resourceGroupName, string name, string vnetName, string gatewayName, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<object> result = await operations.GetSiteVnetGatewaySlotWithHttpMessagesAsync(resourceGroupName, name, vnetName, gatewayName, slot, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name
+            /// </param>
+            /// <param name='name'>
+            /// The name of the web app
+            /// </param>
+            /// <param name='vnetName'>
+            /// The name of the Virtual Network
+            /// </param>
+            /// <param name='gatewayName'>
+            /// The name of the gateway. The only gateway that exists presently is
+            /// "primary"
+            /// </param>
+            /// <param name='connectionEnvelope'>
+            /// The properties to update this gateway with.
+            /// </param>
+            /// <param name='slot'>
+            /// The name of the slot for this web app.
+            /// </param>
+            public static VnetGateway CreateOrUpdateSiteVNETConnectionGatewaySlot(this ISitesOperations operations, string resourceGroupName, string name, string vnetName, string gatewayName, VnetGateway connectionEnvelope, string slot)
+            {
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).CreateOrUpdateSiteVNETConnectionGatewaySlotAsync(resourceGroupName, name, vnetName, gatewayName, connectionEnvelope, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name
+            /// </param>
+            /// <param name='name'>
+            /// The name of the web app
+            /// </param>
+            /// <param name='vnetName'>
+            /// The name of the Virtual Network
+            /// </param>
+            /// <param name='gatewayName'>
+            /// The name of the gateway. The only gateway that exists presently is
+            /// "primary"
+            /// </param>
+            /// <param name='connectionEnvelope'>
+            /// The properties to update this gateway with.
+            /// </param>
+            /// <param name='slot'>
+            /// The name of the slot for this web app.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<VnetGateway> CreateOrUpdateSiteVNETConnectionGatewaySlotAsync( this ISitesOperations operations, string resourceGroupName, string name, string vnetName, string gatewayName, VnetGateway connectionEnvelope, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<VnetGateway> result = await operations.CreateOrUpdateSiteVNETConnectionGatewaySlotWithHttpMessagesAsync(resourceGroupName, name, vnetName, gatewayName, connectionEnvelope, slot, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name
+            /// </param>
+            /// <param name='name'>
+            /// The name of the web app
+            /// </param>
+            /// <param name='vnetName'>
+            /// The name of the Virtual Network
+            /// </param>
+            /// <param name='gatewayName'>
+            /// The name of the gateway. The only gateway that exists presently is
+            /// "primary"
+            /// </param>
+            /// <param name='connectionEnvelope'>
+            /// The properties to update this gateway with.
+            /// </param>
+            /// <param name='slot'>
+            /// The name of the slot for this web app.
+            /// </param>
+            public static VnetGateway UpdateSiteVNETConnectionGatewaySlot(this ISitesOperations operations, string resourceGroupName, string name, string vnetName, string gatewayName, VnetGateway connectionEnvelope, string slot)
+            {
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).UpdateSiteVNETConnectionGatewaySlotAsync(resourceGroupName, name, vnetName, gatewayName, connectionEnvelope, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name
+            /// </param>
+            /// <param name='name'>
+            /// The name of the web app
+            /// </param>
+            /// <param name='vnetName'>
+            /// The name of the Virtual Network
+            /// </param>
+            /// <param name='gatewayName'>
+            /// The name of the gateway. The only gateway that exists presently is
+            /// "primary"
+            /// </param>
+            /// <param name='connectionEnvelope'>
+            /// The properties to update this gateway with.
+            /// </param>
+            /// <param name='slot'>
+            /// The name of the slot for this web app.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<VnetGateway> UpdateSiteVNETConnectionGatewaySlotAsync( this ISitesOperations operations, string resourceGroupName, string name, string vnetName, string gatewayName, VnetGateway connectionEnvelope, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<VnetGateway> result = await operations.UpdateSiteVNETConnectionGatewaySlotWithHttpMessagesAsync(resourceGroupName, name, vnetName, gatewayName, connectionEnvelope, slot, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -5040,186 +5352,6 @@ namespace Microsoft.Azure.Management.WebSites
             public static async Task<VnetGateway> UpdateSiteVNETConnectionGatewayAsync( this ISitesOperations operations, string resourceGroupName, string name, string vnetName, string gatewayName, VnetGateway connectionEnvelope, CancellationToken cancellationToken = default(CancellationToken))
             {
                 AzureOperationResponse<VnetGateway> result = await operations.UpdateSiteVNETConnectionGatewayWithHttpMessagesAsync(resourceGroupName, name, vnetName, gatewayName, connectionEnvelope, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
-            }
-
-            /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='name'>
-            /// The name of the web app
-            /// </param>
-            /// <param name='vnetName'>
-            /// The name of the Virtual Network
-            /// </param>
-            /// <param name='gatewayName'>
-            /// The name of the gateway. The only gateway that exists presently is
-            /// "primary"
-            /// </param>
-            /// <param name='slot'>
-            /// The name of the slot for this web app.
-            /// </param>
-            public static object GetSiteSlotVnetGateway(this ISitesOperations operations, string resourceGroupName, string name, string vnetName, string gatewayName, string slot)
-            {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).GetSiteSlotVnetGatewayAsync(resourceGroupName, name, vnetName, gatewayName, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='name'>
-            /// The name of the web app
-            /// </param>
-            /// <param name='vnetName'>
-            /// The name of the Virtual Network
-            /// </param>
-            /// <param name='gatewayName'>
-            /// The name of the gateway. The only gateway that exists presently is
-            /// "primary"
-            /// </param>
-            /// <param name='slot'>
-            /// The name of the slot for this web app.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<object> GetSiteSlotVnetGatewayAsync( this ISitesOperations operations, string resourceGroupName, string name, string vnetName, string gatewayName, string slot, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                AzureOperationResponse<object> result = await operations.GetSiteSlotVnetGatewayWithHttpMessagesAsync(resourceGroupName, name, vnetName, gatewayName, slot, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
-            }
-
-            /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='name'>
-            /// The name of the web app
-            /// </param>
-            /// <param name='vnetName'>
-            /// The name of the Virtual Network
-            /// </param>
-            /// <param name='gatewayName'>
-            /// The name of the gateway. The only gateway that exists presently is
-            /// "primary"
-            /// </param>
-            /// <param name='connectionEnvelope'>
-            /// The properties to update this gateway with.
-            /// </param>
-            /// <param name='slot'>
-            /// The name of the slot for this web app.
-            /// </param>
-            public static VnetGateway CreateOrUpdateSiteSlotVNETConnectionGateway(this ISitesOperations operations, string resourceGroupName, string name, string vnetName, string gatewayName, VnetGateway connectionEnvelope, string slot)
-            {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).CreateOrUpdateSiteSlotVNETConnectionGatewayAsync(resourceGroupName, name, vnetName, gatewayName, connectionEnvelope, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='name'>
-            /// The name of the web app
-            /// </param>
-            /// <param name='vnetName'>
-            /// The name of the Virtual Network
-            /// </param>
-            /// <param name='gatewayName'>
-            /// The name of the gateway. The only gateway that exists presently is
-            /// "primary"
-            /// </param>
-            /// <param name='connectionEnvelope'>
-            /// The properties to update this gateway with.
-            /// </param>
-            /// <param name='slot'>
-            /// The name of the slot for this web app.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<VnetGateway> CreateOrUpdateSiteSlotVNETConnectionGatewayAsync( this ISitesOperations operations, string resourceGroupName, string name, string vnetName, string gatewayName, VnetGateway connectionEnvelope, string slot, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                AzureOperationResponse<VnetGateway> result = await operations.CreateOrUpdateSiteSlotVNETConnectionGatewayWithHttpMessagesAsync(resourceGroupName, name, vnetName, gatewayName, connectionEnvelope, slot, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
-            }
-
-            /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='name'>
-            /// The name of the web app
-            /// </param>
-            /// <param name='vnetName'>
-            /// The name of the Virtual Network
-            /// </param>
-            /// <param name='gatewayName'>
-            /// The name of the gateway. The only gateway that exists presently is
-            /// "primary"
-            /// </param>
-            /// <param name='connectionEnvelope'>
-            /// The properties to update this gateway with.
-            /// </param>
-            /// <param name='slot'>
-            /// The name of the slot for this web app.
-            /// </param>
-            public static VnetGateway UpdateSiteSlotVNETConnectionGateway(this ISitesOperations operations, string resourceGroupName, string name, string vnetName, string gatewayName, VnetGateway connectionEnvelope, string slot)
-            {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).UpdateSiteSlotVNETConnectionGatewayAsync(resourceGroupName, name, vnetName, gatewayName, connectionEnvelope, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='name'>
-            /// The name of the web app
-            /// </param>
-            /// <param name='vnetName'>
-            /// The name of the Virtual Network
-            /// </param>
-            /// <param name='gatewayName'>
-            /// The name of the gateway. The only gateway that exists presently is
-            /// "primary"
-            /// </param>
-            /// <param name='connectionEnvelope'>
-            /// The properties to update this gateway with.
-            /// </param>
-            /// <param name='slot'>
-            /// The name of the slot for this web app.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<VnetGateway> UpdateSiteSlotVNETConnectionGatewayAsync( this ISitesOperations operations, string resourceGroupName, string name, string vnetName, string gatewayName, VnetGateway connectionEnvelope, string slot, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                AzureOperationResponse<VnetGateway> result = await operations.UpdateSiteSlotVNETConnectionGatewayWithHttpMessagesAsync(resourceGroupName, name, vnetName, gatewayName, connectionEnvelope, slot, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -5420,9 +5552,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='slot'>
             /// The name of the slot for this web app.
             /// </param>
-            public static VnetInfo GetSiteSlotVNETConnection(this ISitesOperations operations, string resourceGroupName, string name, string vnetName, string slot)
+            public static VnetInfo GetSiteVNETConnectionSlot(this ISitesOperations operations, string resourceGroupName, string name, string vnetName, string slot)
             {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).GetSiteSlotVNETConnectionAsync(resourceGroupName, name, vnetName, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).GetSiteVNETConnectionSlotAsync(resourceGroupName, name, vnetName, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -5445,9 +5577,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VnetInfo> GetSiteSlotVNETConnectionAsync( this ISitesOperations operations, string resourceGroupName, string name, string vnetName, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VnetInfo> GetSiteVNETConnectionSlotAsync( this ISitesOperations operations, string resourceGroupName, string name, string vnetName, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<VnetInfo> result = await operations.GetSiteSlotVNETConnectionWithHttpMessagesAsync(resourceGroupName, name, vnetName, slot, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<VnetInfo> result = await operations.GetSiteVNETConnectionSlotWithHttpMessagesAsync(resourceGroupName, name, vnetName, slot, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -5471,9 +5603,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='slot'>
             /// The name of the slot for this web app.
             /// </param>
-            public static VnetInfo CreateOrUpdateSiteSlotVNETConnection(this ISitesOperations operations, string resourceGroupName, string name, string vnetName, VnetInfo connectionEnvelope, string slot)
+            public static VnetInfo CreateOrUpdateSiteVNETConnectionSlot(this ISitesOperations operations, string resourceGroupName, string name, string vnetName, VnetInfo connectionEnvelope, string slot)
             {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).CreateOrUpdateSiteSlotVNETConnectionAsync(resourceGroupName, name, vnetName, connectionEnvelope, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).CreateOrUpdateSiteVNETConnectionSlotAsync(resourceGroupName, name, vnetName, connectionEnvelope, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -5499,9 +5631,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VnetInfo> CreateOrUpdateSiteSlotVNETConnectionAsync( this ISitesOperations operations, string resourceGroupName, string name, string vnetName, VnetInfo connectionEnvelope, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VnetInfo> CreateOrUpdateSiteVNETConnectionSlotAsync( this ISitesOperations operations, string resourceGroupName, string name, string vnetName, VnetInfo connectionEnvelope, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<VnetInfo> result = await operations.CreateOrUpdateSiteSlotVNETConnectionWithHttpMessagesAsync(resourceGroupName, name, vnetName, connectionEnvelope, slot, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<VnetInfo> result = await operations.CreateOrUpdateSiteVNETConnectionSlotWithHttpMessagesAsync(resourceGroupName, name, vnetName, connectionEnvelope, slot, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -5522,9 +5654,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='slot'>
             /// The name of the slot for this web app.
             /// </param>
-            public static object DeleteSiteSlotVNETConnection(this ISitesOperations operations, string resourceGroupName, string name, string vnetName, string slot)
+            public static object DeleteSiteVNETConnectionSlot(this ISitesOperations operations, string resourceGroupName, string name, string vnetName, string slot)
             {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).DeleteSiteSlotVNETConnectionAsync(resourceGroupName, name, vnetName, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).DeleteSiteVNETConnectionSlotAsync(resourceGroupName, name, vnetName, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -5547,9 +5679,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> DeleteSiteSlotVNETConnectionAsync( this ISitesOperations operations, string resourceGroupName, string name, string vnetName, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> DeleteSiteVNETConnectionSlotAsync( this ISitesOperations operations, string resourceGroupName, string name, string vnetName, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<object> result = await operations.DeleteSiteSlotVNETConnectionWithHttpMessagesAsync(resourceGroupName, name, vnetName, slot, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<object> result = await operations.DeleteSiteVNETConnectionSlotWithHttpMessagesAsync(resourceGroupName, name, vnetName, slot, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -5573,9 +5705,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='slot'>
             /// The name of the slot for this web app.
             /// </param>
-            public static VnetInfo UpdateSiteSlotVNETConnection(this ISitesOperations operations, string resourceGroupName, string name, string vnetName, VnetInfo connectionEnvelope, string slot)
+            public static VnetInfo UpdateSiteVNETConnectionSlot(this ISitesOperations operations, string resourceGroupName, string name, string vnetName, VnetInfo connectionEnvelope, string slot)
             {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).UpdateSiteSlotVNETConnectionAsync(resourceGroupName, name, vnetName, connectionEnvelope, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).UpdateSiteVNETConnectionSlotAsync(resourceGroupName, name, vnetName, connectionEnvelope, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -5601,9 +5733,51 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VnetInfo> UpdateSiteSlotVNETConnectionAsync( this ISitesOperations operations, string resourceGroupName, string name, string vnetName, VnetInfo connectionEnvelope, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VnetInfo> UpdateSiteVNETConnectionSlotAsync( this ISitesOperations operations, string resourceGroupName, string name, string vnetName, VnetInfo connectionEnvelope, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<VnetInfo> result = await operations.UpdateSiteSlotVNETConnectionWithHttpMessagesAsync(resourceGroupName, name, vnetName, connectionEnvelope, slot, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<VnetInfo> result = await operations.UpdateSiteVNETConnectionSlotWithHttpMessagesAsync(resourceGroupName, name, vnetName, connectionEnvelope, slot, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name
+            /// </param>
+            /// <param name='name'>
+            /// The name of the web app
+            /// </param>
+            /// <param name='slot'>
+            /// The name of the slot for this web app.
+            /// </param>
+            public static IList<VnetInfo> GetSiteVNETConnectionsSlot(this ISitesOperations operations, string resourceGroupName, string name, string slot)
+            {
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).GetSiteVNETConnectionsSlotAsync(resourceGroupName, name, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name
+            /// </param>
+            /// <param name='name'>
+            /// The name of the web app
+            /// </param>
+            /// <param name='slot'>
+            /// The name of the slot for this web app.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IList<VnetInfo>> GetSiteVNETConnectionsSlotAsync( this ISitesOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<IList<VnetInfo>> result = await operations.GetSiteVNETConnectionsSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -5654,12 +5828,15 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='name'>
             /// The name of the web app
             /// </param>
+            /// <param name='view'>
+            /// The type of view. This can either be "summary" or "detailed".
+            /// </param>
             /// <param name='slot'>
             /// The name of the slot for this web app.
             /// </param>
-            public static IList<VnetInfo> GetSiteSlotVNETConnections(this ISitesOperations operations, string resourceGroupName, string name, string slot)
+            public static NetworkFeatures GetSiteNetworkFeaturesSlot(this ISitesOperations operations, string resourceGroupName, string name, string view, string slot)
             {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).GetSiteSlotVNETConnectionsAsync(resourceGroupName, name, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).GetSiteNetworkFeaturesSlotAsync(resourceGroupName, name, view, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -5673,15 +5850,60 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='name'>
             /// The name of the web app
             /// </param>
+            /// <param name='view'>
+            /// The type of view. This can either be "summary" or "detailed".
+            /// </param>
             /// <param name='slot'>
             /// The name of the slot for this web app.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<VnetInfo>> GetSiteSlotVNETConnectionsAsync( this ISitesOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<NetworkFeatures> GetSiteNetworkFeaturesSlotAsync( this ISitesOperations operations, string resourceGroupName, string name, string view, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<IList<VnetInfo>> result = await operations.GetSiteSlotVNETConnectionsWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<NetworkFeatures> result = await operations.GetSiteNetworkFeaturesSlotWithHttpMessagesAsync(resourceGroupName, name, view, slot, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name
+            /// </param>
+            /// <param name='name'>
+            /// The name of the web app
+            /// </param>
+            /// <param name='view'>
+            /// The type of view. This can either be "summary" or "detailed".
+            /// </param>
+            public static NetworkFeatures GetSiteNetworkFeatures(this ISitesOperations operations, string resourceGroupName, string name, string view)
+            {
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).GetSiteNetworkFeaturesAsync(resourceGroupName, name, view), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name
+            /// </param>
+            /// <param name='name'>
+            /// The name of the web app
+            /// </param>
+            /// <param name='view'>
+            /// The type of view. This can either be "summary" or "detailed".
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<NetworkFeatures> GetSiteNetworkFeaturesAsync( this ISitesOperations operations, string resourceGroupName, string name, string view, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<NetworkFeatures> result = await operations.GetSiteNetworkFeaturesWithHttpMessagesAsync(resourceGroupName, name, view, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -5745,9 +5967,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of web app slot. If not specified then will default to production
             /// slot.
             /// </param>
-            public static object GetSiteSlotOperation(this ISitesOperations operations, string resourceGroupName, string name, string operationId, string slot)
+            public static object GetSiteOperationSlot(this ISitesOperations operations, string resourceGroupName, string name, string operationId, string slot)
             {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).GetSiteSlotOperationAsync(resourceGroupName, name, operationId, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).GetSiteOperationSlotAsync(resourceGroupName, name, operationId, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -5771,9 +5993,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> GetSiteSlotOperationAsync( this ISitesOperations operations, string resourceGroupName, string name, string operationId, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> GetSiteOperationSlotAsync( this ISitesOperations operations, string resourceGroupName, string name, string operationId, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<object> result = await operations.GetSiteSlotOperationWithHttpMessagesAsync(resourceGroupName, name, operationId, slot, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<object> result = await operations.GetSiteOperationSlotWithHttpMessagesAsync(resourceGroupName, name, operationId, slot, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -5836,9 +6058,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='slot'>
             /// Name of source slot for the swap
             /// </param>
-            public static object SwapSlots(this ISitesOperations operations, string resourceGroupName, string name, CsmSlotEntity slotSwapEntity, string slot)
+            public static object SwapSlotsSlot(this ISitesOperations operations, string resourceGroupName, string name, CsmSlotEntity slotSwapEntity, string slot)
             {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).SwapSlotsAsync(resourceGroupName, name, slotSwapEntity, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).SwapSlotsSlotAsync(resourceGroupName, name, slotSwapEntity, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -5861,9 +6083,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> SwapSlotsAsync( this ISitesOperations operations, string resourceGroupName, string name, CsmSlotEntity slotSwapEntity, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> SwapSlotsSlotAsync( this ISitesOperations operations, string resourceGroupName, string name, CsmSlotEntity slotSwapEntity, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<object> result = await operations.SwapSlotsWithHttpMessagesAsync(resourceGroupName, name, slotSwapEntity, slot, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<object> result = await operations.SwapSlotsSlotWithHttpMessagesAsync(resourceGroupName, name, slotSwapEntity, slot, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -5926,9 +6148,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='slot'>
             /// Name of the source slot
             /// </param>
-            public static SlotDifferenceCollection GetSlotsDifferences(this ISitesOperations operations, string resourceGroupName, string name, CsmSlotEntity slotSwapEntity, string slot)
+            public static SlotDifferenceCollection GetSlotsDifferencesSlot(this ISitesOperations operations, string resourceGroupName, string name, CsmSlotEntity slotSwapEntity, string slot)
             {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).GetSlotsDifferencesAsync(resourceGroupName, name, slotSwapEntity, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).GetSlotsDifferencesSlotAsync(resourceGroupName, name, slotSwapEntity, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -5951,9 +6173,61 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SlotDifferenceCollection> GetSlotsDifferencesAsync( this ISitesOperations operations, string resourceGroupName, string name, CsmSlotEntity slotSwapEntity, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SlotDifferenceCollection> GetSlotsDifferencesSlotAsync( this ISitesOperations operations, string resourceGroupName, string name, CsmSlotEntity slotSwapEntity, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<SlotDifferenceCollection> result = await operations.GetSlotsDifferencesWithHttpMessagesAsync(resourceGroupName, name, slotSwapEntity, slot, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<SlotDifferenceCollection> result = await operations.GetSlotsDifferencesSlotWithHttpMessagesAsync(resourceGroupName, name, slotSwapEntity, slot, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app
+            /// </param>
+            /// <param name='slotSwapEntity'>
+            /// Request body that contains the target slot name. Settings from that slot
+            /// will be applied on the source slot
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the source slot. Settings from the target slot will be applied
+            /// onto this slot
+            /// </param>
+            public static object ApplySlotConfigSlot(this ISitesOperations operations, string resourceGroupName, string name, CsmSlotEntity slotSwapEntity, string slot)
+            {
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).ApplySlotConfigSlotAsync(resourceGroupName, name, slotSwapEntity, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app
+            /// </param>
+            /// <param name='slotSwapEntity'>
+            /// Request body that contains the target slot name. Settings from that slot
+            /// will be applied on the source slot
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the source slot. Settings from the target slot will be applied
+            /// onto this slot
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> ApplySlotConfigSlotAsync( this ISitesOperations operations, string resourceGroupName, string name, CsmSlotEntity slotSwapEntity, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<object> result = await operations.ApplySlotConfigSlotWithHttpMessagesAsync(resourceGroupName, name, slotSwapEntity, slot, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -6012,65 +6286,13 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='name'>
             /// Name of web app
             /// </param>
-            /// <param name='slotSwapEntity'>
-            /// Request body that contains the target slot name. Settings from that slot
-            /// will be applied on the source slot
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the source slot. Settings from the target slot will be applied
-            /// onto this slot
-            /// </param>
-            public static object ApplySlotConfig(this ISitesOperations operations, string resourceGroupName, string name, CsmSlotEntity slotSwapEntity, string slot)
-            {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).ApplySlotConfigAsync(resourceGroupName, name, slotSwapEntity, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of resource group
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
-            /// <param name='slotSwapEntity'>
-            /// Request body that contains the target slot name. Settings from that slot
-            /// will be applied on the source slot
-            /// </param>
-            /// <param name='slot'>
-            /// Name of the source slot. Settings from the target slot will be applied
-            /// onto this slot
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<object> ApplySlotConfigAsync( this ISitesOperations operations, string resourceGroupName, string name, CsmSlotEntity slotSwapEntity, string slot, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                AzureOperationResponse<object> result = await operations.ApplySlotConfigWithHttpMessagesAsync(resourceGroupName, name, slotSwapEntity, slot, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
-            }
-
-            /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of resource group
-            /// </param>
-            /// <param name='name'>
-            /// Name of web app
-            /// </param>
             /// <param name='slot'>
             /// Name of web app slot. If not specified then will default to production
             /// slot.
             /// </param>
-            public static object ResetSlotConfig(this ISitesOperations operations, string resourceGroupName, string name, string slot)
+            public static object ResetSlotConfigSlot(this ISitesOperations operations, string resourceGroupName, string name, string slot)
             {
-                return Task.Factory.StartNew(s => ((ISitesOperations)s).ResetSlotConfigAsync(resourceGroupName, name, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISitesOperations)s).ResetSlotConfigSlotAsync(resourceGroupName, name, slot), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -6091,9 +6313,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> ResetSlotConfigAsync( this ISitesOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> ResetSlotConfigSlotAsync( this ISitesOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<object> result = await operations.ResetSlotConfigWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<object> result = await operations.ResetSlotConfigSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

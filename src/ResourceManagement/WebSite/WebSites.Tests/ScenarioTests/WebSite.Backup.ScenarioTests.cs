@@ -30,12 +30,10 @@ namespace WebSites.Tests.ScenarioTests
         [Fact(Skip = "Backup/Restore feature is not allowed in current site mode.")]
         public void ListBackupsAndScheduledBackupRoundTrip()
         {
-            var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
-
             using (var context = MockContext.Start())
             {
-                var webSitesClient = this.GetWebSiteManagementClientWithHandler(context, handler);
-                var resourcesClient = this.GetResourceManagementClientWithHandler(context, handler);
+                var webSitesClient = this.GetWebSiteManagementClient(context);
+                var resourcesClient = this.GetResourceManagementClient(context);
 
                 string farmName = TestUtilities.GenerateName("csmsf");
                 string resourceGroupName = TestUtilities.GenerateName("csmrg");
@@ -61,11 +59,12 @@ namespace WebSites.Tests.ScenarioTests
                     }
                 });
 
+                var serverfarmId = ResourceGroupHelper.GetServerFarmId(webSitesClient.SubscriptionId, resourceGroupName, farmName);
                 webSitesClient.Sites.CreateOrUpdateSite(resourceGroupName, siteName, new Site
                 {
                     SiteName = siteName,
                     Location = locationName,
-                    ServerFarm = farmName
+                    ServerFarmId = serverfarmId
                 });
 
                 var backupResponse = webSitesClient.Sites.ListSiteBackups(resourceGroupName, siteName);

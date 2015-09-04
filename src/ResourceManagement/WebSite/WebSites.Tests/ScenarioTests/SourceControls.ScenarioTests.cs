@@ -46,11 +46,9 @@ namespace WebSites.Tests.ScenarioTests
         [Fact]
         public void TestUpdateSourceControlUpdates()
         {
-            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
-
             using (var context = MockContext.Start())
             {
-                var webSitesClient = this.GetWebSiteManagementClientWithHandler(context, handler);
+                var webSitesClient = this.GetWebSiteManagementClient(context);
 
                 webSitesClient.Provider.UpdateSourceControl(GitHubSourceControl.SourceControlName, GitHubSourceControl);
 

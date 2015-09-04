@@ -71,7 +71,7 @@ namespace WebSites.Tests.ScenarioTests
                 });
         }
 
-        [Fact(Skip = "Test ERROR, please investigate")]
+        [Fact]
         public void CreateAndDeleteWebsite()
         {
             RunWebsiteTestScenario(
@@ -101,15 +101,16 @@ namespace WebSites.Tests.ScenarioTests
                 });
         }
 
-        [Fact(Skip = "Microsoft.WindowsAzure.CloudExceptionInvalidFilterValueParameter: Argument Null; Parameter name: $filter")]
+        [Fact]
         public void GetSiteMetrics()
         {
             RunWebsiteTestScenario(
                 (webSiteName, resourceGroupName, whpName, locationName, webSitesClient, resourcesClient) =>
                 {
-                    var endTime = new DateTime(2014, 8, 8, 1, 0, 0);
+                    var endTime = DateTime.Now;
 
-                    var result = webSitesClient.Sites.GetSiteMetrics(resourceGroupName: resourceGroupName, name: webSiteName, names: "Requests", startTime: endTime.AddHours(-3).ToString(), timeGrain: "PT1H", endTime: endTime.ToString(), details: true);
+                    var result = webSitesClient.Sites.GetSiteMetrics(resourceGroupName: resourceGroupName,
+                        name: webSiteName, filter: WebSitesHelper.BuildMetricFilter(startTime: endTime.AddHours(-3), endTime: endTime, timeGrain: "PT1H", metricNames: new List<string>{ "Requests" }), details: true);
 
                     webSitesClient.Sites.DeleteSite(resourceGroupName, webSiteName, deleteAllSlots: true.ToString());
 
@@ -142,7 +143,7 @@ namespace WebSites.Tests.ScenarioTests
                 });
         }
 
-        [Fact(Skip = "Test ERROR, please investigate")]
+        [Fact]
         public void GetAndSetNonSensitiveSiteConfigs()
         {
             RunWebsiteTestScenario(
@@ -174,7 +175,7 @@ namespace WebSites.Tests.ScenarioTests
                 });
         }
 
-        [Fact(Skip = "Internal server error. Needs investigation")]
+        [Fact]
         public void GetAndSetSensitiveSiteConfigs()
         {
             RunWebsiteTestScenario(
@@ -183,38 +184,38 @@ namespace WebSites.Tests.ScenarioTests
                     #region Get/Set Application settings
 
                     const string settingName = "Application Setting1", settingValue = "Setting Value 1";
-                    var appSetting = new Dictionary<string, string> { { settingName, settingValue} };
+                    var appSetting = new StringDictionary{ Properties = new Dictionary<string, string> { { settingName, settingValue} } };
                     var appSettingsResponse = webSitesClient.Sites.UpdateSiteAppSettings(
                         resourceGroupName,
                         siteName,
                         appSetting);
 
                     Assert.NotNull(appSettingsResponse);
-                    Assert.True(appSettingsResponse.Contains(new KeyValuePair<string, string>(settingName, settingValue)));
+                    Assert.True(appSettingsResponse.Properties.Contains(new KeyValuePair<string, string>(settingName, settingValue)));
 
                     appSettingsResponse = webSitesClient.Sites.ListSiteAppSettings(resourceGroupName, siteName);
 
                     Assert.NotNull(appSettingsResponse);
-                    Assert.True(appSettingsResponse.Contains(new KeyValuePair<string, string>(settingName, settingValue)));
+                    Assert.True(appSettingsResponse.Properties.Contains(new KeyValuePair<string, string>(settingName, settingValue)));
 
                     #endregion Get/Set Application settings
 
                     #region Get/Set Metadata
 
                     const string metadataName = "Metadata 1", metadataValue = "Metadata Value 1";
-                    var metadata = new Dictionary<string, string> { { metadataName, metadataValue } };
+                    var metadata = new StringDictionary { Properties = new Dictionary<string, string> { { metadataName, metadataValue } } };
                     var metadataResponse = webSitesClient.Sites.UpdateSiteMetadata(
                         resourceGroupName,
                         siteName,
                         metadata);
 
                     Assert.NotNull(metadataResponse);
-                    Assert.True(metadataResponse.Contains(new KeyValuePair<string, string>(metadataName, metadataValue)));
+                    Assert.True(metadataResponse.Properties.Contains(new KeyValuePair<string, string>(metadataName, metadataValue)));
 
                     metadataResponse = webSitesClient.Sites.ListSiteMetadata(resourceGroupName, siteName);
 
                     Assert.NotNull(metadataResponse);
-                    Assert.True(metadataResponse.Contains(new KeyValuePair<string, string>(metadataName, metadataValue)));
+                    Assert.True(metadataResponse.Properties.Contains(new KeyValuePair<string, string>(metadataName, metadataValue)));
 
                     #endregion Get/Set Metadata
 
@@ -230,15 +231,15 @@ namespace WebSites.Tests.ScenarioTests
                     var connectionStringResponse = webSitesClient.Sites.UpdateSiteConnectionStrings(
                         resourceGroupName,
                         siteName,
-                        new Dictionary<string, ConnStringValueTypePair> { { connectionStringName, connStringValueTypePair } });
+                        new ConnectionStringDictionary { Properties = new Dictionary<string, ConnStringValueTypePair> { { connectionStringName, connStringValueTypePair } } });
 
                     Assert.NotNull(connectionStringResponse);
-                    Assert.True(connectionStringResponse.Contains(new KeyValuePair<string, ConnStringValueTypePair>(connectionStringName, connStringValueTypePair)));
+                    Assert.True(connectionStringResponse.Properties.Contains(new KeyValuePair<string, ConnStringValueTypePair>(connectionStringName, connStringValueTypePair)));
 
                     connectionStringResponse = webSitesClient.Sites.ListSiteConnectionStrings(resourceGroupName, siteName);
 
                     Assert.NotNull(connectionStringResponse);
-                    Assert.True(connectionStringResponse.Contains(new KeyValuePair<string, ConnStringValueTypePair>(connectionStringName, connStringValueTypePair)));
+                    Assert.True(connectionStringResponse.Properties.Contains(new KeyValuePair<string, ConnStringValueTypePair>(connectionStringName, connStringValueTypePair)));
 
                     #endregion Get/Set Connection strings
 
@@ -336,12 +337,10 @@ namespace WebSites.Tests.ScenarioTests
 
         private void RunWebsiteTestScenario(WebsiteTestDelegate testAction, string skuTier = "Shared", string skuName = "D1")
         {
-            var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
-
             using (var context = MockContext.Start(3))
             {
-                var webSitesClient = this.GetWebSiteManagementClientWithHandler(context, handler);
-                var resourcesClient = this.GetResourceManagementClientWithHandler(context, handler);
+                var webSitesClient = this.GetWebSiteManagementClient(context);
+                var resourcesClient = this.GetResourceManagementClient(context);
 
                 var webSiteName = TestUtilities.GenerateName("csmws");
                 var resourceGroupName = TestUtilities.GenerateName("csmrg");
@@ -388,12 +387,10 @@ namespace WebSites.Tests.ScenarioTests
         [Fact]
         public void GetAndSetSiteLimits()
         {
-            var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
-
             using (var context = MockContext.Start())
             {
-                var webSitesClient = this.GetWebSiteManagementClientWithHandler(context, handler);
-                var resourcesClient = this.GetResourceManagementClientWithHandler(context, handler);
+                var webSitesClient = this.GetWebSiteManagementClient(context);
+                var resourcesClient = this.GetResourceManagementClient(context);
 
                 var whpName = TestUtilities.GenerateName("cswhp");
                 var resourceGroupName = TestUtilities.GenerateName("csmrg");
@@ -463,7 +460,7 @@ namespace WebSites.Tests.ScenarioTests
             }
         }
 
-        [Fact(Skip = "Client does not handle long running operations well.")]
+        [Fact]
         public void CloneSite()
         {
             RunWebsiteTestScenario(
@@ -482,18 +479,8 @@ namespace WebSites.Tests.ScenarioTests
                     };
 
                     ServiceClientTracing.IsEnabled = true;
-                    var operationResponse = webSitesClient.Sites.BeginCreateOrUpdateSite(resourceGroupName, targetSiteName, site);
+                    var operationResponse = webSitesClient.Sites.CreateOrUpdateSite(resourceGroupName, targetSiteName, site);
                     ServiceClientTracing.IsEnabled = false;
-                    Assert.NotNull(operationResponse);
-                    Assert.NotNull(operationResponse.Location);
-
-                    //Guid operationId = ParseOperationIdFromLocation(operationResponse.Location);
-
-                    //WaitForOperationCompletion(360, 1000, "WebSites.GetOperation", () =>
-                    //{
-                    //    var response = webSitesClient.Sites.GetSiteOperation(resourceGroupName, targetSiteName, operationId.ToString()) as HttpOperationResponse<Site>;
-                    //    return response.Response.StatusCode;
-                    //});
                 }, "Premium");
         }
 

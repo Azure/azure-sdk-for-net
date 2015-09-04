@@ -5,6 +5,7 @@
 namespace Microsoft.Azure.Management.WebSites.Models
 {
     using System;
+    using System.Linq;
     using System.Collections.Generic;
     using Newtonsoft.Json;
     using Microsoft.Rest;
@@ -16,11 +17,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
     /// </summary>
     public partial class Certificate : Resource
     {
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "sku")]
-        public SkuDescription Sku { get; set; }
-
         /// <summary>
         /// Friendly name of the certificate
         /// </summary>
@@ -104,13 +100,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.publicKeyHash")]
         public string PublicKeyHash { get; set; }
-
-        /// <summary>
-        /// The hosting environment (App Service Environment) the certificate
-        /// exists on
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.hostingEnvironment")]
-        public string HostingEnvironment { get; set; }
 
         /// <summary>
         /// Specification for the hosting environment (App Service

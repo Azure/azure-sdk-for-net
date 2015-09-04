@@ -414,24 +414,18 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='name'>
             /// Name of hostingEnvironment (App Service Environment)
             /// </param>
-            /// <param name='names'>
-            /// Comma separated list of metric names to retrieve
-            /// </param>
-            /// <param name='startTime'>
-            /// Beginning time of metrics query
-            /// </param>
-            /// <param name='endTime'>
-            /// End time of metrics query
-            /// </param>
-            /// <param name='timeGrain'>
-            /// Time granularity of metrics query
-            /// </param>
             /// <param name='details'>
             /// Include instance details
             /// </param>
-            public static MetricResponseCollection GetHostingEnvironmentMetrics(this IHostingEnvironmentsOperations operations, string resourceGroupName, string name, string names = default(string), string startTime = default(string), string endTime = default(string), string timeGrain = default(string), bool? details = default(bool?))
+            /// <param name='filter'>
+            /// Return only usages/metrics specified in the filter. Filter conforms to
+            /// odata syntax. Example: $filter=(name.value eq 'Metric1' or name.value eq
+            /// 'Metric2') and startTime eq '2014-01-01T00:00:00Z' and endTime eq
+            /// '2014-12-31T23:59:59Z' and timeGrain eq duration'[Hour|Minute|Day]'.
+            /// </param>
+            public static MetricResponseCollection GetHostingEnvironmentMetrics(this IHostingEnvironmentsOperations operations, string resourceGroupName, string name, bool? details = default(bool?), string filter = default(string))
             {
-                return Task.Factory.StartNew(s => ((IHostingEnvironmentsOperations)s).GetHostingEnvironmentMetricsAsync(resourceGroupName, name, names, startTime, endTime, timeGrain, details), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IHostingEnvironmentsOperations)s).GetHostingEnvironmentMetricsAsync(resourceGroupName, name, details, filter), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -445,27 +439,21 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='name'>
             /// Name of hostingEnvironment (App Service Environment)
             /// </param>
-            /// <param name='names'>
-            /// Comma separated list of metric names to retrieve
-            /// </param>
-            /// <param name='startTime'>
-            /// Beginning time of metrics query
-            /// </param>
-            /// <param name='endTime'>
-            /// End time of metrics query
-            /// </param>
-            /// <param name='timeGrain'>
-            /// Time granularity of metrics query
-            /// </param>
             /// <param name='details'>
             /// Include instance details
+            /// </param>
+            /// <param name='filter'>
+            /// Return only usages/metrics specified in the filter. Filter conforms to
+            /// odata syntax. Example: $filter=(name.value eq 'Metric1' or name.value eq
+            /// 'Metric2') and startTime eq '2014-01-01T00:00:00Z' and endTime eq
+            /// '2014-12-31T23:59:59Z' and timeGrain eq duration'[Hour|Minute|Day]'.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<MetricResponseCollection> GetHostingEnvironmentMetricsAsync( this IHostingEnvironmentsOperations operations, string resourceGroupName, string name, string names = default(string), string startTime = default(string), string endTime = default(string), string timeGrain = default(string), bool? details = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<MetricResponseCollection> GetHostingEnvironmentMetricsAsync( this IHostingEnvironmentsOperations operations, string resourceGroupName, string name, bool? details = default(bool?), string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<MetricResponseCollection> result = await operations.GetHostingEnvironmentMetricsWithHttpMessagesAsync(resourceGroupName, name, names, startTime, endTime, timeGrain, details, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<MetricResponseCollection> result = await operations.GetHostingEnvironmentMetricsWithHttpMessagesAsync(resourceGroupName, name, details, filter, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -516,12 +504,15 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='name'>
             /// Name of hostingEnvironment (App Service Environment)
             /// </param>
-            /// <param name='names'>
-            /// Comma separated list of usage names to retrieve
+            /// <param name='filter'>
+            /// Return only usages/metrics specified in the filter. Filter conforms to
+            /// odata syntax. Example: $filter=(name.value eq 'Metric1' or name.value eq
+            /// 'Metric2') and startTime eq '2014-01-01T00:00:00Z' and endTime eq
+            /// '2014-12-31T23:59:59Z' and timeGrain eq duration'[Hour|Minute|Day]'.
             /// </param>
-            public static CsmUsageQuotaCollection GetHostingEnvironmentUsages(this IHostingEnvironmentsOperations operations, string resourceGroupName, string name, string names = default(string))
+            public static CsmUsageQuotaCollection GetHostingEnvironmentUsages(this IHostingEnvironmentsOperations operations, string resourceGroupName, string name, string filter = default(string))
             {
-                return Task.Factory.StartNew(s => ((IHostingEnvironmentsOperations)s).GetHostingEnvironmentUsagesAsync(resourceGroupName, name, names), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IHostingEnvironmentsOperations)s).GetHostingEnvironmentUsagesAsync(resourceGroupName, name, filter), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -535,15 +526,18 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='name'>
             /// Name of hostingEnvironment (App Service Environment)
             /// </param>
-            /// <param name='names'>
-            /// Comma separated list of usage names to retrieve
+            /// <param name='filter'>
+            /// Return only usages/metrics specified in the filter. Filter conforms to
+            /// odata syntax. Example: $filter=(name.value eq 'Metric1' or name.value eq
+            /// 'Metric2') and startTime eq '2014-01-01T00:00:00Z' and endTime eq
+            /// '2014-12-31T23:59:59Z' and timeGrain eq duration'[Hour|Minute|Day]'.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CsmUsageQuotaCollection> GetHostingEnvironmentUsagesAsync( this IHostingEnvironmentsOperations operations, string resourceGroupName, string name, string names = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<CsmUsageQuotaCollection> GetHostingEnvironmentUsagesAsync( this IHostingEnvironmentsOperations operations, string resourceGroupName, string name, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<CsmUsageQuotaCollection> result = await operations.GetHostingEnvironmentUsagesWithHttpMessagesAsync(resourceGroupName, name, names, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<CsmUsageQuotaCollection> result = await operations.GetHostingEnvironmentUsagesWithHttpMessagesAsync(resourceGroupName, name, filter, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -558,9 +552,6 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='name'>
             /// Name of hostingEnvironment (App Service Environment)
             /// </param>
-            /// <param name='names'>
-            /// Comma separated list of metric names to retrieve
-            /// </param>
             /// <param name='startTime'>
             /// Beginning time of metrics query
             /// </param>
@@ -573,9 +564,15 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='details'>
             /// Include instance details
             /// </param>
-            public static MetricResponseCollection GetHostingEnvironmentMultiRoleMetrics(this IHostingEnvironmentsOperations operations, string resourceGroupName, string name, string names = default(string), string startTime = default(string), string endTime = default(string), string timeGrain = default(string), bool? details = default(bool?))
+            /// <param name='filter'>
+            /// Return only usages/metrics specified in the filter. Filter conforms to
+            /// odata syntax. Example: $filter=(name.value eq 'Metric1' or name.value eq
+            /// 'Metric2') and startTime eq '2014-01-01T00:00:00Z' and endTime eq
+            /// '2014-12-31T23:59:59Z' and timeGrain eq duration'[Hour|Minute|Day]'.
+            /// </param>
+            public static MetricResponseCollection GetHostingEnvironmentMultiRoleMetrics(this IHostingEnvironmentsOperations operations, string resourceGroupName, string name, string startTime = default(string), string endTime = default(string), string timeGrain = default(string), bool? details = default(bool?), string filter = default(string))
             {
-                return Task.Factory.StartNew(s => ((IHostingEnvironmentsOperations)s).GetHostingEnvironmentMultiRoleMetricsAsync(resourceGroupName, name, names, startTime, endTime, timeGrain, details), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IHostingEnvironmentsOperations)s).GetHostingEnvironmentMultiRoleMetricsAsync(resourceGroupName, name, startTime, endTime, timeGrain, details, filter), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -589,9 +586,6 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='name'>
             /// Name of hostingEnvironment (App Service Environment)
             /// </param>
-            /// <param name='names'>
-            /// Comma separated list of metric names to retrieve
-            /// </param>
             /// <param name='startTime'>
             /// Beginning time of metrics query
             /// </param>
@@ -604,12 +598,18 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='details'>
             /// Include instance details
             /// </param>
+            /// <param name='filter'>
+            /// Return only usages/metrics specified in the filter. Filter conforms to
+            /// odata syntax. Example: $filter=(name.value eq 'Metric1' or name.value eq
+            /// 'Metric2') and startTime eq '2014-01-01T00:00:00Z' and endTime eq
+            /// '2014-12-31T23:59:59Z' and timeGrain eq duration'[Hour|Minute|Day]'.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<MetricResponseCollection> GetHostingEnvironmentMultiRoleMetricsAsync( this IHostingEnvironmentsOperations operations, string resourceGroupName, string name, string names = default(string), string startTime = default(string), string endTime = default(string), string timeGrain = default(string), bool? details = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<MetricResponseCollection> GetHostingEnvironmentMultiRoleMetricsAsync( this IHostingEnvironmentsOperations operations, string resourceGroupName, string name, string startTime = default(string), string endTime = default(string), string timeGrain = default(string), bool? details = default(bool?), string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<MetricResponseCollection> result = await operations.GetHostingEnvironmentMultiRoleMetricsWithHttpMessagesAsync(resourceGroupName, name, names, startTime, endTime, timeGrain, details, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<MetricResponseCollection> result = await operations.GetHostingEnvironmentMultiRoleMetricsWithHttpMessagesAsync(resourceGroupName, name, startTime, endTime, timeGrain, details, filter, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -627,24 +627,18 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='workerSizeId'>
             /// Id of worker pool
             /// </param>
-            /// <param name='names'>
-            /// Comma separated list of metric names to retrieve
-            /// </param>
-            /// <param name='startTime'>
-            /// Beginning time of metrics query
-            /// </param>
-            /// <param name='endTime'>
-            /// End time of metrics query
-            /// </param>
-            /// <param name='timeGrain'>
-            /// Time granularity of metrics query
-            /// </param>
             /// <param name='details'>
             /// Include instance details
             /// </param>
-            public static MetricResponseCollection GetHostingEnvironmentWebWorkerMetrics(this IHostingEnvironmentsOperations operations, string resourceGroupName, string name, string workerSizeId, string names = default(string), string startTime = default(string), string endTime = default(string), string timeGrain = default(string), bool? details = default(bool?))
+            /// <param name='filter'>
+            /// Return only usages/metrics specified in the filter. Filter conforms to
+            /// odata syntax. Example: $filter=(name.value eq 'Metric1' or name.value eq
+            /// 'Metric2') and startTime eq '2014-01-01T00:00:00Z' and endTime eq
+            /// '2014-12-31T23:59:59Z' and timeGrain eq duration'[Hour|Minute|Day]'.
+            /// </param>
+            public static MetricResponseCollection GetHostingEnvironmentWebWorkerMetrics(this IHostingEnvironmentsOperations operations, string resourceGroupName, string name, string workerSizeId, bool? details = default(bool?), string filter = default(string))
             {
-                return Task.Factory.StartNew(s => ((IHostingEnvironmentsOperations)s).GetHostingEnvironmentWebWorkerMetricsAsync(resourceGroupName, name, workerSizeId, names, startTime, endTime, timeGrain, details), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IHostingEnvironmentsOperations)s).GetHostingEnvironmentWebWorkerMetricsAsync(resourceGroupName, name, workerSizeId, details, filter), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -661,27 +655,21 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='workerSizeId'>
             /// Id of worker pool
             /// </param>
-            /// <param name='names'>
-            /// Comma separated list of metric names to retrieve
-            /// </param>
-            /// <param name='startTime'>
-            /// Beginning time of metrics query
-            /// </param>
-            /// <param name='endTime'>
-            /// End time of metrics query
-            /// </param>
-            /// <param name='timeGrain'>
-            /// Time granularity of metrics query
-            /// </param>
             /// <param name='details'>
             /// Include instance details
+            /// </param>
+            /// <param name='filter'>
+            /// Return only usages/metrics specified in the filter. Filter conforms to
+            /// odata syntax. Example: $filter=(name.value eq 'Metric1' or name.value eq
+            /// 'Metric2') and startTime eq '2014-01-01T00:00:00Z' and endTime eq
+            /// '2014-12-31T23:59:59Z' and timeGrain eq duration'[Hour|Minute|Day]'.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<MetricResponseCollection> GetHostingEnvironmentWebWorkerMetricsAsync( this IHostingEnvironmentsOperations operations, string resourceGroupName, string name, string workerSizeId, string names = default(string), string startTime = default(string), string endTime = default(string), string timeGrain = default(string), bool? details = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<MetricResponseCollection> GetHostingEnvironmentWebWorkerMetricsAsync( this IHostingEnvironmentsOperations operations, string resourceGroupName, string name, string workerSizeId, bool? details = default(bool?), string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<MetricResponseCollection> result = await operations.GetHostingEnvironmentWebWorkerMetricsWithHttpMessagesAsync(resourceGroupName, name, workerSizeId, names, startTime, endTime, timeGrain, details, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<MetricResponseCollection> result = await operations.GetHostingEnvironmentWebWorkerMetricsWithHttpMessagesAsync(resourceGroupName, name, workerSizeId, details, filter, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -774,12 +762,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='name'>
             /// Name of hostingEnvironment (App Service Environment)
             /// </param>
-            /// <param name='names'>
-            /// Comma separated list of usage names to retrieve
-            /// </param>
-            public static UsageCollection GetHostingEnvironmentMultiRoleUsages(this IHostingEnvironmentsOperations operations, string resourceGroupName, string name, string names = default(string))
+            public static UsageCollection GetHostingEnvironmentMultiRoleUsages(this IHostingEnvironmentsOperations operations, string resourceGroupName, string name)
             {
-                return Task.Factory.StartNew(s => ((IHostingEnvironmentsOperations)s).GetHostingEnvironmentMultiRoleUsagesAsync(resourceGroupName, name, names), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IHostingEnvironmentsOperations)s).GetHostingEnvironmentMultiRoleUsagesAsync(resourceGroupName, name), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -793,15 +778,12 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='name'>
             /// Name of hostingEnvironment (App Service Environment)
             /// </param>
-            /// <param name='names'>
-            /// Comma separated list of usage names to retrieve
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<UsageCollection> GetHostingEnvironmentMultiRoleUsagesAsync( this IHostingEnvironmentsOperations operations, string resourceGroupName, string name, string names = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<UsageCollection> GetHostingEnvironmentMultiRoleUsagesAsync( this IHostingEnvironmentsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<UsageCollection> result = await operations.GetHostingEnvironmentMultiRoleUsagesWithHttpMessagesAsync(resourceGroupName, name, names, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<UsageCollection> result = await operations.GetHostingEnvironmentMultiRoleUsagesWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -819,12 +801,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='workerSizeId'>
             /// Id of worker pool
             /// </param>
-            /// <param name='names'>
-            /// Comma separated list of usage names to retrieve
-            /// </param>
-            public static UsageCollection GetHostingEnvironmentWebWorkerUsages(this IHostingEnvironmentsOperations operations, string resourceGroupName, string name, string workerSizeId, string names = default(string))
+            public static UsageCollection GetHostingEnvironmentWebWorkerUsages(this IHostingEnvironmentsOperations operations, string resourceGroupName, string name, string workerSizeId)
             {
-                return Task.Factory.StartNew(s => ((IHostingEnvironmentsOperations)s).GetHostingEnvironmentWebWorkerUsagesAsync(resourceGroupName, name, workerSizeId, names), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IHostingEnvironmentsOperations)s).GetHostingEnvironmentWebWorkerUsagesAsync(resourceGroupName, name, workerSizeId), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -841,15 +820,12 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='workerSizeId'>
             /// Id of worker pool
             /// </param>
-            /// <param name='names'>
-            /// Comma separated list of usage names to retrieve
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<UsageCollection> GetHostingEnvironmentWebWorkerUsagesAsync( this IHostingEnvironmentsOperations operations, string resourceGroupName, string name, string workerSizeId, string names = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<UsageCollection> GetHostingEnvironmentWebWorkerUsagesAsync( this IHostingEnvironmentsOperations operations, string resourceGroupName, string name, string workerSizeId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<UsageCollection> result = await operations.GetHostingEnvironmentWebWorkerUsagesWithHttpMessagesAsync(resourceGroupName, name, workerSizeId, names, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<UsageCollection> result = await operations.GetHostingEnvironmentWebWorkerUsagesWithHttpMessagesAsync(resourceGroupName, name, workerSizeId, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -906,42 +882,6 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='name'>
             /// Name of hostingEnvironment (App Service Environment)
             /// </param>
-            public static ServerFarmCollection GetHostingEnvironmentWebHostingPlans(this IHostingEnvironmentsOperations operations, string resourceGroupName, string name)
-            {
-                return Task.Factory.StartNew(s => ((IHostingEnvironmentsOperations)s).GetHostingEnvironmentWebHostingPlansAsync(resourceGroupName, name), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of resource group
-            /// </param>
-            /// <param name='name'>
-            /// Name of hostingEnvironment (App Service Environment)
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<ServerFarmCollection> GetHostingEnvironmentWebHostingPlansAsync( this IHostingEnvironmentsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                AzureOperationResponse<ServerFarmCollection> result = await operations.GetHostingEnvironmentWebHostingPlansWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
-            }
-
-            /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of resource group
-            /// </param>
-            /// <param name='name'>
-            /// Name of hostingEnvironment (App Service Environment)
-            /// </param>
             public static ServerFarmCollection GetHostingEnvironmentServerFarms(this IHostingEnvironmentsOperations operations, string resourceGroupName, string name)
             {
                 return Task.Factory.StartNew(s => ((IHostingEnvironmentsOperations)s).GetHostingEnvironmentServerFarmsAsync(resourceGroupName, name), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
@@ -964,6 +904,42 @@ namespace Microsoft.Azure.Management.WebSites
             public static async Task<ServerFarmCollection> GetHostingEnvironmentServerFarmsAsync( this IHostingEnvironmentsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
             {
                 AzureOperationResponse<ServerFarmCollection> result = await operations.GetHostingEnvironmentServerFarmsWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of hostingEnvironment (App Service Environment)
+            /// </param>
+            public static ServerFarmCollection GetHostingEnvironmentWebHostingPlans(this IHostingEnvironmentsOperations operations, string resourceGroupName, string name)
+            {
+                return Task.Factory.StartNew(s => ((IHostingEnvironmentsOperations)s).GetHostingEnvironmentWebHostingPlansAsync(resourceGroupName, name), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of hostingEnvironment (App Service Environment)
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ServerFarmCollection> GetHostingEnvironmentWebHostingPlansAsync( this IHostingEnvironmentsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<ServerFarmCollection> result = await operations.GetHostingEnvironmentWebHostingPlansWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -1320,24 +1296,18 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='instance'>
             /// Name of instance in the worker pool
             /// </param>
-            /// <param name='names'>
-            /// Comma separated list of metric names to retrieve
-            /// </param>
-            /// <param name='startTime'>
-            /// Beginning time of metrics query
-            /// </param>
-            /// <param name='endTime'>
-            /// End time of metrics query
-            /// </param>
-            /// <param name='timeGrain'>
-            /// Time granularity of metrics query
-            /// </param>
             /// <param name='details'>
             /// Include instance details
             /// </param>
-            public static object GetWorkerPoolInstanceMetrics(this IHostingEnvironmentsOperations operations, string resourceGroupName, string name, string workerSizeId, string instance, string names = default(string), string startTime = default(string), string endTime = default(string), string timeGrain = default(string), bool? details = default(bool?))
+            /// <param name='filter'>
+            /// Return only usages/metrics specified in the filter. Filter conforms to
+            /// odata syntax. Example: $filter=(name.value eq 'Metric1' or name.value eq
+            /// 'Metric2') and startTime eq '2014-01-01T00:00:00Z' and endTime eq
+            /// '2014-12-31T23:59:59Z' and timeGrain eq duration'[Hour|Minute|Day]'.
+            /// </param>
+            public static object GetWorkerPoolInstanceMetrics(this IHostingEnvironmentsOperations operations, string resourceGroupName, string name, string workerSizeId, string instance, bool? details = default(bool?), string filter = default(string))
             {
-                return Task.Factory.StartNew(s => ((IHostingEnvironmentsOperations)s).GetWorkerPoolInstanceMetricsAsync(resourceGroupName, name, workerSizeId, instance, names, startTime, endTime, timeGrain, details), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IHostingEnvironmentsOperations)s).GetWorkerPoolInstanceMetricsAsync(resourceGroupName, name, workerSizeId, instance, details, filter), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1357,27 +1327,21 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='instance'>
             /// Name of instance in the worker pool
             /// </param>
-            /// <param name='names'>
-            /// Comma separated list of metric names to retrieve
-            /// </param>
-            /// <param name='startTime'>
-            /// Beginning time of metrics query
-            /// </param>
-            /// <param name='endTime'>
-            /// End time of metrics query
-            /// </param>
-            /// <param name='timeGrain'>
-            /// Time granularity of metrics query
-            /// </param>
             /// <param name='details'>
             /// Include instance details
+            /// </param>
+            /// <param name='filter'>
+            /// Return only usages/metrics specified in the filter. Filter conforms to
+            /// odata syntax. Example: $filter=(name.value eq 'Metric1' or name.value eq
+            /// 'Metric2') and startTime eq '2014-01-01T00:00:00Z' and endTime eq
+            /// '2014-12-31T23:59:59Z' and timeGrain eq duration'[Hour|Minute|Day]'.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> GetWorkerPoolInstanceMetricsAsync( this IHostingEnvironmentsOperations operations, string resourceGroupName, string name, string workerSizeId, string instance, string names = default(string), string startTime = default(string), string endTime = default(string), string timeGrain = default(string), bool? details = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> GetWorkerPoolInstanceMetricsAsync( this IHostingEnvironmentsOperations operations, string resourceGroupName, string name, string workerSizeId, string instance, bool? details = default(bool?), string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<object> result = await operations.GetWorkerPoolInstanceMetricsWithHttpMessagesAsync(resourceGroupName, name, workerSizeId, instance, names, startTime, endTime, timeGrain, details, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<object> result = await operations.GetWorkerPoolInstanceMetricsWithHttpMessagesAsync(resourceGroupName, name, workerSizeId, instance, details, filter, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -1443,24 +1407,12 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='instance'>
             /// Name of instance in the multiRole pool
             /// </param>
-            /// <param name='names'>
-            /// Comma separated list of metric names to retrieve
-            /// </param>
-            /// <param name='startTime'>
-            /// Beginning time of metrics query
-            /// </param>
-            /// <param name='endTime'>
-            /// End time of metrics query
-            /// </param>
-            /// <param name='timeGrain'>
-            /// Time granularity of metrics query
-            /// </param>
             /// <param name='details'>
             /// Include instance details
             /// </param>
-            public static object GetMultiRolePoolInstanceMetrics(this IHostingEnvironmentsOperations operations, string resourceGroupName, string name, string instance, string names = default(string), string startTime = default(string), string endTime = default(string), string timeGrain = default(string), bool? details = default(bool?))
+            public static object GetMultiRolePoolInstanceMetrics(this IHostingEnvironmentsOperations operations, string resourceGroupName, string name, string instance, bool? details = default(bool?))
             {
-                return Task.Factory.StartNew(s => ((IHostingEnvironmentsOperations)s).GetMultiRolePoolInstanceMetricsAsync(resourceGroupName, name, instance, names, startTime, endTime, timeGrain, details), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IHostingEnvironmentsOperations)s).GetMultiRolePoolInstanceMetricsAsync(resourceGroupName, name, instance, details), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1477,27 +1429,15 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='instance'>
             /// Name of instance in the multiRole pool
             /// </param>
-            /// <param name='names'>
-            /// Comma separated list of metric names to retrieve
-            /// </param>
-            /// <param name='startTime'>
-            /// Beginning time of metrics query
-            /// </param>
-            /// <param name='endTime'>
-            /// End time of metrics query
-            /// </param>
-            /// <param name='timeGrain'>
-            /// Time granularity of metrics query
-            /// </param>
             /// <param name='details'>
             /// Include instance details
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> GetMultiRolePoolInstanceMetricsAsync( this IHostingEnvironmentsOperations operations, string resourceGroupName, string name, string instance, string names = default(string), string startTime = default(string), string endTime = default(string), string timeGrain = default(string), bool? details = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> GetMultiRolePoolInstanceMetricsAsync( this IHostingEnvironmentsOperations operations, string resourceGroupName, string name, string instance, bool? details = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<object> result = await operations.GetMultiRolePoolInstanceMetricsWithHttpMessagesAsync(resourceGroupName, name, instance, names, startTime, endTime, timeGrain, details, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<object> result = await operations.GetMultiRolePoolInstanceMetricsWithHttpMessagesAsync(resourceGroupName, name, instance, details, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
