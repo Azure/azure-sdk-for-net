@@ -13,7 +13,6 @@
 // ----------------------------------------------------------------------------------
 
 using System;
-using System.Linq;
 
 namespace Microsoft.Azure.Common.Authentication
 {

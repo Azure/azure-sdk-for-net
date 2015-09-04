@@ -12,9 +12,9 @@ namespace Test.Azure.Management.Logic
         protected string resourceGroupName = "flowrg";
         protected string location = "westus";
 
-        protected LogicManagementClient GetLogicManagementClient()
+        protected LogicManagementClient GetLogicManagementClient(MockContext context)
         {
-            return TestBase.GetServiceClient<LogicManagementClient>();
+            return context.GetServiceClient<LogicManagementClient>();
         }
 
         #region Data

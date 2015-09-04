@@ -51,6 +51,18 @@ namespace Microsoft.Azure.Management.Logic.Models
         public WorkflowStatus? Status { get; private set; }
 
         /// <summary>
+        /// Gets the code.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.code")]
+        public string Code { get; private set; }
+
+        /// <summary>
+        /// Gets the error.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.error")]
+        public object Error { get; private set; }
+
+        /// <summary>
         /// Gets the correlation id.
         /// </summary>
         [JsonProperty(PropertyName = "properties.correlationId")]
@@ -72,7 +84,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// Gets the outputs.
         /// </summary>
         [JsonProperty(PropertyName = "properties.outputs")]
-        public IDictionary<string, WorkflowParameter> Outputs { get; private set; }
+        public IDictionary<string, WorkflowOutputParameter> Outputs { get; private set; }
 
     }
 }

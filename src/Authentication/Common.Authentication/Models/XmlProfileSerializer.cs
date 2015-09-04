@@ -24,13 +24,13 @@ namespace Microsoft.Azure.Common.Authentication.Models
 {
     public class XmlProfileSerializer : IProfileSerializer
     {
-        public string Serialize(AzureProfile obj)
+        public string Serialize(AzureSMProfile obj)
         {
             // We do not use the serialize for xml serializer anymore and rely solely on the JSON serializer.
             throw new NotImplementedException();
         }
 
-        public bool Deserialize(string contents, AzureProfile profile)
+        public bool Deserialize(string contents, AzureSMProfile profile)
         {
             ProfileData data;
             Debug.Assert(profile != null);

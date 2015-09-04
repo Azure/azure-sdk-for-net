@@ -19,7 +19,7 @@
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Logic.LogicManagementClient/0.9.0.0"
+          "Microsoft.Azure.Management.Logic.LogicManagementClient/0.1.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"properties\": {\r\n    \"createdTime\": \"2015-07-29T06:03:49.9442891Z\",\r\n    \"changedTime\": \"2015-07-29T06:03:49.9442891Z\",\r\n    \"state\": \"Enabled\",\r\n    \"version\": \"08587634570556489645\",\r\n    \"accessEndpoint\": \"https://westus.logic.azure.com/subscriptions/df602c9c-7aa0-407d-a6fb-eb20c8bd1192/resourceGroups/flowrg/providers/Microsoft.Logic/workflows/logicwf2013\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\"\r\n    },\r\n    \"definition\": {\r\n      \"$schema\": \"http://schema.management.azure.com/providers/Microsoft.Logic/schemas/2014-12-01-preview/workflowdefinition.json#\",\r\n      \"contentVersion\": \"1.0.0.0\",\r\n      \"parameters\": {},\r\n      \"triggers\": {},\r\n      \"actions\": {\r\n        \"httpAction\": {\r\n          \"type\": \"Http\",\r\n          \"inputs\": {\r\n            \"method\": \"GET\",\r\n            \"uri\": \"invalidUri\"\r\n          },\r\n          \"conditions\": []\r\n        }\r\n      },\r\n      \"outputs\": {}\r\n    },\r\n    \"parameters\": {}\r\n  },\r\n  \"id\": \"/subscriptions/df602c9c-7aa0-407d-a6fb-eb20c8bd1192/resourceGroups/flowrg/providers/Microsoft.Logic/workflows/logicwf2013\",\r\n  \"name\": \"logicwf2013\",\r\n  \"type\": \"Microsoft.Logic/workflows\",\r\n  \"location\": \"westus\"\r\n}",
@@ -79,7 +79,7 @@
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Logic.LogicManagementClient/0.9.0.0"
+          "Microsoft.Azure.Management.Logic.LogicManagementClient/0.1.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"properties\": {\r\n    \"startTime\": \"2015-07-29T06:03:50.9205631Z\",\r\n    \"endTime\": \"2015-07-29T06:03:50.9565026Z\",\r\n    \"status\": \"Running\",\r\n    \"correlationId\": \"74d5663d-3009-4fc9-a1ae-3262a1ecbe28\",\r\n    \"workflow\": {\r\n      \"name\": \"logicwf2013/08587634570556489645\",\r\n      \"id\": \"/subscriptions/df602c9c-7aa0-407d-a6fb-eb20c8bd1192/resourceGroups/flowrg/providers/Microsoft.Logic/workflows/logicwf2013/versions/08587634570556489645\",\r\n      \"type\": \"Microsoft.Logic/workflows/versions\"\r\n    },\r\n    \"trigger\": {},\r\n    \"outputs\": {}\r\n  },\r\n  \"id\": \"/subscriptions/df602c9c-7aa0-407d-a6fb-eb20c8bd1192/resourceGroups/flowrg/providers/Microsoft.Logic/workflows/logicwf2013/runs/08587634570545571912\",\r\n  \"name\": \"08587634570545571912\",\r\n  \"type\": \"Microsoft.Logic/workflows/runs\"\r\n}",
@@ -145,7 +145,7 @@
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Logic.LogicManagementClient/0.9.0.0"
+          "Microsoft.Azure.Management.Logic.LogicManagementClient/0.1.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"properties\": {\r\n    \"startTime\": \"2015-07-29T06:04:01.821394Z\",\r\n    \"endTime\": \"2015-07-29T06:04:01.8550113Z\",\r\n    \"status\": \"Running\",\r\n    \"correlationId\": \"332946a9-f1db-4ffd-93a2-95a6d0ed49c2\",\r\n    \"workflow\": {\r\n      \"name\": \"logicwf2013/08587634570556489645\",\r\n      \"id\": \"/subscriptions/df602c9c-7aa0-407d-a6fb-eb20c8bd1192/resourceGroups/flowrg/providers/Microsoft.Logic/workflows/logicwf2013/versions/08587634570556489645\",\r\n      \"type\": \"Microsoft.Logic/workflows/versions\"\r\n    },\r\n    \"trigger\": {},\r\n    \"outputs\": {}\r\n  },\r\n  \"id\": \"/subscriptions/df602c9c-7aa0-407d-a6fb-eb20c8bd1192/resourceGroups/flowrg/providers/Microsoft.Logic/workflows/logicwf2013/runs/08587634570436563371\",\r\n  \"name\": \"08587634570436563371\",\r\n  \"type\": \"Microsoft.Logic/workflows/runs\"\r\n}",
@@ -199,7 +199,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "Microsoft.Azure.Management.Logic.LogicManagementClient/0.9.0.0"
+          "Microsoft.Azure.Management.Logic.LogicManagementClient/0.1.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"properties\": {\r\n    \"startTime\": \"2015-07-29T06:03:50.9205631Z\",\r\n    \"endTime\": \"2015-07-29T06:03:51.3410919Z\",\r\n    \"status\": \"Failed\",\r\n    \"correlationId\": \"74d5663d-3009-4fc9-a1ae-3262a1ecbe28\",\r\n    \"workflow\": {\r\n      \"name\": \"logicwf2013/08587634570556489645\",\r\n      \"id\": \"/subscriptions/df602c9c-7aa0-407d-a6fb-eb20c8bd1192/resourceGroups/flowrg/providers/Microsoft.Logic/workflows/logicwf2013/versions/08587634570556489645\",\r\n      \"type\": \"Microsoft.Logic/workflows/versions\"\r\n    },\r\n    \"trigger\": {},\r\n    \"outputs\": {}\r\n  },\r\n  \"id\": \"/subscriptions/df602c9c-7aa0-407d-a6fb-eb20c8bd1192/resourceGroups/flowrg/providers/Microsoft.Logic/workflows/logicwf2013/runs/08587634570545571912\",\r\n  \"name\": \"08587634570545571912\",\r\n  \"type\": \"Microsoft.Logic/workflows/runs\"\r\n}",
@@ -250,7 +250,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "Microsoft.Azure.Management.Logic.LogicManagementClient/0.9.0.0"
+          "Microsoft.Azure.Management.Logic.LogicManagementClient/0.1.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"properties\": {\r\n    \"startTime\": \"2015-07-29T06:04:01.821394Z\",\r\n    \"endTime\": \"2015-07-29T06:04:02.1702627Z\",\r\n    \"status\": \"Failed\",\r\n    \"correlationId\": \"332946a9-f1db-4ffd-93a2-95a6d0ed49c2\",\r\n    \"workflow\": {\r\n      \"name\": \"logicwf2013/08587634570556489645\",\r\n      \"id\": \"/subscriptions/df602c9c-7aa0-407d-a6fb-eb20c8bd1192/resourceGroups/flowrg/providers/Microsoft.Logic/workflows/logicwf2013/versions/08587634570556489645\",\r\n      \"type\": \"Microsoft.Logic/workflows/versions\"\r\n    },\r\n    \"trigger\": {},\r\n    \"outputs\": {}\r\n  },\r\n  \"id\": \"/subscriptions/df602c9c-7aa0-407d-a6fb-eb20c8bd1192/resourceGroups/flowrg/providers/Microsoft.Logic/workflows/logicwf2013/runs/08587634570436563371\",\r\n  \"name\": \"08587634570436563371\",\r\n  \"type\": \"Microsoft.Logic/workflows/runs\"\r\n}",
@@ -307,7 +307,7 @@
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Logic.LogicManagementClient/0.9.0.0"
+          "Microsoft.Azure.Management.Logic.LogicManagementClient/0.1.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"properties\": {\r\n    \"startTime\": \"2015-07-29T06:04:01.821394Z\",\r\n    \"endTime\": \"2015-07-29T06:04:02.1702627Z\",\r\n    \"status\": \"Failed\",\r\n    \"correlationId\": \"332946a9-f1db-4ffd-93a2-95a6d0ed49c2\",\r\n    \"workflow\": {\r\n      \"name\": \"logicwf2013/08587634570556489645\",\r\n      \"id\": \"/subscriptions/df602c9c-7aa0-407d-a6fb-eb20c8bd1192/resourceGroups/flowrg/providers/Microsoft.Logic/workflows/logicwf2013/versions/08587634570556489645\",\r\n      \"type\": \"Microsoft.Logic/workflows/versions\"\r\n    },\r\n    \"trigger\": {},\r\n    \"outputs\": {}\r\n  },\r\n  \"id\": \"/subscriptions/df602c9c-7aa0-407d-a6fb-eb20c8bd1192/resourceGroups/flowrg/providers/Microsoft.Logic/workflows/logicwf2013/runs/08587634570436563371\",\r\n  \"name\": \"08587634570436563371\",\r\n  \"type\": \"Microsoft.Logic/workflows/runs\"\r\n}",
@@ -364,7 +364,7 @@
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Logic.LogicManagementClient/0.9.0.0"
+          "Microsoft.Azure.Management.Logic.LogicManagementClient/0.1.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"startTime\": \"2015-07-29T06:04:01.821394Z\",\r\n        \"endTime\": \"2015-07-29T06:04:02.1702627Z\",\r\n        \"status\": \"Failed\",\r\n        \"correlationId\": \"332946a9-f1db-4ffd-93a2-95a6d0ed49c2\",\r\n        \"workflow\": {\r\n          \"name\": \"logicwf2013/08587634570556489645\",\r\n          \"id\": \"/subscriptions/df602c9c-7aa0-407d-a6fb-eb20c8bd1192/resourceGroups/flowrg/providers/Microsoft.Logic/workflows/logicwf2013/versions/08587634570556489645\",\r\n          \"type\": \"Microsoft.Logic/workflows/versions\"\r\n        },\r\n        \"trigger\": {},\r\n        \"outputs\": {}\r\n      },\r\n      \"id\": \"/subscriptions/df602c9c-7aa0-407d-a6fb-eb20c8bd1192/resourceGroups/flowrg/providers/Microsoft.Logic/workflows/logicwf2013/runs/08587634570436563371\",\r\n      \"name\": \"08587634570436563371\",\r\n      \"type\": \"Microsoft.Logic/workflows/runs\"\r\n    }\r\n  ],\r\n  \"nextLink\": \"https://management.azure.com/subscriptions/df602c9c-7aa0-407d-a6fb-eb20c8bd1192/resourceGroups/flowrg/providers/Microsoft.Logic/workflows/logicwf2013/runs?api-version=2015-02-01-preview&%24top=1&%24filter=status+eq+%27Failed%27&%24skiptoken=eyJuZXh0UGFydGl0aW9uS2V5IjoiMSE4IVFUQkRNVFEtIiwibmV4dFJvd0tleSI6IjEhNzIhTkRkQk5FUkNRekpDTUVZNE5FWXhNRUl4UWpKRE56Z3dNMFUxUWtRMU9VTmZNRGcxT0RjMk16UTFOekExTkRVMU56RTVNVEktIn0%3d\"\r\n}",
@@ -421,7 +421,7 @@
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Logic.LogicManagementClient/0.9.0.0"
+          "Microsoft.Azure.Management.Logic.LogicManagementClient/0.1.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"startTime\": \"2015-07-29T06:04:01.821394Z\",\r\n        \"endTime\": \"2015-07-29T06:04:02.1702627Z\",\r\n        \"status\": \"Failed\",\r\n        \"correlationId\": \"332946a9-f1db-4ffd-93a2-95a6d0ed49c2\",\r\n        \"workflow\": {\r\n          \"name\": \"logicwf2013/08587634570556489645\",\r\n          \"id\": \"/subscriptions/df602c9c-7aa0-407d-a6fb-eb20c8bd1192/resourceGroups/flowrg/providers/Microsoft.Logic/workflows/logicwf2013/versions/08587634570556489645\",\r\n          \"type\": \"Microsoft.Logic/workflows/versions\"\r\n        },\r\n        \"trigger\": {},\r\n        \"outputs\": {}\r\n      },\r\n      \"id\": \"/subscriptions/df602c9c-7aa0-407d-a6fb-eb20c8bd1192/resourceGroups/flowrg/providers/Microsoft.Logic/workflows/logicwf2013/runs/08587634570436563371\",\r\n      \"name\": \"08587634570436563371\",\r\n      \"type\": \"Microsoft.Logic/workflows/runs\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"startTime\": \"2015-07-29T06:03:50.9205631Z\",\r\n        \"endTime\": \"2015-07-29T06:03:51.3410919Z\",\r\n        \"status\": \"Failed\",\r\n        \"correlationId\": \"74d5663d-3009-4fc9-a1ae-3262a1ecbe28\",\r\n        \"workflow\": {\r\n          \"name\": \"logicwf2013/08587634570556489645\",\r\n          \"id\": \"/subscriptions/df602c9c-7aa0-407d-a6fb-eb20c8bd1192/resourceGroups/flowrg/providers/Microsoft.Logic/workflows/logicwf2013/versions/08587634570556489645\",\r\n          \"type\": \"Microsoft.Logic/workflows/versions\"\r\n        },\r\n        \"trigger\": {},\r\n        \"outputs\": {}\r\n      },\r\n      \"id\": \"/subscriptions/df602c9c-7aa0-407d-a6fb-eb20c8bd1192/resourceGroups/flowrg/providers/Microsoft.Logic/workflows/logicwf2013/runs/08587634570545571912\",\r\n      \"name\": \"08587634570545571912\",\r\n      \"type\": \"Microsoft.Logic/workflows/runs\"\r\n    }\r\n  ]\r\n}",
@@ -478,7 +478,7 @@
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Logic.LogicManagementClient/0.9.0.0"
+          "Microsoft.Azure.Management.Logic.LogicManagementClient/0.1.0.0"
         ]
       },
       "ResponseBody": "",
