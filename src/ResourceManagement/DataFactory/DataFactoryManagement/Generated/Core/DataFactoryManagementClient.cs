@@ -165,6 +165,16 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             get { return this._linkedServices; }
         }
         
+        private IOAuthOperations _oAuth;
+        
+        /// <summary>
+        /// Operations for OAuth authorizations.
+        /// </summary>
+        public virtual IOAuthOperations OAuth
+        {
+            get { return this._oAuth; }
+        }
+        
         private IPipelineOperations _pipelines;
         
         /// <summary>
@@ -199,6 +209,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             this._gateways = new GatewayOperations(this);
             this._hubs = new HubOperations(this);
             this._linkedServices = new LinkedServiceOperations(this);
+            this._oAuth = new OAuthOperations(this);
             this._pipelines = new PipelineOperations(this);
             this._tables = new TableOperations(this);
             this._longRunningOperationInitialTimeout = -1;
@@ -281,6 +292,7 @@ namespace Microsoft.Azure.Management.DataFactories.Core
             this._gateways = new GatewayOperations(this);
             this._hubs = new HubOperations(this);
             this._linkedServices = new LinkedServiceOperations(this);
+            this._oAuth = new OAuthOperations(this);
             this._pipelines = new PipelineOperations(this);
             this._tables = new TableOperations(this);
             this._longRunningOperationInitialTimeout = -1;
