@@ -51,6 +51,9 @@
     <Compile Include="Customizations\Operations\DataFactories\IDataFactoryOperations.cs" />
     <Compile Include="Customizations\Operations\DataSlices\IDataSliceOperations.cs" />
     <Compile Include="Customizations\DataFactoryManagementClient.Registration.cs" />
+    <Compile Include="Customizations\Operations\OAuth\IOAuthOperations.cs" />
+    <Compile Include="Customizations\Operations\OAuth\OAuthOperations.cs" />
+    <Compile Include="Customizations\Operations\OAuth\OAuthOperationsExtensions.cs" />
     <Compile Include="Customizations\Runtime\ActivityConfiguration.cs" />
     <Compile Include="Customizations\Runtime\ActivityConfigurationConverter.cs" />
     <Compile Include="Customizations\Runtime\ActivityExecutor.cs" />
