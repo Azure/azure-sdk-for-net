@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         private ErrorResponse _error;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets the error response if any.
         /// </summary>
         public ErrorResponse Error
         {
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         private string _operationStatusLink;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets the operation status link.
         /// </summary>
         public string OperationStatusLink
         {
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         private int _retryAfter;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets the retry delay for polling.
         /// </summary>
         public int RetryAfter
         {
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         private OperationStatus _status;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets the operation status.
         /// </summary>
         public OperationStatus Status
         {
