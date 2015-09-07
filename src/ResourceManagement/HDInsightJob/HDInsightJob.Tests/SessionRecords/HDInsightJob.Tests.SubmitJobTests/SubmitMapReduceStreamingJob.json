@@ -26,7 +26,7 @@
           "submission"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"job_1441022937859_0019\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"job_1441139801399_0058\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "31"
@@ -34,17 +34,8 @@
         "Content-Type": [
           "application/json"
         ],
-        "x-ms-hdi-servedby": [
-          "GATEWAY0"
-        ],
-        "x-ms-hdi-active": [
-          "headnode0.nemadj-prod-sdk.b4.internal.cloudapp.net"
-        ],
-        "x-ms-leader-detect-time": [
-          "0"
-        ],
         "Set-Cookie": [
-          "hadoop.auth=\"u=admin&p=admin&t=simple&e=1441095707119&s=Hr686xjm9knO5CGZYEoTBzLWz44=\"; Path=/; Expires=Tue, 01-Sep-2015 08:21:47 GMT; HttpOnly"
+          "hadoop.auth=\"u=admin&p=admin&t=simple&e=1441265362253&s=bP8dPBlNxTuLubAigETfpdEDKu4=\"; Path=/; Expires=Thu, 03-Sep-2015 07:29:22 GMT; HttpOnly; path=/; secure"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -53,14 +44,8 @@
           "ARR/2.5",
           "ASP.NET"
         ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000"
-        ],
         "Date": [
-          "Mon, 31 Aug 2015 22:21:49 GMT"
+          "Wed, 02 Sep 2015 21:29:27 GMT"
         ]
       },
       "StatusCode": 200

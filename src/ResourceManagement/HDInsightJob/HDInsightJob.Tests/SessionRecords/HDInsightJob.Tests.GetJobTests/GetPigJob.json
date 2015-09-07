@@ -25,7 +25,7 @@
           "submission"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"job_1441022937859_0011\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"job_1441139801399_0055\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "31"
@@ -33,17 +33,8 @@
         "Content-Type": [
           "application/json"
         ],
-        "x-ms-hdi-servedby": [
-          "GATEWAY1"
-        ],
-        "x-ms-hdi-active": [
-          "headnode0.nemadj-prod-sdk.b4.internal.cloudapp.net"
-        ],
-        "x-ms-leader-detect-time": [
-          "0"
-        ],
         "Set-Cookie": [
-          "hadoop.auth=\"u=admin&p=admin&t=simple&e=1441095676261&s=iwVxr4wzNaZvu6uvmZbOougVd1U=\"; Path=/; Expires=Tue, 01-Sep-2015 08:21:16 GMT; HttpOnly"
+          "hadoop.auth=\"u=admin&p=admin&t=simple&e=1441265334993&s=HloMVNisqAKTamKw8ySRN66Eees=\"; Path=/; Expires=Thu, 03-Sep-2015 07:28:54 GMT; HttpOnly; path=/; secure"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -52,21 +43,15 @@
           "ARR/2.5",
           "ASP.NET"
         ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000"
-        ],
         "Date": [
-          "Mon, 31 Aug 2015 22:21:18 GMT"
+          "Wed, 02 Sep 2015 21:28:58 GMT"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/templeton/v1/jobs/job_1441022937859_0011?user.name=admin&fields=*",
-      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDQxMDIyOTM3ODU5XzAwMTE/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
+      "RequestUri": "/templeton/v1/jobs/job_1441139801399_0055?user.name=admin&fields=*",
+      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDQxMTM5ODAxMzk5XzAwNTU/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -82,22 +67,13 @@
           "job"
         ]
       },
-      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 0.0,\r\n    \"runState\": 4,\r\n    \"startTime\": 1441059678785,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"/user/admin/.staging/job_1441022937859_0011/job.xml\",\r\n    \"finishTime\": 0,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"http://headnodehost:9014/proxy/application_1441022937859_0011/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"jobID\": {\r\n      \"id\": 11,\r\n      \"jtIdentifier\": \"1441022937859\"\r\n    },\r\n    \"username\": \"admin\",\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobId\": \"job_1441022937859_0011\",\r\n    \"state\": \"PREP\",\r\n    \"jobComplete\": false,\r\n    \"retired\": false,\r\n    \"uber\": false\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"admin\",\r\n    \"jobFile\": \"/user/admin/.staging/job_1441022937859_0011/job.xml\",\r\n    \"url\": \"http://headnodehost:9014/proxy/application_1441022937859_0011/\",\r\n    \"queueName\": \"default\",\r\n    \"jobID\": {\r\n      \"id\": 11,\r\n      \"jtIdentifier\": \"1441022937859\"\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobId\": \"job_1441022937859_0011\"\r\n  },\r\n  \"id\": \"job_1441022937859_0011\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"admin\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"\",\r\n    \"files\": \"\",\r\n    \"arg\": [\r\n      \"\"\r\n    ],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"records = LOAD '/example/pig/sahara-paleo-fauna.txt' AS (DateBP:int, Loc:chararray, Coordinates:chararray, Samples:chararray, Country:chararray, Laboratory:chararray);filtered_records = FILTER records by Country == 'Egypt' OR Country == 'Morocco';grouped_records = GROUP filtered_records BY Country;DUMP grouped_records;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": \"\",\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
+      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 0.0,\r\n    \"runState\": 4,\r\n    \"startTime\": 1441229338363,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"/mapreducestaging/admin/.staging/job_1441139801399_0055/job.xml\",\r\n    \"finishTime\": 0,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"http://headnode1.4m32muw04giu3klb5maicsedtd.dx.internal.cloudapp.net:8088/proxy/application_1441139801399_0055/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"jobId\": \"job_1441139801399_0055\",\r\n    \"username\": \"admin\",\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobID\": {\r\n      \"id\": 55,\r\n      \"jtIdentifier\": \"1441139801399\"\r\n    },\r\n    \"jobComplete\": false,\r\n    \"retired\": false,\r\n    \"uber\": false,\r\n    \"state\": \"PREP\"\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"admin\",\r\n    \"jobFile\": \"/mapreducestaging/admin/.staging/job_1441139801399_0055/job.xml\",\r\n    \"url\": \"http://headnode1.4m32muw04giu3klb5maicsedtd.dx.internal.cloudapp.net:8088/proxy/application_1441139801399_0055/\",\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1441139801399_0055\",\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobID\": {\r\n      \"id\": 55,\r\n      \"jtIdentifier\": \"1441139801399\"\r\n    }\r\n  },\r\n  \"id\": \"job_1441139801399_0055\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"admin\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"\",\r\n    \"files\": \"\",\r\n    \"arg\": [\r\n      \"\"\r\n    ],\r\n    \"enablelog\": \"false\",\r\n    \"execute\": \"records = LOAD '/example/pig/sahara-paleo-fauna.txt' AS (DateBP:int, Loc:chararray, Coordinates:chararray, Samples:chararray, Country:chararray, Laboratory:chararray);filtered_records = FILTER records by Country == 'Egypt' OR Country == 'Morocco';grouped_records = GROUP filtered_records BY Country;DUMP grouped_records;\",\r\n    \"user.name\": \"admin\",\r\n    \"file\": \"\",\r\n    \"callback\": null,\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "1623"
+          "1745"
         ],
         "Content-Type": [
           "application/json"
-        ],
-        "x-ms-hdi-servedby": [
-          "GATEWAY1"
-        ],
-        "x-ms-hdi-active": [
-          "headnode0.nemadj-prod-sdk.b4.internal.cloudapp.net"
-        ],
-        "x-ms-leader-detect-time": [
-          "0"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -106,14 +82,8 @@
           "ARR/2.5",
           "ASP.NET"
         ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000"
-        ],
         "Date": [
-          "Mon, 31 Aug 2015 22:21:18 GMT"
+          "Wed, 02 Sep 2015 21:28:58 GMT"
         ]
       },
       "StatusCode": 200

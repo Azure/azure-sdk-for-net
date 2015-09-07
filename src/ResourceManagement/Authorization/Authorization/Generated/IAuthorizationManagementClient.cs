@@ -71,6 +71,15 @@ namespace Microsoft.Azure.Management.Authorization
         }
         
         /// <summary>
+        /// Get classic administrator details  (see http://TBD for more
+        /// information)
+        /// </summary>
+        IClassicAdministratorOperations ClassicAdministrators
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Get resource or resource group permissions  (see http://TBD for
         /// more information)
         /// </summary>
