@@ -113,7 +113,7 @@ namespace HDInsight.Tests
 
         private ClusterCreateParameters GetDataLakeClusterParameters()
         {
-            var spec = GetClusterSpecHelpers.GetPaasCreateParameters();
+            var spec = GetClusterSpecHelpers.GetCustomCreateParametersPaas();
 
             ServicePrincipal servicePrincipal = new ServicePrincipal(new Guid(ApplicationId), new Uri(AadTenantId), CertificateFileBytes,
                 CertificatePassword);
