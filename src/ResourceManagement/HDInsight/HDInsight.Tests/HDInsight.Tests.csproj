@@ -23,10 +23,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />   
-    <None Include="Resources\CertFile.pfx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="packages.config" />
     <None Include="SessionRecords\HDInsight.Tests.CreateClusterTests\TestCreateDuplicateCluster.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
