@@ -46,14 +46,14 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// include: 'Shared', 'Dedicated'.
         /// </summary>
         [JsonProperty(PropertyName = "computeMode")]
-        public string ComputeMode { get; set; }
+        public ComputeModeOptions? ComputeMode { get; set; }
 
         /// <summary>
         /// Size of the machines. Possible values for this property include:
         /// 'Small', 'Medium', 'Large'.
         /// </summary>
         [JsonProperty(PropertyName = "workerSize")]
-        public string WorkerSize { get; set; }
+        public WorkerSizeOptions? WorkerSize { get; set; }
 
         /// <summary>
         /// Size Id of machines:

@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// 'SoftDeleted'.
         /// </summary>
         [JsonProperty(PropertyName = "domainType")]
-        public string DomainType { get; set; }
+        public DomainType? DomainType { get; set; }
 
     }
 }

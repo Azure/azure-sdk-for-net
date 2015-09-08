@@ -309,6 +309,10 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "domainRegistrationInput");
             }
+            if (domainRegistrationInput != null)
+            {
+                domainRegistrationInput.Validate();
+            }
             if (this.Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");

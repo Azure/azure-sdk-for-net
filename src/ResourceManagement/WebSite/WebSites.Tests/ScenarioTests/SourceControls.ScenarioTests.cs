@@ -33,6 +33,7 @@ namespace WebSites.Tests.ScenarioTests
 
         private static readonly SourceControl GitHubSourceControl = new SourceControl()
         {
+            Location = "global",
             SourceControlName = "GitHub",
             Token = "myToken",
             TokenSecret = "myTokenSecret"

@@ -315,6 +315,10 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "requestMessage");
             }
+            if (requestMessage != null)
+            {
+                requestMessage.Validate();
+            }
             if (this.Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
@@ -582,6 +586,10 @@ namespace Microsoft.Azure.Management.WebSites
             if (requestMessage == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "requestMessage");
+            }
+            if (requestMessage != null)
+            {
+                requestMessage.Validate();
             }
             if (this.Client.ApiVersion == null)
             {

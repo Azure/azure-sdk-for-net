@@ -37,5 +37,26 @@ namespace Microsoft.Azure.Management.WebSites.Models
         [JsonProperty(PropertyName = "properties.hybridConnections")]
         public IList<RelayServiceConnectionEntity> HybridConnections { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
+        /// </summary>
+        public override void Validate()
+        {
+            base.Validate();
+            if (this.VirtualNetworkConnection != null)
+            {
+                this.VirtualNetworkConnection.Validate();
+            }
+            if (this.HybridConnections != null)
+            {
+                foreach (var element in this.HybridConnections)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
+        }
     }
 }

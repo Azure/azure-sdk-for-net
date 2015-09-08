@@ -80,7 +80,7 @@ namespace WebSites.Tests.ScenarioTests
                     BackupSchedule = new BackupSchedule()
                     {
                         FrequencyInterval = 17,
-                        FrequencyUnit = "Day",
+                        FrequencyUnit = FrequencyUnit.Day,
                         KeepAtLeastOneBackup = true,
                         RetentionPeriodInDays = 26,
                         StartTime = DateTime.Now.AddDays(5)

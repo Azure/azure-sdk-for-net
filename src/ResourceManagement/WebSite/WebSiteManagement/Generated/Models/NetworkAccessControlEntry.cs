@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// Possible values for this property include: 'Permit', 'Deny'.
         /// </summary>
         [JsonProperty(PropertyName = "action")]
-        public string Action { get; set; }
+        public AccessControlEntryAction? Action { get; set; }
 
         /// <summary>
         /// </summary>

@@ -23,5 +23,22 @@ namespace Microsoft.Azure.Management.WebSites.Models
         [JsonProperty(PropertyName = "properties")]
         public IDictionary<string, ConnStringValueTypePair> Properties { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
+        /// </summary>
+        public override void Validate()
+        {
+            base.Validate();
+            if (this.Properties != null)
+            {
+                foreach (var valueElement in this.Properties.Values)
+                {
+                    if (valueElement != null)
+                    {
+                        valueElement.Validate();
+                    }
+                }
+            }
+        }
     }
 }

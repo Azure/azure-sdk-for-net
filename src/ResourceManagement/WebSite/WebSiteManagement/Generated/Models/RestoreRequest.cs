@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// 'Default', 'Clone', 'Relocation'.
         /// </summary>
         [JsonProperty(PropertyName = "properties.operationType")]
-        public string OperationType { get; set; }
+        public BackupRestoreOperationType? OperationType { get; set; }
 
         /// <summary>
         /// Gets or sets a flag showing if SiteConfig.ConnectionStrings should
@@ -80,5 +80,12 @@ namespace Microsoft.Azure.Management.WebSites.Models
         [JsonProperty(PropertyName = "properties.hostingEnvironment")]
         public string HostingEnvironment { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
+        /// </summary>
+        public override void Validate()
+        {
+            base.Validate();
+        }
     }
 }

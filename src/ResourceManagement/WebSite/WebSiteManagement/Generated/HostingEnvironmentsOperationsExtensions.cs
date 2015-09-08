@@ -234,6 +234,84 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='name'>
             /// Name of hostingEnvironment (App Service Environment)
             /// </param>
+            public static IList<HostingEnvironmentDiagnostics> GetHostingEnvironmentDiagnostics(this IHostingEnvironmentsOperations operations, string resourceGroupName, string name)
+            {
+                return Task.Factory.StartNew(s => ((IHostingEnvironmentsOperations)s).GetHostingEnvironmentDiagnosticsAsync(resourceGroupName, name), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of hostingEnvironment (App Service Environment)
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IList<HostingEnvironmentDiagnostics>> GetHostingEnvironmentDiagnosticsAsync( this IHostingEnvironmentsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<IList<HostingEnvironmentDiagnostics>> result = await operations.GetHostingEnvironmentDiagnosticsWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of hostingEnvironment (App Service Environment)
+            /// </param>
+            /// <param name='diagnosticsName'>
+            /// Name of the diagnostics
+            /// </param>
+            public static HostingEnvironmentDiagnostics GetHostingEnvironmentDiagnosticsItem(this IHostingEnvironmentsOperations operations, string resourceGroupName, string name, string diagnosticsName)
+            {
+                return Task.Factory.StartNew(s => ((IHostingEnvironmentsOperations)s).GetHostingEnvironmentDiagnosticsItemAsync(resourceGroupName, name, diagnosticsName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of hostingEnvironment (App Service Environment)
+            /// </param>
+            /// <param name='diagnosticsName'>
+            /// Name of the diagnostics
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<HostingEnvironmentDiagnostics> GetHostingEnvironmentDiagnosticsItemAsync( this IHostingEnvironmentsOperations operations, string resourceGroupName, string name, string diagnosticsName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<HostingEnvironmentDiagnostics> result = await operations.GetHostingEnvironmentDiagnosticsItemWithHttpMessagesAsync(resourceGroupName, name, diagnosticsName, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of hostingEnvironment (App Service Environment)
+            /// </param>
             public static StampCapacityCollection GetHostingEnvironmentCapacities(this IHostingEnvironmentsOperations operations, string resourceGroupName, string name)
             {
                 return Task.Factory.StartNew(s => ((IHostingEnvironmentsOperations)s).GetHostingEnvironmentCapacitiesAsync(resourceGroupName, name), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();

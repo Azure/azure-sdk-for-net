@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// 7). Possible values for this property include: 'Day', 'Hour'.
         /// </summary>
         [JsonProperty(PropertyName = "frequencyUnit")]
-        public string FrequencyUnit { get; set; }
+        public FrequencyUnit? FrequencyUnit { get; set; }
 
         /// <summary>
         /// True if the retention policy should always keep at least one
@@ -59,5 +59,15 @@ namespace Microsoft.Azure.Management.WebSites.Models
         [JsonProperty(PropertyName = "lastExecutionTime")]
         public DateTime? LastExecutionTime { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
+        /// </summary>
+        public virtual void Validate()
+        {
+            if (FrequencyUnit == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "FrequencyUnit");
+            }
+        }
     }
 }

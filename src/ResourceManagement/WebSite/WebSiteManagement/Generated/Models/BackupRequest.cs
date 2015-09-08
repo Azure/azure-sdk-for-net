@@ -53,7 +53,18 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// 'Default', 'Clone', 'Relocation'.
         /// </summary>
         [JsonProperty(PropertyName = "properties.type")]
-        public string BackupRequestType { get; set; }
+        public BackupRestoreOperationType? BackupRequestType { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
+        /// </summary>
+        public override void Validate()
+        {
+            base.Validate();
+            if (this.BackupSchedule != null)
+            {
+                this.BackupSchedule.Validate();
+            }
+        }
     }
 }

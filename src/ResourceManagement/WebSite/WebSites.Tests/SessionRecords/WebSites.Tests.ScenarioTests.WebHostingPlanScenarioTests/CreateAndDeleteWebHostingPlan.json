@@ -7,7 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "52cbb4f4-cff7-4a25-ad5f-2899446aacce"
+          "57fcbd9e-1120-4f9e-add5-8e540d59ec94"
         ],
         "accept-language": [
           "en-US"
@@ -31,16 +31,16 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14992"
+          "14987"
         ],
         "x-ms-request-id": [
-          "9bbb8627-ac77-4054-9a27-a9d6df3ce305"
+          "6376a339-5fe5-473f-9ff4-324f89d7125d"
         ],
         "x-ms-correlation-request-id": [
-          "9bbb8627-ac77-4054-9a27-a9d6df3ce305"
+          "6376a339-5fe5-473f-9ff4-324f89d7125d"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20150903T201042Z:9bbb8627-ac77-4054-9a27-a9d6df3ce305"
+          "WESTUS:20150905T022849Z:6376a339-5fe5-473f-9ff4-324f89d7125d"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -49,14 +49,14 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 03 Sep 2015 20:10:41 GMT"
+          "Sat, 05 Sep 2015 02:28:49 GMT"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/4adb32ad-8327-4cbb-b775-b84b4465bb38/resourcegroups/csmrg3598?api-version=2014-04-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGFkYjMyYWQtODMyNy00Y2JiLWI3NzUtYjg0YjQ0NjViYjM4L3Jlc291cmNlZ3JvdXBzL2NzbXJnMzU5OD9hcGktdmVyc2lvbj0yMDE0LTA0LTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/4adb32ad-8327-4cbb-b775-b84b4465bb38/resourcegroups/csmrg9102?api-version=2014-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGFkYjMyYWQtODMyNy00Y2JiLWI3NzUtYjg0YjQ0NjViYjM4L3Jlc291cmNlZ3JvdXBzL2NzbXJnOTEwMj9hcGktdmVyc2lvbj0yMDE0LTA0LTAxLXByZXZpZXc=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"East Asia\"\r\n}",
       "RequestHeaders": {
@@ -67,7 +67,7 @@
           "31"
         ],
         "x-ms-client-request-id": [
-          "70ea28ef-8847-4cf0-84b6-d1c40141148e"
+          "b55d74e7-7765-49c5-8567-6309c54410be"
         ],
         "accept-language": [
           "en-US"
@@ -76,7 +76,7 @@
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/2.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4adb32ad-8327-4cbb-b775-b84b4465bb38/resourceGroups/csmrg3598\",\r\n  \"name\": \"csmrg3598\",\r\n  \"location\": \"eastasia\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4adb32ad-8327-4cbb-b775-b84b4465bb38/resourceGroups/csmrg9102\",\r\n  \"name\": \"csmrg9102\",\r\n  \"location\": \"eastasia\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "173"
@@ -91,16 +91,16 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1197"
+          "1158"
         ],
         "x-ms-request-id": [
-          "43bfee20-182a-4dc0-a654-ab580666ad1a"
+          "1e8b7194-7d16-485e-8978-bb410cd93af0"
         ],
         "x-ms-correlation-request-id": [
-          "43bfee20-182a-4dc0-a654-ab580666ad1a"
+          "1e8b7194-7d16-485e-8978-bb410cd93af0"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20150903T201044Z:43bfee20-182a-4dc0-a654-ab580666ad1a"
+          "WESTUS:20150905T022851Z:1e8b7194-7d16-485e-8978-bb410cd93af0"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -109,19 +109,19 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 03 Sep 2015 20:10:43 GMT"
+          "Sat, 05 Sep 2015 02:28:50 GMT"
         ]
       },
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/4adb32ad-8327-4cbb-b775-b84b4465bb38/resourceGroups/csmrg3598/providers/Microsoft.Web/sites?api-version=2015-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGFkYjMyYWQtODMyNy00Y2JiLWI3NzUtYjg0YjQ0NjViYjM4L3Jlc291cmNlR3JvdXBzL2NzbXJnMzU5OC9wcm92aWRlcnMvTWljcm9zb2Z0LldlYi9zaXRlcz9hcGktdmVyc2lvbj0yMDE1LTA4LTAx",
+      "RequestUri": "/subscriptions/4adb32ad-8327-4cbb-b775-b84b4465bb38/resourceGroups/csmrg9102/providers/Microsoft.Web/sites?api-version=2015-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGFkYjMyYWQtODMyNy00Y2JiLWI3NzUtYjg0YjQ0NjViYjM4L3Jlc291cmNlR3JvdXBzL2NzbXJnOTEwMi9wcm92aWRlcnMvTWljcm9zb2Z0LldlYi9zaXRlcz9hcGktdmVyc2lvbj0yMDE1LTA4LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "122fe3ec-1cb3-4f4e-a3ad-1ba6bdd037e1"
+          "1b739ed0-3e48-4e86-9537-13c17a6d7824"
         ],
         "accept-language": [
           "en-US"
@@ -148,22 +148,22 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "1345337a-8134-4991-aaf3-4d0854604a51"
+          "de3ed777-2920-45fa-808c-a18259efbc9d"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14991"
+          "14983"
         ],
         "x-ms-correlation-request-id": [
-          "828d874b-e8c9-462b-9161-571f4ef9aa15"
+          "16ddf43e-b5e5-4140-80c1-8976658877be"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20150903T201045Z:828d874b-e8c9-462b-9161-571f4ef9aa15"
+          "WESTUS:20150905T022852Z:16ddf43e-b5e5-4140-80c1-8976658877be"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Thu, 03 Sep 2015 20:10:45 GMT"
+          "Sat, 05 Sep 2015 02:28:51 GMT"
         ],
         "Server": [
           "Microsoft-IIS/8.0"
@@ -178,19 +178,19 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/4adb32ad-8327-4cbb-b775-b84b4465bb38/resourceGroups/csmrg3598/providers/Microsoft.Web/serverfarms/csmsf4329?api-version=2015-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGFkYjMyYWQtODMyNy00Y2JiLWI3NzUtYjg0YjQ0NjViYjM4L3Jlc291cmNlR3JvdXBzL2NzbXJnMzU5OC9wcm92aWRlcnMvTWljcm9zb2Z0LldlYi9zZXJ2ZXJmYXJtcy9jc21zZjQzMjk/YXBpLXZlcnNpb249MjAxNS0wOC0wMQ==",
+      "RequestUri": "/subscriptions/4adb32ad-8327-4cbb-b775-b84b4465bb38/resourceGroups/csmrg9102/providers/Microsoft.Web/serverfarms/csmsf42?api-version=2015-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGFkYjMyYWQtODMyNy00Y2JiLWI3NzUtYjg0YjQ0NjViYjM4L3Jlc291cmNlR3JvdXBzL2NzbXJnOTEwMi9wcm92aWRlcnMvTWljcm9zb2Z0LldlYi9zZXJ2ZXJmYXJtcy9jc21zZjQyP2FwaS12ZXJzaW9uPTIwMTUtMDgtMDE=",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"F1\",\r\n    \"tier\": \"Free\",\r\n    \"capacity\": 1\r\n  },\r\n  \"location\": \"East Asia\",\r\n  \"properties\": {\r\n    \"name\": \"csmsf4329\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"F1\",\r\n    \"tier\": \"Free\",\r\n    \"capacity\": 1\r\n  },\r\n  \"location\": \"East Asia\",\r\n  \"properties\": {\r\n    \"name\": \"csmsf42\"\r\n  }\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "158"
+          "156"
         ],
         "x-ms-client-request-id": [
-          "a0180b79-a548-409c-8bfc-06f479f2528e"
+          "68f29c6c-8254-4787-a16a-fb760de9ae3d"
         ],
         "accept-language": [
           "en-US"
@@ -199,10 +199,10 @@
           "Microsoft.Azure.Management.WebSites.WebSiteManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4adb32ad-8327-4cbb-b775-b84b4465bb38/resourceGroups/csmrg3598/providers/Microsoft.Web/serverfarms/csmsf4329\",\r\n  \"name\": \"csmsf4329\",\r\n  \"type\": \"Microsoft.Web/serverfarms\",\r\n  \"kind\": null,\r\n  \"location\": \"East Asia\",\r\n  \"tags\": null,\r\n  \"plan\": null,\r\n  \"properties\": {\r\n    \"serverFarmId\": 0,\r\n    \"name\": \"csmsf4329\",\r\n    \"workerSize\": 0,\r\n    \"workerSizeId\": 0,\r\n    \"numberOfWorkers\": 0,\r\n    \"currentWorkerSize\": 0,\r\n    \"currentWorkerSizeId\": 0,\r\n    \"currentNumberOfWorkers\": 0,\r\n    \"status\": 0,\r\n    \"webSpace\": \"csmrg3598-EastAsiawebspace\",\r\n    \"subscription\": \"4adb32ad-8327-4cbb-b775-b84b4465bb38\",\r\n    \"adminSiteName\": null,\r\n    \"hostingEnvironment\": null,\r\n    \"hostingEnvironmentProfile\": null,\r\n    \"maximumNumberOfWorkers\": 1,\r\n    \"planName\": \"VirtualDedicatedPlan\",\r\n    \"adminRuntimeSiteName\": null,\r\n    \"computeMode\": 0,\r\n    \"siteMode\": null,\r\n    \"geoRegion\": \"East Asia\",\r\n    \"perSiteScaling\": false,\r\n    \"numberOfSites\": 0,\r\n    \"hostingEnvironmentId\": null,\r\n    \"tags\": null,\r\n    \"resourceGroup\": \"csmrg3598\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"F1\",\r\n    \"tier\": \"Free\",\r\n    \"size\": \"F1\",\r\n    \"family\": \"F\",\r\n    \"capacity\": 0\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4adb32ad-8327-4cbb-b775-b84b4465bb38/resourceGroups/csmrg9102/providers/Microsoft.Web/serverfarms/csmsf42\",\r\n  \"name\": \"csmsf42\",\r\n  \"type\": \"Microsoft.Web/serverfarms\",\r\n  \"kind\": null,\r\n  \"location\": \"East Asia\",\r\n  \"tags\": null,\r\n  \"plan\": null,\r\n  \"properties\": {\r\n    \"serverFarmId\": 0,\r\n    \"name\": \"csmsf42\",\r\n    \"workerSize\": 0,\r\n    \"workerSizeId\": 0,\r\n    \"numberOfWorkers\": 0,\r\n    \"currentWorkerSize\": 0,\r\n    \"currentWorkerSizeId\": 0,\r\n    \"currentNumberOfWorkers\": 0,\r\n    \"status\": 0,\r\n    \"webSpace\": \"csmrg9102-EastAsiawebspace\",\r\n    \"subscription\": \"4adb32ad-8327-4cbb-b775-b84b4465bb38\",\r\n    \"adminSiteName\": null,\r\n    \"hostingEnvironment\": null,\r\n    \"hostingEnvironmentProfile\": null,\r\n    \"maximumNumberOfWorkers\": 1,\r\n    \"planName\": \"VirtualDedicatedPlan\",\r\n    \"adminRuntimeSiteName\": null,\r\n    \"computeMode\": 0,\r\n    \"siteMode\": null,\r\n    \"geoRegion\": \"East Asia\",\r\n    \"perSiteScaling\": false,\r\n    \"numberOfSites\": 0,\r\n    \"hostingEnvironmentId\": null,\r\n    \"tags\": null,\r\n    \"resourceGroup\": \"csmrg9102\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"F1\",\r\n    \"tier\": \"Free\",\r\n    \"size\": \"F1\",\r\n    \"family\": \"F\",\r\n    \"capacity\": 0\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "931"
+          "925"
         ],
         "Content-Type": [
           "application/json"
@@ -217,22 +217,22 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "e7c9ecd7-8f17-43a6-b29e-dda03bbd441c"
+          "a0e8664b-2f76-4fa3-9a7e-e5b4005d44e3"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1192"
+          "1175"
         ],
         "x-ms-correlation-request-id": [
-          "a9ebe81b-6566-46fc-a55e-3f1b374e4703"
+          "e95b3150-f596-4048-9bcf-74a404ac5f05"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20150903T201052Z:a9ebe81b-6566-46fc-a55e-3f1b374e4703"
+          "WESTUS:20150905T022857Z:e95b3150-f596-4048-9bcf-74a404ac5f05"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Thu, 03 Sep 2015 20:10:52 GMT"
+          "Sat, 05 Sep 2015 02:28:57 GMT"
         ],
         "Server": [
           "Microsoft-IIS/8.0"
@@ -247,13 +247,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/4adb32ad-8327-4cbb-b775-b84b4465bb38/resourceGroups/csmrg3598/providers/Microsoft.Web/serverfarms/csmsf4329?api-version=2015-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGFkYjMyYWQtODMyNy00Y2JiLWI3NzUtYjg0YjQ0NjViYjM4L3Jlc291cmNlR3JvdXBzL2NzbXJnMzU5OC9wcm92aWRlcnMvTWljcm9zb2Z0LldlYi9zZXJ2ZXJmYXJtcy9jc21zZjQzMjk/YXBpLXZlcnNpb249MjAxNS0wOC0wMQ==",
+      "RequestUri": "/subscriptions/4adb32ad-8327-4cbb-b775-b84b4465bb38/resourceGroups/csmrg9102/providers/Microsoft.Web/serverfarms/csmsf42?api-version=2015-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGFkYjMyYWQtODMyNy00Y2JiLWI3NzUtYjg0YjQ0NjViYjM4L3Jlc291cmNlR3JvdXBzL2NzbXJnOTEwMi9wcm92aWRlcnMvTWljcm9zb2Z0LldlYi9zZXJ2ZXJmYXJtcy9jc21zZjQyP2FwaS12ZXJzaW9uPTIwMTUtMDgtMDE=",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "3d369f5b-dcaf-47ff-9d37-e7ea5f0dd6ff"
+          "71cce209-3799-4f5f-a425-866614bcaadb"
         ],
         "accept-language": [
           "en-US"
@@ -277,22 +277,22 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "c1bdce1d-6cca-4224-89e8-f70d989f63a2"
+          "38fd0a19-d8f4-460b-9bb4-bff0776e7058"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1191"
+          "1174"
         ],
         "x-ms-correlation-request-id": [
-          "2b697a58-38ff-427a-8dcf-b91c8a23a5c5"
+          "2165b74c-f426-48a6-8903-d5a1590b0ce3"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20150903T201055Z:2b697a58-38ff-427a-8dcf-b91c8a23a5c5"
+          "WESTUS:20150905T022900Z:2165b74c-f426-48a6-8903-d5a1590b0ce3"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Thu, 03 Sep 2015 20:10:55 GMT"
+          "Sat, 05 Sep 2015 02:29:00 GMT"
         ],
         "Server": [
           "Microsoft-IIS/8.0"
@@ -307,13 +307,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/4adb32ad-8327-4cbb-b775-b84b4465bb38/resourceGroups/csmrg3598/providers/Microsoft.Web/serverfarms?api-version=2015-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGFkYjMyYWQtODMyNy00Y2JiLWI3NzUtYjg0YjQ0NjViYjM4L3Jlc291cmNlR3JvdXBzL2NzbXJnMzU5OC9wcm92aWRlcnMvTWljcm9zb2Z0LldlYi9zZXJ2ZXJmYXJtcz9hcGktdmVyc2lvbj0yMDE1LTA4LTAx",
+      "RequestUri": "/subscriptions/4adb32ad-8327-4cbb-b775-b84b4465bb38/resourceGroups/csmrg9102/providers/Microsoft.Web/serverfarms?api-version=2015-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNGFkYjMyYWQtODMyNy00Y2JiLWI3NzUtYjg0YjQ0NjViYjM4L3Jlc291cmNlR3JvdXBzL2NzbXJnOTEwMi9wcm92aWRlcnMvTWljcm9zb2Z0LldlYi9zZXJ2ZXJmYXJtcz9hcGktdmVyc2lvbj0yMDE1LTA4LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "724c3d3c-3cfc-476e-a492-1c1ef71baac9"
+          "4534f89c-5e2d-434e-87d1-5398953611c4"
         ],
         "accept-language": [
           "en-US"
@@ -340,22 +340,22 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "fdeba9ee-2651-4c15-99a2-6f283354742b"
+          "f967d3d3-88eb-4a12-838b-d896455940bb"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14990"
+          "14982"
         ],
         "x-ms-correlation-request-id": [
-          "1273b048-daaf-4c12-8d0e-11ba7f42b112"
+          "ecaf26f3-c240-47e1-9dc7-48f08e141e4a"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20150903T201055Z:1273b048-daaf-4c12-8d0e-11ba7f42b112"
+          "WESTUS:20150905T022900Z:ecaf26f3-c240-47e1-9dc7-48f08e141e4a"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Thu, 03 Sep 2015 20:10:55 GMT"
+          "Sat, 05 Sep 2015 02:29:00 GMT"
         ],
         "Server": [
           "Microsoft-IIS/8.0"
@@ -372,8 +372,8 @@
   ],
   "Names": {
     "CreateAndDeleteWebHostingPlan": [
-      "csmsf4329",
-      "csmrg3598"
+      "csmsf42",
+      "csmrg9102"
     ]
   },
   "Variables": {

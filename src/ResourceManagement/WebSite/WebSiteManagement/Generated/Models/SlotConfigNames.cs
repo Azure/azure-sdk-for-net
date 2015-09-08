@@ -18,18 +18,18 @@ namespace Microsoft.Azure.Management.WebSites.Models
     /// and not moved during swap operation
     /// This is valid for all deployment slots under the site
     /// </summary>
-    public partial class SlotConfigNames : Resource
+    public partial class SlotConfigNames
     {
         /// <summary>
         /// List of connection string names
         /// </summary>
-        [JsonProperty(PropertyName = "properties.connectionStringNames")]
+        [JsonProperty(PropertyName = "connectionStringNames")]
         public IList<string> ConnectionStringNames { get; set; }
 
         /// <summary>
         /// List of application settings names
         /// </summary>
-        [JsonProperty(PropertyName = "properties.appSettingNames")]
+        [JsonProperty(PropertyName = "appSettingNames")]
         public IList<string> AppSettingNames { get; set; }
 
     }

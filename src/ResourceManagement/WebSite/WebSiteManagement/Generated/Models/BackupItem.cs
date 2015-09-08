@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// 'Skipped', 'PartiallySucceeded'.
         /// </summary>
         [JsonProperty(PropertyName = "properties.status")]
-        public string Status { get; set; }
+        public BackupItemStatus? Status { get; set; }
 
         /// <summary>
         /// Size of the backup in bytes
@@ -100,5 +100,12 @@ namespace Microsoft.Azure.Management.WebSites.Models
         [JsonProperty(PropertyName = "properties.websiteSizeInBytes")]
         public long? WebsiteSizeInBytes { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
+        /// </summary>
+        public override void Validate()
+        {
+            base.Validate();
+        }
     }
 }

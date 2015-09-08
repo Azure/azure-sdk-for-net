@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// this property include: 'Recycle', 'LogEvent', 'CustomAction'.
         /// </summary>
         [JsonProperty(PropertyName = "actionType")]
-        public string ActionType { get; set; }
+        public AutoHealActionType? ActionType { get; set; }
 
         /// <summary>
         /// CustomAction - custom action to be taken
@@ -31,5 +31,15 @@ namespace Microsoft.Azure.Management.WebSites.Models
         [JsonProperty(PropertyName = "customAction")]
         public AutoHealCustomAction CustomAction { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
+        /// </summary>
+        public virtual void Validate()
+        {
+            if (ActionType == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "ActionType");
+            }
+        }
     }
 }

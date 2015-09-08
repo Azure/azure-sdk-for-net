@@ -23,36 +23,6 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='resourceGroupName'>
             /// Name of resource group
             /// </param>
-            public static ServerFarmCollection GetServerFarms(this IServerFarmsOperations operations, string resourceGroupName)
-            {
-                return Task.Factory.StartNew(s => ((IServerFarmsOperations)s).GetServerFarmsAsync(resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of resource group
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<ServerFarmCollection> GetServerFarmsAsync( this IServerFarmsOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                AzureOperationResponse<ServerFarmCollection> result = await operations.GetServerFarmsWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
-            }
-
-            /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of resource group
-            /// </param>
             public static ServerFarmCollection GetWebHostingPlans(this IServerFarmsOperations operations, string resourceGroupName)
             {
                 return Task.Factory.StartNew(s => ((IServerFarmsOperations)s).GetWebHostingPlansAsync(resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
@@ -72,6 +42,36 @@ namespace Microsoft.Azure.Management.WebSites
             public static async Task<ServerFarmCollection> GetWebHostingPlansAsync( this IServerFarmsOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 AzureOperationResponse<ServerFarmCollection> result = await operations.GetWebHostingPlansWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            public static ServerFarmCollection GetServerFarms(this IServerFarmsOperations operations, string resourceGroupName)
+            {
+                return Task.Factory.StartNew(s => ((IServerFarmsOperations)s).GetServerFarmsAsync(resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ServerFarmCollection> GetServerFarmsAsync( this IServerFarmsOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<ServerFarmCollection> result = await operations.GetServerFarmsWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -431,60 +431,6 @@ namespace Microsoft.Azure.Management.WebSites
             /// 'Metric2') and startTime eq '2014-01-01T00:00:00Z' and endTime eq
             /// '2014-12-31T23:59:59Z' and timeGrain eq duration'[Hour|Minute|Day]'.
             /// </param>
-            public static MetricResponseCollection GetServerFarmMetrics(this IServerFarmsOperations operations, string resourceGroupName, string name, bool? details = default(bool?), string filter = default(string))
-            {
-                return Task.Factory.StartNew(s => ((IServerFarmsOperations)s).GetServerFarmMetricsAsync(resourceGroupName, name, details, filter), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of resource group
-            /// </param>
-            /// <param name='name'>
-            /// Name of App Service Plan
-            /// </param>
-            /// <param name='details'>
-            /// If true, metrics are broken down per App Service Plan instance
-            /// </param>
-            /// <param name='filter'>
-            /// Return only usages/metrics specified in the filter. Filter conforms to
-            /// odata syntax. Example: $filter=(name.value eq 'Metric1' or name.value eq
-            /// 'Metric2') and startTime eq '2014-01-01T00:00:00Z' and endTime eq
-            /// '2014-12-31T23:59:59Z' and timeGrain eq duration'[Hour|Minute|Day]'.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<MetricResponseCollection> GetServerFarmMetricsAsync( this IServerFarmsOperations operations, string resourceGroupName, string name, bool? details = default(bool?), string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
-            {
-                AzureOperationResponse<MetricResponseCollection> result = await operations.GetServerFarmMetricsWithHttpMessagesAsync(resourceGroupName, name, details, filter, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
-            }
-
-            /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of resource group
-            /// </param>
-            /// <param name='name'>
-            /// Name of App Service Plan
-            /// </param>
-            /// <param name='details'>
-            /// If true, metrics are broken down per App Service Plan instance
-            /// </param>
-            /// <param name='filter'>
-            /// Return only usages/metrics specified in the filter. Filter conforms to
-            /// odata syntax. Example: $filter=(name.value eq 'Metric1' or name.value eq
-            /// 'Metric2') and startTime eq '2014-01-01T00:00:00Z' and endTime eq
-            /// '2014-12-31T23:59:59Z' and timeGrain eq duration'[Hour|Minute|Day]'.
-            /// </param>
             public static MetricResponseCollection GetWebHostingPlanMetrics(this IServerFarmsOperations operations, string resourceGroupName, string name, bool? details = default(bool?), string filter = default(string))
             {
                 return Task.Factory.StartNew(s => ((IServerFarmsOperations)s).GetWebHostingPlanMetricsAsync(resourceGroupName, name, details, filter), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
@@ -516,6 +462,60 @@ namespace Microsoft.Azure.Management.WebSites
             public static async Task<MetricResponseCollection> GetWebHostingPlanMetricsAsync( this IServerFarmsOperations operations, string resourceGroupName, string name, bool? details = default(bool?), string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 AzureOperationResponse<MetricResponseCollection> result = await operations.GetWebHostingPlanMetricsWithHttpMessagesAsync(resourceGroupName, name, details, filter, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of App Service Plan
+            /// </param>
+            /// <param name='details'>
+            /// If true, metrics are broken down per App Service Plan instance
+            /// </param>
+            /// <param name='filter'>
+            /// Return only usages/metrics specified in the filter. Filter conforms to
+            /// odata syntax. Example: $filter=(name.value eq 'Metric1' or name.value eq
+            /// 'Metric2') and startTime eq '2014-01-01T00:00:00Z' and endTime eq
+            /// '2014-12-31T23:59:59Z' and timeGrain eq duration'[Hour|Minute|Day]'.
+            /// </param>
+            public static MetricResponseCollection GetServerFarmMetrics(this IServerFarmsOperations operations, string resourceGroupName, string name, bool? details = default(bool?), string filter = default(string))
+            {
+                return Task.Factory.StartNew(s => ((IServerFarmsOperations)s).GetServerFarmMetricsAsync(resourceGroupName, name, details, filter), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of App Service Plan
+            /// </param>
+            /// <param name='details'>
+            /// If true, metrics are broken down per App Service Plan instance
+            /// </param>
+            /// <param name='filter'>
+            /// Return only usages/metrics specified in the filter. Filter conforms to
+            /// odata syntax. Example: $filter=(name.value eq 'Metric1' or name.value eq
+            /// 'Metric2') and startTime eq '2014-01-01T00:00:00Z' and endTime eq
+            /// '2014-12-31T23:59:59Z' and timeGrain eq duration'[Hour|Minute|Day]'.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<MetricResponseCollection> GetServerFarmMetricsAsync( this IServerFarmsOperations operations, string resourceGroupName, string name, bool? details = default(bool?), string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<MetricResponseCollection> result = await operations.GetServerFarmMetricsWithHttpMessagesAsync(resourceGroupName, name, details, filter, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -602,42 +602,6 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='name'>
             /// Name of App Service Plan
             /// </param>
-            public static IList<VnetInfo> GetVnetsForWebHostingPlan(this IServerFarmsOperations operations, string resourceGroupName, string name)
-            {
-                return Task.Factory.StartNew(s => ((IServerFarmsOperations)s).GetVnetsForWebHostingPlanAsync(resourceGroupName, name), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of resource group
-            /// </param>
-            /// <param name='name'>
-            /// Name of App Service Plan
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IList<VnetInfo>> GetVnetsForWebHostingPlanAsync( this IServerFarmsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                AzureOperationResponse<IList<VnetInfo>> result = await operations.GetVnetsForWebHostingPlanWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
-            }
-
-            /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of resource group
-            /// </param>
-            /// <param name='name'>
-            /// Name of App Service Plan
-            /// </param>
             public static IList<VnetInfo> GetVnetsForServerFarm(this IServerFarmsOperations operations, string resourceGroupName, string name)
             {
                 return Task.Factory.StartNew(s => ((IServerFarmsOperations)s).GetVnetsForServerFarmAsync(resourceGroupName, name), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
@@ -660,6 +624,42 @@ namespace Microsoft.Azure.Management.WebSites
             public static async Task<IList<VnetInfo>> GetVnetsForServerFarmAsync( this IServerFarmsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
             {
                 AzureOperationResponse<IList<VnetInfo>> result = await operations.GetVnetsForServerFarmWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of App Service Plan
+            /// </param>
+            public static IList<VnetInfo> GetVnetsForWebHostingPlan(this IServerFarmsOperations operations, string resourceGroupName, string name)
+            {
+                return Task.Factory.StartNew(s => ((IServerFarmsOperations)s).GetVnetsForWebHostingPlanAsync(resourceGroupName, name), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of App Service Plan
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IList<VnetInfo>> GetVnetsForWebHostingPlanAsync( this IServerFarmsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<IList<VnetInfo>> result = await operations.GetVnetsForWebHostingPlanWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -828,210 +828,6 @@ namespace Microsoft.Azure.Management.WebSites
             public static async Task<IList<VnetRoute>> GetWebHostingPlanRoutesForVnetAsync( this IServerFarmsOperations operations, string resourceGroupName, string name, string vnetName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 AzureOperationResponse<IList<VnetRoute>> result = await operations.GetWebHostingPlanRoutesForVnetWithHttpMessagesAsync(resourceGroupName, name, vnetName, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
-            }
-
-            /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of resource group
-            /// </param>
-            /// <param name='name'>
-            /// Name of App Service Plan
-            /// </param>
-            /// <param name='vnetName'>
-            /// Name of virtual network
-            /// </param>
-            /// <param name='routeName'>
-            /// Name of the virtual network route
-            /// </param>
-            public static IList<VnetRoute> GetWebHostingPlanRouteForVnet(this IServerFarmsOperations operations, string resourceGroupName, string name, string vnetName, string routeName)
-            {
-                return Task.Factory.StartNew(s => ((IServerFarmsOperations)s).GetWebHostingPlanRouteForVnetAsync(resourceGroupName, name, vnetName, routeName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of resource group
-            /// </param>
-            /// <param name='name'>
-            /// Name of App Service Plan
-            /// </param>
-            /// <param name='vnetName'>
-            /// Name of virtual network
-            /// </param>
-            /// <param name='routeName'>
-            /// Name of the virtual network route
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IList<VnetRoute>> GetWebHostingPlanRouteForVnetAsync( this IServerFarmsOperations operations, string resourceGroupName, string name, string vnetName, string routeName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                AzureOperationResponse<IList<VnetRoute>> result = await operations.GetWebHostingPlanRouteForVnetWithHttpMessagesAsync(resourceGroupName, name, vnetName, routeName, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
-            }
-
-            /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of resource group
-            /// </param>
-            /// <param name='name'>
-            /// Name of App Service Plan
-            /// </param>
-            /// <param name='vnetName'>
-            /// Name of virtual network
-            /// </param>
-            /// <param name='routeName'>
-            /// Name of the virtual network route
-            /// </param>
-            /// <param name='route'>
-            /// The route object
-            /// </param>
-            public static VnetRoute CreateOrUpdateWebHostingPlanVnetRoute(this IServerFarmsOperations operations, string resourceGroupName, string name, string vnetName, string routeName, VnetRoute route)
-            {
-                return Task.Factory.StartNew(s => ((IServerFarmsOperations)s).CreateOrUpdateWebHostingPlanVnetRouteAsync(resourceGroupName, name, vnetName, routeName, route), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of resource group
-            /// </param>
-            /// <param name='name'>
-            /// Name of App Service Plan
-            /// </param>
-            /// <param name='vnetName'>
-            /// Name of virtual network
-            /// </param>
-            /// <param name='routeName'>
-            /// Name of the virtual network route
-            /// </param>
-            /// <param name='route'>
-            /// The route object
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<VnetRoute> CreateOrUpdateWebHostingPlanVnetRouteAsync( this IServerFarmsOperations operations, string resourceGroupName, string name, string vnetName, string routeName, VnetRoute route, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                AzureOperationResponse<VnetRoute> result = await operations.CreateOrUpdateWebHostingPlanVnetRouteWithHttpMessagesAsync(resourceGroupName, name, vnetName, routeName, route, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
-            }
-
-            /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of resource group
-            /// </param>
-            /// <param name='name'>
-            /// Name of App Service Plan
-            /// </param>
-            /// <param name='vnetName'>
-            /// Name of virtual network
-            /// </param>
-            /// <param name='routeName'>
-            /// Name of the virtual network route
-            /// </param>
-            public static object DeleteWebHostingPlanVnetRoute(this IServerFarmsOperations operations, string resourceGroupName, string name, string vnetName, string routeName)
-            {
-                return Task.Factory.StartNew(s => ((IServerFarmsOperations)s).DeleteWebHostingPlanVnetRouteAsync(resourceGroupName, name, vnetName, routeName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of resource group
-            /// </param>
-            /// <param name='name'>
-            /// Name of App Service Plan
-            /// </param>
-            /// <param name='vnetName'>
-            /// Name of virtual network
-            /// </param>
-            /// <param name='routeName'>
-            /// Name of the virtual network route
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<object> DeleteWebHostingPlanVnetRouteAsync( this IServerFarmsOperations operations, string resourceGroupName, string name, string vnetName, string routeName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                AzureOperationResponse<object> result = await operations.DeleteWebHostingPlanVnetRouteWithHttpMessagesAsync(resourceGroupName, name, vnetName, routeName, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
-            }
-
-            /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of resource group
-            /// </param>
-            /// <param name='name'>
-            /// Name of App Service Plan
-            /// </param>
-            /// <param name='vnetName'>
-            /// Name of virtual network
-            /// </param>
-            /// <param name='routeName'>
-            /// Name of the virtual network route
-            /// </param>
-            /// <param name='route'>
-            /// The route object
-            /// </param>
-            public static VnetRoute UpdateWebHostingPlanVnetRoute(this IServerFarmsOperations operations, string resourceGroupName, string name, string vnetName, string routeName, VnetRoute route)
-            {
-                return Task.Factory.StartNew(s => ((IServerFarmsOperations)s).UpdateWebHostingPlanVnetRouteAsync(resourceGroupName, name, vnetName, routeName, route), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of resource group
-            /// </param>
-            /// <param name='name'>
-            /// Name of App Service Plan
-            /// </param>
-            /// <param name='vnetName'>
-            /// Name of virtual network
-            /// </param>
-            /// <param name='routeName'>
-            /// Name of the virtual network route
-            /// </param>
-            /// <param name='route'>
-            /// The route object
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<VnetRoute> UpdateWebHostingPlanVnetRouteAsync( this IServerFarmsOperations operations, string resourceGroupName, string name, string vnetName, string routeName, VnetRoute route, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                AzureOperationResponse<VnetRoute> result = await operations.UpdateWebHostingPlanVnetRouteWithHttpMessagesAsync(resourceGroupName, name, vnetName, routeName, route, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -1250,21 +1046,15 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='name'>
             /// Name of App Service Plan
             /// </param>
-            /// <param name='skipToken'>
-            /// Skip to of web apps in a list. If specified, the resulting list will
-            /// contain web apps starting from (including) the skipToken. Else, the
-            /// resulting list contains web apps from the start of the list
+            /// <param name='vnetName'>
+            /// Name of virtual network
             /// </param>
-            /// <param name='filter'>
-            /// Supported filter: $filter=state eq running. Returns only web apps that are
-            /// currently running
+            /// <param name='routeName'>
+            /// Name of the virtual network route
             /// </param>
-            /// <param name='top'>
-            /// List page size. If specified, results are paged.
-            /// </param>
-            public static Page<Site> GetWebHostingPlanSites(this IServerFarmsOperations operations, string resourceGroupName, string name, string skipToken = default(string), string filter = default(string), string top = default(string))
+            public static IList<VnetRoute> GetWebHostingPlanRouteForVnet(this IServerFarmsOperations operations, string resourceGroupName, string name, string vnetName, string routeName)
             {
-                return Task.Factory.StartNew(s => ((IServerFarmsOperations)s).GetWebHostingPlanSitesAsync(resourceGroupName, name, skipToken, filter, top), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IServerFarmsOperations)s).GetWebHostingPlanRouteForVnetAsync(resourceGroupName, name, vnetName, routeName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1278,24 +1068,174 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='name'>
             /// Name of App Service Plan
             /// </param>
-            /// <param name='skipToken'>
-            /// Skip to of web apps in a list. If specified, the resulting list will
-            /// contain web apps starting from (including) the skipToken. Else, the
-            /// resulting list contains web apps from the start of the list
+            /// <param name='vnetName'>
+            /// Name of virtual network
             /// </param>
-            /// <param name='filter'>
-            /// Supported filter: $filter=state eq running. Returns only web apps that are
-            /// currently running
-            /// </param>
-            /// <param name='top'>
-            /// List page size. If specified, results are paged.
+            /// <param name='routeName'>
+            /// Name of the virtual network route
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Page<Site>> GetWebHostingPlanSitesAsync( this IServerFarmsOperations operations, string resourceGroupName, string name, string skipToken = default(string), string filter = default(string), string top = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<VnetRoute>> GetWebHostingPlanRouteForVnetAsync( this IServerFarmsOperations operations, string resourceGroupName, string name, string vnetName, string routeName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<Page<Site>> result = await operations.GetWebHostingPlanSitesWithHttpMessagesAsync(resourceGroupName, name, skipToken, filter, top, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<IList<VnetRoute>> result = await operations.GetWebHostingPlanRouteForVnetWithHttpMessagesAsync(resourceGroupName, name, vnetName, routeName, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of App Service Plan
+            /// </param>
+            /// <param name='vnetName'>
+            /// Name of virtual network
+            /// </param>
+            /// <param name='routeName'>
+            /// Name of the virtual network route
+            /// </param>
+            /// <param name='route'>
+            /// The route object
+            /// </param>
+            public static VnetRoute CreateOrUpdateWebHostingPlanVnetRoute(this IServerFarmsOperations operations, string resourceGroupName, string name, string vnetName, string routeName, VnetRoute route)
+            {
+                return Task.Factory.StartNew(s => ((IServerFarmsOperations)s).CreateOrUpdateWebHostingPlanVnetRouteAsync(resourceGroupName, name, vnetName, routeName, route), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of App Service Plan
+            /// </param>
+            /// <param name='vnetName'>
+            /// Name of virtual network
+            /// </param>
+            /// <param name='routeName'>
+            /// Name of the virtual network route
+            /// </param>
+            /// <param name='route'>
+            /// The route object
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<VnetRoute> CreateOrUpdateWebHostingPlanVnetRouteAsync( this IServerFarmsOperations operations, string resourceGroupName, string name, string vnetName, string routeName, VnetRoute route, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<VnetRoute> result = await operations.CreateOrUpdateWebHostingPlanVnetRouteWithHttpMessagesAsync(resourceGroupName, name, vnetName, routeName, route, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of App Service Plan
+            /// </param>
+            /// <param name='vnetName'>
+            /// Name of virtual network
+            /// </param>
+            /// <param name='routeName'>
+            /// Name of the virtual network route
+            /// </param>
+            public static object DeleteWebHostingPlanVnetRoute(this IServerFarmsOperations operations, string resourceGroupName, string name, string vnetName, string routeName)
+            {
+                return Task.Factory.StartNew(s => ((IServerFarmsOperations)s).DeleteWebHostingPlanVnetRouteAsync(resourceGroupName, name, vnetName, routeName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of App Service Plan
+            /// </param>
+            /// <param name='vnetName'>
+            /// Name of virtual network
+            /// </param>
+            /// <param name='routeName'>
+            /// Name of the virtual network route
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> DeleteWebHostingPlanVnetRouteAsync( this IServerFarmsOperations operations, string resourceGroupName, string name, string vnetName, string routeName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<object> result = await operations.DeleteWebHostingPlanVnetRouteWithHttpMessagesAsync(resourceGroupName, name, vnetName, routeName, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of App Service Plan
+            /// </param>
+            /// <param name='vnetName'>
+            /// Name of virtual network
+            /// </param>
+            /// <param name='routeName'>
+            /// Name of the virtual network route
+            /// </param>
+            /// <param name='route'>
+            /// The route object
+            /// </param>
+            public static VnetRoute UpdateWebHostingPlanVnetRoute(this IServerFarmsOperations operations, string resourceGroupName, string name, string vnetName, string routeName, VnetRoute route)
+            {
+                return Task.Factory.StartNew(s => ((IServerFarmsOperations)s).UpdateWebHostingPlanVnetRouteAsync(resourceGroupName, name, vnetName, routeName, route), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of App Service Plan
+            /// </param>
+            /// <param name='vnetName'>
+            /// Name of virtual network
+            /// </param>
+            /// <param name='routeName'>
+            /// Name of the virtual network route
+            /// </param>
+            /// <param name='route'>
+            /// The route object
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<VnetRoute> UpdateWebHostingPlanVnetRouteAsync( this IServerFarmsOperations operations, string resourceGroupName, string name, string vnetName, string routeName, VnetRoute route, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<VnetRoute> result = await operations.UpdateWebHostingPlanVnetRouteWithHttpMessagesAsync(resourceGroupName, name, vnetName, routeName, route, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -1368,14 +1308,23 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of resource group
             /// </param>
             /// <param name='name'>
-            /// Name of server farm
+            /// Name of App Service Plan
             /// </param>
-            /// <param name='workerName'>
-            /// Name of worker machine, typically IP address
+            /// <param name='skipToken'>
+            /// Skip to of web apps in a list. If specified, the resulting list will
+            /// contain web apps starting from (including) the skipToken. Else, the
+            /// resulting list contains web apps from the start of the list
             /// </param>
-            public static object RebootWorkerForWebHostingPlan(this IServerFarmsOperations operations, string resourceGroupName, string name, string workerName)
+            /// <param name='filter'>
+            /// Supported filter: $filter=state eq running. Returns only web apps that are
+            /// currently running
+            /// </param>
+            /// <param name='top'>
+            /// List page size. If specified, results are paged.
+            /// </param>
+            public static Page<Site> GetWebHostingPlanSites(this IServerFarmsOperations operations, string resourceGroupName, string name, string skipToken = default(string), string filter = default(string), string top = default(string))
             {
-                return Task.Factory.StartNew(s => ((IServerFarmsOperations)s).RebootWorkerForWebHostingPlanAsync(resourceGroupName, name, workerName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IServerFarmsOperations)s).GetWebHostingPlanSitesAsync(resourceGroupName, name, skipToken, filter, top), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1387,17 +1336,26 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of resource group
             /// </param>
             /// <param name='name'>
-            /// Name of server farm
+            /// Name of App Service Plan
             /// </param>
-            /// <param name='workerName'>
-            /// Name of worker machine, typically IP address
+            /// <param name='skipToken'>
+            /// Skip to of web apps in a list. If specified, the resulting list will
+            /// contain web apps starting from (including) the skipToken. Else, the
+            /// resulting list contains web apps from the start of the list
+            /// </param>
+            /// <param name='filter'>
+            /// Supported filter: $filter=state eq running. Returns only web apps that are
+            /// currently running
+            /// </param>
+            /// <param name='top'>
+            /// List page size. If specified, results are paged.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> RebootWorkerForWebHostingPlanAsync( this IServerFarmsOperations operations, string resourceGroupName, string name, string workerName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Page<Site>> GetWebHostingPlanSitesAsync( this IServerFarmsOperations operations, string resourceGroupName, string name, string skipToken = default(string), string filter = default(string), string top = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<object> result = await operations.RebootWorkerForWebHostingPlanWithHttpMessagesAsync(resourceGroupName, name, workerName, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<Page<Site>> result = await operations.GetWebHostingPlanSitesWithHttpMessagesAsync(resourceGroupName, name, skipToken, filter, top, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -1440,6 +1398,48 @@ namespace Microsoft.Azure.Management.WebSites
             public static async Task<object> RebootWorkerForServerFarmAsync( this IServerFarmsOperations operations, string resourceGroupName, string name, string workerName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 AzureOperationResponse<object> result = await operations.RebootWorkerForServerFarmWithHttpMessagesAsync(resourceGroupName, name, workerName, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of server farm
+            /// </param>
+            /// <param name='workerName'>
+            /// Name of worker machine, typically IP address
+            /// </param>
+            public static object RebootWorkerForWebHostingPlan(this IServerFarmsOperations operations, string resourceGroupName, string name, string workerName)
+            {
+                return Task.Factory.StartNew(s => ((IServerFarmsOperations)s).RebootWorkerForWebHostingPlanAsync(resourceGroupName, name, workerName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group
+            /// </param>
+            /// <param name='name'>
+            /// Name of server farm
+            /// </param>
+            /// <param name='workerName'>
+            /// Name of worker machine, typically IP address
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> RebootWorkerForWebHostingPlanAsync( this IServerFarmsOperations operations, string resourceGroupName, string name, string workerName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<object> result = await operations.RebootWorkerForWebHostingPlanWithHttpMessagesAsync(resourceGroupName, name, workerName, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
@@ -1579,36 +1579,6 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static Page<Site> GetWebHostingPlanSitesNext(this IServerFarmsOperations operations, string nextPageLink)
-            {
-                return Task.Factory.StartNew(s => ((IServerFarmsOperations)s).GetWebHostingPlanSitesNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<Page<Site>> GetWebHostingPlanSitesNextAsync( this IServerFarmsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                AzureOperationResponse<Page<Site>> result = await operations.GetWebHostingPlanSitesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
-                return result.Body;
-            }
-
-            /// <summary>
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
             public static Page<Site> GetServerFarmSitesNext(this IServerFarmsOperations operations, string nextPageLink)
             {
                 return Task.Factory.StartNew(s => ((IServerFarmsOperations)s).GetServerFarmSitesNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
@@ -1628,6 +1598,36 @@ namespace Microsoft.Azure.Management.WebSites
             public static async Task<Page<Site>> GetServerFarmSitesNextAsync( this IServerFarmsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 AzureOperationResponse<Page<Site>> result = await operations.GetServerFarmSitesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
+                return result.Body;
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static Page<Site> GetWebHostingPlanSitesNext(this IServerFarmsOperations operations, string nextPageLink)
+            {
+                return Task.Factory.StartNew(s => ((IServerFarmsOperations)s).GetWebHostingPlanSitesNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Page<Site>> GetWebHostingPlanSitesNextAsync( this IServerFarmsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                AzureOperationResponse<Page<Site>> result = await operations.GetWebHostingPlanSitesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 

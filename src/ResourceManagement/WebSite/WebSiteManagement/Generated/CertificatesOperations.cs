@@ -350,6 +350,10 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "certificateEnvelope");
             }
+            if (certificateEnvelope != null)
+            {
+                certificateEnvelope.Validate();
+            }
             if (this.Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
@@ -1074,6 +1078,10 @@ namespace Microsoft.Azure.Management.WebSites
             if (csrEnvelope == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "csrEnvelope");
+            }
+            if (csrEnvelope != null)
+            {
+                csrEnvelope.Validate();
             }
             if (this.Client.SubscriptionId == null)
             {

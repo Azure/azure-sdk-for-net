@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// include: 'Ready', 'Pending'.
         /// </summary>
         [JsonProperty(PropertyName = "properties.status")]
-        public string Status { get; private set; }
+        public StatusOptions? Status { get; private set; }
 
         /// <summary>
         /// App Service Plan Subscription
@@ -88,5 +88,12 @@ namespace Microsoft.Azure.Management.WebSites.Models
         [JsonProperty(PropertyName = "properties.resourceGroup")]
         public string ResourceGroup { get; private set; }
 
+        /// <summary>
+        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
+        /// </summary>
+        public override void Validate()
+        {
+            base.Validate();
+        }
     }
 }

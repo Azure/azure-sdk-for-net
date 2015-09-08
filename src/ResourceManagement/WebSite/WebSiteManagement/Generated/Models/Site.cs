@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// Possible values for this property include: 'Normal', 'Exceeded'.
         /// </summary>
         [JsonProperty(PropertyName = "properties.usageState")]
-        public string UsageState { get; private set; }
+        public UsageState? UsageState { get; private set; }
 
         /// <summary>
         /// True if the site is enabled; otherwise, false. Setting this  value
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// 'Limited', 'DisasterRecoveryMode'.
         /// </summary>
         [JsonProperty(PropertyName = "properties.availabilityState")]
-        public string AvailabilityState { get; private set; }
+        public SiteAvailabilityState? AvailabilityState { get; private set; }
 
         /// <summary>
         /// Hostname SSL states are  used to manage the SSL bindings for
@@ -182,5 +182,26 @@ namespace Microsoft.Azure.Management.WebSites.Models
         [JsonProperty(PropertyName = "properties.cloningInfo")]
         public CloningInfo CloningInfo { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
+        /// </summary>
+        public override void Validate()
+        {
+            base.Validate();
+            if (this.HostNameSslStates != null)
+            {
+                foreach (var element in this.HostNameSslStates)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
+            if (this.SiteConfig != null)
+            {
+                this.SiteConfig.Validate();
+            }
+        }
     }
 }

@@ -178,7 +178,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// 'Integrated', 'Classic'.
         /// </summary>
         [JsonProperty(PropertyName = "properties.managedPipelineMode")]
-        public string ManagedPipelineMode { get; set; }
+        public ManagedPipelineMode? ManagedPipelineMode { get; set; }
 
         /// <summary>
         /// Virtual applications
@@ -192,7 +192,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// 'WeightedTotalTraffic', 'RequestHash'.
         /// </summary>
         [JsonProperty(PropertyName = "properties.loadBalancing")]
-        public string LoadBalancing { get; set; }
+        public SiteLoadBalancing? LoadBalancing { get; set; }
 
         /// <summary>
         /// This is work around for polymophic types
@@ -249,5 +249,26 @@ namespace Microsoft.Azure.Management.WebSites.Models
         [JsonProperty(PropertyName = "properties.autoSwapSlotName")]
         public string AutoSwapSlotName { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
+        /// </summary>
+        public override void Validate()
+        {
+            base.Validate();
+            if (this.ConnectionStrings != null)
+            {
+                foreach (var element in this.ConnectionStrings)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
+            if (this.AutoHealRules != null)
+            {
+                this.AutoHealRules.Validate();
+            }
+        }
     }
 }

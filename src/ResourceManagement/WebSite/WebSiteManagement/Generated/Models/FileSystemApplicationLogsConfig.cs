@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// 'Verbose', 'Information', 'Warning', 'Error'.
         /// </summary>
         [JsonProperty(PropertyName = "level")]
-        public string Level { get; set; }
+        public LogLevel? Level { get; set; }
 
     }
 }

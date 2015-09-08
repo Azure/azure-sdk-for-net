@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// include: 'Shared', 'Dedicated'.
         /// </summary>
         [JsonProperty(PropertyName = "properties.computeMode")]
-        public string ComputeMode { get; set; }
+        public ComputeModeOptions? ComputeMode { get; set; }
 
         /// <summary>
         /// SiteMode used for this usage
@@ -72,5 +72,12 @@ namespace Microsoft.Azure.Management.WebSites.Models
         [JsonProperty(PropertyName = "properties.siteMode")]
         public string SiteMode { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
+        /// </summary>
+        public override void Validate()
+        {
+            base.Validate();
+        }
     }
 }
