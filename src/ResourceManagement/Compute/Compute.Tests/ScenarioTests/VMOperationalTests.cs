@@ -77,13 +77,11 @@ namespace Compute.Tests
 
                     var captureResponse = m_CrpClient.VirtualMachines.Capture(rg1Name, vm1.Name, captureParams);
 
-                    // AutoRest Capture API problem - 2015-09-08
-                    // Need to take Yugang's fix
-                    //Assert.NotNull(captureResponse.Properties.Output);
-                    //string outputAsString = captureResponse.Properties.Output.ToString();
-                    //Assert.Equal('{', outputAsString[0]);
-                    //Assert.True(outputAsString.Contains(captureParams.DestinationContainerName.ToLowerInvariant()));
-                    //Assert.True(outputAsString.ToLowerInvariant().Contains(captureParams.VhdPrefix.ToLowerInvariant()));
+                    Assert.NotNull(captureResponse.Properties.Output);
+                    string outputAsString = captureResponse.Properties.Output.ToString();
+                    Assert.Equal('{', outputAsString[0]);
+                    Assert.True(outputAsString.Contains(captureParams.DestinationContainerName.ToLowerInvariant()));
+                    Assert.True(outputAsString.ToLowerInvariant().Contains(captureParams.VhdPrefix.ToLowerInvariant()));
                 }
                 finally
                 {

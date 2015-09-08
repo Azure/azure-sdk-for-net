@@ -159,11 +159,11 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Rest.ClientRuntime">
-      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Rest.ClientRuntime.1.2.0\lib\net45\Microsoft.Rest.ClientRuntime.dll</HintPath>
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Rest.ClientRuntime.1.3.0\lib\net45\Microsoft.Rest.ClientRuntime.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Rest.ClientRuntime.Azure">
-      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Rest.ClientRuntime.Azure.1.0.20\lib\net45\Microsoft.Rest.ClientRuntime.Azure.dll</HintPath>
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Rest.ClientRuntime.Azure.1.0.21\lib\net45\Microsoft.Rest.ClientRuntime.Azure.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Rest.ClientRuntime.Azure.Authentication">
