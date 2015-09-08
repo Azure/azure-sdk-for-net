@@ -306,7 +306,9 @@ namespace DataFactory.Tests.Framework.JsonSamples
                     {
                         type: ""SqlDWSink"",
                         writeBatchSize: 1000000,
-                        writeBatchTimeout: ""01:00:00""
+                        writeBatchTimeout: ""01:00:00"",
+                        sqlWriterCleanupScript: ""Script"",
+                        sliceIdentifierColumnName: ""SliceID""
                     },
                 },
                 inputs: 
