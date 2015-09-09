@@ -14,7 +14,7 @@
     <description>Test utilities for xunit test suites for AutoRest generated Azure clients</description>
     <copyright>Copyright 2015</copyright>
     <dependencies>
-      <dependency id="Microsoft.Rest.ClientRuntime.Azure" version="[1.0.20,2.0)" />
+      <dependency id="Microsoft.Rest.ClientRuntime.Azure" version="[1.0.21,2.0)" />
     </dependencies>
   </metadata>
   <files>
