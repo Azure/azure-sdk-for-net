@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Common.Authentication
                     { AzureEnvironment.Endpoint.ServiceManagement, this.ServiceEndpoint },
                     { AzureEnvironment.Endpoint.SqlDatabaseDnsSuffix, this.SqlDatabaseDnsSuffix },
                     { AzureEnvironment.Endpoint.StorageEndpointSuffix, this.StorageEndpointSuffix },
-                    { AzureEnvironment.Endpoint.AzureKonaCatalogAndJobEndpointSuffix, this.AzureKonaCatalogAndJobEndpointSuffix },
+                    { AzureEnvironment.Endpoint.AzureBigAnalyticsCatalogAndJobEndpointSuffix, this.AzureBigAnalyticsCatalogAndJobEndpointSuffix },
                     { AzureEnvironment.Endpoint.AzureDataLakeFileSystemEndpointSuffix, this.AzureDataLakeFileSystemEndpointSuffix },
                 }
             };
@@ -106,7 +106,7 @@ namespace Microsoft.Azure.Common.Authentication
         public string TrafficManagerEndpointSuffix { get; set; }
 
         [DataMember]
-        public string AzureKonaCatalogAndJobEndpointSuffix { get; set; }
+        public string AzureBigAnalyticsCatalogAndJobEndpointSuffix { get; set; }
 
         [DataMember]
         public string AzureDataLakeFileSystemEndpointSuffix { get; set; }
