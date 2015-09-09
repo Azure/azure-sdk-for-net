@@ -31,12 +31,10 @@ namespace WebSites.Tests.ScenarioTests
         [Fact]
         public void CreateAndVerifyWebHostingPlan()
         {
-            var handler = new RecordedDelegatingHandler {StatusCodeToReturn = HttpStatusCode.OK};
-
             using (var context = MockContext.Start())
             {
-                var webSitesClient = this.GetWebSiteManagementClientWithHandler(context, handler);
-                var resourcesClient = this.GetResourceManagementClientWithHandler(context, handler);
+                var webSitesClient = this.GetWebSiteManagementClient(context);
+                var resourcesClient = this.GetResourceManagementClient(context);
 
                 string webHostingPlanName = TestUtilities.GenerateName("csmsf");
                 string resourceGroupName = TestUtilities.GenerateName("csmrg");
@@ -73,12 +71,10 @@ namespace WebSites.Tests.ScenarioTests
         [Fact]
         public void CreateAndVerifyListOfWebHostingPlan()
         {
-            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
-
             using (var context = MockContext.Start())
             {
-                var webSitesClient = this.GetWebSiteManagementClientWithHandler(context, handler);
-                var resourcesClient = this.GetResourceManagementClientWithHandler(context, handler);
+                var webSitesClient = this.GetWebSiteManagementClient(context);
+                var resourcesClient = this.GetResourceManagementClient(context);
 
                 string whpName1 = TestUtilities.GenerateName("csmwhp");
                 string whpName2 = TestUtilities.GenerateName("csmwhp");
@@ -127,12 +123,10 @@ namespace WebSites.Tests.ScenarioTests
         [Fact]
         public void CreateAndDeleteWebHostingPlan()
         {
-            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
-
             using (var context = MockContext.Start())
             {
-                var webSitesClient = this.GetWebSiteManagementClientWithHandler(context, handler);
-                var resourcesClient = this.GetResourceManagementClientWithHandler(context, handler);
+                var webSitesClient = this.GetWebSiteManagementClient(context);
+                var resourcesClient = this.GetResourceManagementClient(context);
 
                 string whpName = TestUtilities.GenerateName("csmsf");
                 string resourceGroupName = TestUtilities.GenerateName("csmrg");
@@ -170,12 +164,10 @@ namespace WebSites.Tests.ScenarioTests
         [Fact]
         public void GetAndSetAdminSiteWebHostingPlan()
         {
-            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
-
             using (var context = MockContext.Start())
             {
-                var webSitesClient = this.GetWebSiteManagementClientWithHandler(context, handler);
-                var resourcesClient = this.GetResourceManagementClientWithHandler(context, handler);
+                var webSitesClient = this.GetWebSiteManagementClient(context);
+                var resourcesClient = this.GetResourceManagementClient(context);
 
                 string webSiteName = TestUtilities.GenerateName("csmws");
                 string webHostingPlanName = TestUtilities.GenerateName("csmsf");

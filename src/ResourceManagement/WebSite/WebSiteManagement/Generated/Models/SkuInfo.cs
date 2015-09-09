@@ -5,6 +5,7 @@
 namespace Microsoft.Azure.Management.WebSites.Models
 {
     using System;
+    using System.Linq;
     using System.Collections.Generic;
     using Newtonsoft.Json;
     using Microsoft.Rest;
@@ -16,6 +17,12 @@ namespace Microsoft.Azure.Management.WebSites.Models
     /// </summary>
     public partial class SkuInfo
     {
+        /// <summary>
+        /// Resource type that this sku applies to
+        /// </summary>
+        [JsonProperty(PropertyName = "resourceType")]
+        public string ResourceType { get; set; }
+
         /// <summary>
         /// Name and tier of the sku
         /// </summary>

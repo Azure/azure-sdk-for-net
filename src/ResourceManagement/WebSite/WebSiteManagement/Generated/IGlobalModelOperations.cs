@@ -10,7 +10,6 @@ namespace Microsoft.Azure.Management.WebSites
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Rest;
-    using System.Linq;
     using Microsoft.Rest.Azure;
     using Models;
 
@@ -63,7 +62,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<ServerFarmCollection>> GetAllWebHostingPlansWithHttpMessagesAsync(bool? detailed = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ServerFarmCollection>> GetAllServerFarmsWithHttpMessagesAsync(bool? detailed = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// </summary>
         /// <param name='detailed'>
@@ -78,7 +77,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<ServerFarmCollection>> GetAllServerFarmsWithHttpMessagesAsync(bool? detailed = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ServerFarmCollection>> GetAllWebHostingPlansWithHttpMessagesAsync(bool? detailed = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// </summary>
         /// <param name='customHeaders'>
@@ -118,6 +117,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <summary>
         /// </summary>
         /// <param name='name'>
+        /// Hosting environment name
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -129,6 +129,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <summary>
         /// </summary>
         /// <param name='name'>
+        /// Hosting environment name
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -137,5 +138,17 @@ namespace Microsoft.Azure.Management.WebSites
         /// The cancellation token.
         /// </param>
         Task<AzureOperationResponse<object>> IsHostingEnvironmentWithLegacyNameAvailableWithHttpMessagesAsync(string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// </summary>
+        /// <param name='request'>
+        /// Name availability request
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<ResourceNameAvailability>> CheckNameAvailabilityWithHttpMessagesAsync(ResourceNameAvailabilityRequest request, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

@@ -5,6 +5,7 @@
 namespace Microsoft.Azure.Management.WebSites.Models
 {
     using System;
+    using System.Linq;
     using System.Collections.Generic;
     using Newtonsoft.Json;
     using Microsoft.Rest;
@@ -12,24 +13,36 @@ namespace Microsoft.Azure.Management.WebSites.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Describes the SKU of an App Service Plan
+    /// Describes a sku for a scalable resource
     /// </summary>
     public partial class SkuDescription
     {
         /// <summary>
-        /// Name for the App Service Plan SKU
+        /// Name of the resource sku
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Service Tier for the App Service Plan
+        /// Service Tier of the resource sku
         /// </summary>
         [JsonProperty(PropertyName = "tier")]
         public string Tier { get; set; }
 
         /// <summary>
-        /// Current number of workers assigned to the App Service Plan
+        /// Size specifier of the resource sku
+        /// </summary>
+        [JsonProperty(PropertyName = "size")]
+        public string Size { get; set; }
+
+        /// <summary>
+        /// Family code of the resource sku
+        /// </summary>
+        [JsonProperty(PropertyName = "family")]
+        public string Family { get; set; }
+
+        /// <summary>
+        /// Current number of instances assigned to the resource
         /// </summary>
         [JsonProperty(PropertyName = "capacity")]
         public int? Capacity { get; set; }

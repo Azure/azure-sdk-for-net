@@ -4,16 +4,16 @@
       "RequestUri": "/providers/Microsoft.Web/sourcecontrols/GitHub?api-version=2015-08-01",
       "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuV2ViL3NvdXJjZWNvbnRyb2xzL0dpdEh1Yj9hcGktdmVyc2lvbj0yMDE1LTA4LTAx",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"name\": \"GitHub\",\r\n    \"token\": \"myToken\",\r\n    \"tokenSecret\": \"myTokenSecret\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"location\": \"global\",\r\n  \"properties\": {\r\n    \"name\": \"GitHub\",\r\n    \"token\": \"myToken\",\r\n    \"tokenSecret\": \"myTokenSecret\"\r\n  }\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "112"
+          "137"
         ],
         "x-ms-client-request-id": [
-          "b5d43cbf-c635-4535-8277-c40d408e1a1f"
+          "c78f11ae-abc2-4112-b57a-6c90ed75bf87"
         ],
         "accept-language": [
           "en-US"
@@ -40,22 +40,22 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "72e4d8f6-da3d-47b1-9ae7-2fcaf02cb8a7"
+          "07616b0e-1582-4e54-9160-83fb65f151e2"
         ],
         "x-ms-ratelimit-remaining-tenant-writes": [
           "1199"
         ],
         "x-ms-correlation-request-id": [
-          "eca8dac8-7ca2-4ef0-ab7c-a4c3bef2663b"
+          "f7b91d3c-9f15-4a86-9c92-ab9fe624f9d5"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20150807T232946Z:eca8dac8-7ca2-4ef0-ab7c-a4c3bef2663b"
+          "WESTUS:20150905T021927Z:f7b91d3c-9f15-4a86-9c92-ab9fe624f9d5"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Fri, 07 Aug 2015 23:29:45 GMT"
+          "Sat, 05 Sep 2015 02:19:26 GMT"
         ],
         "Server": [
           "Microsoft-IIS/8.0"
@@ -76,7 +76,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "2cd056b9-15c6-4873-9a65-bf398321b244"
+          "e587bd08-77b9-4240-9a96-af93d398f7b5"
         ],
         "accept-language": [
           "en-US"
@@ -103,22 +103,22 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "5c4cf321-ea81-414a-a5bf-2f75ca36963f"
+          "772c0a25-1e69-422f-ace7-7aee3f7c3152"
         ],
         "x-ms-ratelimit-remaining-tenant-reads": [
-          "14999"
+          "14993"
         ],
         "x-ms-correlation-request-id": [
-          "a789731a-4606-41d4-ac36-db0a98e4908e"
+          "fc5f742b-2e5c-42c9-8fa5-a90ac1fd03fd"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20150807T232946Z:a789731a-4606-41d4-ac36-db0a98e4908e"
+          "WESTUS:20150905T021927Z:fc5f742b-2e5c-42c9-8fa5-a90ac1fd03fd"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Fri, 07 Aug 2015 23:29:45 GMT"
+          "Sat, 05 Sep 2015 02:19:26 GMT"
         ],
         "Server": [
           "Microsoft-IIS/8.0"
@@ -139,7 +139,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "804919a7-7a65-4eaa-9b9b-abdf72ac0841"
+          "dfcbfe25-e289-497c-9035-9c17a5e04d3a"
         ],
         "accept-language": [
           "en-US"
@@ -166,22 +166,22 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "6b5c4147-78c7-4998-957c-b0872ac2a6fc"
+          "1429da61-ae3e-4773-9d4b-598b6a841917"
         ],
         "x-ms-ratelimit-remaining-tenant-reads": [
-          "14998"
+          "14992"
         ],
         "x-ms-correlation-request-id": [
-          "4ca2eeb0-8582-4818-8f79-63d52ee7dbe4"
+          "91df2df0-b724-4da6-b264-173b4716a139"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20150807T232946Z:4ca2eeb0-8582-4818-8f79-63d52ee7dbe4"
+          "WESTUS:20150905T021927Z:91df2df0-b724-4da6-b264-173b4716a139"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Fri, 07 Aug 2015 23:29:45 GMT"
+          "Sat, 05 Sep 2015 02:19:26 GMT"
         ],
         "Server": [
           "Microsoft-IIS/8.0"
@@ -198,6 +198,6 @@
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "04de5a7a-b82a-48b3-a93d-35d2b090903a"
+    "SubscriptionId": "4adb32ad-8327-4cbb-b775-b84b4465bb38"
   }
 }

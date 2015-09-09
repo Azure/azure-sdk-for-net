@@ -5,6 +5,7 @@
 namespace Microsoft.Azure.Management.WebSites.Models
 {
     using System;
+    using System.Linq;
     using System.Collections.Generic;
     using Newtonsoft.Json;
     using Microsoft.Rest;
@@ -33,7 +34,17 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// 'MySql', 'SQLServer', 'SQLAzure', 'Custom'.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
-        public string Type { get; set; }
+        public DatabaseServerType? Type { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
+        /// </summary>
+        public virtual void Validate()
+        {
+            if (Type == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Type");
+            }
+        }
     }
 }

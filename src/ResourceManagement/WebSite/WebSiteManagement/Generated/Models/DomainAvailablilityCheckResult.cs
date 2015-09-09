@@ -5,6 +5,7 @@
 namespace Microsoft.Azure.Management.WebSites.Models
 {
     using System;
+    using System.Linq;
     using System.Collections.Generic;
     using Newtonsoft.Json;
     using Microsoft.Rest;
@@ -33,7 +34,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// 'SoftDeleted'.
         /// </summary>
         [JsonProperty(PropertyName = "domainType")]
-        public string DomainType { get; set; }
+        public DomainType? DomainType { get; set; }
 
     }
 }

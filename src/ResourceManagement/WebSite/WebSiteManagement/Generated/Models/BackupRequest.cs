@@ -5,6 +5,7 @@
 namespace Microsoft.Azure.Management.WebSites.Models
 {
     using System;
+    using System.Linq;
     using System.Collections.Generic;
     using Newtonsoft.Json;
     using Microsoft.Rest;
@@ -16,11 +17,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
     /// </summary>
     public partial class BackupRequest : Resource
     {
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "sku")]
-        public SkuDescription Sku { get; set; }
-
         /// <summary>
         /// Name of the backup
         /// </summary>
@@ -57,7 +53,18 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// 'Default', 'Clone', 'Relocation'.
         /// </summary>
         [JsonProperty(PropertyName = "properties.type")]
-        public string BackupRequestType { get; set; }
+        public BackupRestoreOperationType? BackupRequestType { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
+        /// </summary>
+        public override void Validate()
+        {
+            base.Validate();
+            if (this.BackupSchedule != null)
+            {
+                this.BackupSchedule.Validate();
+            }
+        }
     }
 }

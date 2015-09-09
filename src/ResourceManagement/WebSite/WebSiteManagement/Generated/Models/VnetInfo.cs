@@ -5,6 +5,7 @@
 namespace Microsoft.Azure.Management.WebSites.Models
 {
     using System;
+    using System.Linq;
     using System.Collections.Generic;
     using Newtonsoft.Json;
     using Microsoft.Rest;
@@ -17,11 +18,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
     /// </summary>
     public partial class VnetInfo : Resource
     {
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "sku")]
-        public SkuDescription Sku { get; set; }
-
         /// <summary>
         /// The vnet resource id
         /// </summary>
@@ -42,5 +38,28 @@ namespace Microsoft.Azure.Management.WebSites.Models
         [JsonProperty(PropertyName = "properties.certBlob")]
         public string CertBlob { get; set; }
 
+        /// <summary>
+        /// The routes that this virtual network connection uses.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.routes")]
+        public IList<VnetRoute> Routes { get; set; }
+
+        /// <summary>
+        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
+        /// </summary>
+        public override void Validate()
+        {
+            base.Validate();
+            if (this.Routes != null)
+            {
+                foreach (var element in this.Routes)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
+        }
     }
 }

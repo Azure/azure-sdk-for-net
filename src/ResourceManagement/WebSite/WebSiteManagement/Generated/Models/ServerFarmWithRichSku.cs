@@ -5,6 +5,7 @@
 namespace Microsoft.Azure.Management.WebSites.Models
 {
     using System;
+    using System.Linq;
     using System.Collections.Generic;
     using Newtonsoft.Json;
     using Microsoft.Rest;
@@ -22,49 +23,29 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public SkuDescription Sku { get; set; }
 
         /// <summary>
-        /// App Service Plan ARM resource ID
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.serverFarmId")]
-        public int? ServerFarmId { get; set; }
-
-        /// <summary>
         /// Name for the App Service Plan
         /// </summary>
         [JsonProperty(PropertyName = "properties.name")]
         public string ServerFarmWithRichSkuName { get; set; }
 
         /// <summary>
-        /// Size of the compute resources assigned to the App Service Plan
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.workerSizeId")]
-        public int? WorkerSizeId { get; set; }
-
-        /// <summary>
         /// App Service Plan Status. Possible values for this property
         /// include: 'Ready', 'Pending'.
         /// </summary>
         [JsonProperty(PropertyName = "properties.status")]
-        public string Status { get; set; }
+        public StatusOptions? Status { get; private set; }
 
         /// <summary>
         /// App Service Plan Subscription
         /// </summary>
         [JsonProperty(PropertyName = "properties.subscription")]
-        public string Subscription { get; set; }
+        public string Subscription { get; private set; }
 
         /// <summary>
         /// App Service Plan administration site
         /// </summary>
         [JsonProperty(PropertyName = "properties.adminSiteName")]
         public string AdminSiteName { get; set; }
-
-        /// <summary>
-        /// Name for the hostingEnvironment (App Service Environment) hosting
-        /// this App Service Plan
-        /// Value is Null when hosted on public environment
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.hostingEnvironment")]
-        public string HostingEnvironment { get; set; }
 
         /// <summary>
         /// Specification for the hosting environment (App Service
@@ -84,7 +65,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// Geographical location for the App Service Plan
         /// </summary>
         [JsonProperty(PropertyName = "properties.geoRegion")]
-        public string GeoRegion { get; set; }
+        public string GeoRegion { get; private set; }
 
         /// <summary>
         /// If True apps assigned to this App Service Plan can be scaled
@@ -99,13 +80,20 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// Number of web apps assigned to this App Service Plan
         /// </summary>
         [JsonProperty(PropertyName = "properties.numberOfSites")]
-        public int? NumberOfSites { get; set; }
+        public int? NumberOfSites { get; private set; }
 
         /// <summary>
-        /// Collection of tags assigned to the App Service Plan
+        /// Resource group of the serverfarm
         /// </summary>
-        [JsonProperty(PropertyName = "properties.tags")]
-        public IDictionary<string, string> ServerFarmWithRichSkuTags { get; set; }
+        [JsonProperty(PropertyName = "properties.resourceGroup")]
+        public string ResourceGroup { get; private set; }
 
+        /// <summary>
+        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
+        /// </summary>
+        public override void Validate()
+        {
+            base.Validate();
+        }
     }
 }

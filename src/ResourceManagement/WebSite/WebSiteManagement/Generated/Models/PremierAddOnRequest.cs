@@ -5,6 +5,7 @@
 namespace Microsoft.Azure.Management.WebSites.Models
 {
     using System;
+    using System.Linq;
     using System.Collections.Generic;
     using Newtonsoft.Json;
     using Microsoft.Rest;
@@ -38,6 +39,12 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public object Properties { get; set; }
+
+        /// <summary>
+        /// Sku description of the resource
+        /// </summary>
+        [JsonProperty(PropertyName = "sku")]
+        public SkuDescription Sku { get; set; }
 
     }
 }

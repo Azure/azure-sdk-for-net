@@ -5,6 +5,7 @@
 namespace Microsoft.Azure.Management.WebSites.Models
 {
     using System;
+    using System.Linq;
     using System.Collections.Generic;
     using Newtonsoft.Json;
     using Microsoft.Rest;
@@ -21,7 +22,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// 'Verbose', 'Information', 'Warning', 'Error'.
         /// </summary>
         [JsonProperty(PropertyName = "level")]
-        public string Level { get; set; }
+        public LogLevel? Level { get; set; }
 
         /// <summary>
         /// SAS url to a azure blob container with read/write/list/delete

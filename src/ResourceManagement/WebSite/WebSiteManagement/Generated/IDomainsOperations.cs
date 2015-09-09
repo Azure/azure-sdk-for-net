@@ -10,7 +10,6 @@ namespace Microsoft.Azure.Management.WebSites
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Rest;
-    using System.Linq;
     using Microsoft.Rest.Azure;
     using Models;
 
