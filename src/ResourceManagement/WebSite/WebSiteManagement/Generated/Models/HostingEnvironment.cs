@@ -5,6 +5,7 @@
 namespace Microsoft.Azure.Management.WebSites.Models
 {
     using System;
+    using System.Linq;
     using System.Collections.Generic;
     using Newtonsoft.Json;
     using Microsoft.Rest;
@@ -16,11 +17,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
     /// </summary>
     public partial class HostingEnvironment : Resource
     {
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "sku")]
-        public SkuDescription Sku { get; set; }
-
         /// <summary>
         /// Name of the hostingEnvironment (App Service Environment)
         /// </summary>
@@ -40,7 +36,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// 'Preparing', 'Ready', 'Scaling', 'Deleting'.
         /// </summary>
         [JsonProperty(PropertyName = "properties.status")]
-        public string Status { get; set; }
+        public HostingEnvironmentStatus? Status { get; set; }
 
         /// <summary>
         /// Name of the hostingEnvironment's (App Service Environment) virtual
@@ -76,7 +72,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// values for this property include: 'None', 'Web', 'Publishing'.
         /// </summary>
         [JsonProperty(PropertyName = "properties.internalLoadBalancingMode")]
-        public string InternalLoadBalancingMode { get; set; }
+        public InternalLoadBalancingMode? InternalLoadBalancingMode { get; set; }
 
         /// <summary>
         /// Front-end VM size, e.g. "Medium", "Large"
@@ -221,5 +217,22 @@ namespace Microsoft.Azure.Management.WebSites.Models
         [JsonProperty(PropertyName = "properties.suspended")]
         public bool? Suspended { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
+        /// </summary>
+        public override void Validate()
+        {
+            base.Validate();
+            if (this.WorkerPools != null)
+            {
+                foreach (var element in this.WorkerPools)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
+        }
     }
 }

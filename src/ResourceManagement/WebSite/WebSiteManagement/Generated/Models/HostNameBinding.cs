@@ -5,6 +5,7 @@
 namespace Microsoft.Azure.Management.WebSites.Models
 {
     using System;
+    using System.Linq;
     using System.Collections.Generic;
     using Newtonsoft.Json;
     using Microsoft.Rest;
@@ -16,11 +17,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
     /// </summary>
     public partial class HostNameBinding : Resource
     {
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "sku")]
-        public SkuDescription Sku { get; set; }
-
         /// <summary>
         /// Hostname
         /// </summary>
@@ -50,21 +46,28 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// 'Website', 'TrafficManager'.
         /// </summary>
         [JsonProperty(PropertyName = "properties.azureResourceType")]
-        public string AzureResourceType { get; set; }
+        public AzureResourceType? AzureResourceType { get; set; }
 
         /// <summary>
         /// Custom DNS record type. Possible values for this property include:
         /// 'CName', 'A'.
         /// </summary>
         [JsonProperty(PropertyName = "properties.customHostNameDnsRecordType")]
-        public string CustomHostNameDnsRecordType { get; set; }
+        public CustomHostNameDnsRecordType? CustomHostNameDnsRecordType { get; set; }
 
         /// <summary>
         /// Host name type. Possible values for this property include:
         /// 'Verified', 'Managed'.
         /// </summary>
         [JsonProperty(PropertyName = "properties.hostNameType")]
-        public string HostNameType { get; set; }
+        public HostNameType? HostNameType { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
+        /// </summary>
+        public override void Validate()
+        {
+            base.Validate();
+        }
     }
 }

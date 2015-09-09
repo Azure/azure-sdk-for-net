@@ -5,6 +5,7 @@
 namespace Microsoft.Azure.Management.WebSites
 {
     using System;
+    using System.Linq;
     using System.Collections.Generic;
     using System.Net;
     using System.Net.Http;
@@ -15,7 +16,6 @@ namespace Microsoft.Azure.Management.WebSites
     using System.Threading.Tasks;
     using Microsoft.Rest;
     using Newtonsoft.Json;
-    using System.Linq;
     using Microsoft.Rest.Azure;
     using Models;
 
@@ -315,6 +315,10 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "requestMessage");
             }
+            if (requestMessage != null)
+            {
+                requestMessage.Validate();
+            }
             if (this.Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
@@ -582,6 +586,10 @@ namespace Microsoft.Azure.Management.WebSites
             if (requestMessage == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "requestMessage");
+            }
+            if (requestMessage != null)
+            {
+                requestMessage.Validate();
             }
             if (this.Client.ApiVersion == null)
             {

@@ -5,6 +5,7 @@
 namespace Microsoft.Azure.Management.WebSites.Models
 {
     using System;
+    using System.Linq;
     using System.Collections.Generic;
     using Newtonsoft.Json;
     using Microsoft.Rest;
@@ -16,11 +17,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
     /// </summary>
     public partial class SourceControl : Resource
     {
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "sku")]
-        public SkuDescription Sku { get; set; }
-
         /// <summary>
         /// Name or Source Control Type
         /// </summary>
@@ -51,5 +47,12 @@ namespace Microsoft.Azure.Management.WebSites.Models
         [JsonProperty(PropertyName = "properties.expirationTime")]
         public DateTime? ExpirationTime { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
+        /// </summary>
+        public override void Validate()
+        {
+            base.Validate();
+        }
     }
 }

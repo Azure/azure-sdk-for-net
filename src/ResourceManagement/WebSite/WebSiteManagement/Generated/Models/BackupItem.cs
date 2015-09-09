@@ -5,6 +5,7 @@
 namespace Microsoft.Azure.Management.WebSites.Models
 {
     using System;
+    using System.Linq;
     using System.Collections.Generic;
     using Newtonsoft.Json;
     using Microsoft.Rest;
@@ -16,11 +17,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
     /// </summary>
     public partial class BackupItem : Resource
     {
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "sku")]
-        public SkuDescription Sku { get; set; }
-
         /// <summary>
         /// SAS URL for the storage account container which contains this
         /// backup
@@ -46,7 +42,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// 'Skipped', 'PartiallySucceeded'.
         /// </summary>
         [JsonProperty(PropertyName = "properties.status")]
-        public string Status { get; set; }
+        public BackupItemStatus? Status { get; set; }
 
         /// <summary>
         /// Size of the backup in bytes
@@ -104,5 +100,12 @@ namespace Microsoft.Azure.Management.WebSites.Models
         [JsonProperty(PropertyName = "properties.websiteSizeInBytes")]
         public long? WebsiteSizeInBytes { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
+        /// </summary>
+        public override void Validate()
+        {
+            base.Validate();
+        }
     }
 }

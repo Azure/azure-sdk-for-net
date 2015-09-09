@@ -5,6 +5,7 @@
 namespace Microsoft.Azure.Management.WebSites
 {
     using System;
+    using System.Linq;
     using System.Collections.Generic;
     using System.Net;
     using System.Net.Http;
@@ -15,7 +16,6 @@ namespace Microsoft.Azure.Management.WebSites
     using System.Threading.Tasks;
     using Microsoft.Rest;
     using Newtonsoft.Json;
-    using System.Linq;
     using Microsoft.Rest.Azure;
     using Models;
 
@@ -49,8 +49,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='resourceGroupName'>
         /// Name of resource group
         /// </param>
-        /// <param name='webSystemName'>
-        /// Name of the sub system: WebSites or Mobile
+        /// <param name='environmentName'>
+        /// Environment name
         /// </param>
         /// <param name='lastId'>
         /// Last marker that was returned from the batch
@@ -64,15 +64,15 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<object>> GetUsageWithHttpMessagesAsync(string resourceGroupName, string webSystemName, string lastId, int? batchSize, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<object>> GetUsageWithHttpMessagesAsync(string resourceGroupName, string environmentName, string lastId, int? batchSize, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (webSystemName == null)
+            if (environmentName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "webSystemName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "environmentName");
             }
             if (lastId == null)
             {
@@ -98,16 +98,16 @@ namespace Microsoft.Azure.Management.WebSites
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("webSystemName", webSystemName);
+                tracingParameters.Add("environmentName", environmentName);
                 tracingParameters.Add("lastId", lastId);
                 tracingParameters.Add("batchSize", batchSize);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(invocationId, this, "GetUsage", tracingParameters);
             }
             // Construct URL
-            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web.Admin/systems/{webSystemName}/usage").ToString();
+            var url = new Uri(this.Client.BaseUri, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web.Admin/environments/{environmentName}/usage").ToString();
             url = url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
-            url = url.Replace("{webSystemName}", Uri.EscapeDataString(webSystemName));
+            url = url.Replace("{environmentName}", Uri.EscapeDataString(environmentName));
             url = url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> queryParameters = new List<string>();
             if (lastId != null)

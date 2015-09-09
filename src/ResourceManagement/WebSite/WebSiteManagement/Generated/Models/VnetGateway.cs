@@ -5,6 +5,7 @@
 namespace Microsoft.Azure.Management.WebSites.Models
 {
     using System;
+    using System.Linq;
     using System.Collections.Generic;
     using Newtonsoft.Json;
     using Microsoft.Rest;
@@ -18,11 +19,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
     public partial class VnetGateway : Resource
     {
         /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "sku")]
-        public SkuDescription Sku { get; set; }
-
-        /// <summary>
         /// The VNET name.
         /// </summary>
         [JsonProperty(PropertyName = "properties.vnetName")]
@@ -34,5 +30,12 @@ namespace Microsoft.Azure.Management.WebSites.Models
         [JsonProperty(PropertyName = "properties.vpnPackageUri")]
         public string VpnPackageUri { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
+        /// </summary>
+        public override void Validate()
+        {
+            base.Validate();
+        }
     }
 }

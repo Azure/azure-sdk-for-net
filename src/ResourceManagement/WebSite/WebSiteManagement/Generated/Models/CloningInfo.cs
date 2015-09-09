@@ -5,6 +5,7 @@
 namespace Microsoft.Azure.Management.WebSites.Models
 {
     using System;
+    using System.Linq;
     using System.Collections.Generic;
     using Newtonsoft.Json;
     using Microsoft.Rest;
@@ -69,9 +70,15 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public IDictionary<string, string> AppSettingsOverrides { get; set; }
 
         /// <summary>
+        /// If specified configure load balancing for source and clone site
+        /// </summary>
+        [JsonProperty(PropertyName = "configureLoadBalancing")]
+        public bool? ConfigureLoadBalancing { get; set; }
+
+        /// <summary>
         /// ARM resource id of the traffic manager profile to use if it
         /// exists. Traffic manager resource id is of the form
-        /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}
+        /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficManagerProfiles/{profileName}
         /// </summary>
         [JsonProperty(PropertyName = "trafficManagerProfileId")]
         public string TrafficManagerProfileId { get; set; }

@@ -5,6 +5,7 @@
 namespace Microsoft.Azure.Management.WebSites.Models
 {
     using System;
+    using System.Linq;
     using System.Collections.Generic;
     using Newtonsoft.Json;
     using Microsoft.Rest;
@@ -16,11 +17,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
     /// </summary>
     public partial class SiteLogsConfig : Resource
     {
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "sku")]
-        public SkuDescription Sku { get; set; }
-
         /// <summary>
         /// Application logs configuration
         /// </summary>
@@ -45,5 +41,12 @@ namespace Microsoft.Azure.Management.WebSites.Models
         [JsonProperty(PropertyName = "properties.detailedErrorMessages")]
         public EnabledConfig DetailedErrorMessages { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ArgumentException or ArgumentNullException if validation fails.
+        /// </summary>
+        public override void Validate()
+        {
+            base.Validate();
+        }
     }
 }

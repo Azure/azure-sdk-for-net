@@ -23,8 +23,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='resourceGroupName'>
             /// Name of resource group
             /// </param>
-            /// <param name='webSystemName'>
-            /// Name of the sub system: WebSites or Mobile
+            /// <param name='environmentName'>
+            /// Environment name
             /// </param>
             /// <param name='lastId'>
             /// Last marker that was returned from the batch
@@ -32,9 +32,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='batchSize'>
             /// size of the batch to be returned.
             /// </param>
-            public static object GetUsage(this IUsageOperations operations, string resourceGroupName, string webSystemName, string lastId, int? batchSize)
+            public static object GetUsage(this IUsageOperations operations, string resourceGroupName, string environmentName, string lastId, int? batchSize)
             {
-                return Task.Factory.StartNew(s => ((IUsageOperations)s).GetUsageAsync(resourceGroupName, webSystemName, lastId, batchSize), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IUsageOperations)s).GetUsageAsync(resourceGroupName, environmentName, lastId, batchSize), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -45,8 +45,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='resourceGroupName'>
             /// Name of resource group
             /// </param>
-            /// <param name='webSystemName'>
-            /// Name of the sub system: WebSites or Mobile
+            /// <param name='environmentName'>
+            /// Environment name
             /// </param>
             /// <param name='lastId'>
             /// Last marker that was returned from the batch
@@ -57,9 +57,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> GetUsageAsync( this IUsageOperations operations, string resourceGroupName, string webSystemName, string lastId, int? batchSize, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> GetUsageAsync( this IUsageOperations operations, string resourceGroupName, string environmentName, string lastId, int? batchSize, CancellationToken cancellationToken = default(CancellationToken))
             {
-                AzureOperationResponse<object> result = await operations.GetUsageWithHttpMessagesAsync(resourceGroupName, webSystemName, lastId, batchSize, null, cancellationToken).ConfigureAwait(false);
+                AzureOperationResponse<object> result = await operations.GetUsageWithHttpMessagesAsync(resourceGroupName, environmentName, lastId, batchSize, null, cancellationToken).ConfigureAwait(false);
                 return result.Body;
             }
 
