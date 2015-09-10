@@ -115,7 +115,7 @@ namespace HDInsight.Tests
         {
             var spec = GetClusterSpecHelpers.GetCustomCreateParametersPaas();
 
-            ServicePrincipal servicePrincipal = new ServicePrincipal(new Guid(ApplicationId), new Uri(AadTenantId), CertificateFileBytes,
+            ServicePrincipal servicePrincipal = new ServicePrincipal(new Guid(ApplicationId), new Guid(AadTenantId), CertificateFileBytes,
                 CertificatePassword);
             spec.Principal = servicePrincipal;
             return spec;

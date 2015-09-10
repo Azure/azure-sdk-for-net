@@ -39,9 +39,9 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         public string CertificatePassword { get; private set; }
 
         /// <summary>
-        /// Gets AAD tenant uri of the service principal
+        /// Gets AAD tenant id of the service principal
         /// </summary>
-        public Uri AADTenantId { get; private set; }
+        public Guid AADTenantId { get; private set; }
 
         /// <summary>
         /// Gets Resource uri of the service principal
@@ -54,14 +54,14 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// <param name="applicationId">Application id of the service principal.</param>
         /// <param name="certificateFileBytes">certificate file bytes associated with service principal.</param>
         /// <param name="certificatePassword">certificate password associated with service principal.</param>
-        /// <param name="aadTenantId">AAD tenant uri of the service principal</param>
-        public ServicePrincipal(Guid applicationId, Uri aadTenantId, byte[] certificateFileBytes, string certificatePassword)
+        /// <param name="aadTenantId">AAD tenant id of the service principal</param>
+        public ServicePrincipal(Guid applicationId, Guid aadTenantId, byte[] certificateFileBytes, string certificatePassword)
         {
             if (applicationId == Guid.Empty)
                 throw new ArgumentException("Input cannot be empty", "applicationId");
 
-            if (aadTenantId == null)
-                throw new ArgumentNullException("aadTenantId");
+            if (aadTenantId == Guid.Empty)
+                throw new ArgumentException("Input cannot be empty", "aadTenantId");
             
             if (certificateFileBytes == null)
                 throw new ArgumentNullException("certificateFileBytes");

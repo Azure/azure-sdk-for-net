@@ -341,8 +341,10 @@ namespace Microsoft.Azure.Management.HDInsight
             {
                 datalakeConfig = new Dictionary<string, string>();
                 ServicePrincipal servicePrincipalObj = (ServicePrincipal)clusterCreateParameters.Principal;
+
                 datalakeConfig.Add("clusterIdentity.applicationId", servicePrincipalObj.ApplicationId.ToString());
-                datalakeConfig.Add("clusterIdentity.aadTenantId", servicePrincipalObj.AADTenantId.ToString());
+                // converting the tenant Id to URI as RP expects this to be URI
+                datalakeConfig.Add("clusterIdentity.aadTenantId", "https://login.windows.net/" + servicePrincipalObj.AADTenantId.ToString());
                 datalakeConfig.Add("clusterIdentity.certificate", Convert.ToBase64String(servicePrincipalObj.CertificateFileBytes));
                 datalakeConfig.Add("clusterIdentity.certificatePassword", servicePrincipalObj.CertificatePassword);
                 datalakeConfig.Add("clusterIdentity.resourceUri", servicePrincipalObj.ResourceUri.ToString());
