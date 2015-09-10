@@ -20,55 +20,48 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 using Microsoft.Azure.Management.Insights.Models;
 
 namespace Microsoft.Azure.Management.Insights.Models
 {
     /// <summary>
-    /// Represents a sku definition.
+    /// Specifies the action to post to service when the rule condition is
+    /// evaluated.
     /// </summary>
-    public partial class SkuDefinition
+    public partial class RuleWebhookAction : RuleAction
     {
-        private Capacity _capacity;
+        private IDictionary<string, string> _properties;
         
         /// <summary>
-        /// Optional. Gets or sets the capacity of the sku.
+        /// Optional. Gets or sets the dictionary of custom properties to
+        /// include with the post operation.
         /// </summary>
-        public Capacity Capacity
+        public IDictionary<string, string> Properties
         {
-            get { return this._capacity; }
-            set { this._capacity = value; }
+            get { return this._properties; }
+            set { this._properties = value; }
         }
         
-        private string _resourceType;
+        private string _serviceUri;
         
         /// <summary>
-        /// Optional. Gets or sets the type of the resource e.g.
-        /// 'Microsoft.Compute/virtualMachines'.
+        /// Optional. Gets or sets the service uri to Post the notitication.
         /// </summary>
-        public string ResourceType
+        public string ServiceUri
         {
-            get { return this._resourceType; }
-            set { this._resourceType = value; }
-        }
-        
-        private Sku _sku;
-        
-        /// <summary>
-        /// Optional. Gets or sets the sku.
-        /// </summary>
-        public Sku Sku
-        {
-            get { return this._sku; }
-            set { this._sku = value; }
+            get { return this._serviceUri; }
+            set { this._serviceUri = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the SkuDefinition class.
+        /// Initializes a new instance of the RuleWebhookAction class.
         /// </summary>
-        public SkuDefinition()
+        public RuleWebhookAction()
         {
+            this.Properties = new LazyDictionary<string, string>();
         }
     }
 }

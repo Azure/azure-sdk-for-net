@@ -527,6 +527,90 @@ namespace Microsoft.Azure.Management.Insights
                                 }
                             }
                         }
+                        if (parameters.Properties.Action is RuleWebhookAction)
+                        {
+                            actionValue["odata.type"] = parameters.Properties.Action.GetType().FullName;
+                            RuleWebhookAction derived11 = ((RuleWebhookAction)parameters.Properties.Action);
+                            
+                            if (derived11.ServiceUri != null)
+                            {
+                                actionValue["serviceUri"] = derived11.ServiceUri;
+                            }
+                            
+                            if (derived11.Properties != null)
+                            {
+                                if (derived11.Properties is ILazyCollection == false || ((ILazyCollection)derived11.Properties).IsInitialized)
+                                {
+                                    JObject propertiesDictionary = new JObject();
+                                    foreach (KeyValuePair<string, string> pair2 in derived11.Properties)
+                                    {
+                                        string propertiesKey = pair2.Key;
+                                        string propertiesValue2 = pair2.Value;
+                                        propertiesDictionary[propertiesKey] = propertiesValue2;
+                                    }
+                                    actionValue["properties"] = propertiesDictionary;
+                                }
+                            }
+                        }
+                    }
+                    
+                    if (parameters.Properties.Actions != null)
+                    {
+                        if (parameters.Properties.Actions is ILazyCollection == false || ((ILazyCollection)parameters.Properties.Actions).IsInitialized)
+                        {
+                            JArray actionsArray = new JArray();
+                            foreach (RuleAction actionsItem in parameters.Properties.Actions)
+                            {
+                                JObject ruleActionValue = new JObject();
+                                actionsArray.Add(ruleActionValue);
+                                if (actionsItem is RuleEmailAction)
+                                {
+                                    ruleActionValue["odata.type"] = actionsItem.GetType().FullName;
+                                    RuleEmailAction derived12 = ((RuleEmailAction)actionsItem);
+                                    
+                                    ruleActionValue["sendToServiceOwners"] = derived12.SendToServiceOwners;
+                                    
+                                    if (derived12.CustomEmails != null)
+                                    {
+                                        if (derived12.CustomEmails is ILazyCollection == false || ((ILazyCollection)derived12.CustomEmails).IsInitialized)
+                                        {
+                                            JArray customEmailsArray2 = new JArray();
+                                            foreach (string customEmailsItem2 in derived12.CustomEmails)
+                                            {
+                                                customEmailsArray2.Add(customEmailsItem2);
+                                            }
+                                            ruleActionValue["customEmails"] = customEmailsArray2;
+                                        }
+                                    }
+                                }
+                                if (actionsItem is RuleWebhookAction)
+                                {
+                                    ruleActionValue["odata.type"] = actionsItem.GetType().FullName;
+                                    RuleWebhookAction derived13 = ((RuleWebhookAction)actionsItem);
+                                    
+                                    if (derived13.ServiceUri != null)
+                                    {
+                                        ruleActionValue["serviceUri"] = derived13.ServiceUri;
+                                    }
+                                    
+                                    if (derived13.Properties != null)
+                                    {
+                                        if (derived13.Properties is ILazyCollection == false || ((ILazyCollection)derived13.Properties).IsInitialized)
+                                        {
+                                            JObject propertiesDictionary2 = new JObject();
+                                            foreach (KeyValuePair<string, string> pair3 in derived13.Properties)
+                                            {
+                                                string propertiesKey2 = pair3.Key;
+                                                string propertiesValue3 = pair3.Value;
+                                                propertiesDictionary2[propertiesKey2] = propertiesValue3;
+                                            }
+                                            ruleActionValue["properties"] = propertiesDictionary2;
+                                        }
+                                    }
+                                }
+                            }
+                            propertiesValue["actions"] = actionsArray;
+                        }
                     }
                     
                     propertiesValue["lastUpdatedTime"] = parameters.Properties.LastUpdatedTime;
@@ -1608,6 +1692,82 @@ namespace Microsoft.Azure.Management.Insights
                                         }
                                         propertiesInstance.Action = ruleEmailActionInstance;
                                     }
+                                    if (typeName5 == "Microsoft.Azure.Management.Insights.Models.RuleWebhookAction")
+                                    {
+                                        RuleWebhookAction ruleWebhookActionInstance = new RuleWebhookAction();
+                                        
+                                        JToken serviceUriValue = actionValue["serviceUri"];
+                                        if (serviceUriValue != null && serviceUriValue.Type != JTokenType.Null)
+                                        {
+                                            string serviceUriInstance = ((string)serviceUriValue);
+                                            ruleWebhookActionInstance.ServiceUri = serviceUriInstance;
+                                        }
+                                        
+                                        JToken propertiesSequenceElement = ((JToken)actionValue["properties"]);
+                                        if (propertiesSequenceElement != null && propertiesSequenceElement.Type != JTokenType.Null)
+                                        {
+                                            foreach (JProperty property2 in propertiesSequenceElement)
+                                            {
+                                                string propertiesKey = ((string)property2.Name);
+                                                string propertiesValue2 = ((string)property2.Value);
+                                                ruleWebhookActionInstance.Properties.Add(propertiesKey, propertiesValue2);
+                                            }
+                                        }
+                                        propertiesInstance.Action = ruleWebhookActionInstance;
+                                    }
+                                }
+                                
+                                JToken actionsArray = propertiesValue["actions"];
+                                if (actionsArray != null && actionsArray.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken actionsValue in ((JArray)actionsArray))
+                                    {
+                                        string typeName6 = ((string)actionsValue["odata.type"]);
+                                        if (typeName6 == "Microsoft.Azure.Management.Insights.Models.RuleEmailAction")
+                                        {
+                                            RuleEmailAction ruleEmailActionInstance2 = new RuleEmailAction();
+                                            
+                                            JToken sendToServiceOwnersValue2 = actionsValue["sendToServiceOwners"];
+                                            if (sendToServiceOwnersValue2 != null && sendToServiceOwnersValue2.Type != JTokenType.Null)
+                                            {
+                                                bool sendToServiceOwnersInstance2 = ((bool)sendToServiceOwnersValue2);
+                                                ruleEmailActionInstance2.SendToServiceOwners = sendToServiceOwnersInstance2;
+                                            }
+                                            
+                                            JToken customEmailsArray2 = actionsValue["customEmails"];
+                                            if (customEmailsArray2 != null && customEmailsArray2.Type != JTokenType.Null)
+                                            {
+                                                foreach (JToken customEmailsValue2 in ((JArray)customEmailsArray2))
+                                                {
+                                                    ruleEmailActionInstance2.CustomEmails.Add(((string)customEmailsValue2));
+                                                }
+                                            }
+                                            propertiesInstance.Actions.Add(ruleEmailActionInstance2);
+                                        }
+                                        if (typeName6 == "Microsoft.Azure.Management.Insights.Models.RuleWebhookAction")
+                                        {
+                                            RuleWebhookAction ruleWebhookActionInstance2 = new RuleWebhookAction();
+                                            
+                                            JToken serviceUriValue2 = actionsValue["serviceUri"];
+                                            if (serviceUriValue2 != null && serviceUriValue2.Type != JTokenType.Null)
+                                            {
+                                                string serviceUriInstance2 = ((string)serviceUriValue2);
+                                                ruleWebhookActionInstance2.ServiceUri = serviceUriInstance2;
+                                            }
+                                            
+                                            JToken propertiesSequenceElement2 = ((JToken)actionsValue["properties"]);
+                                            if (propertiesSequenceElement2 != null && propertiesSequenceElement2.Type != JTokenType.Null)
+                                            {
+                                                foreach (JProperty property3 in propertiesSequenceElement2)
+                                                {
+                                                    string propertiesKey2 = ((string)property3.Name);
+                                                    string propertiesValue3 = ((string)property3.Value);
+                                                    ruleWebhookActionInstance2.Properties.Add(propertiesKey2, propertiesValue3);
+                                                }
+                                            }
+                                            propertiesInstance.Actions.Add(ruleWebhookActionInstance2);
+                                        }
+                                    }
                                 }
                                 
                                 JToken lastUpdatedTimeValue = propertiesValue["lastUpdatedTime"];
@@ -2507,6 +2667,82 @@ namespace Microsoft.Azure.Management.Insights
                                                 }
                                                 propertiesInstance.Action = ruleEmailActionInstance;
                                             }
+                                            if (typeName5 == "Microsoft.Azure.Management.Insights.Models.RuleWebhookAction")
+                                            {
+                                                RuleWebhookAction ruleWebhookActionInstance = new RuleWebhookAction();
+                                                
+                                                JToken serviceUriValue = actionValue["serviceUri"];
+                                                if (serviceUriValue != null && serviceUriValue.Type != JTokenType.Null)
+                                                {
+                                                    string serviceUriInstance = ((string)serviceUriValue);
+                                                    ruleWebhookActionInstance.ServiceUri = serviceUriInstance;
+                                                }
+                                                
+                                                JToken propertiesSequenceElement = ((JToken)actionValue["properties"]);
+                                                if (propertiesSequenceElement != null && propertiesSequenceElement.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JProperty property2 in propertiesSequenceElement)
+                                                    {
+                                                        string propertiesKey = ((string)property2.Name);
+                                                        string propertiesValue2 = ((string)property2.Value);
+                                                        ruleWebhookActionInstance.Properties.Add(propertiesKey, propertiesValue2);
+                                                    }
+                                                }
+                                                propertiesInstance.Action = ruleWebhookActionInstance;
+                                            }
+                                        }
+                                        
+                                        JToken actionsArray = propertiesValue["actions"];
+                                        if (actionsArray != null && actionsArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken actionsValue in ((JArray)actionsArray))
+                                            {
+                                                string typeName6 = ((string)actionsValue["odata.type"]);
+                                                if (typeName6 == "Microsoft.Azure.Management.Insights.Models.RuleEmailAction")
+                                                {
+                                                    RuleEmailAction ruleEmailActionInstance2 = new RuleEmailAction();
+                                                    
+                                                    JToken sendToServiceOwnersValue2 = actionsValue["sendToServiceOwners"];
+                                                    if (sendToServiceOwnersValue2 != null && sendToServiceOwnersValue2.Type != JTokenType.Null)
+                                                    {
+                                                        bool sendToServiceOwnersInstance2 = ((bool)sendToServiceOwnersValue2);
+                                                        ruleEmailActionInstance2.SendToServiceOwners = sendToServiceOwnersInstance2;
+                                                    }
+                                                    
+                                                    JToken customEmailsArray2 = actionsValue["customEmails"];
+                                                    if (customEmailsArray2 != null && customEmailsArray2.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken customEmailsValue2 in ((JArray)customEmailsArray2))
+                                                        {
+                                                            ruleEmailActionInstance2.CustomEmails.Add(((string)customEmailsValue2));
+                                                        }
+                                                    }
+                                                    propertiesInstance.Actions.Add(ruleEmailActionInstance2);
+                                                }
+                                                if (typeName6 == "Microsoft.Azure.Management.Insights.Models.RuleWebhookAction")
+                                                {
+                                                    RuleWebhookAction ruleWebhookActionInstance2 = new RuleWebhookAction();
+                                                    
+                                                    JToken serviceUriValue2 = actionsValue["serviceUri"];
+                                                    if (serviceUriValue2 != null && serviceUriValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string serviceUriInstance2 = ((string)serviceUriValue2);
+                                                        ruleWebhookActionInstance2.ServiceUri = serviceUriInstance2;
+                                                    }
+                                                    
+                                                    JToken propertiesSequenceElement2 = ((JToken)actionsValue["properties"]);
+                                                    if (propertiesSequenceElement2 != null && propertiesSequenceElement2.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JProperty property3 in propertiesSequenceElement2)
+                                                        {
+                                                            string propertiesKey2 = ((string)property3.Name);
+                                                            string propertiesValue3 = ((string)property3.Value);
+                                                            ruleWebhookActionInstance2.Properties.Add(propertiesKey2, propertiesValue3);
+                                                        }
+                                                    }
+                                                    propertiesInstance.Actions.Add(ruleWebhookActionInstance2);
+                                                }
+                                            }
                                         }
                                         
                                         JToken lastUpdatedTimeValue = propertiesValue["lastUpdatedTime"];
@@ -3011,6 +3247,90 @@ namespace Microsoft.Azure.Management.Insights
                                     actionValue["customEmails"] = customEmailsArray;
                                 }
                             }
+                        }
+                        if (parameters.Properties.Action is RuleWebhookAction)
+                        {
+                            actionValue["odata.type"] = parameters.Properties.Action.GetType().FullName;
+                            RuleWebhookAction derived11 = ((RuleWebhookAction)parameters.Properties.Action);
+                            
+                            if (derived11.ServiceUri != null)
+                            {
+                                actionValue["serviceUri"] = derived11.ServiceUri;
+                            }
+                            
+                            if (derived11.Properties != null)
+                            {
+                                if (derived11.Properties is ILazyCollection == false || ((ILazyCollection)derived11.Properties).IsInitialized)
+                                {
+                                    JObject propertiesDictionary = new JObject();
+                                    foreach (KeyValuePair<string, string> pair2 in derived11.Properties)
+                                    {
+                                        string propertiesKey = pair2.Key;
+                                        string propertiesValue2 = pair2.Value;
+                                        propertiesDictionary[propertiesKey] = propertiesValue2;
+                                    }
+                                    actionValue["properties"] = propertiesDictionary;
+                                }
+                            }
+                        }
+                    }
+                    
+                    if (parameters.Properties.Actions != null)
+                    {
+                        if (parameters.Properties.Actions is ILazyCollection == false || ((ILazyCollection)parameters.Properties.Actions).IsInitialized)
+                        {
+                            JArray actionsArray = new JArray();
+                            foreach (RuleAction actionsItem in parameters.Properties.Actions)
+                            {
+                                JObject ruleActionValue = new JObject();
+                                actionsArray.Add(ruleActionValue);
+                                if (actionsItem is RuleEmailAction)
+                                {
+                                    ruleActionValue["odata.type"] = actionsItem.GetType().FullName;
+                                    RuleEmailAction derived12 = ((RuleEmailAction)actionsItem);
+                                    
+                                    ruleActionValue["sendToServiceOwners"] = derived12.SendToServiceOwners;
+                                    
+                                    if (derived12.CustomEmails != null)
+                                    {
+                                        if (derived12.CustomEmails is ILazyCollection == false || ((ILazyCollection)derived12.CustomEmails).IsInitialized)
+                                        {
+                                            JArray customEmailsArray2 = new JArray();
+                                            foreach (string customEmailsItem2 in derived12.CustomEmails)
+                                            {
+                                                customEmailsArray2.Add(customEmailsItem2);
+                                            }
+                                            ruleActionValue["customEmails"] = customEmailsArray2;
+                                        }
+                                    }
+                                }
+                                if (actionsItem is RuleWebhookAction)
+                                {
+                                    ruleActionValue["odata.type"] = actionsItem.GetType().FullName;
+                                    RuleWebhookAction derived13 = ((RuleWebhookAction)actionsItem);
+                                    
+                                    if (derived13.ServiceUri != null)
+                                    {
+                                        ruleActionValue["serviceUri"] = derived13.ServiceUri;
+                                    }
+                                    
+                                    if (derived13.Properties != null)
+                                    {
+                                        if (derived13.Properties is ILazyCollection == false || ((ILazyCollection)derived13.Properties).IsInitialized)
+                                        {
+                                            JObject propertiesDictionary2 = new JObject();
+                                            foreach (KeyValuePair<string, string> pair3 in derived13.Properties)
+                                            {
+                                                string propertiesKey2 = pair3.Key;
+                                                string propertiesValue3 = pair3.Value;
+                                                propertiesDictionary2[propertiesKey2] = propertiesValue3;
+                                            }
+                                            ruleActionValue["properties"] = propertiesDictionary2;
+                                        }
+                                    }
+                                }
+                            }
+                            propertiesValue["actions"] = actionsArray;
                         }
                     }
                     

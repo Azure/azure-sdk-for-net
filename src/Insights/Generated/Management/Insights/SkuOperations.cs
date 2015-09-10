@@ -50,9 +50,9 @@ namespace Microsoft.Azure.Management.Insights
         {
             this._client = client;
         }
-
+        
         private InsightsManagementClient _client;
-
+        
         /// <summary>
         /// Gets a reference to the
         /// Microsoft.Azure.Management.Insights.InsightsManagementClient.
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.Insights
         {
             get { return this._client; }
         }
-
+        
         /// <param name='resourceId'>
         /// Required. The resource id.
         /// </param>
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Management.Insights
             {
                 throw new ArgumentNullException("apiVersion");
             }
-
+            
             // Tracing
             bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
@@ -98,7 +98,7 @@ namespace Microsoft.Azure.Management.Insights
                 tracingParameters.Add("apiVersion", apiVersion);
                 TracingAdapter.Enter(invocationId, this, "GetCurrentSkuAsync", tracingParameters);
             }
-
+            
             // Construct URL
             string url = "";
             url = url + "/";
@@ -121,7 +121,7 @@ namespace Microsoft.Azure.Management.Insights
             }
             url = baseUrl + "/" + url;
             url = url.Replace(" ", "%20");
-
+            
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
             try
@@ -129,14 +129,14 @@ namespace Microsoft.Azure.Management.Insights
                 httpRequest = new HttpRequestMessage();
                 httpRequest.Method = HttpMethod.Get;
                 httpRequest.RequestUri = new Uri(url);
-
+                
                 // Set Headers
                 httpRequest.Headers.Add("Accept", "application/json");
-
+                
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
                 await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-
+                
                 // Send Request
                 HttpResponseMessage httpResponse = null;
                 try
@@ -162,7 +162,7 @@ namespace Microsoft.Azure.Management.Insights
                         }
                         throw ex;
                     }
-
+                    
                     // Create Result
                     SkuGetResponse result = null;
                     // Deserialize Response
@@ -176,7 +176,7 @@ namespace Microsoft.Azure.Management.Insights
                         {
                             responseDoc = JToken.Parse(responseContent);
                         }
-
+                        
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
                             JToken skuValue = responseDoc["sku"];
@@ -184,35 +184,35 @@ namespace Microsoft.Azure.Management.Insights
                             {
                                 CurrentSku skuInstance = new CurrentSku();
                                 result.Sku = skuInstance;
-
+                                
                                 JToken nameValue = skuValue["name"];
                                 if (nameValue != null && nameValue.Type != JTokenType.Null)
                                 {
                                     string nameInstance = ((string)nameValue);
                                     skuInstance.Name = nameInstance;
                                 }
-
+                                
                                 JToken tierValue = skuValue["tier"];
                                 if (tierValue != null && tierValue.Type != JTokenType.Null)
                                 {
                                     string tierInstance = ((string)tierValue);
                                     skuInstance.Tier = tierInstance;
                                 }
-
+                                
                                 JToken sizeValue = skuValue["size"];
                                 if (sizeValue != null && sizeValue.Type != JTokenType.Null)
                                 {
                                     string sizeInstance = ((string)sizeValue);
                                     skuInstance.Size = sizeInstance;
                                 }
-
+                                
                                 JToken familyValue = skuValue["family"];
                                 if (familyValue != null && familyValue.Type != JTokenType.Null)
                                 {
                                     string familyInstance = ((string)familyValue);
                                     skuInstance.Family = familyInstance;
                                 }
-
+                                
                                 JToken capacityValue = skuValue["capacity"];
                                 if (capacityValue != null && capacityValue.Type != JTokenType.Null)
                                 {
@@ -221,14 +221,14 @@ namespace Microsoft.Azure.Management.Insights
                                 }
                             }
                         }
-
+                        
                     }
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
-
+                    
                     if (shouldTrace)
                     {
                         TracingAdapter.Exit(invocationId, result);
@@ -251,7 +251,7 @@ namespace Microsoft.Azure.Management.Insights
                 }
             }
         }
-
+        
         /// <param name='resourceId'>
         /// Required. The resource id.
         /// </param>
@@ -276,7 +276,7 @@ namespace Microsoft.Azure.Management.Insights
             {
                 throw new ArgumentNullException("apiVersion");
             }
-
+            
             // Tracing
             bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
@@ -288,7 +288,7 @@ namespace Microsoft.Azure.Management.Insights
                 tracingParameters.Add("apiVersion", apiVersion);
                 TracingAdapter.Enter(invocationId, this, "ListSkuDefinitionsAsync", tracingParameters);
             }
-
+            
             // Construct URL
             string url = "";
             url = url + "/";
@@ -312,7 +312,7 @@ namespace Microsoft.Azure.Management.Insights
             }
             url = baseUrl + "/" + url;
             url = url.Replace(" ", "%20");
-
+            
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
             try
@@ -320,14 +320,14 @@ namespace Microsoft.Azure.Management.Insights
                 httpRequest = new HttpRequestMessage();
                 httpRequest.Method = HttpMethod.Get;
                 httpRequest.RequestUri = new Uri(url);
-
+                
                 // Set Headers
                 httpRequest.Headers.Add("Accept", "application/json");
-
+                
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
                 await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-
+                
                 // Send Request
                 HttpResponseMessage httpResponse = null;
                 try
@@ -353,7 +353,7 @@ namespace Microsoft.Azure.Management.Insights
                         }
                         throw ex;
                     }
-
+                    
                     // Create Result
                     SkuListResponse result = null;
                     // Deserialize Response
@@ -367,7 +367,7 @@ namespace Microsoft.Azure.Management.Insights
                         {
                             responseDoc = JToken.Parse(responseContent);
                         }
-
+                        
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
                             JToken valueArray = responseDoc["value"];
@@ -377,41 +377,41 @@ namespace Microsoft.Azure.Management.Insights
                                 {
                                     SkuDefinition skuDefinitionInstance = new SkuDefinition();
                                     result.Value.Add(skuDefinitionInstance);
-
+                                    
                                     JToken resourceTypeValue = valueValue["resourceType"];
                                     if (resourceTypeValue != null && resourceTypeValue.Type != JTokenType.Null)
                                     {
                                         string resourceTypeInstance = ((string)resourceTypeValue);
                                         skuDefinitionInstance.ResourceType = resourceTypeInstance;
                                     }
-
+                                    
                                     JToken skuValue = valueValue["sku"];
                                     if (skuValue != null && skuValue.Type != JTokenType.Null)
                                     {
                                         Sku skuInstance = new Sku();
                                         skuDefinitionInstance.Sku = skuInstance;
-
+                                        
                                         JToken nameValue = skuValue["name"];
                                         if (nameValue != null && nameValue.Type != JTokenType.Null)
                                         {
                                             string nameInstance = ((string)nameValue);
                                             skuInstance.Name = nameInstance;
                                         }
-
+                                        
                                         JToken tierValue = skuValue["tier"];
                                         if (tierValue != null && tierValue.Type != JTokenType.Null)
                                         {
                                             string tierInstance = ((string)tierValue);
                                             skuInstance.Tier = tierInstance;
                                         }
-
+                                        
                                         JToken sizeValue = skuValue["size"];
                                         if (sizeValue != null && sizeValue.Type != JTokenType.Null)
                                         {
                                             string sizeInstance = ((string)sizeValue);
                                             skuInstance.Size = sizeInstance;
                                         }
-
+                                        
                                         JToken familyValue = skuValue["family"];
                                         if (familyValue != null && familyValue.Type != JTokenType.Null)
                                         {
@@ -419,34 +419,34 @@ namespace Microsoft.Azure.Management.Insights
                                             skuInstance.Family = familyInstance;
                                         }
                                     }
-
+                                    
                                     JToken capacityValue = valueValue["capacity"];
                                     if (capacityValue != null && capacityValue.Type != JTokenType.Null)
                                     {
                                         Capacity capacityInstance = new Capacity();
                                         skuDefinitionInstance.Capacity = capacityInstance;
-
+                                        
                                         JToken minimumValue = capacityValue["minimum"];
                                         if (minimumValue != null && minimumValue.Type != JTokenType.Null)
                                         {
                                             int minimumInstance = ((int)minimumValue);
                                             capacityInstance.Minimum = minimumInstance;
                                         }
-
+                                        
                                         JToken maximumValue = capacityValue["maximum"];
                                         if (maximumValue != null && maximumValue.Type != JTokenType.Null)
                                         {
                                             int maximumInstance = ((int)maximumValue);
                                             capacityInstance.Maximum = maximumInstance;
                                         }
-
+                                        
                                         JToken defaultValue = capacityValue["default"];
                                         if (defaultValue != null && defaultValue.Type != JTokenType.Null)
                                         {
                                             int defaultInstance = ((int)defaultValue);
                                             capacityInstance.Default = defaultInstance;
                                         }
-
+                                        
                                         JToken scaleTypeValue = capacityValue["scaleType"];
                                         if (scaleTypeValue != null && scaleTypeValue.Type != JTokenType.Null)
                                         {
@@ -457,14 +457,14 @@ namespace Microsoft.Azure.Management.Insights
                                 }
                             }
                         }
-
+                        
                     }
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
-
+                    
                     if (shouldTrace)
                     {
                         TracingAdapter.Exit(invocationId, result);
@@ -487,7 +487,7 @@ namespace Microsoft.Azure.Management.Insights
                 }
             }
         }
-
+        
         /// <param name='resourceId'>
         /// Required.
         /// </param>
@@ -519,7 +519,7 @@ namespace Microsoft.Azure.Management.Insights
             {
                 throw new ArgumentNullException("apiVersion");
             }
-
+            
             // Tracing
             bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
@@ -532,7 +532,7 @@ namespace Microsoft.Azure.Management.Insights
                 tracingParameters.Add("apiVersion", apiVersion);
                 TracingAdapter.Enter(invocationId, this, "UpdateCurrentSkuAsync", tracingParameters);
             }
-
+            
             // Construct URL
             string url = "";
             url = url + "/";
@@ -555,7 +555,7 @@ namespace Microsoft.Azure.Management.Insights
             }
             url = baseUrl + "/" + url;
             url = url.Replace(" ", "%20");
-
+            
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
             try
@@ -563,53 +563,53 @@ namespace Microsoft.Azure.Management.Insights
                 httpRequest = new HttpRequestMessage();
                 httpRequest.Method = new HttpMethod("PATCH");
                 httpRequest.RequestUri = new Uri(url);
-
+                
                 // Set Headers
                 httpRequest.Headers.Add("Accept", "application/json");
-
+                
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
                 await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-
+                
                 // Serialize Request
                 string requestContent = null;
                 JToken requestDoc = null;
-
+                
                 JObject skuUpdateParametersValue = new JObject();
                 requestDoc = skuUpdateParametersValue;
-
+                
                 if (parameters.Sku != null)
                 {
                     JObject skuValue = new JObject();
                     skuUpdateParametersValue["sku"] = skuValue;
-
+                    
                     if (parameters.Sku.Name != null)
                     {
                         skuValue["name"] = parameters.Sku.Name;
                     }
-
+                    
                     if (parameters.Sku.Tier != null)
                     {
                         skuValue["tier"] = parameters.Sku.Tier;
                     }
-
+                    
                     if (parameters.Sku.Size != null)
                     {
                         skuValue["size"] = parameters.Sku.Size;
                     }
-
+                    
                     if (parameters.Sku.Family != null)
                     {
                         skuValue["family"] = parameters.Sku.Family;
                     }
-
+                    
                     skuValue["capacity"] = parameters.Sku.Capacity;
                 }
-
+                
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
-
+                
                 // Send Request
                 HttpResponseMessage httpResponse = null;
                 try
@@ -635,7 +635,7 @@ namespace Microsoft.Azure.Management.Insights
                         }
                         throw ex;
                     }
-
+                    
                     // Create Result
                     SkuUpdateResponse result = null;
                     // Deserialize Response
@@ -649,18 +649,18 @@ namespace Microsoft.Azure.Management.Insights
                         {
                             responseDoc = JToken.Parse(responseContent);
                         }
-
+                        
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
                         }
-
+                        
                     }
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
-
+                    
                     if (shouldTrace)
                     {
                         TracingAdapter.Exit(invocationId, result);

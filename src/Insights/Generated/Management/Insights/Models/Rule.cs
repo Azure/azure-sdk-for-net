@@ -20,7 +20,9 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 using Microsoft.Azure.Management.Insights.Models;
 
 namespace Microsoft.Azure.Management.Insights.Models
@@ -40,6 +42,18 @@ namespace Microsoft.Azure.Management.Insights.Models
         {
             get { return this._action; }
             set { this._action = value; }
+        }
+        
+        private IList<RuleAction> _actions;
+        
+        /// <summary>
+        /// Optional. Gets or sets the actions that are performed when the
+        /// alert rule becomes active, and when an alert condition is resolved.
+        /// </summary>
+        public IList<RuleAction> Actions
+        {
+            get { return this._actions; }
+            set { this._actions = value; }
         }
         
         private RuleCondition _condition;
@@ -105,6 +119,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         /// </summary>
         public Rule()
         {
+            this.Actions = new LazyList<RuleAction>();
         }
     }
 }
