@@ -13,6 +13,8 @@
 // limitations under the License.
 //
 
+using System.Collections.Generic;
+
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
@@ -24,5 +26,15 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// SQL data warehouse reader query.
         /// </summary>
         public string SqlReaderQuery { get; set; }
+
+        /// <summary>
+        /// Optional. Name of stored procedure for SQL data warehouse source, which can't be used with SqlReaderQuery at the same time.
+        /// </summary>
+        public string SqlReaderStoredProcedureName { get; set; }
+
+        /// <summary>
+        /// Optional. Parameter setting for stored procedure. Format exmaple: "{Parameter1: {value: "1", type: "int"}}".
+        /// </summary>
+        public IDictionary<string, Dictionary<string, string>> StoredProcedureParameters { get; set; }
     }
 }
