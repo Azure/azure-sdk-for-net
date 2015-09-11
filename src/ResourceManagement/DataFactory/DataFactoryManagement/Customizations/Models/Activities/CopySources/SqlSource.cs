@@ -28,12 +28,12 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         public string SqlReaderQuery { get; set; }
 
         /// <summary>
-        /// Optional. Name of stored procedure for SQL source, which can't be used with SqlReaderQuery at the same time.
+        /// Optional. Name of the stored procedure for a SQL Azure source. This cannot be used at the same time as SqlReaderQuery.
         /// </summary>
         public string SqlReaderStoredProcedureName { get; set; }
 
         /// <summary>
-        /// Optional. Parameter setting for stored procedure. Format exmaple: "{Parameter1: {value: "1", type: "int"}}".
+        /// Optional. Value and type setting for stored procedure parameters. Format Exmaple: "{Parameter1: {value: "1", type: "int"}}".
         /// </summary>
         public IDictionary<string, Dictionary<string, string>> StoredProcedureParameters { get; set; }
     }
