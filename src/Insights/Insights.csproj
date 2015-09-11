@@ -42,9 +42,6 @@
     <Compile Include="Customizations\Shoebox\SizeBoundedCache.cs" />
     <Compile Include="Customizations\Shoebox\StorageMetricRetriever.cs" />
     <Compile Include="Customizations\Shoebox\TableOperationContextLogger.cs" />
-    <Compile Include="Customizations\Sku\SkuOperations.Antares.Customizations.cs" />
-    <Compile Include="Customizations\Sku\ISkuOperations.Customizations.cs" />
-    <Compile Include="Customizations\Sku\SkuOperations.Customizations.cs" />
     <Compile Include="Customizations\Util.cs" />
     <Compile Include="Generated\Insights\ILogDefinitionOperations.cs" />
     <Compile Include="Generated\Insights\ILogOperations.cs" />
@@ -77,7 +74,6 @@
     <Compile Include="Generated\Management\Insights\Models\DatabaseBackupOption.cs" />
     <Compile Include="Generated\Management\Insights\Models\DatabaseConsistencyOption.cs" />
     <Compile Include="Generated\Management\Insights\Models\DatabaseServerCredential.cs" />
-    <Compile Include="Generated\Management\Insights\Models\Display.cs" />
     <Compile Include="Generated\Management\Insights\Models\LogSettings.cs" />
     <Compile Include="Generated\Management\Insights\Models\MetricSettings.cs" />
     <Compile Include="Generated\Management\Insights\Models\RetentionPolicy.cs" />
@@ -128,13 +124,9 @@
     <Compile Include="OnetimeGenerated\Management\StorageDiagnosticSettingsOperations.cs" />
     <Compile Include="Generated\Management\Insights\StorageDiagnosticSettingsOperationsExtensions.cs" />
     <Compile Include="Generated\Management\Insights\Models\SkuUpdateResponse.cs" />
-    <Compile Include="Customizations\Sku\SkuOperationsExtensions.Customizations.cs" />
     <Compile Include="OnetimeGenerated\Insights\LogOperations.cs" />
     <Compile Include="Generated\Management\Insights\SkuOperations.cs" />
     <Compile Include="Generated\Management\Insights\SkuOperationsExtensions.cs" />
-    <Compile Include="Generated\Management\Insights\StorageDiagnosticSettingsOperations.cs" />
-    <Compile Include="Generated\Management\Insights\StorageDiagnosticSettingsOperationsExtensions.cs" />
-    <Compile Include="Generated\Management\Insights\Models\SkuUpdateResponse.cs" />
     <Compile Include="OnetimeGenerated\Insights\MetricDefinitionOperations.cs" />
     <Compile Include="OnetimeGenerated\Insights\MetricOperations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
