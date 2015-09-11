@@ -97,7 +97,7 @@ namespace Microsoft.Azure.Management.Resources
             url = url + "/providers/Microsoft.Authorization/providerOperations/";
             url = url + Uri.EscapeDataString(resourceProviderNamespace);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-07-01-preview");
+            queryParameters.Add("api-version=2015-07-01");
             queryParameters.Add("$expand=resourceTypes");
             if (queryParameters.Count > 0)
             {
@@ -375,7 +375,7 @@ namespace Microsoft.Azure.Management.Resources
             string url = "";
             url = url + "/providers/Microsoft.Authorization/providerOperations";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-07-01-preview");
+            queryParameters.Add("api-version=2015-07-01");
             queryParameters.Add("$expand=resourceTypes");
             if (queryParameters.Count > 0)
             {
