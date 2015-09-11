@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         public string SqlReaderStoredProcedureName { get; set; }
 
         /// <summary>
-        /// Optional. Value and type setting for stored procedure parameters. Format Exmaple: "{Parameter1: {value: "1", type: "int"}}".
+        /// Optional. Value and type setting for stored procedure parameters. Exmaple: "{Parameter1: {value: "1", type: "int"}}".
         /// </summary>
         public IDictionary<string, Dictionary<string, string>> StoredProcedureParameters { get; set; }
     }
