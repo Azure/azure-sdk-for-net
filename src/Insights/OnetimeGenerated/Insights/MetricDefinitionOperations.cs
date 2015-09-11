@@ -114,7 +114,15 @@ namespace Microsoft.Azure.Insights
             List<string> odataFilter = new List<string>();
             if (filterString != null)
             {
-                url = url + "&$filter=" + Uri.EscapeDataString(filterString);
+                odataFilter.Add(Uri.EscapeDataString(filterString));
+            }
+            if (odataFilter.Count > 0)
+            {
+                queryParameters.Add("$filter=" + string.Join(null, odataFilter));
+            }
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
             }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
