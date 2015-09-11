@@ -108,7 +108,7 @@ namespace Microsoft.Azure.Insights
             string url = "";
             url = url + "/";
             url = url + resourceUri;
-            url = url + "/metricDefinitions";
+            url = url + "/metricDefinitions?";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2014-04-01");
             List<string> odataFilter = new List<string>();
