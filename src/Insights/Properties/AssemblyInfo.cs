@@ -21,7 +21,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("Provides Microsoft Azure Insights operations.")]
 
 [assembly: AssemblyVersion("0.9.0.0")]
-[assembly: AssemblyFileVersion("0.8.9.0")]
+[assembly: AssemblyFileVersion("0.9.0.0")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
