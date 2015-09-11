@@ -66,6 +66,7 @@
     <Compile Include="Generated\Management\Insights\AutomatedExportOperations.cs" />
     <Compile Include="Generated\Management\Insights\AutomatedExportOperationsExtensions.cs" />
     <Compile Include="Generated\Management\Insights\IAutomatedExportOperations.cs" />
+    <Compile Include="Generated\Management\Insights\ISkuOperations.cs" />
     <Compile Include="Generated\Management\Insights\Models\AutomatedExportSetting.cs" />
     <Compile Include="Generated\Management\Insights\Models\AutomatedExportSettingCreateOrUpdateParameters.cs" />
     <Compile Include="Generated\Management\Insights\Models\AutomatedExportSettingGetResponse.cs" />
@@ -80,6 +81,7 @@
     <Compile Include="Generated\Management\Insights\Models\LogSettings.cs" />
     <Compile Include="Generated\Management\Insights\Models\MetricSettings.cs" />
     <Compile Include="Generated\Management\Insights\Models\RetentionPolicy.cs" />
+    <Compile Include="Generated\Management\Insights\Models\RuleWebhookAction.cs" />
     <Compile Include="Generated\Management\Insights\Models\Sku.cs" />
     <Compile Include="Generated\Management\Insights\Models\SkuDefinition.cs" />
     <Compile Include="Generated\Management\Insights\Models\SkuGetProperties.cs" />
@@ -128,12 +130,13 @@
     <Compile Include="Generated\Management\Insights\Models\SkuUpdateResponse.cs" />
     <Compile Include="Customizations\Sku\SkuOperationsExtensions.Customizations.cs" />
     <Compile Include="OnetimeGenerated\Insights\LogOperations.cs" />
+    <Compile Include="Generated\Management\Insights\SkuOperations.cs" />
+    <Compile Include="Generated\Management\Insights\SkuOperationsExtensions.cs" />
+    <Compile Include="Generated\Management\Insights\StorageDiagnosticSettingsOperations.cs" />
+    <Compile Include="Generated\Management\Insights\StorageDiagnosticSettingsOperationsExtensions.cs" />
+    <Compile Include="Generated\Management\Insights\Models\SkuUpdateResponse.cs" />
     <Compile Include="OnetimeGenerated\Insights\MetricDefinitionOperations.cs" />
     <Compile Include="OnetimeGenerated\Insights\MetricOperations.cs" />
-    <Compile Include="OnetimeGenerated\Management\Insights\Models\AntaresSku.cs" />
-    <Compile Include="OnetimeGenerated\Management\Insights\Models\AntaresSkuGetResponse.cs" />
-    <Compile Include="OnetimeGenerated\Management\Insights\Models\AntaresSkuUpdateRequest.cs" />
-    <Compile Include="OnetimeGenerated\Management\Insights\SkuOperations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Generated\Insights\EventOperations.cs" />
     <Compile Include="Generated\Insights\EventOperationsExtensions.cs" />
@@ -282,6 +285,9 @@
     <Reference Include="System.Spatial, Version=5.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Spatial.5.6.0\lib\net40\System.Spatial.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="OnetimeGenerated\Management\Insights\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(LibraryFxTarget)' == 'portable' " />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(LibraryFxTarget)' != 'portable' " />

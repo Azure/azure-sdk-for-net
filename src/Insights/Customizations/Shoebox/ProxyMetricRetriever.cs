@@ -2,7 +2,10 @@
 // Copyright (c) Microsoft.  All rights reserved.
 //
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.Insights.Models;
@@ -24,6 +27,7 @@ namespace Microsoft.Azure.Insights.Customizations.Shoebox
 
         public Task<MetricListResponse> GetMetricsAsync(string resourceId, string filterString, IEnumerable<MetricDefinition> definitions, string invocationId)
         {
+            ShoeboxHelper.EncodeUriSegments(resourceId);
             return this.metricOperations.GetMetricsInternalAsync(resourceId, filterString, CancellationToken.None);
         }
     }

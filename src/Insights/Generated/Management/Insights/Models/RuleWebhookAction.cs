@@ -20,31 +20,48 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
+using Microsoft.Azure.Management.Insights.Models;
 
 namespace Microsoft.Azure.Management.Insights.Models
 {
     /// <summary>
-    /// Represents how the sku is displayed.
+    /// Specifies the action to post to service when the rule condition is
+    /// evaluated.
     /// </summary>
-    public partial class Display
+    public partial class RuleWebhookAction : RuleAction
     {
-        private string _title;
+        private IDictionary<string, string> _properties;
         
         /// <summary>
-        /// Optional. Gets or sets the display title.
+        /// Optional. Gets or sets the dictionary of custom properties to
+        /// include with the post operation.
         /// </summary>
-        public string Title
+        public IDictionary<string, string> Properties
         {
-            get { return this._title; }
-            set { this._title = value; }
+            get { return this._properties; }
+            set { this._properties = value; }
+        }
+        
+        private string _serviceUri;
+        
+        /// <summary>
+        /// Optional. Gets or sets the service uri to Post the notitication.
+        /// </summary>
+        public string ServiceUri
+        {
+            get { return this._serviceUri; }
+            set { this._serviceUri = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the Display class.
+        /// Initializes a new instance of the RuleWebhookAction class.
         /// </summary>
-        public Display()
+        public RuleWebhookAction()
         {
+            this.Properties = new LazyDictionary<string, string>();
         }
     }
 }

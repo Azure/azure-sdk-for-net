@@ -45,13 +45,13 @@ namespace Microsoft.Azure.Management.Insights
         /// </returns>
         public static SkuGetResponse GetCurrentSku(this ISkuOperations operations, string resourceId, string apiVersion)
         {
-            return Task.Factory.StartNew((object s) =>
+            return Task.Factory.StartNew((object s) => 
             {
                 return ((ISkuOperations)s).GetCurrentSkuAsync(resourceId, apiVersion);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
-
+        
         /// <param name='operations'>
         /// Reference to the Microsoft.Azure.Management.Insights.ISkuOperations.
         /// </param>
@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Management.Insights
         {
             return operations.GetCurrentSkuAsync(resourceId, apiVersion, CancellationToken.None);
         }
-
+        
         /// <param name='operations'>
         /// Reference to the Microsoft.Azure.Management.Insights.ISkuOperations.
         /// </param>
@@ -85,13 +85,13 @@ namespace Microsoft.Azure.Management.Insights
         /// </returns>
         public static SkuListResponse ListSkuDefinitions(this ISkuOperations operations, string resourceId, string apiVersion)
         {
-            return Task.Factory.StartNew((object s) =>
+            return Task.Factory.StartNew((object s) => 
             {
                 return ((ISkuOperations)s).ListSkuDefinitionsAsync(resourceId, apiVersion);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
-
+        
         /// <param name='operations'>
         /// Reference to the Microsoft.Azure.Management.Insights.ISkuOperations.
         /// </param>
@@ -109,7 +109,7 @@ namespace Microsoft.Azure.Management.Insights
         {
             return operations.ListSkuDefinitionsAsync(resourceId, apiVersion, CancellationToken.None);
         }
-
+        
         /// <param name='operations'>
         /// Reference to the Microsoft.Azure.Management.Insights.ISkuOperations.
         /// </param>
@@ -128,13 +128,13 @@ namespace Microsoft.Azure.Management.Insights
         /// </returns>
         public static SkuUpdateResponse UpdateCurrentSku(this ISkuOperations operations, string resourceId, SkuUpdateParameters parameters, string apiVersion)
         {
-            return Task.Factory.StartNew((object s) =>
+            return Task.Factory.StartNew((object s) => 
             {
                 return ((ISkuOperations)s).UpdateCurrentSkuAsync(resourceId, parameters, apiVersion);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
-
+        
         /// <param name='operations'>
         /// Reference to the Microsoft.Azure.Management.Insights.ISkuOperations.
         /// </param>

@@ -41,15 +41,16 @@ namespace Microsoft.Azure.Management.Insights.Models
             set { this._capacity = value; }
         }
         
-        private Display _display;
+        private string _resourceType;
         
         /// <summary>
-        /// Optional. Gets or sets the capacity of the sku.
+        /// Optional. Gets or sets the type of the resource e.g.
+        /// 'Microsoft.Compute/virtualMachines'.
         /// </summary>
-        public Display Display
+        public string ResourceType
         {
-            get { return this._display; }
-            set { this._display = value; }
+            get { return this._resourceType; }
+            set { this._resourceType = value; }
         }
         
         private Sku _sku;

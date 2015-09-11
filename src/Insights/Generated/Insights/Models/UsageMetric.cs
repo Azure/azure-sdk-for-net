@@ -41,6 +41,17 @@ namespace Microsoft.Azure.Insights.Models
             set { this._currentValue = value; }
         }
         
+        private string _id;
+        
+        /// <summary>
+        /// Optional. Gets or sets the id for the usage metric.
+        /// </summary>
+        public string Id
+        {
+            get { return this._id; }
+            set { this._id = value; }
+        }
+        
         private double _limit;
         
         /// <summary>
