@@ -41,6 +41,18 @@ namespace Microsoft.Azure.Management.Automation.Models
             set { this._description = value; }
         }
         
+        private int _logActivityTrace;
+        
+        /// <summary>
+        /// Optional. Gets or sets the activity-level tracing options of the
+        /// runbook.
+        /// </summary>
+        public int LogActivityTrace
+        {
+            get { return this._logActivityTrace; }
+            set { this._logActivityTrace = value; }
+        }
+        
         private bool _logProgress;
         
         /// <summary>

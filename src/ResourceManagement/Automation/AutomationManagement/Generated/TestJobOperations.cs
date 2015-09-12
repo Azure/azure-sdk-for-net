@@ -195,6 +195,11 @@ namespace Microsoft.Azure.Management.Automation
                     }
                 }
                 
+                if (parameters.RunOn != null)
+                {
+                    testJobCreateParametersValue["runOn"] = parameters.RunOn;
+                }
+                
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
@@ -263,6 +268,13 @@ namespace Microsoft.Azure.Management.Automation
                             {
                                 string statusDetailsInstance = ((string)statusDetailsValue);
                                 testJobInstance.StatusDetails = statusDetailsInstance;
+                            }
+                            
+                            JToken runOnValue = responseDoc["runOn"];
+                            if (runOnValue != null && runOnValue.Type != JTokenType.Null)
+                            {
+                                string runOnInstance = ((string)runOnValue);
+                                testJobInstance.RunOn = runOnInstance;
                             }
                             
                             JToken startTimeValue = responseDoc["startTime"];
@@ -509,6 +521,13 @@ namespace Microsoft.Azure.Management.Automation
                             {
                                 string statusDetailsInstance = ((string)statusDetailsValue);
                                 testJobInstance.StatusDetails = statusDetailsInstance;
+                            }
+                            
+                            JToken runOnValue = responseDoc["runOn"];
+                            if (runOnValue != null && runOnValue.Type != JTokenType.Null)
+                            {
+                                string runOnInstance = ((string)runOnValue);
+                                testJobInstance.RunOn = runOnInstance;
                             }
                             
                             JToken startTimeValue = responseDoc["startTime"];

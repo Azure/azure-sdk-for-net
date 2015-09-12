@@ -54,6 +54,18 @@ namespace Microsoft.Azure.Management.Automation.Models
             set { this._runbook = value; }
         }
         
+        private string _runOn;
+        
+        /// <summary>
+        /// Optional. Gets or sets the hybrid worker group that the scheduled
+        /// job should run on.
+        /// </summary>
+        public string RunOn
+        {
+            get { return this._runOn; }
+            set { this._runOn = value; }
+        }
+        
         private ScheduleAssociationProperty _schedule;
         
         /// <summary>

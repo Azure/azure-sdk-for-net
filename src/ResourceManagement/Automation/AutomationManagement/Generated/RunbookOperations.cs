@@ -408,6 +408,8 @@ namespace Microsoft.Azure.Management.Automation
                     propertiesValue["description"] = parameters.Properties.Description;
                 }
                 
+                propertiesValue["logActivityTrace"] = parameters.Properties.LogActivityTrace;
+                
                 if (parameters.Name != null)
                 {
                     runbookCreateOrUpdateParametersValue["name"] = parameters.Name;
@@ -1180,6 +1182,13 @@ namespace Microsoft.Azure.Management.Automation
                                     propertiesInstance.LogProgress = logProgressInstance;
                                 }
                                 
+                                JToken logActivityTraceValue = propertiesValue["logActivityTrace"];
+                                if (logActivityTraceValue != null && logActivityTraceValue.Type != JTokenType.Null)
+                                {
+                                    int logActivityTraceInstance = ((int)logActivityTraceValue);
+                                    propertiesInstance.LogActivityTrace = logActivityTraceInstance;
+                                }
+                                
                                 JToken jobCountValue = propertiesValue["jobCount"];
                                 if (jobCountValue != null && jobCountValue.Type != JTokenType.Null)
                                 {
@@ -1670,6 +1679,13 @@ namespace Microsoft.Azure.Management.Automation
                                             propertiesInstance.LogProgress = logProgressInstance;
                                         }
                                         
+                                        JToken logActivityTraceValue = propertiesValue["logActivityTrace"];
+                                        if (logActivityTraceValue != null && logActivityTraceValue.Type != JTokenType.Null)
+                                        {
+                                            int logActivityTraceInstance = ((int)logActivityTraceValue);
+                                            propertiesInstance.LogActivityTrace = logActivityTraceInstance;
+                                        }
+                                        
                                         JToken jobCountValue = propertiesValue["jobCount"];
                                         if (jobCountValue != null && jobCountValue.Type != JTokenType.Null)
                                         {
@@ -2137,6 +2153,13 @@ namespace Microsoft.Azure.Management.Automation
                                             propertiesInstance.LogProgress = logProgressInstance;
                                         }
                                         
+                                        JToken logActivityTraceValue = propertiesValue["logActivityTrace"];
+                                        if (logActivityTraceValue != null && logActivityTraceValue.Type != JTokenType.Null)
+                                        {
+                                            int logActivityTraceInstance = ((int)logActivityTraceValue);
+                                            propertiesInstance.LogActivityTrace = logActivityTraceInstance;
+                                        }
+                                        
                                         JToken jobCountValue = propertiesValue["jobCount"];
                                         if (jobCountValue != null && jobCountValue.Type != JTokenType.Null)
                                         {
@@ -2548,6 +2571,8 @@ namespace Microsoft.Azure.Management.Automation
                     propertiesValue["logVerbose"] = parameters.Properties.LogVerbose;
                     
                     propertiesValue["logProgress"] = parameters.Properties.LogProgress;
+                    
+                    propertiesValue["logActivityTrace"] = parameters.Properties.LogActivityTrace;
                 }
                 
                 if (parameters.Name != null)
@@ -2695,6 +2720,13 @@ namespace Microsoft.Azure.Management.Automation
                                 {
                                     bool logProgressInstance = ((bool)logProgressValue);
                                     propertiesInstance.LogProgress = logProgressInstance;
+                                }
+                                
+                                JToken logActivityTraceValue = propertiesValue2["logActivityTrace"];
+                                if (logActivityTraceValue != null && logActivityTraceValue.Type != JTokenType.Null)
+                                {
+                                    int logActivityTraceInstance = ((int)logActivityTraceValue);
+                                    propertiesInstance.LogActivityTrace = logActivityTraceInstance;
                                 }
                                 
                                 JToken jobCountValue = propertiesValue2["jobCount"];

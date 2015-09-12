@@ -21,20 +21,33 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
+using Microsoft.Azure.Management.Automation.Models;
 
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// The type of runbook.
+    /// The response model for the get hybrid runbook worker group operation.
     /// </summary>
-    public static partial class RunbookTypeEnum
+    public partial class HybridRunbookWorkerGroupGetResponse : AzureOperationResponse
     {
-        public const string Script = "Script";
+        private HybridRunbookWorkerGroup _hybridRunbookWorkerGroup;
         
-        public const string Graph = "Graph";
+        /// <summary>
+        /// Optional. Gets or sets a hybrid runbook worker group.
+        /// </summary>
+        public HybridRunbookWorkerGroup HybridRunbookWorkerGroup
+        {
+            get { return this._hybridRunbookWorkerGroup; }
+            set { this._hybridRunbookWorkerGroup = value; }
+        }
         
-        public const string PowerShellWorkflow = "PowerShellWorkflow";
-        
-        public const string PowerShell = "PowerShell";
+        /// <summary>
+        /// Initializes a new instance of the
+        /// HybridRunbookWorkerGroupGetResponse class.
+        /// </summary>
+        public HybridRunbookWorkerGroupGetResponse()
+        {
+        }
     }
 }

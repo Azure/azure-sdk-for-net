@@ -293,6 +293,16 @@ namespace Microsoft.Azure.Management.Automation
         }
         
         /// <summary>
+        /// Service operation for automation usages.  (see
+        /// http://aka.ms/azureautomationsdk/usageoperations for more
+        /// information)
+        /// </summary>
+        IUsageOperations Usages
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Service operation for automation variables.  (see
         /// http://aka.ms/azureautomationsdk/variableoperations for more
         /// information)

@@ -21,20 +21,32 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure.Management.Automation.Models;
 
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// The type of runbook.
+    /// Parameters supplied to the patch operation.
     /// </summary>
-    public static partial class RunbookTypeEnum
+    public partial class HybridRunbookWorkerGroupPatchParameters
     {
-        public const string Script = "Script";
+        private CredentialNavigation _credential;
         
-        public const string Graph = "Graph";
+        /// <summary>
+        /// Optional. Sets the credential of a worker group.
+        /// </summary>
+        public CredentialNavigation Credential
+        {
+            get { return this._credential; }
+            set { this._credential = value; }
+        }
         
-        public const string PowerShellWorkflow = "PowerShellWorkflow";
-        
-        public const string PowerShell = "PowerShell";
+        /// <summary>
+        /// Initializes a new instance of the
+        /// HybridRunbookWorkerGroupPatchParameters class.
+        /// </summary>
+        public HybridRunbookWorkerGroupPatchParameters()
+        {
+        }
     }
 }

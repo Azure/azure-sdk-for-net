@@ -25,16 +25,26 @@ using System.Linq;
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// The type of runbook.
+    /// Definition of the credential.
     /// </summary>
-    public static partial class RunbookTypeEnum
+    public partial class CredentialNavigation
     {
-        public const string Script = "Script";
+        private string _name;
         
-        public const string Graph = "Graph";
+        /// <summary>
+        /// Optional. Gets or sets the name of the credential.
+        /// </summary>
+        public string Name
+        {
+            get { return this._name; }
+            set { this._name = value; }
+        }
         
-        public const string PowerShellWorkflow = "PowerShellWorkflow";
-        
-        public const string PowerShell = "PowerShell";
+        /// <summary>
+        /// Initializes a new instance of the CredentialNavigation class.
+        /// </summary>
+        public CredentialNavigation()
+        {
+        }
     }
 }

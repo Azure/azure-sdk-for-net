@@ -25,16 +25,37 @@ using System.Linq;
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// The type of runbook.
+    /// Definition of usage counter name.
     /// </summary>
-    public static partial class RunbookTypeEnum
+    public partial class UsageCounterName
     {
-        public const string Script = "Script";
+        private string _localizedValue;
         
-        public const string Graph = "Graph";
+        /// <summary>
+        /// Optional. Gets or sets the localized usage counter name.
+        /// </summary>
+        public string LocalizedValue
+        {
+            get { return this._localizedValue; }
+            set { this._localizedValue = value; }
+        }
         
-        public const string PowerShellWorkflow = "PowerShellWorkflow";
+        private string _value;
         
-        public const string PowerShell = "PowerShell";
+        /// <summary>
+        /// Optional. Gets or sets the usage counter name.
+        /// </summary>
+        public string Value
+        {
+            get { return this._value; }
+            set { this._value = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the UsageCounterName class.
+        /// </summary>
+        public UsageCounterName()
+        {
+        }
     }
 }

@@ -25,16 +25,16 @@ using System.Linq;
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// The type of runbook.
+    /// Activity level tracing options of the runbook.
     /// </summary>
-    public static partial class RunbookTypeEnum
+    public static partial class ActivityTraceOptions
     {
-        public const string Script = "Script";
+        public const string None = "None";
         
-        public const string Graph = "Graph";
+        public const string ActivityStartEnd = "ActivityStartEnd";
         
-        public const string PowerShellWorkflow = "PowerShellWorkflow";
+        public const string ActivityInput = "ActivityInput";
         
-        public const string PowerShell = "PowerShell";
+        public const string ActivityOutput = "ActivityOutput";
     }
 }

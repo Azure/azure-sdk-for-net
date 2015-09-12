@@ -98,6 +98,18 @@ namespace Microsoft.Azure.Management.Automation.Models
             set { this._parameters = value; }
         }
         
+        private string _runOn;
+        
+        /// <summary>
+        /// Optional. Gets or sets the runOn which specifies the group name
+        /// where the job is to be executed.
+        /// </summary>
+        public string RunOn
+        {
+            get { return this._runOn; }
+            set { this._runOn = value; }
+        }
+        
         private DateTimeOffset _startTime;
         
         /// <summary>
